@@ -6,7 +6,9 @@ class IndexController extends Base_Controller_Abstract {
 	
 	public function indexAction() 
 	{
-        echo "In index controller";
+        $model = new TestModel();
+        $res = $model->query();
+        print_r($res);
 		exit();
 	}
 }

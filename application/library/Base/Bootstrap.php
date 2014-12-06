@@ -33,12 +33,4 @@ class Base_Bootstrap extends Ap_Bootstrap_Abstract{
         //路由协议栈，后入先验证
         //默认已添加Ap_Route_Static自动划分module/controller/action
     }
-
-    /**
-     * 初始化DB配置
-     */
-    public function _initDb(Ap_Dispatcher $dispatcher) {
-        $conf = Base_Config::getConfig('db', CONF_PATH . '/db.ini');
-        Base_Dao_Factory::getInstance()->setConfig(Base_Config::getConfig('db', CONF_PATH . '/db.ini'));
-    }
 }

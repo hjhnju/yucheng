@@ -45,11 +45,4 @@ class Bootstrap extends Base_Bootstrap{
         $router->addConfig(Base_Config::getConfig('routes', CONF_PATH . '/route.ini'));
         $routes = $router->getRoutes();
     }
-
-    /**
-     * 初始化DB配置
-     */
-    public function _initDb(Ap_Dispatcher $dispatcher) {
-        parent::_initDb($dispatcher);
-    }
 }

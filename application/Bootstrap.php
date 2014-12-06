@@ -45,11 +45,4 @@ class Bootstrap extends Base_Bootstrap{
         //$router->addConfig(Base_Config::getConfig('routes', CONF_PATH . '/route.ini'));
     }
 
-    /**
-     * 初始化DB配置
-     */
-    public function _initDb(Ap_Dispatcher $dispatcher) {
-        //$conf = Base_Config::getConfig('db', CONF_PATH . '/db.ini');
-        //Base_Dao_Factory::getInstance()->setConfig(Base_Config::getConfig('db', CONF_PATH . '/db.ini'));
-    }
 }

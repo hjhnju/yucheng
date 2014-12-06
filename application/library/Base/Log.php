@@ -6,8 +6,6 @@
  * 隐式行为：
  *      1. 将调用者传入的strMsg中的tab替换为空格
  *      2. 在调用者传入的strMsg后添加换行符
- *
- * @author chengyi02
  */
 
 class Base_Log {
