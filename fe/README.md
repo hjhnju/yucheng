@@ -2,6 +2,7 @@
 
 ### 程序安装
 代码下载下来后，需要安装前端用的基础库及本地开发环境模块
+
 1. 执行 `edp update` 用来下载edp相关的基础库
 2. 执行 `npm i` 安装phpcgi模块，用来在本地模拟运行php程序
 3. 由于指定的phpcgi模块代码有误，需要手动修改 `node_modules/node-phpcgi/main.js` 中的red -> req
