@@ -3,13 +3,13 @@
  * 用户页面controller基础类
  * @author hejunhua <hejunhua@baidu.com>
  */
-class User_Base_Page extends User_Base {
+class Base_Controller_Page extends Base_Controller_Abstract {
 
     public function init () {
         parent::init();
 
-        $this->getView()->assign('webroot', $this->_webroot);
-        $this->getView()->assign('passroot', $this->_passroot);
+        $webroot = Base_Config::getConfig('web.root');
+        $this->getView()->assign('webroot', $webroot);
 
         //打日志
         $this->baselog();
@@ -23,13 +23,12 @@ class User_Base_Page extends User_Base {
     /**
      * log for every page
      */
-    public function baselog(){         
+    protected function baselog(){         
         //解析du串
         Base_Log::notice(array(
-            'controller' => Base_Ssl::filterValue($this->getRequest()->getControllerName()),
-            'action'     => Base_Ssl::filterValue($this->getRequest()->getActionName()),
-            'vuid'       => $this->_vuid,
-            'duid'       => $this->_duid,
+            'controller' => $this->getRequest()->getControllerName(),
+            'action'     => $this->getRequest()->getActionName(),
+            //'userid'     => $this->_userid,
             'type'       => 'page',
         ));
     }

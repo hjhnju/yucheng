@@ -8,10 +8,6 @@
 class Base_Controller_Abstract extends Ap_Controller_Abstract
 {
     public function init(){
-        Base_Log::notice(array(
-            'controller' => Base_Util_Request::filterXss($this->getRequest()->getControllerName()),
-            'action'     => Base_Util_Request::filterXss($this->getRequest()->getActionName()),
-        ));
     }
     
     public function ajax($arrData = array(), $errorMsg = '', $status = 0){
@@ -117,5 +113,5 @@ class Base_Controller_Abstract extends Ap_Controller_Abstract
             echo $strJsonRet;
         }
         die();
-    }    
+    }
 }

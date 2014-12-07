@@ -1,13 +1,12 @@
 <?php
 /**
  * 用户API controller基础类
- * @author hejunhua <hejunhua@baidu.com>
+ * @author hejunhua
  */
-class User_Base_Api extends User_Base {
+class Base_Controller_Api extends Base_Controller_Abstract {
     
     public function init () {
         parent::init();
-        $this->_apiversion   = (float)$this->getRequest()->getParam('version');
         Ap_Dispatcher::getInstance()->disableView();
 
         //打日志
@@ -17,14 +16,11 @@ class User_Base_Api extends User_Base {
     /**
      * log for every api
      */
-    public function baselog(){         
-        //解析du串
+    protected function baselog(){
         Base_Log::notice(array(
-            'controller' => Base_Ssl::filterValue($this->getRequest()->getControllerName()),
-            'action'     => Base_Ssl::filterValue($this->getRequest()->getActionName()),
-            'vuid'       => $this->_vuid,
-            'duid'       => $this->_duid,
-            'version'    => $this->_apiversion,
+            'controller' => $this->getRequest()->getControllerName(),
+            'action'     => $this->getRequest()->getActionName(),
+            //'userid'     => $this->_userid,
             'type'       => 'api',
         ));
     }
