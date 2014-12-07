@@ -5,3 +5,6 @@ fe/node_modules
 fe/start.sh
 fe/htdocs/
 fe/mock/entry/templates_c/
+
+application/tmp/*
+
