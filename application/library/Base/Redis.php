@@ -49,7 +49,7 @@ class Base_Redis {
      */
     public function __construct($arrConfig) {
         if (empty($arrConfig) || !is_array($arrConfig)){
-            throw new Exception("Config empty.");
+            throw new Base_Exception_Runtime("Config for redis empty.");
         } 
         //max_retry config
         if(isset($arrConfig['max_retry'])){
@@ -73,7 +73,7 @@ class Base_Redis {
             );
         }
         if (!$bol) {
-            throw new Exception("Connected to redis failed!");
+            throw new Base_Exception_Runtime("Connected to redis failed!");
         }
     }
 

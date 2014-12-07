@@ -1,5 +1,5 @@
 <?php
-Class Smarty_Adapter implements Ap_View_Interface
+Class Smarty_Adapter implements Yaf_View_Interface
 {
 	/**
 	 * Smarty object

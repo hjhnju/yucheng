@@ -6,13 +6,13 @@ define('APP_PATH',dirname(dirname(__FILE__)));
 //添加配置定义路径
 define('CONF_PATH', APP_PATH . '/conf');
 //添加环境节点
-define('ENVIRON', ini_get('ap.environ'));
+define('ENVIRON', ini_get('yaf.environ'));
 
 error_reporting(E_ALL);
 ini_set('date.timezone', 'Asia/Shanghai');
-ini_set('ap.library', APP_PATH . "/application/library");
+ini_set('yaf.library', APP_PATH . "/application/library");
 
-$conf    = new Ap_Config_INI(CONF_PATH. "/application.ini", ENVIRON);
+$conf    = new Yaf_Config_INI(CONF_PATH. "/application.ini", ENVIRON);
 $modules = explode(',', $conf->get('application.modules'));
 $uri     = $_SERVER['REQUEST_URI'];
 $intPos  = strpos($uri, '?');
@@ -39,9 +39,10 @@ if (in_array($module, $modules) && $module !== 'Index') {
     $conf['smarty']['template_dir']   = MODULE_PATH . '/views';
 }
 try {
-    $application = new Ap_Application($conf);
+    $application = new Yaf_Application($conf);
     $application->bootstrap()->run();
 } catch (Exception $e) {
+    var_dump($e->getMessage());die;
     Base_Log::error($e->getMessage());
 }
 

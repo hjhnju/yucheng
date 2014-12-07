@@ -7,7 +7,7 @@ class Base_Controller_Api extends Base_Controller_Abstract {
     
     public function init () {
         parent::init();
-        Ap_Dispatcher::getInstance()->disableView();
+        Yaf_Dispatcher::getInstance()->disableView();
 
         //打日志
         $this->baselog();

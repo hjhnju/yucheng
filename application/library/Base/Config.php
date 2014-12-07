@@ -42,7 +42,7 @@ class Base_Config {
 
     /**
      * 默认配置管理handler
-     * @var Ap_Config_Abstract
+     * @var Yaf_Config_Abstract
      */
     protected static $_objDefaultConfig;
 
@@ -135,9 +135,9 @@ class Base_Config {
      * @return mixed 配置的值，若不存在返回null
      */
     protected static function _getDefaultConfig($strTag) {/*{{{*/
-        // 延迟加载Apconfig对象，为节省资源，不再进行类型检查
+        // 延迟加载Yafconfig对象，为节省资源，不再进行类型检查
         if (!self::$_objDefaultConfig) {
-            self::$_objDefaultConfig = Ap_Application::app()->getConfig();
+            self::$_objDefaultConfig = Yaf_Application::app()->getConfig();
             if (!self::$_objDefaultConfig) {
                 return null;
             }
@@ -160,7 +160,7 @@ class Base_Config {
      */
     protected static function _loadFile($strFile) {/*{{{*/
         if (substr($strFile, -self::TYPE_INI_LEN) === self::TYPE_INI) {
-            if(!($objConfig = new AP_Config_Ini($strFile, self::$_defSection))) {
+            if(!($objConfig = new Yaf_Config_Ini($strFile, self::$_defSection))) {
                 throw new Base_Exception_Runtime('load file fail:'.$strFile, Base_RetCode::CONFIG_FAIL);
             }
             self::$_arrConfig[$strFile] = $objConfig;

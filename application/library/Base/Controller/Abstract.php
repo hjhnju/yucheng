@@ -5,7 +5,7 @@
  * @author hejunhua@baidu.com
  * @since 2014-07 重构
  */
-class Base_Controller_Abstract extends Ap_Controller_Abstract
+class Base_Controller_Abstract extends Yaf_Controller_Abstract
 {
     public function init(){
     }
