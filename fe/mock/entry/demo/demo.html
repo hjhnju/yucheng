@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>消息详情</title>
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+</head>
+
+<body>
+    <div class="detail">
+        <article>
+            <h2>{%$message.title|escape%}</h2>
+            <p class="detail-author">
+                <span>{%$message.addtime|date_format:'%Y-%m-%d'%}</span>
+                {%if $message.author%}<em>{%$message.author|escape:"html"|escape:"javascript"%}</em>{%/if%}
+            </p>
+            {%if $message.displaycover%}
+            <img src="{%$message.coverurl%}"/>
+            {%/if%}
+            <div class="content">
+                {%$message.content%}
+            </div>
+            {%if $message.sourceurl%}
+            <p class="detail-sourceurl"><a data-log='{"act":"or"}' target="_blank" href="{%$message.sourceurl|escape%}">查看原文</a></p>
+            {%/if%}
+        </article>
+    </div>
+    
+</body>
+</html>
