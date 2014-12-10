@@ -1,0 +1,81 @@
+@import '../../../dep/est/1.3.0/src/all.less';
+@import "./color.less";
+
+
+body {
+    margin: 0;
+    font-size: 12px;
+    font-family: "Microsoft YaHei";
+}
+ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+        list-style: none;
+
+    }
+}
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+
+    .clearfix;
+}
+
+//nav 开始
+.nav {
+    height: 100px;
+}
+.logo {
+    float: left;
+    width: 300px;
+    height: 100px;
+}
+.nav-item {
+    float: left;
+    margin-top: 30px;
+
+    .clearfix;
+}
+.nav-item-list {
+    margin-right: 40px;
+    float: left;
+
+    &.last {
+        margin-right: 0;
+    }
+
+    .nav-item-link {
+        color: #676767;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 12px 7px;
+        text-decoration: none;
+
+        &:hover,&.current {
+            border-bottom: 3px solid @color-green;
+            color: @color-green;
+        }
+    }
+}
+.nav-myaccount {
+    float: right;
+    width: 120px;
+    margin-top:26px;
+    height: 26px;
+    line-height: 26px;
+    color: #676767;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+//nav结束
