@@ -198,6 +198,7 @@ class Base_TopazDb {
         $this->_strQueryStr = $strSql;
         //释放上次的查询
         $this->free();
+        $this->escape($strSql);
         $this->_objQueryID = mysqli_query($this->_objLinkID, $this->_strQueryStr);
         if (! $this->_objQueryID) {
             //查询失败则抛出异常
@@ -217,7 +218,7 @@ class Base_TopazDb {
      * 获取query后的查询结果
      *
      */
-    public function fetch () {
+    protected function fetch () {
         return mysqli_fetch_assoc($this->_objQueryID);
     }
 
@@ -303,6 +304,7 @@ class Base_TopazDb {
         $this->_strQueryStr = $strSql;
         $this->free();
         $startInterval = microtime(true);
+        $this->escape($strSql);
         $result = mysqli_query($this->_objLinkID, $this->_strQueryStr);
         if (false === $result) {
             throw new Base_Exception_Runtime("QUERY ERROR:" . $this->_objLinkID->error . " SQL:" . $strSql);
