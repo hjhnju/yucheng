@@ -7,9 +7,8 @@
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
     <script>
     require.config({
-        'baseUrl': '../../src',
-        'paths': {
-        },
+        'baseUrl': '/src',
+        'paths': {},
         'packages': [
             {
                 'name': 'echarts',
@@ -48,6 +47,11 @@
         ]
     });
     </script>
+    <script>
+        require(['index/index'],function (main) {
+            main.init();
+        })
+    </script>
 </head>
 
 <body>
@@ -58,13 +62,13 @@
                 <span class="header-left-time">(工作时间：9：00 - 21：00)</span>
                 <span class="header-left-attention">
                     <span class="attention-span">关注我们：</span>
-                    <a class="attention-me"></a>
-                    <a class="attention-me"></a>
+                    <a class="attention-me xinlang" href="###"></a>
+                    <a class="attention-me weixin" href="###"></a>
                 </span>
             </div>
             <div class="header-right">
                 <div class="header-right-default">
-                    <span class="default-fastlogin">快速登录</span>
+                    <a href="###" class="default-fastlogin">快速注册</a>
                     <a class="default-login" href="###">登录</a>
                 </div>
                 <div class="header-right-login">
@@ -76,10 +80,10 @@
     </div>
     <div class="nav">
         <div class="container">
-            <div class="logo"><img width="100%" height="100%" src="###" /></div>
+            <a href="###" class="logo"><img width="100%" height="100%" src="/src/common/img/logo.png" /></a>
             <ul class="nav-item">
                 <li class="nav-item-list">
-                    <a href="###" class="nav-item-link current">我来投资</a>
+                    <a href="###" class="nav-item-link">我来投资</a>
                 </li>
                 <li class="nav-item-list">
                     <a href="###" class="nav-item-link">我要借款</a>
@@ -98,8 +102,26 @@
         </div>
     </div>
     <div class="banner">
-        <div class="container">
-            <div class="banner-floation"></div>
+        <div class="container banner-position">
+            <div class="banner-floatation">
+                <div class="banner-floatation-top">
+                    <div class="banner-income">
+                        <p class="banner-income-number">
+                            <span class="banner-income-number-sp">15.8</span>
+                            <span class="banner-income-number-bai">%</span>
+                        </p>
+                        <p class="banner-income-text">最高年化收益率</p>
+                    </div>
+                </div>
+                <div class="banner-floatation-bottom">
+                    <a class="banner-floatation-fastlogin">快速注册</a>
+                    <p class="banner-floatation-link">
+                        <span>已有账号？</span>
+                        <a class="banner-floatation-register" href="###">立即登录</a>
+                    </p>
+                </div>
+
+            </div>
             <div class="banner-select">
                 <a href="###" class="banner-select-link current">●</a>
                 <a href="###" class="banner-select-link">●</a>
@@ -116,7 +138,7 @@
             </div>
             <div class="introduce-right">
                 <div class="introduce-right-list">
-                    <div class="introduce-list-logo"></div>
+                    <div class="introduce-list-logo highincome"></div>
                     <div class="introduce-list-title">低门槛高收入</div>
                     <a class="introduce-list-link" href="###">
                         <p class="introduce-list-link-text">互联网理财100元起投</p>
@@ -124,7 +146,7 @@
                     </a>
                 </div>
                 <div class="introduce-right-list">
-                    <div class="introduce-list-logo"></div>
+                    <div class="introduce-list-logo baozhang"></div>
                     <div class="introduce-list-title">全方位投资保障</div>
                     <a class="introduce-list-link" href="###">
                         <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
@@ -132,11 +154,11 @@
                     </a>
                 </div>
                 <div class="introduce-right-list last">
-                    <div class="introduce-list-logo"></div>
+                    <div class="introduce-list-logo zhuanzhu"></div>
                     <div class="introduce-list-title">专注教育行业</div>
                     <a class="introduce-list-link" href="###">
                         <p class="introduce-list-link-text">深挖教育行业特性</p>
-                        <p class="introduce-list-link-text">最权威教育行业风险评估体系</p>
+                        <p class="introduce-list-link-text">最权威教育行业评估体系</p>
                     </a>
                 </div>
             </div>
@@ -146,7 +168,7 @@
         <div class="container">
             <div class="newgonggao">
                 <span class="newgonggao-title">最新公告</span>
-                <a class="newgonggao-txt"><span class="symbol">•</span>兴教贷产品全新上线<span class="newgonggao-time">2014-12-12</span></a>
+                <a href="###" class="newgonggao-txt"><span class="symbol">•</span>兴教贷产品全新上线<span class="newgonggao-time">2014-12-12</span></a>
                 <a class="newgonggao-more" href="###">更多 > ></a>
             </div>
             <div class="investlist">
@@ -166,9 +188,11 @@
                             <span class="name-shi">实</span>
                             <span class="school">福建三明高中扩建一期</span>
                         </div>
-                        <div class="investlist-box-title-name grade">评估等级</div>
-
-
+                        <div class="investlist-box-title-name grade">
+                            <span class="grade-star all"></span>
+                            <span class="grade-star hale"></span>
+                            <span class="grade-star none"></span>
+                        </div>
                         <div class="investlist-box-title-name lilv">
                             <span class="lilv-number">12</span>
                             <span class="lilv-bai">%</span>
@@ -182,9 +206,46 @@
                             <span class="lilv-bai">个月</span>
                         </div>
                         <div class="investlist-box-title-name jindu">
-                            <div class="jindu-box"></div>
+                            <div class="jindu-box">
+                                <div class="jindu-box-smallbox number-eight"></div>
+                            </div>
                             <div class="jindu-number">
-                                <span class="lilv-number">85</span>
+                                <span class="lilv-number">80</span>
+                                <span class="lilv-bai">%</span>
+                            </div>
+                        </div>
+                        <div class="investlist-box-title-name status">
+                            <a class="status-biding" href="###">投标中</a>
+                        </div>
+                    </div>
+                    <div class="investlist-box-title">
+                        <div class="investlist-box-title-name name">
+                            <span class="name-shi">实</span>
+                            <span class="school">福建三明高中扩建一期</span>
+                        </div>
+                        <div class="investlist-box-title-name grade">
+                            <span class="grade-star all"></span>
+                            <span class="grade-star hale"></span>
+                            <span class="grade-star none"></span>
+                        </div>
+                        <div class="investlist-box-title-name lilv">
+                            <span class="lilv-number">12</span>
+                            <span class="lilv-bai">%</span>
+                        </div>
+                        <div class="investlist-box-title-name price">
+                            <span class="lilv-number color-blank">1,000,000</span>
+                            <span class="lilv-bai">元</span>
+                        </div>
+                        <div class="investlist-box-title-name time">
+                            <span class="lilv-number color-blank">6</span>
+                            <span class="lilv-bai">个月</span>
+                        </div>
+                        <div class="investlist-box-title-name jindu">
+                            <div class="jindu-box">
+                                <div class="jindu-box-smallbox"></div>
+                            </div>
+                            <div class="jindu-number">
+                                <span class="lilv-number">100</span>
                                 <span class="lilv-bai">%</span>
                             </div>
                         </div>
@@ -193,8 +254,66 @@
                         </div>
                     </div>
                 </div>
+                <a href="###" class="investlist-find">查看更多标的></a>
             </div>
         </div>
+    </div>
+    <div class="bottom">
+        <div class="container">
+            <div class="bottom-title">合作伙伴</div>
+            <div class="bottom-main">
+                <a href="###" class="bottom-main-bank">
+                    <img width="100%" height="100%" src="/src/index/img/bank.png" />
+                </a>
+                <a href="###" class="bottom-main-bank">
+                    <img width="100%" height="100%" src="/src/index/img/bank.png" />
+                </a>
+                <a href="###" class="bottom-main-bank">
+                    <img width="100%" height="100%" src="/src/index/img/bank.png" />
+                </a>
+                <a href="###" class="bottom-main-bank">
+                    <img width="100%" height="100%" src="/src/index/img/bank.png" />
+                </a>
+                <a href="###" class="bottom-main-bank last">
+                    <img width="100%" height="100%" src="/src/index/img/bank.png" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="footer-left">
+                <ul class="footer-item">
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">关于我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">联系我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">新手指引</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">安全保障</a>
+                    </li>
+                </ul>
+                <div class="footer-site">
+                    <span class="footer-site-left"><span>@2014</span>北京百年兴教网络技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;京IPC证140334号</span>
+                    <span class="footer-site-me">
+                        关于我们:
+                        <a href="###" class="footer-site-me-xinlang xinlang"></a>
+                        <a href="###" class="footer-site-me-xinlang weixin"></a>
+                    </span>
+                </div>
+            </div>
+            <div class="footer-right">
+                客服电话：400-888-6666
+            </div>
+        </div>
+
     </div>
 </body>
 </html>

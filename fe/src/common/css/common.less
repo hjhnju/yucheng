@@ -21,6 +21,84 @@ p {
     padding: 0;
 }
 
+//header开始
+.header {
+    height: 34px;
+    border-bottom: 1px solid #e3e3e3;
+}
+.header-left {
+    float: left;
+}
+.header-left-phone {
+    display: inline-block;
+    line-height: 34px;
+    font-size: 14px;
+    color: #666666;
+    margin-right: 10px;
+    background: url("../img/header_icon.png") 0 11px no-repeat;
+    padding-left: 24px;
+}
+.header-left-time {
+    display: inline-block;
+    line-height: 34px;
+    font-size: 14px;
+    color: #666666;
+    margin-right: 20px;
+}
+.header-left-attention {
+    display: inline-block;
+    line-height: 34px;
+    font-size: 14px;
+    color: #666666;
+
+    .attention-me {
+        display: inline-block;
+        margin-right: 6px;
+        width: 20px;
+        height: 20px;
+        background: url("../img/header_icon.png") 0 0 no-repeat;
+        line-height: 34px;
+
+        &.xinlang {
+            background-position: 0 -46px;
+        }
+
+        &.weixin {
+            background-position: 0 -96px;
+        }
+    }
+}
+.header-right {
+    float: right;
+}
+.header-right-default {
+
+    .default-fastlogin {
+        line-height: 34px;
+        color: #666666;
+        margin-right: 20px;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    .default-login {
+        display: inline-block;
+        color: #FFFFFF;
+        padding: 4px 8px;
+        background-color: @color-red;
+        text-decoration: none;
+
+
+        .border-radius(3px);
+    }
+}
+.header-right-login {
+    display: none;
+}
+
+
+//header结束
+
 .container {
     width: 1000px;
     margin: 0 auto;
@@ -31,12 +109,21 @@ p {
 
 //nav 开始
 .nav {
-    height: 100px;
+    height: 90px;
+    padding-top: 10px;
 }
 .logo {
     float: left;
     width: 300px;
-    height: 100px;
+    height: 60px;
+    display: block;
+    text-decoration: none;
+    margin-top: 7px;
+    margin-right: 20px;
+
+    img {
+        border: none;
+    }
 }
 .nav-item {
     float: left;
@@ -45,7 +132,7 @@ p {
     .clearfix;
 }
 .nav-item-list {
-    margin-right: 40px;
+    margin-right: 34px;
     float: left;
 
     &.last {
@@ -67,7 +154,7 @@ p {
 }
 .nav-myaccount {
     float: right;
-    width: 120px;
+    width: 90px;
     margin-top:26px;
     height: 26px;
     line-height: 26px;
@@ -76,6 +163,80 @@ p {
     font-weight: bold;
     text-decoration: none;
     text-align: center;
+    background: url("../img/my_account.png") 10px 0 no-repeat;
+    padding-left: 30px;
 }
 
 //nav结束
+
+//footer开始
+
+.footer {
+    height: 80px;
+    padding-top: 36px;
+    background-color: #55565f;
+
+    .clearfix;
+}
+.footer-left {
+    float: left;
+}
+.footer-item {
+    margin-bottom: 20px;
+
+    .clearfix;
+}
+.footer-item-list {
+    float: left;
+
+    .footer-item-link {
+        color: #a4a4a7;
+        text-decoration: none;
+    }
+
+    .footer-vertical {
+        margin: 0 8px;
+        color: #cacaca;
+
+    }
+}
+.footer-site {
+    color: #a4a4a7;
+}
+.footer-site-left {
+
+    span {
+        vertical-align: bottom;
+        margin-right: 10px;
+    }
+}
+.footer-site-me {
+    margin-left: 10px;
+}
+.footer-site-me-xinlang {
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: url("../img/header_icon.png") 0 0 no-repeat;
+    vertical-align: middle;
+
+    &.xinlang {
+        background-position: 0 -150px;
+    }
+
+    &.weixin {
+        background-position: 0 -200px;
+    }
+}
+.footer-right {
+    float: right;
+    font-size: 14px;
+    color: #a4a4a7;
+    padding-left: 40px;
+    background: url("../img/footer_phone.png") 0 7px no-repeat;
+    height: 40px;
+    line-height: 40px;
+}
+
+//footer结束
