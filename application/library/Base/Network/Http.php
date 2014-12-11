@@ -222,7 +222,7 @@ class Base_Network_Http {
      *
      * @return Base_Network_Http
      */
-    public function url($mixHost, $strPath, $intFlag = 0) {/*{{{*/
+    public function url($mixHost, $strPath = '', $intFlag = 0) {/*{{{*/
         if(is_array($mixHost)){
             $this->_arrServerInfor['hosts'] = array_values($mixHost);
             $this->_arrServerInfor['path'] = $strPath;
