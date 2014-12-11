@@ -16,10 +16,7 @@ define(function (require) {
     }
     function easy() {
 
-        $('.nav-item-link').click(function () {
-            $('.nav-item-link').removeClass('curremt');
-            $(this).addClass('current');
-        })
+        
     }
     return {init:init};
 });

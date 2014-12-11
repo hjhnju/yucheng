@@ -86,7 +86,9 @@
     .clearfix;
 
     width: 100px;
-    margin: 330px auto 0;
+    position: absolute;
+    left: 450px;
+    top: 330px;
 
     .banner-select-link {
         display: block;
@@ -190,7 +192,7 @@
 }
 .newgonggao {
     height: 70px;
-    line-height: 70px;
+    margin-bottom: 20px;
     border-bottom: 1px solid #dfdfdf;
     padding-right: 20px;
 
@@ -200,10 +202,13 @@
     font-size: 20px;
     color: #333333;
     margin-right: 20px;
+    line-height: 70px;
 }
 .newgonggao-txt {
     text-decoration: none;
     color: #333333;
+    line-height: 70px;
+    font-size: 14px;
 
     .symbol {
         color: @color-green;
@@ -213,13 +218,14 @@
     .newgonggao-time {
         margin-left: 10px;
         color: #adadad;
+        font-size: 12px;
     }
 }
 .newgonggao-more {
     float: right;
-    line-height: 70px;
     text-decoration: none;
     color: #333333;
+    line-height: 86px;
 }
 .investlist {
     padding-bottom: 20px;
@@ -228,7 +234,6 @@
 }
 .investlist-title {
     height: 56px;
-    line-height: 56px;
     font-size: 20px;
     color: #333333;
 }
@@ -253,21 +258,27 @@
     color: #999999;
     font-size: 14px;
 
+
     &.name {
         width: 200px;
         text-align: center;
+        *line-height: normal;
+    }
+
+    &.name-height {
+        line-height: 64px;
     }
 
     &.grade {
         width: 60px;
         text-align: center;
-        *margin-top: 10px;
 
         .grade-star {
             display: inline-block;
             width: 16px;
             height: 16px;
             background: url("./img/star_icon.png") 0 0 no-repeat;
+            *margin-top: 24px;
 
             &.all {
                 background-position: 0 0;
@@ -356,6 +367,7 @@
 .school {
     color: #323232;
     font-size: 14px;
+
 }
 
 
