@@ -9,7 +9,7 @@ class RegistController extends Base_Controller_Page{
     public function init(){
         parent::init();
         $this->registLogic = new User_Logic_Regist();
-        $this->modLogin = new LoginModel();
+        $this->loginLogic = new User_Logic_Login();
     }
     
     /**
@@ -102,7 +102,10 @@ class RegistController extends Base_Controller_Page{
             $openid = Yaf_Session::getInstance()->get("openid");
             if(!empty($openid)){
                $type = Yaf_Session::getInstance()->get("idtype");
-               $ret = $this->;
+               $ret = $this->loginLogic->thirdLogin($openid,$type);
+               if(ret){
+                   return $this->ajaxError(ret,User_RetCode::getMsg(ret));
+               }
             }
             return $this->ajax(User_RetCode::getMsg($data));
         }
