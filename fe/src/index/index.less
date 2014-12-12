@@ -1,0 +1,449 @@
+@import "../common/css/common.less";
+
+
+.banner {
+    height: 370px;
+    background-color: @color-green;
+}
+.banner-position {
+    position: relative;
+}
+.banner-floatation {
+    width: 280px;
+    height: 286px;
+
+    border-bottom: 3px solid #40aa32;
+
+    background-color: #FFFFFF;
+    position: absolute;
+    right: 0;
+    top: 40px;
+
+    .border-radius(5px);
+
+    .banner-floatation-top {
+        height: 108px;
+        background: url("./img/floatation.png") 0 0 no-repeat;
+        padding-top: 40px;
+        .border-radius(5px);
+    }
+    .banner-income {
+        text-align: center;
+    }
+    .banner-income-number {
+        color: #FFFFFF;
+        margin-bottom: 10px;
+    }
+    .banner-income-number-sp {
+        font-size: 44px;
+    }
+    .banner-income-number-bai {
+        font-size: 14px;
+    }
+    .banner-income-text {
+        font-size: 16px;
+        height: 20px;
+        line-height: 20px;
+        color: #FFFFFF;
+    }
+
+    .banner-floatation-bottom {
+        width: 166px;
+        padding-top: 30px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .banner-floatation-fastlogin {
+        display: block;
+        text-decoration: none;
+        color: #FFFFFF;
+        font-size: 16px;
+        height: 38px;
+        line-height: 38px;
+        background-color: @color-green;
+        margin-bottom: 20px;
+
+        .border-radius(3px);
+    }
+    .banner-floatation-link {
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+
+        span {
+            color: #676767;
+        }
+
+        .banner-floatation-register {
+            color: @color-green;
+            text-decoration: underline;
+        }
+    }
+}
+
+
+.banner-select {
+    .clearfix;
+
+    width: 100px;
+    position: absolute;
+    left: 450px;
+    top: 330px;
+
+    .banner-select-link {
+        display: block;
+        float: left;
+        margin-right: 10px;
+        font-size: 14px;
+        color: @color-red;
+        text-decoration: none;
+
+        &:hover,&.current {
+            color: #FFFFFF;
+        }
+    }
+}
+.introduce {
+    height: 220px;
+    background-color: #f8f8f8;
+    padding-top: 60px;
+}
+.introduce-left {
+    float: left;
+    width: 360px;
+    overflow: hidden;
+    
+    .introduce-left-title {
+        height: 56px;
+        line-height: 56px;
+        font-size: 26px;
+        font-weight: bold;
+
+        span {
+            color: @color-green;
+        }
+    }
+    .introduce-left-text {
+        font-size: 14px;
+        color: #333333;
+        line-height: 28px;
+
+        a {
+            text-decoration: none;
+            color: @color-green;
+
+        }
+    }
+}
+.introduce-right {
+    float: right;
+
+    .clearfix;
+}
+.introduce-right-list {
+    float: left;
+    margin-right: 50px;
+    text-align: center;
+    width: 140px;
+    overflow: hidden;
+    *width: 150px;
+
+    &.last {
+        margin-right: 0;
+    }
+
+    .introduce-list-logo {
+        width: 80px;
+        height: 80px;
+        background: url("./img/round_pic_icon.png") 0 0 no-repeat;
+        margin: 0 auto 10px;
+
+        &.highincome {
+            background-position: 0 0;
+        }
+
+        &.baozhang {
+            background-position: 0 -100px;
+        }
+
+        &.zhuanzhu {
+            background-position: 0 -200px;
+        }
+    }
+    .introduce-list-title {
+        font-size: 20px;
+        height: 26px;
+        line-height: 26px;
+        color: #343434;
+        margin-bottom: 4px;
+    }
+    .introduce-list-link {
+        display: block;
+        text-decoration: none;
+        color: #656565;
+    }
+    .introduce-list-link-text {
+        height: 20px;
+        line-height: 20px;
+    }
+}
+.main {
+
+}
+.newgonggao {
+    height: 70px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dfdfdf;
+    padding-right: 20px;
+
+    .clearfix;
+}
+.newgonggao-title {
+    font-size: 20px;
+    color: #333333;
+    margin-right: 20px;
+    line-height: 70px;
+}
+.newgonggao-txt {
+    text-decoration: none;
+    color: #333333;
+    line-height: 70px;
+    font-size: 14px;
+
+    .symbol {
+        color: @color-green;
+        margin-right: 10px;
+    }
+
+    .newgonggao-time {
+        margin-left: 10px;
+        color: #adadad;
+        font-size: 12px;
+    }
+}
+.newgonggao-more {
+    float: right;
+    text-decoration: none;
+    color: #333333;
+    line-height: 86px;
+}
+.investlist {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dfdfdf;
+    margin-bottom: 20px;
+}
+.investlist-title {
+    height: 56px;
+    font-size: 20px;
+    color: #333333;
+}
+.investlist-box {
+
+}
+.investlist-box-title {
+    border-bottom: 1px dashed #d8d8d8;
+    padding-left: 12px;
+    height: 64px;
+    line-height: 64px;
+
+    .clearfix;
+
+    &.border-bottom {
+        border-bottom: none;
+    }
+}
+.investlist-box-title-name {
+    float: left;
+    margin-right: 40px;
+    color: #999999;
+    font-size: 14px;
+
+
+    &.name {
+        width: 200px;
+        text-align: center;
+        *line-height: normal;
+    }
+
+    &.name-height {
+        line-height: 64px;
+    }
+
+    &.grade {
+        width: 60px;
+        text-align: center;
+
+        .grade-star {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url("./img/star_icon.png") 0 0 no-repeat;
+            *margin-top: 24px;
+
+            &.all {
+                background-position: 0 0;
+            }
+
+            &.hale {
+                background-position: 0 -100px;
+            }
+
+            &.none {
+                background-position: 0 -50px;
+            }
+        }
+    }
+
+    &.lilv {
+        width: 60px;
+        text-align: center;
+    }
+
+    &.price {
+        width: 130px;
+        text-align: center;
+    }
+
+    &.time {
+        width: 48px;
+        text-align: center;
+    }
+
+    &.jindu {
+        width: 130px;
+
+        .clearfix;
+    }
+
+    &.status {
+        width: 80px;
+        text-align: center;
+    }
+    .jindu-box {
+        float: left;
+        width: 70px;
+        height: 8px;
+        background-color: #e0e0e0;
+        margin-top: 27px;
+        margin-right: 14px;
+
+        .border-radius(20px);
+
+        .jindu-box-smallbox {
+            width: 100%;
+            height: 8px;
+            background-color: @color-red;
+
+            .border-radius(20px);
+
+            &.number-eight {
+                width: 80%;
+            }
+        }
+    }
+    .jindu-number {
+        float: left;
+
+        .lilv-number {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+}
+.name-shi {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    width: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: @color-green;
+    margin: 20px 10px 0;
+
+    .border-radius(3px);
+}
+.school {
+    color: #323232;
+    font-size: 14px;
+
+}
+
+
+
+.lilv-number {
+    font-size: 16px;
+    color: @color-red;
+    font-weight: bold;
+
+    &.color-blank {
+        color: #000000;
+    }
+}
+.lilv-bai {
+    font-size: 12px;
+    color: #949494;
+}
+.status-biding {
+    display: block;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    margin-top: 18px;
+    background-color: @color-green;
+
+    .border-radius(3px);
+
+    &:hover {
+        background-color: #2c9818;
+    }
+
+    &.current {
+        color: #666666;
+        background-color: #e5e5e5;
+    }
+}
+
+.investlist-find {
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    color: #999999;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin-top: 10px;
+}
+.bottom {
+    padding-bottom: 40px;
+}
+.bottom-title {
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    color: #333333;
+}
+.bottom-main {
+    padding-left: 20px;
+    overflow: hidden;
+
+    .bottom-main-bank {
+        display: inline-block;
+        text-decoration: none;
+        width: 146px;
+        height: 40px;
+        margin-right: 47px;
+
+        img {
+            border: none;
+        }
+
+        &.last {
+            margin-right: 0;
+        }
+    }
+}
