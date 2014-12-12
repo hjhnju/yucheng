@@ -1,9 +1,8 @@
 <?php
 /**
- * 注册model类
+ * 用户资料model类
  */
-class RegistModel extends BaseModel {
-    const USER_STATUS = 0;
+class MaterialModel extends BaseModel {
     
     public function __construct (){
         parent::__construct();
@@ -34,7 +33,7 @@ class RegistModel extends BaseModel {
      * 检查用户名是否存在
      */
     public function checkUserName($strName){
-        $strSql = "SELECT  `uid` FROM `user_login` WHERE `name` = '$strName' LIMIT 0, 1";
+        $strSql = "SELECT  `uid` FROM `user_info` WHERE `name` = '$strName' LIMIT 0, 1";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -46,7 +45,7 @@ class RegistModel extends BaseModel {
      * 检查手机号是否存在
      */
     public function checkPhone($intPhone){
-        $strSql = "SELECT  `uid` FROM `user_login` WHERE `phone` = $intPhone LIMIT 0, 1";
+        $strSql = "SELECT  `uid` FROM `user_info` WHERE `phone` = $intPhone LIMIT 0, 1";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -59,7 +58,7 @@ class RegistModel extends BaseModel {
      * 修改用户手机号
      */
     public function setPhone($intPhone){
-        $strSql = "UPDATE  `user_login` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
+        $strSql = "UPDATE  `user_info` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -72,7 +71,7 @@ class RegistModel extends BaseModel {
      * 修改用户邮箱
      */
     public function setEmail($strEmail){
-        $strSql = "UPDATE  `user_login` SET `email`='$strEmail' WHERE `uid` = $intUid";
+        $strSql = "UPDATE  `user_info` SET `email`='$strEmail' WHERE `uid` = $intUid";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -85,7 +84,7 @@ class RegistModel extends BaseModel {
      * 修改用户密码
      */
     public function setPasswd($strPasswd){
-        $strSql = "UPDATE  `user_login` SET `passwd`='$strPasswd' WHERE `uid` = '$intUid'";
+        $strSql = "UPDATE  `user_info` SET `passwd`='$strPasswd' WHERE `uid` = '$intUid'";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -98,7 +97,7 @@ class RegistModel extends BaseModel {
      * 设置用户绑定
      */
     public function setBinding(){
-        $strSql = "UPDATE  `phone` FROM `user_login` WHERE `uid` = $intUid";
+        $strSql = "UPDATE  `phone` FROM `user_info` WHERE `uid` = $intUid";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -111,7 +110,7 @@ class RegistModel extends BaseModel {
      * 删除用户绑定
      */
     public function delBinding(){
-        $strSql = "UPDATE  `phone` FROM `user_login` WHERE `uid` = $intUid";
+        $strSql = "UPDATE  `phone` FROM `user_info` WHERE `uid` = $intUid";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
