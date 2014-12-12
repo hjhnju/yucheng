@@ -155,6 +155,7 @@ class Base_Network_Http {
             curl_setopt($this->_objHandle, CURLOPT_URL, $this->_strCurUrl);
             // 开始计时
             Base_Util_Timer::start('http');
+            $this->nossl();
             // 执行调用
             $strRet = curl_exec($this->_objHandle);
             // 结束计时
@@ -276,6 +277,7 @@ class Base_Network_Http {
      * @return Base_Network_Http
      */
      public function nossl() {/*{{{*/
+        curl_setopt($this->_objHandle, CURLOPT_RETURNTRANSFER, 1);//禁止直接显示获取的内容 重要
         curl_setopt($this->_objHandle, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($this->_objHandle, CURLOPT_SSL_VERIFYHOST, FALSE);
         return $this;

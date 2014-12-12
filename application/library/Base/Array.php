@@ -1,5 +1,5 @@
 <?php 
-class Utils_Array{
+class Base_Array{
 
     public static function filter($arrVars, $arrFields){
         $arrBind = array();
