@@ -4,8 +4,7 @@
  */
 class RegistController extends Base_Controller_Page{
 
-    
-    CONST LAST_TIME = 60;
+    CONST LAST_TIME = 60;     //验证码过期时间
     protected $verified;
     
     public function init(){
@@ -21,10 +20,10 @@ class RegistController extends Base_Controller_Page{
     public function checkNameAction(){
        $strName = trim($_REQUEST['name']);
        $data = $this->registLogic->checkName($strName);
-       if(0 == $data){
-           return $this->ajax('success');
+       if(User_RetCode::SUCCESS == $data){
+           return $this->ajax(User_RetCode::getMsg($data));
        }
-       return $this->ajaxError($data,"test");
+       return $this->ajaxError($data,User_RetCode::getMsg($data));
     }
     
     /**
@@ -33,9 +32,10 @@ class RegistController extends Base_Controller_Page{
     public function checkPhoneAction(){
         $strPhone = trim($_REQUEST['phone']);
         $data = $this->registLogic->checkPhone($strPhone);
-        return $this->ajax(array(
-            'empty'=>$data,
-        ));      
+        if(User_RetCode::SUCCESS == $data){
+           return $this->ajax(User_RetCode::getMsg($data));
+       }
+       return $this->ajaxError($data,User_RetCode::getMsg($data));     
     }
     
     /**
@@ -62,13 +62,9 @@ class RegistController extends Base_Controller_Page{
         $arrData = explode(",",$strStoredCode);
         $time = time() - $arrData[1];
         if(($strVeriCode == $strStoredCode)&&($time<=100)&&($this->verified <= sef::LAST_TIME)){
-            return $this->ajax(array(
-            'status'=>0,
-        ));
+            return $this->ajax(User_RetCode::getMsg(User_RetCode::SUCCESS));
         }
-        return $this->ajax(array(
-            'status'=>1,
-        ));
+        return $this->ajax(User_RetCode::getMsg(User_RetCode::UNKNOWN_ERROR));
     }
     
     /**
@@ -78,9 +74,10 @@ class RegistController extends Base_Controller_Page{
     public function checkRefereeAction(){
         $ref = new Referee();
         $bResult = $ref->checkReferee();
-        return $this->ajax(array(
-            'empty'=>$bResult,
-        ));
+        if(User_RetCode::SUCCESS == $data){
+           return $this->ajax(User_RetCode::getMsg($data));
+       }
+       return $this->ajaxError($data,User_RetCode::getMsg($data));   
     }
     
     /**
@@ -88,26 +85,25 @@ class RegistController extends Base_Controller_Page{
      */
     public function RegistAction(){
         if($this->verified){
-        $strName    = trim($_REQUEST['name']);
-        $strPasswd  = md5(trim($_REQUEST['passwd']));
-        $strPhone   = trim($_REQUEST['phone']);
-        $strReferee = "";
-        if(isset($_REQUEST['referee'])){
-            $strReferee = $_REQUEST['referee'];
-        }
-        $arrParam = array(
-        	'name'   => $strName,
-            'passwd' => $strPasswd,
-            'phone'  => $strPhone,
-            'refere' => $strReferee,
-        );
-        $data = $this->registLogic->regist($arrParam);
-        return $this->ajax(array(
-            'success'=>$data,
-        ));
+            $strName    = trim($_REQUEST['name']);
+            $strPasswd  = md5(trim($_REQUEST['passwd']));
+            $strPhone   = trim($_REQUEST['phone']);
+            $strReferee = "";
+            if(isset($_REQUEST['referee'])){
+                $strReferee = $_REQUEST['referee'];
+            }
+            $arrParam = array(
+            	'name'   => $strName,
+                'passwd' => $strPasswd,
+                'phone'  => $strPhone,
+                'refere' => $strReferee,
+            );
+            $data = $this->registLogic->regist($arrParam);
+            if(User_RetCode::SUCCESS == $data){
+               return $this->ajax(User_RetCode::getMsg($data));
+            }
+            return $this->ajaxError($data,User_RetCode::getMsg($data));   
         }       
-        return $this->ajax(array(
-            'success'=>$data,
-        ));
+        return $this->ajaxError(User_RetCode::VERIFY_ERROR,User_RetCode::getMsg(User_RetCode::VERIFY_ERROR));
     }
 }

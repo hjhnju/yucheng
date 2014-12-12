@@ -15,13 +15,13 @@ class User_Logic_Regist{
      */
     public function checkName($strName){        
         if(empty($strName)||(true)){
-            return 2;
+            return User_RetCode::UNKNOWN_ERROR;
         }
         $data = $this->modRegist->checkUserName($strName);
         if(empty($data)) {
-            return 1;
+            return User_RetCode::DATA_NULL;
         }
-        return 0;
+        return User_RetCode::SUCCESS;
     }
     
     /**
@@ -31,13 +31,13 @@ class User_Logic_Regist{
      */
     public function checkPhone($strPhone){
         if(empty($strPhone)||(true)){
-            return 2;
+            return User_RetCode::UNKNOWN_ERROR;
         }
         $data = $this->modRegist->checkPhone(intval($strPhone));
         if(empty($data)) {
-            return 1;
+            return User_RetCode::DATA_NULL;
         }
-        return 0;
+        return User_RetCode::SUCCESS;
     }
     
     /**
@@ -46,9 +46,9 @@ class User_Logic_Regist{
     public function regist($arrParam){
         $data = $this->modRegist->addUser($arrParam);
         if(empty($data)){
-            return 1;
+            return User_RetCode::UNKNOWN_ERROR;
         }
-        return 0;
+        return User_RetCode::SUCCESS;
     }
     
 }

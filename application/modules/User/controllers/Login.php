@@ -4,8 +4,6 @@
  */
 class LoginController extends Base_Controller_Page{
     
-    const SUCCESS_STATE = 0;  //成功的状态
-    const FAIL_STATE = 1;     //失败的返回状态
     protected $uid = null;
     protected $type = null;
     
@@ -25,13 +23,9 @@ class LoginController extends Base_Controller_Page{
        if(!empty($retUid)) {
            Yaf_Session::getInstance()->set("LOGIN",$retUid);
            $this->uid = $retUid; 
-           return $this->ajax(array(
-               'success'=>self::SUCCESS_STATE,
-           ));
+           return $this->ajax(User_RetCode::getMsg(User_RetCode::SUCCESS));
        }
-       return $this->ajax(array(
-           'success'=>self::FAIL_STATE,
-       ));
+       return $this->ajaxError(User_RetCode::UNKNOWN_ERROR,User_RetCode::getMsg(User_RetCode::UNKNOWN_ERROR));
     }
     
     /**
@@ -48,6 +42,9 @@ class LoginController extends Base_Controller_Page{
         Yaf_Session::getInstance()->set("openid",$openid); 
     }
     
+    /**
+     * 
+     */
     public function getUserInfoAction(){
         if(Yaf_Session::getInstance()->has("LOGIN")){
             $this->uid = Yaf_Session::getInstance()->get("LOGIN");
