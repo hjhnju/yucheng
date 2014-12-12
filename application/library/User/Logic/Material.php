@@ -5,10 +5,10 @@
 class User_Logic_Material{
     
     public function __construct(){
-        $this->modRegist = new MaterialModel();
+        $this->modMaterial = new MaterialModel();
     }
     
-/**
+    /**
      * 
      * @param string $strName,用户名
      * @return int,0表示用户名不存在，1表示用户名存在，2表示输入的用户名不合法
@@ -17,7 +17,7 @@ class User_Logic_Material{
         if(empty($strName)||(User_RegCheck::checkReg('name',$strName))){
             return User_RetCode::UNKNOWN_ERROR;
         }
-        $data = $this->modRegist->checkUserName($strName);
+        $data = $this->modMaterial->checkUserName($strName);
         if(empty($data)) {
             return User_RetCode::DATA_NULL;
         }
@@ -33,12 +33,24 @@ class User_Logic_Material{
         if(empty($strPhone)||(User_RegCheck::checkReg('phone',$strPhone))){
             return User_RetCode::UNKNOWN_ERROR;
         }
-        $data = $this->modRegist->checkPhone(intval($strPhone));
+        $data = $this->modMaterial->checkPhone(intval($strPhone));
         if(empty($data)) {
             return User_RetCode::DATA_NULL;
         }
         return User_RetCode::SUCCESS;
     }
-    
-    
+
+    /**
+     * 根据用户$arrUid数组获取用户的一些信息
+     */
+    public function getUserInfo($arrUid){
+        $arrResult = array();
+        foreach ($arrUid as $uid){
+            $data = $this->modMaterial->getUserInfo($uid);
+            if(!empty($data)) {
+                $arrResult[] = $data;
+            }
+        }
+        return $arrResult;
+    }
 }

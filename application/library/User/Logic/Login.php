@@ -44,6 +44,15 @@ class User_Logic_Login{
     }
     
     /**
+     * 第三账号登录，首先需要获取用户的部分资料
+     * @param unknown $openid
+     * @param unknown $intType
+     */
+    public function thridLogin($openid,$intType){
+        
+    }
+    
+    /**
      * 判断用户的登录状态
      * 若用户处于登录状态，则返回uid，否则返回0
      */

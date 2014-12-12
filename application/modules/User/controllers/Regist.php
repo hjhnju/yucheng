@@ -4,18 +4,17 @@
  */
 class RegistController extends Base_Controller_Page{
 
-    CONST LAST_TIME = 60;     //验证码过期时间
-    protected $verified;
+    CONST LAST_TIME = 60;     //验证码过期时间,60秒
     
     public function init(){
         parent::init();
-        $this->verified = 0;
         $this->registLogic = new User_Logic_Regist();
+        $this->modLogin = new LoginModel();
     }
     
     /**
      * 检查用户名是否存在
-     * empty=>0表示存在,empty=>1表示不存在
+     * 
      */
     public function checkNameAction(){
        $strName = trim($_REQUEST['name']);
@@ -45,12 +44,13 @@ class RegistController extends Base_Controller_Page{
        $strPhone   = trim($_REQUEST['phone']);
        $srandNum = srand((double)microtime()*1000000);
        $sms = new Base_Util_Sms();      
-       $sms ->send($strPhone,'您的验证码是：'.$srandNum);
+       $bResult = $sms ->send($strPhone,'您的验证码是：'.$srandNum);
        $now = time();
        Yaf_Session::getInstance()->set("vericode",$srandNum.",".$now);
-       return $this->ajax(array(
-           'status'=>$bResult,
-       ));
+       if(!$bResult){
+           return $this->ajax(User_RetCode::getMsg($bResult));
+       }
+       return $this->ajaxError($bResult,User_RetCode::getMsg($bResult));
     }
     
     /**
@@ -69,7 +69,7 @@ class RegistController extends Base_Controller_Page{
     
     /**
      * 检验推荐人是否存在
-     * empty=>0表示存在,empty=>1表示不存在
+     * 
      */
     public function checkRefereeAction(){
         $ref = new Referee();
@@ -84,26 +84,28 @@ class RegistController extends Base_Controller_Page{
      * 用户注册类
      */
     public function RegistAction(){
-        if($this->verified){
-            $strName    = trim($_REQUEST['name']);
-            $strPasswd  = md5(trim($_REQUEST['passwd']));
-            $strPhone   = trim($_REQUEST['phone']);
-            $strReferee = "";
-            if(isset($_REQUEST['referee'])){
-                $strReferee = $_REQUEST['referee'];
+        $strName    = trim($_REQUEST['name']);
+        $strPasswd  = md5(trim($_REQUEST['passwd']));
+        $strPhone   = trim($_REQUEST['phone']);
+        $strReferee = "";
+        if(isset($_REQUEST['referee'])){
+           $strReferee = $_REQUEST['referee'];
+        }
+        $arrParam = array(
+            'name'   => $strName,
+            'passwd' => $strPasswd,
+            'phone'  => $strPhone,
+            'refere' => $strReferee,
+        );
+        $data = $this->registLogic->regist($arrParam);
+        if(User_RetCode::SUCCESS == $data){  //注册成功时判用户是否已经QQ等第三方登录
+            $openid = Yaf_Session::getInstance()->get("openid");
+            if(!empty($openid)){
+               $type = Yaf_Session::getInstance()->get("idtype");
+               $ret = $this->;
             }
-            $arrParam = array(
-            	'name'   => $strName,
-                'passwd' => $strPasswd,
-                'phone'  => $strPhone,
-                'refere' => $strReferee,
-            );
-            $data = $this->registLogic->regist($arrParam);
-            if(User_RetCode::SUCCESS == $data){
-               return $this->ajax(User_RetCode::getMsg($data));
-            }
-            return $this->ajaxError($data,User_RetCode::getMsg($data));   
-        }       
-        return $this->ajaxError(User_RetCode::VERIFY_ERROR,User_RetCode::getMsg(User_RetCode::VERIFY_ERROR));
+            return $this->ajax(User_RetCode::getMsg($data));
+        }
+        return $this->ajaxError($data,User_RetCode::getMsg($data));   
     }
 }

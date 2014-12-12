@@ -1,19 +1,25 @@
 <?php
 /**
- * 用户注册相关操作
+ * 用户资料查看、修改相关操作
  */
 class MaterialController extends Base_Controller_Page{
-
-    protected $verified;
     
     public function init(){
         parent::init();
-        $this->verified = 0;
-        $this->registLogic = new User_Logic_Material();
+        $this->materialLogic = new User_Logic_Material();
     }
     
     public function getUserInfo(){
-        
+        if(Yaf_Session::getInstance()->has("LOGIN")){
+            $this->uid = Yaf_Session::getInstance()->get("LOGIN");
+            $data = $this->materialLogic->getUserInfo($this->uid);
+        }
+        if(!empty($data)){
+            return $this->ajax(array(
+                'data'=> $data,
+            ));
+        }
+        return $this->ajaxError(User_RetCode::DATA_NULL,User_RetCode::getMsg(User_RetCode::DATA_NULL));
     }
     
     /**
@@ -21,11 +27,12 @@ class MaterialController extends Base_Controller_Page{
      * empty=>0表示存在,empty=>1表示不存在
      */
     public function checkRealNameAction(){
-       $strName = trim($_REQUEST['realname']);
-       $data = $this->registLogic->checkRealName($strName);
-       return $this->ajax(array(
-           'empty'=>$data,
-       ));
+        $strName = trim($_REQUEST['realname']);
+        $data = $this->materialLogic->checkName($strName);
+        if(User_RetCode::SUCCESS == $data){
+            return $this->ajax(User_RetCode::getMsg($data));
+        }
+        return $this->ajaxError($data,User_RetCode::getMsg($data));
     }
     
     /**
@@ -33,10 +40,11 @@ class MaterialController extends Base_Controller_Page{
      */
     public function checkPhoneAction(){
         $strPhone = trim($_REQUEST['phone']);
-        $data = $this->registLogic->checkPhone($strPhone);
-        return $this->ajax(array(
-            'empty'=>$data,
-        ));      
+        $data = $this->materialLogic->checkPhone($strPhone);
+        if(User_RetCode::SUCCESS == $data){
+           return $this->ajax(User_RetCode::getMsg($data));
+       }
+       return $this->ajaxError($data,User_RetCode::getMsg($data));  
     }
     
     /**

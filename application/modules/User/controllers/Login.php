@@ -40,6 +40,12 @@ class LoginController extends Base_Controller_Page{
             $openid = $this->getOpenId($intType);
         }
         Yaf_Session::getInstance()->set("openid",$openid); 
+        Yaf_Session::getInstance()->set("idtype",$intType);
+        $ret = $this->loginLogic->thirdLogin($openid,$intType);
+        if(!ret) {
+            return $this->ajax(User_RetCode::getMsg($ret));
+        }
+        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
     
     /**
@@ -50,9 +56,12 @@ class LoginController extends Base_Controller_Page{
             $this->uid = Yaf_Session::getInstance()->get("LOGIN");
             $data = $this->loginLogic->getUserInfo($this->uid);
         }
-        return $this->ajax(array(
-            'data'=> $data,
-        )); 
+        if(!empty($data)){
+            return $this->ajax(array(
+                'data'=> $data,
+            ));
+        }
+        return $this->ajaxError(User_RetCode::DATA_NULL,User_RetCode::getMsg(User_RetCode::DATA_NULL));
     }
     
     /**
