@@ -6,6 +6,7 @@ class LoginController extends Base_Controller_Page{
     
     protected $uid = null;
     protected $type = null;
+    const REDIS_VALID_TIME = 2592000;
     
     public function init(){
         parent::init();
@@ -34,8 +35,9 @@ class LoginController extends Base_Controller_Page{
      */
     public function thirdLoginAction(){
         $intType = trim($_REQUEST['type']);
-        if(!empty($_COOKIE["access_token".$this->type])){
-            $openid = $this->getAccessTokenAction($_COOKIE["access_token".$this->type]);
+        $access_token = Base_Redis::getInstance()->get("access_token".$this->type);
+        if(!empty($access_token)){
+            $openid = $this->getAccessTokenAction($access_token);
         }else{
             $openid = $this->getOpenId($intType);
         }
@@ -43,9 +45,9 @@ class LoginController extends Base_Controller_Page{
         Yaf_Session::getInstance()->set("idtype",$intType);
         $ret = $this->loginLogic->thirdLogin($openid,$intType);
         if(!ret) {
-            return $this->ajax(User_RetCode::getMsg($ret));
+            return $this->ajax();
         }
-        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
+        return $this->ajaxError($ret);
     }
     
     /**
@@ -61,7 +63,7 @@ class LoginController extends Base_Controller_Page{
                 'data'=> $data,
             ));
         }
-        return $this->ajaxError(User_RetCode::DATA_NULL,User_RetCode::getMsg(User_RetCode::DATA_NULL));
+        return $this->ajaxError(User_RetCode::DATA_NULL);
     }
     
     /**
@@ -108,7 +110,8 @@ class LoginController extends Base_Controller_Page{
         if(!empty($access_token)){
             $strAccessToken = $access_token;
         }
-        setcookie("access_token".$this->type,$strAccessToken, time()+3600*24*30);
+        Base_Redis::getInstance()->set("access_token".$this->type,$strAccessToken);
+        Base_Redis::getInstance()->setTimeout("access_token".$this->type,self::REDIS_VALID_TIME);
         $arrData =  Base_Config::getConfig('login');
         $arrData = $arrData[$this->type];
         $host = $arrData['host'];

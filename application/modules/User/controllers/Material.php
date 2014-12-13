@@ -22,7 +22,7 @@ class MaterialController extends Base_Controller_Page{
                 'data'=> $data,
             ));
         }
-        return $this->ajaxError(User_RetCode::DATA_NULL,User_RetCode::getMsg(User_RetCode::DATA_NULL));
+        return $this->ajaxError(User_RetCode::DATA_NULL);
     }
     
     /**
@@ -45,9 +45,9 @@ class MaterialController extends Base_Controller_Page{
             'email'               =>$strEmail,
         ));
         if(User_RetCode::SUCCESS == $ret){
-            return $this->ajax(User_RetCode::SUCCESS);
+            return $this->ajax();
         }
-        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
+        return $this->ajaxError($ret);
     }
     
     /**
@@ -55,14 +55,14 @@ class MaterialController extends Base_Controller_Page{
      */
     public function setRealNameAction(){
         $strName = trim($_REQUEST['realname']);
-        if(empty($strName)||(!User_RegCheck::checkReg('realname', $strName))){
-            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        if(empty($strName)||(User_Api::checkReg('realname', $strName))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR);
         }
         $data = $this->materialLogic->setRealName($strName);
         if(User_RetCode::SUCCESS == $data){
-            return $this->ajax(User_RetCode::getMsg($data));
+            return $this->ajax();
         }
-        return $this->ajaxError($data,User_RetCode::getMsg($data));
+        return $this->ajaxError($data);
     }
     
     /**
@@ -70,14 +70,14 @@ class MaterialController extends Base_Controller_Page{
      */
     public function setPhoneAction(){
         $strPhone = trim($_REQUEST['phone']);
-        if(empty($strPhone)||(!User_RegCheck::checkReg('phone', $strPhone))){
-            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        if(empty($strPhone)||(User_Api::checkReg('phone', $strPhone))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR);
         }
         $data = $this->materialLogic->setPhone($strPhone);
         if(User_RetCode::SUCCESS == $data){
-           return $this->ajax(User_RetCode::getMsg($data));
+           return $this->ajax();
        }
-       return $this->ajaxError($data,User_RetCode::getMsg($data));  
+       return $this->ajaxError($data);  
     }
     
     /**
@@ -85,14 +85,14 @@ class MaterialController extends Base_Controller_Page{
      */
     public function setEmailAction(){
         $strPhone = trim($_REQUEST['phone']);
-        if(empty($strPhone)||(!User_RegCheck::checkReg('email', $strPhone))){
-            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        if(empty($strPhone)||(User_Api::checkReg('email', $strPhone))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR);
         }
         $data = $this->materialLogic->setEmail($strPhone);
         if(User_RetCode::SUCCESS == $data){
-            return $this->ajax(User_RetCode::getMsg($data));
+            return $this->ajax();
         }
-        return $this->ajaxError($data,User_RetCode::getMsg($data));
+        return $this->ajaxError($data);
     }
     
     /**
@@ -100,13 +100,13 @@ class MaterialController extends Base_Controller_Page{
      */
     public function setPasswdAction(){
         $strPhone = trim($_REQUEST['passwd']);
-        if(empty($strPhone)||(!User_RegCheck::checkReg('passwd', $strPhone))){
-            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        if(empty($strPhone)||(User_Api::checkReg('passwd', $strPhone))){
+            return $this->ajaxError();
         }
         $data = $this->materialLogic->setPasswd($strPhone);
         if(User_RetCode::SUCCESS == $data){
-            return $this->ajax(User_RetCode::getMsg($data));
+            return $this->ajax();
         }
-        return $this->ajaxError($data,User_RetCode::getMsg($data));
+        return $this->ajaxError($data);
     }
 }

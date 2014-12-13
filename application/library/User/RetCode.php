@@ -25,6 +25,8 @@ class User_RetCode{
     const SERVICE_DEGRADED  = 505; //服务降级
     const CONFIG_FAIL       = 506; //配置错误
     const VERIFY_ERROR      = 507; //验证码错误
+    
+    const INVALID_USER      = 0;
 
     /* 消息函数
      * @var array

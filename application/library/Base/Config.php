@@ -32,7 +32,7 @@ class Base_Config {
      * 一般在框架初始化时设置
      * @var string
      */
-    protected static $_defSection = 'product';
+    protected static $_defSection = 'dev';
 
     /**
      * 配置key的分隔符
@@ -94,6 +94,7 @@ class Base_Config {
         }
 
         // 读取非默认配置值
+
         if (is_array(self::$_arrConfig[$strFile])) {
             return self::_getConfigFromArray($strTag, $strFile);
         } else {
@@ -163,6 +164,7 @@ class Base_Config {
             if(!($objConfig = new Yaf_Config_Ini($strFile, self::$_defSection))) {
                 throw new Base_Exception_Runtime('load file fail:'.$strFile, Base_RetCode::CONFIG_FAIL);
             }
+
             self::$_arrConfig[$strFile] = $objConfig;
             Base_Log::Debug('Read from ini file: '.$strFile);
             return true;

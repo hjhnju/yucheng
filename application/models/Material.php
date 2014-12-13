@@ -74,7 +74,7 @@ class MaterialModel extends BaseModel {
      * 修改用户手机号
      */
     public function setPhone($intPhone){
-        $strSql = "UPDATE  `user_info` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
+        $strSql = "UPDATE  `user_info` SET `phone`= $intPhone WHERE `uid` = $intUid";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
@@ -100,7 +100,7 @@ class MaterialModel extends BaseModel {
      * 修改用户密码
      */
     public function setPasswd($strPasswd){
-        $strSql = "UPDATE  `user_info` SET `passwd`='$strPasswd' WHERE `uid` = '$intUid'";
+        $strSql = "UPDATE  `user_info` SET `passwd`='$strPasswd' WHERE `uid` = $intUid";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
