@@ -9,18 +9,34 @@ class MaterialModel extends BaseModel {
     }
 
     /**
-     * 用户注册，插入数据
-     * @param $arrParams 用户注册时填的信息
-     * @return int status 1插入正常，0出错
+     * 用户开通汇付，填加新数据
+     * @param $arrParams 用户的信息
+     * @return int status 0插入正常，1出错
      */
-    public function addUser($arrParams){
-        $now = date("Y-m-d h:i:s");
-        $strSql  = "INSERT INTO `user_login` (`status`,`name`,`passwd`,`phone`,`create_time`) VALUES(";
+    public function addUserInfo($arrParams){
+        $strSql  = "REPLACE INTO `user_info` (`uid`,`type`,`real_name`,`certificate_type`,`certificate_content`,`huifu_uid`) VALUES(";
         $strSql .= self::USER_STATUS.",";
-        $strSql .= $arrParams['name'].",";
-        $strSql .= $arrParams['passwd'].",";
-        $strSql .= $arrParams['phone'].",";
-        $strSql .= $now.")";
+        $strSql .= $arrParams['uid'].",";
+        $strSql .= $arrParams['type'].",";
+        $strSql .= $arrParams['real_name'].",";
+        $strSql .= $arrParams['certificate_type'].",";
+        $strSql .= $arrParams['certificate_content'].",";
+        $strSql .= $arrParams['huifu_uid'].")";
+        try{
+            return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
+            throw new Base_Exception("Db operation error!");
+        }
+    }
+    
+    /**
+     * 
+     * @param string $uid
+     * @throws Base_Exception
+     */
+    public function getUserInfo($uid){
+        $strSql  = "SELECT `type`,`real_name`,`certificate_type`,`certificate_content`,`huifu_uid` from `user_info`  WHERE `uid` = $uid";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){

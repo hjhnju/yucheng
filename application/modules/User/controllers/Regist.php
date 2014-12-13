@@ -4,7 +4,7 @@
  */
 class RegistController extends Base_Controller_Page{
 
-    CONST LAST_TIME = 60;     //验证码过期时间,60秒
+    CONST LAST_TIME = 5;     //验证码过期时间,5分钟
     
     public function init(){
         parent::init();
@@ -17,12 +17,12 @@ class RegistController extends Base_Controller_Page{
      * 
      */
     public function checkNameAction(){
-       $strName = trim($_REQUEST['name']);
+       $strName = trim($_REQUEST['name']); 
        $data = $this->registLogic->checkName($strName);
        if(User_RetCode::SUCCESS == $data){
-           return $this->ajax(User_RetCode::getMsg($data));
+           return $this->ajax();
        }
-       return $this->ajaxError($data,User_RetCode::getMsg($data));
+       return $this->ajaxError($data);
     }
     
     /**
@@ -32,9 +32,9 @@ class RegistController extends Base_Controller_Page{
         $strPhone = trim($_REQUEST['phone']);
         $data = $this->registLogic->checkPhone($strPhone);
         if(User_RetCode::SUCCESS == $data){
-           return $this->ajax(User_RetCode::getMsg($data));
+           return $this->ajax();
        }
-       return $this->ajaxError($data,User_RetCode::getMsg($data));     
+       return $this->ajaxError($data);     
     }
     
     /**
@@ -42,15 +42,16 @@ class RegistController extends Base_Controller_Page{
      */
     public function getVerificodeAction(){
        $strPhone   = trim($_REQUEST['phone']);
-       $srandNum = srand((double)microtime()*1000000);
-       $sms = new Base_Util_Sms();      
-       $bResult = $sms ->send($strPhone,'您的验证码是：'.$srandNum);
+       $srandNum = srand((double)microtime()*1000000);   
+       $arrArgs = array($srandNum, self::LAST_TIME);
+       $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+       $bResult = Base_Sms::getInstance()->send($strPhone,$tplid, $arrArgs);
        $now = time();
        Yaf_Session::getInstance()->set("vericode",$srandNum.",".$now);
-       if(!$bResult){
-           return $this->ajax(User_RetCode::getMsg($bResult));
+       if(!empty($bResult)){
+           return $this->ajax();
        }
-       return $this->ajaxError($bResult,User_RetCode::getMsg($bResult));
+       return $this->ajaxError($bResult);
     }
     
     /**
@@ -61,10 +62,10 @@ class RegistController extends Base_Controller_Page{
         $strStoredCode = Yaf_Session::getInstance()->get("vericode");
         $arrData = explode(",",$strStoredCode);
         $time = time() - $arrData[1];
-        if(($strVeriCode == $strStoredCode)&&($time<=100)&&($this->verified <= sef::LAST_TIME)){
-            return $this->ajax(User_RetCode::getMsg(User_RetCode::SUCCESS));
+        if(($strVeriCode == $strStoredCode)&&($time <= 60*self::LAST_TIME)){
+            return $this->ajax();
         }
-        return $this->ajax(User_RetCode::getMsg(User_RetCode::UNKNOWN_ERROR));
+        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
     }
     
     /**
@@ -72,12 +73,16 @@ class RegistController extends Base_Controller_Page{
      * 
      */
     public function checkRefereeAction(){
+        $referee = rim($_REQUEST['referee']);
+        if(empty($referee)||(!User_RegCheck::checkReg('phone', $referee))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR);
+        }
         $ref = new Referee();
         $bResult = $ref->checkReferee();
         if(User_RetCode::SUCCESS == $data){
-           return $this->ajax(User_RetCode::getMsg($data));
+           return $this->ajax();
        }
-       return $this->ajaxError($data,User_RetCode::getMsg($data));   
+       return $this->ajaxError($data);   
     }
     
     /**
@@ -104,11 +109,15 @@ class RegistController extends Base_Controller_Page{
                $type = Yaf_Session::getInstance()->get("idtype");
                $ret = $this->loginLogic->thirdLogin($openid,$type);
                if(ret){
-                   return $this->ajaxError(ret,User_RetCode::getMsg(ret));
+                   return $this->ajaxError(ret);
                }
             }
-            return $this->ajax(User_RetCode::getMsg($data));
+            return $this->ajax();
         }
-        return $this->ajaxError($data,User_RetCode::getMsg($data));   
+        return $this->ajaxError($data);   
+    }
+    
+    public function testAction(){
+        User_Api::getAuthImage();
     }
 }

@@ -15,13 +15,11 @@ class RegistModel extends BaseModel {
      * @return int status 1插入正常，0出错
      */
     public function addUser($arrParams){
-        $now = date("Y-m-d h:i:s");
-        $strSql  = "INSERT INTO `user_login` (`status`,`name`,`passwd`,`phone`,`create_time`) VALUES(";
+        $strSql  = "INSERT INTO `user_login` (`status`,`name`,`passwd`,`phone`) VALUES(";
         $strSql .= self::USER_STATUS.",";
         $strSql .= $arrParams['name'].",";
         $strSql .= $arrParams['passwd'].",";
-        $strSql .= $arrParams['phone'].",";
-        $strSql .= $now.")";
+        $strSql .= $arrParams['phone'].")";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){

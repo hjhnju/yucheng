@@ -30,8 +30,9 @@ class User_Logic_Login{
     public function login($strName,$strPasswd){
         $strPasswd = md5($strPasswd);
         $type = $this->checkType($strName);
+        $ip = Base_Util_Ip::getClientIp();
         if('error' != $type){
-            $data = $this->modLogin->login($type,$strName,$strPasswd);
+            $data = $this->modLogin->login($type,$strName,$strPasswd,$ip);
             if(!empty($data)) {
                return User_RetCode::SUCCESS;
             }
