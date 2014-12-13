@@ -18,6 +18,9 @@ class RegistController extends Base_Controller_Page{
      */
     public function checkNameAction(){
        $strName = trim($_REQUEST['name']);
+       if(empty($strName)||(!User_RegCheck::checkReg('name', $strName))){
+           return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+       }
        $data = $this->registLogic->checkName($strName);
        if(User_RetCode::SUCCESS == $data){
            return $this->ajax(User_RetCode::getMsg($data));
@@ -30,6 +33,9 @@ class RegistController extends Base_Controller_Page{
      */
     public function checkPhoneAction(){
         $strPhone = trim($_REQUEST['phone']);
+        if(empty($strPhone)||(!User_RegCheck::checkReg('phone', $strPhone))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        }
         $data = $this->registLogic->checkPhone($strPhone);
         if(User_RetCode::SUCCESS == $data){
            return $this->ajax(User_RetCode::getMsg($data));
@@ -73,6 +79,10 @@ class RegistController extends Base_Controller_Page{
      * 
      */
     public function checkRefereeAction(){
+        $referee = rim($_REQUEST['referee']);
+        if(empty($referee)||(!User_RegCheck::checkReg('phone', $referee))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        }
         $ref = new Referee();
         $bResult = $ref->checkReferee();
         if(User_RetCode::SUCCESS == $data){
