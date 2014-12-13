@@ -6,7 +6,10 @@ class IndexController extends Base_Controller_Page {
 	
 	public function indexAction() {
 
-        die;
+        echo "in Index controller";
+        $this->getView()->assign('street', '20');
+
+        /*
         //$smsRet = Base_Sms::getInstance()->sendRaw('18611015043', '【兴教贷】测试短信fromxjd');
         //var_dump($smsRet);
         $arrArgs = array('476181', '5');
@@ -24,5 +27,6 @@ class IndexController extends Base_Controller_Page {
         $res = $model->query();
         print_r($res);
 		exit();
+        */
 	}
 }
