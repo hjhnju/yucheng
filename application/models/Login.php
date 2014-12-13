@@ -50,6 +50,7 @@ class LoginModel extends BaseModel {
         try{
             $ret = $this->db->fetchAll($strSql);
             if(empty($ret)){
+                $this->addRecord(0, User_RetCode::DB_ERROR, $ip);
                 return User_RetCode::DATA_NULL;
             }
             else{
@@ -59,8 +60,6 @@ class LoginModel extends BaseModel {
                 if(!empty($ret)){ 
                     $this->addRecord($uid, User_RetCode::SUCCESS, $ip);          
                     return User_RetCode::SUCCESS;
-                }else{
-                    $this->addRecord($uid, User_RetCode::DB_ERROR, $ip);
                 }
             }
         }catch(Base_Exception $ex){

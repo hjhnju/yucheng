@@ -21,8 +21,22 @@ class MaterialModel extends BaseModel {
         $strSql .= $arrParams['real_name'].",";
         $strSql .= $arrParams['certificate_type'].",";
         $strSql .= $arrParams['certificate_content'].",";
-        $strSql .= $arrParams['huifu_uid'].",";
-        $strSql .= $now.")";
+        $strSql .= $arrParams['huifu_uid'].")";
+        try{
+            return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
+            throw new Base_Exception("Db operation error!");
+        }
+    }
+    
+    /**
+     * 
+     * @param string $uid
+     * @throws Base_Exception
+     */
+    public function getUserInfo($uid){
+        $strSql  = "SELECT `type`,`real_name`,`certificate_type`,`certificate_content`,`huifu_uid` from `user_info`  WHERE `uid` = $uid";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){

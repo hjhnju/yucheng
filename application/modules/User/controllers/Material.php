@@ -9,6 +9,9 @@ class MaterialController extends Base_Controller_Page{
         $this->materialLogic = new User_Logic_Material();
     }
     
+    /**
+     * 获取用户信息
+     */
     public function getUserInfo(){
         if(Yaf_Session::getInstance()->has("LOGIN")){
             $this->uid = Yaf_Session::getInstance()->get("LOGIN");
@@ -23,12 +26,39 @@ class MaterialController extends Base_Controller_Page{
     }
     
     /**
-     * 检查用户名是否存在
-     * empty=>0表示存在,empty=>1表示不存在
+     * 设置用户信息
+     * @param $arrParams
      */
-    public function checkRealNameAction(){
+    public function setUserInfo(){
+        $strRealName = trim($_REQUEST['realname']);
+        $strPhone = trim($_REQUEST['phone']);
+        $huifu_id = trim($_REQUEST['huifuid']);
+        $cert_type = trim($_REQUEST['cert_type']);
+        $cert_contents = trim($_REQUEST['cert_content']);
+        $strEmail = trim($_REQUEST['email']);
+        $ret = $this->materialLogic->addUserInfo(array(
+        	'realname'            => $strRealName,
+            'phone'               => $strPhone,
+            'huifu_id'            => $huifu_id,
+            'certificate_type'    =>$cert_type,
+            'certificate_content' =>$cert_contents,
+            'email'               =>$strEmail,
+        ));
+        if(User_RetCode::SUCCESS == $ret){
+            return $this->ajax(User_RetCode::SUCCESS);
+        }
+        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
+    }
+    
+    /**
+     * 设置真实用户姓名
+     */
+    public function setRealNameAction(){
         $strName = trim($_REQUEST['realname']);
-        $data = $this->materialLogic->checkName($strName);
+        if(empty($strName)||(!User_RegCheck::checkReg('realname', $strName))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        }
+        $data = $this->materialLogic->setRealName($strName);
         if(User_RetCode::SUCCESS == $data){
             return $this->ajax(User_RetCode::getMsg($data));
         }
@@ -36,11 +66,14 @@ class MaterialController extends Base_Controller_Page{
     }
     
     /**
-     * 检查手机号中否存在，返回值同上
+     * 设置用户手机号
      */
-    public function checkPhoneAction(){
+    public function setPhoneAction(){
         $strPhone = trim($_REQUEST['phone']);
-        $data = $this->materialLogic->checkPhone($strPhone);
+        if(empty($strPhone)||(!User_RegCheck::checkReg('phone', $strPhone))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        }
+        $data = $this->materialLogic->setPhone($strPhone);
         if(User_RetCode::SUCCESS == $data){
            return $this->ajax(User_RetCode::getMsg($data));
        }
@@ -48,70 +81,32 @@ class MaterialController extends Base_Controller_Page{
     }
     
     /**
-     * 获取验证码信息
+     * 设置用户邮箱
      */
-    public function getVerificodeAction(){
-       $strPhone   = trim($_REQUEST['phone']);
-       $srandNum = srand((double)microtime()*1000000);
-       $sms = new Base_Util_Sms();      
-       $sms ->send($strPhone,'您的验证码是：'.$srandNum);
-       $now = time();
-       Yaf_Session::getInstance()->set("vericode",$srandNum.",".$now);
-       return $this->ajax(array(
-           'status'=>$bResult,
-       ));
+    public function setEmailAction(){
+        $strPhone = trim($_REQUEST['phone']);
+        if(empty($strPhone)||(!User_RegCheck::checkReg('email', $strPhone))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
+        }
+        $data = $this->materialLogic->setEmail($strPhone);
+        if(User_RetCode::SUCCESS == $data){
+            return $this->ajax(User_RetCode::getMsg($data));
+        }
+        return $this->ajaxError($data,User_RetCode::getMsg($data));
     }
     
     /**
-     * 验证用户输入的验证码是否正确
+     * 设置用户密码
      */
-    public function checkVerificodeAction(){
-        $strVeriCode   = trim($_REQUEST['vericode']);
-        $strStoredCode = Yaf_Session::getInstance()->get("vericode");
-        $now = time();
-        if(true){
-            $this->verified = 1;
+    public function setPasswdAction(){
+        $strPhone = trim($_REQUEST['passwd']);
+        if(empty($strPhone)||(!User_RegCheck::checkReg('passwd', $strPhone))){
+            return $this->ajaxError(User_RetCode::PARAM_ERROR,User_RetCode::getMsg(User_RetCode::PARAM_ERROR));
         }
-    }
-    
-    /**
-     * 检验推荐人是否存在
-     * empty=>0表示存在,empty=>1表示不存在
-     */
-    public function checkRefereeAction(){
-        $ref = new Referee();
-        $bResult = $ref->checkReferee();
-        return $this->ajax(array(
-            'empty'=>$bResult,
-        ));
-    }
-    
-    /**
-     * 用户注册类
-     */
-    public function RegistAction(){
-        if($this->verified){
-        $strName    = trim($_REQUEST['name']);
-        $strPasswd  = md5(trim($_REQUEST['passwd']));
-        $strPhone   = trim($_REQUEST['phone']);
-        $strReferee = "";
-        if(isset($_REQUEST['referee'])){
-            $strReferee = $_REQUEST['referee'];
+        $data = $this->materialLogic->setPasswd($strPhone);
+        if(User_RetCode::SUCCESS == $data){
+            return $this->ajax(User_RetCode::getMsg($data));
         }
-        $arrParam = array(
-        	'name'   => $strName,
-            'passwd' => $strPasswd,
-            'phone'  => $strPhone,
-            'refere' => $strReferee,
-        );
-        $data = $this->registLogic->regist($arrParam);
-        return $this->ajax(array(
-            'success'=>$data,
-        ));
-        }else{
-            return $this->ajax(array(
-             'success'=>$data,
-        ));
-        }
+        return $this->ajaxError($data,User_RetCode::getMsg($data));
     }
 }
