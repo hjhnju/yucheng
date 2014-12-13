@@ -14,7 +14,7 @@ class User_Logic_Regist{
      * @return int,0表示用户名不存在，1表示用户名存在，2表示输入的用户名不合法
      */
     public function checkName($strName){        
-        if(empty($strName)||(User_RegCheck::checkReg('name',$strName))){
+        if(empty($strName)||(User_Api::checkReg('name',$strName))){
             return User_RetCode::UNKNOWN_ERROR;
         }
         $data = $this->modRegist->checkUserName($strName);
@@ -30,7 +30,7 @@ class User_Logic_Regist{
      * @return int,0表示手机存在，1表示手机不存在
      */
     public function checkPhone($strPhone){
-        if(empty($strPhone)||(User_RegCheck::checkReg('phone',$strPhone))){
+        if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::UNKNOWN_ERROR;
         }
         $data = $this->modRegist->checkPhone(intval($strPhone));

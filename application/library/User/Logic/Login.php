@@ -33,15 +33,12 @@ class User_Logic_Login{
         $ip = Base_Util_Ip::getClientIp();
         if('error' != $type){
             $data = $this->modLogin->login($type,$strName,$strPasswd,$ip);
-            if(!empty($data)) {
-               return User_RetCode::SUCCESS;
-            }
-            elseif(empty($data)){
-                return User_RetCode::DATA_NULL;
-            }
-            return User_RetCode::UNKNOWN_ERROR;
+            if($data != User_RetCode::INVALID_USER) {
+               return $data;
+            }           
+            return User_RetCode::INVALID_USER;
         }
-        return User_RetCode::PARAM_ERROR;
+        return User_RetCode::INVALID_USER;
     }
     
     /**
@@ -70,11 +67,11 @@ class User_Logic_Login{
      * @return string 根据$val的类型返回:name,email,phone,其它情况返回error报错
      */
     protected function checkType($val){
-        if(User_RegCheck::checkReg('name',$val)){
+        if(User_Api::checkReg('name',$val)){
             return 'name';
-        }elseif(User_RegCheck::checkReg('email',$val)){
+        }elseif(User_Api::checkReg('email',$val)){
             return 'email';
-        }elseif(User_RegCheck::checkReg('phone',$val)){
+        }elseif(User_Api::checkReg('phone',$val)){
             return 'phone';
         }else{
             return 'error';

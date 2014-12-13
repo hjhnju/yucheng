@@ -16,10 +16,10 @@ class RegistModel extends BaseModel {
      */
     public function addUser($arrParams){
         $strSql  = "INSERT INTO `user_login` (`status`,`name`,`passwd`,`phone`) VALUES(";
-        $strSql .= self::USER_STATUS.",";
-        $strSql .= $arrParams['name'].",";
-        $strSql .= $arrParams['passwd'].",";
-        $strSql .= $arrParams['phone'].")";
+        $strSql .= self::USER_STATUS.',"';
+        $strSql .= $arrParams['name'].'","';
+        $strSql .= $arrParams['passwd'].'","';
+        $strSql .= $arrParams['phone'].'")';
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){

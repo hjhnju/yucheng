@@ -61,7 +61,7 @@ class MaterialModel extends BaseModel {
      * 检查手机号是否存在
      */
     public function checkPhone($intPhone){
-        $strSql = "SELECT  `uid` FROM `user_info` WHERE `phone` = $intPhone LIMIT 0, 1";
+        $strSql = "SELECT  `uid` FROM `user_login` WHERE `phone` = $intPhone LIMIT 0, 1";
         try{
             return $this->db->fetchAll($strSql);
         }catch(Base_Exception $ex){
@@ -74,7 +74,7 @@ class MaterialModel extends BaseModel {
      * 修改用户手机号
      */
     public function setPhone($intPhone){
-        $strSql = "UPDATE  `user_info` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
+        $strSql = "UPDATE  `user_login` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){

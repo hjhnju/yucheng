@@ -3,8 +3,6 @@
  * 用户注册相关操作
  */
 class RegistController extends Base_Controller_Page{
-
-    CONST LAST_TIME = 5;     //验证码过期时间,5分钟
     
     public function init(){
         parent::init();
@@ -42,16 +40,11 @@ class RegistController extends Base_Controller_Page{
      */
     public function getVerificodeAction(){
        $strPhone   = trim($_REQUEST['phone']);
-       $srandNum = srand((double)microtime()*1000000);   
-       $arrArgs = array($srandNum, self::LAST_TIME);
-       $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-       $bResult = Base_Sms::getInstance()->send($strPhone,$tplid, $arrArgs);
-       $now = time();
-       Yaf_Session::getInstance()->set("vericode",$srandNum.",".$now);
-       if(!empty($bResult)){
+       $ret = User_Api::getVerificode($strPhone);
+       if($ret == User_RetCode::SUCCESS){
            return $this->ajax();
        }
-       return $this->ajaxError($bResult);
+       return $this->ajaxError($ret);
     }
     
     /**
@@ -59,13 +52,12 @@ class RegistController extends Base_Controller_Page{
      */
     public function checkVerificodeAction(){
         $strVeriCode   = trim($_REQUEST['vericode']);
-        $strStoredCode = Yaf_Session::getInstance()->get("vericode");
-        $arrData = explode(",",$strStoredCode);
-        $time = time() - $arrData[1];
-        if(($strVeriCode == $strStoredCode)&&($time <= 60*self::LAST_TIME)){
-            return $this->ajax();
-        }
-        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
+        $strPhone   = trim($_REQUEST['phone']);
+        $ret = User_Api::checkVerificode($strPhone,$strVeriCode);
+        if($ret == User_RetCode::SUCCESS){
+           return $this->ajax();
+       }
+       return $this->ajaxError($ret);
     }
     
     /**
@@ -115,9 +107,5 @@ class RegistController extends Base_Controller_Page{
             return $this->ajax();
         }
         return $this->ajaxError($data);   
-    }
-    
-    public function testAction(){
-        User_Api::getAuthImage();
     }
 }

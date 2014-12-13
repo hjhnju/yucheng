@@ -1,6 +1,6 @@
 <?php
 /**
- * 用户注册相关操作
+ * 用户登录相关操作
  */
 class LoginController extends Base_Controller_Page{
     
@@ -21,7 +21,7 @@ class LoginController extends Base_Controller_Page{
        $strName = trim($_REQUEST['name']);
        $strPasswd = trim($_REQUEST['passwd']);
        $retUid = $this->loginLogic->login($strName,$strPasswd);
-       if(!empty($retUid)) {
+       if($retUid != User_RetCode::INVALID_USER) {
            Yaf_Session::getInstance()->set("LOGIN",$retUid);
            $this->uid = $retUid; 
            return $this->ajax();
@@ -56,7 +56,7 @@ class LoginController extends Base_Controller_Page{
     public function getUserInfoAction(){
         if(Yaf_Session::getInstance()->has("LOGIN")){
             $this->uid = Yaf_Session::getInstance()->get("LOGIN");
-            $data = $this->loginLogic->getUserInfo($this->uid);
+            $data = $this->loginLogic->getUserInfo(array($this->uid));
         }
         if(!empty($data)){
             return $this->ajax(array(

@@ -13,7 +13,7 @@ class User_Logic_Material{
      * @param string $strName,用户名
      */
     public function setRealName($strName){        
-        if(empty($strName)||(User_RegCheck::checkReg('name',$strName))){
+        if(empty($strName)||(User_Api::checkReg('name',$strName))){
             return User_RetCode::UNKNOWN_ERROR;
         }
         $data = $this->modMaterial->setRealName($strName);
@@ -29,7 +29,7 @@ class User_Logic_Material{
      * @return int,0表示手机存在，1表示手机不存在
      */
     public function setPhone($strPhone){
-        if(empty($strPhone)||(User_RegCheck::checkReg('phone',$strPhone))){
+        if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::UNKNOWN_ERROR;
         }
         $data = $this->modMaterial->setPhone(intval($strPhone));
