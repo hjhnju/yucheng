@@ -23,7 +23,7 @@ class RegistModel extends BaseModel {
         $strSql .= $arrParams['phone'].",";
         $strSql .= $now.")";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -61,7 +61,7 @@ class RegistModel extends BaseModel {
     public function setPhone($intPhone){
         $strSql = "UPDATE  `user_login` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -74,7 +74,7 @@ class RegistModel extends BaseModel {
     public function setEmail($strEmail){
         $strSql = "UPDATE  `user_login` SET `email`='$strEmail' WHERE `uid` = $intUid";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -87,33 +87,7 @@ class RegistModel extends BaseModel {
     public function setPasswd($strPasswd){
         $strSql = "UPDATE  `user_login` SET `passwd`='$strPasswd' WHERE `uid` = '$intUid'";
         try{
-            return $this->db->fetchAll($strSql);
-        }catch(Base_Exception $ex){
-            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
-            throw new Base_Exception("Db operation error!");
-        }
-    }
-    
-    /**
-     * 设置用户绑定
-     */
-    public function setBinding(){
-        $strSql = "UPDATE  `phone` FROM `user_login` WHERE `uid` = $intUid";
-        try{
-            return $this->db->fetchAll($strSql);
-        }catch(Base_Exception $ex){
-            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
-            throw new Base_Exception("Db operation error!");
-        }
-    }
-    
-    /**
-     * 删除用户绑定
-     */
-    public function delBinding(){
-        $strSql = "UPDATE  `phone` FROM `user_login` WHERE `uid` = $intUid";
-        try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
             throw new Base_Exception("Db operation error!");

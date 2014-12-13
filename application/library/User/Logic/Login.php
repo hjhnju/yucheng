@@ -31,7 +31,7 @@ class User_Logic_Login{
         $strPasswd = md5($strPasswd);
         $type = $this->checkType($strName);
         if('error' != $type){
-            $data = $this->modLogin->login($type,$strPasswd);
+            $data = $this->modLogin->login($type,$strName,$strPasswd);
             if(!empty($data)) {
                return User_RetCode::SUCCESS;
             }

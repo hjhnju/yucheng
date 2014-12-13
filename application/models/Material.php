@@ -22,7 +22,7 @@ class MaterialModel extends BaseModel {
         $strSql .= $arrParams['phone'].",";
         $strSql .= $now.")";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -60,7 +60,7 @@ class MaterialModel extends BaseModel {
     public function setPhone($intPhone){
         $strSql = "UPDATE  `user_info` SET `phone`=$intPhone WHERE `uid` = '$intUid'";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -73,7 +73,7 @@ class MaterialModel extends BaseModel {
     public function setEmail($strEmail){
         $strSql = "UPDATE  `user_info` SET `email`='$strEmail' WHERE `uid` = $intUid";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -86,7 +86,7 @@ class MaterialModel extends BaseModel {
     public function setPasswd($strPasswd){
         $strSql = "UPDATE  `user_info` SET `passwd`='$strPasswd' WHERE `uid` = '$intUid'";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
             throw new Base_Exception("Db operation error!");
@@ -99,7 +99,7 @@ class MaterialModel extends BaseModel {
     public function setBinding(){
         $strSql = "UPDATE  `phone` FROM `user_info` WHERE `uid` = $intUid";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
             throw new Base_Exception("Db operation error!");
@@ -112,7 +112,7 @@ class MaterialModel extends BaseModel {
     public function delBinding(){
         $strSql = "UPDATE  `phone` FROM `user_info` WHERE `uid` = $intUid";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
             throw new Base_Exception("Db operation error!");
