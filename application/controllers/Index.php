@@ -6,9 +6,10 @@ class IndexController extends Base_Controller_Page {
 	
 	public function indexAction() {
 
+        die;
         //$smsRet = Base_Sms::getInstance()->sendRaw('18611015043', '【兴教贷】测试短信fromxjd');
         //var_dump($smsRet);
-        $arrArgs = array('576581', '5');
+        $arrArgs = array('476181', '5');
         $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
         $smsRet = Base_Sms::getInstance()->send('18611015043', $tplid, $arrArgs);
         var_dump($smsRet);
