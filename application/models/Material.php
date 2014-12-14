@@ -38,7 +38,7 @@ class MaterialModel extends BaseModel {
     public function getUserInfo($uid){
         $strSql  = "SELECT `type`,`real_name`,`certificate_type`,`certificate_content`,`huifu_uid` from `user_info`  WHERE `uid` = $uid";
         try{
-            return $this->db->execute($strSql);
+            return $this->db->fetchRow($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -51,7 +51,7 @@ class MaterialModel extends BaseModel {
     public function checkUserName($strName){
         $strSql = "SELECT  `uid` FROM `user_info` WHERE `name` = '$strName' LIMIT 0, 1";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->fetchOne($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -63,7 +63,7 @@ class MaterialModel extends BaseModel {
     public function checkPhone($intPhone){
         $strSql = "SELECT  `uid` FROM `user_info` WHERE `phone` = $intPhone LIMIT 0, 1";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->fetchOne($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");

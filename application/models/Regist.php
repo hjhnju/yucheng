@@ -35,7 +35,7 @@ class RegistModel extends BaseModel {
     public function checkUserName($strName){
         $strSql = "SELECT  `uid` FROM `user_login` WHERE `name` = '$strName' LIMIT 0, 1";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->fetchOne($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -47,7 +47,7 @@ class RegistModel extends BaseModel {
     public function checkPhone($intPhone){
         $strSql = "SELECT  `uid` FROM `user_login` WHERE `phone` = $intPhone LIMIT 0, 1";
         try{
-            return $this->db->fetchAll($strSql);
+            return $this->db->fetchOne($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
