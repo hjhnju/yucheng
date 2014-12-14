@@ -54,8 +54,8 @@ class LoginModel extends BaseModel {
                 return User_RetCode::INVALID_USER;
             }
             else{
-                $uid = $ret['uid'];
-                $strSql = "UPDATE `user_login` SET `ip` = $ip";
+                $uid = $ret;
+                $strSql = "UPDATE `user_login` SET `ip` = '$ip' WHERE `uid` = $uid";
                 $ret = $this->db->execute($strSql);
                 if(!empty($ret)){ 
                     $this->addRecord($uid, User_RetCode::SUCCESS, $ip);          

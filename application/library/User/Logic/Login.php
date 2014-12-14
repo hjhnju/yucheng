@@ -14,7 +14,7 @@ class User_Logic_Login{
     public function getUserInfo($arrUid){
         $arrResult = array();
         foreach ($arrUid as $uid){
-            $data = $this->modLogin->getUserInfo(array($uid));
+            $data = $this->modLogin->getUserInfo($uid);
             if(!empty($data)) {
                $arrResult[] = $data;
             }

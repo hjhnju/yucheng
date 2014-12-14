@@ -56,12 +56,10 @@ class LoginController extends Base_Controller_Page{
     public function getUserInfoAction(){
         if(Yaf_Session::getInstance()->has("LOGIN")){
             $this->uid = Yaf_Session::getInstance()->get("LOGIN");
-            $data = $this->loginLogic->getUserInfo($this->uid);
+            $data = $this->loginLogic->getUserInfo(array($this->uid));
         }
         if(!empty($data)){
-            return $this->ajax(array(
-                'data'=> $data,
-            ));
+            return $this->ajax($data);
         }
         return $this->ajaxError(User_RetCode::DATA_NULL);
     }
@@ -125,7 +123,7 @@ class LoginController extends Base_Controller_Page{
         }
         $user = json_decode($str);
         if (isset($user->error)){
-            $this->ajaxError("test");
+            $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
         }
         return $user->openid;
     }
