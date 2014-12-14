@@ -94,18 +94,18 @@ class RegistController extends Base_Controller_Page{
             'phone'  => $strPhone,
             'refere' => $strReferee,
         );
-        $data = $this->registLogic->regist($arrParam);
-        if(User_RetCode::SUCCESS == $data){  //注册成功时判用户是否已经QQ等第三方登录
+        $uid = $this->registLogic->regist($arrParam);
+        if(User_RetCode::INVALID_USER!= $uid){  //注册成功时判用户是否已经QQ等第三方登录
             $openid = Yaf_Session::getInstance()->get("openid");
             if(!empty($openid)){
                $type = Yaf_Session::getInstance()->get("idtype");
-               $ret = $this->loginLogic->thirdLogin($openid,$type);
+               $ret = $this->loginLogic->thirdLogin($uid,$openid,$type);
                if(ret){
                    return $this->ajaxError(ret);
                }
             }
             return $this->ajax();
         }
-        return $this->ajaxError($data);   
+        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);   
     }
 }

@@ -21,7 +21,8 @@ class RegistModel extends BaseModel {
         $strSql .= $arrParams['passwd'].",";
         $strSql .= $arrParams['phone'].")";
         try{
-            return $this->db->execute($strSql);
+            $this->db->execute($strSql);
+            return mysql_insert_id();
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");

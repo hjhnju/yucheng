@@ -46,9 +46,10 @@ class LoginController extends Base_Controller_Page{
     
 
     /**
-     * 第三方登录过程,用户点登录后，先判断cookie中是否有该用户的
-     * access token,如果有则直接返回登录成功页面，并将用户设置为
-     * 登录状态；否则，返回一个授权页面URL供前端放在授权按钮后
+     * 第三方登录过程,用户点登录后，先判断redis中是否有该用户的
+     * access token,如果没有，返回一个授权页面URL供前端放在授权按钮后。
+     * 如果有则查找有无此用户绑定状态，如果有直接返回登录成功页面，并将用户设置为
+     * 登录状态；如果没有绑定则让用户选择绑定或注册。
      * 
      * access_token,不能存于session中，不能存于
      */
@@ -60,8 +61,12 @@ class LoginController extends Base_Controller_Page{
             $openid = $this->getAccessTokenAction($access_token);
             Yaf_Session::getInstance()->set("openid",$openid);
             Yaf_Session::getInstance()->set("idtype",$intType);
-            $ret = $this->loginLogic->thridLogin($openid, $intType);
-            return $this->ajax();
+            $ret = $this->loginLogic->checkBind($openid, $intType); //$ret=0表示已经绑定，$ret=1表示未绑定
+            if($ret == User_RetCode::BOUND){
+                return $this->ajax();         //用户登录成功并已经绑定账号
+            }else{
+                return $this->ajax('','',User_RetCode::UNBOUND);  //用户未绑定账号
+            }
         }else{
             $ret = $this->loginLogic->getAuthCode($intType);
             return $this->ajax($ret);
@@ -94,8 +99,12 @@ class LoginController extends Base_Controller_Page{
     /**
      * 获取access token后再用它获取open id，同时将access token存cookie
      */
-    public function getAccessTokenAction(){
-        $strAccessToken = trim($_REQUEST['access_token']);
+    public function getAccessTokenAction($access_token=null){
+        if(isset($access_token)){
+            $strAccessToken = $access_token;
+        }else{
+            $strAccessToken = trim($_REQUEST['access_token']);
+        }
         $key = md5(microtime()); 
         setcookie('access_key',$key,self::REDIS_VALID_TIME);
         Base_Redis::getInstance()->set("access_token".$this->type.$key,$strAccessToken);
@@ -114,7 +123,27 @@ class LoginController extends Base_Controller_Page{
         if (isset($user->error)){
             $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
         }
-        $ret = $this->loginLogic->thridLogin($user->openid, $this->type);
-        $this->ajax();
+        $ret = $this->loginLogic->checkBind($user->openid, $this->type);
+        if($ret == User_RetCode::BOUND){
+            return $this->ajax();         //用户登录成功并已经绑定账号
+        }else{
+            return $this->ajax('','',User_RetCode::UNBOUND);  //用户未绑定账号
+        }
+    }
+    
+    /**
+     * 对第三方账号进行绑定
+     * 0表示绑定成功，其它绑定出错
+     */
+    public function setBindAction(){
+        $strName = trim($_REQUEST['name']);
+        $strPasswd = trim($_REQUEST['passwd']);
+        $opeid = Yaf_Session::getInstance()->get("openid");
+        $type =  Yaf_Session::getInstance()->get("idtype");
+        $ret = $this->loginLogic->setBind($openid, $intType,$strName,$strPasswd);
+        if(User_RetCode::BOUND == $ret){
+            return $this->ajax();
+        }
+        return $this->ajaxError(User_RetCode::UNBOUND);
     }
 }

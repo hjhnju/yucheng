@@ -66,8 +66,32 @@ class User_Logic_Login{
      * @param unknown $openid
      * @param unknown $intType
      */
-    public function thridLogin($openid,$intType){
-        
+    public function checkBind($openid,$intType){
+        $ret = $this->modLogin->checkBing($openid,$intType);
+        return $ret;
+    }
+       
+    /**
+     * 第三账号登录，首先需要获取用户的部分资料
+     * @param unknown $openid
+     * @param unknown $intType
+     */
+    public function setBind($openid, $intType,$strName,$strPasswd){
+        $ret = $this->modLogin->setBing($openid,$intType,$status['bind']);
+        return $ret;
+    }
+    /**
+     * 第三账号登录，首先需要获取用户的部分资料
+     * @param unknown $openid
+     * @param unknown $intType
+     */
+    public function thridLogin($uid,$openid,$intType){
+        $ip = Base_Util_Ip::getClientIp();
+        if(User_RetCode::INVALID_USER != $uid){
+           $this->modLogin->addRecord($uid,User_RetCode::SUCCESS,$ip);
+           return User_RetCode::SUCCESS;
+        }
+        return User_RetCode::UNKNOWN_ERROR;
     }
     
     /**
@@ -97,4 +121,6 @@ class User_Logic_Login{
             return 'error';
         }
     }
+    
+  
 }

@@ -67,4 +67,62 @@ class LoginModel extends BaseModel {
             throw new Base_Exception("Db operation error!");
         }
     }
+     
+    /**
+     * 检查用户是否绑定
+     */
+     public function checkBing($openid,$intType){
+         $strSql = "SELECT  `uid` FROM `user_third_login` WHERE `openid` = '$openid' ADN `type` = $intType";
+         try{
+             return $this->db->fetchRow($strSql);
+         }catch(Base_Exception $ex){
+             $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
+             throw new Base_Exception("Db operation error!");
+         }
+     }
+     
+     /**
+     * 设置用户绑定
+     */
+    public function setBinding($openid,$intType){
+        $strSql  = "INSERT INTO `user_third_login` (`uid`,`type`,`openid`) VALUES(";
+        $strSql .= $uid.',"';
+        $strSql .= $openid.'",';
+        $strSql .= $intType.",";
+        try{
+            return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
+            throw new Base_Exception("Db operation error!");
+        }
+    }
+    
+    /**
+     * 删除用户绑定
+     */
+    public function delBinding($intUid,$type){
+        $strSql = "DELETE *   FROM `user_info` WHERE `uid` = $intUid AND `type` = $type";
+        try{
+            return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
+            throw new Base_Exception("Db operation error!");
+        }
+    }
+    
+    /**
+     * 记录用户uid与第三方登录的信息
+     */
+    /*public function thirdLogin($uid,$openid,$intType){
+        $strSql  = "INSERT INTO `login_record` (`uid`,`type`,`openid`) VALUES(";
+        $strSql .= $uid.',"';
+        $strSql .= $openid.'",';
+        $strSql .= $intType.",";
+        try{
+            return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
+            throw new Base_Exception("Db operation error!");
+        }
+    }*/
 }

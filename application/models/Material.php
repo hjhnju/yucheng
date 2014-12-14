@@ -108,30 +108,4 @@ class MaterialModel extends BaseModel {
             throw new Base_Exception("Db operation error!");
         }
     }
-    
-    /**
-     * 设置用户绑定
-     */
-    public function setBinding(){
-        $strSql = "UPDATE  `phone` FROM `user_info` WHERE `uid` = $intUid";
-        try{
-            return $this->db->execute($strSql);
-        }catch(Base_Exception $ex){
-            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
-            throw new Base_Exception("Db operation error!");
-        }
-    }
-    
-    /**
-     * 删除用户绑定
-     */
-    public function delBinding(){
-        $strSql = "UPDATE  `phone` FROM `user_info` WHERE `uid` = $intUid";
-        try{
-            return $this->db->execute($strSql);
-        }catch(Base_Exception $ex){
-            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
-            throw new Base_Exception("Db operation error!");
-        }
-    }
 }

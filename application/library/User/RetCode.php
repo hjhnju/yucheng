@@ -27,8 +27,11 @@ class User_RetCode{
     const VERIFY_ERROR      = 507; //验证码错误
     
     const NORMAL_ERROR      =1; //系统错误
-    const INVALID_USER      = 0;
-    const INVALID_URL       = 0;
+    const INVALID_USER      = 0;  //非效的用户
+    const INVALID_URL       = 0;  //无效的URL
+    
+    const BOUND             = 0; //用户已绑定第三方账号
+    const UNBOUND           = 1; //用户未绑定第三方账号
 
     /* 消息函数
      * @var array

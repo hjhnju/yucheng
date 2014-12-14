@@ -41,14 +41,12 @@ class User_Logic_Regist{
     }
     
     /**
-     * @param 
+     * @param array $arrParam注册所需要的信息
+     * @return int $uid,成功注册返回用户id，否则返回0
      */
     public function regist($arrParam){
-        $data = $this->modRegist->addUser($arrParam);
-        if(empty($data)){
-            return User_RetCode::UNKNOWN_ERROR;
-        }
-        return User_RetCode::SUCCESS;
+        $uid = $this->modRegist->addUser($arrParam);
+        return $uid;
     }
     
 }
