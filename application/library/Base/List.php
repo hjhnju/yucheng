@@ -116,13 +116,13 @@ class Base_List {
      * 创建where条件
      * @return string
      */
-    private function buildWhere() {
-        if (empty($this->filters)) {
+    private function buildWhere($filters) {
+        if (empty($filters)) {
             return '1';
         }
         $this->initDB();
         $ary = array();
-        foreach ($this->filters as $key => $val) {
+        foreach ($filters as $key => $val) {
             $val = $this->db->escape($val);
             $ary[] = "`$key` = '$val'";
         }
@@ -139,8 +139,23 @@ class Base_List {
             return false;
         }
         $this->filters = $filters;
-        $where = $this->buildWhere();
+        $where = $this->buildWhere($filters);
         $this->setFilterString($where);
+        $this->fetched = 0;
+    }
+    
+    /**
+     * 附加更多的过滤条件
+     * @param array $filters
+     * @return boolean
+     */
+    public function appendFilter($filters) {
+        if (!is_array($filters)) {
+            return false;
+        }
+        $this->filters = array_merge($this->filters, $filters);
+        $where = $this->buildWhere($this->filters);
+        $this->appendFilterString($where);
         $this->fetched = 0;
     }
     
@@ -150,6 +165,15 @@ class Base_List {
      */
     public function setFilterString($filter) {
         $this->filterStr = $filter;
+        $this->fetched = 0;
+    }
+    
+    /**
+     * 附加更多的where条件
+     * @param string $filter
+     */
+    public function appendFilterString($filter) {
+        $this->filterStr .= ' and ' . $filter;
         $this->fetched = 0;
     }
     
@@ -164,9 +188,12 @@ class Base_List {
         $cols = implode("`, `", $this->fields);
         $where = $this->getWhere();
         $order = !empty($this->order) ? $this->order : $this->prikey . ' desc';
-        $offset = ($this->page - 1) * $this->pagesize;
-        $pagesize = $this->pagesize;
-        $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where $where order by $order limit $offset, $pagesize";
+        $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where $where order by $order";
+        if ($this->pagesize > 0 && $this->pagesize != PHP_INT_MAX && $this->page > 1) {
+            $offset = ($this->page - 1) * $this->pagesize;
+            $pagesize = $this->pagesize;
+            $sql .= " limit $offset, $pagesize";
+        }
 
         $this->initDB();
         $this->data = $this->db->fetchAll($sql);

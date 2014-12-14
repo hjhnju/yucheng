@@ -50,7 +50,7 @@ class Base_Object {
         if (!empty($id)) {
             $key = $this->prikey;
             $this->$key = $id;
-            $this->fetch();
+            $this->fetchFromPrimary();
         }
         if (!empty($db)) {
             $this->db = $db;
@@ -74,6 +74,46 @@ class Base_Object {
     }
     
     /**
+     * 获取对象的属性值
+     * @param string $prop
+     */
+    public function get($prop) {
+        return $this->$prop;
+    }
+    
+    /**
+     * 对不存在的属性进行默认处理 防止报错
+     */
+    public function __set($key, $val) {
+        
+    }
+    
+    /**
+     * 设置对象属性值
+     * @param string $prop
+     * @param mixed $val
+     */
+    public function set($prop, $val) {
+        $this->$prop = $val;
+    }
+    
+    /**
+     * 批量设置对象数据
+     * @param array $data
+     */
+    public function setData($data) {
+        if (empty($data)) {
+            return false;
+        }
+        foreach ($this->properties as $field => $prop) {
+            if (isset($this->intProps[$field])) {
+                $data[$field] = intval($data[$field]);
+            }
+            $this->set($prop, $data[$field]);
+        }
+    }
+    
+    /**
      * 初始化数据库
      */
     protected function initDB() {
@@ -87,7 +127,7 @@ class Base_Object {
      * @param string $forcedb 强制从DB中操作
      * @return boolean
      */
-    protected function fetch($forcedb = false) {
+    protected function fetchFromPrimary($forcedb = false) {
         $key = $this->prikey;
         if (!isset($this->$key)) {
             return false;
@@ -99,15 +139,54 @@ class Base_Object {
         $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
 
         $data = $this->db->fetchRow($sql);
-        if (empty($data)) {
+        $this->setData($data);
+    }
+    
+    /**
+     * 通过对象属性作为查询条件从DB中查询对象数据<br>
+     * 默认会使用对象的属性作为条件，但是也可以指定$cond参数来设定查询条件
+     * @param array $cond
+     * @return boolean
+     */
+    public function fetch($cond = array()) {
+        if (empty($cond)) {
+            $cond = $this->getCond();
+        }
+        if (empty($cond)) {
             return false;
         }
-        foreach ($this->properties as $field => $prop) {
-            if (isset($this->intProps[$field])) {
-                $data[$field] = intval($data[$field]);
+        
+        $this->initDB();
+        $ary = array();
+        foreach ($this->fields as $field) {
+            if (isset($cond[$field])) {
+                $val = $this->db->escape($cond[$field]);
+                $ary[] = "`$field` = '$val'";
             }
-            $this->$prop = $data[$field];
         }
+        if (empty($ary)) {
+            return false;
+        }
+        
+        $where = implode(' and ', $ary);
+        $cols = implode("`, `", $this->fields);
+        $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where $where limit 1";
+        $data = $this->db->fetchRow($sql);
+        $this->setData($data);
+    }
+    
+    /**
+     * 通过对象的属性获取查询条件
+     * @return array
+     */
+    private function getCond() {
+        $cond = array();
+        foreach ($this->properties as $fileld => $prop) {
+            if (isset($this->$prop)) {
+                $cond[$fileld] = $this->get($prop);
+            }
+        }
+        return $cond;
     }
     
     /**
@@ -118,11 +197,18 @@ class Base_Object {
         $data = array();
         foreach ($this->properties as $field => $prop) {
             if (isset($this->$prop)) {
-                $data[$field] = $this->$prop;
+                $data[$field] = $this->get($prop);
             }
         }
+        if ($this->properties['create_time'] && empty($data['create_time'])) {
+            unset($data['create_time']);
+        }
+        if ($this->properties['update_time']) {
+            unset($data['update_time']);
+        }
+        
         $this->initDB();
-        if (!empty($this->{$this->prikey})) {
+        if ($this->get($this->prikey)) {
             $key = $this->prikey;
             $val = $this->db->escape($this->$key);
             $where = "`$key` = '$val'";
@@ -130,12 +216,12 @@ class Base_Object {
         } else {
             $res = $this->db->insert($this->table, $data);
             if (!empty($res)) {
-                $this->{$this->prikey} = $this->db->getLastInsertId();
+                $this->set($this->prikey, $this->db->getLastInsertId());
             } else {
                 return false;
             }
         }
-        $this->fetch(true);
+        $this->fetchFromPrimary(true);
         return true;
     }
     
@@ -145,9 +231,9 @@ class Base_Object {
      */
     public function remove() {
         $key = $this->prikey;
-        $val = $this->$key;
-        $sql = "delete from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
         $this->initDB();
+        $val = $this->db->escape($this->$key);
+        $sql = "delete from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
         return $this->db->query($sql);
     }
     
@@ -157,9 +243,9 @@ class Base_Object {
      */
     public function erase() {
         $key = $this->prikey;
-        $val = $this->$key;
-        $sql = "delete from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
         $this->initDB();
+        $val = $this->db->escape($this->$key);
+        $sql = "delete from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
         return $this->db->query($sql);
     }
     
