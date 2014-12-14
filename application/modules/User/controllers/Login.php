@@ -54,7 +54,6 @@ class LoginController extends Base_Controller_Page{
      * access_token,不能存于session中，不能存于
      */
     public function thirdLoginAction(){
-        $intType = trim($_REQUEST['type']);
         $key = $_COOKIE['access_key'];
         $access_token = Base_Redis::getInstance()->get("access_token".$this->type.$key);
         if(!empty($access_token)){
@@ -74,11 +73,17 @@ class LoginController extends Base_Controller_Page{
         return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
     }
     
-    
+    /**
+     * 获取auth code的请求URL
+     */
+    public function getAuthcodeUrlAction(){
+        $intType = trim($_REQUEST['type']);
+        return $this->loginLogic->getAuthCode($intType);
+    }
     
     /**
      * 获取auth code,由前端发起这个请求，请求URL已经通过
-     * thirdLoginAction（）传给前端
+     * getAuthcodeUrlAction（）传给前端
      */
     public function getAuthCodeAction(){
         $state = trim($_REQUEST['state']);
