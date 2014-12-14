@@ -1,34 +1,10 @@
 <?php
-define('APP_PATH', dirname(__DIR__) . '/../../');
-//添加配置定义路径
-define('CONF_PATH', APP_PATH . '/conf');
-//添加环境节点
-define('ENVIRON', ini_get('yaf.environ'));
-//error_reporting(E_ERROR | E_PARSE);
+include __DIR__ . '/TestBase.php';
 
 /**
- * @author hejunhua <hejunhua@baidu.com>
- * @since 2013-12-05
+ * @author jiangsongfang
  */
-class ObjectTest extends PHPUnit_Framework_TestCase {
-    private $__application = NULL;
-    
-    // 初始化实例化YAF应用，YAF application只能实例化一次
-    public function __construct() {
-        if ( ! $this->__application = Yaf_Registry::get('Application') ) {
-            $this->__application = new Yaf_Application(APP_PATH."/conf/application.ini");
-            Yaf_Registry::set('Application', $this->__application);
-        }
-    }
-    
-    // 创建一个简单请求，并利用调度器接受Repsonse信息，指定分发请求。
-    private function __requestActionAndParseBody($controller, $action, $params=array()) {
-        $request = new Yaf_Request_Simple("CLI", "Loan", $controller, $action, $params);
-        $response = $this->__application->getDispatcher()
-        ->returnResponse(TRUE)
-        ->dispatch($request);
-        return $response->getBody();
-    }
+class ObjectTest extends TestBase {
 
     public function testDefaultFeature() {
         $log = new Loan_Object_Log();
