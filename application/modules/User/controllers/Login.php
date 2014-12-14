@@ -15,7 +15,7 @@ class LoginController extends Base_Controller_Page{
     
     /**
      * 标准登录过程
-     * success=>0表示成功,success=>1表示失败
+     * 返回0表示登录出错，否则返回非0的正确用户id
      */
     public function loginAction(){
        $strName = trim($_REQUEST['name']);
@@ -24,34 +24,14 @@ class LoginController extends Base_Controller_Page{
        if(!empty($retUid)) {
            Yaf_Session::getInstance()->set("LOGIN",$retUid);
            $this->uid = $retUid; 
-           return $this->ajax(User_RetCode::getMsg(User_RetCode::SUCCESS));
+           return $this->ajax($this->uid);
        }
-       return $this->ajaxError(User_RetCode::UNKNOWN_ERROR,User_RetCode::getMsg(User_RetCode::UNKNOWN_ERROR));
+       return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
     }
     
     /**
-     * 第三方登录过程
-     * 先从cookie中拿access token,没有的话则调用一遍接口取
-     */
-    public function thirdLoginAction(){
-        $intType = trim($_REQUEST['type']);
-        $access_token = Base_Redis::getInstance()->get("access_token".$this->type);
-        if(!empty($access_token)){
-            $openid = $this->getAccessTokenAction($access_token);
-        }else{
-            $openid = $this->getOpenId($intType);
-        }
-        Yaf_Session::getInstance()->set("openid",$openid); 
-        Yaf_Session::getInstance()->set("idtype",$intType);
-        $ret = $this->loginLogic->thirdLogin($openid,$intType);
-        if(!ret) {
-            return $this->ajax();
-        }
-        return $this->ajaxError($ret);
-    }
-    
-    /**
-     * 
+     * 根据用户的登录状态，获取用户信息
+     * 若用户未登录，返回状态码504表示用户未登录
      */
     public function getUserInfoAction(){
         if(Yaf_Session::getInstance()->has("LOGIN")){
@@ -64,25 +44,36 @@ class LoginController extends Base_Controller_Page{
         return $this->ajaxError(User_RetCode::DATA_NULL);
     }
     
+
     /**
-     * 根据$intType类型获取auth code
-     * @param int $intType,1表示qq,2表示微博
+     * 第三方登录过程,用户点登录后，先判断cookie中是否有该用户的
+     * access token,如果有则直接返回登录成功页面，并将用户设置为
+     * 登录状态；否则，返回一个授权页面URL供前端放在授权按钮后
+     * 
+     * access_token,不能存于session中，不能存于
      */
-    public function getOpenId($intType){
-        $this->type = $intType;
-        $arrData =  Base_Config::getConfig('login');
-        $redirect_url = $arrData['auth_code_url'];
-        $arrData = $arrData[$intType];
-        $host = $arrData['host'];
-        $randnum = md5(uniqid(rand(), TRUE)); 
-        Yaf_Session::getInstance()->set("state",$randnum);
-        $url = $arrData['authcode_url'].$arrData['appid']."&redirect_uri=".$redirect_url."&scope=get_user_info&state=".$randnum;    
-        $post = Base_Network_Http::instance()->url($host,$url);
-        $post->exec();
+    public function thirdLoginAction(){
+        $intType = trim($_REQUEST['type']);
+        $key = $_COOKIE['access_key'];
+        $access_token = Base_Redis::getInstance()->get("access_token".$this->type.$key);
+        if(!empty($access_token)){
+            $openid = $this->getAccessTokenAction($access_token);
+            Yaf_Session::getInstance()->set("openid",$openid);
+            Yaf_Session::getInstance()->set("idtype",$intType);
+            $ret = $this->loginLogic->thridLogin($openid, $intType);
+            return $this->ajax();
+        }else{
+            $ret = $this->loginLogic->getAuthCode($intType);
+            return $this->ajax($ret);
+        }
+        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
     }
     
+    
+    
     /**
-     * 获取access token
+     * 获取auth code,由前端发起这个请求，请求URL已经通过
+     * thirdLoginAction（）传给前端
      */
     public function getAuthCodeAction(){
         $state = trim($_REQUEST['state']);
@@ -103,13 +94,11 @@ class LoginController extends Base_Controller_Page{
     /**
      * 获取access token后再用它获取open id，同时将access token存cookie
      */
-    public function getAccessTokenAction($access_token){
+    public function getAccessTokenAction(){
         $strAccessToken = trim($_REQUEST['access_token']);
-        if(!empty($access_token)){
-            $strAccessToken = $access_token;
-        }
-        Base_Redis::getInstance()->set("access_token".$this->type,$strAccessToken);
-        Base_Redis::getInstance()->setTimeout("access_token".$this->type,self::REDIS_VALID_TIME);
+        $key = md5(microtime()); 
+        setcookie('access_key',$key,self::REDIS_VALID_TIME);
+        Base_Redis::getInstance()->set("access_token".$this->type.$key,$strAccessToken);
         $arrData =  Base_Config::getConfig('login');
         $arrData = $arrData[$this->type];
         $host = $arrData['host'];
@@ -125,6 +114,7 @@ class LoginController extends Base_Controller_Page{
         if (isset($user->error)){
             $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
         }
-        return $user->openid;
+        $ret = $this->loginLogic->thridLogin($user->openid, $this->type);
+        $this->ajax();
     }
 }

@@ -42,6 +42,26 @@ class User_Logic_Login{
     }
     
     /**
+     * 根据$intType类型获取auth code
+     * 拼接URL的操作，发给前端放在点击授权处
+     * @param int $intType,1表示qq,2表示微博
+     */
+    public function getAuthCode($intType){
+        $this->type = $intType;
+        $arrData =  Base_Config::getConfig('login');
+        $redirect_url = $arrData['auth_code_url'];
+        $arrData = $arrData[$intType];
+        $host = $arrData['host'];
+        $randnum = md5(uniqid(rand(), TRUE));
+        Yaf_Session::getInstance()->set("state",$randnum);
+        $url = $arrData['authcode_url'].$arrData['appid']."&redirect_uri=".$redirect_url."&scope=get_user_info&state=".$randnum;
+        if(empty($host)||empty($url))  {
+            return User_RetCode::INVALID_URL;
+        }
+        return $host.$url;
+    }
+    
+    /**
      * 第三账号登录，首先需要获取用户的部分资料
      * @param unknown $openid
      * @param unknown $intType
