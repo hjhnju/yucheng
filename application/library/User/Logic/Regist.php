@@ -6,6 +6,7 @@ class User_Logic_Regist{
     
     public function __construct(){
         $this->modRegist = new RegistModel();
+        $this->modMaterial = new MaterialModel();
     }
     
     /**
@@ -41,11 +42,16 @@ class User_Logic_Regist{
     }
     
     /**
+     * 注册的同时要添加信息进`user_info`表
      * @param array $arrParam注册所需要的信息
      * @return int $uid,成功注册返回用户id，否则返回0
      */
     public function regist($arrParam){
         $uid = $this->modRegist->addUser($arrParam);
+        $ret = $this->modMaterial->addUserInfo($arrParams);
+        if(empty($ret)){
+            return User_RetCode::INVALID_USER;
+        }
         return $uid;
     }
     

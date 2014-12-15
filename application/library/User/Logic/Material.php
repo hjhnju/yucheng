@@ -61,7 +61,7 @@ class User_Logic_Material{
      * 'phone' => ''
      */
     public function setUserInfo($arrInfo){
-        $ret = $this->modMaterial->addUserInfo($arrInfo);
+        $ret = $this->modMaterial->updateUserInfo($arrInfo);
         return $ret;
     }
 }

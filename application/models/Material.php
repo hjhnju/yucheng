@@ -13,15 +13,26 @@ class MaterialModel extends BaseModel {
      * @param $arrParams 用户的信息
      * @return int status 0插入正常，1出错
      */
+    public function updateUserInfo($arrParams){
+        $strSql  = 'UPDATE`user_info` SET `real_name` = ".'.$arrParams['real_name'].'" AND `certificate_type` ='. $arrParams['certificate_type'].' AND `certificate_content`="'
+                .$arrParams['certificate_content'].'" AND `huifu_uid` ="'. $arrParams['huifu_uid'].'"';
+        try{
+            return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
+            throw new Base_Exception("Db operation error!");
+        }
+    }
+    
+    /**
+     * 注册时增加基本信息
+     * @param $arrParams 用户的信息
+     * @return int status 0插入正常，1出错
+     */
     public function addUserInfo($arrParams){
-        $strSql  = "REPLACE INTO `user_info` (`uid`,`type`,`real_name`,`certificate_type`,`certificate_content`,`huifu_uid`) VALUES(";
-        $strSql .= self::USER_STATUS.",";
+        $strSql  = "INSERT INTO `user_info` (`uid`,`type`) VALUES(";
         $strSql .= $arrParams['uid'].",";
-        $strSql .= $arrParams['type'].",";
-        $strSql .= $arrParams['real_name'].",";
-        $strSql .= $arrParams['certificate_type'].",";
-        $strSql .= $arrParams['certificate_content'].",";
-        $strSql .= $arrParams['huifu_uid'].")";
+        $strSql .= $arrParams['type'].")";
         try{
             return $this->db->execute($strSql);
         }catch(Base_Exception $ex){
