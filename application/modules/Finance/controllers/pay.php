@@ -16,7 +16,6 @@ class PayController extends Base_Controller_Api{
     );
     public function init(){
         parent::init();
-        $this->payLogic = new Finance_Logic_Pay();
     }
 
     public function testAction(){

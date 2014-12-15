@@ -5,16 +5,27 @@
  *
  */
 class Finance_Logic_Pay{
+
+    protected static $instance = NULL;
+    
     public function init(){
     
-    } 
-    public function __construct(){
+    }
+ 
+    public static getInstance(){
+        if(is_null(self::$instance)){
+            self::$instance = new Finance_Logic_Pay();
+        }
+        return self::$instance;
+    }
+
+    private function __construct(){
+
     }
 
     /**
      *
      * 生成订单号Order_id YmdHis+随机数
-     * @param
      * @return
      */
     public function generateOrderId(){
