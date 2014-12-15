@@ -10,7 +10,7 @@ class Base_RetCode {
     const SUCCESS           = 0;//成功
 
      //默认错误
-    const UNKNOWN_ERROR     = 999; //未知错误
+    const UNKNOWN_ERROR     = 99; //未知错误
 
     //验证会话
     const SESSION_INVALID   = 410; //会话无效

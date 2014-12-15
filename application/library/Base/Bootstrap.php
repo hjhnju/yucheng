@@ -14,7 +14,7 @@ class Base_Bootstrap extends Yaf_Bootstrap_Abstract{
 
     public function _initConfig(Yaf_Dispatcher $dispatcher) {
         // 设置配置分节，以适配不同环境
-        Base_Config::setOption(array('section' => ini_get('ap.environ')));
+        Base_Config::setOption(array('section' => ini_get('yaf.environ')));
     }
 
     public function _initView(Yaf_Dispatcher $dispatcher) {

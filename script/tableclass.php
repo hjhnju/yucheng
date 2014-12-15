@@ -1,15 +1,28 @@
 <?php
-$host = '127.0.0.1';
-$user = 'root';
-$pass = '123456';
+$host = 'xingjiaodai.mysql.rds.aliyuncs.com';
+$user = 'xingjiaodai';
+$pass = 'xingjiaodai';
 $dbname = 'xjd';
-$tb_pre = 'loan';
-$tb_class = 'Loan_Object_';
-$save_path = '/Users/jiangsongfang/Documents/website/yucheng/application/library/Loan/';
+$tb_pre = 'invite';
+$tb_class = 'Invite_Object_';
+$save_path = '/home/work/user/hejh/yucheng/application/library/Invite';
+$author = 'hejunhua';
+
+if(!file_exists($save_path)){
+    mkdir($save_path, 0775); 
+}
+if(!file_exists($save_path . '/Object')){
+    mkdir($save_path . '/Object', 0775); 
+}
+if(!file_exists($save_path . '/List')){
+    mkdir($save_path . '/List', 0775); 
+}
+
+
 
 mysql_connect($host, $user, $pass);
 mysql_select_db($dbname);
-mysql_query("set names 'utf8'");
+mysql_query("set names utf8");
 
 function getAll($sql) {
 	$result = mysql_query($sql);
@@ -48,14 +61,14 @@ foreach($tables as $table) {
 }
 
 function dumpClass($table, $tb, $columns) {
-	global $save_path, $tb_pre, $tb_class, $types;
+	global $save_path, $tb_pre, $tb_class, $types, $author;
 	$tbname = $table['TABLE_NAME'];
 	$tbclass = $tb_class . ucfirst($tb);
 	$content = '<?php';
 	$content .= "\n";
 	$content .= "/**\n";
 	$content .= " * $table[TABLE_COMMENT]\n";
-	$content .= " * @author jiangsongfang\n";
+	$content .= " * @author $author\n";
 	$content .= " */\n";
 	$content .= "class $tbclass extends Base_Object {\n";
 	$colary = array();
@@ -165,7 +178,7 @@ function dumpClass($table, $tb, $columns) {
 	}
 	$content .= "}\n";
 	
-	$filename = $save_path . 'Object/' . ucfirst($tb) . ".php";
+	$filename = $save_path . '/Object/' . ucfirst($tb) . ".php";
 	file_put_contents($filename, $content);
 	//var_dump($filename);
 	echo $content;
@@ -181,7 +194,7 @@ function dumpList($table, $tb, $columns) {
 	$content .= "\n";
 	$content .= "/**\n";
 	$content .= " * $table[TABLE_COMMENT] 列表类\n";
-	$content .= " * @author jiangsongfang\n";
+	$content .= " * @author $author\n";
 	$content .= " */\n";
 	$content .= "class $tbclass extends Base_List {\n";
 	$colary = array();
@@ -242,7 +255,7 @@ function dumpList($table, $tb, $columns) {
 	$content .= "\n";
 	
 	$content .= "}";
-	$filename = $save_path . 'List/' . ucfirst($tb) . ".php";
+	$filename = $save_path . '/List/' . ucfirst($tb) . ".php";
 	file_put_contents($filename, $content);
 	//var_dump($filename);
 	echo $content;
