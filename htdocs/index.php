@@ -21,7 +21,7 @@ if($intPos !== false){
 }
 $params  = explode('/', $uri);
 $module  = isset($params[1]) ? ucfirst(strtolower($params[1])) : '';
-//$module  = in_array($module, array('Api', 'Chat', 'Detail', 'Jump', 'S')) ? 'User' : $module;
+$module  = in_array($module, array('I')) ? 'Awards' : $module;
 
 $conf    = $conf->toArray();
 if (in_array($module, $modules) && $module !== 'Index') {
