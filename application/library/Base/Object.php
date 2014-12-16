@@ -209,10 +209,18 @@ class Base_Object {
         
         $this->initDB();
         if ($this->get($this->prikey)) {
-            $key = $this->prikey;
-            $val = $this->db->escape($this->$key);
-            $where = "`$key` = '$val'";
-            $this->db->update($this->table, $data, $where);
+            $keys = $vals = $sets = array();
+            foreach ($data as $key => $val) {
+                $val = $this->db->escape($data[$key]);
+                $keys[] = $key;
+                $vals[] = $val;
+                $sets[] = "`$key` = '$val'";
+            }
+            $keys = implode('`, `', $keys);
+            $vals = implode("', '", $vals);
+            $sets = implode(', ', $sets);
+            $sql = "insert into `{$this->table}`(`$keys`) values('$vals') on duplicate key update $sets";
+            $this->db->execute($sql);
         } else {
             $res = $this->db->insert($this->table, $data);
             if (!empty($res)) {
