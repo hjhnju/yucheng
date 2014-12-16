@@ -103,7 +103,7 @@ class User_Api{
     }
     
     /**
-     * 获取验证码信息
+     * 获取短信验证码信息
      */
     public static function getVerificode($strPhone){
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
@@ -115,11 +115,11 @@ class User_Api{
         if(!empty($bResult)){
             return User_RetCode::SUCCESS;
         }
-        return User_RetCode::UNKNOWN_ERROR;
+        return User_RetCode::GETVERICODE_FAIL;
     }
     
     /**
-     * 验证用户输入的验证码是否正确
+     * 验证用户输入的短信验证码是否正确
      */
     public static function checkVerificode($strPhone,$strVeriCode){
         $strStoredCode = Yaf_Session::getInstance()->get("vericode".$strPhone);
@@ -128,6 +128,6 @@ class User_Api{
         if(($strVeriCode == $strStoredCode)&&($time <= 60*self::LAST_TIME)){
             return User_RetCode::SUCCESS;
         }
-        return User_RetCode::UNKNOWN_ERROR;
+        return User_RetCode::VERICODE_WRONG;
     }
 }

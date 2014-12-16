@@ -4,30 +4,32 @@
  * 各模块可以在library中自定义错误码，如User/RetCode.php
  */
 
-class User_RetCode{
+class User_RetCode extends Base_RetCode{
 
     //定义错误码：
-    const SUCCESS           = 0;//成功
-
-     //默认错误
-    const UNKNOWN_ERROR     = 999; //未知错误
-
-    //验证会话
-    const SESSION_INVALID   = 410; //会话无效
-    const SESSION_DENY      = 411; //非法请求
-    const SESSION_NOT_LOGIN = 412; //未登录
-
-    //其他错误
-    const DB_ERROR          = 501; //数据库操作错误
-    const PARAM_ERROR       = 502; //接口参数错误
-    const NOT_FINISHED      = 503; //功能未实现
-    const DATA_NULL         = 504; //数据为空
-    const SERVICE_DEGRADED  = 505; //服务降级
-    const CONFIG_FAIL       = 506; //配置错误
-    const VERIFY_ERROR      = 507; //验证码错误
+    const USERNAME_EXIST             = 1025; //用户 名已存在
+    const USERNAME_SYNTEX_ERROR      = 1026; //用户名语法错误
     
-    const NORMAL_ERROR      =1; //系统错误
-    const INVALID_USER      = 0;  //非效的用户
+    const USERPHONE_EXIST            = 1027;  //手机号已存在
+    const USERPHONE_SYNTEX_ERROR     = 1028;  //手机号不合法
+    
+    const GETVERICODE_FAIL           = 1029;  //获取短信验证码失败
+    const VERICODE_WRONG             = 1030;  //短信验证码不正确
+    
+    const REFEREE_NOT_EXIST          = 1031;  //推荐人不存在
+    const REFEREE_SNYTEX_ERROR       = 1032;  //推荐人拼写语法错误
+    
+    const REGIST_FAIL                = 1033; //注册失败
+    
+    const USER_NOT_EXSIT             = 1034; //无效的用户
+    
+    const USER_NAME_ERROR            = 1035; //用户名错误
+    
+    const USER_NAME_OR_PASSWD_ERROR  = 1036; //用户名或密码错误
+    
+    
+    const INVALID_USER      = 0;  //无效的用户    
+        
     const INVALID_URL       = 0;  //无效的URL
     
     const BOUND             = 0; //用户已绑定第三方账号
@@ -37,21 +39,18 @@ class User_RetCode{
      * @var array
      */
     protected static $_arrErrMap = array(
-        self::SUCCESS           => '成功',
-        self::UNKNOWN_ERROR     => '未知错误',
-
-        self::SESSION_INVALID   => '会话无效',
-        self::SESSION_DENY      => '非法请求',
-        self::SESSION_NOT_LOGIN => '未登录',
-
-        self::DB_ERROR          => '数据库操作错误',
-        self::PARAM_ERROR       => '接口参数错误',
-        self::NOT_FINISHED      => '功能未实现',
-        self::DATA_NULL         => '数据为空',
-        self::VERIFY_ERROR      => '验证码错误',
+        self::USERNAME_EXIST           => '用户名已存在',
+        self::USERNAME_SYNTEX_ERROR    => '用户名语法错误',
+        self::USERPHONE_EXIST          => '手机号已存在',
+        self::USERPHONE_SYNTEX_ERROR   => '手机号不合法',
+        self::GETVERICODE_FAIL         => '获取短信验证码失败',
+        self::VERICODE_WRONG           => '短信验证码不正确',
+        self::REFEREE_NOT_EXIST        => '推荐人不存在',
+        self::REFEREE_SNYTEX_ERROR     => '推荐人拼写语法错误',
+        self::REGIST_FAIL              => '注册失败',
     );
-
-    /**
+    
+     /**
      * 获取信息描述
      * @param  int    $exceptionCode 错误码
      * @return string            描述
