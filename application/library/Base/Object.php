@@ -248,7 +248,7 @@ class Base_Object {
         try {
             $res = $this->db->query($sql);
         } catch (Exception $ex) {
-            Base_Log::error($ex->getMessage(), __CLASS__ . '::' . __FUNCTION__);
+            Base_Log::error($ex->getMessage());
             return false;
         }
         
@@ -268,7 +268,7 @@ class Base_Object {
         try {
             $res = $this->db->insert($this->table, $data);
         } catch (Exception $ex) {
-            Base_Log::error($ex->getMessage(), __CLASS__ . '::' . __FUNCTION__);
+            Base_Log::error($ex->getMessage());
             return false;
         }
         
@@ -289,7 +289,14 @@ class Base_Object {
         $this->initDB();
         $val = $this->db->escape($this->$key);
         $sql = "delete from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
-        return $this->db->query($sql);
+        
+        try {
+            $this->db->query($sql);
+        } catch (Exception $ex) {
+            Base_Log::error($ex->getMessage());
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -301,7 +308,14 @@ class Base_Object {
         $this->initDB();
         $val = $this->db->escape($this->$key);
         $sql = "delete from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
-        return $this->db->query($sql);
+        
+        try {
+            $this->db->query($sql);
+        } catch (Exception $ex) {
+            Base_Log::error($ex->getMessage());
+            return false;
+        }
+        return true;
     }
     
     /**
