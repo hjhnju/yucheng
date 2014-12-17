@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>安全中心</title>
+    <link rel="stylesheet" type="text/css" href="/src/safecenter/finish/index.less" />
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script>
+        require.config({
+            'baseUrl': '../../../src',
+            'paths': {
+            },
+            'packages': [
+                {
+                    'name': 'echarts',
+                    'location': '../dep/echarts/2.1.9/src',
+                    'main': 'echarts'
+                },
+                {
+                    'name': 'est',
+                    'location': '../dep/est/1.3.0/src'
+                },
+                {
+                    'name': 'etpl',
+                    'location': '../dep/etpl/3.0.0/src',
+                    'main': 'main'
+                },
+                {
+                    'name': 'jquery',
+                    'location': '../dep/jquery/1.9.1/src',
+                    'main': 'jquery.min'
+                },
+                {
+                    'name': 'moment',
+                    'location': '../dep/moment/2.7.0/src',
+                    'main': 'moment'
+                },
+                {
+                    'name': 'saber-emitter',
+                    'location': '../dep/saber-emitter/1.0.0/src',
+                    'main': 'emitter'
+                },
+                {
+                    'name': 'zrender',
+                    'location': '../dep/zrender/2.0.6/src',
+                    'main': 'zrender'
+                }
+            ]
+        });
+    </script>
+    <script>
+        require([],function (main) {
+            main.init();
+        })
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-left">
+                <span class="header-left-phone">客服：400-888-6666</span>
+                <span class="header-left-time">(工作时间：9：00 - 21：00)</span>
+                <span class="header-left-attention">
+                    <span class="attention-span">关注我们：</span>
+                    <a class="attention-me xinlang" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                    <a class="attention-me weixin" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                </span>
+            </div>
+            <div class="header-right">
+                <div class="header-right-default">
+                    <a href="###" class="default-fastlogin">快速注册</a>
+                    <a class="default-login" href="###">登录</a>
+                </div>
+                <div class="header-right-login">
+                    <span class="default-fastlogin">您好，XXX</span>
+                    <a class="default-login" href="###">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="container">
+            <a href="###" class="logo"><img width="100%" height="100%" src="/src/common/img/logo.png" /></a>
+            <ul class="nav-item">
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">我来投资</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">我要借款</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">安全保障</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">新手指引</a>
+                </li>
+                <li class="nav-item-list last">
+                    <a href="###" class="nav-item-link">关于我们</a>
+                </li>
+            </ul>
+            <a href="###" class="nav-myaccount">我的账户</a>
+        </div>
+    </div>
+    <div class="finish">
+        <div class="container finish-bg-color">
+            <div class="finish-nav">
+                <div class="finish-nav-top">
+                    <div class="finish-nav-top-user">Hi,xxx</div>
+                    <div class="finish-top-icon">
+                        <a href="###" class="top-icon-link user"></a>
+                        <a href="###" class="top-icon-link phone current"></a>
+                        <a href="###" class="top-icon-link other"></a>
+                    </div>
+                    <div class="finish-top-schedule">
+                        <div class="top-schedule-internal"></div>
+                    </div>
+                    <div class="finish-top-grade">
+                        <span>安全等级</span>
+                        <a href="###" class="grade-high">低</a>
+                        <a href="###" class="grade-high">[提升]</a>
+                    </div>
+                </div>
+                <ul class="finish-nav-item">
+                    <li class="finish-nav-item-list">
+                        <a href="###" class="finish-nav-item-link all">账户总览</a>
+                    </li>
+                    <li class="finish-nav-item-list">
+                        <a href="###" class="finish-nav-item-link mymoney">我的投资</a>
+                    </li>
+                    <li class="finish-nav-item-list">
+                        <a href="###" class="finish-nav-item-link current pay">充值提现</a>
+                    </li>
+                    <li class="finish-nav-item-list">
+                        <a href="###" class="finish-nav-item-link safe">安全中心</a>
+                    </li>
+                    <li class="finish-nav-item-list">
+                        <a href="###" class="finish-nav-item-link jiangli">邀请奖励</a>
+                    </li>
+                    <li class="finish-nav-item-list">
+                        <a href="###" class="finish-nav-item-link mynews">我的消息</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="finish-main">
+                <div class="finish-main-title">安全中心</div>
+                <div class="finish-main-grade">
+                    <span class="finish-grade-left">您的账号安全等级：</span>
+                    <div class="finish-main-grade-box">
+                        <div class="finish-main-grade-box-internal"></div>
+                    </div>
+                    <a href="###" class="finish-grade-refresh">重新测试</a>
+                </div>
+                <div class="infor-data">
+                    <div class="infor-data-title">个人资料</div>
+                    <div class="infor-data-box">
+                        <div class="infor-data-box-phone">手机号码</div>
+                        <div class="infor-data-box-text">手机号是您在兴教贷重要的身份凭证</div>
+                        <div class="infor-data-box-status cha">已认证</div>
+                        <div class="infor-data-box-testing">
+                            <div class="testing-content">188****8888</div>
+                            <a href="###" class="testing-link">验证</a>
+                        </div>
+                    </div>
+                    <div class="infor-data-box twoheight">
+                        <div class="infor-data-box-phone">证件信息</div>
+                        <div class="infor-data-box-text">保障账户安全，只有完成实名认证才能
+                            投资、借款和基金交易</div>
+                        <div class="infor-data-box-status cha">已认证</div>
+                        <div class="infor-data-box-testing">
+                            <div class="testing-content">188****8888</div>
+                            <a href="###" class="testing-link">验证</a>
+                        </div>
+                    </div>
+                    <div class="infor-data-box">
+                        <div class="infor-data-box-phone">第三方支付</div>
+                        <div class="infor-data-box-text">保障资金安全和正常投入</div>
+                        <div class="infor-data-box-status cha">已认证</div>
+                        <div class="infor-data-box-testing">
+                            <div class="testing-content">188****8888</div>
+                            <a href="###" class="testing-link">开通</a>
+                        </div>
+                    </div>
+                    <div class="infor-data-box border-btm">
+                        <div class="infor-data-box-phone">电子邮箱</div>
+                        <div class="infor-data-box-text">获取最新的投资资讯和账户信息变化通知</div>
+                        <div class="infor-data-box-status cha">已认证</div>
+                        <div class="infor-data-box-testing">
+                            <div class="testing-content">188****8888</div>
+                            <a href="###" class="testing-link">绑定</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="infor-data">
+                    <div class="infor-data-title">账户信息</div>
+                    <div class="infor-data-box border-btm">
+                        <div class="infor-data-box-phone">登录密码</div>
+                        <div class="infor-data-box-text">上次登录时间：2014-12-12 12：12：12</div>
+                        <div class="infor-data-box-status cha">已设置</div>
+                        <div class="infor-data-box-testing">
+                            <a href="###" class="testing-link">修改</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="infor-data">
+                    <div class="infor-data-title">第三方绑定</div>
+                    <div class="infor-data-box border-btm twoheight">
+                        <div class="infor-data-box-phone">账号绑定</div>
+                        <div class="infor-data-box-text">选择使用第三方账户登陆可与平台账号
+                            绑定，方便登陆</div>
+                        <div class="infor-data-box-status cha">已设置</div>
+                        <div class="infor-data-box-testing">
+                            <div class="testing-content qq-pic">曹操</div>
+                            <a href="###" class="testing-link">解绑</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-left">
+                <ul class="footer-item">
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">关于我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">联系我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">新手指引</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">安全保障</a>
+                    </li>
+                </ul>
+                <div class="footer-site">
+                    <span class="footer-site-left"><span>@2014</span>北京百年兴教网络技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;京IPC证140334号</span>
+                    <span class="footer-site-me">
+                        关于我们:
+                        <a href="###" class="footer-site-me-xinlang xinlang"></a>
+                        <a href="###" class="footer-site-me-xinlang weixin"></a>
+                    </span>
+                </div>
+            </div>
+            <div class="footer-right">
+                客服电话：400-888-6666
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

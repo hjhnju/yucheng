@@ -1,0 +1,15 @@
+{%include file='common/top.phtml'%}
+{%block name="link"%}{%/block%}
+<script>
+    require(['common/global']);
+</script>
+{%block name="script"%}{%/block%}
+</head>
+<body class="result-op">
+    {%include file='common/header.phtml'%}
+    <div id="main-wraper">
+        {%block name="content"%}{%/block%}
+    </div>
+    {%include file='common/footer.phtml'%}
+</body>
+</html>
