@@ -20,7 +20,7 @@ class RegistController extends Base_Controller_Page{
        if(User_RetCode::SUCCESS == $data){
            return $this->ajax();
        }
-       return $this->ajaxError($data);
+       return $this->ajaxError($data,User_RetCode::getMsg($data));
     }
     
     /**
@@ -32,7 +32,7 @@ class RegistController extends Base_Controller_Page{
         if(User_RetCode::SUCCESS == $data){
            return $this->ajax();
        }
-       return $this->ajaxError($data);     
+       return $this->ajaxError($data,User_RetCode::getMsg($data));     
     }
     
     /**
@@ -57,7 +57,7 @@ class RegistController extends Base_Controller_Page{
        if(User_RetCode::SUCCESS == $ret){
            return $this->ajax();
        }
-       return $this->ajaxError($ret);
+       return $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
     
     /**
@@ -67,14 +67,14 @@ class RegistController extends Base_Controller_Page{
     public function checkRefereeAction(){
         $referee = rim($_REQUEST['referee']);
         if(empty($referee)||(User_Api::checkReg('phone', $referee))){
-            return $this->ajaxError(User_RetCode::PARAM_ERROR);
+            return $this->ajaxError(User_RetCode::REFEREE_SNYTEX_ERROR,User_RetCode::getMsg(User_RetCode::REFEREE_SNYTEX_ERROR));
         }
         $ref = new Referee();
         $bResult = $ref->checkReferee();
         if(User_RetCode::SUCCESS == $data){
            return $this->ajax();
        }
-       return $this->ajaxError($data);   
+       return $this->ajaxError($data,User_RetCode::getMsg($data));   
     }
     
     /**
@@ -100,12 +100,12 @@ class RegistController extends Base_Controller_Page{
             if(!empty($openid)){
                $type = Yaf_Session::getInstance()->get("idtype");
                $ret = $this->loginLogic->thirdLogin($uid,$openid,$type);
-               if(ret){
-                   return $this->ajaxError(ret);
+               if($ret){
+                   return $this->ajaxError($ret,User_RetCode::getMsg($ret));
                }
             }
             return $this->ajax();
         }
-        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);   
+        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR,User_RetCode::getMsg(User_RetCode::UNKNOWN_ERROR));   
     }
 }

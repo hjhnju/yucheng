@@ -11,7 +11,7 @@ class User_Logic_Login{
     /**
      * 根据用户$arrUid数组获取用户的一些信息
      */
-    public function getUserInfo($arrUid){
+    /*public function getUserInfo($arrUid){
         $arrResult = array();
         foreach ($arrUid as $uid){
             $data = $this->modLogin->getUserInfo($uid);
@@ -20,23 +20,19 @@ class User_Logic_Login{
             }
         }
         return $arrResult;
-    }
+    }*/
     
     /**
      * 
      * @param string $strName,用户名
      * @return int,0表示登录失败，1表示登录成功
      */
-    public function login($strName,$strPasswd){
+    public function login($type,$strName,$strPasswd){
         $strPasswd = md5($strPasswd);
-        $type = $this->checkType($strName);
         $ip = Base_Util_Ip::getClientIp();
-        if('error' != $type){
-            $data = $this->modLogin->login($type,$strName,$strPasswd,$ip);
-            if($data != User_RetCode::INVALID_USER) {
-               return $data;
-            }
-            return User_RetCode::INVALID_USER;
+        $data = $this->modLogin->login($type,$strName,$strPasswd,$ip);
+        if($data != User_RetCode::INVALID_USER) {
+            return $data;
         }
         return User_RetCode::INVALID_USER;
     }
@@ -110,7 +106,7 @@ class User_Logic_Login{
      * @param string $val
      * @return string 根据$val的类型返回:name,email,phone,其它情况返回error报错
      */
-    protected function checkType($val){
+    public function checkType($val){
         if(User_Api::checkReg('name',$val)){
             return 'name';
         }elseif(User_Api::checkReg('email',$val)){

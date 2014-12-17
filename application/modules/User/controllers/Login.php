@@ -15,18 +15,22 @@ class LoginController extends Base_Controller_Page{
     
     /**
      * 标准登录过程
-     * 返回0表示登录出错，否则返回非0的正确用户id
+     * 状态返回0表示登录成功
      */
     public function loginAction(){
        $strName = trim($_REQUEST['name']);
        $strPasswd = trim($_REQUEST['passwd']);
-       $retUid = $this->loginLogic->login($strName,$strPasswd);
-       if(!empty($retUid)) {
+       $type = $this->loginLogic->checkType($strName);
+       if('error' == $type) {
+           return $this->ajaxError(User_RetCode::USER_NAME_ERROR,User_RetCode::getMsg(User_RetCode::USER_NAME_ERROR));
+       }
+       $retUid = $this->loginLogic->login($type,$strName,$strPasswd);
+       if(User_RetCode::INVALID_USER != $retUid) {
            Yaf_Session::getInstance()->set("LOGIN",$retUid);
            $this->uid = $retUid; 
-           return $this->ajax($this->uid);
+           return $this->ajax();
        }
-       return $this->ajaxError(User_RetCode::UNKNOWN_ERROR);
+       return $this->ajaxError(User_RetCode::USER_NAME_OR_PASSWD_ERROR,User_RetCode::getMsg(User_RetCode::USER_NAME_OR_PASSWD_ERROR));
     }
     
     /**
@@ -51,7 +55,6 @@ class LoginController extends Base_Controller_Page{
      * 如果有则查找有无此用户绑定状态，如果有直接返回登录成功页面，并将用户设置为
      * 登录状态；如果没有绑定则让用户选择绑定或注册。
      * 
-     * access_token,不能存于session中，不能存于
      */
     public function thirdLoginAction(){
         $key = $_COOKIE['access_key'];

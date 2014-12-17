@@ -4,7 +4,7 @@
  * 财务模块公共逻辑层
  *
  */
-class Finance_Logic_Pay{
+class Finance_Logic_Pay {
 
     protected static $instance = NULL;
     
@@ -12,7 +12,7 @@ class Finance_Logic_Pay{
     
     }
  
-    public static getInstance(){
+    public static function getInstance(){
         if(is_null(self::$instance)){
             self::$instance = new Finance_Logic_Pay();
         }
