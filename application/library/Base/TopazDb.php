@@ -189,8 +189,8 @@ class Base_TopazDb {
 
     /**
      * 查询SQL语句返回结果
-     * @param string $str sql语句
-     * @return array  查询结果
+     * @param string $strSql sql语句
+     * @return boolean 是否执行成功
      */
     public function query ($strSql) {
         //连接数据库

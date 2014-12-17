@@ -194,6 +194,24 @@ class Base_Object {
      * @return boolean
      */
     public function save() {
+        $data = $this->prepareData();
+        
+        $this->initDB();
+        if ($this->get($this->prikey)) {
+            return $this->update($data);
+        } else {
+            return $this->insert($data);
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 获取对象属性对应的字段值数组 用于进行db写入与更新<br>
+     * 会默认设置create_time与update_time字段的值
+     * @return array
+     */
+    private function prepareData() {
         $data = array();
         foreach ($this->properties as $field => $prop) {
             if (isset($this->$prop)) {
@@ -206,31 +224,60 @@ class Base_Object {
         if ($this->properties['update_time']) {
             unset($data['update_time']);
         }
-        
-        $this->initDB();
-        if ($this->get($this->prikey)) {
-            $keys = $vals = $sets = array();
-            foreach ($data as $key => $val) {
-                $val = $this->db->escape($data[$key]);
-                $keys[] = $key;
-                $vals[] = $val;
-                $sets[] = "`$key` = '$val'";
-            }
-            $keys = implode('`, `', $keys);
-            $vals = implode("', '", $vals);
-            $sets = implode(', ', $sets);
-            $sql = "insert into `{$this->table}`(`$keys`) values('$vals') on duplicate key update $sets";
-            $this->db->execute($sql);
-        } else {
-            $res = $this->db->insert($this->table, $data);
-            if (!empty($res)) {
-                $this->set($this->prikey, $this->db->getLastInsertId());
-            } else {
-                return false;
-            }
+        return $data;
+    }
+    
+    /**
+     * 更新数据到db中，默认尝试写入新数据，如果存在primary key则会更新
+     * @param array $data 要更新的数据
+     * @return boolean 成功返回true 失败false
+     */
+    private function update($data) {
+        $keys = $vals = $sets = array();
+        foreach ($data as $key => $val) {
+            $val = $this->db->escape($data[$key]);
+            $keys[] = $key;
+            $vals[] = $val;
+            $sets[] = "`$key` = '$val'";
         }
-        $this->fetchFromPrimary(true);
-        return true;
+        $keys = implode('`, `', $keys);
+        $vals = implode("', '", $vals);
+        $sets = implode(', ', $sets);
+        
+        $sql = "insert into `{$this->table}`(`$keys`) values('$vals') on duplicate key update $sets";
+        try {
+            $res = $this->db->query($sql);
+        } catch (Exception $ex) {
+            Base_Log::error($ex->getMessage(), __CLASS__ . '::' . __FUNCTION__);
+            return false;
+        }
+        
+        if ($res == true) {
+            $this->fetchFromPrimary(true);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 插入数据到db中
+     * @param array $data 要写入的数据
+     * @return boolean 成功返回true 失败false
+     */
+    private function insert($data) {
+        try {
+            $res = $this->db->insert($this->table, $data);
+        } catch (Exception $ex) {
+            Base_Log::error($ex->getMessage(), __CLASS__ . '::' . __FUNCTION__);
+            return false;
+        }
+        
+        if (!empty($res)) {
+            $this->set($this->prikey, $this->db->getLastInsertId());
+            $this->fetchFromPrimary(true);
+            return true;
+        }
+        return false;
     }
     
     /**
