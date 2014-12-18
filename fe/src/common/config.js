@@ -23,23 +23,23 @@ define(function () {
      */
     var URL = {
         REGIST_CHECKNAME_EDIT: rootUrl
-            + '/user/regist/checkname',
-            // + '/test/user/regist/checkname.json',
+            //+ '/user/regist/checkname',
+            + '/test/user/regist/checkname.json',
         REGIST_CHECKPHONE_EDIT: rootUrl
             //+ '/user/regist/checkphone',
             + '/test/user/regist/checkphone.json',
-        REGIST_CHECKVERICODE_EDIT: rootUrl
-            //+ '/user/regist/checkvericode',
-        + '/test/user/regist/checkvericode.json',
-        REGIST_CHECKREFEREE_EDIT: rootUrl
-            //+ '/user/regist/checkreferee',
-        + '/test/user/regist/checkreferee.json',
+        REGIST_SENDSMSCODE_EDIT: rootUrl
+            //+ '/user/regist/sendsmscode',
+            + '/test/user/regist/sendsmscode.json',
         REGIST_GETVERICODE: rootUrl
             //+ '/user/regist/getvericode',
-        + '/test/user/regist/getvericode.json',
+            + '/test/user/regist/getvericode.json',
         REGIST_INDEX: rootUrl
             //+ '/user/regist/index',
-        + '/test/user/regist/index.json'
+            + '/test/user/regist/index.json',
+        REGIST_CHECKINVITER: rootUrl
+            //+ '/user/regist/checkinviter',
+            + '/test/user/regist/checkinviter.json'
 
     };
 

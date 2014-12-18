@@ -29,23 +29,133 @@ p {
     .clearfix;
 }
 
+//header开始
+.header {
+    height: 34px;
+    border-bottom: 1px solid #e3e3e3;
+}
+.header-left {
+    float: left;
+}
+.header-left-phone {
+    display: inline-block;
+    line-height: 34px;
+    color: #666666;
+    margin-right: 10px;
+}
+.header-left-time {
+    display: inline-block;
+    line-height: 34px;
+    color: #666666;
+    margin-right: 20px;
+}
+.header-left-attention {
+    display: inline-block;
+    line-height: 34px;
+    color: #666666;
+
+    .attention-me {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: url("../img/header_icon.png") 0 0 no-repeat;
+        margin-right: 10px;
+        vertical-align: middle;
+        position: relative;
+
+        &.xinlang {
+            background-position: 0 -50px;
+        }
+
+        &.weixin {
+            background-position: 0 -100px;
+        }
+
+    }
+    .xinlang-erweima {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: -88px;
+        top: 27px;
+        background-color: #FFFFFF;
+        z-index: 5;
+        border: 1px solid #cccccc;
+        display: none;
+
+        &.current {
+            display: block;
+        }
+    }
+    .triangle-top {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #cccccc;
+        left: 90px;
+        top: -8px;
+    }
+    .triangle-bottom {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #FFFFFF;
+        left: 90px;
+        top: -6px;
+    }
+}
+.header-right {
+    float: right;
+}
+.header-right-default {
+
+    .default-fastlogin {
+        line-height: 34px;
+        color: #666666;
+        margin-right: 20px;
+        text-decoration: none;
+    }
+
+    .default-login {
+        display: inline-block;
+        color: #FFFFFF;
+        padding: 4px 8px;
+        background-color: @color-red;
+        text-decoration: none;
+
+        .border-radius(3px);
+    }
+}
+.header-right-login {
+    display: none;
+}
+//header结束
+
+
 //nav 开始
 .nav {
-    height: 100px;
+    height: 80px;
+    padding-top: 20px;
 }
 .logo {
     float: left;
     width: 300px;
-    height: 100px;
+    height: 60px;
+    display: block;
+    margin-right: 16px;
 }
 .nav-item {
     float: left;
-    margin-top: 30px;
+    margin-top: 24px;
 
     .clearfix;
 }
 .nav-item-list {
-    margin-right: 40px;
+    margin-right: 34px;
     float: left;
 
     &.last {
@@ -68,14 +178,81 @@ p {
 .nav-myaccount {
     float: right;
     width: 120px;
-    margin-top:26px;
+    margin: 19px 10px 0 0;
     height: 26px;
     line-height: 26px;
     color: #676767;
     font-size: 16px;
     font-weight: bold;
     text-decoration: none;
-    text-align: center;
+
+    background: url("../img/my_account.png") 33px 0 no-repeat;
+    text-align: right;
+    padding-left: 10px;
 }
 
 //nav结束
+
+
+//footer开始
+.footer {
+    padding: 36px 0;
+    background-color: #55565f;
+}
+.footer-left {
+    float: left;
+}
+.footer-item {
+    .clearfix;
+    margin-bottom: 10px;
+}
+.footer-item-list {
+    float: left;
+}
+.footer-item-link {
+    text-decoration: none;
+    color: #b1b1b3;
+}
+.footer-vertical {
+    margin: 0 5px;
+    color: #b1b1b3;
+}
+.footer-site {
+
+}
+.footer-site-left {
+    color: #b1b1b3;
+    margin-right: 20px;
+}
+.footer-site-me {
+    color: #b1b1b3;
+}
+.footer-site-me-xinlang {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../img/header_icon.png") 0 0 no-repeat;
+    vertical-align: middle;
+    margin-left: 5px;
+
+    &.xinlang {
+        background-position: 0 -150px;
+    }
+
+    &.weixin {
+        background-position: 0 -200px;
+    }
+}
+.footer-right {
+    float: right;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #b1b1b3;
+    padding-left: 40px;
+    background: url("../img/footer_phone.png") 0 0 no-repeat;
+}
+
+
+
+//footer结束

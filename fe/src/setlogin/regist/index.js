@@ -12,25 +12,42 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var checkName = new Remoter('REGIST_CHECKNAME_EDIT');
     var checkphone = new Remoter('REGIST_CHECKPHONE_EDIT');
-    var checkVericode = new Remoter('REGIST_CHECKVERICODE_EDIT');
-    var checkReferee = new Remoter('REGIST_CHECKREFEREE_EDIT');
+    var sendsmscode = new Remoter('REGIST_SENDSMSCODE_EDIT');
+    //var checkReferee = new Remoter('REGIST_CHECKREFEREE_EDIT');
     var getVericode = new Remoter('REGIST_GETVERICODE');
+    var checkInviter = new Remoter('REGIST_CHECKINVITER');
     //var Index = new Remoter('RESET_INDEX');
+
+    var loginInput = {
+        loginUser: $('#login-user'),
+        loginPwd: $('#login-pwd'),
+        loginPhone: $('#login-phone'),
+        loginTest: $('#login-testing'),
+        loginTuiJian: $('#login-login-tuijian')
+    }
+
+    var error = {
+        userError: $('#login-user-error'),
+        phoneError: $('#login-phone-error'),
+        pwdError: $('#login-pwd-error'),
+        testError: $('#login-testing-error'),
+        tuiJian: $('#login-tuijian-error')
+    };
 
     function init() {
         bindEvents();
+        callBack();
     }
 
     function bindEvents() {
-        var text = $('.login-username.current .username-error').html('内容不能为空');
-        console.log(text);
         // 控制placeHolder
         $('.login-input').on({
             focus: function () {
-                var error = $(this).parent().children('.username-error');
+                var parent = $(this).parent();
+                var Error = parent.children('.username-error');
 
-                $('.login-username').removeClass('current');
-                error.html(null);
+                parent.removeClass('current');
+                Error.html('');
                 $(this).next().addClass('hidden');
             },
             blur: function () {
@@ -51,24 +68,15 @@ define(function (require) {
                 });
             }
             else {
-                alert('用户名不能为空');
+                error.userError.html('用户名不正确');
+                $(this).parent().addClass('current');
             }
         });
 
-        // checkNameCb
-        checkName.on('success', function (data) {
-            if (data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-                alert('用户名可使用');
-            }
-        });
 
         //检查手机号
-        $('#login-phone').blur (function () {
+        $('#login-phone').blur(function () {
             var value = $.trim($(this).val());
-            var error = $(this).parent().children('.username-error');
 
             if(value) {
 
@@ -78,45 +86,25 @@ define(function (require) {
             }
             else {
                 $(this).parent().addClass('current');
-                error.html('手机号不能为空');
+                error.phoneError.html('手机号不存在');
             }
         });
 
-        //checkphoneCb
-        checkphone.on('success',function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-                alert('手机可用')
-            }
-        });
 
         //检查验证码
         $('#login-testing').blur(function (data) {
             var value = $.trim($(this).val());
-            var error = $(this).parent().children('.username-error');
 
             if (value) {
-                checkVericode.remote({
+                sendsmscode.remote({
                     ricode: value
                 });
             }
             else {
-                error.html('验证码不能为空');
+                error.testError.html('验证码不能为空');
                 $(this).parent().addClass('current');
             }
         })
-
-        //checkVericodeCb
-        checkVericode.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo)
-            }
-            else {
-                alert('你成功了');
-            }
-        });
 
         //检查是否获取验证码   这里没写完呢吧回家问老婆
         $('.login-username-testing').click(function () {
@@ -126,26 +114,13 @@ define(function (require) {
             })
         });
 
-        //getVericodeCb
-        getVericode.on('success',function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-                alert("发送成功");
-            }
-        });
-
-
-
         //检查推荐人
         $('#login-tuijian').blur(function (data) {
             var value = $.trim($(this).val());
-            var error = $(this).parent().children('.username-error');
 
             if(value) {
-                checkReferee.remote({
-                    referee:value
+                checkInviter.remote({
+                    inviter:value
                 });
             }
             else {
@@ -153,26 +128,90 @@ define(function (require) {
             }
         });
 
-        //checkRefereeCb
-        checkReferee.on('success', function (data) {
+        //检查快速注册
+        $('.login-fastlogin').click(function () {
+            var errors = $('.login-username.current');
+            if(!errors.length) {
+                alert('成功');
+            }
+            else {
+                alert('不成功');
+            }
+        });
+
+    }
+
+    function callBack() {
+
+        var timer;
+
+        // checkNameCb
+        checkName.on('success', function (data) {
+            if (data && data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                error.userError.append('<span class="username-error-span"></span>');
+            }
+        });
+
+        //checkphoneCb
+        checkphone.on('success',function (data) {
             if(data && data.bizError) {
                 alert(data.statusInfo);
             }
             else {
-                alert('你成功了');
+                error.phoneError.append('<span class="username-error-span"></span>');
+                //alert('手机可用')
             }
         });
 
-        //检查快速注册
-        $('.login-fastlogin').click(function () {
-            var oDiv = $('.login-username');
-            if(!oDiv.hasClass('current')) {
-                alert('成功');
+        //sendsmscodeCb
+        sendsmscode.on('success', function (data) {
+            if(data && data.bizError) {
+                alert(data.statusInfo)
             }
             else {
-                alert(text);
+               //alert('你成功了');
+                error.testError.append('<span class="username-error-span"></span>');
             }
         });
+
+        //checkInviterCb
+        checkInviter.on('success',function (data) {
+           if(data && data.bizError) {
+               alert(data.statusInfo);
+           }
+            else {
+
+           }
+        });
+
+        //getVericodeCb
+        getVericode.on('success',function (data) {
+            if(data && data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                var value = + $('#testing-wait').text();
+                $('#testing-wait').addClass('show');
+                timer = setInterval(function () {
+
+                    //console.log(value);
+
+                    $('#testing-wait').text(value--);
+                    if(value < 0) {
+                        clearInterval(timer);
+                        $('#testing-wait').removeClass('show');
+                        $('#testing-wait').text('10');
+                    }
+
+                },1000);
+
+
+            }
+        });
+
 
 
     }
