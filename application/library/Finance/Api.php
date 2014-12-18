@@ -8,6 +8,26 @@
 class Finance_Api {
 	
 	/**
+	 * 订单类型mapping
+	 */
+	Const PAY_TYPE = array(
+		0 => 'netSave',//充值
+		1 => 'cash',//提现
+		2 => 'initiativeTender',//主动投标
+		3 => 'tenderCancle',//投标撤销
+		4 => 'loans',//满标打款
+	);
+	
+	/**
+	 * 订单状态mapping
+	 */
+	Const STATUS = array(
+		0 => 'processing',//处理中
+		1 => 'endWithFail',//处理结束，失败
+		2 => 'endWithSuccedd'//处理结束，成功
+	);
+	
+	/**
 	 * 余额查询接口 Finance_Api::queryBalanceBg
 	 * @param String $UserCustId 用户客户号(require)
 	 * 
@@ -21,9 +41,9 @@ class Finance_Api {
      *    'FrzBal' 冻结余额   
 	 * )
 	 * 
-	 */
+	 */	
 	public static function queryBalanceBg($userCustId) {
-		
+	
 	}
 	
 	/**
@@ -135,8 +155,9 @@ class Finance_Api {
      * )   
      * 
 	 */
-	public static function initiativeTender($TransAmt,$UsrCustId,$MaxTenderRate,$BorrowDetail=null,$IsFreeze=true,$FreezeOrdId='') {
-		
+	public static function initiativeTender($transAmt,$usrCustId,$maxTenderRate,$borrowDetail=null,$isFreeze=true,$freezeOrdId='') {
+		$financeLogic = new Finance_Logic_Base();
+		$orderId = $financeLogic->generateOrderId();
 	}
 	
 	/**
@@ -261,7 +282,7 @@ class Finance_Api {
       *        )
       *  
       */
-     public static function netSave($UsrCustId,$TransAmt,$GateBusiId='B2C',$OpenBankId='ICBC',$DcFlag='D'){
+     public static function netSave($usrCustId,$transAmt,$gateBusiId='B2C',$ppenBankId='ICBC',$dcFlag='D'){
      
      }
      
@@ -294,14 +315,14 @@ class Finance_Api {
       * )
       *
       */
-     public static function cash($TransAmt,$OpenAcctId=''){
+     public static function cash($transAmt,$openAcctId=''){
      
      	 
      }
      
      /**
       * 封装汇付天下API实现用户开户功能(由Fiance模块controller层转入调用)Finance_Api::userRegister
-      * @param String $UsrId 用户号(optinal)
+      * @param String $userId 用户号(optinal)
       * @param String $UsrName 真实名称(optinal)
       * @param String $IdType 证件类型 身份证或其他(optinal)
       * @param String $IdNo 证件号码(optinal)
@@ -331,7 +352,7 @@ class Finance_Api {
       *         'UsrName' 真实名称
       *       )
       */
-     public static function userRegister($UsrId='',$UsrName='',$IdType='',$IdNo='',$UsrMp='',$UsrEmail=''){
+     public static function userRegister($userId='',$usrName='',$idType='',$idNo='',$usrMp='',$usrEmail=''){
      
      }
      
@@ -358,14 +379,14 @@ class Finance_Api {
       *      )
       *      
       */
-     public static function userBindCard($UsrCustId){
+     public static function userBindCard($usrCustId){
      
      }
      
      /**
       * 封装汇付天下API实现企业开户功能(由Fiance模块controller层转入调用)
       * @param String $BusiCode 营业执照编号(必须)
-      * @param String $UsrId 用户号
+      * @param String $userId 用户号
       * @param String $UsrName 真实名称
       * @param String $InstuCode 组织机构代码
       * @param String $TaxCode 税务登记号
@@ -395,8 +416,78 @@ class Finance_Api {
       *     )
       *     
       */
-     public static function corpRegister($BusiCode,$UsrId='',$UsrName='',$InstuCode='',$TaxCode='',$GuarType=''){
+     public static function corpRegister($busiCode,$userId='',$usrName='',$instuCode='',$taxCode='',$guarType=''){
      	 
      }
-	
+     
+     /**
+      * 获取充值提现列表数据
+      * @param String $userId 用户号(require)
+      * @param integer $type 记录类型   0--充值  1--提现
+      * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
+      * status=0 处理成功
+      * status=502参数错误
+      * status=API调用失败
+      * data=array(
+      *          'payType'交易类型,
+      *          'serialNumber'交易流水号,
+      *          'amount'交易金额,
+      *          'balance'可用余额,
+      *          'createTime'交易时间         
+      * ) 
+      */
+     public static function getRechargeWithDrawRecord($userId,$type=null) {
+     	$financeLogic = new Finance_Logic_Base();
+     	if($userId>0) {
+     		$data = $financeLogic->getRechargeWithDrawRecord($userId);
+     		$ret = array(
+     				'status'=>0,
+     				'statusInfo' =>'success' ,
+     				'data' => $data,
+     		);
+        } else {
+        	Base_Log::fatal(array('msg'=>'invalid param','userId'=>$userId,));
+        	$data = null;
+        	$ret = array('status'=>502,
+        			'statusInfo'=>'invalid param',
+        			'data' => $data,
+        	);
+        }
+     	
+     	return $ret;    	    	 
+     }	
+     
+     /**
+      * 获取某个人投资者的总投资金额
+      * @param String $userId 用户号(require)
+      * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}  
+      * status=0 处理成功
+      * status=502参数错误
+      * data=array(
+      *        'amount'总投资金额
+      *      )
+      */
+     public static function tenderAmount($userId) {
+     	$financeLogic = new Finance_Logic_Base();
+     	$ret = array(); 
+     	
+     	if($userId>0) {
+     		$data = $financeLogic->fetchTenderAmonut($userId);
+     		$ret = array('status'=>0,
+     				'statusInfo'=>'success to fetch tender amount',
+     				'data' => $data,
+     		 );
+     	} else {
+     		Base_Log::fatal(array('msg'=>'invalid param',
+     		                      'userId'=>$userId,)
+     		);
+     		$data = null;
+     		$ret = array('status'=>502,
+     				'statusInfo'=>'invalid param',
+     				'data' => $data,
+     		);	
+     	}
+     	return $ret;
+     	    	
+     }
 }

@@ -93,13 +93,28 @@ class Awards_Logic_Awards {
      * @return array
      */
     public function getAwards($userid){
-        $userid = intval($userid);
-        $refunds = new Invite_List_Awards();
-        $filters = array('userid' => $userid);
+        $inviterid = intval($userid);
+        $refunds = new Awards_List_Invite();
+        $filters = array('$inviterid' => $userid);//caution:被邀请人的userid
         $refunds->setFilter($filters);
         $refunds->setOrder('create_time desc');
         $refunds->setPagesize(PHP_INT_MAX);
-        $list = $refunds->toArray();
-        var_dump($list);
+        $list = $refunds->toArray();//拿到了该邀请人邀请到的所有人的信息
+        $users = $list['list'];
+        $ret = array();
+        foreach ($users as $key=>$value) {
+        	$data = array();
+        	$_userId = $value['userid'];
+        	$tenderAmount = Finance_Api::tenderAmount($_userId);//拿到了呗邀请人的投资总额
+        	$data['tenderAmount'] = $tenderAmount;
+        	$data['canBeAwarded'] = ($tenderAmount>=10000.00)?1:0;//若投资金额满10000元，达到奖励标准1，否则为0
+        	//从用户模块拿到注册的进度  与用户的详细信息
+        	//$userInfo = User_Api::getUserInfo();
+        	//$registProgress = User_Api::getRegistProgress();
+        	//$data['registProgress'] = $registProgress;
+        	$ret[$key] = $data;
+         }
+        return $ret;
     }
+    
 }
