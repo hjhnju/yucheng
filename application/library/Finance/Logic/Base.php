@@ -4,7 +4,7 @@
  * 财务模块公共逻辑层
  *
  */
-class Finance_Logic_Pay {
+class Finance_Logic_Base {
 
     protected static $instance = NULL;
     

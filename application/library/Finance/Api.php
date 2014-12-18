@@ -5,7 +5,7 @@
  * @author lilu
  *
  */
-class Finance_Api extends Finance_Logic_Pay {
+class Finance_Api {
 	
 	/**
 	 * 余额查询接口 Finance_Api::queryBalanceBg
