@@ -7,7 +7,7 @@ class IndexController extends Base_Controller_Page {
 	public function indexAction() {
 
         echo "in Index controller";
-        $this->getView()->assign('street', '20');
+        $this->getView()->assign('street', '21');
 
         /*
         //$smsRet = Base_Sms::getInstance()->sendRaw('18611015043', '【兴教贷】测试短信fromxjd');
