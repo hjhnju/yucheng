@@ -92,7 +92,10 @@ class Awards_Logic_Awards {
      * @param integer $userid
      * @return array
      */
-    public function getAwards($userid){
+    public function getAwards($userid) {
+    	if($userid<0){
+    		return false;
+    	}
         $inviterid = intval($userid);
         $refunds = new Awards_List_Invite();
         $filters = array('$inviterid' => $userid);//caution:被邀请人的userid
@@ -102,6 +105,9 @@ class Awards_Logic_Awards {
         $list = $refunds->toArray();//拿到了该邀请人邀请到的所有人的信息
         $users = $list['list'];
         $ret = array();
+        if(empty($users)) {	
+        	return false;//若没有邀请者，返回false
+        }
         foreach ($users as $key=>$value) {
         	$data = array();
         	$_userId = $value['userid'];
