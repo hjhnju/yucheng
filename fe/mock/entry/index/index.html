@@ -7,7 +7,7 @@
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
     <script>
     require.config({
-        'baseUrl': '../../src',
+        'baseUrl': '/src',
         'paths': {
         },
         'packages': [
@@ -47,6 +47,11 @@
             }
         ]
     });
+    </script>
+    <script>
+        require(['index/index'], function (main) {
+            main.init();
+        });
     </script>
 </head>
 

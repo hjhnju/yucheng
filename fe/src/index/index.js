@@ -11,21 +11,13 @@ define(function (require) {
 
     function init() {
 
-        easy();
+        var header = require('common/header');
+        header.init();
+
 
     }
-    function easy() {
-        var timer;
-        $('.attention-me').mouseenter(function () {
-            clearTimeout(timer);
-            $(this).children($('.xinlang-erweima')).addClass('current');
-        });
-        $('.attention-me').mouseleave(function () {
-            timer = setTimeout(function () {
-                $('.attention-me').children($('.xinlang-erweima')).removeClass('current');
-            },100)
-        });
 
-    }
-    return {init:init};
+    return {
+        init:init
+    };
 });

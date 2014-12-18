@@ -13,7 +13,6 @@ define(function (require) {
     var checkName = new Remoter('REGIST_CHECKNAME_EDIT');
     var checkphone = new Remoter('REGIST_CHECKPHONE_EDIT');
     var sendsmscode = new Remoter('REGIST_SENDSMSCODE_EDIT');
-    //var checkReferee = new Remoter('REGIST_CHECKREFEREE_EDIT');
     var getVericode = new Remoter('REGIST_GETVERICODE');
     var checkInviter = new Remoter('REGIST_CHECKINVITER');
     //var Index = new Remoter('RESET_INDEX');
