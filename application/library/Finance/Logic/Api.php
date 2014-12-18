@@ -5,10 +5,10 @@
  * @author lilu
  *
  */
-class Finance_Logic_Api extends Finance_Logic_Pay {
+class Finance_Api extends Finance_Logic_Pay {
 	
 	/**
-	 * 余额查询接口 Finance_Logic_Api::queryBalanceBg
+	 * 余额查询接口 Finance_Api::queryBalanceBg
 	 * @param String $UserCustId 用户客户号(require)
 	 * 
 	 * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
@@ -27,7 +27,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
 	}
 	
 	/**
-	 * 查询用户某一张银行卡信息接口 Finance_Logic_Api::queryThisCardInfo
+	 * 查询用户某一张银行卡信息接口 Finance_Api::queryThisCardInfo
 	 * @param String $userCustId 用户客户号(required)
 	 * @param String $cardId 开户银行帐号(require)     
 	 * 
@@ -55,7 +55,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
 	}
 	
 	/**
-	 * 银行卡查询接口 Finance_Logic_Api::queryThisCardInfo
+	 * 银行卡查询接口 Finance_Api::queryThisCardInfo
 	 * @param String $userCustId 用户客户号(required)    
 	 * @param String $carId 开户银行账号(optional)
 	 * 
@@ -90,7 +90,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
 	}
 	
 	/**
-	 * 主动投标接口 Finance_Logic_Api::initiativeTender
+	 * 主动投标接口 Finance_Api::initiativeTender
 	 * @param String transAmt 交易金额(required)   
 	 * @param String usrCustId 汇付平台的用户ID(required)    
 	 * @param String maxTenderRate 最大投资手续费率(required)
@@ -140,7 +140,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
 	}
 	
 	/**
-	 * 投标撤销接口Finance_Logic_Api::tenderCancel
+	 * 投标撤销接口Finance_Api::tenderCancel
 	 * @param String transAmt 交易金额    (required)
 	 * @param String usrCustId 用户商户号   (required)
 	 * @param boolean isUnFreeze 是否解冻(require)  true--解冻  false--不解冻
@@ -172,7 +172,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
 	}
 	
 	/**
-	 * 满标打款接口 Finance_Logic_Api::loans
+	 * 满标打款接口 Finance_Api::loans
 	 * @param String outCustId 出账客户号(require)--出账客户号， 由汇付生成， 用户的唯一性标识  
 	 * @param String transAmt 交易金额 (require)
 	 * @param String fee 扣款手续费(require) 
@@ -228,7 +228,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
      }
      
      /**
-      * 网银充值实现 Finance_Logic_Api::netSave
+      * 网银充值实现 Finance_Api::netSave
       * @param String $UsrCustId 用户客户号(require)
       * @param String $TransAmt 交易金额(require)
       * @param String $GateBusiId 支付网关业务代号:B2C--B2C网银支付  B2B--B2B网银支付  FPAY--快捷支付  POS--POS支付  WPAY--定向支付  WH--代扣(optional)
@@ -266,7 +266,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
      }
      
      /**
-      * 提现实现--考虑xjd平台要不要向用户收取提现手续费 Finance_Logic_Api::cash
+      * 提现实现--考虑xjd平台要不要向用户收取提现手续费 Finance_Api::cash
       * @param String $TransAmt 交易金额(必须)
       * @param String $OpenAcctId 开户银行帐号
       *
@@ -300,7 +300,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
      }
      
      /**
-      * 封装汇付天下API实现用户开户功能(由Fiance模块controller层转入调用)Finance_Logic_Api::userRegister
+      * 封装汇付天下API实现用户开户功能(由Fiance模块controller层转入调用)Finance_Api::userRegister
       * @param String $UsrId 用户号(optinal)
       * @param String $UsrName 真实名称(optinal)
       * @param String $IdType 证件类型 身份证或其他(optinal)
@@ -336,7 +336,7 @@ class Finance_Logic_Api extends Finance_Logic_Pay {
      }
      
      /**
-      * 封装汇付天下API实现用户绑卡功能(由Fiance模块controller层转入调用)Finance_Logic_Api::userBindCard
+      * 封装汇付天下API实现用户绑卡功能(由Fiance模块controller层转入调用)Finance_Api::userBindCard
       * @param String $UsrCustId 用户客户号(必须)
       *
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
