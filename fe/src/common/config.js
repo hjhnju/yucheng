@@ -39,8 +39,10 @@ define(function () {
             + '/test/user/regist/index.json',
         REGIST_CHECKINVITER: rootUrl
             //+ '/user/regist/checkinviter',
-            + '/test/user/regist/checkinviter.json'
-
+            + '/test/user/regist/checkinviter.json',
+        LOGIN_INDEX: rootUrl
+            //+ '/user/login/index',
+            + '/test/user/login/index.json'
     };
 
     return {

@@ -15,7 +15,7 @@ define(function (require) {
     var sendsmscode = new Remoter('REGIST_SENDSMSCODE_EDIT');
     var getVericode = new Remoter('REGIST_GETVERICODE');
     var checkInviter = new Remoter('REGIST_CHECKINVITER');
-    //var Index = new Remoter('RESET_INDEX');
+    var Index = new Remoter('REGIST_INDEX');
 
     var loginInput = {
         loginUser: $('#login-user'),
@@ -130,12 +130,33 @@ define(function (require) {
         //检查快速注册
         $('.login-fastlogin').click(function () {
             var errors = $('.login-username.current');
-            if(!errors.length) {
-                alert('成功');
-            }
-            else {
+            var status = false;
+
+            if (errors.length) {
                 alert('不成功');
+                return;  //跳出click方法，不往下执行
             }
+
+            $('.login-input').each(function () {
+
+                if (!$.trim($(this).val()) && !$(this).hasClass('login-tuijian')) {
+                    status = true;
+                    return;
+                }
+            });
+
+            if (status) {
+                alert('不成功');
+                return;
+            }
+
+            Index.remote({
+                name: loginInput.loginUser.val(),
+                passwd: loginInput.loginPwd.val(),
+                phone: loginInput.loginPhone.val(),
+                inviter: loginInput.loginTuiJian.val()
+            });
+
         });
 
     }
