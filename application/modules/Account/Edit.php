@@ -41,8 +41,8 @@ class EditController extends Base_Controller_Response {
      * @param $token, csrf token
      * @return 标准json格式
      * status 0: 成功
-     * status 1103: 验证码错误
-     * status 1104: 修改失败
+     * status 1102: 验证码错误
+     * status 1103: 修改手机号失败
      */
     public function chphoneAction(){
     }

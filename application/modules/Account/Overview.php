@@ -1,4 +1,7 @@
 <?php
+/**
+ * 账户总览页
+ */
 class OverviewController extends Base_Controller_Response {
 
     public function init(){

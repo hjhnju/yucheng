@@ -47,5 +47,14 @@ class Awards_Api {
         $logic = new Awards_Logic_Invite();
         return $logic->getInviteUrl($userid);
     }
-
+    
+    /**
+     * Awards_Api::receiveAwards($userid)
+     * 领取奖励Api
+     * @param integer $userid
+     * 
+     */
+    public static function receiveAwards($userid) {
+    	 
+    }
 }

@@ -90,11 +90,11 @@ class Awards_Logic_Awards {
      * 3. 修改达成条件的状态
      * TODO://
      * @param integer $userid
-     * @return array
+     * @return array or false
      */
     public function getAwards($userid) {
     	if($userid<0){
-    		return false;
+    		return false;//参数错误，返回false
     	}
         $inviterid = intval($userid);
         $refunds = new Awards_List_Invite();
@@ -106,7 +106,7 @@ class Awards_Logic_Awards {
         $users = $list['list'];
         $ret = array();
         if(empty($users)) {	
-        	return false;//若没有邀请者，返回false
+        	return $ret;//若没有邀请者，返回false
         }
         foreach ($users as $key=>$value) {
         	$data = array();
@@ -121,6 +121,15 @@ class Awards_Logic_Awards {
         	$ret[$key] = $data;
          }
         return $ret;
+    }
+    
+    /**
+     * 满足领取奖励条件后进行奖励领取
+     * @param integer $userid
+     * @return bool
+     */
+    public function receiveAwards($userid) {
+    	
     }
     
 }
