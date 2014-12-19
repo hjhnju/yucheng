@@ -2,6 +2,7 @@
 /**
  *
  * 财务模块公共逻辑层
+ * @author lilu
  *
  */
 class Finance_Logic_Base {
