@@ -11,7 +11,8 @@ class AwardController extends Base_Controller_Response {
 	
 	public function indexAction() {
 		$userid = User_Api::getUserId();//from User Module
-		$inviteUrl = Awards_Api::getInviteUrl($userid);//获取该用户的专属邀请链接
+		$inviteUrl = Awards_Api::getInviteUrl($userid);
+		$inviteUrl = isset($inviteUrl)?$inviteUrl:"";//获取该用户的专属邀请链接
 		$this->getView()->assign("inviteUrl", $inviteUrl);
 			
 	}
@@ -19,12 +20,13 @@ class AwardController extends Base_Controller_Response {
 	/**
 	 * 接口5/account/award/receiveAwards
 	 * 领取奖励
+	 * @param userId 用户id
 	 * @return 标准json格式
 	 * status 0: 成功
 	 * status 1104:领取奖励失败
 	 */
 	public function receiveAwardsAction() {
-		$userid = User_Api::getUserId();//from User Module
+		
 		Awards_Api::receiveAwards($userid);
 		//ajax返回结果
 	}
