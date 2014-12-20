@@ -16,13 +16,14 @@ class RegistModel extends BaseModel {
      */
     public function addUser($arrParams){
         $strSql  = "INSERT INTO `user_login` (`status`,`name`,`passwd`,`phone`) VALUES(";
-        $strSql .= self::USER_STATUS.",";
-        $strSql .= $arrParams['name'].",";
-        $strSql .= $arrParams['passwd'].",";
+        $strSql .= self::USER_STATUS.",'";
+        $strSql .= $arrParams['name']."','";
+        $strSql .= $arrParams['passwd']."',";
         $strSql .= $arrParams['phone'].")";
         try{
-            $this->db->execute($strSql);
-            return mysql_insert_id();
+            $this->db->execute($strSql);           
+            $ret = $this->db->getLastInsertId();
+            return $ret;
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUseId);
             throw new Base_Exception("Db operation error!");
@@ -87,6 +88,19 @@ class RegistModel extends BaseModel {
         $strSql = "UPDATE  `user_login` SET `passwd`='$strPasswd' WHERE `uid` = '$intUid'";
         try{
             return $this->db->execute($strSql);
+        }catch(Base_Exception $ex){
+            $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
+            throw new Base_Exception("Db operation error!");
+        }
+    }
+    
+    /**
+     * 根据手机号查用户
+     */
+    public function getUidByPhone($strPhone){
+        $strSql = "SELECT  `uid` FROM `user_login` WHERE `phone` = '$strPhone'";
+        try{
+            return $this->db->fetchOne($strSql);
         }catch(Base_Exception $ex){
             $this->logger->notice($ex->getMessage(),__METHOD__,$intUid);
             throw new Base_Exception("Db operation error!");

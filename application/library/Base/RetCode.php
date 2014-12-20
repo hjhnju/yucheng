@@ -11,7 +11,7 @@ class Base_RetCode {
     const SUCCESS           = 0;//成功
 
      //默认错误
-    const UNKNOWN_ERROR     = 99; //未知错误
+    const UNKNOWN_ERROR     = 999; //未知错误
 
     //需要图片验证码验证
     const VARIFY_IMGCODE    = 101; //图片验证码
@@ -49,6 +49,8 @@ class Base_RetCode {
         self::NOT_FINISHED      => '功能未实现',
         self::DATA_NULL         => '数据为空',
         self::SERVICE_DEGRADED  => '服务降级',
+
+        self::VARIFY_IMGCODE    => '图片验证码', 
     );
 
     /**
