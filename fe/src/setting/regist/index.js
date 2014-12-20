@@ -10,6 +10,7 @@ define(function (require) {
 
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
+    var header = require('common/header');
 
     var Remoter = require('common/Remoter');
     var checkName = new Remoter('REGIST_CHECKNAME_CHECK');
@@ -47,6 +48,7 @@ define(function (require) {
     };
 
     function init() {
+        header.init();
         picScroll.init();
         bindEvents();
         callBack();

@@ -6,13 +6,17 @@ define('common/header', function (require) {
     }
     function easy() {
         var timer;
+        var item;
         $('.attention-me').mouseenter(function () {
+            if (item && item !== $(this)) {
+                $('.xinlang-erweima').removeClass('current');
+            }
             clearTimeout(timer);
-            $(this).children($('.xinlang-erweima')).addClass('current');
-        });
-        $('.attention-me').mouseleave(function () {
+            item = $(this);
+            $(this).children('.xinlang-erweima').addClass('current');
+        }).mouseleave(function () {
             timer = setTimeout(function () {
-                $('.attention-me').children($('.xinlang-erweima')).removeClass('current');
+                $('.attention-me').children('.xinlang-erweima').removeClass('current');
             }, 100);
         });
     }

@@ -9,6 +9,7 @@ define(function (require) {
 
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
+    var header = require('common/header');
     var Remoter = require('common/Remoter');
     var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
     var imgcodeCheck = new Remoter('LOGIN_IMGCODE_CHECK');
@@ -18,6 +19,7 @@ define(function (require) {
     var imgUrl = $('#login-img-url');
 
     function init () {
+        header.init();
         picScroll.init();
         bindEvents();
         bindCallback();
