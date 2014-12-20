@@ -91,17 +91,6 @@ class User_Logic_Login{
     }
     
     /**
-     * 判断用户的登录状态
-     * 若用户处于登录状态，则返回uid，否则返回0
-     */
-    public function checkLogin(){
-        if(Yaf_Session::getInstance()->has("LOGIN")){
-            $uid = Yaf_Session::getInstance()->get("LOGIN");
-        }
-       return $uid;
-    }
-    
-    /**
      * 
      * @param string $val
      * @return string 根据$val的类型返回:name,email,phone,其它情况返回error报错

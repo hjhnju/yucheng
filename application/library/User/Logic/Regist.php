@@ -42,13 +42,30 @@ class User_Logic_Regist{
     }
     
     /**
+     *
+     * @param string $strPhone,手机号
+     * @return int,0表示手机存在，1表示手机不存在
+     */
+    public function checkInviter($strPhone){
+        if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
+            return User_RetCode::USERPHONE_SYNTEX_ERROR;
+        }
+        $data = $this->modRegist->getUidByPhone(intval($strPhone));
+        if(empty($data)) {
+            return User_RetCode::INVALID_USER;
+        }
+        return $data;
+    }
+    
+    /**
      * 注册的同时要添加信息进`user_info`表
      * @param array $arrParam注册所需要的信息
      * @return int $uid,成功注册返回用户id，否则返回0
      */
     public function regist($arrParam){
         $uid = $this->modRegist->addUser($arrParam);
-        $ret = $this->modMaterial->addUserInfo($arrParams);
+        $arrParam = array('uid'=>$uid,'type' => 1);
+        $ret = $this->modMaterial->addUserInfo($arrParam);
         if(empty($ret)){
             return User_RetCode::INVALID_USER;
         }
