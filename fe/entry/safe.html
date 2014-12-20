@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>安全中心</title>
-    <link rel="stylesheet" type="text/css" href="/src/safecenter/finish/index.less" />
+    <link rel="stylesheet" type="text/css" href="/src/my/safe/index.less" />
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
     <script>
         require.config({
@@ -49,7 +49,7 @@
         });
     </script>
     <script>
-        require([],function (main) {
+        require(['my/safe/index'],function (main) {
             main.init();
         })
     </script>

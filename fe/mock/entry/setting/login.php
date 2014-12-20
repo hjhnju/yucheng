@@ -1,10 +1,9 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: mySunShinning(441984145@qq.com)
- *       yangbinYB(1033371745@qq.com)
- * Date: 14-12-16
- * Time: 上午11:31
+ * User: baidu
+ * Date: 14-12-20
+ * Time: 上午10:55
  */
 
 date_default_timezone_set("PRC");
@@ -33,7 +32,7 @@ $smarty->right_delimiter = '%}';
 
 $smarty->template_dir = "../../view/";
 
-$output = $smarty->fetch('setlogin/regist.phtml');
+$output = $smarty->fetch('setting/login.phtml');
 
 $livereload = '<script src="http://'.getHostByName($_SERVER['SERVER_NAME']).':8898/livereload.js"></script></body>';
 

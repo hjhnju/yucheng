@@ -8,7 +8,7 @@
 define(function (require) {
 
     var $ = require('jquery');
-    var picScroll = require('setlogin/common/picScroll');
+    var picScroll = require('../common/picScroll');
     var Remoter = require('common/Remoter');
     var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
 

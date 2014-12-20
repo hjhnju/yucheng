@@ -13,6 +13,18 @@ require('../../libs/Smarty.class.php');
 
 $smarty = new Smarty();
 
+$smarty->assign('message',
+    array(
+        'addtime' => '1408859074',
+        'title' => 'tilte',
+        'content' => 'content',
+        'coverurl' => 'http://echarts.baidu.com/doc/asset/img/slide-01.png',
+        'displaycover' => 'displaycover',
+        'author' => 'author',
+        'sourceurl' => 'sourceurl'
+    )
+);
+
 $smarty->caching = false;
 $smarty->compile_check = true;
 $smarty->debugging_ctrl = true;
@@ -21,7 +33,7 @@ $smarty->right_delimiter = '%}';
 
 $smarty->template_dir = "../../view/";
 
-$output = $smarty->fetch('setlogin/forgetpwd.phtml');
+$output = $smarty->fetch('setting/regist.phtml');
 
 $livereload = '<script src="http://'.getHostByName($_SERVER['SERVER_NAME']).':8898/livereload.js"></script></body>';
 

@@ -1,12 +1,12 @@
 {%extends file="common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="/src/setlogin/login/index.less" />
+<link rel="stylesheet" type="text/css" href="/src/setting/login/index.less" />
 {%/block%}
 
 {%block name="script"%}
 <script>
-    require(['setlogin/login/index'], function (main) {
+    require(['setting/login/index'], function (main) {
         main.init();
     });
 </script>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="login-right">
-            <a href="###" class="login-right-linkleft left"></a>
+            <a class="login-right-linkleft left"></a>
             <div class="login-right-box">
                 <ul class="login-item">
                     <li class="login-item-list">
@@ -81,7 +81,7 @@
 
                 </ul>
             </div>
-            <a href="###" class="login-right-linkleft right last"></a>
+            <a class="login-right-linkleft right last"></a>
         </div>
     </div>
 </div>

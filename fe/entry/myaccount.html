@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>账户总览</title>
-    <link rel="stylesheet" type="text/css" href="/src/safecenter/all-account/index.less" />
+    <link rel="stylesheet" type="text/css" href="/src/my/account/index.less" />
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
     <script>
         require.config({
@@ -49,7 +49,7 @@
         });
     </script>
     <script>
-        require([],function (main) {
+        require(['my/account/index'],function (main) {
             main.init();
         })
     </script>
