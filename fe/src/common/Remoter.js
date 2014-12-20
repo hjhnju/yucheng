@@ -10,6 +10,7 @@ define(function (require) {
 
     var config = require('./config');
     var $ = require('jquery');
+    var global = require('common/global');
     var XEmitter = require('./XEmitter');
 
     /**
@@ -31,7 +32,7 @@ define(function (require) {
      * @type {Object}
      */
     Remoter.hooks = {
-        token: 'default'
+        token: global.get('token')
     };
 
     /**
@@ -92,7 +93,7 @@ define(function (require) {
                             me.emit('fail', data.statusInfo);
                         }
                     }
-                    else {
+                    else if (status > 1024 && status < 99999) {
 
                         /**
                          * 触发成功回调

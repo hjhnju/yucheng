@@ -3,7 +3,7 @@
 fe/dep/
 fe/node_modules
 fe/start.sh
-fe/htdocs/
+fe/output/
 fe/mock/entry/templates_c/
 
 application/tmp/*

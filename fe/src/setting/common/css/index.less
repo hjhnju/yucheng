@@ -1,6 +1,7 @@
 
 
-.login {
+.login,
+.regist {
     padding: 50px 0 50px;
     background-color: #f8f8f8;
 }
@@ -21,6 +22,7 @@
 .login-username {
     position: relative;
     margin-bottom: 20px;
+    .clearfix;
 
     &.current .login-input {
         border-color: #f00;
@@ -368,7 +370,10 @@
     }
 }
 
-
+.bound-name {
+    color: @color-green;
+    padding: 0 5px;
+}
 
 
 

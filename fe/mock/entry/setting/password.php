@@ -23,6 +23,4 @@ $smarty->template_dir = "../../view/";
 
 $output = $smarty->fetch('setting/password.phtml');
 
-$livereload = '<script src="http://'.getHostByName($_SERVER['SERVER_NAME']).':8898/livereload.js"></script></body>';
-
-echo str_replace("</body>", $livereload, $output);
+echo $output;

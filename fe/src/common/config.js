@@ -40,8 +40,12 @@ define(function () {
             + '/user/regist/checkinviter',
 //            + '/test/user/regist/checkinviter.json',
         LOGIN_INDEX_CHECK: rootUrl
-            + '/user/login/index'
-//            + '/test/user/login/index.json'
+            + '/user/login/index',
+//            + '/test/user/login/index.json',
+        LOGIN_IMGCODE_ADD: rootUrl
+            + '/user/login/getauthimage',
+        LOGIN_IMGCODE_CHECK: rootUrl
+            + '/user/login/checkauthimage'
     };
 
     return {

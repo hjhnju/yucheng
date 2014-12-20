@@ -6,52 +6,53 @@
 
 {%block name="script"%}
 <script>
-    require(['setting/regist/index'], function (main) {
-        main.init();
+    require(['setting/regist/index', 'setting/login/index'], function (regist, login) {
+        regist.init();
+        login.init();
     });
 </script>
 {%/block%}
 
 {%block name="content"%}
-<div class="login">
+<div class="regist">
     <div class="container">
         <div class="login-left">
             <div class="bound">
-                <p class="bound-text">QQ用户:就像以往一样，请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击<a href="###">快速绑定</a></p>
+                <p class="bound-text">QQ用户:<span class="bound-name">就像以往</span>，请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击<a href="###">快速绑定</a></p>
             </div>
             <div class="login-left-box">
                 <div class="login-left-title">账号注册</div>
                 <div class="login-username">
-                    <input class="login-input" id="login-user" type="text" data-text="用户名" />
-                    <label class="user-lable" for="login-user">用户名</label>
-                    <div class="username-error" id="login-user-error"></div>
+                    <input autocomplete="off" class="login-input" id="regist-user" type="text" data-text="用户名" />
+                    <label class="user-lable" for="regist-user">用户名</label>
+                    <div class="username-error" id="regist-user-error"></div>
                 </div>
                 <div class="login-username">
-                    <input class="login-input" id="login-pwd" type="password" data-text="密码" />
-                    <label class="user-lable" for="login-pwd">密码</label>
-                    <div class="username-error" id="login-pwd-error"></div>
+                    <input autocomplete="off" class="login-input" id="regist-pwd" type="password" data-text="密码" />
+                    <label class="user-lable" for="regist-pwd">密码</label>
+                    <div class="username-error" id="regist-pwd-error"></div>
                 </div>
                 <div class="login-username">
-                    <input class="login-input" id="login-phone" type="text" data-text="电话" />
-                    <label class="user-lable" for="login-phone">电话</label>
-                    <div class="username-error" id="login-phone-error"></div>
+                    <input autocomplete="off" class="login-input" id="regist-phone" type="text" data-text="电话" />
+                    <label class="user-lable" for="regist-phone">电话</label>
+                    <div class="username-error" id="regist-phone-error"></div>
                 </div>
                 <div class="login-username">
-                    <input class="login-input testing" id="login-testing" type="text" data-text="验证码" />
-                    <label class="user-lable" for="login-testing">验证码</label>
+                    <input autocomplete="off" class="login-input testing" id="regist-testing" type="text" data-text="验证码" />
+                    <label class="user-lable" for="regist-testing">验证码</label>
                     <a href="###" class="login-username-testing">获取验证码</a>
-                    <div class="login-username-testing-box" id="testing-wait">10</div>
-                    <div class="username-error yanzma" id="login-testing-error">
+                    <div class="login-username-testing-box" id="testing-wait"></div>
+                    <div class="username-error yanzma" id="regist-testing-error">
                     </div>
                 </div>
                 <div class="login-username">
-                    <input class="login-input login-tuijian" id="login-tuijian" type="text" />
-                    <label class="user-lable" for="login-tuijian">推荐人手机号(选填)</label>
-                    <div class="username-error" id="login-tuijian-error"></div>
+                    <input autocomplete="off" class="login-input login-tuijian" id="regist-tuijian" type="text" />
+                    <label class="user-lable" for="regist-tuijian">推荐人手机号(选填)</label>
+                    <div class="username-error" id="regist-tuijian-error"></div>
                 </div>
                 <a href="###" class="login-fastlogin">快速注册</a>
                 <div class="login-tiaoyue">
-                    <input type="checkbox" checked id="tiaoyue-itp" />
+                    <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />
                     <label class="tiaoyue-lable" for="tiaoyue-itp">同意<a href="###">用户条约</a></label>
                     <span class="login-tiaoyue-have">已有账号？<a href="###">请登录</a></span>
                 </div>

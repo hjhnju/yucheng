@@ -85,7 +85,9 @@ exports.getLocations = function () {
                     '/user/regist/index',
                     '/user/regist/checkinviter',
                     '/user/regist/checksmscode',
-                    '/user/login/index'
+                    '/user/login/index',
+                    '/user/login/getauthimage',
+                    '/user/login/checkauthimage'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;

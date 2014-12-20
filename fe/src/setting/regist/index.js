@@ -20,17 +20,18 @@ define(function (require) {
     var registSubmit = new Remoter('REGIST_INDEX_CHECK');
 
     var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
+    var CORRECT = '<span class="username-error-span"></span>';
 
     /**
      * input集合
      * @type {Object}
      */
     var loginInput = {
-        loginUser: $('#login-user'),
-        loginPwd: $('#login-pwd'),
-        loginPhone: $('#login-phone'),
-        loginTest: $('#login-testing'),
-        loginTuiJian: $('#login-tuijian')
+        loginUser: $('#regist-user'),
+        loginPwd: $('#regist-pwd'),
+        loginPhone: $('#regist-phone'),
+        loginTest: $('#regist-testing'),
+        loginTuiJian: $('#regist-tuijian')
     };
 
     /**
@@ -38,11 +39,11 @@ define(function (require) {
      * @type {Object}
      */
     var error = {
-        userError: $('#login-user-error'),
-        phoneError: $('#login-phone-error'),
-        pwdError: $('#login-pwd-error'),
-        testError: $('#login-testing-error'),
-        tuiJianError: $('#login-tuijian-error')
+        userError: $('#regist-user-error'),
+        phoneError: $('#regist-phone-error'),
+        pwdError: $('#regist-pwd-error'),
+        testError: $('#regist-testing-error'),
+        tuiJianError: $('#regist-tuijian-error')
     };
 
     function init() {
@@ -53,7 +54,7 @@ define(function (require) {
 
     function bindEvents() {
         // 控制placeHolder
-        $('.login-input').on({
+        $('.regist .login-input').on({
             focus: function () {
                 var parent = $(this).parent();
                 var error = parent.children('.username-error');
@@ -103,7 +104,10 @@ define(function (require) {
             if (!testPwd.test(value)) {
                 $(this).parent().addClass('current');
                 error.pwdError.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
+                return;
             }
+
+            error.pwdError.html(CORRECT);
         });
 
 
@@ -166,11 +170,11 @@ define(function (require) {
         });
 
         // 检查快速注册
-        $('.login-fastlogin').click(function (e) {
+        $('.regist .login-fastlogin').click(function (e) {
             e.preventDefault();
 
-            $('.login-input').trigger('blur');
-            var errors = $('.login-username.current');
+            $('.regist .login-input').trigger('blur');
+            var errors = $('.regist .login-username.current');
 
             if (!$('#tiaoyue-itp')[0].checked) {
                 alert('请同意用户条约');
@@ -203,7 +207,7 @@ define(function (require) {
                 error.userError.html(data.statusInfo);
             }
             else {
-                error.userError.html('<span class="username-error-span"></span>');
+                error.userError.html(CORRECT);
             }
         });
 
@@ -214,7 +218,7 @@ define(function (require) {
                 error.phoneError.html(data.statusInfo);
             }
             else {
-                error.phoneError.html('<span class="username-error-span"></span>');
+                error.phoneError.html(CORRECT);
             }
         });
 
@@ -225,28 +229,30 @@ define(function (require) {
                 error.tuiJianError.html(data.statusInfo);
             }
             else {
-                error.tuiJianError.html('<span class="username-error-span"></span>');
+                error.tuiJianError.html(CORRECT);
             }
         });
 
         // sendsmscodeCb
         sendsmscode.on('success', function (data) {
+            var value = 300;
             if (data && data.bizError) {
                 alert(data.statusInfo);
             }
             else {
                 var wait = $('#testing-wait');
-                var value = +wait.text();
+
+                wait.text('300秒后重新发送');
                 wait.addClass('show');
 
                 timer = setInterval(function () {
 
-                    wait.text(value--);
+                    wait.text(--value + '秒后重新发送');
                     if (value < 0) {
                         clearInterval(timer);
                         wait.removeClass('show');
-                        wait.text('10');
                     }
+
                 }, 1000);
             }
         });
@@ -257,7 +263,7 @@ define(function (require) {
                 error.testError.html(data.statusInfo);
             }
             else {
-                error.testError.html('<span class="username-error-span"></span>');
+                error.testError.html(CORRECT);
             }
         });
 

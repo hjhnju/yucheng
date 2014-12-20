@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>兴教贷</title>
+    <!--[if lt IE 7]>
+    <script>
+        // window.location.href = '{%$webroot%}/static/ieup/index.html';
+    </script>
+    <![endif]-->
+
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script>
+        require.config({
+            'baseUrl': '{%$feRoot%}',
+            'paths': {
+            },
+            'packages': [
+                {
+                    'name': 'echarts',
+                    'location': '../dep/echarts/2.1.9/src',
+                    'main': 'echarts'
+                },
+                {
+                    'name': 'est',
+                    'location': '../dep/est/1.3.0/src'
+                },
+                {
+                    'name': 'etpl',
+                    'location': '../dep/etpl/3.0.0/src',
+                    'main': 'main'
+                },
+                {
+                    'name': 'jquery',
+                    'location': '../dep/jquery/1.9.1/src',
+                    'main': 'jquery.min'
+                },
+                {
+                    'name': 'moment',
+                    'location': '../dep/moment/2.7.0/src',
+                    'main': 'moment'
+                },
+                {
+                    'name': 'saber-emitter',
+                    'location': '../dep/saber-emitter/1.0.0/src',
+                    'main': 'emitter'
+                },
+                {
+                    'name': 'zrender',
+                    'location': '../dep/zrender/2.0.6/src',
+                    'main': 'zrender'
+                }
+            ]
+        });
+
+        window.GLOBAL = {
+            token: '{%$token%}'
+        };
+    </script>

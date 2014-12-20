@@ -8,9 +8,19 @@ exports.output = path.resolve( __dirname, 'output' );
 
 exports.getProcessors = function () {
     var lessProcessor = new LessCompiler();
-    var cssProcessor = new CssCompressor();
+    var cssProcessor = new CssCompressor({
+        files: [
+            'src/setting/login/index.less',
+            'src/setting/regist/index.less'
+        ]
+    });
     var moduleProcessor = new ModuleCompiler();
-    var jsProcessor = new JsCompressor();
+    var jsProcessor = new JsCompressor({
+        files: [
+            'src/setting/login/index.js',
+            'src/setting/regist/index.js'
+        ]
+    });
     var pathMapperProcessor = new PathMapper();
     var addCopyright = new AddCopyright();
 
@@ -27,7 +37,13 @@ exports.exclude = [
     'tool',
     'doc',
     'test',
+    'entry',
+    'mock',
+    'node_modules',
     'module.conf',
+    'package.json',
+    '*.sh',
+    'README.md',
     'dep/packages.manifest',
     'dep/*/*/test',
     'dep/*/*/doc',
