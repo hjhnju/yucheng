@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('setting/common/picScroll', function (require) {
     var $ = require('jquery');
     function init() {

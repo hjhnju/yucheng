@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/chart', function () {
     var self = {};
     var _chartLibrary = {};

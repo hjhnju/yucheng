@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('common/Remoter', function (require) {
     var config = require('./config');
     var $ = require('jquery');

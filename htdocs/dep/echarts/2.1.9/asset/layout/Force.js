@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/layout/Force', function (require) {
     var ForceLayoutWorker = require('./forceLayoutWorker');
     var vec2 = require('zrender/tool/vector');

@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/projection/mercator', function () {
     function _mercator() {
         var radians = Math.PI / 180;

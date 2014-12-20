@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/ndarray', function (require) {
     'use strict';
     var kwargs = require('./kwargs');

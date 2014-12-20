@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/component/dataView', function (require) {
     var Base = require('./base');
     var ecConfig = require('../config');

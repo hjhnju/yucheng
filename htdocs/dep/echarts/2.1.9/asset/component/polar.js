@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/component/polar', function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');

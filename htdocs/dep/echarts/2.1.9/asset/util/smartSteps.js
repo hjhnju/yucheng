@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/smartSteps', function () {
     var mySteps = [
             10,

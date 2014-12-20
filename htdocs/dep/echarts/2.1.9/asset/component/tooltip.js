@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/component/tooltip', function (require) {
     var Base = require('./base');
     var CrossShape = require('../util/shape/Cross');

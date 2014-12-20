@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/component/axis', function (require) {
     var Base = require('./base');
     var LineShape = require('zrender/shape/Line');

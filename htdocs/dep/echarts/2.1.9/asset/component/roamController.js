@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/component/roamController', function (require) {
     var Base = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');

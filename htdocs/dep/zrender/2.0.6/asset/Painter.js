@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/Painter', function (require) {
     'use strict';
     var config = require('./config');

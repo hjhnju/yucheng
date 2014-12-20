@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Path', function (require) {
     var Base = require('./Base');
     var PathProxy = require('./util/PathProxy');

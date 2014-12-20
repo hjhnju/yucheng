@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/Storage', function (require) {
     'use strict';
     var util = require('./tool/util');

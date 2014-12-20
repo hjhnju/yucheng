@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/projection/svg', function (require) {
     var PathShape = require('zrender/shape/Path');
     function toFloat(str) {

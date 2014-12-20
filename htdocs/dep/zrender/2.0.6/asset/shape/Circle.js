@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Circle', function (require) {
     'use strict';
     var Base = require('./Base');

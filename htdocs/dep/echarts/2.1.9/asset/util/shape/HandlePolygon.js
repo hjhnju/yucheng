@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/shape/HandlePolygon', function (require) {
     var Base = require('zrender/shape/Base');
     var PolygonShape = require('zrender/shape/Polygon');

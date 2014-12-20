@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Base', function (require) {
     var vmlCanvasManager = window['G_vmlCanvasManager'];
     var matrix = require('../tool/matrix');

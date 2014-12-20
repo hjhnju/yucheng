@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/ecEffect', function (require) {
     var ecData = require('../util/ecData');
     var CircleShape = require('zrender/shape/Circle');

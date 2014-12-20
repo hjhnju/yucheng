@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/geoJson/china_geo', function () {
     return {
         'type': 'FeatureCollection',

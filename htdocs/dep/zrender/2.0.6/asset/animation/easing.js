@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/animation/easing', function () {
     var easing = {
             Linear: function (k) {

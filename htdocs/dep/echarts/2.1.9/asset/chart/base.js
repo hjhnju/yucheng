@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/chart/base', function (require) {
     var ImageShape = require('zrender/shape/Image');
     var IconShape = require('../util/shape/Icon');

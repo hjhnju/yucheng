@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/shape/BrokenLine', function (require) {
     var Base = require('./Base');
     var smoothSpline = require('./util/smoothSpline');

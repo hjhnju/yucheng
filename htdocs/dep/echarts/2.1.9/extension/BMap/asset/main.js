@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define(function (require) {
     function BMapExt(obj, BMap, ec) {
         this._init(obj, BMap, ec);

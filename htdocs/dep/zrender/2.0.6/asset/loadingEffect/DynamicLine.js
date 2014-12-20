@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/loadingEffect/DynamicLine', function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');

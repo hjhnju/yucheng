@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/layout/Chord', function (require) {
     var ChordLayout = function (opts) {
         opts = opts || {};

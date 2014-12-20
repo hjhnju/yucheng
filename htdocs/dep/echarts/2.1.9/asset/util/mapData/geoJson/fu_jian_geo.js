@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/geoJson/fu_jian_geo', function () {
     return {
         'type': 'FeatureCollection',

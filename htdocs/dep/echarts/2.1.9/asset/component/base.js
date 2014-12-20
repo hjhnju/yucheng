@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/component/base', function (require) {
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');

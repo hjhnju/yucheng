@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/layout/forceLayoutWorker', function __echartsForceLayoutWorker(require) {
     'use strict';
     var vec2;

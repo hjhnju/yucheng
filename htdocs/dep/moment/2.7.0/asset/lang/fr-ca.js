@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         define('moment/lang/fr-ca', ['moment'], factory);

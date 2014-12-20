@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('saber-emitter/emitter', function () {
     function Emitter() {
     }

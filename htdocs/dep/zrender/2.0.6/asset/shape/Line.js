@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Line', function (require) {
     var Base = require('./Base');
     var dashedLineTo = require('./util/dashedLineTo');

@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 /**
  * ETPL (Enterprise Template)
  * Copyright 2013 Baidu Inc. All rights reserved.

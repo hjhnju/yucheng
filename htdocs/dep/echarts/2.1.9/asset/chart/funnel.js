@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/chart/funnel', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');

@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('echarts/util/shape/Icon', function (require) {
     var zrUtil = require('zrender/tool/util');
     function _iconMark(ctx, style) {

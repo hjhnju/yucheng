@@ -1,3 +1,4 @@
+/*! 2014 Baidu Inc. All Rights Reserved */
 define('zrender/animation/Clip', function (require) {
     var Easing = require('./easing');
     function Clip(options) {
