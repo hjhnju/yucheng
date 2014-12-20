@@ -79,15 +79,15 @@ exports.getLocations = function () {
             location: function (request) {
 
                 var mapper = [
-                    '/user/regist/checkname',
-                    '/user/regist/checkphone',
-                    '/user/regist/sendsmscode',
-                    '/user/regist/index',
-                    '/user/regist/checkinviter',
-                    '/user/regist/checksmscode',
-                    '/user/login/index',
-                    '/user/login/getauthimage',
-                    '/user/login/checkauthimage'
+                    '/user/registapi/checkname',
+                    '/user/registapi/checkphone',
+                    '/user/registapi/sendsmscode',
+                    '/user/registapi/index',
+                    '/user/registapi/checkinviter',
+                    '/user/registapi/checksmscode',
+                    '/user/loginapi/index',
+                    '/user/loginapi/getauthimage',
+                    '/user/loginapi/checkauthimage'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;

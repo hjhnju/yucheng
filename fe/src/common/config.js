@@ -23,29 +23,29 @@ define(function () {
      */
     var URL = {
         REGIST_CHECKNAME_CHECK: rootUrl
-            + '/user/regist/checkname',
+            + '/user/registapi/checkname',
 //            + '/test/user/regist/checkname.json',
         REGIST_CHECKPHONE_CHECK: rootUrl
-            + '/user/regist/checkphone',
+            + '/user/registapi/checkphone',
 //            + '/test/user/regist/checkphone.json',
         REGIST_SENDSMSCODE_CHECK: rootUrl
-            + '/user/regist/sendsmscode',
+            + '/user/registapi/sendsmscode',
 //            + '/test/user/regist/sendsmscode.json',
         REGIST_CHECKSMSCODE_CHECK: rootUrl
-            + '/user/regist/checksmscode',
+            + '/user/registapi/checksmscode',
         REGIST_INDEX_CHECK: rootUrl
-            + '/user/regist/index',
+            + '/user/registapi/index',
 //            + '/test/user/regist/index.json',
         REGIST_CHECKINVITER_CHECK: rootUrl
-            + '/user/regist/checkinviter',
+            + '/user/registapi/checkinviter',
 //            + '/test/user/regist/checkinviter.json',
         LOGIN_INDEX_CHECK: rootUrl
-            + '/user/login/index',
+            + '/user/loginapi/index',
 //            + '/test/user/login/index.json',
         LOGIN_IMGCODE_ADD: rootUrl
-            + '/user/login/getauthimage',
+            + '/user/loginapi/getauthimage',
         LOGIN_IMGCODE_CHECK: rootUrl
-            + '/user/login/checkauthimage'
+            + '/user/loginapi/checkauthimage'
     };
 
     return {
