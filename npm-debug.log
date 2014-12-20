@@ -1,0 +1,66 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.10.26/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'i',
+1 verbose cli   '-g',
+1 verbose cli   'csfe' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose cache add [ 'csfe', null ]
+5 verbose cache add name=undefined spec="csfe" args=["csfe",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'csfe',
+6 verbose parsed url   path: 'csfe',
+6 verbose parsed url   href: 'csfe' }
+7 silly lockFile 0af34bbb-csfe csfe
+8 verbose lock csfe /Users/baidu/.npm/0af34bbb-csfe.lock
+9 silly lockFile 0af34bbb-csfe csfe
+10 silly lockFile 0af34bbb-csfe csfe
+11 verbose addNamed [ 'csfe', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 8589c7c0-csfe csfe@
+14 verbose lock csfe@ /Users/baidu/.npm/8589c7c0-csfe.lock
+15 silly addNameRange { name: 'csfe', range: '*', hasData: false }
+16 verbose url raw csfe
+17 verbose url resolving [ 'https://registry.npmjs.org/', './csfe' ]
+18 verbose url resolved https://registry.npmjs.org/csfe
+19 info trying registry request attempt 1 at 11:53:33
+20 http GET https://registry.npmjs.org/csfe
+21 http 404 https://registry.npmjs.org/csfe
+22 silly registry.get cb [ 404,
+22 silly registry.get   { date: 'Sat, 20 Dec 2014 03:53:31 GMT',
+22 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+22 silly registry.get     'content-type': 'application/json',
+22 silly registry.get     'cache-control': 'max-age=0',
+22 silly registry.get     'content-length': '52',
+22 silly registry.get     'accept-ranges': 'bytes',
+22 silly registry.get     via: '1.1 varnish',
+22 silly registry.get     age: '0',
+22 silly registry.get     'x-served-by': 'cache-ty68-TYO',
+22 silly registry.get     'x-cache': 'MISS',
+22 silly registry.get     'x-cache-hits': '0',
+22 silly registry.get     'x-timer': 'S1419047611.063165,VS0,VE190',
+22 silly registry.get     'keep-alive': 'timeout=10, max=50',
+22 silly registry.get     connection: 'Keep-Alive' } ]
+23 silly lockFile 8589c7c0-csfe csfe@
+24 silly lockFile 8589c7c0-csfe csfe@
+25 error 404 'csfe' is not in the npm registry.
+25 error 404 You should bug the author to publish it
+25 error 404
+25 error 404 Note that you can also install from a
+25 error 404 tarball, folder, or http url, or git url.
+26 error System Darwin 13.3.0
+27 error command "/usr/local/Cellar/node/0.10.26/bin/node" "/usr/local/bin/npm" "i" "-g" "csfe"
+28 error cwd /Users/baidu/Desktop/xjd
+29 error node -v v0.10.26
+30 error npm -v 1.4.3
+31 error code E404
+32 verbose exit [ 1, true ]

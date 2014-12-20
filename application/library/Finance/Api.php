@@ -33,7 +33,7 @@ class Finance_Api {
 	 * 
 	 * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
 	 * status=0 请求成功 返回正常数据
-	 * status=502 参数错误
+	 * status=Base_RetCode::PARAM_ERROR 参数错误
 	 * status=
 	 * data=array(
 	 *    'AvlBal' 可用余额         
@@ -53,7 +53,7 @@ class Finance_Api {
 	 * 
 	 * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
 	 * status=0 请求成功 返回正常数据
-	 * status=502参数错误
+	 * status=Base_RetCode::PARAM_ERROR参数错误
 	 * status=
 	 * data=array(  
      *    'MerCustId'商户客户号   
@@ -75,13 +75,13 @@ class Finance_Api {
 	}
 	
 	/**
-	 * 银行卡查询接口 Finance_Api::queryThisCardInfo
+	 * 银行卡查询接口 Finance_Api::queryCardInfo
 	 * @param String $userCustId 用户客户号(required)    
 	 * @param String $carId 开户银行账号(optional)
 	 * 
 	 * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
 	 * status=0 请求成功 返回正常信息
-	 * status=502  参数错误(1.userCustId查无此人 2.$userCustId或$carId格式出错 )
+	 * status=Base_RetCode::PARAM_ERROR  参数错误(1.userCustId查无此人 2.$userCustId或$carId格式出错 )
      * status=  该用户无此卡(有其他的卡)
      * status=  该用户没有绑定任何银行卡
      * status=  请求API出错
@@ -105,7 +105,7 @@ class Finance_Api {
      * )
      *  
 	 */ 
-	public static function queryThisCardInfo($userCustId,$carId='') {
+	public static function queryCardInfo($userCustId,$carId='') {
 		
 	}
 	
@@ -133,7 +133,7 @@ class Finance_Api {
      * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}  
      * status=0 请求成功 返回正常信息  
      * status=  请求API出错  
-     * status=502 参数错误  
+     * status=Base_RetCode::PARAM_ERROR 参数错误  
      * data = array(
      *     'CmdId' 消息类型  
      *     'RespCode' 应答返回码    
@@ -168,7 +168,7 @@ class Finance_Api {
 	 * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
 	 * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
 	 * status=0 请求成功 返回正常信息
-     * status=502  参数错误 
+     * status=Base_RetCode::PARAM_ERROR  参数错误 
      * status=  请求API出错
      * data = array(   
      *     'Version' 版本号 
@@ -216,7 +216,7 @@ class Finance_Api {
      * 
      * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}   
      * status=0 请求成功 返回正常信息  
-     * status=502  参数错误
+     * status=Base_RetCode::PARAM_ERROR  参数错误
      * status=  请求API出错  
      * data=array(  
      *     'CmdId'  消息类型   
@@ -258,7 +258,7 @@ class Finance_Api {
       *
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}  
       * status=0 处理成功
-      * status=502参数错误
+      * status=Base_RetCode::PARAM_ERROR参数错误
       * status=API调用失败
       * data = array(      
       *         'CmdId' 消息类型(必须)
@@ -293,7 +293,7 @@ class Finance_Api {
       *
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}  
       * status=0 处理成功
-      * status=502参数错误
+      * status=Base_RetCode::PARAM_ERROR参数错误
       * status=API调用失败
       * data=array(
       *         'CmdId' 消息类型 (必须) 此处为Cash
@@ -331,7 +331,7 @@ class Finance_Api {
       *
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
       * status=0 处理成功
-      * status=502参数错误
+      * status=Base_RetCode::PARAM_ERROR 参数错误
       * status=API调用失败
       * data=array(
       *         'CmdId' 消息类型UserRegister 
@@ -362,7 +362,7 @@ class Finance_Api {
       *
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
       * status=0 处理成功
-      * status=502参数错误
+      * status=Base_RetCode::PARAM_ERROR 参数错误
       * status=API调用失败
       * data=array(
       *         'CmdId' 消息类型 
@@ -394,7 +394,7 @@ class Finance_Api {
       *
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
       * status=0 处理成功
-      * status=502参数错误
+      * status=Base_RetCode::PARAM_ERROR 参数错误
       * status=API调用失败
       * data=array(
       *         'CmdId' 消息类型(必须)
@@ -426,7 +426,7 @@ class Finance_Api {
       * @param integer $type 记录类型   0--充值  1--提现
       * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
       * status=0 处理成功
-      * status=502参数错误
+      * status=Base_RetCode::PARAM_ERROR 参数错误
       * status=API调用失败
       * data=array(
       *          'payType'交易类型,
@@ -436,7 +436,7 @@ class Finance_Api {
       *          'createTime'交易时间         
       * ) 
       */
-     public static function getRechargeWithDrawRecord($userId,$type=null) {
+     public static function getRechargeWithDrawRecord($userId,$type=null,$startTime,$endTime,$date) {
      	$financeLogic = new Finance_Logic_Base();
      	if($userId>0) {
      		$data = $financeLogic->getRechargeWithDrawRecord($userId);
@@ -448,7 +448,7 @@ class Finance_Api {
         } else {
         	Base_Log::fatal(array('msg'=>'invalid param','userId'=>$userId,));
         	$data = null;
-        	$ret = array('status'=>502,
+        	$ret = array('status'=>Base_RetCode::PARAM_ERROR,
         			'statusInfo'=>'invalid param',
         			'data' => $data,
         	);
@@ -482,7 +482,7 @@ class Finance_Api {
      		                      'userId'=>$userId,)
      		);
      		$data = null;
-     		$ret = array('status'=>502,
+     		$ret = array('status'=>Base_RetCode::PARAM_ERROR,
      				'statusInfo'=>'invalid param',
      				'data' => $data,
      		);	

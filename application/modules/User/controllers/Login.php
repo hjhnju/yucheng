@@ -1,6 +1,6 @@
 <?php
 /**
- * 用户注册相关操作
+ * 用户登录相关操作
  */
 class LoginController extends Base_Controller_Page{
     
@@ -24,11 +24,22 @@ class LoginController extends Base_Controller_Page{
        if('error' == $type) {
            return $this->ajaxError(User_RetCode::USER_NAME_ERROR,User_RetCode::getMsg(User_RetCode::USER_NAME_ERROR));
        }
+       
        $retUid = $this->loginLogic->login($type,$strName,$strPasswd);
        if(User_RetCode::INVALID_USER != $retUid) {
            Yaf_Session::getInstance()->set("LOGIN",$retUid);
            $this->uid = $retUid; 
            return $this->ajax();
+       }
+       $intWrongTimes = Yaf_Session::getInstance()->get("LOGIN_WRONG");
+       if(empty($intWrongTimes)){
+           Yaf_Session::getInstance()->set("LOGIN_WRONG",1);
+       }else{
+           Yaf_Session::getInstance()->set("LOGIN_WRONG",$intWrongTimes+=1);
+       }
+       if($intWrongTimes >= 3) {
+           $data = User_Api::getAuthImage();
+           return $this->ajaxError(User_RetCode::NEED_PICTURE,'',array('url'=>$data));
        }
        return $this->ajaxError(User_RetCode::USER_NAME_OR_PASSWD_ERROR,User_RetCode::getMsg(User_RetCode::USER_NAME_OR_PASSWD_ERROR));
     }
@@ -37,7 +48,7 @@ class LoginController extends Base_Controller_Page{
      * 根据用户的登录状态，获取用户信息
      * 若用户未登录，返回状态码504表示用户未登录
      */
-    public function getUserInfoAction(){
+    /*public function getUserInfoAction(){
         if(Yaf_Session::getInstance()->has("LOGIN")){
             $this->uid = Yaf_Session::getInstance()->get("LOGIN");
             $data = $this->loginLogic->getUserInfo(array($this->uid));
@@ -46,7 +57,7 @@ class LoginController extends Base_Controller_Page{
             return $this->ajax($data);
         }
         return $this->ajaxError(User_RetCode::DATA_NULL);
-    }
+    }*/
     
 
     /**
@@ -90,18 +101,14 @@ class LoginController extends Base_Controller_Page{
      */
     public function getAuthCodeAction(){
         $state = trim($_REQUEST['state']);
-        if($state == Yaf_Session::getInstance()->get("state")){
-            $strAuthCode = trim($_REQUEST['code']);
-            $arrData =  Base_Config::getConfig('login');
-            $redirect_url = $arrData['access_token_url'];
-            $arrData = $arrData[$this->type];
-            $host = $arrData['host'];
-            $url = $arrData['acctoken_url'].$arrData['appid']."&client_secret=".$arrData['appkey']."&code=$strAuthCode"."&redirect_uri=".$redirect_url;
-            $post = Base_Network_Http::instance()->url($host,$url);
-            $post->exec();
-        }else{
-            $this->ajaxError("csrf");
-        }
+        $strAuthCode = trim($_REQUEST['code']);
+        $arrData =  Base_Config::getConfig('login');
+        $redirect_url = $arrData['access_token_url'];
+        $arrData = $arrData[$this->type];
+        $host = $arrData['host'];
+        $url = $arrData['acctoken_url'].$arrData['appid']."&client_secret=".$arrData['appkey']."&code=$strAuthCode"."&redirect_uri=".$redirect_url;
+        $post = Base_Network_Http::instance()->url($host,$url);
+        $post->exec();
     }
     
     /**

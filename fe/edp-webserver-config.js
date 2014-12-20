@@ -45,7 +45,7 @@ exports.getLocations = function () {
             location: /^\/redirect-target/, 
             handler: content('redirectd!') 
         },
-        { 
+        {
             location: '/empty', 
             handler: empty() 
         },
@@ -73,6 +73,26 @@ exports.getLocations = function () {
             location: /\.tpl\.js($|\?)/,
             handler: [
                 html2js()
+            ]
+        },
+        {
+            location: function (request) {
+
+                var mapper = [
+                    '/user/regist/checkname',
+                    '/user/regist/checkphone',
+                    '/user/regist/sendsmscode',
+                    '/user/regist/index',
+                    '/user/regist/checkinviter',
+                    '/user/regist/checksmscode',
+                    '/user/login/index'
+                ];
+
+                return mapper.indexOf(request.pathname) !== -1;
+
+            },
+            handler: [
+                proxy('123.57.46.229', 8301)
             ]
         },
         { 

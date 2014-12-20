@@ -27,9 +27,17 @@ class User_RetCode extends Base_RetCode{
     
     const USER_NAME_OR_PASSWD_ERROR  = 1036; //用户名或密码错误
     
+    const USER_PASSWD_FORMAT_ERROR  = 1037; //用户密码格式错误
     
-    const INVALID_USER      = 0;  //无效的用户    
-        
+    const INVITER_NOT_EXIST         = 1039; //邀请人不存在
+    
+    
+    
+    //供自己内部使用
+    const INVALID_USER               = 0;  //无效的用户   
+
+    const REG_FORMAT_WRONG      = 0;  //用户名不合法
+  
     const INVALID_URL       = 0;  //无效的URL
     
     const BOUND             = 0; //用户已绑定第三方账号
@@ -48,6 +56,8 @@ class User_RetCode extends Base_RetCode{
         self::REFEREE_NOT_EXIST        => '推荐人不存在',
         self::REFEREE_SNYTEX_ERROR     => '推荐人拼写语法错误',
         self::REGIST_FAIL              => '注册失败',
+        self::INVITER_NOT_EXIST        => '邀请人不存在',
+        self::USER_PASSWD_FORMAT_ERROR => '用户密码格式错误',
     );
     
      /**

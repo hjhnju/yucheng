@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>账号注册</title>
+    <link rel="stylesheet" type="text/css" href="/src/setting/regist/index.less" />
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script>
+        require.config({
+            'baseUrl': '../../../src',
+            'paths': {
+            },
+            'packages': [
+                {
+                    'name': 'echarts',
+                    'location': '../dep/echarts/2.1.9/src',
+                    'main': 'echarts'
+                },
+                {
+                    'name': 'est',
+                    'location': '../dep/est/1.3.0/src'
+                },
+                {
+                    'name': 'etpl',
+                    'location': '../dep/etpl/3.0.0/src',
+                    'main': 'main'
+                },
+                {
+                    'name': 'jquery',
+                    'location': '../dep/jquery/1.9.1/src',
+                    'main': 'jquery.min'
+                },
+                {
+                    'name': 'moment',
+                    'location': '../dep/moment/2.7.0/src',
+                    'main': 'moment'
+                },
+                {
+                    'name': 'saber-emitter',
+                    'location': '../dep/saber-emitter/1.0.0/src',
+                    'main': 'emitter'
+                },
+                {
+                    'name': 'zrender',
+                    'location': '../dep/zrender/2.0.6/src',
+                    'main': 'zrender'
+                }
+            ]
+        });
+    </script>
+    <script>
+        require(["setting/regist/index"], function (main) {
+            main.init();
+        })
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-left">
+                <span class="header-left-phone">客服：400-888-6666</span>
+                <span class="header-left-time">(工作时间：9：00 - 21：00)</span>
+                <span class="header-left-attention">
+                    <span class="attention-span">关注我们：</span>
+                    <a class="attention-me xinlang" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                    <a class="attention-me weixin" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                </span>
+            </div>
+            <div class="header-right">
+                <div class="header-right-default">
+                    <a href="###" class="default-fastlogin">快速注册</a>
+                    <a class="default-login" href="###">登录</a>
+                </div>
+                <div class="header-right-login">
+                    <span class="default-fastlogin">您好，XXX</span>
+                    <a class="default-login" href="###">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="container">
+            <a href="###" class="logo"><img width="100%" height="100%" src="/src/common/img/logo.png" /></a>
+            <ul class="nav-item">
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">我来投资</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">我要借款</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">安全保障</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">新手指引</a>
+                </li>
+                <li class="nav-item-list last">
+                    <a href="###" class="nav-item-link">关于我们</a>
+                </li>
+            </ul>
+            <a href="###" class="nav-myaccount">我的账户</a>
+        </div>
+    </div>
+    <div class="login">
+        <div class="container">
+            <div class="login-left">
+                <div class="bound">
+                    <p class="bound-text">QQ用户:就像以往一样，请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击<a href="###">快速绑定</a></p>
+                </div>
+                <div class="login-left-box">
+                    <div class="login-left-title">账号注册</div>
+                    <div class="login-username">
+                        <input class="login-input" id="login-user" type="text" />
+                        <label class="user-lable" for="login-user">用户名</label>
+                        <div class="username-error" id="login-user-error"></div>
+                    </div>
+                    <div class="login-username">
+                        <input class="login-input" id="login-pwd" type="password" />
+                        <label class="user-lable" for="login-pwd">密码</label>
+                        <div class="username-error" id="login-pwd-error"></div>
+                    </div>
+                    <div class="login-username">
+                        <input class="login-input" id="login-phone" type="text" />
+                        <label class="user-lable" for="login-phone">电话</label>
+                        <div class="username-error" id="login-phone-error"></div>
+                    </div>
+                    <div class="login-username">
+                        <input class="login-input testing" id="login-testing" type="text" />
+                        <label class="user-lable" for="login-testing">验证码</label>
+                        <a href="###" class="login-username-testing">获取验证码</a>
+                        <div class="login-username-testing-box" id="testing-wait">10</div>
+                        <div class="username-error yanzma" id="login-testing-error">
+                        </div>
+                    </div>
+                    <div class="login-username">
+                        <input class="login-input login-tuijian" id="login-tuijian" type="text" />
+                        <label class="user-lable" for="login-tuijian">推荐人手机号(选填)</label>
+                        <div class="username-error" id="login-tuijian-error"></div>
+                    </div>
+                    <a href="###" class="login-fastlogin">快速注册</a>
+                    <div class="login-tiaoyue">
+                        <input type="checkbox" checked="checked" id="tiaoyue-itp" />
+                        <label class="tiaoyue-lable" for="tiaoyue-itp">同意<a href="###">用户条约</a></label>
+                        <span class="login-tiaoyue-have">已有账号？<a href="###">请登录</a></span>
+                    </div>
+                    <div class="login-thirdlogin">
+                        <span class="login-third-tx">您也可以使用第三方账号登录</span>
+                        <a href="http://www.weibo.com" class="login-third-qq weibo"></a>
+                        <a href="http://www.qq.com" class="login-third-qq qq"></a>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="login-right">
+                <a href="###" class="login-right-linkleft left"></a>
+                <div class="login-right-box">
+                    <ul class="login-item">
+                        <li class="login-item-list">
+                            <div class="introduce-list-logo baozhang"></div>
+                            <div class="introduce-list-title">全方位投资保障</div>
+                            <div class="introduce-list-title">安全稳健的互联网投机理财</div>
+                            <a class="introduce-list-link" href="###">
+                                <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
+                                <p class="introduce-list-link-text">第三方资金托管</p>
+                            </a>
+                        </li>
+                        <li class="login-item-list">
+                            <div class="introduce-list-logo highincome"></div>
+                            <div class="introduce-list-title">低门槛高收入</div>
+                            <a class="introduce-list-link" href="###">
+                                <p class="introduce-list-link-text">互联网理财100元起投</p>
+                                <p class="introduce-list-link-text">超过银行存款利率30倍</p>
+                            </a>
+                        </li>
+                        <li class="login-item-list">
+                            <div class="introduce-list-logo zhuanzhu"></div>
+                            <div class="introduce-list-title">专注教育行业</div>
+                            <a class="introduce-list-link" href="###">
+                                <p class="introduce-list-link-text">深挖教育行业特性</p>
+                                <p class="introduce-list-link-text">最权威教育行业评估体系</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <a href="###" class="login-right-linkleft right last"></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-left">
+                <ul class="footer-item">
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">关于我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">联系我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">新手指引</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">安全保障</a>
+                    </li>
+                </ul>
+                <div class="footer-site">
+                    <span class="footer-site-left"><span>@2014</span>北京百年兴教网络技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;京IPC证140334号</span>
+                    <span class="footer-site-me">
+                        关于我们:
+                        <a href="###" class="footer-site-me-xinlang xinlang"></a>
+                        <a href="###" class="footer-site-me-xinlang weixin"></a>
+                    </span>
+                </div>
+            </div>
+            <div class="footer-right">
+                客服电话：400-888-6666
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

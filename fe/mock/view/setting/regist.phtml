@@ -1,0 +1,103 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/setting/regist/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/regist/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="login">
+    <div class="container">
+        <div class="login-left">
+            <div class="bound">
+                <p class="bound-text">QQ用户:就像以往一样，请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击<a href="###">快速绑定</a></p>
+            </div>
+            <div class="login-left-box">
+                <div class="login-left-title">账号注册</div>
+                <div class="login-username">
+                    <input class="login-input" id="login-user" type="text" data-text="用户名" />
+                    <label class="user-lable" for="login-user">用户名</label>
+                    <div class="username-error" id="login-user-error"></div>
+                </div>
+                <div class="login-username">
+                    <input class="login-input" id="login-pwd" type="password" data-text="密码" />
+                    <label class="user-lable" for="login-pwd">密码</label>
+                    <div class="username-error" id="login-pwd-error"></div>
+                </div>
+                <div class="login-username">
+                    <input class="login-input" id="login-phone" type="text" data-text="电话" />
+                    <label class="user-lable" for="login-phone">电话</label>
+                    <div class="username-error" id="login-phone-error"></div>
+                </div>
+                <div class="login-username">
+                    <input class="login-input testing" id="login-testing" type="text" data-text="验证码" />
+                    <label class="user-lable" for="login-testing">验证码</label>
+                    <a href="###" class="login-username-testing">获取验证码</a>
+                    <div class="login-username-testing-box" id="testing-wait">10</div>
+                    <div class="username-error yanzma" id="login-testing-error">
+                    </div>
+                </div>
+                <div class="login-username">
+                    <input class="login-input login-tuijian" id="login-tuijian" type="text" />
+                    <label class="user-lable" for="login-tuijian">推荐人手机号(选填)</label>
+                    <div class="username-error" id="login-tuijian-error"></div>
+                </div>
+                <a href="###" class="login-fastlogin">快速注册</a>
+                <div class="login-tiaoyue">
+                    <input type="checkbox" checked id="tiaoyue-itp" />
+                    <label class="tiaoyue-lable" for="tiaoyue-itp">同意<a href="###">用户条约</a></label>
+                    <span class="login-tiaoyue-have">已有账号？<a href="###">请登录</a></span>
+                </div>
+                <div class="login-thirdlogin">
+                    <span class="login-third-tx">您也可以使用第三方账号登录</span>
+                    <a href="/user/login/auth?type=weibo" class="login-third-qq weibo"></a>
+                    <a href="/user/login/auth?type=qq" class="login-third-qq qq"></a>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="login-right">
+            <a class="login-right-linkleft left"></a>
+            <div class="login-right-box">
+                <ul class="login-item">
+                    <li class="login-item-list">
+                        <div class="introduce-list-logo baozhang"></div>
+                        <div class="introduce-list-title">全方位投资保障</div>
+                        <div class="introduce-list-title">安全稳健的互联网投机理财</div>
+                        <a class="introduce-list-link" href="###">
+                            <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
+                            <p class="introduce-list-link-text">第三方资金托管</p>
+                        </a>
+                    </li>
+                    <li class="login-item-list">
+                        <div class="introduce-list-logo highincome"></div>
+                        <div class="introduce-list-title">低门槛高收入</div>
+                        <a class="introduce-list-link" href="###">
+                            <p class="introduce-list-link-text">互联网理财100元起投</p>
+                            <p class="introduce-list-link-text">超过银行存款利率30倍</p>
+                        </a>
+                    </li>
+                    <li class="login-item-list">
+                        <div class="introduce-list-logo zhuanzhu"></div>
+                        <div class="introduce-list-title">专注教育行业</div>
+                        <a class="introduce-list-link" href="###">
+                            <p class="introduce-list-link-text">深挖教育行业特性</p>
+                            <p class="introduce-list-link-text">最权威教育行业评估体系</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <a class="login-right-linkleft right last"></a>
+        </div>
+    </div>
+</div>
+{%/block%}

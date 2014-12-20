@@ -56,7 +56,7 @@ define(function (require) {
                 method = 'post';
             }
 
-            if ((/EDIT|DEL|ADD/g).test(me.opt.url)) {
+            if ((/EDIT|DEL|ADD|CHECK/g).test(me.opt.url)) {
                 data = $.extend({}, Remoter.hooks, data);
             }
 
