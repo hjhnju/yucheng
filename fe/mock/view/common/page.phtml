@@ -3,7 +3,6 @@
 <script>
     require(['common/global']);
 </script>
-{%block name="script"%}{%/block%}
 </head>
 <body class="result-op">
     {%include file='common/header.phtml'%}
@@ -11,5 +10,7 @@
         {%block name="content"%}{%/block%}
     </div>
     {%include file='common/footer.phtml'%}
+
+    {%block name="script"%}{%/block%}
 </body>
 </html>

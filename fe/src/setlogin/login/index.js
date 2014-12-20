@@ -10,14 +10,13 @@ define(function (require) {
     var $ = require('jquery');
     var picScroll = require('setlogin/common/picScroll');
     var Remoter = require('common/Remoter');
-    var Index = new Remoter('LOGIN_INDEX');
+    var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
+
+    var loginError = $('#login-error');
 
     function init () {
-
-       picScroll.init();
+        picScroll.init();
         bindLogin();
-
-
     }
 
     function bindLogin() {
@@ -26,40 +25,42 @@ define(function (require) {
         $('.login-input').on({
             focus: function () {
                 var parent = $(this).parent();
-                var Error = parent.children('.username-error');
+                var error = parent.children('.username-error');
 
                 parent.removeClass('current');
-                Error.html('');
+                error.html('');
                 $(this).next().addClass('hidden');
             },
             blur: function () {
-
                 var value = $.trim($(this).val());
-
                 !value && $(this).next().removeClass('hidden');
-
             }
         });
 
 
-        $('.login-fastlogin').click(function (data) {
+        $('.login-fastlogin').click(function (e) {
+            e.preventDefault();
 
-            if(!$('#login-user').val() || !$('#login-pwd').val()) {
-                alert('用户名或者密码不能为空');
+            var user = $.trim($('#login-user').val());
+            var pwd = $.trim($('#login-pwd').val());
+
+            if(!user || !pwd) {
+                loginError.html('用户名或密码不能为空');
             }
             else {
-                Index.remote({
-                    name: $('#login-user').val(),
-                    passwd: $('#login-pwd').val()
+                loginCheck.remote({
+                    name: user,
+                    passwd: pwd
                 })
             }
         });
-        Index.on('success', function (data) {
+
+        loginCheck.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+                $('#login-error').html(data.statusInfo);
             }
             else {
-                alert('注册成功');
+                window.location.href = 'http://www.baidu.com';
             }
         })
 

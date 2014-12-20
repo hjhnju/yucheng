@@ -9,31 +9,44 @@
 define(function (require) {
 
     var $ = require('jquery');
-    var Remoter = require('common/Remoter');
-    var checkName = new Remoter('REGIST_CHECKNAME_EDIT');
-    var checkphone = new Remoter('REGIST_CHECKPHONE_EDIT');
-    var sendsmscode = new Remoter('REGIST_SENDSMSCODE_EDIT');
-    var getVericode = new Remoter('REGIST_GETVERICODE');
-    var checkInviter = new Remoter('REGIST_CHECKINVITER');
-    var Index = new Remoter('REGIST_INDEX');
+    var picScroll = require('../common/picScroll');
 
+    var Remoter = require('common/Remoter');
+    var checkName = new Remoter('REGIST_CHECKNAME_CHECK');
+    var checkphone = new Remoter('REGIST_CHECKPHONE_CHECK');
+    var sendsmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
+    var checkInviter = new Remoter('REGIST_CHECKINVITER_CHECK');
+    var checksmscode = new Remoter('REGIST_CHECKSMSCODE_CHECK');
+    var registSubmit = new Remoter('REGIST_INDEX_CHECK');
+
+    var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
+
+    /**
+     * input集合
+     * @type {Object}
+     */
     var loginInput = {
         loginUser: $('#login-user'),
         loginPwd: $('#login-pwd'),
         loginPhone: $('#login-phone'),
         loginTest: $('#login-testing'),
-        loginTuiJian: $('#login-login-tuijian')
-    }
+        loginTuiJian: $('#login-tuijian')
+    };
 
+    /**
+     * error集合
+     * @type {Object}
+     */
     var error = {
         userError: $('#login-user-error'),
         phoneError: $('#login-phone-error'),
         pwdError: $('#login-pwd-error'),
         testError: $('#login-testing-error'),
-        tuiJian: $('#login-tuijian-error')
+        tuiJianError: $('#login-tuijian-error')
     };
 
     function init() {
+        picScroll.init();
         bindEvents();
         callBack();
     }
@@ -43,114 +56,132 @@ define(function (require) {
         $('.login-input').on({
             focus: function () {
                 var parent = $(this).parent();
-                var Error = parent.children('.username-error');
+                var error = parent.children('.username-error');
 
                 parent.removeClass('current');
-                Error.html('');
+                error.html('');
                 $(this).next().addClass('hidden');
             },
             blur: function () {
-
+                var parent = $(this).parent();
                 var value = $.trim($(this).val());
+                var text = $(this).attr('data-text');
+                var id = $(this).attr('id');
 
-                !value && $(this).next().removeClass('hidden');
+                if (!value) {
+                    // 不是推荐
+                    if (!$(this).hasClass('login-tuijian')) {
+                        parent.addClass('current');
+                        $('#' + id + '-error').html(text + '不能为空');
+                    }
 
+                    $(this).next().removeClass('hidden');
+                }
             }
         });
 
         // 检查用户名
-        $('#login-user').blur(function () {
+        loginInput.loginUser.blur(function () {
             var value = $.trim($(this).val());
+
             if (value) {
                 checkName.remote({
                     name: value
                 });
             }
-            else {
-                error.userError.html('用户名不正确');
+
+        });
+
+        // 密码格式验证
+        loginInput.loginPwd.blur(function () {
+            var value = $.trim($(this).val());
+
+            if (!value) {
+                return;
+            }
+
+            if (!testPwd.test(value)) {
                 $(this).parent().addClass('current');
+                error.pwdError.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
             }
         });
 
 
-        //检查手机号
-        $('#login-phone').blur(function () {
+        // 检查手机号
+        loginInput.loginPhone.blur(function () {
             var value = $.trim($(this).val());
 
-            if(value) {
-
+            if (value) {
                 checkphone.remote({
                     phone: value
                 });
             }
-            else {
-                $(this).parent().addClass('current');
-                error.phoneError.html('手机号不存在');
-            }
+
         });
 
 
-        //检查验证码
-        $('#login-testing').blur(function (data) {
+        // 检查验证码
+        loginInput.loginTest.blur(function () {
             var value = $.trim($(this).val());
+            var phone = $.trim(loginInput.loginPhone.val());
 
-            if (value) {
-                sendsmscode.remote({
-                    ricode: value
-                });
-            }
-            else {
-                error.testError.html('验证码不能为空');
-                $(this).parent().addClass('current');
-            }
-        })
-
-        //检查是否获取验证码   这里没写完呢吧回家问老婆
-        $('.login-username-testing').click(function () {
-
-            getVericode.remote('post',{
-
-            })
-        });
-
-        //检查推荐人
-        $('#login-tuijian').blur(function (data) {
-            var value = $.trim($(this).val());
-
-            if(value) {
-                checkInviter.remote({
-                    inviter:value
-                });
-            }
-            else {
-
-            }
-        });
-
-        //检查快速注册
-        $('.login-fastlogin').click(function () {
-            var errors = $('.login-username.current');
-            var status = false;
-
-            if (errors.length) {
-                alert('不成功');
-                return;  //跳出click方法，不往下执行
-            }
-
-            $('.login-input').each(function () {
-
-                if (!$.trim($(this).val()) && !$(this).hasClass('login-tuijian')) {
-                    status = true;
-                    return;
-                }
-            });
-
-            if (status) {
-                alert('不成功');
+            if (!phone) {
+                loginInput.loginPhone.trigger('blur');
                 return;
             }
 
-            Index.remote({
+            if (value) {
+                checksmscode.remote({
+                    vericode: value,
+                    phone: phone
+                });
+            }
+
+        });
+
+        // 检查是否获取验证码
+        $('.login-username-testing').click(function (e) {
+            e.preventDefault();
+
+            var value = $.trim(loginInput.loginPhone.val());
+
+            if (value) {
+                sendsmscode.remote({
+                    phone: value
+                });
+            }
+
+        });
+
+        // 检查推荐人
+        loginInput.loginTuiJian.blur(function () {
+            var value = $.trim($(this).val());
+
+            if (value) {
+                checkInviter.remote({
+                    inviter: value
+                });
+            }
+
+        });
+
+        // 检查快速注册
+        $('.login-fastlogin').click(function (e) {
+            e.preventDefault();
+
+            $('.login-input').trigger('blur');
+            var errors = $('.login-username.current');
+
+            if (!$('#tiaoyue-itp')[0].checked) {
+                alert('请同意用户条约');
+                return;
+            }
+
+            if (errors.length) {
+                return;  // 跳出click方法，不往下执行
+            }
+
+            registSubmit.remote({
                 name: loginInput.loginUser.val(),
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
@@ -168,72 +199,76 @@ define(function (require) {
         // checkNameCb
         checkName.on('success', function (data) {
             if (data && data.bizError) {
-                alert(data.statusInfo);
+                loginInput.loginUser.parent().addClass('current');
+                error.userError.html(data.statusInfo);
             }
             else {
-                error.userError.append('<span class="username-error-span"></span>');
+                error.userError.html('<span class="username-error-span"></span>');
             }
         });
 
-        //checkphoneCb
-        checkphone.on('success',function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
+        // checkphoneCb
+        checkphone.on('success', function (data) {
+            if (data && data.bizError) {
+                loginInput.loginPhone.parent().addClass('current');
+                error.phoneError.html(data.statusInfo);
             }
             else {
-                error.phoneError.append('<span class="username-error-span"></span>');
-                //alert('手机可用')
+                error.phoneError.html('<span class="username-error-span"></span>');
             }
         });
 
-        //sendsmscodeCb
+        // checkInviterCb
+        checkInviter.on('success', function (data) {
+            if (data && data.bizError) {
+                loginInput.loginTuiJian.parent().addClass('current');
+                error.tuiJianError.html(data.statusInfo);
+            }
+            else {
+                error.tuiJianError.html('<span class="username-error-span"></span>');
+            }
+        });
+
+        // sendsmscodeCb
         sendsmscode.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo)
-            }
-            else {
-               //alert('你成功了');
-                error.testError.append('<span class="username-error-span"></span>');
-            }
-        });
-
-        //checkInviterCb
-        checkInviter.on('success',function (data) {
-           if(data && data.bizError) {
-               alert(data.statusInfo);
-           }
-            else {
-
-           }
-        });
-
-        //getVericodeCb
-        getVericode.on('success',function (data) {
-            if(data && data.bizError) {
+            if (data && data.bizError) {
                 alert(data.statusInfo);
             }
             else {
-                var value = + $('#testing-wait').text();
-                $('#testing-wait').addClass('show');
+                var wait = $('#testing-wait');
+                var value = +wait.text();
+                wait.addClass('show');
+
                 timer = setInterval(function () {
 
-                    //console.log(value);
-
-                    $('#testing-wait').text(value--);
-                    if(value < 0) {
+                    wait.text(value--);
+                    if (value < 0) {
                         clearInterval(timer);
-                        $('#testing-wait').removeClass('show');
-                        $('#testing-wait').text('10');
+                        wait.removeClass('show');
+                        wait.text('10');
                     }
-
-                },1000);
-
-
+                }, 1000);
             }
         });
 
+        checksmscode.on('success', function (data) {
+            if (data && data.bizError) {
+                loginInput.loginTest.parent().addClass('current');
+                error.testError.html(data.statusInfo);
+            }
+            else {
+                error.testError.html('<span class="username-error-span"></span>');
+            }
+        });
 
-
+        registSubmit.on('success', function (data) {
+            if (data && data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                window.location.href = 'http://www.baidu.com';
+            }
+        });
     }
     return {
         init: init
