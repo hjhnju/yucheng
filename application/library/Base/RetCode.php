@@ -13,6 +13,9 @@ class Base_RetCode {
      //默认错误
     const UNKNOWN_ERROR     = 99; //未知错误
 
+    //需要图片验证码验证
+    const VARIFY_IMGCODE    = 101; //图片验证码
+
     //重定向
     const REDIRECT          = 302; //前端重定向
 

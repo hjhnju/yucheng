@@ -105,11 +105,15 @@ class Base_Object {
         if (empty($data)) {
             return false;
         }
-        foreach ($this->properties as $field => $prop) {
-            if (isset($this->intProps[$field])) {
-                $data[$field] = intval($data[$field]);
+        foreach ($data as $field => $val) {
+            if (!isset($this->properties[$field])) {
+                echo "!isset $field \n";
+                continue;
             }
-            $this->set($prop, $data[$field]);
+            if (isset($this->intProps[$field])) {
+                $val = intval($val);
+            }
+            $this->set($this->properties[$field], $val);
         }
     }
     
@@ -195,7 +199,6 @@ class Base_Object {
      */
     public function save() {
         $data = $this->prepareData();
-        
         $this->initDB();
         if ($this->get($this->prikey)) {
             return $this->update($data);
