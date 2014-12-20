@@ -27,7 +27,8 @@ class CashController extends Base_Controller_Response {
 	}
 	
 	/**
-	 * 接口 /account/cash/rechargeWithdrawList
+	 * 接口 /account/cash/list
+	 * 获取充值提现列表
 	 * @param type 0--充值  1--提现
 	 * @param startTime 
 	 * @param endTime 
@@ -36,14 +37,14 @@ class CashController extends Base_Controller_Response {
 	 * status 0: 处理成功
 	 * status 1107:获取充值提现列表失败
 	 */
-	public function rechargeWithdrawListAction() {
+	public function ListAction() {
 		$type = $_REQUEST['type'];
 		$startTime = $_REQUEST['startTime'];
 		$endTime = $_REQUEST['startTime'];
 		$date = $_REQUEST['date'];
 		//$userId = User_Api::getUserId()
 		$ret = Finance_Api::getRechargeWithDrawRecord($userId,$type,$startTime,$endTime,$date);
-		//判断$ret合法性
+		//判断$ret合法性   
 		//合法：
 		//$this->output($ret);
 		//非法

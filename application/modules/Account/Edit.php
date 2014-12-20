@@ -11,7 +11,6 @@ class EditController extends Base_Controller_Response {
      * 用户密码修改接口
      * @param $oldpwd
      * @param $newpwd
-     * @param $newpwd2
      * @param $token, csrf token
      * @return 标准json格式
      * status 0: 成功

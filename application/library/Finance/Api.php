@@ -130,34 +130,14 @@ class Finance_Api {
      *        )
      * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
      * @param String $FreezeOrdId 冻结订单号(optional)    
-     * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}  
-     * status=0 请求成功 返回正常信息  
-     * status=  请求API出错  
-     * status=Base_RetCode::PARAM_ERROR 参数错误  
-     * data = array(
-     *     'CmdId' 消息类型  
-     *     'RespCode' 应答返回码    
-     *     'RespDesc' 应答描述   
-     *     'MerCustId' 商户客户号     
-     *     'OrdId' 订单号   
-     *     'OrdDate' 订单日期       
-     *     'TransAmt' 交易金额       
-     *     'UsrCustId' 用户客户号   
-     *     'BgRetUrl' 商户后台应答地址   
-     *     'IsFreeze' 是否冻结    
-     *     'ChkValue' 签名  
-     *     'TrxId' 本平台 交易唯一标识              
-     *     'FreezeOrdId' 冻结订单号     
-     *     'FreezeTrxId' 冻结标识   
-     *     'RetUrl' 页面返回URL          
-     *     'MerPriv' 商户私有域   
-     *     'RespExt' 返参扩展域   
+     * @return string requestURL 请求汇付的URL  
      * )   
      * 
 	 */
 	public static function initiativeTender($transAmt,$usrCustId,$maxTenderRate,$borrowDetail=null,$isFreeze=true,$freezeOrdId='') {
-		$financeLogic = new Finance_Logic_Base();
-		$orderId = $financeLogic->generateOrderId();
+	//	$financeLogic = new Finance_Logic_Base();
+	//	$orderId = $financeLogic->generateOrderId();
+		return " ";
 	}
 	
 	/**
@@ -166,30 +146,10 @@ class Finance_Api {
 	 * @param String usrCustId 用户商户号   (required)
 	 * @param boolean isUnFreeze 是否解冻(require)  true--解冻  false--不解冻
 	 * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
-	 * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
-	 * status=0 请求成功 返回正常信息
-     * status=Base_RetCode::PARAM_ERROR  参数错误 
-     * status=  请求API出错
-     * data = array(   
-     *     'Version' 版本号 
-     *     'CmdId'  消息类型 
-     *     'MerCusId' 商户客户号  
-     *     'OrdId' 订单号 
-     *     'OrdDate' 订单日期 
-     *     'TransAmt' 交易金额 
-     *     'UrsrCustId' 用户客户号  
-     *     'IsUnFreeze' 是否解冻   
-     *     'BgRetUrl' 商户后台应答地址  
-     *     'ChkValue' 签名 
-     *     'UnFreezeOrdId' 解冻订单号  
-     *     'FreezeTrxId' 冻结标识 
-     *     'RetUrl' 页面返回URL    
-     *     'MerPriv' 商户私有域     
-     * )
-	 * 
+	 * @return bool true--撤销成功  false--撤销失败
 	 */
 	public static function tenderCancel($transAmt,$usrCustId,$isUnFreeze,$UnFreezeOrdId='') {
-		
+		return true;
 	}
 	
 	/**
@@ -214,33 +174,7 @@ class Finance_Api {
      *     ) 
      * @param array reqExt 扩展请求参数(optional) {'VocherAmt'=>'50.00',}  VocherAmt为代金券金额  
      * 
-     * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>}   
-     * status=0 请求成功 返回正常信息  
-     * status=Base_RetCode::PARAM_ERROR  参数错误
-     * status=  请求API出错  
-     * data=array(  
-     *     'CmdId'  消息类型   
-     *     'MerCusId' 商户客户号    
-     *     'OrdId' 订单号   
-     *     'OrdDate' 订单日期   
-     *     'OutCustId' 出账客户号  
-     *     'OutAcctId'出账子账户  
-     *     'TransAmt' 交易金额   
-     *     'Fee' 扣款手续费  
-     *     'InCustId' 入账客户号  
-     *     'InAcctId' 入账子账户  
-     *     'SubOrdId' 订单号  
-     *     'SubOrdDate' 订单日期     
-     *     'FeeObjFlag' 续费收取对象标志I/O  
-     *     'IsDefault' 是否默认  
-     *     'IsUnFreeze' 是否解冻  
-     *     'UnFreezeOrdId' 解冻订单号    
-     *     'FreezeTrxId' 冻结标识   
-     *     'BgRetUrl' 商户后台应答地址      
-     *     'MerPriv' 商户私有域  
-     *     'RespExt'返参扩展域  
-     *     'ChkValue' 签名  
-     * ) 
+     * @return bool true--成功  false--失败
      * 
 	 */
      public static function loans($outCustId,$transAmt,$fee,$inCustId,$feeObjFlag,$isDefault,$isUnFreeze,$unFreezeOrdId='',$DivDetails=null,$reqExt='') {
@@ -449,7 +383,7 @@ class Finance_Api {
         	Base_Log::fatal(array('msg'=>'invalid param','userId'=>$userId,));
         	$data = null;
         	$ret = array('status'=>Base_RetCode::PARAM_ERROR,
-        			'statusInfo'=>'invalid param',
+        			'statusInfo'=>Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR),
         			'data' => $data,
         	);
         }
@@ -483,7 +417,7 @@ class Finance_Api {
      		);
      		$data = null;
      		$ret = array('status'=>Base_RetCode::PARAM_ERROR,
-     				'statusInfo'=>'invalid param',
+     				'statusInfo'=>Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR),
      				'data' => $data,
      		);	
      	}

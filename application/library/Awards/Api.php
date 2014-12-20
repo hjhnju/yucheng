@@ -12,8 +12,14 @@ class Awards_Api {
      * 不管是否有邀请者, 注册成功后均通知
      * @param $userid
      * @param $inviterid, default null
+     * @return array || false
      */
     public static function registNotify($userid, $inviterid = null){
+    	
+    	if(is_null($userid) || $userid<0 ) {
+    		Base_Log::error("invalid param",array('userid'=>$userid));
+    		return false;
+    	}
         $logic = new Awards_Logic_Awards();
         $ret   = $logic->awardWhenRegist($userid, $inviterid);
         if(!$ret){
@@ -30,9 +36,13 @@ class Awards_Api {
      * 2. 判断奖励条件是否达成
      * 3. 修改达成条件的状态
      * @param integer $userid
-     * @return array
+     * @return array || false
      */
     public static function getAwards($userid) {
+    	if(is_null($userid) || $userid<0 ) {
+    		Base_Log::error("invalid param",array('userid'=>$userid));
+    		return false;
+    	}
         $logic = new Awards_Logic_Awards();
         return $logic->getAwards($userid);
     }
@@ -41,9 +51,13 @@ class Awards_Api {
      * Awards_Api::getInviteUrl($userid)
      * 获取个人邀请URL
      * @param integer $userid
-     * @return string $url, such as 'http://www.xingjiaodai.com/invite/{$code}'
+     * @return string $url, such as 'http://www.xingjiaodai.com/invite/{$code}' || false
      */
     public static function getInviteUrl($userid) {
+    	if(is_null($userid) || $userid<0 ) {
+    		Base_Log::error("invalid param",array('userid'=>$userid));
+    		return false;
+    	}
         $logic = new Awards_Logic_Invite();
         return $logic->getInviteUrl($userid);
     }

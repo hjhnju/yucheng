@@ -212,6 +212,25 @@ class Base_List {
     }
     
     /**
+     * 在数据列表中连接类型字段名,会在列表行中增加$type_field的字段名，值是对应的类型
+     * @param Base_Type $type
+     * @param string $field
+     * @param string $type_field
+     */
+    public function joinType($type, $field = '', $type_field = '') {
+        $this->fetch();
+        if (empty($field)) {
+            $field = $type->getDefaultKey();
+        }
+        if (empty($type_field)) {
+            $type_field = $type->getDefaultField();
+        }
+        foreach ($this->data as $key => $val) {
+            $this->data[$key][$type_field] = $type->getTypeName($val[$field]);
+        }
+    }
+    
+    /**
      * 将数据转换成数组
      * @return array
      */

@@ -17,6 +17,6 @@ class OverviewController extends Base_Controller_Response {
 	 * 2.调用Invest_Api获取收益信息
 	 */
 	public function indexAction(){
-
+    
 	}
 }
