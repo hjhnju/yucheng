@@ -6,11 +6,11 @@ class Awards_Logic_Invite {
     /**
      * 获取个人邀请url
      * @param integer $userid
-     * @return string $url, such as 'http://www.xingjiaodai.com/invite/{$code}'
+     * @return string $url, such as 'http://www.xingjiaodai.com/i/{$code}'
      */
     public function getInviteUrl($userid) {
         $code = $this->encode($userid);
-        return Base_Config::getConfig('webroot') . "/invite/$code";
+        return Base_Config::getConfig('webroot') . "/i/$code";
     }
 
     /**
