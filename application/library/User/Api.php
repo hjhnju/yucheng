@@ -57,7 +57,7 @@ class User_Api{
      */
     public function setRealName($uid,$strRealName){
         $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid,'realname'=>$strRealName));
+        $objInfo->fetch(array('userid'=>$uid));
         $objInfo->realname = $strRealName;
         $ret = $objInfo->save();
         return $ret;
@@ -71,7 +71,7 @@ class User_Api{
      */
     public function setEmail($uid,$strEmail){
         $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid,'email'=>$strEmail));
+        $objInfo->fetch(array('userid'=>$uid));
         $objInfo->email = $strEmail;
         $ret = $objInfo->save();
         return $ret;
@@ -83,10 +83,13 @@ class User_Api{
      * @param unknown $strPasswd
      * @return boolean
      */
-    public function setPasswd($uid,$strPasswd){
+    public function setPasswd($uid,$strPasswdOld,$strPasswdNew){
         $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswd)));
-        $objInfo->passwd = md5($strPasswd);
+        $objInfo->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
+        if(empty($objInfo->userid)){
+            return false;
+        }
+        $objInfo->passwd = md5($strPasswdNew);
         $ret = $objInfo->save();
         return $ret;
     }
@@ -99,7 +102,7 @@ class User_Api{
      */
     public static function setHuifuId($uid,$strHuifuid){
         $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid,'huifuid'=>$strHuifuid));
+        $objInfo->fetch(array('userid'=>$uid));
         $objInfo->huifuid = $strHuifuid;
         $ret = $objInfo->save();
         return $ret;
