@@ -83,7 +83,7 @@ class Loan_Object_Attach extends Base_Object {
     public $userId;
 
     /**
-     * 类别
+     * 类别 1认证 2合同 3实地照片
      * @var integer
      */
     public $type;

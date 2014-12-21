@@ -4,7 +4,7 @@
  * @author jiangsongfang
  *
  */
-class CreateController extends Base_Controller_Response {
+class CreateController extends Base_Controller_Admin {
 
     /**
      * 需要验证的参数值

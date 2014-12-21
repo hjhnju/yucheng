@@ -26,7 +26,7 @@ class Loan_Object_Loan extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'user_id', 'title', 'pic', 'content', 'type_id', 'cat_id', 'duration', 'level', 'amount', 'interest', 'guarantee_type', 'audit_info', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
+    protected $fields = array('id', 'user_id', 'title', 'pic', 'content', 'type_id', 'cat_id', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
 
     /**
      * 字段与属性隐射关系
@@ -44,7 +44,10 @@ class Loan_Object_Loan extends Base_Object {
         'level'           => 'level',
         'amount'          => 'amount',
         'interest'        => 'interest',
-        'guarantee_type'  => 'guaranteeType',
+        'invest_cnt'      => 'investCnt',
+        'invest_amount'   => 'investAmount',
+        'safe_id'         => 'safeId',
+        'refund_type'     => 'refundType',
         'audit_info'      => 'auditInfo',
         'deadline'        => 'deadline',
         'status'          => 'status',
@@ -66,7 +69,9 @@ class Loan_Object_Loan extends Base_Object {
         'cat_id'          => 1,
         'duration'        => 1,
         'level'           => 1,
-        'guarantee_type'  => 1,
+        'invest_cnt'      => 1,
+        'safe_id'         => 1,
+        'refund_type'     => 1,
         'status'          => 1,
         'create_uid'      => 1,
     );
@@ -80,7 +85,7 @@ class Loan_Object_Loan extends Base_Object {
     }
 
     /**
-     * 
+     * 借款ID
      * @var integer
      */
     public $id;
@@ -146,10 +151,28 @@ class Loan_Object_Loan extends Base_Object {
     public $interest;
 
     /**
-     * 担保类型
+     * 投标总数
      * @var integer
      */
-    public $guaranteeType;
+    public $investCnt;
+
+    /**
+     * 已投资金额
+     * @var number
+     */
+    public $investAmount;
+
+    /**
+     * 保障方式
+     * @var integer
+     */
+    public $safeId;
+
+    /**
+     * 还款方式
+     * @var integer
+     */
+    public $refundType;
 
     /**
      * 审核信息
