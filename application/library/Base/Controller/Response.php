@@ -8,86 +8,63 @@ class Base_Controller_Response extends Base_Controller_Abstract {
     
     protected $outputView = 'output.phtml';
 
-    public function init () {
+    public function init() {
         parent::init();
-
-        $webroot = Base_Config::getConfig('web.root');
-        $this->getView()->assign('webroot', $webroot);
-
-        //打日志
-        $this->baselog();
     }
-
-    public function redirect($url){
-        parent::redirect($url);
+    
+    protected function checkParam($param, $data) {
+        foreach ($param as $key => $msg) {
+            if (empty($data[$key])) {
+                $this->outputError(Base_RetCode::PARAM_ERROR, $msg);
+                return false;
+            }
+        }
+        return true;
     }
-
-    /**
-     * log for every page
-     */
-    protected function baselog(){         
-        //解析du串
-        Base_Log::notice(array(
-            'controller' => $this->getRequest()->getControllerName(),
-            'action'     => $this->getRequest()->getActionName(),
-            //'userid'     => $this->_userid,
-            'type'       => 'page',
-        ));
+    
+    protected function isAjax() {
+        if ($this->ajax == true) {
+            return true;
+        }
+        if (!empty($_REQUEST['ajax'])) {
+            return true;
+        }
+        return false;
     }
-	
-	protected function checkParam($param, $data) {
-	    foreach ($param as $key => $msg) {
-    	    if (empty($data[$key])) {
-    	        $this->outputError(Base_RetCode::PARAM_ERROR, $msg);
-    	        return false;
-    	    }
-	    }
-	    return true;
-	}
-	
-	protected function isAjax() {
-	    if ($this->ajax == true) {
-	        return true;
-	    }
-	    if (!empty($_REQUEST['ajax'])) {
-	        return true;
-	    }
-	    return false;
-	}
-	
-	public function output($arrData = array(), $errorMsg = '', $status = 0){
-	    if ($this->isAjax()) {
-	        $this->ajax($arrData, $errorMsg, $status);
-	    } else {
-	        $this->_view->assign('output', 1);
+    
+    public function output($arrData = array(), $errorMsg = '', $status = 0){
+        if ($this->isAjax()) {
+            $this->ajax($arrData, $errorMsg, $status);
+        } else {
+            $this->_view->assign('output', 1);
             $arrRtInfo = array();
             $arrRtInfo['status'] = $status;
             $arrRtInfo['statusInfo'] = $errorMsg;
             $arrRtInfo['data']= $arrData;
-	        $this->_view->assign('result', $arrRtInfo);
-	        
+            $this->_view->assign('result', $arrRtInfo);
+            
             Yaf_Dispatcher::getInstance()->disableView();
             //$this->_view->render($this->outputView);
-	        $this->_response->setBody($this->_view->render($this->outputView));
-	    }
-	}
-	
-	public function outputError($errorCode = Base_RetCode::UNKNOWN_ERROR, $errorMsg = '', $arrData = array()) {
-	    if ($this->isAjax()) {
-	        $this->ajaxError($errorCode, $errorMsg, $arrData);
-	    } else {
-	        $this->_view->assign('output', 1);
+            $this->_response->setBody($this->_view->render($this->outputView));
+        }
+    }
+    
+    public function outputError($errorCode = Base_RetCode::UNKNOWN_ERROR, $errorMsg = '', $arrData = array()) {
+        if ($this->isAjax()) {
+            $this->ajaxError($errorCode, $errorMsg, $arrData);
+        } else {
+            $this->_view->assign('output', 1);
             $arrRtInfo = array();
             $arrRtInfo['status'] = $errorCode;
             $arrRtInfo['statusInfo'] = $errorMsg;
             $arrRtInfo['data']= $arrData;
-	        $this->_view->assign('result', $arrRtInfo);
-	        
+            $this->_view->assign('result', $arrRtInfo);
+            
             Yaf_Dispatcher::getInstance()->disableView();
             //$this->_view->render($this->outputView);
-	        $this->_response->setBody($this->_view->render($this->outputView));
-	    }
-	}
+            $this->_response->setBody($this->_view->render($this->outputView));
+        }
+    }
     
     public function ajax($arrData = array(), $errorMsg = '', $status = 0){
         Yaf_Dispatcher::getInstance()->disableView();
@@ -104,8 +81,8 @@ class Base_Controller_Response extends Base_Controller_Abstract {
         $this->_response->setBody($output);
     }
     
-	//将转义后的字符进行decode处理，输出未转义原样
-	public function ajaxDecode($arrData = array(), $errorMsg = '', $status = 0){
+    //将转义后的字符进行decode处理，输出未转义原样
+    public function ajaxDecode($arrData = array(), $errorMsg = '', $status = 0){
         Yaf_Dispatcher::getInstance()->disableView();
         @header("Content-Type: application/json; charset=UTF-8");
 

@@ -14,7 +14,7 @@ class User_Object_Login extends Base_Object {
      * 主键
      * @var string
      */
-    protected $prikey = 'uid';
+    protected $prikey = 'userid';
 
     /**
      * 类名
@@ -26,20 +26,20 @@ class User_Object_Login extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('uid', 'status', 'name', 'passwd', 'phone', 'email', 'ip', 'login_time', 'create_time');
+    protected $fields = array('userid', 'status', 'name', 'passwd', 'phone', 'email', 'lastip', 'login_time', 'create_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'uid'         => 'uid',
+        'userid'      => 'userid',
         'status'      => 'status',
         'name'        => 'name',
         'passwd'      => 'passwd',
         'phone'       => 'phone',
         'email'       => 'email',
-        'ip'          => 'ip',
+        'lastip'      => 'lastip',
         'login_time'  => 'loginTime',
         'create_time' => 'createTime',
     );
@@ -63,7 +63,7 @@ class User_Object_Login extends Base_Object {
      * 用户id
      * @var 
      */
-    public $uid;
+    public $userid;
 
     /**
      * 是否允许登录
@@ -96,20 +96,20 @@ class User_Object_Login extends Base_Object {
     public $email;
 
     /**
-     * IP
+     * 最近登陆ip
      * @var string
      */
-    public $ip;
+    public $lastip;
 
     /**
      * 最近一次登录时间
-     * @var string
+     * @var 
      */
     public $loginTime;
 
     /**
      * 注册时间
-     * @var string
+     * @var 
      */
     public $createTime;
 

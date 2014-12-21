@@ -2,7 +2,7 @@
 /**
  * 用户资料查询修改Logic层
  */
-class User_Logic_Material{
+class User_Logic_Info{
     
     public function __construct(){
         $this->modMaterial = new MaterialModel();
@@ -63,5 +63,14 @@ class User_Logic_Material{
     public function setUserInfo($arrInfo){
         $ret = $this->modMaterial->updateUserInfo($arrInfo);
         return $ret;
+    }
+
+    /**
+     * 根据用户id获取用户信息
+     * @author  hejunhua
+     */
+    public function getUserObject($intUserid){
+        $objUser = new User_Object($intUserid);
+        return $objUser;
     }
 }

@@ -1,26 +1,26 @@
 <?php
 /**
- *  列表类
+ * 用户登录历史纪录表 列表类
  * @author 
  */
-class User_List_Info extends Base_List {
+class User_List_Record extends Base_List {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'user_info';
+    protected $table = 'user_record';
 
     /**
      * 主键
      * @var string
      */
-    protected $prikey = 'userid';
+    protected $prikey = 'id';
 
     /**
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'usertype', 'realname', 'certificate_type', 'certificate_content', 'headurl', 'huifuid', 'create_time', 'update_time');
+    protected $fields = array('id', 'userid', 'status', 'ip', 'create_time');
 
     /**
      * 整数类型的字段

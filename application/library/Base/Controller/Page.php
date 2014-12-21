@@ -3,7 +3,7 @@
  * 用户页面controller基础类
  * @author hejunhua <hejunhua@baidu.com>
  */
-class Base_Controller_Page extends Base_Controller_Abstract {
+class Base_Controller_Page extends Base_Controller_Response {
 
     public function init () {
         parent::init();
@@ -13,6 +13,10 @@ class Base_Controller_Page extends Base_Controller_Abstract {
 
         //打日志
         $this->baselog();
+    }
+    
+    protected function isAjax() {
+        return false;
     }
 
     public function redirect($url){
