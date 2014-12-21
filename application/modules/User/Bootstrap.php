@@ -41,8 +41,8 @@ class Bootstrap extends Base_Bootstrap{
     }
 
     public function _initRoute(Yaf_Dispatcher $dispatcher) {
-        //$router = Yaf_Dispatcher::getInstance()->getRouter();
-        //$router->addConfig(Base_Config::getConfig('routes', CONF_PATH . '/route.ini'));
-        //$routes = $router->getRoutes();
+        $router = Yaf_Dispatcher::getInstance()->getRouter();
+        $router->addConfig(Base_Config::getConfig('user', CONF_PATH . '/route.ini'));
+        $routes = $router->getRoutes();
     }
 }

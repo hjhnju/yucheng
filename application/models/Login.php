@@ -49,7 +49,7 @@ class LoginModel extends BaseModel {
         $strSql = "SELECT  `uid` FROM `user_login` WHERE $type = '$strName' AND `passwd` = '$strPasswd' LIMIT 0, 1";
         try{
             $ret = $this->db->fetchOne($strSql);
-            if($ret == User_RetCode::INVALID_USER){
+            if(!$ret){
                 $this->addRecord(0, User_RetCode::DB_ERROR, $ip);
                 return User_RetCode::INVALID_USER;
             }
@@ -72,7 +72,7 @@ class LoginModel extends BaseModel {
      * 检查用户是否绑定
      */
      public function checkBing($openid,$intType){
-         $strSql = "SELECT  `uid` FROM `user_third_login` WHERE `openid` = '$openid' ADN `type` = $intType";
+         $strSql = "SELECT  `uid` FROM `user_thirdlogin` WHERE `openid` = '$openid' ADN `type` = $intType";
          try{
              return $this->db->fetchOne($strSql);
          }catch(Base_Exception $ex){
@@ -85,7 +85,7 @@ class LoginModel extends BaseModel {
      * 设置用户绑定
      */
     public function setBinding($openid,$intType){
-        $strSql  = "INSERT INTO `user_third_login` (`uid`,`type`,`openid`) VALUES(";
+        $strSql  = "INSERT INTO `user_thirdlogin` (`uid`,`type`,`openid`) VALUES(";
         $strSql .= $uid.',"';
         $strSql .= $openid.'",';
         $strSql .= $intType.",";

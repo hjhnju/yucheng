@@ -31,7 +31,9 @@ class User_RetCode extends Base_RetCode{
     
     const INVITER_NOT_EXIST         = 1039; //邀请人不存在
     
+    const IMAGE_CODE_WRONG          = 1040; //图片验证码错误
     
+    const GET_AUTHCODE_FAIL         = 1041; //第三方登录授权出错
     
     //供自己内部使用
     const INVALID_USER               = 0;  //无效的用户   
@@ -58,6 +60,12 @@ class User_RetCode extends Base_RetCode{
         self::REGIST_FAIL              => '注册失败',
         self::INVITER_NOT_EXIST        => '邀请人不存在',
         self::USER_PASSWD_FORMAT_ERROR => '用户密码格式错误',
+        self::USER_NAME_OR_PASSWD_ERROR => '用户名或密码错误',
+        self::USER_NAME_ERROR          => '用户名错误',
+        
+        self::IMAGE_CODE_WRONG         => '图形验证码错误',
+        self::GET_AUTHCODE_FAIL        => '第三方登录授权出错',
+        
     );
     
      /**
