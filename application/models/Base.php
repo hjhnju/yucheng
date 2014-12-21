@@ -4,6 +4,9 @@
  */
 class BaseModel {
 
+    /**
+     * @var Base_TopazDb
+     */
     protected $db;
 
     public function __construct() {
