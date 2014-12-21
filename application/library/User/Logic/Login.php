@@ -102,10 +102,24 @@ class User_Logic_Login{
     }
     
     /**
-     * 获取第三方站点信息
+     * 获取第三方站点信息,目前只返回nickname
      */
-    public function getUserThirdInfo(){
-        
+    public function getUserThirdInfo($openid){
+        $strType = Yaf_Session::getInstance()->get("third_login_type");
+        $key = $_COOKIE['access_key'];
+        $access_token = Base_Redis::getInstance()->get("access_token".$strType.$key);
+        $strType = Yaf_Session::getInstance()->get("third_login_type");
+        $arrData =  Base_Config::getConfig('login');
+        $arrData = $arrData[$strType];
+        $host = $arrData['host'];
+        $redirect_url = $arrData['getinfo_url'].$access_token.'openid='.$openid;
+        $post = Base_Network_Http::instance()->url($host,$redirect_url);
+        $response = $post->exec();
+        $user = json_decode($response);
+        if (!isset($user->nickname)){
+            return $this->ajaxError();
+        }
+        return $user->nickname;
     }
     
     /**
@@ -113,11 +127,39 @@ class User_Logic_Login{
      * @param unknown $openid
      * @param unknown $intType
      */
-    public function checkBind($openid,$intType){
+    public function checkBind($openid,$strType){
         $objThird = new User_Object_Third();
-        $objThird->fetch(array('openid'=>$openid,'authtype'=>$intType));
-        $userid = $objThird->userid;
-        return $userid;
+        $objThird->fetch(array('openid'=>$openid,'authtype'=>$this->getAuthType($strType)));
+        if(empty($objThird->userid)){
+            return User_RetCode::UNBOUND;
+        }   
+        return User_RetCode::BOUND;
+    }
+    
+    /**
+     * 设置第三方绑定状态
+     * @param unknown $openid
+     * @param unknown $type
+     * @param unknown $strName
+     * @param unknown $strPasswd
+     */
+    public function setBind($openid, $type,$strName,$strPasswd){
+        $objLogin         = new User_Object_Login();
+        $objLogin->fetch(array($this->checkType($strName)=>$strName,'passwd'=>md5($strPasswd)));
+        if(empty($objLogin->userid)){
+            return User_RetCode::UNBOUND;
+        }
+        $this->setLogin($objLogin);
+        $objThird     = new User_Object_Third();
+        $objThird->authtype = $this->getAuthType($type);
+        $objLogin->userid = $objLogin->userid;
+        $objThird->nickname = $this->getUserThirdInfo($openid);
+        $objThird->openid = $openid;
+        $ret = $objThird->save();
+        if($ret){
+            return User_RetCode::BOUND;
+        }
+        return User_RetCode::UNBOUND;
     }
 
     /**
@@ -165,6 +207,17 @@ class User_Logic_Login{
         }else{
             return 'error';
         }
+    }
+    
+    /**
+     * 将认证类型从qq web转化成1,2
+     * @param unknown $strType
+     */
+    public function getAuthType($strType){
+        $arr = array(
+            'qq'    => 1,
+            'weibo' => 2,);
+        return $arr[$strType];
     }
   
 }
