@@ -1,14 +1,14 @@
 <?php
 /**
- * 借款附件
+ * 借款的还款计划
  * @author jiangsongfang
  */
-class Loan_Object_Attach extends Base_Object {
+class Invest_Object_Refund extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'loan_attach';
+    protected $table = 'invest_refund';
 
     /**
      * 主键
@@ -20,13 +20,13 @@ class Loan_Object_Attach extends Base_Object {
      * 类名
      * @var string
      */
-    const CLASSNAME = 'Loan_Object_Attach';
+    const CLASSNAME = 'Invest_Object_Refund';
 
     /**
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'type', 'title', 'url', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -34,11 +34,16 @@ class Loan_Object_Attach extends Base_Object {
      */
     public $properties = array(
         'id'          => 'id',
+        'invest_id'   => 'investId',
         'loan_id'     => 'loanId',
         'user_id'     => 'userId',
-        'type'        => 'type',
-        'title'       => 'title',
-        'url'         => 'url',
+        'period'      => 'period',
+        'capital'     => 'capital',
+        'interest'    => 'interest',
+        'amount'      => 'amount',
+        'late_charge' => 'lateCharge',
+        'promise_time'=> 'promiseTime',
+        'refund_time' => 'refundTime',
         'status'      => 'status',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
@@ -50,25 +55,32 @@ class Loan_Object_Attach extends Base_Object {
      */
     protected $intProps = array(
         'id'          => 1,
+        'invest_id'   => 1,
         'loan_id'     => 1,
         'user_id'     => 1,
-        'type'        => 1,
+        'period'      => 1,
         'status'      => 1,
     );
 
     /**
      * @param array $data
-     * @return Loan_Object_Attach
+     * @return Invest_Object_Refund
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);
     }
 
     /**
-     * 
+     * 计划ID
      * @var integer
      */
     public $id;
+
+    /**
+     * 投标ID
+     * @var integer
+     */
+    public $investId;
 
     /**
      * 借款ID
@@ -77,31 +89,55 @@ class Loan_Object_Attach extends Base_Object {
     public $loanId;
 
     /**
-     * 用户ID
+     * 投资人ID
      * @var integer
      */
     public $userId;
 
     /**
-     * 类别 1认证 2合同 3实地照片
+     * 期数
      * @var integer
      */
-    public $type;
+    public $period;
 
     /**
-     * 标题
+     * 本金
+     * @var number
+     */
+    public $capital;
+
+    /**
+     * 利息
+     * @var number
+     */
+    public $interest;
+
+    /**
+     * 应还本息
+     * @var number
+     */
+    public $amount;
+
+    /**
+     * 逾期罚息
+     * @var number
+     */
+    public $lateCharge;
+
+    /**
+     * 应还日期
      * @var string
      */
-    public $title;
+    public $promiseTime;
 
     /**
-     * 地址
+     * 回款时间
      * @var string
      */
-    public $url;
+    public $refundTime;
 
     /**
-     * 状态
+     * 状态 1正常 2已还 3逾期
      * @var integer
      */
     public $status;

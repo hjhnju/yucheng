@@ -1,44 +1,45 @@
 <?php
 /**
- * 借款附件
+ * 借款统计数据
  * @author jiangsongfang
  */
-class Loan_Object_Attach extends Base_Object {
+class Loan_Object_Counter extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'loan_attach';
+    protected $table = 'loan_counter';
 
     /**
      * 主键
      * @var string
      */
-    protected $prikey = 'id';
+    protected $prikey = 'user_id';
 
     /**
      * 类名
      * @var string
      */
-    const CLASSNAME = 'Loan_Object_Attach';
+    const CLASSNAME = 'Loan_Object_Counter';
 
     /**
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'type', 'title', 'url', 'status', 'create_time', 'update_time');
+    protected $fields = array('user_id', 'success', 'limit', 'total', 'finished', 'refund', 'rest', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'id'          => 'id',
-        'loan_id'     => 'loanId',
         'user_id'     => 'userId',
-        'type'        => 'type',
-        'title'       => 'title',
-        'url'         => 'url',
+        'success'     => 'success',
+        'limit'       => 'limit',
+        'total'       => 'total',
+        'finished'    => 'finished',
+        'refund'      => 'refund',
+        'rest'        => 'rest',
         'status'      => 'status',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
@@ -49,32 +50,19 @@ class Loan_Object_Attach extends Base_Object {
      * @var array
      */
     protected $intProps = array(
-        'id'          => 1,
-        'loan_id'     => 1,
         'user_id'     => 1,
-        'type'        => 1,
+        'success'     => 1,
+        'finished'    => 1,
         'status'      => 1,
     );
 
     /**
      * @param array $data
-     * @return Loan_Object_Attach
+     * @return Loan_Object_Counter
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);
     }
-
-    /**
-     * 
-     * @var integer
-     */
-    public $id;
-
-    /**
-     * 借款ID
-     * @var integer
-     */
-    public $loanId;
 
     /**
      * 用户ID
@@ -83,25 +71,43 @@ class Loan_Object_Attach extends Base_Object {
     public $userId;
 
     /**
-     * 类别 1认证 2合同 3实地照片
+     * 成功借款次数
      * @var integer
      */
-    public $type;
+    public $success;
 
     /**
-     * 标题
-     * @var string
+     * 授信额度
+     * @var number
      */
-    public $title;
+    public $limit;
 
     /**
-     * 地址
-     * @var string
+     * 累计借款
+     * @var number
      */
-    public $url;
+    public $total;
 
     /**
-     * 状态
+     * 还清笔数
+     * @var integer
+     */
+    public $finished;
+
+    /**
+     * 已还金额
+     * @var number
+     */
+    public $refund;
+
+    /**
+     * 待还本息
+     * @var number
+     */
+    public $rest;
+
+    /**
+     * 状态 0正常
      * @var integer
      */
     public $status;

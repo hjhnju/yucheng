@@ -4,7 +4,7 @@
  * @author jiangsongfang
  *
  */
-class Loan_Type_Refund {
+class Loan_Type_Refund extends Base_Type {
     /**
      * 正常
      * @var integer
@@ -42,31 +42,4 @@ class Loan_Type_Refund {
         self::REFUNDED => '已还',
         self::OUTTIME => '逾期',
     );
-    
-    /**
-     * 通过类型id获取类型名
-     * @param integer $id
-     * @return string
-     */
-    public static function getTypeName($id) {
-        return self::$names[$id];
-    }
-    
-    /**
-     * 将类型名附加到数据组中，会在数组中增加一个key值
-     * @param array $data
-     * @param string $key
-     * @param string $field
-     * @return array
-     */
-    public static function appendTypeName($data, $key = self::DEFAULT_KEYNAME, 
-            $field = self::DEFAULT_FIELD) {
-        if (empty($data)) {
-            return array();
-        }
-        foreach ($data as $k => $v) {
-            $data[$k][$field] = self::getTypeName($v[$key]);
-        }
-        return $data;
-    }
 }

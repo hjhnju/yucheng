@@ -10,7 +10,6 @@ class Bootstrap extends Base_Bootstrap{
 
     public function _initNamespace(Yaf_Dispatcher $dispatcher) {
         parent::_initNamespace($dispatcher);
-        Yaf_Loader::getInstance()->registerLocalNamespace(array('Api'));
     }
  
     public function _initConfig(Yaf_Dispatcher $dispatcher) {
@@ -25,7 +24,7 @@ class Bootstrap extends Base_Bootstrap{
 
     public function _initPlugin(Yaf_Dispatcher $dispatcher) {
         //注册一个插件
-        parent::_initPlugin($dispatcher); 
+        parent::_initPlugin($dispatcher);
 
         $plugin = new ModulePlugin();
         $dispatcher->registerPlugin($plugin);
@@ -44,7 +43,7 @@ class Bootstrap extends Base_Bootstrap{
     }
 
     public function _initRoute(Yaf_Dispatcher $dispatcher) {
-        $conf = Base_Config::getConfig('loan', CONF_PATH . '/route.ini');
+        $conf = Base_Config::getConfig('invest', CONF_PATH . '/route.ini');
         if (!empty($conf)) {
             $router = Yaf_Dispatcher::getInstance()->getRouter();
             $router->addConfig($conf);

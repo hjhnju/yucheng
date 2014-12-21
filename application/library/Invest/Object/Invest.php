@@ -1,14 +1,14 @@
 <?php
 /**
- * 借款附件
+ * 借款的投标记录
  * @author jiangsongfang
  */
-class Loan_Object_Attach extends Base_Object {
+class Invest_Object_Invest extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'loan_attach';
+    protected $table = 'invest';
 
     /**
      * 主键
@@ -20,13 +20,13 @@ class Loan_Object_Attach extends Base_Object {
      * 类名
      * @var string
      */
-    const CLASSNAME = 'Loan_Object_Attach';
+    const CLASSNAME = 'Invest_Object_Invest';
 
     /**
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'type', 'title', 'url', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'name', 'amount', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -36,9 +36,8 @@ class Loan_Object_Attach extends Base_Object {
         'id'          => 'id',
         'loan_id'     => 'loanId',
         'user_id'     => 'userId',
-        'type'        => 'type',
-        'title'       => 'title',
-        'url'         => 'url',
+        'name'        => 'name',
+        'amount'      => 'amount',
         'status'      => 'status',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
@@ -52,20 +51,19 @@ class Loan_Object_Attach extends Base_Object {
         'id'          => 1,
         'loan_id'     => 1,
         'user_id'     => 1,
-        'type'        => 1,
         'status'      => 1,
     );
 
     /**
      * @param array $data
-     * @return Loan_Object_Attach
+     * @return Invest_Object_Invest
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);
     }
 
     /**
-     * 
+     * 投标ID
      * @var integer
      */
     public $id;
@@ -77,28 +75,22 @@ class Loan_Object_Attach extends Base_Object {
     public $loanId;
 
     /**
-     * 用户ID
+     * 投资人ID
      * @var integer
      */
     public $userId;
 
     /**
-     * 类别 1认证 2合同 3实地照片
-     * @var integer
-     */
-    public $type;
-
-    /**
-     * 标题
+     * 姓名
      * @var string
      */
-    public $title;
+    public $name;
 
     /**
-     * 地址
-     * @var string
+     * 金额
+     * @var number
      */
-    public $url;
+    public $amount;
 
     /**
      * 状态

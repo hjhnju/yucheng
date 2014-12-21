@@ -4,7 +4,7 @@
  * @author jiangsongfang
  *
  */
-class ListController extends Base_Controller_Abstract {
+class ListController extends Base_Controller_Admin {
     
 	/**
 	 * 借款列表
