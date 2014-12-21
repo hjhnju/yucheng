@@ -37,7 +37,8 @@ class User_RetCode extends Base_RetCode{
     
     //供自己内部使用
     const INVALID_USER               = 0;  //无效的用户
-
+    const LOGIN_OK                   = 0;   //登录成功
+    const LOGIN_WRONG                = 1;  //登录失败
     
 
     const REG_FORMAT_WRONG      = 0;  //用户名不合法

@@ -37,7 +37,6 @@ class LoginApiController extends Base_Controller_Api{
        
        $retUid = $this->loginLogic->login($type,$strName,$strPasswd);
        if(User_RetCode::INVALID_USER != $retUid) {
-           Yaf_Session::getInstance()->set("LOGIN",$retUid);
            $this->uid = $retUid; 
            return $this->ajax();
        }
@@ -114,7 +113,7 @@ class LoginApiController extends Base_Controller_Api{
      */
     public function getAuthImageAction(){
         $strToken = trim($_REQUEST['token']);
-        User_Api::getAuthImage($strToken);
+        User_Logic_Api::getAuthImage($strToken);
     }
     
     /**

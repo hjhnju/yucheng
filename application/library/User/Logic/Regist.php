@@ -16,11 +16,9 @@ class User_Logic_Regist{
         if(empty($strName)||(User_Api::checkReg('name',$strName))){
             return User_RetCode::USERNAME_SYNTEX_ERROR;
         }
-        $login = new User_List_Login();
-        $filter = array('name'=>$strName);
-        $login->setFilter($filter);
-        $num = $login->getTotal();
-        if(empty($num)) {
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('name'=>$strName));
+        if(empty($objLogin->name)) {
             return User_RetCode::SUCCESS;
         }
         return User_RetCode::USERNAME_EXIST;
@@ -35,11 +33,9 @@ class User_Logic_Regist{
         if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::USERPHONE_SYNTEX_ERROR;
         }
-        $login = new User_List_Login();
-        $filter = array('phone'=>$strPhone);
-        $login->setFilter($filter);
-        $num = $login->getTotal();
-        if(empty($num)) {
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('phone'=>$strPhone));
+        if(empty($objLogin->phone)) {
             return User_RetCode::SUCCESS;
         }
         return User_RetCode::USERPHONE_EXIST;
@@ -54,14 +50,12 @@ class User_Logic_Regist{
         if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::USERPHONE_SYNTEX_ERROR;
         }
-        $login = new User_List_Login();
-        $filter = array('phone'=>$strPhone);
-        $login->setFilter($filter);
-        $user = $login->getObjects();
-        if(empty($user[0]['userid'])) {
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('phone'=>$strPhone));
+        if(empty($objLogin->userid)) {
             return User_RetCode::INVALID_USER;
         }
-        return intval($user[0]['userid']);
+        return $objLogin->userid;
     }
     
     /**

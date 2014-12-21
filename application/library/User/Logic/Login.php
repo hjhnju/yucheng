@@ -109,13 +109,15 @@ class User_Logic_Login{
     }
     
     /**
-     * 第三账号登录，首先需要获取用户的部分资料
+     * 检查第三方的绑定状态
      * @param unknown $openid
      * @param unknown $intType
      */
     public function checkBind($openid,$intType){
-        $ret = $this->modLogin->checkBing($openid,$intType);
-        return $ret;
+        $objThird = new User_Object_Third();
+        $objThird->fetch(array('openid'=>$openid,'authtype'=>$intType));
+        $userid = $objThird->userid;
+        return $userid;
     }
 
     /**
@@ -135,24 +137,22 @@ class User_Logic_Login{
      */
 
     public function login($type, $strName, $strPasswd){
-        $objLogin         = new User_List_Login();
-        $filter = array($type    => $strName,
-                        'passwd' => md5($strPasswd));
+        $objLogin         = new User_Object_Login();
         $objRecord        = new User_Object_Record();
         $objRecord->ip    = Base_Util_Ip::getClientIp();
-        $objLogin->setFilter($filter);
-        $ret = $objLogin->getTotal();
-        if(empty($ret)){
-            $objRecord->status = 0;
+        $objLogin->fetch(array($type=>$strName,'passwd'=>md5($strPasswd)));
+        if(empty($objLogin->userid)){
+            $objRecord->status = User_RetCode::LOGIN_WRONG;
             $objRecord->save();
             return User_RetCode::INVALID_USER;
-        }
-        $ret = $objLogin->getObjects();
-        $uid = $ret[0]['userid'];       
-        $objRecord->userid = $uid;
-        $objRecord->status = 1;
+        }     
+        $objRecord->userid = $objLogin->userid;
+        $objRecord->status = User_RetCode::LOGIN_OK;
         $objRecord->save();
-        return $uid;
+        $objLogin->lastip = Base_Util_Ip::getClientIp();
+        $objLogin->save();
+        $this->setLogin($objLogin);
+        return $objLogin->userid;
     }
     
     public function checkType($val){
