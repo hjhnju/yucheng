@@ -27,9 +27,9 @@ class User_Api{
     public function checkLogin(){
         $logic   = new User_Logic_Login();
         $objUser = $logic->checkLogin();
+        $userid  = is_object($objUser) ? $objUser->userid : 0;
         Base_Log::notice(array(
-            'msg' => 'Api success',
-            'user'=> $objUser
+            'userid' => $userid,
         ));
         return $objUser;
     }
@@ -42,8 +42,8 @@ class User_Api{
     public function getUserObject($userid){
         $logic   = new User_Logic_Info();
         $objUser = $logic->getUserObject($userid);
+        $userid  = is_object($objUser) ? $objUser->userid : 0;
         Base_Log::notice(array(
-            'msg'    => 'Api success',
             'userid' => $userid,
         ));
         return $objUser;

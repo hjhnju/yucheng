@@ -1,13 +1,107 @@
 <?php
 /**
  * 所有controller的基类
- * 命名不以controller结尾防止Ap识别
+ * 命名不以controller结尾防止Yaf识别
  * @author hejunhua@baidu.com
  * @since 2014-07 重构
+ * @author jiangsongfang
+ * @since 2014-12 output
  */
 class Base_Controller_Abstract extends Yaf_Controller_Abstract
 {
+
+    protected $ajax        = false;
+    
+    protected $outputView  = 'output.phtml';
+
+    //User_Object实例
+    protected $objUser     = null;
+    
+    //子类增加的base日志字段
+    protected $addBaseLogs = array();
+    
     public function init(){
+
+        $this->baselog();
+        $this->objUser = User_Api::checkLogin();
+    }
+
+    private function baselog(){
+        $userid    = is_object($this->objUser) ? $this->objUser->userid : 0;
+        $logParams = array(
+            'module'     => $this->getRequest()->getModuleName(),
+            'controller' => $this->getRequest()->getControllerName(),
+            'action'     => $this->getRequest()->getActionName(),
+            'userid'     => $userid,
+        );
+        $logParams = array_merge($logParams, $this->addBaseLogs);
+        Base_Log::notice($logParams);
+    }
+
+    /**
+     * 添加base日志里的字段
+     * 继承类可以在parent::init前调用以增加日志字段
+     * @param $arrParams
+     * @return  true
+     */
+    protected function addBaseLogs($arrParams){
+        if(!empty($arrParams)){
+            $this->addBaseLogs = array_merge($this->addBaseLogs, $arrParams);
+        }
+    }
+    
+    protected function checkParam($param, $data) {
+        foreach ($param as $key => $msg) {
+            if (empty($data[$key])) {
+                $this->outputError(Base_RetCode::PARAM_ERROR, $msg);
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    protected function isAjax() {
+        if ($this->ajax == true) {
+            return true;
+        }
+        if (!empty($_REQUEST['ajax'])) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function output($arrData = array(), $errorMsg = '', $status = 0){
+        if ($this->isAjax()) {
+            $this->ajax($arrData, $errorMsg, $status);
+        } else {
+            $this->_view->assign('output', 1);
+            $arrRtInfo = array();
+            $arrRtInfo['status'] = $status;
+            $arrRtInfo['statusInfo'] = $errorMsg;
+            $arrRtInfo['data']= $arrData;
+            $this->_view->assign('result', $arrRtInfo);
+            
+            Yaf_Dispatcher::getInstance()->disableView();
+            //$this->_view->render($this->outputView);
+            $this->_response->setBody($this->_view->render($this->outputView));
+        }
+    }
+    
+    public function outputError($errorCode = Base_RetCode::UNKNOWN_ERROR, $errorMsg = '', $arrData = array()) {
+        if ($this->isAjax()) {
+            $this->ajaxError($errorCode, $errorMsg, $arrData);
+        } else {
+            $this->_view->assign('output', 1);
+            $arrRtInfo = array();
+            $arrRtInfo['status'] = $errorCode;
+            $arrRtInfo['statusInfo'] = $errorMsg;
+            $arrRtInfo['data']= $arrData;
+            $this->_view->assign('result', $arrRtInfo);
+            
+            Yaf_Dispatcher::getInstance()->disableView();
+            //$this->_view->render($this->outputView);
+            $this->_response->setBody($this->_view->render($this->outputView));
+        }
     }
     
     public function ajax($arrData = array(), $errorMsg = '', $status = 0){

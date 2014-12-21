@@ -22,9 +22,5 @@ class RegistController extends Base_Controller_Page{
             $this->getView()->assign("type",$strType);
             $this->getView()->assign("third",$login->nickname);
         }
-        $arrData =  Base_Config::getConfig('web'); 
-        $this->getView()->assign("token","123");
-        $this->getView()->assign("webRoot",$arrData['root']);
-        $this->getView()->assign("feRoot",$arrData['root'].$arrData['feroot']);
     }
 }
