@@ -64,14 +64,15 @@ class LoginApiController extends Base_Controller_Api{
         if(!isset($_REQUEST['code'])){   //auth code
             return $this->ajaxError(User_RetCode::GET_AUTHCODE_FAIL,User_RetCode::getMsg(User_RetCode::GET_AUTHCODE_FAIL));    
         }
+        $strType = Yaf_Session::getInstance()->get("third_login_type");
         $state = trim($_REQUEST['state']);
         $strAuthCode = trim($_REQUEST['code']);      
         $key = $_COOKIE['access_key'];
         $access_token = Base_Redis::getInstance()->get("access_token".$this->type.$key);
         if(empty($access_token)){
-            $access_token = $this->loginLogic->getAccessToken($strAuthCode,$this->type);
+            $access_token = $this->loginLogic->getAccessToken($strAuthCode);
         }
-        $openid = $this->loginLogic->getOpenid($access_token,$this->type);
+        $openid = $this->loginLogic->getOpenid($access_token);
         Yaf_Session::getInstance()->set("openid",$openid);
         Yaf_Session::getInstance()->set("idtype",$this->type);
         $ret = $this->loginLogic->checkBind($openid, $this->type); //$ret=0表示已经绑定，$ret=1表示未绑定

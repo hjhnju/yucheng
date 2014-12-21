@@ -36,7 +36,9 @@ class User_RetCode extends Base_RetCode{
     const GET_AUTHCODE_FAIL         = 1041; //第三方登录授权出错
     
     //供自己内部使用
-    const INVALID_USER               = 0;  //无效的用户   
+    const INVALID_USER               = 0;  //无效的用户
+
+    
 
     const REG_FORMAT_WRONG      = 0;  //用户名不合法
   

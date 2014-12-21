@@ -5,8 +5,6 @@
 class User_Logic_Regist{
     
     public function __construct(){
-        $this->modRegist = new RegistModel();
-        $this->modMaterial = new MaterialModel();
     }
     
     /**
@@ -18,8 +16,11 @@ class User_Logic_Regist{
         if(empty($strName)||(User_Api::checkReg('name',$strName))){
             return User_RetCode::USERNAME_SYNTEX_ERROR;
         }
-        $data = $this->modRegist->checkUserName($strName);
-        if(empty($data)) {
+        $login = new User_List_Login();
+        $filter = array('name'=>$strName);
+        $login->setFilter($filter);
+        $num = $login->getTotal();
+        if(empty($num)) {
             return User_RetCode::SUCCESS;
         }
         return User_RetCode::USERNAME_EXIST;
@@ -34,8 +35,11 @@ class User_Logic_Regist{
         if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::USERPHONE_SYNTEX_ERROR;
         }
-        $data = $this->modRegist->checkPhone(intval($strPhone));
-        if(empty($data)) {
+        $login = new User_List_Login();
+        $filter = array('phone'=>$strPhone);
+        $login->setFilter($filter);
+        $num = $login->getTotal();
+        if(empty($num)) {
             return User_RetCode::SUCCESS;
         }
         return User_RetCode::USERPHONE_EXIST;
@@ -50,11 +54,14 @@ class User_Logic_Regist{
         if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::USERPHONE_SYNTEX_ERROR;
         }
-        $data = $this->modRegist->getUidByPhone(intval($strPhone));
-        if(empty($data)) {
+        $login = new User_List_Login();
+        $filter = array('phone'=>$strPhone);
+        $login->setFilter($filter);
+        $user = $login->getObjects();
+        if(empty($user[0]['userid'])) {
             return User_RetCode::INVALID_USER;
         }
-        return $data;
+        return intval($user[0]['userid']);
     }
     
     /**
@@ -63,10 +70,17 @@ class User_Logic_Regist{
      * @return int $uid,成功注册返回用户id，否则返回0
      */
     public function regist($arrParam){
-        $uid = $this->modRegist->addUser($arrParam);
-        $arrParam = array('uid'=>$uid,'type' => 1);
-        $ret = $this->modMaterial->addUserInfo($arrParam);
-        if(empty($ret)){
+        $regis = new User_Object_Login();
+        $regis->name = $arrParam['name'];
+        $regis->passwd = $arrParam['passwd'];
+        $regis->phone = $arrParam['phone'];
+        $ret = $regis->save();
+        $uid = $regis->userid;        
+        $info = new User_Object_Info();
+        $info->userid = $uid;
+        $info->usertype = 1;
+        $ret = $info->save();
+        if(!$ret){
             return User_RetCode::INVALID_USER;
         }
         return $uid;

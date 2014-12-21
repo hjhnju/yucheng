@@ -39,14 +39,10 @@ class User_Logic_Login{
      * @param int $intType,1表示qq,2表示微博
      */
     public function getAuthCodeUrl($strType){
-        $arrType = array('qq' => 1,
-                         'weibo' => 2,
-        );
-        $intType = $arrType[$strType];
-        Yaf_Session::getInstance()->set("third_login_type",$intType);
+        Yaf_Session::getInstance()->set("third_login_type",$strType);
         $arrData =  Base_Config::getConfig('login');
         $redirect_url = $arrData['auth_code_url'];
-        $arrData = $arrData[$intType];
+        $arrData = $arrData[$strType];
         $host = $arrData['host'];
         $randnum = md5(uniqid(rand(), TRUE));
         Yaf_Session::getInstance()->set("state",$randnum);
@@ -60,11 +56,11 @@ class User_Logic_Login{
     /**
      * 获取access token
      */
-    public function getAccessToken($strAuthCode,$intType){
-        $intType = Yaf_Session::getInstance()->get("third_login_type");
+    public function getAccessToken($strAuthCode){
+        $strType = Yaf_Session::getInstance()->get("third_login_type");
         $arrData =  Base_Config::getConfig('login');
         $redirect_url = $arrData['access_token_url'];
-        $arrData = $arrData[$intType];
+        $arrData = $arrData[$strType];
         $host = $arrData['host'];
         $url = $arrData['acctoken_url'].$arrData['appid']."&client_secret=".$arrData['appkey']."&code=$strAuthCode"."&redirect_uri=".$redirect_url;
         $post = Base_Network_Http::instance()->url($host,$url);
@@ -87,10 +83,10 @@ class User_Logic_Login{
      * 获取open id
      */
     public function getOpenid($access_token){
-        $intType = Yaf_Session::getInstance()->get("third_login_type");
+        $strType = Yaf_Session::getInstance()->get("third_login_type");
         $arrData =  Base_Config::getConfig('login');
         $redirect_url = $arrData['access_token_url'];
-        $arrData = $arrData[$intType];
+        $arrData = $arrData[$strType];
         $host = $arrData['host'];
         $redirect_url = $arrData['openid_url'].$access_token;
         $post = Base_Network_Http::instance()->url($host,$redirect_url);
@@ -139,14 +135,26 @@ class User_Logic_Login{
      */
 
     public function login($type, $strName, $strPasswd){
-        $objLogin         = new User_Object_Login();
-        $objLogin->name   = $strName;
-        $objLogin->passwd = md5($strPasswd); 
-        $objLogin->lastip = Base_Util_Ip::getClientIp();
-        $ret              = $objLogin->save();
-        //todo:纪录登陆纪录
-        return $ret;
+        $objLogin         = new User_List_Login();
+        $filter = array($type    => $strName,
+                        'passwd' => md5($strPasswd));
+        $objRecord        = new User_Object_Record();
+        $objRecord->ip    = Base_Util_Ip::getClientIp();
+        $objLogin->setFilter($filter);
+        $ret = $objLogin->getTotal();
+        if(empty($ret)){
+            $objRecord->status = 0;
+            $objRecord->save();
+            return User_RetCode::INVALID_USER;
+        }
+        $ret = $objLogin->getObjects();
+        $uid = $ret[0]['userid'];       
+        $objRecord->userid = $uid;
+        $objRecord->status = 1;
+        $objRecord->save();
+        return $uid;
     }
+    
     public function checkType($val){
         if(!User_Api::checkReg('name',$val)){
             return 'name';

@@ -15,6 +15,13 @@ class RegistController extends Base_Controller_Page{
      * 用户注册类
      */
     public function IndexAction(){
+        $strType = Yaf_Session::getInstance()->get("idtype");
+        if(!empty($strType)){
+            $openid = Yaf_Session::getInstance()->get("openid");
+            $login = new User_Object_Third($openid);
+            $this->getView()->assign("type",$strType);
+            $this->getView()->assign("third",$login->nickname);
+        }
         $arrData =  Base_Config::getConfig('web'); 
         $this->getView()->assign("token","123");
         $this->getView()->assign("webRoot",$arrData['root']);
