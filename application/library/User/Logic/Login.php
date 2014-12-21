@@ -11,14 +11,8 @@ class User_Logic_Login{
     }
     
     /**
-<<<<<<< Updated upstream
      * 判断用户的登录状态
      * @return object || null
-=======
-     * 
-     * @param string $strName,用户名
-     * @return int,0表示登录失败，1表示登录成功
->>>>>>> Stashed changes
      */
     public function checkLogin(){
         $objUser = Yaf_Session::getInstance()->get(self::SESSION_LOGIN_USER);
@@ -29,7 +23,6 @@ class User_Logic_Login{
     }
 
     /**
-<<<<<<< Updated upstream
      * 设置用户的登陆状态
      * @return boolean
      */ 
@@ -39,7 +32,8 @@ class User_Logic_Login{
             return true;
         }
         return false;
-=======
+    }
+     /**
      * 根据$intType类型获取auth code
      * 拼接URL的操作，发给前端放在点击授权处
      * @param int $intType,1表示qq,2表示微博
@@ -126,7 +120,6 @@ class User_Logic_Login{
     public function checkBind($openid,$intType){
         $ret = $this->modLogin->checkBing($openid,$intType);
         return $ret;
->>>>>>> Stashed changes
     }
 
     /**
@@ -144,7 +137,7 @@ class User_Logic_Login{
      * @param string $strPasswd,用户密码
      * @return boolean
      */
-<<<<<<< Updated upstream
+
     public function login($type, $strName, $strPasswd){
         $objLogin         = new User_Object_Login();
         $objLogin->name   = $strName;
@@ -153,7 +146,7 @@ class User_Logic_Login{
         $ret              = $objLogin->save();
         //todo:纪录登陆纪录
         return $ret;
-=======
+    }
     public function checkType($val){
         if(!User_Api::checkReg('name',$val)){
             return 'name';
@@ -164,7 +157,6 @@ class User_Logic_Login{
         }else{
             return 'error';
         }
->>>>>>> Stashed changes
     }
   
 }

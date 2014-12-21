@@ -85,7 +85,7 @@ class User_Object {
      * @param  $authtype 'qq' or 'weibo' or 'weixin'
      * @return $nickname || false
      */
-    public function getNickname($authtype) (
+    public function getNickname($authtype) {
         if(!$this->thirdLogic){
             $this->thirdLogic = new User_Logic_Third($this->userid);
         }

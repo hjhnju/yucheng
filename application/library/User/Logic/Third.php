@@ -16,7 +16,7 @@ class User_Logic_Third{
 
     public function __construct($userid){
         $this->userid = $userid;
-        $list         = new User_List_Third()
+        $list         = new User_List_Third();
         $filters      = array('userid' => $this->userid);
         $list->setFilter($filters);
         foreach ($list->toArray() as $value) {
@@ -33,7 +33,7 @@ class User_Logic_Third{
         $arrInfo = $this->objs[$this->getType($authtype)];
         $openid  = isset($arrInfo['openid']) ? $arrInfo['openid'] : false;
         return $openid;
-    )
+    }
 
     /**
      * 获取Nickname
