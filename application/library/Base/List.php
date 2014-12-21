@@ -236,9 +236,13 @@ class Base_List {
      */
     public function toArray() {
         $this->fetch();
+        $pagesize = $this->pagesize;
+        if ($this->pagesize == PHP_INT_MAX) {
+            $pagesize = 0;
+        }
         $list = array(
             'page' => $this->page,
-            'pagesize' => $this->pagesize,
+            'pagesize' => $pagesize,
             'pageall' => $this->pageall,
             'total' => $this->total,
             'list' => $this->data,

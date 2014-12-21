@@ -21,6 +21,14 @@ class Base_Controller_Response extends Base_Controller_Abstract {
     public function redirect($url){
         parent::redirect($url);
     }
+    
+    /**
+     * 获取登录用户的ID
+     * @return number
+     */
+    public function getUserId() {
+        return 1;
+    }
 
     /**
      * log for every page
