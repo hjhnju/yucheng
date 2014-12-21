@@ -21,6 +21,7 @@ class ObjectTest extends TestBase {
         $log->content = 'update hello';
         $log->save();
         $data2 = $log->toArray();
+        var_dump($data2);
         $this->assertNotEquals($data, $data2);
         
         var_dump('fetch', $id);

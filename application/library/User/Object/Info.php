@@ -14,7 +14,7 @@ class User_Object_Info extends Base_Object {
      * 主键
      * @var string
      */
-    protected $prikey = 'uid';
+    protected $prikey = 'userid';
 
     /**
      * 类名
@@ -26,20 +26,20 @@ class User_Object_Info extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('uid', 'type', 'real_name', 'certificate_type', 'certificate_content', 'headurl', 'huifu_uid', 'create_time', 'update_time');
+    protected $fields = array('userid', 'usertype', 'realname', 'certificate_type', 'certificate_content', 'headurl', 'huifuid', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'uid'                 => 'uid',
-        'type'                => 'type',
-        'real_name'           => 'realName',
+        'userid'              => 'userid',
+        'usertype'            => 'usertype',
+        'realname'            => 'realname',
         'certificate_type'    => 'certificateType',
         'certificate_content' => 'certificateContent',
         'headurl'             => 'headurl',
-        'huifu_uid'           => 'huifuUid',
+        'huifuid'             => 'huifuid',
         'create_time'         => 'createTime',
         'update_time'         => 'updateTime',
     );
@@ -63,19 +63,19 @@ class User_Object_Info extends Base_Object {
      * 用户id
      * @var 
      */
-    public $uid;
+    public $userid;
 
     /**
-     * 用户类型
+     * 用户类型 1:个人用户 2:企业用户
      * @var 
      */
-    public $type;
+    public $usertype;
 
     /**
      * 用户真实姓名
      * @var string
      */
-    public $realName;
+    public $realname;
 
     /**
      * 证件类型
@@ -99,17 +99,17 @@ class User_Object_Info extends Base_Object {
      * 汇付用户ID
      * @var string
      */
-    public $huifuUid;
+    public $huifuid;
 
     /**
      * 注册时间
-     * @var string
+     * @var 
      */
     public $createTime;
 
     /**
      * 修改资料时间
-     * @var string
+     * @var 
      */
     public $updateTime;
 

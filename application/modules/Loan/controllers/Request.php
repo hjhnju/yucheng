@@ -4,7 +4,7 @@
  * @author jiangsongfang
  *
  */
-class RequestController extends Base_Controller_Response {
+class RequestController extends Base_Controller_Admin {
     /**
      * 需要验证的参数值
      * @var array

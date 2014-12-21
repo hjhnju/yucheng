@@ -17,9 +17,15 @@
 <div class="regist">
     <div class="container">
         <div class="login-left">
+            {%if isset($type)%}
             <div class="bound">
-                <p class="bound-text">QQ用户:<span class="bound-name">就像以往</span>，请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击<a href="###">快速绑定</a></p>
+                <p class="bound-text">
+                    {%$type%}用户:
+                    <span class="bound-name">{%$third%}</span>，
+                    请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击<a href="###">快速绑定</a>
+                </p>
             </div>
+            {%/if%}
             <div class="login-left-box">
                 <div class="login-left-title">账号注册</div>
                 <div class="login-username">

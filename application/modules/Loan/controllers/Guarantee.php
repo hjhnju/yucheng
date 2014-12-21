@@ -11,8 +11,6 @@ class GuaranteeController extends Base_Controller_Admin {
      * @var array
      */
     private $param = array(
-        'loan_id' => '借款ID不能为空',
-        'user_id' => '操作员ID不能为空',
         'name' => '担保人不能为空',
     );
     
@@ -22,7 +20,7 @@ class GuaranteeController extends Base_Controller_Admin {
 	public function indexAction() {
         $laonId = intval($_GET['id']);
         if (empty($laonId)) {
-            $this->outputError();
+            $this->outputError(Base_RetCode::PARAM_ERROR);
             return false;
         }
         

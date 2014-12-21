@@ -5,17 +5,18 @@
 class User_Logic_Material{
     
     public function __construct(){
-        $this->modMaterial = new MaterialModel();
     }
     
     /**
      * 
      * @param string $strName,用户名
      */
-    public function setRealName($strName){        
+    public function setRealName($uid,$strName){        
         if(empty($strName)||(User_Api::checkReg('name',$strName))){
             return User_RetCode::UNKNOWN_ERROR;
         }
+        $objInfo = new User_Object_Info();
+        //$objInfo->
         $data = $this->modMaterial->setRealName($strName);
         if(empty($data)) {
             return User_RetCode::DATA_NULL;
@@ -28,7 +29,7 @@ class User_Logic_Material{
      * @param string $strPhone,手机号
      * @return int,0表示手机存在，1表示手机不存在
      */
-    public function setPhone($strPhone){
+    public function setPhone($uid,$strPhone){
         if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
             return User_RetCode::UNKNOWN_ERROR;
         }
