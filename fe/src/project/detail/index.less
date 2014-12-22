@@ -330,11 +330,11 @@
     margin-right: 30px;
     background: url("./img/renzheng.png") 0 0 no-repeat;
 
-    &.yingye {
+    &.shidi {
         background-position: 20px 0;
     }
 
-    &.shidi {
+    &.yingye {
         background-position: -110px 0;
     }
 
@@ -392,4 +392,172 @@
     position: absolute;
     right: 8px;
     top: 30px;
+}
+.detail-right {
+    width: 260px;
+    border-left: 1px solid #efefef;
+    padding-left: 20px;
+    float: right;
+    margin-top: 50px;
+}
+.right-top {
+    border-bottom: 1px dashed #efefef;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+.right-top-title {
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    font-size: 19px;
+    color: #333333;
+}
+.right-top-allmoney {
+    padding: 15px 25px;
+    background-color: #f8f8f8;
+    border: 1px solid #efefef;
+    margin-bottom: 10px;
+}
+.right-top-allmoney-money {
+    font-size: 14px;
+    color: #333333;
+    height: 20px;
+    line-height: 20px;
+
+    span {
+        color: @color-red;
+    }
+}
+.right-top-allmoney-time {
+    color: #333333;
+    height: 20px;
+    line-height: 20px;
+}
+.right-top-ipt {
+    height: 34px;
+    border: 1px solid #efefef;
+    padding-left: 5px;
+    line-height: 32px;
+
+    .right-top-ipt-input {
+        outline: none;
+        border: none;
+        width: 90%;
+    }
+}
+.right-top-chongzhi {
+    height: 34px;
+
+
+    .clearfix;
+}
+.chongzhi-left {
+    float: left;
+    color: #333333;
+    line-height: 34px;
+
+    .chongzhi-link {
+        text-decoration: none;
+        color: @color-green;
+    }
+}
+
+.chongzhi-right {
+    line-height: 34px;
+    float: right;
+
+    .chongzhi-span {
+        color: @color-red;
+    }
+}
+.right-top-btn {
+    height: 34px;
+
+    .clearfix;
+
+    .right-top-btn-confirm {
+        float: left;
+        width: 170px;
+        line-height: 34px;
+        background-color: @color-green;
+        color: #FFFFFF;
+        text-decoration: none;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+
+        .border-radius(5px);
+
+        &.confirm-all {
+            width: 80px;
+            background-color: @color-red;
+            float: right;
+
+            .border-radius(5px);
+        }
+    }
+}
+.right-bottom {
+
+}
+.right-bottom-title {
+    height: 30px;
+
+    .clearfix;
+}
+.bottom-title-name {
+    float: left;
+    font-size: 18px;
+    color: #333333;
+    line-height: 30px;
+}
+.bottom-title-number {
+    float: right;
+    line-height: 30px;
+    font-size: 14px;
+    color: #333333;
+
+    .btm-title-number-sp {
+        color: @color-red;
+    }
+}
+.right-bottom-main {
+
+}
+.bottom-main-title {
+    height: 30px;
+    border-left: 5px solid @color-green;
+    background-color: #f8f8f8;
+
+    .clearfix;
+}
+.btm-main-title-box {
+    float: left;
+    width: 100px;
+    line-height: 30px;
+    text-align: center;
+
+
+    &.time {
+        width: 90px;
+    }
+
+    &.yinghuan {
+        width: 100px;
+    }
+
+    &.status {
+        width: 64px;
+        float: right;
+    }
+}
+.btm-main-box {
+    height: 30px;
+    padding-left: 5px;
+
+    &.btm-bg-color {
+        background-color: #f8f8f8;
+    }
+
+    .clearfix;
 }

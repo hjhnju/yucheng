@@ -22,7 +22,7 @@ $smarty->assign('cat_id', 1);
 $smarty->assign('duration', 12);
 $smarty->assign('level', 1);
 $smarty->assign('amount', '200000.00');
-$smarty->assign('interest', '12.00');
+$smarty->assign('interest', '12');
 $smarty->assign('invest_cnt', 0);
 $smarty->assign('invest_amount', 0.00);
 $smarty->assign('safe_id', 1);
@@ -105,7 +105,7 @@ $smarty->assign('audit',
                 'loan_id' => 1,
                 'user_id' => 1,
                 'type' => 1,
-                'name' => '实地认证',
+                'name' => '营业执照',
                 'comment' => '通过',
                 'status' => 1,
                 'create_time' => '2014-12-20 12:15:50',
@@ -118,7 +118,7 @@ $smarty->assign('audit',
                 'loan_id' => 1,
                 'user_id' => 1,
                 'type' => 1,
-                'name' => '实地认证',
+                'name' => '身份证',
                 'comment' => '通过',
                 'status' => 1,
                 'create_time' => '2014-12-20 12:15:50',
@@ -129,7 +129,7 @@ $smarty->assign('audit',
                 'loan_id' => 1,
                 'user_id' => 1,
                 'type' => 1,
-                'name' => '实地认证',
+                'name' => '户口本',
                 'comment' => '通过',
                 'status' => 1,
                 'create_time' => '2014-12-20 12:15:50',

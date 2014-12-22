@@ -3,7 +3,7 @@ var phpcgi = require('node-phpcgi')({
     handler: 'php-cgi'
 });
 
-exports.port = 8849;
+exports.port = 8805;
 exports.directoryIndexes = true;
 exports.documentRoot = __dirname;
 exports.getLocations = function () {
@@ -22,15 +22,22 @@ exports.getLocations = function () {
                 livereload()
             ]
         },
+        //{
+        //    location: '/*.php',
+        //    handler: [
+        //        function (context) {
+        //            context.stop();
+        //            phpcgi(context.request, context.response, function (err) {
+        //                context.start();
+        //            });
+        //        }
+        //    ]
+        //},
         {
-            location: '/*.php',
+            location: /\.php($|\?)/,
             handler: [
-                function (context) {
-                    context.stop();
-                    phpcgi(context.request, context.response, function (err) {
-                        context.start();
-                    });
-                }
+                php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
+                //php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
             ]
         },
         { 

@@ -1,0 +1,306 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/project/detail/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['project/detail/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+{%assign var=mapType value=['实地认证'=>'shidi', '营业执照'=>'yingye', '税务登记证'=>'shuiwu', '银行开户许可证'=>'bank',
+'组织机构代码证'=>'zuzhi', '征信报告'=>'zhengxin', '抵押手续'=>'diya', '身份证'=>'shenfen', '户口本'=>'hukou',
+'结婚证'=>'jiehun', '房产证'=>'fangchan', '行驶证'=>'xingshi']%}
+<div class="details">
+    <div class="container">
+        <div class="detail-left">
+            <div class="detail-left-title">
+                <a href="###" class="left-title-link">我来投资</a>
+                <span class="left-title-greater">></span>
+                <a href="###" class="left-title-link">项目列表</a>
+                <span class="left-title-greater">></span>
+                <span class="left-title-link">项目详情</span>
+            </div>
+            <div class="project">
+                <div class="project-title">
+                    <div class="project-title-name">{%$title%}</div>
+                    <div class="project-title-number">
+                        <span>借款编号：</span>
+                        <span>{%$id%}</span>
+                    </div>
+                </div>
+                <div class="project-gaishu">
+                    <div class="project-gaishu-top">
+                        <div class="gaisu-top-rental">
+                            <div class="gaishu-top-rental-icon rental">借款总额</div>
+                            <div class="gaishu-top-rental-number">
+                                <span>￥</span>
+                                <span class="rental-number-big">{%$amount%}</span>
+                            </div>
+                        </div>
+                        <div class="gaisu-top-rental">
+                            <div class="gaishu-top-rental-icon lilv">借款年利率</div>
+                            <div class="gaishu-top-rental-number">
+                                <span class="rental-number-big">{%$interest%}</span>
+                                <span>.00%</span>
+                            </div>
+                        </div>
+                        <div class="gaisu-top-rental">
+                            <div class="gaishu-top-rental-icon time">借款期限</div>
+                            <div class="gaishu-top-rental-number">
+                                <span class="rental-number-big">{%$duration%}</span>
+                                <span>个月</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="project-gaishu-bottom">
+                        <div class="gaishu-bottom-guard">
+                            <div class="gaishu-guard-baozhang">
+                                <span>保障方式：</span>
+                                <span class="baozhang-type benxi">{%$safe_id%}</span>
+                                <span class="baozhang-type gudong">大股东联保</span>
+                            </div>
+                            <div class="gaishu-guard-baozhang">
+                                <span>还款方式：</span>
+                                <span class="baozhang-return">{%$refund_type%}</span>
+                            </div>
+                        </div>
+                        <div class="gaishu-bottom-jindu">
+                            <div class="jindu-top">
+                                <span class="jindu-top-text">筹款进度：</span>
+                                <div class="jindu-top-tiao">
+                                    <div class="jindu-tio-tiao-within"></div>
+                                </div>
+                                    <span class="jindu-top-bai">
+                                        <span class="jindu-top-bai-number">{%$status%}</span>%
+                                    </span>
+                            </div>
+                            <div class="jindu-btm">
+                                已投标：<span>106人</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-time">
+                    <span class="project-time-start">开始时间：{%$create_time%}</span>
+                    <span class="project-time-start">截止日期：{%$deadline%}</span>
+                </div>
+                <div class="project-main project">
+                    <div class="project-main-title">
+                        <div class="main-title-box showproject current">项目详情</div>
+                        <div class="main-title-box showfile">文件资料</div>
+                        <div class="main-title-box showrecord">投资记录</div>
+                    </div>
+                    <div class="main-box-details showproject-main">
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">借款企业</div>
+                            <div class="main-detail-content">
+                                <div class="main-detail-content-left">
+                                    <div class="left-box">
+                                        <div class="content-left-name">借款学校：</div>
+                                        <div class="content-left-text">{%$company.school%}</div>
+                                    </div>
+                                    <div class="left-box">
+                                        <div class="content-left-name">区域位置：</div>
+                                        <div class="content-left-text">{%$company.area%}</div>
+                                    </div>
+                                    <div class="left-box">
+                                        <div class="content-left-name">资产总值：</div>
+                                        <div class="content-left-text">{%$company.assets%}</div>
+                                    </div>
+                                    <div class="left-box">
+                                        <div class="content-left-name">教职工数量：</div>
+                                        <div class="content-left-text">{%$company.employers%}</div>
+                                    </div>
+                                    <div class="left-box">
+                                        <div class="content-left-name">借款用提：</div>
+                                        <div class="content-left-text">{%$content%}</div>
+                                    </div>
+
+                                </div>
+                                <div class="main-detail-content-right">
+                                    <div class="left-box">
+                                        <div class="content-left-name">注册年限：</div>
+                                        <div class="content-left-text right-text">{%$company.years%}</div>
+                                    </div>
+                                    <div class="left-box">
+                                        <div class="content-left-name">注册资金：</div>
+                                        <div class="content-left-text right-text">{%$company.funds%}</div>
+                                    </div>
+                                    <div class="left-box">
+                                        <div class="content-left-name">学生数量：</div>
+                                        <div class="content-left-text right-text">{%$company.students%}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">信用档案</div>
+                            <div class="main-detail-content">
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">成功借款：</div>
+                                        <div class="file-left-text">{%$counter.success%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">还清笔数：</div>
+                                        <div class="file-left-text">{%$counter.finished%}笔</div>
+                                    </div>
+                                </div>
+                                <div class="file-enter">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">授信额度：</div>
+                                        <div class="file-left-text">{%$counter.limit%}元</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">已还金额：</div>
+                                        <div class="file-left-text">{%$counter.refund%}元</div>
+                                    </div>
+                                </div>
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">累计借款：</div>
+                                        <div class="file-left-text">{%$counter.total%}元</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">待还本息：</div>
+                                        <div class="file-left-text">{%$counter.rest%}元</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">担保人信息</div>
+                            <div class="main-detail-content">
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">姓名：</div>
+                                        <div class="file-left-text">{%$guarantee.name%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">所处职位：</div>
+                                        <div class="file-left-text">{%$guarantee.job_title%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">婚否：</div>
+                                        <div class="file-left-text">{%$guarantee.marriage%}</div>
+                                    </div>
+                                </div>
+                                <div class="file-enter">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">单位类别：</div>
+                                        <div class="file-left-text">{%$guarantee.company_type%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">年龄：</div>
+                                        <div class="file-left-text">{%$guarantee.age%}岁</div>
+                                    </div>
+                                </div>
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">户口：</div>
+                                        <div class="file-left-text">{%$guarantee.account%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">年收入：</div>
+                                        <div class="file-left-text">{%$guarantee.income%}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">审核信息</div>
+                            <div class="renzheng-box">
+                                <div class="renzheng-title">企业认证</div>
+                                <div class="renzheng-box-main">
+                                    {%foreach $audit['1'] as $key => $item%}
+                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    {%/foreach%}
+<!--                                    <div class="renzheng-pic shidi"></div>-->
+<!--                                    <div class="renzheng-pic shuiwu"></div>-->
+<!--                                    <div class="renzheng-pic bank"></div>-->
+<!--                                    <div class="renzheng-pic zuzhi"></div>-->
+<!--                                    <div class="renzheng-pic zengxin"></div>-->
+<!--                                    <div class="renzheng-pic diya"></div>-->
+                                </div>
+                            </div>
+                            <div class="renzheng-box">
+                                <div class="renzheng-title">个人认证</div>
+                                <div class="renzheng-box-main">
+                                    {%foreach $audit['2'] as $key => $item%}
+                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    {%/foreach%}
+
+<!--                                    <div class="renzheng-pic shenfen"></div>-->
+<!--                                    <div class="renzheng-pic hukou"></div>-->
+<!--                                    <div class="renzheng-pic jiehun"></div>-->
+<!--                                    <div class="renzheng-pic fangchan"></div>-->
+<!--                                    <div class="renzheng-pic xingshi"></div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details-main-box bor-btm">
+                            <div class="main-box-detail-title">审核通过</div>
+                            <div class="detail-pass">客户在云南省某民营企业工作，收入稳定，本借款用于资金周转。本借款已通过利信快捷及安富担保审核并被推荐至有利网；推荐方提供全额本息担保。有利网于2014年12月16日终审通过。</div>
+                            <div class="detail-symbol"></div>
+                        </div>
+                    </div>
+                    <div class="main-box-details showfile-main"></div>
+                    <div class="main-box-details showrecord-main"></div>
+                </div>
+            </div>
+        </div>
+        <div class="detail-right">
+            <div class="right-top">
+                <div class="right-top-title">我来投资</div>
+                <div class="right-top-allmoney">
+                    <div class="right-top-allmoney-money">可投金额：<span>{%$invest_cnt%}元</span></div>
+                    <div class="right-top-allmoney-time">剩余时间：<span>1天1小时22分钟</span></div>
+                </div>
+                <div class="right-top-ipt">
+                    <input type="text" class="right-top-ipt-input" />
+                </div>
+                <div class="right-top-chongzhi">
+                    <div class="chongzhi-left">可用金额：10,000,000.00元<a href="###" class="chongzhi-link">[充值]</a></div>
+                    <div class="chongzhi-right">预期收益<span class="chongzhi-span">0.66</span></div>
+                </div>
+                <div class="right-top-btn">
+                    <a class="right-top-btn-confirm">确定投资</a>
+                    <a class="right-top-btn-confirm confirm-all">全部投资</a>
+                </div>
+            </div>
+            <div class="right-bottom">
+                <div class="right-bottom-title">
+                    <div class="bottom-title-name">还款计划</div>
+                    <div class="bottom-title-number">共<span class="btm-title-number-sp">12</span>期</div>
+                </div>
+                <div class="right-bottom-main">
+                    <div class="bottom-main-title">
+                        <div class="btm-main-title-box time">还款时间</div>
+                        <div class="btm-main-title-box yinghuan">应还本息</div>
+                        <div class="btm-main-title-box status">还款状态</div>
+                    </div>
+                    <div class="btm-main-box">
+                        <div class="btm-main-title-box time">2014-12-12</div>
+                        <div class="btm-main-title-box yinghuan">￥1,000,000.00</div>
+                        <div class="btm-main-title-box status">未到期</div>
+                    </div>
+                    <div class="btm-main-box btm-bg-color">
+                        <div class="btm-main-title-box time">2014-12-12</div>
+                        <div class="btm-main-title-box yinghuan">￥1,000,000.00</div>
+                        <div class="btm-main-title-box status">未到期</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}
