@@ -14,10 +14,6 @@ class LoginController extends Base_Controller_Page{
      * 状态返回0表示登录成功
      */    
     public function indexAction(){
-        $arrData =  Base_Config::getConfig('web');
-        $this->getView()->assign("webRoot",$arrData['root']);
-        $this->getView()->assign("token","123");
-        $this->getView()->assign("feRoot",$arrData['root'].$arrData['feroot']);
     }
   
     /**

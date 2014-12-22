@@ -67,15 +67,15 @@ class LoginApiController extends Base_Controller_Api{
         $state = trim($_REQUEST['state']);
         $strAuthCode = trim($_REQUEST['code']);      
         $key = $_COOKIE['access_key'];
-        $access_token = Base_Redis::getInstance()->get("access_token".$this->type.$key);
+        $access_token = Base_Redis::getInstance()->get("access_token".$strType.$key);
         if(empty($access_token)){
             $access_token = $this->loginLogic->getAccessToken($strAuthCode);
         }
         $openid = $this->loginLogic->getOpenid($access_token);
         Yaf_Session::getInstance()->set("openid",$openid);
-        Yaf_Session::getInstance()->set("idtype",$this->type);
-        $ret = $this->loginLogic->checkBind($openid, $this->type); //$ret=0表示已经绑定，$ret=1表示未绑定
-        if($ret == User_RetCode::BOUND){
+        Yaf_Session::getInstance()->set("idtype",$strType);
+        $ret = $this->loginLogic->checkBind($openid, $strType); //$ret=0表示已经绑定，$ret=1表示未绑定
+        if($ret){
             return $this->ajax();         //用户登录成功并已经绑定账号
         }else{
             return $this->ajaxError(User_RetCode::UNBOUND,User_RetCode::getMsg(User_RetCode::UNBOUND));  //用户未绑定账号
@@ -91,10 +91,10 @@ class LoginApiController extends Base_Controller_Api{
     public function setBindAction(){
         $strName = trim($_REQUEST['name']);
         $strPasswd = trim($_REQUEST['passwd']);
-        $opeid = Yaf_Session::getInstance()->get("openid");
-        $type =  Yaf_Session::getInstance()->get("idtype");
-        $ret = $this->loginLogic->setBind($openid, $intType,$strName,$strPasswd);
-        if(User_RetCode::BOUND == $ret){
+        $openid = Yaf_Session::getInstance()->get("openid");
+        $strType =  Yaf_Session::getInstance()->get("idtype");
+        $ret = $this->loginLogic->setBind($openid, $strType,$strName,$strPasswd);
+        if($ret){
             return $this->ajax();
         }
         return $this->ajaxError(User_RetCode::UNBOUND);
@@ -130,6 +130,6 @@ class LoginApiController extends Base_Controller_Api{
     }
     
     public function testAction(){
-        print $this->loginLogic->getOpenid('test');
+        print $this->loginLogic->getAuthCodeUrl('qq');
     }
 }

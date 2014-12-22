@@ -550,7 +550,7 @@ class Base_Log {
             $strParams = urldecode($strParams);
         } elseif (is_string($mixMsg)) {
             $strParams = $mixMsg;
-        }
+        } 
 
         // 替换self::DELEMITER
         $strParams = str_replace("\t", ' ', $strParams);

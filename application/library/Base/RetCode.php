@@ -10,6 +10,7 @@ class Base_RetCode {
     const SUCCESS           = 0;//成功
 
     const NEED_PICTURE      = 101; //需要图片验证码
+    const CSRFTOKEN_INVALID = 102; //CSRF验证不通过
     
      //默认错误
     const UNKNOWN_ERROR     = 999; //未知错误
@@ -44,6 +45,7 @@ class Base_RetCode {
         self::DATA_NULL         => '数据为空',
         self::SERVICE_DEGRADED  => '服务降级',
         self::NEED_PICTURE      => '需要图片验证码',
+        self::CSRFTOKEN_INVALID => '会话已过期，请重新刷新页面',
     );
 
     /**
