@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>wuqi</title>
+    <link rel="stylesheet" type="text/css" href="/src/home/index.less" />
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script>
+        require.config({
+            'baseUrl': '/src',
+            'paths': {
+            },
+            'packages': [
+                {
+                    'name': 'echarts',
+                    'location': '../dep/echarts/2.1.9/src',
+                    'main': 'echarts'
+                },
+                {
+                    'name': 'est',
+                    'location': '../dep/est/1.3.0/src'
+                },
+                {
+                    'name': 'etpl',
+                    'location': '../dep/etpl/3.0.0/src',
+                    'main': 'main'
+                },
+                {
+                    'name': 'jquery',
+                    'location': '../dep/jquery/1.9.1/src',
+                    'main': 'jquery.min'
+                },
+                {
+                    'name': 'moment',
+                    'location': '../dep/moment/2.7.0/src',
+                    'main': 'moment'
+                },
+                {
+                    'name': 'saber-emitter',
+                    'location': '../dep/saber-emitter/1.0.0/src',
+                    'main': 'emitter'
+                },
+                {
+                    'name': 'zrender',
+                    'location': '../dep/zrender/2.0.6/src',
+                    'main': 'zrender'
+                }
+            ]
+        });
+    </script>
+    <style>
+        .test {
+            padding: 10px 0;
+            text-align: center;
+        }
+        .test div {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test">
+        <div>case1: startPage = 0, total = 20</div>
+        <div id="test1"></div>
+    </div>
+    <div class="test">
+        <div>case2: startPage = 1, total = 20</div>
+        <div id="test2"></div>
+    </div>
+    <div class="test">
+        <div>case3: startPage = 0, total = 20, page < front</div>
+        <div id="test3"></div>
+    </div>
+    <div class="test">
+        <div>case4: startPage = 0, total < showCount</div>
+        <div id="test4"></div>
+    </div>
+    <div class="test">
+        <div>case5: startPage = 0, total = 20, page > endLine</div>
+        <div id="test5"></div>
+    </div>
+    <script>
+        require(['common/ui/Pager/pager', 'jquery'], function(Pager, $) {
+            var pager1 = new Pager({
+                startPage: 0,
+                total: 20,
+                main: $('#test1')
+            });
+
+            pager1.render(10);
+
+            var pager2 = new Pager({
+                startPage: 1,
+                total: 20,
+                main: $('#test2')
+            });
+
+            pager2.render(10);
+
+            pager2.on('change', function(data) {
+                this.render(data.value);
+            });
+
+            var pager3 = new Pager({
+                startPage: 0,
+                total: 20,
+                main: $('#test3')
+            });
+
+            pager3.render(3);
+
+            var pager4 = new Pager({
+                startPage: 0,
+                total: 5,
+                main: $('#test4')
+            });
+
+            pager4.render(4);
+
+            var pager5 = new Pager({
+                startPage: 0,
+                total: 20,
+                main: $('#test5')
+            });
+
+            pager5.render(18);
+
+            pager5.on('change', function(data) {
+                this.render(data.value);
+            });
+        });
+    </script>
+</body>
+</html>
