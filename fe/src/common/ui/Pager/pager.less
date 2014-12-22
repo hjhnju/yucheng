@@ -1,0 +1,35 @@
+.ui-pager {
+    text-align: center;
+    width: 100%;
+}
+
+.ui-pager-box {
+    display: inline-block;
+    .clearfix;
+
+    .ui-pager-item {
+        float: left;
+        border: 1px solid #ccc;
+        padding: 2px 5px;
+        text-decoration: none;
+        margin-right: 10px;
+        color: #000;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dfdfdf;
+        }
+    }
+
+    .ui-pager-select {
+        &.current {
+            border: 0;
+            color: #333;
+            cursor: default;
+
+            &:hover {
+                background: #fff;
+            }
+        }
+    }
+}

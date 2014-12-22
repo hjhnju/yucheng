@@ -1,39 +1,34 @@
 <?php
 /**
  * 用户页面controller基础类
- * @author hejunhua <hejunhua@baidu.com>
+ * @author hejunhua
  */
-class Base_Controller_Page extends Base_Controller_Response {
+class Base_Controller_Page extends Base_Controller_Abstract {
 
-    public function init () {
+    public function init(){
+        //增加日志字段
+        $this->addBaseLogs(array('type'=>'page'));
+
         parent::init();
 
         $webroot = Base_Config::getConfig('web.root');
         $this->getView()->assign('webroot', $webroot);
+        $this->getView()->assign('feRoot', $webroot . '/asset');
 
-        //打日志
-        $this->baselog();
+        //set csrf token
+        $token = time() . mt_rand(5, 5);
+        $ret   = Yaf_Session::getInstance()->set(Base_Keys::getCsrfTokenKey(), $token);
+        //防止错误时验证无法访问
+        $token = $ret ? $token : '';
+        $this->getView()->assign('token', $token);
     }
     
-    protected function isAjax() {
+    protected function isAjax(){
         return false;
     }
 
     public function redirect($url){
         parent::redirect($url);
         exit;
-    }
-
-    /**
-     * log for every page
-     */
-    protected function baselog(){         
-        //解析du串
-        Base_Log::notice(array(
-            'controller' => $this->getRequest()->getControllerName(),
-            'action'     => $this->getRequest()->getActionName(),
-            //'userid'     => $this->_userid,
-            'type'       => 'page',
-        ));
     }
 }
