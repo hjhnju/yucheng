@@ -37,6 +37,20 @@ class AwardController extends Base_Controller_Response {
 	 * @return 标准json格式
 	 * status 0:成功
 	 * status 1105:获取奖励列表失败
+	 * data=
+	 * {
+	 *     {
+	 *         'userId' 用户的
+	 *         'userName' 注册用户名
+	 *         'phone' 用户手机号
+	 *         'registProgress' 注册进度
+	 *         'percent' 投资满额百分数
+	 *         'awardAmt' 奖励金额
+	 *         'isAwarded' 是否可以领取奖励  0--不可以   1--可以
+	 *     }
+	 * }
+	 * 
+	 * 
 	 */
 	public function  getAwards() {
 		$userid = User_Api::getUserId();//from User Module
