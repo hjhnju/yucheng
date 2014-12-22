@@ -115,6 +115,7 @@ class Loan_Api {
     public static function getLoanDetail($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
+        $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();
