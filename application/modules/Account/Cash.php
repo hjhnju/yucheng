@@ -29,19 +29,21 @@ class CashController extends Base_Controller_Response {
 	/**
 	 * 接口 /account/cash/list
 	 * 获取充值提现列表
-	 * @param type 0--充值  1--提现
+	 * @param type 0--全部 1--充值  2--提现
 	 * @param startTime 
 	 * @param endTime 
 	 * @param date 0--今天  1--最近一周  2--1个月  3--3个月  4--半年
+	 * @param page
 	 * @return 标准json
 	 * status 0: 处理成功
 	 * status 1107:获取充值提现列表失败
 	 */
 	public function ListAction() {
-		$type = $_REQUEST['type'];
-		$startTime = $_REQUEST['startTime'];
-		$endTime = $_REQUEST['startTime'];
-		$date = $_REQUEST['date'];
+		$type = isset($_REQUEST['type'])?$_REQUEST['type']:0;
+		$startTime = isset($_REQUEST['startTime'])?$_REQUEST['startTime']:0;
+		$endTime = isset($_REQUEST['startTime'])?$_REQUEST['endTime']:0;
+		$date = isset($_REQUEST['date'])?$_REQUEST['date']:0;
+		$page = isset($_REQUEST['page'])?$_REQUEST['page']:1;//约定接口page从第一页开始
 		//$userId = User_Api::getUserId()
 		$ret = Finance_Api::getRechargeWithDrawRecord($userId,$type,$startTime,$endTime,$date);
 		//判断$ret合法性   

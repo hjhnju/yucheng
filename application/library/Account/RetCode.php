@@ -14,7 +14,9 @@ class Account_RetCode extends Base_RetCode {
 	CONST GET_AWARDSLIST_FAIL        = 1105;//获取奖励列表失败
 	CONST GET_MESLIST_FAIL           = 1106;//获取消息列表失败
 	CONST GET_WITHDRAW_RECHARGE_FAIL = 1107;//获取充值提现列表失败
-	CONST GET_INVEST_LIST_FAIL = 1108;//获取投资列表
+	CONST GET_INVEST_LIST_FAIL       = 1108;//获取投资列表失败
+	CONST GET_REPAYPLAN_FAIL         = 1109;//获取还款计划失败
+	CONST GET_MESCONTENT_FAIL        = 1110;//获取消息内容失败
 	
 	/* 消息函数
 	 * @var array
@@ -27,7 +29,9 @@ class Account_RetCode extends Base_RetCode {
 		self::GET_AWARDSLIST_FAIL        => '获取奖励列表失败',
 		self::GET_MESLIST_FAIL           => '获取消息列表失败',		
 		self::GET_WITHDRAW_RECHARGE_FAIL => '获取充值提现列表失败',
-	    self::GET_INVEST_LIST_FAIL       => '获取投资列表',
+	    self::GET_INVEST_LIST_FAIL       => '获取投资列表失败',
+	    self::GET_REPAYPLAN_FAIL         => '获取还款计划失败',
+	    self::GET_MESCONTENT_FAIL        => '获取消息内容失败'
 	);
 	
 	/**
