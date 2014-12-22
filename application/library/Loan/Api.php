@@ -146,8 +146,8 @@ class Loan_Api {
         $attachs_data = $attachs->toArray();
         $data['attach'] = self::stepArray($attachs_data['list'], 'type');
         
-        $invests = Invest_Api::getLoanInvests($loan_id);
-        $data['invest'] = $invests['list'];
+        //$invests = Invest_Api::getLoanInvests($loan_id);
+        //$data['invest'] = $invests['list'];
         
         return $data;
     }

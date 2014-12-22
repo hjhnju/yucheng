@@ -33,6 +33,8 @@ class Loan_List_Guarantee extends Base_List {
         'age'         => 1,
         'marriage'    => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
 }

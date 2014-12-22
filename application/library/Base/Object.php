@@ -227,10 +227,10 @@ class Base_Object {
             }
         }
         if ($this->properties['create_time'] && empty($data['create_time'])) {
-            unset($data['create_time']);
+            $data['create_time'] = time();
         }
         if ($this->properties['update_time']) {
-            unset($data['update_time']);
+            $data['update_time'] = time();
         }
         return $data;
     }

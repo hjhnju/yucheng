@@ -31,6 +31,8 @@ class Loan_List_Counter extends Base_List {
         'success'     => 1,
         'finished'    => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
 }

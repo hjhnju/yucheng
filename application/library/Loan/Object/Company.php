@@ -26,7 +26,7 @@ class Loan_Object_Company extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'school', 'area', 'assets', 'employers', 'years', 'funds', 'students', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'school', 'area', 'assets', 'employers', 'years', 'funds', 'students', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -43,6 +43,7 @@ class Loan_Object_Company extends Base_Object {
         'years'       => 'years',
         'funds'       => 'funds',
         'students'    => 'students',
+        'status'      => 'status',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
     );
@@ -58,6 +59,9 @@ class Loan_Object_Company extends Base_Object {
         'employers'   => 1,
         'years'       => 1,
         'students'    => 1,
+        'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -129,14 +133,20 @@ class Loan_Object_Company extends Base_Object {
     public $students;
 
     /**
+     * 状态
+     * @var integer
+     */
+    public $status;
+
+    /**
      * 创建时间
-     * @var string
+     * @var integer
      */
     public $createTime;
 
     /**
      * 更新时间
-     * @var string
+     * @var integer
      */
     public $updateTime;
 
