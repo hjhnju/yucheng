@@ -52,6 +52,8 @@ class Invest_Object_Invest extends Base_Object {
         'loan_id'     => 1,
         'user_id'     => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -100,13 +102,13 @@ class Invest_Object_Invest extends Base_Object {
 
     /**
      * 创建时间
-     * @var string
+     * @var integer
      */
     public $createTime;
 
     /**
      * 更新时间
-     * @var string
+     * @var integer
      */
     public $updateTime;
 

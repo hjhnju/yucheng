@@ -1,7 +1,7 @@
 <?php
 /**
  *  列表类
- * @author 
+ * @author jiangsongfang
  */
 class User_List_Info extends Base_List {
     /**
@@ -27,6 +27,11 @@ class User_List_Info extends Base_List {
      * @var array
      */
     protected $intProps = array(
+        'userid'              => 1,
+        'usertype'            => 1,
+        'certificate_type'    => 1,
+        'create_time'         => 1,
+        'update_time'         => 1,
     );
 
 }

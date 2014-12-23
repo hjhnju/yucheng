@@ -145,11 +145,8 @@ class Base_Config {
         }
 
         $mixRet = self::$_objDefaultConfig->get($strTag);
-        if (is_object($mixRet)) {
-            return $mixRet->toArray();
-        } else {
-            return $mixRet;
-        }
+ 
+        return $mixRet;
     }/*}}}*/
 
     /**

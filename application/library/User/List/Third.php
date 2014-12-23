@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户第三方登陆表 列表类
- * @author 
+ * @author jiangsongfang
  */
 class User_List_Third extends Base_List {
     /**
@@ -27,6 +27,9 @@ class User_List_Third extends Base_List {
      * @var array
      */
     protected $intProps = array(
+        'id'          => 1,
+        'userid'      => 1,
+        'authtype'    => 1,
     );
 
 }

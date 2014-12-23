@@ -31,6 +31,8 @@ class Invest_List_Invest extends Base_List {
         'loan_id'     => 1,
         'user_id'     => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
 }

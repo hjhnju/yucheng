@@ -20,7 +20,7 @@ class Loan_List_Company extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'school', 'area', 'assets', 'employers', 'years', 'funds', 'students', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'school', 'area', 'assets', 'employers', 'years', 'funds', 'students', 'status', 'create_time', 'update_time');
 
     /**
      * 整数类型的字段
@@ -33,6 +33,9 @@ class Loan_List_Company extends Base_List {
         'employers'   => 1,
         'years'       => 1,
         'students'    => 1,
+        'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
 }

@@ -54,6 +54,8 @@ class Loan_Object_Counter extends Base_Object {
         'success'     => 1,
         'finished'    => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -114,13 +116,13 @@ class Loan_Object_Counter extends Base_Object {
 
     /**
      * 创建时间
-     * @var string
+     * @var integer
      */
     public $createTime;
 
     /**
      * 更新时间
-     * @var string
+     * @var integer
      */
     public $updateTime;
 

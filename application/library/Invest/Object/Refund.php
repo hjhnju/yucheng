@@ -60,6 +60,8 @@ class Invest_Object_Refund extends Base_Object {
         'user_id'     => 1,
         'period'      => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -144,13 +146,13 @@ class Invest_Object_Refund extends Base_Object {
 
     /**
      * 创建时间
-     * @var string
+     * @var integer
      */
     public $createTime;
 
     /**
      * 更新时间
-     * @var string
+     * @var integer
      */
     public $updateTime;
 

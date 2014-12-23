@@ -33,6 +33,8 @@ class Invest_List_Refund extends Base_List {
         'user_id'     => 1,
         'period'      => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
 }

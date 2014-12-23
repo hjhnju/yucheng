@@ -10,6 +10,9 @@
 class Base_Controller_Abstract extends Yaf_Controller_Abstract
 {
 
+    //check login 时是否需要自动跳转
+    protected $autoJump    = true;
+
     protected $ajax        = false;
     
     protected $outputView  = 'output.phtml';
@@ -24,6 +27,20 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
 
         $this->baselog();
         $this->objUser = User_Api::checkLogin();
+        //未登录自动跳转
+        if($this->autoJump && empty($this->objUser)){
+            $u        = isset($_REQUEST['HTTP_REFERER']) ? $_REQUEST['HTTP_REFERER'] : null;
+            $loginUrl = Base_Config::getConfig('web')->loginurl;
+            if(!empty($u)){
+                $loginUrl = $loginUrl . '?' . http_build_query(array('u'=>$u));
+            }
+            //jump
+            if($this->isAjax()){
+                $this->ajaxJump($loginUrl);
+            }else{
+                $this->redirect($loginUrl);
+            }
+        }
     }
 
     private function baselog(){
@@ -36,6 +53,14 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
         );
         $logParams = array_merge($logParams, $this->addBaseLogs);
         Base_Log::notice($logParams);
+    }
+
+    /**
+     * 未登录是否跳转
+     * @param boolean
+     */
+    protected function setAutoJump($autoJump) {
+        $this->autoJump = $autoJump;
     }
 
     /**
@@ -206,6 +231,27 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
         }else{
             echo $strJsonRet;
         }
+        die();
+    }
+
+    public function redirect($url){
+        parent::redirect($url);
+        exit;
+    }
+
+    /** 
+     * 前端跳转
+     * @param   $url jump url
+     */
+    public function ajaxJump($url, $arrData = null){
+        header("Content-Type: application/json; charset=UTF-8"); 
+        $arrRtInfo               = array();
+        $arrRtInfo['status']     = Base_RetCode::NEED_REDIRECT;
+        $arrRtInfo['statusInfo'] = $url;
+        $arrRtInfo['data']       = $arrData;
+        
+        $output = json_encode($arrRtInfo);
+        echo $output;
         die();
     }
 }

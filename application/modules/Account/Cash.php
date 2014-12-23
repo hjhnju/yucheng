@@ -37,8 +37,20 @@ class CashController extends Base_Controller_Response {
 	 * @return 标准json
 	 * status 0: 处理成功
 	 * status 1107:获取充值提现列表失败
+	 * data
+	 * {
+	 *     { 
+	 *         'time'      时间
+	 *         'transType' 交易类型
+	 *         'serialNo'  交易流水号
+	 *         'tranAmt'   交易金额
+	 *         'avalBg'    可用余额
+	 * 
+	 * 
+	 *     }
+	 * }
 	 */
-	public function ListAction() {
+	public function listAction() {
 		$type = isset($_REQUEST['type'])?$_REQUEST['type']:0;
 		$startTime = isset($_REQUEST['startTime'])?$_REQUEST['startTime']:0;
 		$endTime = isset($_REQUEST['startTime'])?$_REQUEST['endTime']:0;

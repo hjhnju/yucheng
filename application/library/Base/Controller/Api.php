@@ -133,4 +133,19 @@ class Base_Controller_Api extends Base_Controller_Abstract {
         }
     }
 
+    /** 
+     * 前端跳转
+     * @param   $url jump url
+     */
+    public function ajaxJump($url, $arrData = null){
+        @header("Content-Type: application/json; charset=UTF-8"); 
+        $arrRtInfo               = array();
+        $arrRtInfo['status']     = Base_RetCode::NEED_REDIRECT;
+        $arrRtInfo['statusInfo'] = $url;
+        $arrRtInfo['data']       = $arrData;
+ 
+        $output = json_encode($arrRtInfo);
+        $this->_response->setBody($output);       
+    }
+
 }

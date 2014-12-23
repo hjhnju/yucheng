@@ -36,8 +36,13 @@ class Loan_List_Loan extends Base_List {
         'invest_cnt'      => 1,
         'safe_id'         => 1,
         'refund_type'     => 1,
+        'deadline'        => 1,
         'status'          => 1,
+        'create_time'     => 1,
+        'update_time'     => 1,
         'create_uid'      => 1,
+        'full_time'       => 1,
+        'pay_time'        => 1,
     );
 
 }

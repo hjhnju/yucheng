@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户登录历史纪录表
- * @author hejunhua
+ * @author jiangsongfang
  */
 class User_Object_Record extends Base_Object {
     /**
@@ -45,6 +45,9 @@ class User_Object_Record extends Base_Object {
      * @var array
      */
     protected $intProps = array(
+        'id'          => 1,
+        'userid'      => 1,
+        'status'      => 1,
     );
 
     /**
@@ -57,19 +60,19 @@ class User_Object_Record extends Base_Object {
 
     /**
      * 自增id
-     * @var 
+     * @var integer
      */
     public $id;
 
     /**
      * 用户id
-     * @var 
+     * @var integer
      */
     public $userid;
 
     /**
      * 登录状态
-     * @var 
+     * @var integer
      */
     public $status;
 

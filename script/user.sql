@@ -11,8 +11,8 @@
     `phone` varchar(12) default NULL COMMENT '用户手机号',
     `email` varchar(50) default NULL COMMENT '用户邮箱',
     `lastip` varchar(50) default NULL COMMENT '最近登陆ip',
-    `login_time` datetime NOT NULL COMMENT '最近一次登录时间',
-    `create_time` datetime NOT NULL COMMENT '注册时间',
+    `login_time` int(11) NOT NULL COMMENT '最近一次登录时间',
+    `create_time` int(11) NOT NULL COMMENT '注册时间',
     PRIMARY KEY  (`userid`),
     UNIQUE (name),
     UNIQUE (phone),
@@ -29,8 +29,8 @@
     `certificate_content` varchar(50) default NULL COMMENT '证件内容',
     `headurl` varchar(255) default NULL COMMENT '头像URL',
     `huifuid` varchar(50) default NULL COMMENT '汇付用户ID',
-    `create_time` datetime NOT NULL COMMENT '注册时间',
-    `update_time` datetime NOT NULL COMMENT '修改资料时间',
+    `create_time` int(11) NOT NULL COMMENT '注册时间',
+    `update_time` int(11) NOT NULL COMMENT '修改资料时间',
     PRIMARY KEY  (`userid`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -42,7 +42,7 @@
     `authtype` tinyint(3) unsigned NOT NULL COMMENT '第三方登录类型 1:qq, 2:weibo, 3:weixin',
     `nickname` varchar(50) default NULL COMMENT '用户第三方站点用户名',
     `openid` varchar(50) NOT NULL COMMENT '第三方认证ID',
-    `create_time` datetime NOT NULL COMMENT '绑定时间',
+    `create_time` int(11) NOT NULL COMMENT '绑定时间',
     PRIMARY KEY  (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户第三方登陆表';
 
@@ -53,7 +53,7 @@
     `userid` int(11) unsigned NOT NULL COMMENT '用户id',
     `status` tinyint(3) unsigned NOT NULL COMMENT '登录状态',
     `ip` varchar(50) NOT NULL COMMENT 'IP',
-    `create_time` datetime NOT NULL COMMENT '登录时间',
+    `create_time` int(11) NOT NULL COMMENT '登录时间',
     PRIMARY KEY  (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户登录历史纪录表';
 

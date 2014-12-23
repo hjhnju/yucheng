@@ -11,9 +11,9 @@ class Base_Controller_Page extends Base_Controller_Abstract {
 
         parent::init();
 
-        $webroot = Base_Config::getConfig('web.root');
+        $webroot = Base_Config::getConfig('web')->root;
         $this->getView()->assign('webroot', $webroot);
-        $this->getView()->assign('feRoot', $webroot . '/asset');
+        $this->getView()->assign('feroot', $webroot . '/asset');
 
         //set csrf token
         $token = time() . mt_rand(5, 5);
