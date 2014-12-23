@@ -33,7 +33,8 @@ class InvestController extends Base_Controller_Response {
 	 * 
 	 */
 	public function indexAction() {
-		$status = isset($_REQUEST['status'])?$_REQUEST['status']:0;
+		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+		//Invest_Api::
 	
 	}
 	
@@ -57,7 +58,7 @@ class InvestController extends Base_Controller_Response {
 	 *  }
 	 */
 	public function  tenderingAction() {
-		
+	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;		
 	}
 	
 	/**
@@ -82,7 +83,7 @@ class InvestController extends Base_Controller_Response {
 	 *  }
 	 */
 	public function  endedAction() {
-	
+		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 	}
 	
 	/**
@@ -106,7 +107,7 @@ class InvestController extends Base_Controller_Response {
 	 * 
 	 */
 	public function tenderFailAction() {
-		
+		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 	}
 	
 	/**

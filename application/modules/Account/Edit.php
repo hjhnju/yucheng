@@ -17,6 +17,7 @@ class EditController extends Base_Controller_Response {
      * status 1101: 修改密码失败
      */
     public function chpwdAction(){
+    	
     }
 
      /** 

@@ -113,7 +113,7 @@ class Finance_Api {
 	 * 主动投标接口 Finance_Api::initiativeTender
 	 * @param String transAmt 交易金额(required)   
 	 * @param String usrCustId 汇付平台的用户ID(required)    
-	 * @param String maxTenderRate 最大投资手续费率(required)
+	 * //@param String maxTenderRate 最大投资手续费率(required)
 	 * @param array BorrowerDetails 借款人信息(required)     
 	 *        array(
      *            0 => array(
@@ -134,7 +134,7 @@ class Finance_Api {
      * )   
      * 
 	 */
-	public static function initiativeTender($transAmt,$usrCustId,$maxTenderRate,$borrowDetail=null,$isFreeze=true,$freezeOrdId='') {
+	public static function initiativeTender($transAmt, $usrCustId ,$borrowDetail=null, $isFreeze=true, $freezeOrdId='') {
 	//	$financeLogic = new Finance_Logic_Base();
 	//	$orderId = $financeLogic->generateOrderId();
 		return " ";
@@ -156,7 +156,7 @@ class Finance_Api {
 	 * 满标打款接口 Finance_Api::loans
 	 * @param String outCustId 出账客户号(require)--出账客户号， 由汇付生成， 用户的唯一性标识  
 	 * @param String transAmt 交易金额 (require)
-	 * @param String fee 扣款手续费(require) 
+	 * //@param String fee 扣款手续费(require) 
 	 * @param String inCustId 入账客户号(require)--入账客户号， 由汇付生成， 用户的唯一性标识  
 	 * @param String feeObjFlag 续费收取对象标志(require) I--向入款客户号 InCustId 收取 O--向出款客户号 OutCustId 收取 
 	 * @param String isDefault Y--默认添加资金池(require) N--不默认添加资金池  
@@ -177,7 +177,7 @@ class Finance_Api {
      * @return bool true--成功  false--失败
      * 
 	 */
-     public static function loans($outCustId,$transAmt,$fee,$inCustId,$feeObjFlag,$isDefault,$isUnFreeze,$unFreezeOrdId='',$DivDetails=null,$reqExt='') {
+     public static function loans($outCustId, $transAmt, $inCustId, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId='', $DivDetails=null, $reqExt='') {
      	
      	
      }
@@ -370,24 +370,31 @@ class Finance_Api {
       *          'createTime'交易时间         
       * ) 
       */
-     public static function getRechargeWithDrawRecord($userId,$type=null,$startTime,$endTime,$date) {
-     	$financeLogic = new Finance_Logic_Base();
+     public static function getRechargeWithDrawRecord($userId, $type=0, $startTime, $endTime, $date) {
+     	$financeLogic = new Finance_Logic_Base(); 
      	if($userId>0) {
      		$data = $financeLogic->getRechargeWithDrawRecord($userId);
-     		$ret = array(
-     				'status'=>0,
-     				'statusInfo' =>'success' ,
+     		if(empty($data)) {
+     			$ret = array(
+     			    'status'=>0,
+     				'statusInfo' =>'The query result is empty',
      				'data' => $data,
+     			);
+     		}
+     		$ret = array(
+     		    'status'=>0,
+     			'statusInfo' =>'success' ,
+     			'data' => $data,
      		);
         } else {
         	Base_Log::fatal(array('msg'=>'invalid param','userId'=>$userId,));
         	$data = null;
-        	$ret = array('status'=>Base_RetCode::PARAM_ERROR,
-        			'statusInfo'=>Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR),
-        			'data' => $data,
+        	$ret = array(
+        	    'status'=>Base_RetCode::PARAM_ERROR,
+        		'statusInfo'=>Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR),
+        		'data' => $data,
         	);
-        }
-     	
+        }    	
      	return $ret;    	    	 
      }	
      

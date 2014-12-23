@@ -19,4 +19,9 @@ class OverviewController extends Base_Controller_Response {
 	public function indexAction(){
     
 	}
+	
+	/**
+	 * 近半年收益曲线
+	 * 
+	 */
 }

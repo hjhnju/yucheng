@@ -111,7 +111,7 @@ class Awards_Logic_Awards {
         foreach ($users as $key=>$value) {
         	$data = array();
         	$_userId = $value['userid'];
-        	$tenderAmount = Finance_Api::tenderAmount($_userId);//拿到了呗邀请人的投资总额
+        	$tenderAmount = Finance_Api::tenderAmount($_userId);//拿到了被邀请人的投资总额
         	$data['tenderAmount'] = $tenderAmount;
         	$data['canBeAwarded'] = ($tenderAmount>=10000.00)?1:0;//若投资金额满10000元，达到奖励标准1，否则为0
         	//从用户模块拿到注册的进度  与用户的详细信息
