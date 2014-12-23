@@ -12,13 +12,7 @@
 </script>
 <script>
     require(['common/ui/Pager/pager', 'jquery'], function(Pager, $) {
-        var pager1 = new Pager({
-            startPage: 0,
-            total: 20,
-            main: $('#test1')
-        });
 
-        pager1.render(10);
 
         var pager2 = new Pager({
             startPage: 1,
@@ -26,40 +20,13 @@
             main: $('#test2')
         });
 
-        pager2.render(10);
+        pager2.render(1);
 
         pager2.on('change', function(data) {
             this.render(data.value);
         });
 
-        var pager3 = new Pager({
-            startPage: 0,
-            total: 20,
-            main: $('#test3')
-        });
 
-        pager3.render(3);
-
-        var pager4 = new Pager({
-            startPage: 0,
-            total: 5,
-            main: $('#test4')
-        });
-
-        pager4.render(4);
-
-        var pager5 = new Pager({
-            startPage: 0,
-            total: 20,
-            main: $('#test5')
-        });
-
-        pager5.render(18);
-
-        pager5.on('change', function(data) {
-            console.log(data);
-            this.render(data.value);
-        });
     });
 </script>
 {%/block%}

@@ -52,7 +52,8 @@ define(function (require) {
             else {
                 $('#invest-main').html(etpl.render('list',{
                     list: data.list
-                }))
+                }));
+
             }
         });
 
