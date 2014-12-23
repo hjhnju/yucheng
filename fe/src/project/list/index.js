@@ -70,15 +70,10 @@ define(function (require) {
                 }
                 pager.render(+data.page);
 
-                $('#works-item').html(etpl.render('worksList',{
-                    list: data.list,
-                    type: type
-                }));
-
-
 
                 $('#invest-main').html(etpl.render('list',{
-                    list: data.list
+                    list: data.list,
+                    type: type
                 }));
 
             }
@@ -114,7 +109,8 @@ define(function (require) {
                 pager.render(+data.page);
 
                 $('#invest-main').html(etpl.render('list',{
-                    list: data.list
+                    list: data.list,
+                    type: type
                 }))
             }
         });
@@ -150,7 +146,8 @@ define(function (require) {
                 pager.render(+data.page);
 
                 $('#invest-main').html(etpl.render('list',{
-                    list: data.list
+                    list: data.list,
+                    type: type
                 }))
             }
         });
