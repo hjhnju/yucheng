@@ -10,6 +10,58 @@
         main.init();
     });
 </script>
+<script>
+    require(['common/ui/Pager/pager', 'jquery'], function(Pager, $) {
+        var pager1 = new Pager({
+            startPage: 0,
+            total: 20,
+            main: $('#test1')
+        });
+
+        pager1.render(10);
+
+        var pager2 = new Pager({
+            startPage: 1,
+            total: 20,
+            main: $('#test2')
+        });
+
+        pager2.render(10);
+
+        pager2.on('change', function(data) {
+            this.render(data.value);
+        });
+
+        var pager3 = new Pager({
+            startPage: 0,
+            total: 20,
+            main: $('#test3')
+        });
+
+        pager3.render(3);
+
+        var pager4 = new Pager({
+            startPage: 0,
+            total: 5,
+            main: $('#test4')
+        });
+
+        pager4.render(4);
+
+        var pager5 = new Pager({
+            startPage: 0,
+            total: 20,
+            main: $('#test5')
+        });
+
+        pager5.render(18);
+
+        pager5.on('change', function(data) {
+            console.log(data);
+            this.render(data.value);
+        });
+    });
+</script>
 {%/block%}
 
 {%block name="content"%}
@@ -20,25 +72,25 @@
             <div class="toulist-top-box">
                 <div class="toulist-box-class" id="type_id">
                     <span class="toulist-box-class-name">标的类型：</span>
-                    <a href="###" class="toulist-box-class-all current" data-value="0">全部</a>
-                    <a href="###" class="toulist-box-class-all" data-value="1">{%$list[0].loan_type%}</a>
-                    <a href="###" class="toulist-box-class-all" data-value="2">信用认证标</a>
-                    <a href="###" class="toulist-box-class-all" data-value="3">机构担保标</a>
+                    <a href="###" class="toulist-box-class-all type_id current" data-value="0">全部</a>
+                    <a href="###" class="toulist-box-class-all type_id" data-value="1">实地认正标</a>
+                    <a href="###" class="toulist-box-class-all type_id" data-value="2">信用认证标</a>
+                    <a href="###" class="toulist-box-class-all type_id" data-value="3">机构担保标</a>
                 </div>
                 <div class="toulist-box-class" id="cat_id">
                     <span class="toulist-box-class-name">借款类型：</span>
-                    <a href="###" class="toulist-box-class-all current" data-value="0">全部</a>
-                    <a href="###" class="toulist-box-class-all" data-value="1">{%$list[0].loan_cat%}</a>
-                    <a href="###" class="toulist-box-class-all" data-value="2">教师圆梦贷</a>
+                    <a href="###" class="toulist-box-class-all cat_id current" data-value="0">全部</a>
+                    <a href="###" class="toulist-box-class-all cat_id"  data-value="1">学校助力贷</a>
+                    <a href="###" class="toulist-box-class-all cat_id" data-value="2">教师圆梦贷</a>
                 </div>
                 <div class="toulist-box-class" id="qixian">
                     <span class="toulist-box-class-name">借款期限：</span>
-                    <a href="###" class="toulist-box-class-all current">全部</a>
-                    <a href="###" class="toulist-box-class-all" data-value="0">1-3月</a>
-                    <a href="###" class="toulist-box-class-all" data-value="1">4-6月</a>
-                    <a href="###" class="toulist-box-class-all" data-value="2">7-12月</a>
-                    <a href="###" class="toulist-box-class-all" data-value="3">13-24月</a>
-                    <a href="###" class="toulist-box-class-all" data-value="4">24月以上</a>
+                    <a href="###" class="toulist-box-class-all qixian current">全部</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="0">1-3月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="1">4-6月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="2">7-12月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="3">13-24月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="4">24月以上</a>
                 </div>
             </div>
         </div>
@@ -53,43 +105,54 @@
                     <div class="investlist-box-title-name jindu">进度</div>
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
-                <div class="investlist-box-title">
-                    {%foreach $list as $key => $item%}
-                    <div class="investlist-box-title-name name">
-                        <span class="name-shi">{%$item.pic%}</span>
-                        <span class="school">{%$item.title%}</span>
-                    </div>
-                    <div class="investlist-box-title-name grade">
-                        <span class="grade-star all"></span>
-                        <span class="grade-star hale"></span>
-                        <span class="grade-star none"></span>
-                    </div>
-                    <div class="investlist-box-title-name lilv">
-                        <span class="lilv-number">{%$item.interest%}</span>
-                        <span class="lilv-bai">%</span>
-                    </div>
-                    <div class="investlist-box-title-name price">
-                        <span class="lilv-number color-blank">{%$item.amount%}</span>
-                        <span class="lilv-bai">元</span>
-                    </div>
-                    <div class="investlist-box-title-name time">
-                        <span class="lilv-number color-blank">{%$item.duration%}</span>
-                        <span class="lilv-bai">个月</span>
-                    </div>
-                    <div class="investlist-box-title-name jindu">
-                        <div class="jindu-box">
-                            <div class="jindu-box-inline"></div>
+                <div id="invest-main">
+                    <div class="investlist-box-title">
+                        {%foreach $list as $key => $item%}
+                        <div class="investlist-box-title-name name">
+                            <span class="name-shi">实</span>
+                            <span class="school">{%$item.title%}</span>
                         </div>
-                        <div class="jindu-number">
-                            <span class="lilv-number">{%$item.percent%}</span>
+                        <div class="investlist-box-title-name grade">
+                            <span class="grade-star all"></span>
+                            <span class="grade-star hale"></span>
+                            <span class="grade-star none"></span>
+                        </div>
+                        <div class="investlist-box-title-name lilv">
+                            <span class="lilv-number">{%$item.interest%}</span>
                             <span class="lilv-bai">%</span>
                         </div>
+                        <div class="investlist-box-title-name price">
+                            <span class="lilv-number color-blank">{%$item.amount%}</span>
+                            <span class="lilv-bai">元</span>
+                        </div>
+                        <div class="investlist-box-title-name time">
+                            <span class="lilv-number color-blank">{%$item.duration%}</span>
+                            <span class="lilv-bai">个月</span>
+                        </div>
+                        <div class="investlist-box-title-name jindu">
+                            <div class="jindu-box">
+                                <div class="jindu-box-inline"></div>
+                            </div>
+                            <div class="jindu-number">
+                                <span class="lilv-number">{%$item.percent%}</span>
+                                <span class="lilv-bai">%</span>
+                            </div>
+                        </div>
+                        <div class="investlist-box-title-name status">
+                            {%if $item.status == 1%}
+                            <a class="status-biding" href="###">投标中</a>
+                            {%else if $item.status == 2%}
+                            <span class="status-biding current">回款中</span>
+                            {%else if $item.status == 3%}
+                            <span class="status-biding current">投标失败</span>
+                            {%else%}
+                            <span class="status-biding current">投标结束</span>
+                            {%/if%}
+                        </div>
+                        {%/foreach%}
                     </div>
-                    <div class="investlist-box-title-name status">
-                        <a class="status-biding" href="###">{%$item.status%}</a>
-                    </div>
-                    {%/foreach%}
                 </div>
+
 <!--                <div class="investlist-box-title">-->
 <!--                    <div class="investlist-box-title-name name">-->
 <!--                        <span class="name-shi">实</span>-->
@@ -126,18 +189,22 @@
 <!--                    </div>-->
 <!--                </div>-->
             </div>
-            <div class="pager">
-                <a href="###" class="pager-link left">上一页</a>
-                <a href="###" class="pager-link current">1</a>
-                <a href="###" class="pager-link">2</a>
-                <a href="###" class="pager-link">3</a>
-                <a href="###" class="pager-link">4</a>
-                <a href="###" class="pager-link">5</a>
-                <a href="###" class="pager-link">6</a>
-                <span class="pager-span">...</span>
-                <a href="###" class="pager-link">22</a>
-                <a href="###" class="pager-link left">下一页</a>
-
+<!--            <div class="pager">-->
+<!--                <a href="###" class="pager-link left">上一页</a>-->
+<!--                <a href="###" class="pager-link current">1</a>-->
+<!--                <a href="###" class="pager-link">2</a>-->
+<!--                <a href="###" class="pager-link">3</a>-->
+<!--                <a href="###" class="pager-link">4</a>-->
+<!--                <a href="###" class="pager-link">5</a>-->
+<!--                <a href="###" class="pager-link">6</a>-->
+<!--                <span class="pager-span">...</span>-->
+<!--                <a href="###" class="pager-link">22</a>-->
+<!--                <a href="###" class="pager-link left">下一页</a>-->
+<!---->
+<!--            </div>-->
+            <div class="test">
+                <div></div>
+                <div id="test2"></div>
             </div>
         </div>
     </div>

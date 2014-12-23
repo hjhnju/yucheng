@@ -39,7 +39,7 @@ $smarty->assign('loan_type', '实地认证标');
 $smarty->assign('loan_cat', '学校助力贷');
 $smarty->assign('safemode', '本金保障计划');
 $smarty->assign('refund_typename', '等额本息');
-$smarty->assign('percent', 0.00);
+$smarty->assign('percent', 50.00);
 $smarty->assign('company',
     array(
         'id' => 2,

@@ -126,6 +126,7 @@
             pager5.render(18);
 
             pager5.on('change', function(data) {
+                console.log(data);
                 this.render(data.value);
             });
         });
