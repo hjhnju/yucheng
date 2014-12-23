@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户第三方登陆表
- * @author hejunhua
+ * @author jiangsongfang
  */
 class User_Object_Third extends Base_Object {
     /**
@@ -46,6 +46,9 @@ class User_Object_Third extends Base_Object {
      * @var array
      */
     protected $intProps = array(
+        'id'          => 1,
+        'userid'      => 1,
+        'authtype'    => 1,
     );
 
     /**
@@ -58,19 +61,19 @@ class User_Object_Third extends Base_Object {
 
     /**
      * 自增id
-     * @var 
+     * @var integer
      */
     public $id;
 
     /**
      * 用户id
-     * @var 
+     * @var integer
      */
     public $userid;
 
     /**
      * 第三方登录类型 1:qq, 2:weibo, 3:weixin
-     * @var 
+     * @var integer
      */
     public $authtype;
 

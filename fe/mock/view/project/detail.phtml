@@ -63,12 +63,12 @@
                         <div class="gaishu-bottom-guard">
                             <div class="gaishu-guard-baozhang">
                                 <span>保障方式：</span>
-                                <span class="baozhang-type benxi">{%$safe_id%}</span>
+                                <span class="baozhang-type benxi">{%$safemode%}</span>
                                 <span class="baozhang-type gudong">大股东联保</span>
                             </div>
                             <div class="gaishu-guard-baozhang">
                                 <span>还款方式：</span>
-                                <span class="baozhang-return">{%$refund_type%}</span>
+                                <span class="baozhang-return">{%$refund_typename%}</span>
                             </div>
                         </div>
                         <div class="gaishu-bottom-jindu">
@@ -78,11 +78,11 @@
                                     <div class="jindu-tio-tiao-within"></div>
                                 </div>
                                     <span class="jindu-top-bai">
-                                        <span class="jindu-top-bai-number">{%$status%}</span>%
+                                        <span class="jindu-top-bai-number">{%$percent%}</span>%
                                     </span>
                             </div>
                             <div class="jindu-btm">
-                                已投标：<span>106人</span>
+                                已投标：<span>{%$invest_cnt%}人</span>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">教职工数量：</div>
-                                        <div class="content-left-text">{%$company.employers%}</div>
+                                        <div class="content-left-text">{%$company.employers%}名</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">借款用提：</div>
@@ -127,7 +127,7 @@
                                 <div class="main-detail-content-right">
                                     <div class="left-box">
                                         <div class="content-left-name">注册年限：</div>
-                                        <div class="content-left-text right-text">{%$company.years%}</div>
+                                        <div class="content-left-text right-text">{%$company.years%}年</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">注册资金：</div>
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">学生数量：</div>
-                                        <div class="content-left-text right-text">{%$company.students%}</div>
+                                        <div class="content-left-text right-text">{%$company.students%}名</div>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                                 <div class="file-left">
                                     <div class="file-left-box">
                                         <div class="file-left-name">成功借款：</div>
-                                        <div class="file-left-text">{%$counter.success%}</div>
+                                        <div class="file-left-text">{%$counter.success%}笔</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">还清笔数：</div>

@@ -72,8 +72,13 @@ class Loan_Object_Loan extends Base_Object {
         'invest_cnt'      => 1,
         'safe_id'         => 1,
         'refund_type'     => 1,
+        'deadline'        => 1,
         'status'          => 1,
+        'create_time'     => 1,
+        'update_time'     => 1,
         'create_uid'      => 1,
+        'full_time'       => 1,
+        'pay_time'        => 1,
     );
 
     /**
@@ -182,7 +187,7 @@ class Loan_Object_Loan extends Base_Object {
 
     /**
      * 截止时间
-     * @var string
+     * @var integer
      */
     public $deadline;
 
@@ -194,13 +199,13 @@ class Loan_Object_Loan extends Base_Object {
 
     /**
      * 创建时间
-     * @var string
+     * @var integer
      */
     public $createTime;
 
     /**
      * 修改时间
-     * @var string
+     * @var integer
      */
     public $updateTime;
 
@@ -212,13 +217,13 @@ class Loan_Object_Loan extends Base_Object {
 
     /**
      * 满标时间
-     * @var string
+     * @var integer
      */
     public $fullTime;
 
     /**
      * 放款时间
-     * @var string
+     * @var integer
      */
     public $payTime;
 

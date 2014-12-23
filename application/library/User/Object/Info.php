@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- * @author hejunhua
+ * @author jiangsongfang
  */
 class User_Object_Info extends Base_Object {
     /**
@@ -49,6 +49,11 @@ class User_Object_Info extends Base_Object {
      * @var array
      */
     protected $intProps = array(
+        'userid'              => 1,
+        'usertype'            => 1,
+        'certificate_type'    => 1,
+        'create_time'         => 1,
+        'update_time'         => 1,
     );
 
     /**
@@ -61,13 +66,13 @@ class User_Object_Info extends Base_Object {
 
     /**
      * 用户id
-     * @var 
+     * @var integer
      */
     public $userid;
 
     /**
      * 用户类型 1:个人用户 2:企业用户
-     * @var 
+     * @var integer
      */
     public $usertype;
 
@@ -79,7 +84,7 @@ class User_Object_Info extends Base_Object {
 
     /**
      * 证件类型
-     * @var 
+     * @var integer
      */
     public $certificateType;
 
@@ -103,13 +108,13 @@ class User_Object_Info extends Base_Object {
 
     /**
      * 注册时间
-     * @var 
+     * @var integer
      */
     public $createTime;
 
     /**
      * 修改资料时间
-     * @var 
+     * @var integer
      */
     public $updateTime;
 

@@ -54,6 +54,8 @@ class Loan_Object_Attach extends Base_Object {
         'user_id'     => 1,
         'type'        => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -108,13 +110,13 @@ class Loan_Object_Attach extends Base_Object {
 
     /**
      * 创建时间
-     * @var string
+     * @var integer
      */
     public $createTime;
 
     /**
      * 更新时间
-     * @var string
+     * @var integer
      */
     public $updateTime;
 

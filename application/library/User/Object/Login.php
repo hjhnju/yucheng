@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- * @author hejunhua
+ * @author jiangsongfang
  */
 class User_Object_Login extends Base_Object {
     /**
@@ -49,6 +49,10 @@ class User_Object_Login extends Base_Object {
      * @var array
      */
     protected $intProps = array(
+        'userid'      => 1,
+        'status'      => 1,
+        'login_time'  => 1,
+        'create_time' => 1,
     );
 
     /**
@@ -61,13 +65,13 @@ class User_Object_Login extends Base_Object {
 
     /**
      * 用户id
-     * @var 
+     * @var integer
      */
     public $userid;
 
     /**
      * 是否允许登录
-     * @var 
+     * @var integer
      */
     public $status;
 
@@ -103,13 +107,13 @@ class User_Object_Login extends Base_Object {
 
     /**
      * 最近一次登录时间
-     * @var 
+     * @var integer
      */
     public $loginTime;
 
     /**
      * 注册时间
-     * @var 
+     * @var integer
      */
     public $createTime;
 

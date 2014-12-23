@@ -5,6 +5,9 @@
 class LoginController extends Base_Controller_Page{
     
     public function init(){
+        //未登录不跳转
+        $this->setAutoJump(false);
+
         parent::init();
         $this->loginLogic = new User_Logic_Login();
     }

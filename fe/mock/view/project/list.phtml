@@ -18,26 +18,27 @@
         <div class="toulist-top">
             <div class="toulist-top-title">我来投资<span>&gt;</span>投资列表</div>
             <div class="toulist-top-box">
-                <div class="toulist-box-class">
+                <div class="toulist-box-class" id="type_id">
                     <span class="toulist-box-class-name">标的类型：</span>
-                    <a href="###" class="toulist-box-class-all current">全部</a>
-                    <a href="###" class="toulist-box-class-all">实地认证标</a>
-                    <a href="###" class="toulist-box-class-all">信用认证标</a>
+                    <a href="###" class="toulist-box-class-all current" data-value="0">全部</a>
+                    <a href="###" class="toulist-box-class-all" data-value="1">{%$list[0].loan_type%}</a>
+                    <a href="###" class="toulist-box-class-all" data-value="2">信用认证标</a>
+                    <a href="###" class="toulist-box-class-all" data-value="3">机构担保标</a>
                 </div>
-                <div class="toulist-box-class">
+                <div class="toulist-box-class" id="cat_id">
                     <span class="toulist-box-class-name">借款类型：</span>
-                    <a href="###" class="toulist-box-class-all current">全部</a>
-                    <a href="###" class="toulist-box-class-all">学校助力贷</a>
-                    <a href="###" class="toulist-box-class-all">教师圆梦贷</a>
+                    <a href="###" class="toulist-box-class-all current" data-value="0">全部</a>
+                    <a href="###" class="toulist-box-class-all" data-value="1">{%$list[0].loan_cat%}</a>
+                    <a href="###" class="toulist-box-class-all" data-value="2">教师圆梦贷</a>
                 </div>
-                <div class="toulist-box-class">
+                <div class="toulist-box-class" id="qixian">
                     <span class="toulist-box-class-name">借款期限：</span>
                     <a href="###" class="toulist-box-class-all current">全部</a>
-                    <a href="###" class="toulist-box-class-all">1-3月</a>
-                    <a href="###" class="toulist-box-class-all">4-6月</a>
-                    <a href="###" class="toulist-box-class-all">7-12月</a>
-                    <a href="###" class="toulist-box-class-all">13-24月</a>
-                    <a href="###" class="toulist-box-class-all">24月以上</a>
+                    <a href="###" class="toulist-box-class-all" data-value="0">1-3月</a>
+                    <a href="###" class="toulist-box-class-all" data-value="1">4-6月</a>
+                    <a href="###" class="toulist-box-class-all" data-value="2">7-12月</a>
+                    <a href="###" class="toulist-box-class-all" data-value="3">13-24月</a>
+                    <a href="###" class="toulist-box-class-all" data-value="4">24月以上</a>
                 </div>
             </div>
         </div>
@@ -53,9 +54,10 @@
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
                 <div class="investlist-box-title">
+                    {%foreach $list as $key => $item%}
                     <div class="investlist-box-title-name name">
-                        <span class="name-shi">实</span>
-                        <span class="school">福建三明高中扩建一期</span>
+                        <span class="name-shi">{%$item.pic%}</span>
+                        <span class="school">{%$item.title%}</span>
                     </div>
                     <div class="investlist-box-title-name grade">
                         <span class="grade-star all"></span>
@@ -63,15 +65,15 @@
                         <span class="grade-star none"></span>
                     </div>
                     <div class="investlist-box-title-name lilv">
-                        <span class="lilv-number">12</span>
+                        <span class="lilv-number">{%$item.interest%}</span>
                         <span class="lilv-bai">%</span>
                     </div>
                     <div class="investlist-box-title-name price">
-                        <span class="lilv-number color-blank">1,000,000</span>
+                        <span class="lilv-number color-blank">{%$item.amount%}</span>
                         <span class="lilv-bai">元</span>
                     </div>
                     <div class="investlist-box-title-name time">
-                        <span class="lilv-number color-blank">6</span>
+                        <span class="lilv-number color-blank">{%$item.duration%}</span>
                         <span class="lilv-bai">个月</span>
                     </div>
                     <div class="investlist-box-title-name jindu">
@@ -79,49 +81,50 @@
                             <div class="jindu-box-inline"></div>
                         </div>
                         <div class="jindu-number">
-                            <span class="lilv-number">80</span>
+                            <span class="lilv-number">{%$item.percent%}</span>
                             <span class="lilv-bai">%</span>
                         </div>
                     </div>
                     <div class="investlist-box-title-name status">
-                        <a class="status-biding" href="###">投标中</a>
+                        <a class="status-biding" href="###">{%$item.status%}</a>
                     </div>
+                    {%/foreach%}
                 </div>
-                <div class="investlist-box-title">
-                    <div class="investlist-box-title-name name">
-                        <span class="name-shi">实</span>
-                        <span class="school">福建三明高中扩建一期</span>
-                    </div>
-                    <div class="investlist-box-title-name grade">
-                        <span class="grade-star all"></span>
-                        <span class="grade-star hale"></span>
-                        <span class="grade-star none"></span>
-                    </div>
-                    <div class="investlist-box-title-name lilv">
-                        <span class="lilv-number">12</span>
-                        <span class="lilv-bai">%</span>
-                    </div>
-                    <div class="investlist-box-title-name price">
-                        <span class="lilv-number color-blank">1,000,000</span>
-                        <span class="lilv-bai">元</span>
-                    </div>
-                    <div class="investlist-box-title-name time">
-                        <span class="lilv-number color-blank">6</span>
-                        <span class="lilv-bai">个月</span>
-                    </div>
-                    <div class="investlist-box-title-name jindu">
-                        <div class="jindu-box">
-                            <div class="jindu-box-inline"></div>
-                        </div>
-                        <div class="jindu-number">
-                            <span class="lilv-number">100</span>
-                            <span class="lilv-bai">%</span>
-                        </div>
-                    </div>
-                    <div class="investlist-box-title-name status">
-                        <a class="status-biding current" href="###">投标结束</a>
-                    </div>
-                </div>
+<!--                <div class="investlist-box-title">-->
+<!--                    <div class="investlist-box-title-name name">-->
+<!--                        <span class="name-shi">实</span>-->
+<!--                        <span class="school">福建三明高中扩建一期</span>-->
+<!--                    </div>-->
+<!--                    <div class="investlist-box-title-name grade">-->
+<!--                        <span class="grade-star all"></span>-->
+<!--                        <span class="grade-star hale"></span>-->
+<!--                        <span class="grade-star none"></span>-->
+<!--                    </div>-->
+<!--                    <div class="investlist-box-title-name lilv">-->
+<!--                        <span class="lilv-number">12</span>-->
+<!--                        <span class="lilv-bai">%</span>-->
+<!--                    </div>-->
+<!--                    <div class="investlist-box-title-name price">-->
+<!--                        <span class="lilv-number color-blank">1,000,000</span>-->
+<!--                        <span class="lilv-bai">元</span>-->
+<!--                    </div>-->
+<!--                    <div class="investlist-box-title-name time">-->
+<!--                        <span class="lilv-number color-blank">6</span>-->
+<!--                        <span class="lilv-bai">个月</span>-->
+<!--                    </div>-->
+<!--                    <div class="investlist-box-title-name jindu">-->
+<!--                        <div class="jindu-box">-->
+<!--                            <div class="jindu-box-inline"></div>-->
+<!--                        </div>-->
+<!--                        <div class="jindu-number">-->
+<!--                            <span class="lilv-number">100</span>-->
+<!--                            <span class="lilv-bai">%</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="investlist-box-title-name status">-->
+<!--                        <a class="status-biding current" href="###">投标结束</a>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="pager">
                 <a href="###" class="pager-link left">上一页</a>

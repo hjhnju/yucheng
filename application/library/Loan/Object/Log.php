@@ -49,6 +49,7 @@ class Loan_Object_Log extends Base_Object {
         'id'          => 1,
         'loan_id'     => 1,
         'user_id'     => 1,
+        'create_time' => 1,
     );
 
     /**
@@ -84,8 +85,8 @@ class Loan_Object_Log extends Base_Object {
     public $content;
 
     /**
-     * 操作时间
-     * @var string
+     * 创建时间
+     * @var integer
      */
     public $createTime;
 

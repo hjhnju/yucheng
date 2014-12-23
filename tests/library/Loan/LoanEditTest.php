@@ -9,7 +9,7 @@ class ObjectTest extends TestBase {
     public function testEdit() {
         
         //edit
-        $id = 27;
+        $id = 1;
         var_dump('edit id=', $id);
         $_GET = array(
             'id' => $id,

@@ -30,6 +30,7 @@ class Loan_List_Log extends Base_List {
         'id'          => 1,
         'loan_id'     => 1,
         'user_id'     => 1,
+        'create_time' => 1,
     );
 
 }

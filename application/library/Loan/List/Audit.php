@@ -32,6 +32,8 @@ class Loan_List_Audit extends Base_List {
         'user_id'     => 1,
         'type'        => 1,
         'status'      => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
 }
