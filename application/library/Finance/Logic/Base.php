@@ -39,8 +39,8 @@ class Finance_Logic_Base {
      */
     public function getRechargeWithDrawRecord($userId,$type) {
     	$recordList = new Finance_List_Record();
-    	if(is_null($type)) {
-    		$filterStr = '`type` IN (0,1)';
+    	if($type === 0) {
+    		$filterStr = '`type` IN (1,2)';
     	}
     	else {
     		$filterStr = "`type` = `{$type}`";
@@ -48,7 +48,7 @@ class Finance_Logic_Base {
     	$recordList->setFilterString($filterStr);
     	$recordList->setOrder('create_time desc');
     	$recordList->setPagesize(PHP_INT_MAX);
-    	$list = $refunds->toArray();
+    	$list = $recordList->toArray();
     	
     	var_dump($list);
     	return $list;

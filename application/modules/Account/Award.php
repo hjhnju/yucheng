@@ -9,16 +9,16 @@ class AwardController extends Base_Controller_Response {
 		$this->ajax = true;
 	}
 	
-	public function indexAction() {
-		$userid = User_Api::getUserId();//from User Module
+	public function indexAction() {				
+        $userid = $this->getUserId();	
+        $userid = isset($userid) ? $userid : 0;
 		$inviteUrl = Awards_Api::getInviteUrl($userid);
-		$inviteUrl = isset($inviteUrl)?$inviteUrl:"";//获取该用户的专属邀请链接
-		$this->getView()->assign("inviteUrl", $inviteUrl);
-			
+		$inviteUrl = ($inviteUrl != false) ? $inviteUrl : ""; //获取该用户的专属邀请链接
+		$this->getView()->assign("inviteUrl", $inviteUrl);			
 	}
 	
 	/**
-	 * 接口5/account/award/receiveAwards
+	 * 接口  /account/award/receiveAwards
 	 * 领取奖励
 	 * @param userId 用户id
 	 * @return 标准json格式
@@ -32,7 +32,7 @@ class AwardController extends Base_Controller_Response {
 	}
 	
 	/**
-	 * 接口6/account/award/getAwards
+	 * 接口  /account/award/getAwards
 	 * 获取用户的邀请列表
 	 * @return 标准json格式
 	 * status 0:成功
@@ -40,7 +40,7 @@ class AwardController extends Base_Controller_Response {
 	 * data=
 	 * {
 	 *     {
-	 *         'userId' 用户的
+	 *         'userId' 用户id
 	 *         'userName' 注册用户名
 	 *         'phone' 用户手机号
 	 *         'registProgress' 注册进度
@@ -53,9 +53,9 @@ class AwardController extends Base_Controller_Response {
 	 * 
 	 */
 	public function  getAwards() {
-		$userid = User_Api::getUserId();//from User Module
+		$userid = $this->getUserId();//from User Module
 		$awardsInfo = Awards_Api::getAwards($userid);//获取邀请列表
-		if($awardsInfo==false) {
+		if($awardsInfo === false) {
 			$this->outputError(Account_RetCode::GET_AWARDSLIST_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_AWARDSLIST_FAIL));
 		}
 		$this->output($awardsInfo);

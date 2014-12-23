@@ -29,6 +29,10 @@ class MessageController extends Base_Controller_Response {
 	 * }
 	 */
 	public function indexAction() {
+		$type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 0;
+		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 0;
+		
+		
 		//$msg = Msg_Api::getMsg($msgType);
 		//$msg合法性判断
 		//$this->output($msg);

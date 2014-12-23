@@ -24,7 +24,7 @@ class User_Api{
      * @return object User_Object | null
      * User/Object.php封装了User_Object_Login, User_Object_Info实例
      */
-    public function checkLogin(){
+    public static function checkLogin(){
         $logic   = new User_Logic_Login();
         $objUser = $logic->checkLogin();
         $userid  = is_object($objUser) ? $objUser->userid : 0;
@@ -39,7 +39,7 @@ class User_Api{
      * @return object User_Object | null
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
      */
-    public function getUserObject($userid){
+    public static function getUserObject($userid){
         $logic   = new User_Logic_Info();
         $objUser = $logic->getUserObject($userid);
         $userid  = is_object($objUser) ? $objUser->userid : 0;
@@ -55,7 +55,7 @@ class User_Api{
      * @param unknown $strRealName
      * @return boolean
      */
-    public function setRealName($uid,$strRealName){
+    public static function setRealName($uid,$strRealName){
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid));
         $objInfo->realname = $strRealName;
@@ -69,7 +69,7 @@ class User_Api{
      * @param unknown $strEmail
      * @return boolean
      */
-    public function setEmail($uid,$strEmail){
+    public static function setEmail($uid,$strEmail){
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid));
         $objInfo->email = $strEmail;
@@ -83,7 +83,7 @@ class User_Api{
      * @param unknown $strPasswd
      * @return boolean
      */
-    public function setPasswd($uid,$strPasswdOld,$strPasswdNew){
+    public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
         if(empty($objInfo->userid)){
