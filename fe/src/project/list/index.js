@@ -14,6 +14,7 @@ define(function (require) {
     var qiXian = new Remoter('LIST_QIXIAN');
     var etpl = require('etpl');
     var tpl = require('./list.tpl');
+    //var Pager = require('common/ui/Pager/Pager');
 
     var option = {
         'type_id': 0,
@@ -28,6 +29,7 @@ define(function (require) {
         etpl.compile(tpl);
 
         bindEvent();
+
 
     }
 

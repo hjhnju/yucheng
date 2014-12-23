@@ -1,0 +1,145 @@
+@import "../../common/css/common.less";
+@import "../common/css/index.less";
+
+.my-invest-tab {
+    padding: 15px 25px;
+    background-color: @color-gray-bg;
+    margin-bottom: 10px;
+    .clearfix;
+
+    .my-invest-tab-item {
+        float: left;
+        padding: 0 10px;
+        height: 26px;
+        line-height: 26px;
+        color: @color-black;
+        .border-radius(3px);
+        margin-right: 15px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &.current {
+            color: @color-white;
+            background-color: @color-red;
+        }
+    }
+}
+
+.my-invest-list {
+    .my-invest-header {
+        border-bottom: 1px solid @color-gray-border;
+        .clearfix;
+    }
+    .my-invest-item {
+        min-height: 60px;
+        line-height: 60px;
+        border-bottom: 1px dashed @color-gray-border;
+
+        &.current .my-invest-detail {
+            display: block;
+        }
+    }
+
+    .my-invest-content {
+        .clearfix;
+    }
+    .my-invest-title {
+        color: #a0a0a0;
+        float: left;
+        height: 34px;
+        line-height: 34px;
+        width: 75px;
+        padding-left: 10px;
+    }
+
+    .my-invest-project {
+        float: left;
+        width: 75px;
+
+        padding-left: 10px;
+    }
+
+    .invest-name {
+        width: 180px;
+    }
+    .invest-time {
+        width: 110px;
+        text-align: center;
+    }
+
+    .invest-op,
+    .view-plan {
+        width: 80px;
+        .clearfix;
+    }
+
+    .view-plan-btn {
+        float: left;
+        background-color: @color-green;
+        color: @color-white;
+        .border-radius(3px);
+        cursor: pointer;
+        height: 26px;
+        line-height: 26px;
+        margin-top: 14px;
+        padding: 0 4px;
+    }
+
+    .invest-em {
+        color: @color-red;
+    }
+    .invest-pass {
+        color: @color-green;
+    }
+
+    .my-invest-detail {
+        display: none;
+        position: relative;
+        border: 1px solid @color-gray-border;
+        margin-bottom: 20px;
+        min-height: 100px;
+
+        .my-invest-plan-title {
+            background-color: @color-gray-bg;
+            margin: 0;
+            padding-left: 20px;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        th,
+        .my-invest-plan-all td {
+            background: @color-gray-bg;
+            border-bottom: 0;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid @color-gray-border;
+        }
+
+        .trangle-border,
+        .trangle-content {
+            position: absolute;
+            width: 0;
+            height: 0;
+            display: block;
+            border: 10px solid;
+            top: -20px;
+            right: 30px;
+        }
+
+        .trangle-border {
+            top: -21px;
+            border-color: transparent transparent @color-gray-border transparent;
+        }
+        .trangle-content {
+            border-color: transparent transparent @color-gray-bg transparent;
+        }
+    }
+}

@@ -46,6 +46,7 @@ define(function () {
             + '/user/loginapi/getauthimage',
         LOGIN_IMGCODE_CHECK: rootUrl
             + '/user/loginapi/checkauthimage',
+<<<<<<< HEAD
         EDIT_CHECKPHONE_CHECK: rootUrl
             //+ '/account/edit/checkphone.json',
             + '/test/account/edit/checkphone.json',
@@ -61,6 +62,14 @@ define(function () {
         LIST_QIXIAN: rootUrl
             //+ '/account/edit/getvericode.json',
         + '/test/invest/list.json'
+=======
+        MY_INVEST_GET: rootUrl
+            // + '/account/invest/list',
+            + '/test/account/invest/list.json',
+        MY_INVEST_DETAIL: rootUrl
+            // + '/account/invest/detail'
+            + '/test/account/invest/detail.json'
+>>>>>>> 63a4fe165f9cd1115439b499a5097b2fd2e3ea1d
     };
 
     return {
