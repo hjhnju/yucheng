@@ -23,8 +23,8 @@ define(function () {
      */
     var URL = {
         REGIST_CHECKNAME_CHECK: rootUrl
-            + '/user/registapi/checkname',
-//            + '/test/user/regist/checkname.json',
+            //+ '/user/registapi/checkname',
+            + '/test/user/regist/checkname.json',
         REGIST_CHECKPHONE_CHECK: rootUrl
             + '/user/registapi/checkphone',
 //            + '/test/user/regist/checkphone.json',

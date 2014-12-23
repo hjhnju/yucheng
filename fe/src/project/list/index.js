@@ -70,10 +70,12 @@ define(function (require) {
                 }
                 pager.render(+data.page);
 
-
+                console.log(type);
                 $('#invest-main').html(etpl.render('list',{
+
                     list: data.list,
                     type: type
+
                 }));
 
             }

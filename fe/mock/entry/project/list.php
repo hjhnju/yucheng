@@ -43,7 +43,7 @@ $smarty->assign('list',
             'loan_type' => '实地认证标',
             'loan_cat' => '学校助力贷',
             'safemode' => '本金保障计划',
-            'percent' => 0.00
+            'percent' => 50.00
         ),
         1 => array(
             'id' => 1,
@@ -71,7 +71,7 @@ $smarty->assign('list',
             'loan_type' => '实地认证标',
             'loan_cat' => '学校助力贷',
             'safemode' => '本金保障计划',
-            'percent' => 0.00
+            'percent' => 50.00
         )
     )
 );
