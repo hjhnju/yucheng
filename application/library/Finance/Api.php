@@ -36,9 +36,9 @@ class Finance_Api {
 	 * status=Base_RetCode::PARAM_ERROR 参数错误
 	 * status=
 	 * data=array(
-	 *    'AvlBal' 可用余额         
-     *    'AcctBal' 账户余额         
-     *    'FrzBal' 冻结余额   
+	 *    'avlBal' 可用余额         
+     *    'acctBal' 账户余额         
+     *    'frzBal' 冻结余额   
 	 * )
 	 * 
 	 */	

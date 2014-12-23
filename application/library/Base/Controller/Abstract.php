@@ -109,6 +109,7 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
             Yaf_Dispatcher::getInstance()->disableView();
             //$this->_view->render($this->outputView);
             $this->_response->setBody($this->_view->render($this->outputView));
+            
         }
     }
     
