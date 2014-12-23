@@ -2,8 +2,8 @@
     "status": 0,
     "statusInfo": "",
     "data": {
-        "page": 1,
-        "pageall": 0,
+        "page": 0,
+        "pageall": 10,
         "list": [
             {
                 "id": 1,
@@ -61,6 +61,7 @@
                 "safemode": "本金保障计划",
                 "percent": 10.00
             }
+
         ]
     }
 

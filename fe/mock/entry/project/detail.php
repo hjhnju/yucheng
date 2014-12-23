@@ -30,7 +30,7 @@ $smarty->assign('refund_type', 1);
 $smarty->assign('audit_info', '经过审核可以借');
 $smarty->assign('deadline', '2014-12-27 11:19:21');
 $smarty->assign('status', 1);
-$smarty->assign('create_time', '2014-12-20 11:19:21');
+$smarty->assign('create_time', '1419312345');
 $smarty->assign('update_time', '2014-12-20 11:19:21');
 $smarty->assign('create_uid', 1);
 $smarty->assign('full_time', '');

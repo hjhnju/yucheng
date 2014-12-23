@@ -14,7 +14,13 @@ define(function (require) {
     var qiXian = new Remoter('LIST_QIXIAN');
     var etpl = require('etpl');
     var tpl = require('./list.tpl');
-    //var Pager = require('common/ui/Pager/Pager');
+    var Pager = require('common/ui/Pager/Pager');
+    var pager;
+    var type;
+    pager = new Pager({
+        //total: data.pageall,
+        main: $('#test2')
+    });
 
     var option = {
         'type_id': 0,
@@ -50,6 +56,27 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
+                if (!pager) {
+                    pager = new Pager({
+                        total: data.pageall,
+                        main: $('#test2')
+                    });
+
+                    pager.on('change', function (e) {
+                        place.remote('post', {
+                            page: e.value
+                        });
+                    });
+                }
+                pager.render(+data.page);
+
+                $('#works-item').html(etpl.render('worksList',{
+                    list: data.list,
+                    type: type
+                }));
+
+
+
                 $('#invest-main').html(etpl.render('list',{
                     list: data.list
                 }));
@@ -71,6 +98,21 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
+
+                if (!pager) {
+                    pager = new Pager({
+                        total: data.pageall,
+                        main: $('#test2')
+                    });
+
+                    pager.on('change', function (e) {
+                        broMoney.remote('post', {
+                            page: e.value
+                        });
+                    });
+                }
+                pager.render(+data.page);
+
                 $('#invest-main').html(etpl.render('list',{
                     list: data.list
                 }))
@@ -92,6 +134,21 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
+
+                if (!pager) {
+                    pager = new Pager({
+                        total: data.pageall,
+                        main: $('#test2')
+                    });
+
+                    pager.on('change', function (e) {
+                        qiXian.remote('post', {
+                            page: e.value
+                        });
+                    });
+                }
+                pager.render(+data.page);
+
                 $('#invest-main').html(etpl.render('list',{
                     list: data.list
                 }))

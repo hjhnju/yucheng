@@ -10,25 +10,6 @@
         main.init();
     });
 </script>
-<script>
-    require(['common/ui/Pager/pager', 'jquery'], function(Pager, $) {
-
-
-        var pager2 = new Pager({
-            startPage: 1,
-            total: 20,
-            main: $('#test2')
-        });
-
-        pager2.render(1);
-
-        pager2.on('change', function(data) {
-            this.render(data.value);
-        });
-
-
-    });
-</script>
 {%/block%}
 
 {%block name="content"%}
@@ -170,7 +151,7 @@
 <!---->
 <!--            </div>-->
             <div class="test">
-                <div></div>
+
                 <div id="test2"></div>
             </div>
         </div>
