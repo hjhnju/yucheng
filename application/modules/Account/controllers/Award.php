@@ -4,6 +4,8 @@
  */
 class AwardController extends Base_Controller_Response {
 	
+	CONST PAGESIZE = 20;
+	
 	public function init() {
 		parent::init();
 		$this->ajax = true;
@@ -27,37 +29,49 @@ class AwardController extends Base_Controller_Response {
 	 */
 	public function receiveAwardsAction() {
 		
-		Awards_Api::receiveAwards($userid);
-		//ajax返回结果
+		$ret = Awards_Api::receiveAwards($userid);
+		if($ret === false) {
+			$errCode = Account_RetCode::RECEIVE_AWARDS_FAIL;
+			$errMsg = Account_RetCode::getMsg(Account_RetCode::RECEIVE_AWARDS_FAIL);
+			$this->outputError($errCode,$errMsg);
+		} else {
+			$this->output();
+		}
 	}
 	
 	/**
 	 * 接口  /account/award/getAwards
 	 * 获取用户的邀请列表
+	 * @param page
 	 * @return 标准json格式
 	 * status 0:成功
 	 * status 1105:获取奖励列表失败
 	 * data=
 	 * {
 	 *     {
-	 *         'userId' 用户id
-	 *         'userName' 注册用户名
-	 *         'phone' 用户手机号
-	 *         'registProgress' 注册进度
-	 *         'percent' 投资满额百分数
-	 *         'awardAmt' 奖励金额
-	 *         'isAwarded' 是否可以领取奖励  0--不可以   1--可以
+     *         'tenderAmount' 投资金额
+     *         'canBeAwarded' 是否可以领取奖励   1--达到奖励标准  2-- 未达到
+     *         'userInfo'= {  
+     *                         { 
+     *                             'name' 注册用户名
+     *                             'phone'用户手机号码 
+     *                         }
+     *                     }
 	 *     }
 	 * }
-	 * 
+	 * 注意：第一项为该用户"我"的信息
 	 * 
 	 */
 	public function  getAwards() {
+		$page =isset($_REQUEST['page']) ? $_REQUEST['page'] :1;
 		$userid = $this->getUserId();//from User Module
-		$awardsInfo = Awards_Api::getAwards($userid);//获取邀请列表
+		$awardsInfo = Awards_Api::getAwards($userid, $page, $this->PAGESIZE);//获取邀请列表
 		if($awardsInfo === false) {
-			$this->outputError(Account_RetCode::GET_AWARDSLIST_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_AWARDSLIST_FAIL));
-		}
-		$this->output($awardsInfo);
+			$errCode = Account_RetCode::GET_AWARDSLIST_FAIL;
+			$errMsg = Account_RetCode::getMsg(Account_RetCode::GET_AWARDSLIST_FAIL);
+			$this->outputError($errCode,$errMsg);
+		} else {
+			$this->output($awardsInfo);
+		}		
 	}
 }

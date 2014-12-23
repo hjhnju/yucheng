@@ -27,16 +27,16 @@ class OverviewController extends Base_Controller_Response {
 	 * 
 	 */
 	public function indexAction(){
-		//$userId = $this->getUserId();
-		//$objUser = User_Api::getUserObject($userId); 
-		$objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','realname'=>'jiangbianliming',)));//for test
-		$data = array('name' => $objUser->name, 'phone' => $objUser->phone,);
+		$userId = $this->getUserId();
+		$objUser = User_Api::getUserObject($userId); 
+		//$objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','realname'=>'jiangbianliming',)));//for test
+		//$data = array('name' => $objUser->name, 'phone' => $objUser->phone,);
 		$balance = Finance_Api::queryBalanceBg($huifuid);
 		$avlBal = isset($balance['avlBal']) ? $balance['avlBal'] : 0.00;//可用余额
 		$acctBal = isset($balance['acctBal']) ? $balance['acctBal'] : 0.00;//资产总计
 		$frzBal = isset($balance['frzBal']) ? $balance['frzBal'] : 0.00;//冻结金额
 		//$totalProfit = Invest_Api:: 累计收益
-		//$totalInvest = Invest_Api:: 累计投资
+		$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
 		//$reposPrifit = Invest_Api:: 待收收益
 		//$reposPrincipal = Invest_Api:: 待收本金
 		$this->getView()->assign("avlBal",$avlBal);
