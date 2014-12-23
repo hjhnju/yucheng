@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>账户总览</title>
-    <link rel="stylesheet" type="text/css" href="/src/my/account/index.less" />
+    <link rel="stylesheet" type="text/css" href="/src/my/invest/index.less" />
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
     <script>
         require.config({
@@ -148,42 +148,17 @@
                 </ul>
             </div>
             <div class="finish-main">
-                <div class="finish-main-title">账户总览</div>
-                <div class="all-account-box">
-                    <div class="all-box-income">
-                        <div class="all-box-income-title">
-                            <p class="all-income-title-price">￥0.00</p>
-                            <p class="all-income-title-name">累计收益</p>
-                        </div>
-                        <div class="all-box-income-class">
-                            <div class="all-class-money">
-                                <p class="all-class-money-price">￥0.00</p>
-                                <p class="all-class-money-price">累计投资</p>
-                            </div>
-                            <div class="all-class-money">
-                                <p class="all-class-money-price">￥0.00</p>
-                                <p class="all-class-money-price">待收收益</p>
-                            </div>
-                            <div class="all-class-money">
-                                <p class="all-class-money-price">￥0.00</p>
-                                <p class="all-class-money-price">待收本金</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="all-box-pay">
-                        <div class="all-box-pay-top">可用余额<span>￥0.00</span></div>
-                        <div class="all-box-pay-top">冻结金额<span>￥0.00</span></div>
-                        <div class="all-box-pay-top">资产总计<span><a href="###" class="all-pay-help"></a>￥0.00</span></div>
-                        <a href="###" class="all-box-pay-link">充值</a>
-                    </div>
+                <div class="finish-main-title">我的投资</div>
+                <div class="my-invest-tab">
+                    <span class="my-invest-tab-item current" data-value="1">回款中</span>
+                    <span class="my-invest-tab-item" data-value="2">投标中</span>
+                    <span class="my-invest-tab-item" data-value="3">已结束</span>
+                    <span class="my-invest-tab-item" data-value="4">投标失败</span>
                 </div>
-                <div class="all-account-box-dredge">
-                    <div class="all-box-dredge-name">尚未开通资金托管账户</div>
-                    <a href="###" class="all-box-dredge-link">立即开通</a>
-                </div>
-                <div id="all-account-line" class="all-account-box-dredge quxian">
-                    加载中
-                </div>
+                <ul id="my-invest-list" class="my-invest-list">
+
+                </ul>
+                <div id="my-invest-pager" class="my-invest-pager"></div>
             </div>
         </div>
     </div>
@@ -226,7 +201,7 @@
     </div>
 
     <script>
-        require(['my/account/index'], function(main) {
+        require(['my/invest/index'], function(main) {
             main.init();
         });
     </script>

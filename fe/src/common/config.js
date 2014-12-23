@@ -45,7 +45,13 @@ define(function () {
         LOGIN_IMGCODE_ADD: rootUrl
             + '/user/loginapi/getauthimage',
         LOGIN_IMGCODE_CHECK: rootUrl
-            + '/user/loginapi/checkauthimage'
+            + '/user/loginapi/checkauthimage',
+        MY_INVEST_GET: rootUrl
+            // + '/account/invest/list',
+            + '/test/account/invest/list.json',
+        MY_INVEST_DETAIL: rootUrl
+            // + '/account/invest/detail'
+            + '/test/account/invest/detail.json'
     };
 
     return {

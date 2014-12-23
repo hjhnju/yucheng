@@ -119,6 +119,12 @@ define(function (require) {
             }
 
             return result;
+        },
+
+        setOpt: function (key, value) {
+            if (this.opt.hasOwnProperty(key)) {
+                this.opt[key] = value;
+            }
         }
     };
 
