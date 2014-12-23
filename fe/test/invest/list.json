@@ -1,0 +1,69 @@
+{
+    "status": 0,
+    "statusInfo": "",
+    "data": {
+        "page": 1,
+        "total": 0,
+        "list": [
+            {
+                "id": 1,
+                "userId": 1,
+                "title": "借钱买车",
+                "pic": "http://",
+                "content": "不说明看能不能买车",
+                "type_id": 1,
+                "cat_id": 1,
+                "duration": 12,
+                "level": 1,
+                "amount": 200000.00,
+                "interest": 12.00,
+                "invest_cnt": 0,
+                "invest_amount": 0.00,
+                "safe_id": 1,
+                "audit_info": "经过审核可以借",
+                "deadline": 1419260806,
+                "status": 1,
+                "create_time": 1419260806,
+                "update_time": 1419260806,
+                "create_uid": 1,
+                "full_time": "",
+                "pay_time": "",
+                "loan_type": "实地认证",
+                "loan_cat": "学校助力贷",
+                "safemode": "本金保障计划",
+                "percent": 10.00
+            },
+            {
+                "id": 1,
+                "userId": 1,
+                "title": "借钱买车",
+                "pic": "http://",
+                "content": "不说明看能不能买车",
+                "type_id": 1,
+                "cat_id": 1,
+                "duration": 12,
+                "level": 1,
+                "amount": 200000.00,
+                "interest": 12.00,
+                "invest_cnt": 0,
+                "invest_amount": 0.00,
+                "safe_id": 1,
+                "audit_info": "经过审核可以借",
+                "deadline": 1419260806,
+                "status": 2,
+                "create_time": 1419260806,
+                "update_time": 1419260806,
+                "create_uid": 1,
+                "full_time": "",
+                "pay_time": "",
+                "loan_type": "实地认证",
+                "loan_cat": "学校助力贷",
+                "safemode": "本金保障计划",
+                "percent": 10.00
+            }
+        ]
+    }
+
+
+}
+

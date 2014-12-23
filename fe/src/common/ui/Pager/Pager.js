@@ -127,8 +127,8 @@ define(function (require) {
         page: 0,
         total: 10,
         main: $('body'),
-        prevText: 'prev',
-        nextText: 'next',
+        prevText: '上一页',
+        nextText: '下一页',
         front: 4,
         end: 5
     };

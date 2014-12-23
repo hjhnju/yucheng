@@ -45,7 +45,22 @@ define(function () {
         LOGIN_IMGCODE_ADD: rootUrl
             + '/user/loginapi/getauthimage',
         LOGIN_IMGCODE_CHECK: rootUrl
-            + '/user/loginapi/checkauthimage'
+            + '/user/loginapi/checkauthimage',
+        EDIT_CHECKPHONE_CHECK: rootUrl
+            //+ '/account/edit/checkphone.json',
+            + '/test/account/edit/checkphone.json',
+        EDIT_GETVERICODE_CHECK: rootUrl
+            //+ '/account/edit/getvericode.json',
+        + '/test/account/edit/getvericode.json',
+        LIST_PLACE: rootUrl
+            //+ '/account/edit/getvericode.json',
+        + '/test/invest/list.json',
+        LIST_BROMONEY: rootUrl
+            //+ '/account/edit/getvericode.json',
+        + '/test/invest/list.json',
+        LIST_QIXIAN: rootUrl
+            //+ '/account/edit/getvericode.json',
+        + '/test/invest/list.json'
     };
 
     return {
