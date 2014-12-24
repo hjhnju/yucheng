@@ -1,0 +1,24 @@
+{
+    "status": 0,
+    "statusInfo": "",
+    "data": {
+        "invester": "投资人用户名",
+        "list": [{
+            "time": 1419389896,
+            "repossPrincipal": "待收本金",
+            "repossProfit": "待收收益",
+            "recePrincipal": "已收本金",
+            "receProfit": "已收收益",
+            "paymentStatus": "还款状态",
+            "punitive": "罚息"
+        }],
+        "all": {
+            "repossPrincipal": "待收本金",
+            "repossProfit": "待收收益",
+            "recePrincipal": "已收本金",
+            "receProfit": "已收收益",
+            "paymentStatus": "还款状态",
+            "punitive": "罚息"
+        }
+    }
+}

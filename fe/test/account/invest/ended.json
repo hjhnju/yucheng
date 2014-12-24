@@ -1,0 +1,32 @@
+{
+    "status": 0,
+    "statusInfo": "",
+    "data": {
+        "page": 1,
+        "pageall": 10,
+        "list": [
+            {
+                "proId": 12,
+                "investPro": "投资项目名称",
+                "annlnterestRate": 12,
+                "tenderAmt": "200,000.00",
+                "deadline": 12,
+                "tenderTime": 1419389896,
+                "endTime": 1419389896,
+                "totalRetAmt": "100,000.00",
+                "totalProfit": "100,000.00"
+            },
+            {
+                "proId": 12,
+                "investPro": "投资项目名称",
+                "annlnterestRate": 12,
+                "tenderAmt": "200,000.00",
+                "deadline": 12,
+                "tenderTime": 1419389896,
+                "endTime": 1419389896,
+                "totalRetAmt": "100,000.00",
+                "totalProfit": "100,000.00"
+            }
+        ]
+    }
+}

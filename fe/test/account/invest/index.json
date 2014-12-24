@@ -1,0 +1,28 @@
+{
+    "status": 0,
+    "statusInfo": "",
+    "data": {
+        "page": 1,
+        "pageall": 10,
+        "list": [
+            {
+                "proId": 12,
+                "investPro": "福建三明高中扩建一期",
+                "annlnterestRate": 12,
+                "tenderAmt": "200,000.00",
+                "tenderTime": 1419389896,
+                "haveBack": "20.00",
+                "toBeBack": "19,980.00"
+            },
+            {
+                "proId": 13,
+                "investPro": "福建三明高中扩建二期",
+                "annlnterestRate": 12,
+                "tenderAmt": "200,000.00",
+                "tenderTime": 1419389896,
+                "haveBack": "20.00",
+                "toBeBack": "19,980.00"
+            }
+        ]
+    }
+}
