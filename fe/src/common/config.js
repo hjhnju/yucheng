@@ -23,8 +23,8 @@ define(function () {
      */
     var URL = {
         REGIST_CHECKNAME_CHECK: rootUrl
-            //+ '/user/registapi/checkname',
-            + '/test/user/regist/checkname.json',
+            + '/user/registapi/checkname',
+//            + '/test/user/regist/checkname.json',
         REGIST_CHECKPHONE_CHECK: rootUrl
             + '/user/registapi/checkphone',
 //            + '/test/user/regist/checkphone.json',
@@ -52,15 +52,12 @@ define(function () {
         EDIT_GETVERICODE_CHECK: rootUrl
             //+ '/account/edit/getvericode.json',
         + '/test/account/edit/getvericode.json',
-        LIST_PLACE: rootUrl
+        INVEST_LIST: rootUrl
+            + '/invest/api',
+        //+ '/test/invest/api.json',
+        INVEST_DETAIL_CONFIRM: rootUrl
             //+ '/account/edit/getvericode.json',
-        + '/test/invest/list.json',
-        LIST_BROMONEY: rootUrl
-            //+ '/account/edit/getvericode.json',
-        + '/test/invest/list.json',
-        LIST_QIXIAN: rootUrl
-            //+ '/account/edit/getvericode.json',
-        + '/test/invest/list.json',
+        + '/test/invest/detail.json',
         MY_INVEST_GET: rootUrl
             // + '/account/invest/list',
             + '/test/account/invest/list.json',

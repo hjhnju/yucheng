@@ -9,18 +9,13 @@ define(function (require) {
 
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
-    var place = new Remoter('LIST_PLACE');
-    var broMoney = new Remoter('LIST_BROMONEY');
-    var qiXian = new Remoter('LIST_QIXIAN');
+    var getList = new Remoter('INVEST_LIST');
     var etpl = require('etpl');
     var tpl = require('./list.tpl');
     var Pager = require('common/ui/Pager/Pager');
     var pager;
     var type;
-    pager = new Pager({
-        //total: data.pageall,
-        main: $('#test2')
-    });
+
 
     var option = {
         'type_id': 0,
@@ -28,15 +23,27 @@ define(function (require) {
         'duration': 0,
         'page': 1,
         'pagesize': 10
-    }
+    };
 
-    function init() {
+    function init(opt) {
+        option.pagesize = +opt.pagesize;
 
         etpl.compile(tpl);
 
         bindEvent();
 
+        pager = new Pager({
+            total: +opt.pageall,
+            main: $('#test2'),
+            startPage: 1
+        });
 
+        pager.render(+opt.page);
+
+        pager.on('change', function (data) {
+            option.page = data.value;
+            getList.remote(option);
+        });
     }
 
     function bindEvent() {
@@ -46,36 +53,22 @@ define(function (require) {
             $('.type_id').removeClass('current');
             $(this).addClass('current');
             option.type_id = +$(this).attr('data-value');
+            option.page = 1;
 
-            place.remote('post',option);
+            getList.remote('post',option);
         });
 
-        //placeCb
-        place.on('success', function (data) {
+        //getListCb
+        getList.on('success', function (data) {
             if(data && data.bizError) {
                 alert(data.statusInfo);
             }
             else {
-                if (!pager) {
-                    pager = new Pager({
-                        total: data.pageall,
-                        main: $('#test2')
-                    });
-
-                    pager.on('change', function (e) {
-                        place.remote('post', {
-                            page: e.value
-                        });
-                    });
-                }
+                pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 
-                console.log(type);
                 $('#invest-main').html(etpl.render('list',{
-
-                    list: data.list,
-                    type: type
-
+                    list: data.list
                 }));
 
             }
@@ -86,82 +79,21 @@ define(function (require) {
             $('.cat_id').removeClass('current');
             $(this).addClass('current');
             option.cat_id = +$(this).attr('data-value');
+            option.page = 1;
 
-            broMoney.remote('post',option);
-        });
-
-        broMoney.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-
-                if (!pager) {
-                    pager = new Pager({
-                        total: data.pageall,
-                        main: $('#test2')
-                    });
-
-                    pager.on('change', function (e) {
-                        broMoney.remote('post', {
-                            page: e.value
-                        });
-                    });
-                }
-                pager.render(+data.page);
-
-                $('#invest-main').html(etpl.render('list',{
-                    list: data.list,
-                    type: type
-                }))
-            }
+            getList.remote('post',option);
         });
 
         //借款期限
         $('.qixian').click(function () {
             $('.qixian').removeClass('current');
             $(this).addClass('current');
-            option.qixian = +$(this).attr('data-value');
+            option.duration = +$(this).attr('data-value');
 
-            qiXian.remote('post',option);
+            getList.remote('post',option);
         });
-
-        //qiXianCb
-        qiXian.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-
-                if (!pager) {
-                    pager = new Pager({
-                        total: data.pageall,
-                        main: $('#test2')
-                    });
-
-                    pager.on('change', function (e) {
-                        qiXian.remote('post', {
-                            page: e.value
-                        });
-                    });
-                }
-                pager.render(+data.page);
-
-                $('#invest-main').html(etpl.render('list',{
-                    list: data.list,
-                    type: type
-                }))
-            }
-        });
-
 
     }
-
-
-
-
-
-
 
     return {
         init:init

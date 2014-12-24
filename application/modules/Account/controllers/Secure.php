@@ -7,6 +7,7 @@ class SecureController extends Base_Controller_Response{
 	private $retData;
 	public function init() {
 		//$this->setAutoJump(false); for test
+		$this->secureLogic = new Account_Logic_Secure();
 		$this->retData = array();
 		parent::init();
 		$this->ajax= true;
@@ -22,8 +23,7 @@ class SecureController extends Base_Controller_Response{
 	 * 'thirdPlatform' 第三方绑定平台  qq weixin wenbo
 	 * 'thirdNickName' 第三方平台昵称 
 	 */
-	public function indexAction() {
-		
+	public function indexAction() {	
 		$userid = $this->getUserId();
 		$userObj = User_Api::getUserObject($userid);
 		//$userObj = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','realname'=>'jiangbianliming',)));//for test
@@ -70,21 +70,7 @@ class SecureController extends Base_Controller_Response{
 		$this->retData['certificateInfo'] =  1;
 		$this->retData['thirdPay'] = 2;
 		$this->retData['email'] = 2;
-		$ret = array();
-		$sum = 0;
-		foreach ($this->retData as $k=>$v) {
-			if($v==1) {
-				$sum += 25;
-			}
-		}
-		$ret['score'] = $sum;
-		if($sum==0 || $sum==25 || $sum==50) {
-			$ret['secureDegree'] = 1;
-		} elseif ($sum==75) {
-			$ret['secureDegree'] = 2;
-		} else {
-			$ret['secureDegree'] = 3;
-		}
+		$ret = $this->secureLogic->scoreDegree($this->retData);
 		$this->output($ret);		
 	}		 
 }

@@ -1,0 +1,53 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/setting/phone/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/regist/index', 'setting/phone/index'], function (regist, login) {
+        regist.init();
+        login.init();
+    });
+</script>
+{%/block%}
+
+{%$block name="content"%}
+<div class="login">
+    <div class="container">
+        <div class="change-box-title">
+            <p class="change-title-text">修改手机</p>
+            <p class="change-main-txt">如果您绑定的手机因停机、注销、丢失等情况无法接收验证，请与兴教贷客服联系</p>
+        </div>
+        <div class="changephone">
+            <div class="changephone-top">
+                <div class="changephone-title stepone">
+                    <div class="number-text">
+                        <p class="number-p current">验证原手机号</p>
+                        <p class="number-p">绑定新手机号</p>
+                        <p class="number-p three last">修改成功</p>
+                    </div>
+                </div>
+                <div class="changephone-box">
+                    <div class="login-username">
+                        <input class="login-input" id="login-phonenew" type="text" />
+                        <label class="user-lable" for="login-phonenew">手机号</label>
+                        <div class="username-error" id="login-phonenew-error"></div>
+                    </div>
+                    <div class="login-username">
+                        <input class="login-input testing" id="login-test" type="text" />
+                        <label class="user-lable" for="login-test">验证码</label>
+                        <a href="###" class="login-username-testing" id="sendsmscode">获取验证码</a>
+                        <div class="username-error"id="username-error-error"></div>
+                        <div class="login-username-testing-box" id="testing-wait"></div>
+                    </div>
+                    <a class="login-fastlogin">确认</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{%$/blocl%}

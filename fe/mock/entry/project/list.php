@@ -13,8 +13,8 @@ $smarty = new Smarty();
 
 $smarty->assign('page', 1);
 $smarty->assign('pagesize', 10);
-$smarty->assign('pageall', 1);
-$smarty->assign('total', 1);
+$smarty->assign('pageall', 10);
+$smarty->assign('total', 10);
 $smarty->assign('list',
     array(
         0 => array(

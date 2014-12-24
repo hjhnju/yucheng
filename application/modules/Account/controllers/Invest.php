@@ -33,8 +33,9 @@ class InvestController extends Base_Controller_Response {
 	 * 
 	 */
 	public function indexAction() {
+		$userId = $this->getUserId();
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-		//Invest_Api::
+		//nvest_Api::getUserInvests()
 	
 	}
 	
@@ -58,6 +59,7 @@ class InvestController extends Base_Controller_Response {
 	 *  }
 	 */
 	public function  tenderingAction() {
+		$userId = $this->getUserId();
 	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;		
 	}
 	
@@ -132,7 +134,7 @@ class InvestController extends Base_Controller_Response {
 	 *  }
 	 */
 	public function repayPlanAction() {
-		
+		//Invest_Api::getRefunds($invest_id)
 	}
 	
 	

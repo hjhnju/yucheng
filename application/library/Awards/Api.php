@@ -36,15 +36,16 @@ class Awards_Api {
      * 2. 判断奖励条件是否达成
      * 3. 修改达成条件的状态
      * @param integer $userid
+     * @param integer $page
      * @return array || false
      */
-    public static function getAwards($userid) {
-    	if(is_null($userid) || $userid<0 ) {
-    		Base_Log::error("invalid param",array('userid'=>$userid));
+    public static function getAwards($inviterid,$page,$pageSize) {
+    	if(is_null($inviterid) || $inviterid<0 || $page<=0 || $pageSize<0) {
+    		Base_Log::error("invalid param",array('userid'=>$inviterid));
     		return false;
     	}
         $logic = new Awards_Logic_Awards();
-        return $logic->getAwards($userid);
+        return $logic->getAwards($inviterid,$page,$pageSize);
     }
 
     /**

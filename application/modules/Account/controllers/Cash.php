@@ -15,12 +15,13 @@ class CashController extends Base_Controller_Response {
 	 * assign至前端即可
 	 */
 	public function indexAction() {
+		
 		//$userCustId = User_Api::getUserCustId()  用户模块封装接口获取用户在汇付天下的唯一ID
 		$info = Finance_Api::queryBalanceBg($userCustId);
 		$data = $info['data'];
-		$avlBal = isset($data['AvlBal'])?$data['AvlBal']:0.00;//可用余额
-		$acctBal =isset($data['AcctBal'])?$data['AcctBal']:0.00;//账户余额     
-		$frzBal = isset($data['FrzBal'])?$data['FrzBal']:0.00;//冻结余额  
+		$avlBal = isset($data['AvlBal']) ? $data['AvlBal'] : 0.00;//可用余额
+		$acctBal = isset($data['AcctBal']) ? $data['AcctBal'] : 0.00;//账户余额     
+		$frzBal = isset($data['FrzBal']) ? $data['FrzBal'] : 0.00;//冻结余额  
 		$this->getView()->assign("avlBal", $avlBal);
 		$this->getView()->assign("acctBal", $acctBal);
 		$this->getView()->assign("frzBal", $frzBal);	
