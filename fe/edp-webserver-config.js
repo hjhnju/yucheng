@@ -11,15 +11,13 @@ exports.getLocations = function () {
         { 
             location: /\/$/, 
             handler: [
-                home('index.html'),
-                livereload()
+                home('index.html')
             ]
         },
         {
             location: '/*.html',
             handler: [
-                file(),
-                livereload()
+                file()
             ]
         },
         //{
@@ -94,14 +92,17 @@ exports.getLocations = function () {
                     '/user/registapi/checksmscode',
                     '/user/loginapi/index',
                     '/user/loginapi/getauthimage',
-                    '/user/loginapi/checkauthimage'
+                    '/user/loginapi/checkauthimage',
+                    '/invest/api'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
 
             },
             handler: [
-                proxy('123.57.46.229', 8301)
+                //proxy('123.57.46.229', 8301)  //李璐
+                //proxy('123.57.46.229', 8801)  //胡伟
+                proxy('123.57.46.229', 8600)  //松芳
             ]
         },
         { 

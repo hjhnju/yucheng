@@ -2,7 +2,13 @@
 <!--for: ${list} as ${item} -->
 <div class="investlist-box-title">
     <div class="investlist-box-title-name name">
+        <!--if: ${item.type_id} == 1-->
         <span class="name-shi">实</span>
+        <!--elif: ${item.type_id} == 2-->
+        <span class="name-shi">信</span>
+        <!--else-->
+        <span class="name-shi">机</span>
+        <!--/if-->
         <span class="school">${item.title}</span>
     </div>
     <div class="investlist-box-title-name grade">
