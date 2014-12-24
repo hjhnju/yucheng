@@ -86,7 +86,6 @@ class LoginApiController extends Base_Controller_Api{
     
     /**
      * 对第三方账号进行绑定
-     * 0表示绑定成功，其它绑定出错
      */
     public function setBindAction(){
         $strName = trim($_REQUEST['name']);

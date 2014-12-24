@@ -41,7 +41,7 @@ class RegistApiController extends Base_Controller_Api{
     public function sendSmsCodeAction(){
        $strPhone   = trim($_REQUEST['phone']);
        $ret = User_Api::sendSmsCode($strPhone,1);
-       if(User_RetCode::SUCCESS == $ret){
+       if($ret){
            return $this->ajax();
        }
        return $this->ajaxError($ret);
@@ -54,7 +54,7 @@ class RegistApiController extends Base_Controller_Api{
         $strPhone   = trim($_REQUEST['phone']);
         $strVeriCode   = trim($_REQUEST['vericode']);
         $ret = User_Api::checkSmsCode($strPhone, $strVeriCode,1);
-        if(User_RetCode::SUCCESS == $ret){
+        if($ret){
            return $this->ajax();
        }
        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
