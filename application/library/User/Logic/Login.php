@@ -5,7 +5,8 @@
  */
 class User_Logic_Login{
 
-    const SESSION_LOGIN_USER = "login_user";
+    const SESSION_LOGIN_USER           = "login_user";
+    const SESSION_THIRD_LOGIN_TYPE     = 'third_login_type';
     
     //第三方登录需要的配置信息
     protected $third_login_array = array(
@@ -56,12 +57,12 @@ class User_Logic_Login{
      * @param int $intType,1表示qq,2表示微博
      */
     public function getAuthCodeUrl($strType){
-        Yaf_Session::getInstance()->set("third_login_type",$strType);
+        Yaf_Session::getInstance()->set(self::SESSION_THIRD_LOGIN_TYPE,$strType);
         $redirect_url = $this->third_login_array['auth_code_redirect_url'];
         $arrData = $this->third_login_array[$strType];
         $host = $arrData['host'];
         $randnum = md5(uniqid(rand(), TRUE));
-        Yaf_Session::getInstance()->set("state",$randnum);
+        Yaf_Session::getInstance()->set("state",$randnum);   //token  验证
         $url = $arrData['authcode_url'].$arrData['appid']."&redirect_uri=".$redirect_url."&scope=get_user_info&state=".$randnum;
         if(empty($host)||empty($url))  {
             return User_RetCode::INVALID_URL;
@@ -98,7 +99,7 @@ class User_Logic_Login{
      * 获取open id
      */
     public function getOpenid($access_token){
-        $strType = Yaf_Session::getInstance()->get("third_login_type");
+        $strType = Yaf_Session::getInstance()->get(self::SESSION_THIRD_LOGIN_TYPE);
         $redirect_url = $this->third_login_array['access_token_url'];
         $arrData = $this->third_login_array[$strType];
         $host = $arrData['host'];
@@ -120,7 +121,7 @@ class User_Logic_Login{
      * 失败返回空串
      */
     public function getUserThirdInfo($openid){
-        $strType = Yaf_Session::getInstance()->get("third_login_type");
+        $strType = Yaf_Session::getInstance()->get(self::SESSION_THIRD_LOGIN_TYPE);
         if(!isset($_COOKIE['access_key'])){
            return NULL; 
         }

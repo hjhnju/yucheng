@@ -13,9 +13,9 @@ class User_Api{
     public static function checkReg($type, $value){
         $ret = preg_match(User_Logic_Api::$_arrRegMap[$type],$value);
         if($ret == User_RetCode::REG_FORMAT_WRONG) {
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
     
     /** 
