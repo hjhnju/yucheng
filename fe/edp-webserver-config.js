@@ -36,8 +36,8 @@ exports.getLocations = function () {
         {
             location: /\.php($|\?)/,
             handler: [
-                php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
-                //php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
+                //php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
+                php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
             ]
         },
         { 
