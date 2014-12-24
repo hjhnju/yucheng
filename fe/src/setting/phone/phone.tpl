@@ -43,7 +43,7 @@
             <input class="login-input testing login-input2nd" id="login-test" type="text" />
             <label class="user-lable" for="login-test">验证码</label>
             <a href="###" class="login-username-testing" id="sendsmscode">获取验证码</a>
-            <div class="username-error"id="username-error-error"></div>
+            <div class="username-error yanzma"id="username-error-error"></div>
             <div class="login-username-testing-box" id="testing-wait"></div>
         </div>
         <a class="login-fastlogin" id="confirm2nd">确认</a>

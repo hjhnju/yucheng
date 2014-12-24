@@ -1,0 +1,48 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/setting/email/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/email/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="login">
+    <div class="container">
+        <div class="change-box-title"><p class="change-title-text">修改邮箱</p></div>
+        <div class="changephone" id="checkemial">
+            <div class="changephone-top">
+                <div class="changephone-title stepone">
+                    <div class="number-text">
+                        <p class="number-p current">提供最新邮箱</p>
+                        <p class="number-p">验证邮箱</p>
+                        <p class="number-p three last">修改成功</p>
+                    </div>
+                </div>
+                <div class="changephone-box">
+                    <div class="login-username">
+                        <input class="login-input" id="login-email" type="text" />
+                        <label class="user-lable" for="login-email">邮箱</label>
+                        <div class="username-error"></div>
+                    </div>
+                    <div class="login-username">
+                        <input class="login-input testing" id="login-testing" type="text" />
+                        <label class="user-lable" for="login-testing">验证码</label>
+                        <span class="login-username-testing testing_span">1234</span>
+                        <div class="username-error yanzma"></div>
+                    </div>
+                    <a class="login-fastlogin" id="confirm">确认</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{%/block%}

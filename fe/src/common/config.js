@@ -49,12 +49,18 @@ define(function () {
         EDIT_CHECKPHONE_CHECK: rootUrl
             //+ '/account/edit/checkphone.json',
             + '/test/account/edit/checkphone.json',
-        EDIT_GETVERICODE_CHECK: rootUrl
-            //+ '/account/edit/getvericode.json',
-        + '/test/account/edit/getvericode.json',
+        EDIT_GETSMSCODE_CHECK: rootUrl
+            //+ '/account/edit/getsmscode.json',
+        + '/test/account/edit/getsmscode.json',
+        EDIT_GETSMSCODE2ND_CHECK: rootUrl
+            //+ '/account/edit/getsmscode.json',
+        + '/test/account/edit/getsmscode.json',
         EDIT_PHONE_SUBMITE: rootUrl
             //+ '/account/edit/getvericode.json',
         + '/test/account/edit/phoneSubmite.json',
+        EDIT_EMAILCONFIRM: rootUrl
+            //+ '/account/edit/getvericode.json',
+        + '/test/account/edit/emailConfirm.json',
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',
