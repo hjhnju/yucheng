@@ -12,6 +12,15 @@ class Invest_Logic_Invest {
     const MIN_INVEST = 100;
     
     /**
+     * @var InvestModel
+     */
+    private $objModel = null;
+    
+    public function __construct() {
+        $this->objModel = new InvestModel();
+    }
+    
+    /**
      * 准备进行投标
      * @param integer $uid
      * @param integer $loan_id
@@ -103,7 +112,38 @@ class Invest_Logic_Invest {
      * @return number
      */
     public function getUserInvestAmount($uid) {
-        return 1000;
+        $list = new Invest_List_Invest();
+        $filters = array(
+            'uid' => $uid,
+            'status' => array(
+                'status != ' . Invest_Type_InvestStatus::CANCEL,
+                'status != ' . Invest_Type_InvestStatus::FAILED,
+            ),
+        );
+        $list->setFilter($filters);
+        //累计投资
+        $all = $list->sumField('amount');
+        return $all;
+    }
+    
+    /**
+     * 获取用户的正在回收的资产总额
+     * @param integer $uid
+     * @return number
+     */
+    public function getUserRefundsAmount($uid) {
+        $refunds = new Invest_List_Refund();
+        $filters = array(
+            'uid' => $uid,
+            'status' => Invest_Type_InvestStatus::REFUNDING,
+        );
+        $refunds->setFilter($filters);
+        $fields = array(
+            'capital',
+            'interest',
+        );
+        $waiting = $refunds->sumField($fields);
+        return array_sum($waiting);
     }
     
     /**
@@ -177,5 +217,146 @@ class Invest_Logic_Invest {
         $invest->setPagesize(PHP_INT_MAX);
         
         return $invest->toArray();
+    }
+    
+    /**
+     * 获取我的投资列表 借款维度
+     * @param integer $uid
+     * @param integer $loan_id
+     * @return array
+     */
+    public function getUserInvests($uid, $status, $page = 1, $pagesize = 10) {
+        $data = $this->objModel->getUserInvests($uid, $status, $page, $pagesize);
+        
+        return $data;
+    }
+    
+    /**
+     * 获取用户累计投资收益情况
+     * @param integer $uid
+     * @return array <pre>(
+            'all_invest' => $all,
+            'all_income' => $incomes,
+            'wait_capital' => $capital,
+            'wait_interest' => $interest,
+        );
+     */
+    public function getUserEarnings($uid) {
+        $list = new Invest_List_Invest();
+        $filters = array(
+            'uid' => $uid,
+            'status' => array(
+                'status != ' . Invest_Type_InvestStatus::CANCEL,
+                'status != ' . Invest_Type_InvestStatus::FAILED,
+            ),
+        );
+        $list->setFilter($filters);
+        //累计投资
+        $all = $list->sumField('amount');
+        
+        $refunds = new Invest_List_Refund();
+        $filters = array(
+            'uid' => $uid,
+            'status' => Invest_Type_InvestStatus::FINISHED,
+        );
+        $refunds->setFilter($filters);
+        $fields = array(
+            'interest',
+            'late_charge',
+        );
+        $income = $refunds->sumField($fields);
+        //累计收益
+        $incomes = $income['interest'] + $income['late_charge'];
+        
+        $filters = array(
+            'uid' => $uid,
+            'status' => Invest_Type_InvestStatus::REFUNDING,
+        );
+        $refunds->setFilter($filters);
+        $fields = array(
+            'capital',
+            'interest',
+        );
+        $waiting = $refunds->sumField($fields);
+        //待收本金
+        $capital = $waiting['$waiting'];
+        //待收收益
+        $interest = $waiting['$interest'];
+        
+        $data = array(
+            'all_invest' => $all,
+            'all_income' => $incomes,
+            'wait_capital' => $capital,
+            'wait_interest' => $interest,
+        );
+        return $data;
+    }
+    
+    /**
+     * 获取用户一定时期的投资收益情况 按月区分
+     * @param number $uid
+     * @param number $start
+     * @param number $end
+     * @return array <pre>(
+            '2014-09' => 100,
+            '2014-10' => 200,
+        );
+    */
+    public function getEarningsMonthly($uid, $start = 0, $end = 0) {
+        $date = date("Y-m", $start) . '-01 00:00:00';
+        $stime = strtotime($date);
+        $month = -1;
+        
+        $earns = array();
+        while (true) {
+            $month ++;
+            $from = $this->nextMonth($stime, $month);
+            $to = $this->nextMonth($stime, $month + 1);
+            $date = date("Y-m", $from);
+            $earns[$date] = $this->getMoneyEarn($uid, $from, $to);
+        }
+        return $earns;
+    }
+    
+    /**
+     * 获取下几个月的时间戳
+     * @param number $stime
+     * @param number $month
+     * @return number
+     */
+    private function nextMonth($stime, $month) {
+        if ($month < 1) {
+            return $stime;
+        }
+        $time = strtotime("+{$month} month", $stime);
+        return $time;
+    }
+    
+    /**
+     * 指定时间段的总收益
+     * @param number $uid
+     * @param number $start
+     * @param number $end
+     * @return number
+     */
+    private function getMoneyEarn($uid, $start, $end) {
+        $refunds = new Invest_List_Refund();
+        $filters = array(
+            'uid' => $uid,
+            'status' => Invest_Type_InvestStatus::FINISHED,
+            'time' => array(
+                'refund_time >= ' . $start,
+                'refund_time < ' . $end,
+            ),
+        );
+        $refunds->setFilter($filters);
+        $fields = array(
+            'interest',
+            'late_charge',
+        );
+        $income = $refunds->sumField($fields);
+        //该时间段的总收益
+        $incomes = $income['interest'] + $income['late_charge'];
+        return $incomes;
     }
 }
