@@ -2,9 +2,9 @@
 /**
  * 投资列表
  */
-class ApiController extends Base_Controller_Page {
+class ApiController extends Base_Controller_Api {
     protected $ajax = true;
-    protected $autoJump = false;
+    protected $needLogin = false;
 	
 	public function indexAction() {
 	    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

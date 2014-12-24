@@ -5,7 +5,7 @@
 class OverviewController extends Base_Controller_Response {
 
     public function init(){
-    	$this->setAutoJump(false);//for test TODO remove
+    	$this->setNeedLogin(false);//for test TODO remove
         parent::init();
         $this->ajax = true;
     }

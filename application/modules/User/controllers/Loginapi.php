@@ -9,7 +9,7 @@ class LoginApiController extends Base_Controller_Api{
     const REDIS_VALID_TIME = 2592000;
     
     public function init(){
-        $this->setAutoJump(false);
+        $this->setNeedLogin(false);
         parent::init();
         $this->loginLogic = new User_Logic_Login();
     }

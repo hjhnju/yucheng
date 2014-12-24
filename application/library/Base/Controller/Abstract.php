@@ -10,8 +10,8 @@
 class Base_Controller_Abstract extends Yaf_Controller_Abstract
 {
 
-    //check login 时是否需要自动跳转
-    protected $autoJump    = true;
+    //controller是否需要登录，true则checklogin自动跳转至登录页
+    protected $needLogin   = true;
 
     protected $ajax        = false;
     
@@ -28,7 +28,7 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
         $this->baselog();
         $this->objUser = User_Api::checkLogin();
         //未登录自动跳转
-        if($this->autoJump && empty($this->objUser)){
+        if($this->needLogin && empty($this->objUser)){
             $u        = isset($_REQUEST['HTTP_REFERER']) ? $_REQUEST['HTTP_REFERER'] : null;
             $loginUrl = Base_Config::getConfig('web')->loginurl;
             if(!empty($u)){
@@ -59,8 +59,8 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
      * 未登录是否跳转
      * @param boolean
      */
-    protected function setAutoJump($autoJump) {
-        $this->autoJump = $autoJump;
+    protected function setNeedLogin($needLogin) {
+        $this->needLogin = $needLogin;
     }
 
     /**

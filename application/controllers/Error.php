@@ -4,7 +4,12 @@
  * @desc 错误控制器, 在发生未捕获的异常时刻被调用
  * @author root
  */
-class ErrorController extends Base_Controller_Abstract {
+class ErrorController extends Base_Controller_Page {
+
+	public function init(){
+		$this->setNeedLogin(false);
+		parent::init();
+	}
 
     public function errorAction($exception){
         $code = $exception->getCode();

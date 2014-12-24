@@ -6,7 +6,7 @@ class SecureController extends Base_Controller_Response{
 	
 	private $retData;
 	public function init() {
-		//$this->setAutoJump(false); for test
+		//$this->setNeedLogin(false); for test
 		$this->secureLogic = new Account_Logic_Secure();
 		$this->retData = array();
 		parent::init();

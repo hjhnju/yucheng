@@ -5,7 +5,9 @@
 class RegistController extends Base_Controller_Page{
     
     public function init(){
-    	$this->setAutoJump(false);
+
+        $this->setNeedLogin(false);
+
         parent::init();
         $this->registLogic = new User_Logic_Regist();
         $this->loginLogic = new User_Logic_Login();
