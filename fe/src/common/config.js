@@ -52,6 +52,9 @@ define(function () {
         EDIT_GETVERICODE_CHECK: rootUrl
             //+ '/account/edit/getvericode.json',
         + '/test/account/edit/getvericode.json',
+        EDIT_PHONE_SUBMITE: rootUrl
+            //+ '/account/edit/getvericode.json',
+        + '/test/account/edit/phoneSubmite.json',
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',
