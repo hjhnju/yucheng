@@ -275,7 +275,7 @@ class Base_List {
             $total = array();
             foreach ($row as $key => $val) {
                 $fkey = $fary[$key];
-                $total[$fkey] = $val;
+                $total[$fkey] = floatval($val);
             }
         } else {
             $sql = "select sum(`$field`) as total from `{$this->dbname}`.`{$this->table}` where $where";

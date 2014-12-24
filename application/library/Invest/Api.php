@@ -137,7 +137,7 @@ class Invest_Api {
      * @param unknown $interest
      */
     public static function invest($uid, $loan_id, $amount, $interest) {
-        
+        //@todo 自动投标使用
     }
     
     /**

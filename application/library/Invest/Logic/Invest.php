@@ -244,7 +244,7 @@ class Invest_Logic_Invest {
     public function getUserEarnings($uid) {
         $list = new Invest_List_Invest();
         $filters = array(
-            'uid' => $uid,
+            'user_id' => $uid,
             'status' => array(
                 'status != ' . Invest_Type_InvestStatus::CANCEL,
                 'status != ' . Invest_Type_InvestStatus::FAILED,
@@ -256,7 +256,7 @@ class Invest_Logic_Invest {
         
         $refunds = new Invest_List_Refund();
         $filters = array(
-            'uid' => $uid,
+            'user_id' => $uid,
             'status' => Invest_Type_InvestStatus::FINISHED,
         );
         $refunds->setFilter($filters);
@@ -269,7 +269,7 @@ class Invest_Logic_Invest {
         $incomes = $income['interest'] + $income['late_charge'];
         
         $filters = array(
-            'uid' => $uid,
+            'user_id' => $uid,
             'status' => Invest_Type_InvestStatus::REFUNDING,
         );
         $refunds->setFilter($filters);
@@ -279,9 +279,9 @@ class Invest_Logic_Invest {
         );
         $waiting = $refunds->sumField($fields);
         //待收本金
-        $capital = $waiting['$waiting'];
+        $capital = $waiting['capital'];
         //待收收益
-        $interest = $waiting['$interest'];
+        $interest = $waiting['interest'];
         
         $data = array(
             'all_invest' => $all,
@@ -314,6 +314,9 @@ class Invest_Logic_Invest {
             $to = $this->nextMonth($stime, $month + 1);
             $date = date("Y-m", $from);
             $earns[$date] = $this->getMoneyEarn($uid, $from, $to);
+            if ($to >= $end) {
+                break;
+            }
         }
         return $earns;
     }
@@ -342,7 +345,7 @@ class Invest_Logic_Invest {
     private function getMoneyEarn($uid, $start, $end) {
         $refunds = new Invest_List_Refund();
         $filters = array(
-            'uid' => $uid,
+            'user_id' => $uid,
             'status' => Invest_Type_InvestStatus::FINISHED,
             'time' => array(
                 'refund_time >= ' . $start,
