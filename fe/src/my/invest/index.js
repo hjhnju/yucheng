@@ -17,6 +17,8 @@ define(function (require) {
     var getReturnList = new Remoter('MY_INVEST_GET');
     var getReturnDetail = new Remoter('MY_INVEST_DETAIL');
     var getTenderingList = new Remoter('MY_INVEST_TENDERING');
+    var getEndedList = new Remoter('MY_INVEST_ENDED');
+    var getTenderFailList = new Remoter('MY_INVEST_TENDERFAIL');
 
     var tpl = require('./list.tpl');
 
@@ -76,14 +78,27 @@ define(function (require) {
 
         // 获取回款列表按钮
         $('.my-invest-list').delegate('.view-plan-btn', 'click', function () {
+            var allItem = $('.my-invest-item');
+            // 如果当前为显示状态，则隐藏
+            if ($(this).hasClass('current')) {
+                allItem.removeClass('current');
+                $(this).removeClass('current');
+                return;
+            }
             var value = $.trim($(this).attr('data-id'));
             item = $(this);
 
-            $('.my-invest-item').removeClass('current');
+            allItem.removeClass('current');
             $(this).closest('.my-invest-item').addClass('current');
-            getReturnDetail.remote({
-                id: value
-            });
+            $(this).addClass('current');
+
+            // 获取内容后再次展开不再发送请求
+            if (!$(this).hasClass('hasDetail')) {
+                getReturnDetail.remote({
+                    id: value
+                });
+            }
+
         });
     }
 
@@ -128,6 +143,8 @@ define(function (require) {
                 var container = $(item).closest('.my-invest-item')
                     .addClass('current').find('.my-invest-detail');
 
+                $(item).addClass('hasDetail');
+
                 for (var i = 0, l = data.list.length; i < l; i++) {
                     data.list[i].timeInfo = moment.unix(data.list[i].time).format('YYYY-MM-DD');
                 }
@@ -147,6 +164,26 @@ define(function (require) {
                 renderHTML('tenderingList', data);
             }
         });
+
+        // 已结束列表
+        getEndedList.on('success', function (data) {
+            if (data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                renderHTML('endedList', data);
+            }
+        });
+
+        // 投标失败
+        getTenderFailList.on('success', function (data) {
+            if (data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                renderHTML('tenderFailList', data);
+            }
+        });
     }
     
     function getRemoteList(page) {
@@ -162,8 +199,14 @@ define(function (require) {
                 });
                 break;
             case 3:
+                getEndedList.remote({
+                    page: page
+                });
                 break;
             case 4:
+                getTenderFailList.remote({
+                    page: page
+                });
                 break;
         }
     }
@@ -172,6 +215,9 @@ define(function (require) {
         // 格式化时间
         for (var i = 0, l = data.list.length; i < l; i++) {
             data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format(FORMATER);
+            if (data.list[i].endTime) {
+                data.list[i].endTimeInfo = moment.unix(data.list[i].endTime).format('YYYY-MM-DD');
+            }
         }
 
         htmlContainer.html(etpl.render(tpl, {

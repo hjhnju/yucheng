@@ -52,8 +52,8 @@
     <!-- for: ${data.list} as ${item} -->
     <tr>
         <td>${item.timeInfo}</td>
-        <td>{item.repossPrincipal}</td>
-        <td>{item.repossProfit}</td>
+        <td>${item.repossPrincipal}</td>
+        <td>${item.repossProfit}</td>
         <!-- if: ${item.paymentStatus} == 0 -->
         <td>${item.recePrincipal}</td>
         <td>${item.receProfit}</td>
@@ -102,6 +102,56 @@
         <td>${item.deadline}个月</td>
         <td>${item.timeInfo}</td>
         <td><span class="invest-em">${item.tenderProgress}</span>%</td>
+    </tr>
+    <!-- /for -->
+</table>
+<!-- /target -->
+
+<!-- target: endedList -->
+<table border="0" cellspacing="0" cellpadding="0" class="my-invest-table">
+    <tr>
+        <th>项目名称</th>
+        <th>年利率</th>
+        <th>投资金额</th>
+        <th>期限</th>
+        <th>投标时间</th>
+        <th>合同结束时间</th>
+        <th>总回款</th>
+        <th>总收益</th>
+    </tr>
+    <!-- for: ${list} as ${item} -->
+    <tr>
+        <td>${item.investPro}</td>
+        <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
+        <td>￥${item.tenderAmt}</td>
+        <td>${item.deadline}个月</td>
+        <td>${item.timeInfo}</td>
+        <td>${item.endTimeInfo}</td>
+        <td>￥${item.totalRetAmt}</td>
+        <td><span class="invest-em">￥${item.totalProfit}</span></td>
+    </tr>
+    <!-- /for -->
+</table>
+<!-- /target -->
+
+<!-- target: tenderFailList -->
+<table border="0" cellspacing="0" cellpadding="0" class="my-invest-table">
+    <tr>
+        <th>项目名称</th>
+        <th>年利率</th>
+        <th>投资金额</th>
+        <th>期限</th>
+        <th>投标时间</th>
+        <th>失败原因</th>
+    </tr>
+    <!-- for: ${list} as ${item} -->
+    <tr>
+        <td>${item.investPro}</td>
+        <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
+        <td>￥${item.tenderAmt}</td>
+        <td>${item.deadline}个月</td>
+        <td>${item.timeInfo}</td>
+        <td>${item.failReason}</td>
     </tr>
     <!-- /for -->
 </table>

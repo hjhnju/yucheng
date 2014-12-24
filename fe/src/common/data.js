@@ -10,8 +10,8 @@ define(function () {
     return {
         pagerOpt: {
             startPage: 1,
-            prevText: 'prev',
-            nextText: 'next'
+            prevText: '上一页',
+            nextText: '下一页'
         }
     };
 });
