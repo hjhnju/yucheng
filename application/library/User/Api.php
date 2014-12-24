@@ -79,6 +79,20 @@ class User_Api{
     }
     
     /**
+     * 设置用户邮箱
+     * @param int $uid
+     * @param string $strPhone
+     * @return boolean
+     */
+    public static function setPhone($uid,$strPhone){
+        $objInfo = new User_Object_Info();
+        $objInfo->fetch(array('userid'=>$uid));
+        $objInfo->phone = $strPhone;
+        $ret = $objInfo->save();
+        return $ret;
+    }
+    
+    /**
      * 设置用户密码
      * @param int $uid
      * @param string $strPasswd
@@ -130,6 +144,24 @@ class User_Api{
     public static function checkSmscode($strPhone,$strVeriCode,$intType){
         $strStoredCode = Base_Redis::getInstance()->get($strPhone.$intType);
         if($strVeriCode == $strStoredCode){
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 返回获取图片验证码的URL
+     */
+    public static function getAuthImageUrl($strToken){
+        return "http://123.57.46.229:8301/User/loginapi/getAuthImage?&token=$strToken";
+    }
+    
+    /**
+     * 验证图片验证码
+     */
+    public static function checkAuthImage($strImageCode,$strToken){
+        $storedImageCode = Base_Redis::getInstance()->get($strToken);
+        if(strtolower($storedImageCode) == strtolower($strImageCode)){
             return true;
         }
         return false;
