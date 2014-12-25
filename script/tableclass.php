@@ -1,10 +1,21 @@
 <?php
-$host = '127.0.0.1';
-$user = 'root';
-$pass = '123456';
-$dbname = 'xjd';
-$tb_pre = 'invest';
-$save_path = '/Users/jiangsongfang/Documents/website/yucheng/application/library/Invest/';
+$host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
+$user      = 'xingjiaodai';
+$pass      = 'xingjiaodai';
+$dbname    = 'xjd';
+$tb_pre    = 'infos';
+$save_path = '/Users/hejunhua/Dev/yucheng/application/library/Infos';
+$author    = 'hejunhua';
+
+if(!file_exists($save_path)){
+    mkdir($save_path, 0775); 
+}
+if(!file_exists($save_path . '/Object')){
+    mkdir($save_path . '/Object', 0775); 
+}
+if(!file_exists($save_path . '/List')){
+    mkdir($save_path . '/List', 0775); 
+}
 
 mysql_connect($host, $user, $pass);
 mysql_select_db($dbname);
@@ -54,7 +65,7 @@ function dumpClass($table, $tb, $columns) {
 	$content .= "\n";
 	$content .= "/**\n";
 	$content .= " * $table[TABLE_COMMENT]\n";
-	$content .= " * @author jiangsongfang\n";
+	$content .= " * @author $author\n";
 	$content .= " */\n";
 	$content .= "class $tbclass extends Base_Object {\n";
 	$colary = array();
@@ -162,12 +173,12 @@ function dumpClass($table, $tb, $columns) {
 	}
 	$content .= "}\n";
 	
-	$filename = $save_path . 'Object/' . ucfirst($tb) . ".php";
+	$filename = $save_path . '/Object/' . ucfirst($tb) . ".php";
 	file_put_contents($filename, $content);
-	//var_dump($filename);
 	echo $content;
 	echo "@examples\n";
 	echo implode("", $example);
+	echo "\nsaved to $filename\n";
 }
 
 function dumpList($table, $tb, $columns) {
@@ -178,7 +189,7 @@ function dumpList($table, $tb, $columns) {
 	$content .= "\n";
 	$content .= "/**\n";
 	$content .= " * $table[TABLE_COMMENT] 列表类\n";
-	$content .= " * @author jiangsongfang\n";
+	$content .= " * @author $author\n";
 	$content .= " */\n";
 	$content .= "class $tbclass extends Base_List {\n";
 	$colary = array();
@@ -238,10 +249,10 @@ function dumpList($table, $tb, $columns) {
 	$content .= "\n";
 	
 	$content .= "}";
-	$filename = $save_path . 'List/' . ucfirst($tb) . ".php";
+	$filename = $save_path . '/List/' . ucfirst($tb) . ".php";
 	file_put_contents($filename, $content);
-	//var_dump($filename);
 	echo $content;
+	echo "\nsaved to $filename\n";
 }
 
 function gettabs($maxlen, $len) {

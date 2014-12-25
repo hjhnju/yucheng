@@ -31,7 +31,7 @@ class Loan_Type_Attach extends Base_Type {
      * 默认类型属性名
      * @var string
      */
-    const DEFAULT_FIELD = 'Attach_type';
+    const DEFAULT_FIELD = 'attach_type';
     
     /**
      * 状态名

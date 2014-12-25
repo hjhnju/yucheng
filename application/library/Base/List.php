@@ -1,4 +1,10 @@
 <?php
+/**
+ * 数据列表基类
+ * 用于对数据表中的数据进行分页读取，可以通过设置filter来进行数据筛选
+ * @author jiangsongfang
+ *
+ */
 class Base_List {
     /**
      * 数据库名
@@ -41,6 +47,12 @@ class Base_List {
      * @var integer
      */
     public $pagesize = 10;
+    
+    /**
+     * 翻页的offset
+     * @var integer
+     */
+    public $offset = 0;
 
     /**
      * 整数类型的字段
@@ -82,7 +94,7 @@ class Base_List {
      * 数据过滤条件 用于sql中的where条件
      * @var string
      */
-    private $filterStr = '';
+    private $filterStr = '1';
     
     /**
      * @var Base_TopazDb
@@ -123,8 +135,14 @@ class Base_List {
         $this->initDB();
         $ary = array();
         foreach ($filters as $key => $val) {
-            $val = $this->db->escape($val);
-            $ary[] = "`$key` = '$val'";
+            if (is_array($val)) {
+                foreach ($val as $filter) {
+                    $ary[] = $filter;
+                }
+            } else {
+                $val = $this->db->escape($val);
+                $ary[] = "`$key` = '$val'";
+            }
         }
         return implode(' and ', $ary);
     }
@@ -189,26 +207,81 @@ class Base_List {
         $where = $this->getWhere();
         $order = !empty($this->order) ? $this->order : $this->prikey . ' desc';
         $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where $where order by $order";
-        if ($this->pagesize > 0 && $this->pagesize != PHP_INT_MAX && $this->page > 1) {
-            $offset = ($this->page - 1) * $this->pagesize;
+        if ($this->pagesize > 0 && $this->pagesize != PHP_INT_MAX) {
+            $offset = $this->offset;
             $pagesize = $this->pagesize;
             $sql .= " limit $offset, $pagesize";
         }
 
         $this->initDB();
         $this->data = $this->db->fetchAll($sql);
+        $this->dealIntField();
+        
+        $this->countAll();
+        
+        $this->fetched = 1;
+    }
+    
+    /**
+     * 处理int类型的字段，使属性转换为int类型，便于进行数据交互
+     */
+    private function dealIntField() {
         $cnt = count($this->data);
         for ($i = 0; $i < $cnt; $i++) {
             foreach ($this->intProps as $k => $val) {
                 $this->data[$i][$k] = intval($this->data[$i][$k]);
             }
         }
-        
+    }
+    
+    /**
+     * 统计列表中的所有行数
+     * @return integer
+     */
+    public function countAll() {
+        $where = $this->getWhere();
         $sql = "select count(*) as total from `{$this->dbname}`.`{$this->table}` where $where";
         $this->total = $this->db->fetchOne($sql);
         $this->pageall = ceil($this->total / $this->pagesize);
-        
-        $this->fetched = 1;
+        return $this->total;
+    }
+    
+    /**
+     * 计算所有行某字段的总和
+     * @return integer | array
+     * 如果field是string，则直接返回sum后的结果<br>
+     * 如果field是array，则返回的是该array为key的数组，例如：<pre>
+     * array(
+     *      $field1 => $sum1,
+     *      $field2 => $sum2,
+     * );
+     */
+    public function sumField($field) {
+        $where = $this->getWhere();
+        if (is_array($field)) {
+            $sumary = $fary = array();
+            $cnt = 0;
+            foreach ($field as $k) {
+                $sname = 'total' . $cnt;
+                $sumary[$sname] = "sum(`$k`) as $sname";
+                $fary[$sname] = $k;
+                $cnt++;
+            }
+            $field = implode(',', $sumary);
+            
+            $sql = "select $field from `{$this->dbname}`.`{$this->table}` where $where";
+            $row = $this->db->fetchRow($sql);
+            
+            $total = array();
+            foreach ($row as $key => $val) {
+                $fkey = $fary[$key];
+                $total[$fkey] = floatval($val);
+            }
+        } else {
+            $sql = "select sum(`$field`) as total from `{$this->dbname}`.`{$this->table}` where $where";
+            $total = $this->db->fetchOne($sql);
+        }
+        return $total;
     }
     
     /**
@@ -257,8 +330,18 @@ class Base_List {
     public function setPage($page) {
         if ($page > 0) {
             $this->page = $page;
+            $this->setOffset(($page - 1) * $this->pagesize);
             $this->fetched = 0;
         }
+    }
+    
+    /**
+     * 设置当前offset 优先级高于page与pagesize
+     * @param integer $page
+     */
+    public function setOffset($offset) {
+        $this->offset = $offset;
+        $this->fetched = 0;
     }
     
     /**
@@ -267,6 +350,7 @@ class Base_List {
      */
     public function setPagesize($pagesize) {
         $this->pagesize = $pagesize;
+        $this->setOffset(($this->page - 1) * $this->pagesize);
         $this->fetched = 0;
     }
     
