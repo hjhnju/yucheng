@@ -2,6 +2,7 @@
 class EditController extends Base_Controller_Response {
 
     public function init(){
+    	$this->setNeedLogin(false);
         parent::init();
         $this->ajax = true;
     }
@@ -9,10 +10,13 @@ class EditController extends Base_Controller_Response {
     /**
      * 接口/account/edit/chphone
      * 修改手机号
+     * @return 标准json
+     * status 0:成功
      * 
      */
     public function chphoneAction() {
     	//渲染验证原手机号页面
+    	$this->output();
     }
     /**
      * 接口: /account/edit/checkphone

@@ -6,7 +6,7 @@ class SecureController extends Base_Controller_Response{
 	
 	private $retData;
 	public function init() {
-		//$this->setNeedLogin(false); for test
+		$this->setNeedLogin(false);// for test
 		$this->secureLogic = new Account_Logic_Secure();
 		$this->retData = array();
 		parent::init();
@@ -18,52 +18,67 @@ class SecureController extends Base_Controller_Response{
 	 * 获取用户个人资料
 	 * assign数值至前端
 	 * 'phone' 1--认证  2--未认证
+	 * 'phonenum' 手机号码
 	 * 'phoneurl' 手机后的url
+	 * 
 	 * 'certinfo' 1--认证  2--未认证
+	 * 'realname' 真实姓名
+	 * 'certinfonum' 身份证号
 	 * 'certinfourl' 认证信息后的url
+	 * 
 	 * 'thirdpay' 1--开通  2--未开通
+	 * 'huiid' 汇付平台id
 	 * 'thirdpayurl' 第三方后url
+	 * 
 	 * 'email' 1--绑定  2--未绑定 
+	 * 'emailnum' 邮件
 	 * 'emailpay' email后的url
-	 * 'modifypswurl' 修改密码url
+	 * 
+	 * 'bindthirdlogin'是否绑定第三方登录  1--是  2--否
 	 * 'thirdPlatform' 第三方绑定平台  qq weixin wenbo
 	 * 'thirdNickName' 第三方平台昵称 
 	 * 'thirdloginurl' 第三方平台登录url
 	 */
 	public function indexAction() {	
 		$webroot = Base_Config::getConfig('web')->root;
-		$userid = $this->getUserId();
-		$userObj = User_Api::getUserObject($userid);
-		//$userObj = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','realname'=>'jiangbianliming',)));//for test
+		//$userid = $this->getUserId();
+		//$userObj = User_Api::getUserObject($userid);
+		$userObj = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming',)));//for test
 		$phone = $userObj->phone;//获取用户手机号码
+		
 		$realname = $userObj->realname;//获取用户真实姓名
 		$certificateContent = $userObj->certificateContent;//获取用户的证件信息
 		$huifuid = $userObj->huifuid;//获取用户的汇付id--判断用户有没有开通汇付
 		$email = $userObj->email;
+		 
 		$this->retData['phone']['bind'] = isset($phone) ? 1 : 2;//若设置手机，前端assign值1，否则assign值0，下同
 		if($this->retData['phone'] == 1) {
-			$this->retData['phone']['url'] = $webroot.'/account/secure/modifyphone';
+			$this->retData['phone']['url'] = $webroot.'/account/secure/bindphone';
 		} else {
 			$this->retData['phone']['url'] = $webroot.'/account/edit/chphone';
 		}
+		
 		$this->retData['certificateInfo']['bind'] = (isset($realname) && isset($certificateContent)) ? 1 : 2;
 		if($this->retData['certificateInfo'] == 1) {
 			$this->retData['certificateInfo']['url'] = $webroot.'/account/secure/bindcertinfo';
 		} else {
 			$this->retData['certificateInfo']['url'] = '';
 		}
+		
 		$this->retData['thirdPay']['bind'] = isset($huifuid) ? 1 : 2;
 		if($this->retData['thirdPay']['bind'] == 1) {
 			$this->retData['thirdpay']['url'] = $webroot.'/account/secure/bindthirdpay';
 		} else {
 			$this->retData['thirdpay']['url'] = $webroot.'/account/secure/viewthirdPay';
 		}
+		
 		$this->retData['email']['bind'] = isset($email) ? 1 : 2;	
 		if($this->retData['email']['bind'] == 1) {
 			$this->retData['thirdpay']['url'] = $webroot.'/account/secure/bindemail';
 		} else {
 			$this->retData['thirdpay']['url'] = $webroot.'/account/edit/chemail';
 		}
+	/* 	
 		$thirdLogin = array('qq','weibo','weixin');		
 		foreach ($thirdLogin as $k=>$v) {
 			if($userObj->getOpenid($v)!=false) {
@@ -71,7 +86,15 @@ class SecureController extends Base_Controller_Response{
 				$this->retData['thirdNickName'] = $userObj->getNickname($v);
 				break;
 			}
-		} 			 	
+		} */
+		if(!isset($this->retData['thirdPlatform'])) {
+			$this->retData['bindthirdlogin'] = 2;
+			$this->retData['thirdloginurl'] = $webroot.'/account/secure/bindthirdlogin';
+		} else {
+			$this->retData['bindthirdlogin'] = 1;
+			$this->retData['thirdloginurl'] = $webroot.'/account/secure/unbindthirdlogin';
+		}
+		var_dump($this->retData);die;
 		$this->getView()->assign('phone', $this->retData['phone']['bind']);
 		$this->getView()->assign('phoneurl',$this->retData['phone']['url']);
 		
@@ -84,11 +107,11 @@ class SecureController extends Base_Controller_Response{
 		$this->getView()->assign('email', $this->retData['email']['bind']);
 		$this->getView()->assign('emailurl', $this->retData['email']['url']);
 		
-		$this->getView()->assign('modifypswurl',$webroot.'/account/edit/chpwd');	
+		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);	
 			
-		$this->getView()->assign('thirdPlatform',$this->retData['thirdPlatform']);
-		$this->getView()->assign('thirdPlatform',$this->retData['thirdNickName']);
-		$this->getView()->assign('thirdloginurl','');
+		$this->getView()->assign('thirdPlatform','qq');//mock
+		$this->getView()->assign('thirdNickName','海阔天空');
+		$this->getView()->assign('thirdloginurl',$this->retData['thirdloginurl']);
 	}
 
 	/**
@@ -188,4 +211,29 @@ class SecureController extends Base_Controller_Response{
 		$this->ajax = false;
 		$this->output();
 	}	
+	
+	/**
+	 * 接口/account/secure/bindthirdlogin
+	 * 绑定第三方登录接口
+	 * 返回标准json
+	 * status 0:成功
+	 */
+	public function bindthirdloginAction() {
+		$this->ajax = false;
+		$this->output();
+	}
+	
+	/**
+	 * 接口 /account/secure/unbindthirdlogin
+	 * 解绑第三方登录
+	 * 返回标准json
+	 * status 0:成功
+	 */
+	public function unbindthirdloginAction() {
+		$this->ajax = false;
+		$this->output();
+	}
+	
+	
+	
 }

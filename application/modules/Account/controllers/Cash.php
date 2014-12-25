@@ -65,5 +65,15 @@ class CashController extends Base_Controller_Response {
 			$errMsg = Account_RetCode::getMsg($errCode);
 			$this->outputError($errCode,$errMsg);
 		}		
-	}	
+	}
+
+	/**
+	 * /account/cash/recharge
+	 * 充值入口
+	 * @return 标准json
+	 * status 0:成功
+	 */
+	public function rechargeAction() {
+		
+	}
 }

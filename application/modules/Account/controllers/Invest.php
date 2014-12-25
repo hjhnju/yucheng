@@ -12,8 +12,8 @@ class InvestController extends Base_Controller_Response {
     CONST ENDED      = 6;
     CONST TENDERFAIL = 9;
 	public function init(){
-		$this->setAutoJump(false);
-		parent::init();
+        $this->setNeedLogin(false);
+        parent::init();
 		$this->ajax = true;
 	}
 	
@@ -45,7 +45,8 @@ class InvestController extends Base_Controller_Response {
 	 */
 	public function indexAction() {
 		$status = InvestController::BACKING;
-		$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 		//$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
 	    
@@ -54,7 +55,8 @@ class InvestController extends Base_Controller_Response {
 		$mockdata = array(
 			'page'    => $page,
 			'pageall' => 10,
-			'list'    => array(
+            'all'     => 3,
+            'list'    => array(
 				0 => array(
 						'proId'          => 0,
 						'investPro'      => '测试用汇款中项目1',
@@ -113,14 +115,15 @@ class InvestController extends Base_Controller_Response {
 	 */
 	public function  tenderingAction() {
 		$status = InvestController::TENDERING;
-		$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
 	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 	    //$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
 	    //for test
 	    //TODO:remove
 	    $mockdata = array(
 	    		'page'    => $page,
-	    		'pageall' => 10,
+                'pageall' => 10,
+                'all' => 2,
 	    		'list'    => array(
 	    		    0 => array(
 	    		    	'proId'          => 1,
@@ -168,14 +171,15 @@ class InvestController extends Base_Controller_Response {
 	 */
 	public function  endedAction() {
 		$status = InvestController::ENDED;
-		$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
 	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 	    //$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
 		//for test
 		//TODO:remove
 		$mockdata = array(
 				'page'    => $page,
-				'pageall' => 10,
+                'pageall' => 10,
+                'all'     => 2,
 				'list'    => array(
 				    0 => array(
 				    		'proId'          => 1,
@@ -227,7 +231,7 @@ class InvestController extends Base_Controller_Response {
 	 */
 	public function tenderFailAction() {
 		$status = InvestController::TENDERFAIL;
-		$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
 	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 	    //$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
 		//for test
@@ -235,8 +239,9 @@ class InvestController extends Base_Controller_Response {
 		$mockdata = array(
 				'page'    => $page,
 				'pageall' => $this->PAGEALL,
-				'list'    => array(
-				 0 =>	array(
+                'all'=>2,
+                'list'    => array(
+				        0 =>	array(
 					 		'proId'          => 1,
 					 		'investPro'      => '测试用投标失败项目',
 					 		'annlnterestRate'=> 12,
@@ -280,7 +285,7 @@ class InvestController extends Base_Controller_Response {
 	 *             'paymentStatus' 还款状态 
 	 *             'punitive' 罚息
 	 *         }
-	 *         'data'={
+	 *         'data'={ 
 	 *             'repossPrincipal' 待收本金
 	 *             'repossProfit' 待收收益
 	 *             'recePrincipal' 已收本金
@@ -303,7 +308,8 @@ class InvestController extends Base_Controller_Response {
 		//Invest_Api::getRefunds($invest_id)
 		$mockdata = array(
 				'page'    => $page,
-				'pageall' => 10,
+                'pageall' => 10,
+                'all' => 3,
 				'list'    => array(
 						0 =>    array(
 							 	    'time '           => 1419419678,

@@ -23,7 +23,8 @@ class OverviewController extends Base_Controller_Response {
 	 * 'totalProfit' 累计收益
 	 * 'totalInvest' 累计投资
 	 * 'reposPrifit' 待收收益
-	 * '$reposPrincipal' 待收本金
+	 * 'reposPrincipal' 待收本金
+	 * 'rechargeurl' 充值url 
 	 * 
 	 */
 	public function indexAction(){
