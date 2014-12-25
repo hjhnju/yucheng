@@ -30,15 +30,13 @@ define(function (require) {
 
         var phone_id = $('#login-phonenew');
 
-
-
         box_id.delegate('.login-input', 'focus', function () {
             var parent = $(this).parent();
 
             $(this).next().addClass('hidden');
             parent.removeClass('current');
-            $(this).parent().find($('#login-phonenew-error')).html('');
-            $(this).parent().find($('#username-error-error')).html('');
+            $('#login-phonenew-error').html('');
+            $('#username-error-error').html('');
         });
         box_id.delegate('.login-input', 'blur', function () {
             var value = $.trim($(this).val());
@@ -55,11 +53,11 @@ define(function (require) {
                     $('#login-phonenew-error').html('手机号码不能为空');
                     return;
                 }
-                else {
-                    checkPhone.remote({
-                        oldphone: value
-                    });
-                }
+
+                checkPhone.remote({
+                    oldphone: value
+                });
+
         });
 
 
@@ -113,14 +111,14 @@ define(function (require) {
         box_id.delegate('#login-test', 'blur', function () {
 
             var value = $(this).val();
+            var error = $('#username-error-error');
             if(!value) {
                 $(this).parent().addClass('current');
-                $('#username-error-error').html('验证码不正确');
+                error.html('验证码不正确');
                 return;
             }
-            else {
-                $('#username-error-error').html('<span class="username-error-span"></span>');
-            }
+
+            error.html('<span class="username-error-span"></span>');
 
         });
 
@@ -149,9 +147,7 @@ define(function (require) {
             else {
                 //$('.login-username').removeClass('current');
                 //$('#login-phonenew-error').html('');
-                $("#checkphone").html(etpl.render('list2nd', {
-
-                }));
+                $("#checkphone").html(etpl.render('list2nd'));
             }
         });
 
@@ -164,7 +160,7 @@ define(function (require) {
             if(errors.length) {
                 return;
             }
-            phoneSubmite.remote({
+            getSmscode2nd.remote({
                 newPhone: phone_id.val()
             });
 
@@ -176,7 +172,7 @@ define(function (require) {
             }
             else {
                 $("#checkphone").html(etpl.render('list3th', {
-
+                    user: data
                 }));
             }
         })

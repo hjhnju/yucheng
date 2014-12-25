@@ -32,7 +32,7 @@ define(function (require) {
     var item = null;
 
     // 时间格式化
-    var FORMATER = 'YYYY-MM-DD hh:mm';
+    var FORMATER = 'YYYY-MM-DD';
 
     var htmlContainer;
 
@@ -89,6 +89,7 @@ define(function (require) {
             item = $(this);
 
             allItem.removeClass('current');
+            $('.view-plan-btn').removeClass('current');
             $(this).closest('.my-invest-item').addClass('current');
             $(this).addClass('current');
 
@@ -146,7 +147,7 @@ define(function (require) {
                 $(item).addClass('hasDetail');
 
                 for (var i = 0, l = data.list.length; i < l; i++) {
-                    data.list[i].timeInfo = moment.unix(data.list[i].time).format('YYYY-MM-DD');
+                    data.list[i].timeInfo = moment.unix(data.list[i].time).format(FORMATER);
                 }
 
                 container.html(etpl.render('returnMoneyDetail', {
@@ -216,7 +217,7 @@ define(function (require) {
         for (var i = 0, l = data.list.length; i < l; i++) {
             data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format(FORMATER);
             if (data.list[i].endTime) {
-                data.list[i].endTimeInfo = moment.unix(data.list[i].endTime).format('YYYY-MM-DD');
+                data.list[i].endTimeInfo = moment.unix(data.list[i].endTime).format(FORMATER);
             }
         }
 
