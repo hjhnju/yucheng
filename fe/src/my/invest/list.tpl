@@ -101,7 +101,10 @@
         <td>￥${item.tenderAmt}</td>
         <td>${item.deadline}个月</td>
         <td>${item.timeInfo}</td>
-        <td><span class="invest-em">${item.tenderProgress}</span>%</td>
+        <td>
+            <span class="span-box"><span class="within" style="width: ${item.tenderProgress}%;"></span></span>
+            <span class="invest-em">${item.tenderProgress}</span>%
+        </td>
     </tr>
     <!-- /for -->
 </table>

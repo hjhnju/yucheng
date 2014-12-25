@@ -12,18 +12,17 @@ define(function (require) {
     var Remoter = require('common/Remoter');
 
 
-    var loginError = $('#login-error');
-    var imgUrl = $('#login-img-url');
-
     function init() {
         header.init();
+        bindEvent();
     }
 
     function bindEvent() {
 
-        $('#phone').click (function () {
+        $('.testing-link').click(function () {
 
         })
+
 
     }
 
