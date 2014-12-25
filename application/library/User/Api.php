@@ -7,11 +7,12 @@ class User_Api{
     const LAST_TIME = 5;     //验证码过期时间,5分钟
  
     /**
-     * 检验$value是否是$type规定的类型
-     * 正则匹配验证：返回1为成功，其它为失败
-    */
-    public static function checkReg($type, $value){
-        $ret = preg_match(User_Logic_Api::$_arrRegMap[$type],$value);
+     * User_Api::checkReg()
+     * 检验$value是否是$type规定的类型,正则在User_Logic_Api类中
+     * 正则匹配验证：返回true为成功，其它为失败
+     */
+    public static function checkReg($strType, $strValue){
+        $ret = preg_match(User_Logic_Api::$_arrRegMap[$strType],$strValue);
         if($ret == User_RetCode::REG_FORMAT_WRONG) {
             return true;
         }
@@ -19,7 +20,7 @@ class User_Api{
     }
     
     /** 
-     * 方法1: User_Api::checkLogin()
+     * User_Api::checkLogin()
      * 判断登陆状态，获取用户Object
      * @return object User_Object | null
      * User/Object.php封装了User_Object_Login, User_Object_Info实例
@@ -34,7 +35,7 @@ class User_Api{
         return $objUser;
     }
     /** 
-     * 方法2: User_Api::getUserObject($userid)
+     *User_Api::getUserObject($userid)
      * 获取用户Object
      * @return object User_Object | null
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
@@ -51,8 +52,8 @@ class User_Api{
     
     /**
      * 设置用户真实姓名
-     * @param unknown $uid
-     * @param unknown $strRealName
+     * @param int $uid
+     * @param string $strRealName
      * @return boolean
      */
     public static function setRealName($uid,$strRealName){
@@ -65,8 +66,8 @@ class User_Api{
     
     /**
      * 设置用户邮箱
-     * @param unknown $uid
-     * @param unknown $strEmail
+     * @param int $uid
+     * @param string $strEmail
      * @return boolean
      */
     public static function setEmail($uid,$strEmail){
@@ -78,9 +79,23 @@ class User_Api{
     }
     
     /**
+     * 设置用户邮箱
+     * @param int $uid
+     * @param string $strPhone
+     * @return boolean
+     */
+    public static function setPhone($uid,$strPhone){
+        $objInfo = new User_Object_Info();
+        $objInfo->fetch(array('userid'=>$uid));
+        $objInfo->phone = $strPhone;
+        $ret = $objInfo->save();
+        return $ret;
+    }
+    
+    /**
      * 设置用户密码
-     * @param unknown $uid
-     * @param unknown $strPasswd
+     * @param int $uid
+     * @param string $strPasswd
      * @return boolean
      */
     public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
@@ -111,26 +126,44 @@ class User_Api{
     /**
      * 获取短信验证码信息,需要参数手机号及类型
      */
-    public static function sendSmsCode($strPhone,$type){
+    public static function sendSmsCode($strPhone,$intType){
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
         $arrArgs = array($srandNum, self::LAST_TIME);
         $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
         $bResult = Base_Sms::getInstance()->send($strPhone,$tplid, $arrArgs);
-        Base_Redis::getInstance()->setex($strPhone.$type,60*(self::LAST_TIME),$srandNum);
+        Base_Redis::getInstance()->setex($strPhone.$intType,60*(self::LAST_TIME),$srandNum);
         if(!empty($bResult)){
-            return User_RetCode::SUCCESS;
+            return true;
         }
-        return User_RetCode::GETVERICODE_FAIL;
+        return false;
     }
     
     /**
      * 验证用户输入的短信验证码是否正确
      */
-    public static function checkSmscode($strPhone,$strVeriCode,$strtype){
-        $strStoredCode = Base_Redis::getInstance()->get($strPhone.$strtype);
+    public static function checkSmscode($strPhone,$strVeriCode,$intType){
+        $strStoredCode = Base_Redis::getInstance()->get($strPhone.$intType);
         if($strVeriCode == $strStoredCode){
-            return User_RetCode::SUCCESS;
+            return true;
         }
-        return User_RetCode::VERICODE_WRONG;
+        return false;
+    }
+    
+    /**
+     * 返回获取图片验证码的URL
+     */
+    public static function getAuthImageUrl($strToken){
+        return "http://123.57.46.229:8301/User/loginapi/getAuthImage?&token=$strToken";
+    }
+    
+    /**
+     * 验证图片验证码
+     */
+    public static function checkAuthImage($strImageCode,$strToken){
+        $storedImageCode = Base_Redis::getInstance()->get($strToken);
+        if(strtolower($storedImageCode) == strtolower($strImageCode)){
+            return true;
+        }
+        return false;
     }
 }

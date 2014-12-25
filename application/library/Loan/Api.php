@@ -80,6 +80,8 @@ class Loan_Api {
         $data = $list->toArray();
         foreach ($data['list'] as $key => $row) {
             $data['list'][$key]['percent'] = number_format($row['invest_amount'] / $row['amount'], 2);
+            $data['list'][$key]['amount'] = number_format($row['amount'], 2);
+            $data['list'][$key]['invest_amount'] = number_format($row['invest_amount'], 2);
         }
         return $data;
     }
@@ -92,6 +94,8 @@ class Loan_Api {
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
+        $data['amount'] = number_format($data['amount'], 2);
+        $data['invest_amount'] = number_format($data['invest_amount'], 2);
         
         return $data;
     }
@@ -125,6 +129,8 @@ class Loan_Api {
         $data['loan_cat'] = $cat->getTypeName($loan->catId);
         $data['safemode'] = $safe->getTypeName($loan->safeId);
         $data['refund_typename'] = $refund->getTypeName($loan->refundType);
+        $data['amount'] = number_format($data['amount'], 2);
+        $data['invest_amount'] = number_format($data['invest_amount'], 2);
 
         $cond = array('loan_id' => $loan_id);
         $company = new Loan_Object_Company($cond);

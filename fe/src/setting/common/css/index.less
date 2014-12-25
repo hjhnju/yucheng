@@ -34,6 +34,7 @@
     border: 1px solid #cfcfcf;
     padding: 10px;
     outline: none;
+    float: left;
 }
 .user-lable {
     position: absolute;
@@ -217,6 +218,7 @@
     margin-right: 21px;
 }
 .login-username-testing {
+    float: right;
     display: inline-block;
     text-decoration: none;
     color: #000000;
@@ -228,6 +230,14 @@
     width: 162px;
     font-size: 14px;
     cursor: pointer;
+
+    &.testing_span {
+        cursor: default;
+        &:hover{
+            background-color: #ececec;
+            border-color: #cfcfcf;
+        }
+    }
 
     &:hover {
         background-color: #d4d4d4;

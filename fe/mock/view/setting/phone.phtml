@@ -6,9 +6,8 @@
 
 {%block name="script"%}
 <script>
-    require(['setting/phone/index', 'setting/phone/index'], function (regist, login) {
-        regist.init();
-        login.init();
+    require(['setting/phone/index'], function (main) {
+        main.init();
     });
 </script>
 {%/block%}
@@ -30,16 +29,16 @@
                     </div>
                 </div>
                 <div class="changephone-box">
-                    <div class="login-username">
+                    <div class="login-username" id="phone1">
                         <input class="login-input" id="login-phonenew" type="text" />
                         <label class="user-lable" for="login-phonenew">手机号</label>
                         <div class="username-error" id="login-phonenew-error"></div>
                     </div>
-                    <div class="login-username">
+                    <div class="login-username" id="phone2">
                         <input class="login-input testing" id="login-test" type="text" />
                         <label class="user-lable" for="login-test">验证码</label>
                         <a href="###" class="login-username-testing" id="sendsmscode">获取验证码</a>
-                        <div class="username-error"id="username-error-error"></div>
+                        <div class="username-error yanzma"id="username-error-error"></div>
                         <div class="login-username-testing-box" id="testing-wait"></div>
                     </div>
                     <a class="login-fastlogin" id="confirm">确认</a>

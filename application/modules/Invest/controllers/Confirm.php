@@ -5,11 +5,6 @@
 class ConfirmController extends Base_Controller_Response {
 	
 	public function indexAction() {
-	    //@TODO fortest
-	    $_POST = array(
-	        'id' => 1,
-	        'amount' => 100,
-	    );
 	    //@todo支付接口验证
 	    
 	    $loan_id = intval($_POST['id']);

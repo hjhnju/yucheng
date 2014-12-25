@@ -9,6 +9,7 @@ class LoginApiController extends Base_Controller_Api{
     const REDIS_VALID_TIME = 2592000;
     
     public function init(){
+        $this->setNeedLogin(false);
         parent::init();
         $this->loginLogic = new User_Logic_Login();
     }
@@ -86,7 +87,6 @@ class LoginApiController extends Base_Controller_Api{
     
     /**
      * 对第三方账号进行绑定
-     * 0表示绑定成功，其它绑定出错
      */
     public function setBindAction(){
         $strName = trim($_REQUEST['name']);
@@ -122,7 +122,7 @@ class LoginApiController extends Base_Controller_Api{
     public function checkAuthImageAction(){
         $strToken = trim($_REQUEST['token']);
         $strImageCode= trim($_REQUEST['imagecode']);
-        $storedImageCode = Yaf_Session::getInstance()->get("image_token");
+        $storedImageCode = Base_Redis::getInstance()->get($strToken);
         if(strtolower($storedImageCode) == strtolower($strImageCode)){
             $this->ajax();
         }
