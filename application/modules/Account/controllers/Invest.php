@@ -18,7 +18,15 @@ class InvestController extends Base_Controller_Response {
 	}
 	
 	/**
-	 * 接口 /account/invest/index
+	 * 接口/account/invest/index
+	 * 渲染入口界面
+	 */
+	public function index() {
+		
+	}
+	
+	/**
+	 * 接口 /account/invest/backing
 	 * 调用投资模块Invest_Api获取投资项目列表数据--拉取回款中
 	 * @param page begin from 1
 	 * @return 标准json
