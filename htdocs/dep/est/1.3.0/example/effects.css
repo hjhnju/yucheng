@@ -37,7 +37,7 @@
   font-size: 72px;
 }
 .example-text-effects h3 {
-  font-size: 57.6px;
+  font-size: 57.599999999999994px;
 }
 .example-text-effects h4,
 .example-text-effects h5,
@@ -75,5 +75,4 @@
 .est-blurry {
   color: transparent;
   text-shadow: 0 0 0.15em #ffffff;
-  text-shadow: 0 0 0.15em 0.1px #ffffff;
 }
