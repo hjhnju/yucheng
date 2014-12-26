@@ -10,7 +10,7 @@
     </div>
     <div class="changephone-box">
         <div class="login-username">
-            <input class="login-input login-input2nd" id="login-phonenew" type="text" />
+            <input class="login-input login-input2nd" id="login-phonenew2nd" type="text" />
             <label class="user-lable" for="login-phonenew">新手机号</label>
             <div class="username-error" id="login-phonenew-error"></div>
         </div>

@@ -93,7 +93,9 @@ exports.getLocations = function () {
                     '/user/loginapi/index',
                     '/user/loginapi/getauthimage',
                     '/user/loginapi/checkauthimage',
-                    '/invest/api'
+                    '/invest/api',
+                    '/account/edit/getsmscode',
+                    '/account/edit/checkphone'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;

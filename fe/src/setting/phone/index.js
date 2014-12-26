@@ -9,11 +9,9 @@ define(function (require) {
 
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
-    var checkPhone = new Remoter('EDIT_CHECKPHONE_CHECK');
-    var sendsmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var phoneSubmite = new Remoter('EDIT_PHONE_SUBMITE');
+    var phoneSubmite2nd = new Remoter('EDIT_PHONE_SUBMITE');
     var getSmscode = new Remoter('EDIT_GETSMSCODE_CHECK');
-    var getSmscode2nd = new Remoter('EDIT_GETSMSCODE2ND_CHECK');
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
 
@@ -54,24 +52,9 @@ define(function (require) {
                 $('#login-phonenew-error').html('手机号码不能为空');
                 return;
             }
-            $(this).addClass('phone-current')
-
-            checkPhone.remote({
-                oldphone: value
-            });
 
         });
 
-
-        // checkPhoneCb
-        checkPhone.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-                $('#login-phonenew-error').html('<span class="username-error-span"></span>');
-            }
-        });
 
         //获取验证码
         box_id.delegate('#sendsmscode', 'click', function () {
@@ -87,8 +70,11 @@ define(function (require) {
 
         //getSmscodeCb
         getSmscode.on('success', function (data) {
+            var error = $('#login-phonenew-error')
             if(data && data.bizError) {
-               alert(data.statusInfo);
+                error.parent().addClass('current');
+                error.html(data.statusInfo);
+                //alert(data.statusInfo);
             }
             else {
                 var timer;
@@ -127,7 +113,7 @@ define(function (require) {
         // 点击下一步
         box_id.delegate('#confirm','click', function (e) {
             e.preventDefault();
-            !$('#login-phonenew').hasClass('phone-current') && $('.login-input').trigger('blur');
+            $('.login-input').trigger('blur');
             //if('#login-phonenew'.hasClass('phone-current')) {
             //
             //}
@@ -138,7 +124,7 @@ define(function (require) {
                 return;
             }
             phoneSubmite.remote({
-                oldPhone: phone_id.val()
+                oldPhone: $('#login-phonenew').val()
             });
 
         });
@@ -153,23 +139,25 @@ define(function (require) {
             }
         });
 
+
+
         //第二次点击确定
         box_id.delegate('#confirm2nd','click', function (e) {
             e.preventDefault();
-            !$('#confirm2nd').hasClass('phone-current') && $('.login-input').trigger('blur');
+            $('.login-input').trigger('blur');
 
             var errors = $('.login-username.current');
 
             if(errors.length) {
                 return;
             }
-            getSmscode2nd.remote({
-                newPhone: phone_id.val()
+            phoneSubmite2nd.remote({
+                newPhone: $('#login-phonenew2nd').val()
             });
 
         });
 
-        getSmscode2nd.on('success', function (data) {
+        phoneSubmite2nd.on('success', function (data) {
             if(data && data.bizError) {
                 alert(data.statusInfo);
             }
