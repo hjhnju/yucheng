@@ -15,9 +15,7 @@ class EditController extends Base_Controller_Response {
      * 
      */
     public function chphoneAction() {
-    	//渲染验证原手机号页面
-    	$this->outputView = 'edit/chphone.phtml';
-     	$this->output(); 
+
     }
     /**
      * 接口: /account/edit/checkphone

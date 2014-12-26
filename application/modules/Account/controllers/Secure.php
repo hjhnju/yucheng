@@ -142,8 +142,7 @@ class SecureController extends Base_Controller_Response{
 	 * 返回标准json
 	 */
 	public function bindphoneAction() {
-		$this->ajax = false;
-		$this->output();
+
 	}
 	
 	/**
@@ -153,8 +152,7 @@ class SecureController extends Base_Controller_Response{
 	 * status 0:成功
 	 */
 	public function bindcertinfoAction() {
-		$this->ajax = false;
-		$this->output();
+
 	}
 	
 	/**
@@ -164,8 +162,7 @@ class SecureController extends Base_Controller_Response{
 	 * status 0:成功
 	 */
 	public function bindthirdpayAction() {
-		$this->ajax = false;
-		$this->output();
+
 	}
 	
 	/**
@@ -175,8 +172,7 @@ class SecureController extends Base_Controller_Response{
 	 * status 0:成功
 	 */
 	public function bindemailAction() {
-		$this->ajax = false;
-		$this->output();
+
 	}
 		
 	/**
@@ -186,8 +182,7 @@ class SecureController extends Base_Controller_Response{
 	 * status 0:成功
 	 */
 	public function viewthirdPayAction() {
-		$this->ajax = false;
-		$this->output();
+
 	}	
 	
 	/**
@@ -197,8 +192,7 @@ class SecureController extends Base_Controller_Response{
 	 * status 0:成功
 	 */
 	public function bindthirdloginAction() {
-		$this->ajax = false;
-		$this->output();
+
 	}
 
 	
