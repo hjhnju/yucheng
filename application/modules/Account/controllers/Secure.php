@@ -27,7 +27,7 @@ class SecureController extends Base_Controller_Response{
 	 * 'certinfourl' 认证信息后的url
 	 * 
 	 * 'thirdpay' 1--开通  2--未开通
-	 * 'huiid' 汇付平台id
+	 * 'huifuid' 汇付平台id
 	 * 'thirdpayurl' 第三方后url
 	 * 
 	 * 'email' 1--绑定  2--未绑定 
@@ -43,7 +43,7 @@ class SecureController extends Base_Controller_Response{
 		$webroot = Base_Config::getConfig('web')->root;
 		//$userid = $this->getUserId();
 		//$userObj = User_Api::getUserObject($userid);
-		$userObj = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming',)));//for test
+		$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
 		$phone = $userObj->phone;//获取用户手机号码
 		
 		$realname = $userObj->realname;//获取用户真实姓名
@@ -74,10 +74,11 @@ class SecureController extends Base_Controller_Response{
 		
 		$this->retData['email']['bind'] = isset($email) ? 1 : 2;	
 		if($this->retData['email']['bind'] == 1) {
-			$this->retData['thirdpay']['url'] = $webroot.'/account/secure/bindemail';
+			$this->retData['email']['url'] = $webroot.'/account/edit/chemail';
 		} else {
-			$this->retData['thirdpay']['url'] = $webroot.'/account/edit/chemail';
+			$this->retData['email']['url'] = $webroot.'/account/secure/bindemail';
 		}
+		
 	/* 	
 		$thirdLogin = array('qq','weibo','weixin');		
 		foreach ($thirdLogin as $k=>$v) {
@@ -97,15 +98,21 @@ class SecureController extends Base_Controller_Response{
 		//var_dump($this->retData);die;
 		$this->getView()->assign('phone', $this->retData['phone']['bind']);
 		$this->getView()->assign('phoneurl',$this->retData['phone']['url']);
+		$this->getView()->assign('phonenum',$phone);
 		
 		$this->getView()->assign('certinfo', $this->retData['certificateInfo']['bind']);
 		$this->getView()->assign('certinfourl', $this->retData['certificateInfo']['url']);
+		$this->getView()->assign('realname',$realname);
+		$this->getView()->assign('certinfonum',$certificateContent);
 		
 		$this->getView()->assign('thirdpay', $this->retData['thirdPay']['bind']);
-		$this->getView()->assign('thirdpayurl', $this->retData['thirdPay']['url']);
+		$this->getView()->assign('thirdpayurl',$this->retData['thirdpay']['url']);
+		$this->getView()->assign('huifuid', $huifuid);
+		
 		
 		$this->getView()->assign('email', $this->retData['email']['bind']);
 		$this->getView()->assign('emailurl', $this->retData['email']['url']);
+		$this->getView()->assign('emailnum', $email);
 		
 		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);	
 			

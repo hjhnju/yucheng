@@ -23,7 +23,7 @@
                 <div class="finish-main-grade-box">
                     <div class="finish-main-grade-box-internal" style="width: {%$score%}%;"></div>
                 </div>
-                <a href="###" class="finish-grade-refresh">重新测试</a>
+                <a href="/account/secure/secureDegree/" class="finish-grade-refresh">重新测试</a>
                 <span class="finish-fen"></span>
             </div>
             <div class="infor-data">
@@ -35,13 +35,13 @@
                     <div class="infor-data-box-status cha">未认证</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content"></div>
-                        <a href="###" class="testing-link" id="phone">验证</a>
+                        <a href={%$phoneurl%} class="testing-link" id="phone">验证</a>
                     </div>
                     {%else%}
                     <div class="infor-data-box-status gou">已认证</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content">{%$phonenum%}</div>
-                        <a href="###" class="testing-link" id="phone2nd">修改</a>
+                        <a href={%$phoneurl%} class="testing-link" id="phone2nd">修改</a>
                     </div>
                     {%/if%}
 
@@ -54,13 +54,13 @@
                     <div class="infor-data-box-status cha">未认证</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content"></div>
-                        <a href="###" class="testing-link" id="papers">验证</a>
+                        <a href={%$certinfourl%} class="testing-link" id="papers">验证</a>
                     </div>
                     {%else%}
                     <div class="infor-data-box-status gou">已认证</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content">{%$realname%}{%$certinfonum%}</div>
-                        <a href="###" class="testing-link" id="papers2nd"></a>
+                        <a href={%$certinfourl%} class="testing-link" id="papers2nd"></a>
                     </div>
                     {%/if%}
 
@@ -72,13 +72,13 @@
                     <div class="infor-data-box-status cha">未开通</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content"></div>
-                        <a href="###" class="testing-link" id="thirdpay2nd">开通</a>
+                        <a href={%$thirdpayurl%} class="testing-link" id="thirdpay2nd">开通</a>
                     </div>
                     {%else%}
                     <div class="infor-data-box-status gou">已开通</div>
                     <div class="infor-data-box-testing">
-                        <div class="testing-content">{%$emailnum%}</div>
-                        <a href="###" class="testing-link" id="thirdpay2nd">查看</a>
+                        <div class="testing-content">{%$huifuid%}</div>
+                        <a href={%$thirdpayurl%} class="testing-link" id="thirdpay2nd">查看</a>
                     </div>
                     {%/if%}
 
@@ -90,13 +90,13 @@
                     <div class="infor-data-box-status cha">未绑定</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content"></div>
-                        <a href="###" class="testing-link" id="email">绑定</a>
+                        <a href={%$emailurl%} class="testing-link" id="email">绑定</a>
                     </div>
                     {%else%}
                     <div class="infor-data-box-status gou">已绑定</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content">{%$emailnum%}</div>
-                        <a href="###" class="testing-link" id="email2nd">修改</a>
+                        <a href={%$emailurl%} class="testing-link" id="email2nd">修改</a>
                     </div>
                     {%/if%}
 
@@ -123,7 +123,7 @@
                     <div class="infor-data-box-status cha">未设置</div>
                     <div class="infor-data-box-testing">
                         <!--<div class="testing-content qq-pic">曹操</div>-->
-                        <a href="###" class="testing-link" id="bindthird">未绑定</a>
+                        <a href={%$thirdloginurl%} class="testing-link" id="bindthird">未绑定</a>
                     </div>
                     {%else%}
                     <div class="infor-data-box-status gou">已设置</div>
