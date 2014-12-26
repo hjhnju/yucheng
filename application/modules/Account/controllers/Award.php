@@ -48,16 +48,24 @@ class AwardController extends Base_Controller_Response {
 	 * status 1105:获取奖励列表失败
 	 * data=
 	 * {
-	 *     {
+	 *     'page'页码
+	 *     'pageall':10 总共页码 
+	 *     'all' 数据条数
+	 *     'list'=
+	 *      {
+	 *     
      *         'tenderAmount' 投资金额
+     *         'registprogress' 注册进度
+     *         'award' 领取奖励数目
      *         'canBeAwarded' 是否可以领取奖励   1--达到奖励标准  2-- 未达到
      *         'userInfo'= {  
      *                         { 
+     *                             'userId' 
      *                             'name' 注册用户名
      *                             'phone'用户手机号码 
      *                         }
      *                     }
-	 *     }
+	 *      }
 	 * }
 	 * 注意：第一项为该用户"我"的信息
 	 * 
