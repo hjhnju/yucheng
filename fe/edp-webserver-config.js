@@ -101,7 +101,7 @@ exports.getLocations = function () {
                     '/account/invest/ended',
                     '/account/invest/tendering',
                     '/account/invest/tenderfail',
-                    '/secure/index'
+                    '/account/secure/securedegree'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;

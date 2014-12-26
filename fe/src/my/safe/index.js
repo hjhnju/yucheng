@@ -32,7 +32,7 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
-
+                $('.finish-main-grade-box-internal').css('width',data.score + '%');
             }
         })
 
