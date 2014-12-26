@@ -58,6 +58,9 @@ define(function () {
         EDIT_EMAILCONFIRM: rootUrl
             //+ '/account/edit/getvericode.json',
         + '/test/account/edit/emailConfirm.json',
+        SECURE_DEGREE: rootUrl
+        //+ '/secure/index',
+            + '/test/account/secure/secureDegree.json',
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',

@@ -1,7 +1,7 @@
 {%extends file="common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="/src/my/safe/index.less" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/safe/index.css" />
 {%/block%}
 
 {%block name="script"%}
@@ -15,44 +15,7 @@
 {%block name="content"%}
 <div class="finish">
     <div class="container finish-bg-color">
-        <div class="finish-nav">
-            <div class="finish-nav-top">
-                <div class="finish-nav-top-user">Hi,xxx</div>
-                <div class="finish-top-icon">
-                    <a href="###" class="top-icon-link user"></a>
-                    <a href="###" class="top-icon-link phone current"></a>
-                    <a href="###" class="top-icon-link other"></a>
-                </div>
-                <div class="finish-top-schedule">
-                    <div class="top-schedule-internal"></div>
-                </div>
-                <div class="finish-top-grade">
-                    <span>安全等级</span>
-                    <a href="###" class="grade-high">低</a>
-                    <a href="###" class="grade-high">[提升]</a>
-                </div>
-            </div>
-            <ul class="finish-nav-item">
-                <li class="finish-nav-item-list">
-                    <a href="###" class="finish-nav-item-link all">账户总览</a>
-                </li>
-                <li class="finish-nav-item-list">
-                    <a href="###" class="finish-nav-item-link mymoney">我的投资</a>
-                </li>
-                <li class="finish-nav-item-list">
-                    <a href="###" class="finish-nav-item-link pay">充值提现</a>
-                </li>
-                <li class="finish-nav-item-list">
-                    <a href="###" class="finish-nav-item-link safe current">安全中心</a>
-                </li>
-                <li class="finish-nav-item-list">
-                    <a href="###" class="finish-nav-item-link jiangli">邀请奖励</a>
-                </li>
-                <li class="finish-nav-item-list">
-                    <a href="###" class="finish-nav-item-link mynews">我的消息</a>
-                </li>
-            </ul>
-        </div>
+        {%include file='common/nav.phtml' current="4"%}
         <div class="finish-main">
             <div class="finish-main-title">安全中心</div>
             <div class="finish-main-grade">
@@ -61,6 +24,7 @@
                     <div class="finish-main-grade-box-internal" style="width: {%$score%}%;"></div>
                 </div>
                 <a href="###" class="finish-grade-refresh">重新测试</a>
+                <span class="finish-fen"></span>
             </div>
             <div class="infor-data">
                 <div class="infor-data-title">个人资料</div>
@@ -71,13 +35,13 @@
                     <div class="infor-data-box-status cha">未认证</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content"></div>
-                        <a href="李璐的链接" class="testing-link" id="phone">验证</a>
+                        <a href="###" class="testing-link" id="phone">验证</a>
                     </div>
                     {%else%}
                     <div class="infor-data-box-status gou">已认证</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content">{%$phonenum%}</div>
-                        <a href="点修改的链接" class="testing-link" id="phone2nd">修改</a>
+                        <a href="###" class="testing-link" id="phone2nd">修改</a>
                     </div>
                     {%/if%}
 

@@ -10,6 +10,7 @@ define(function (require) {
     var $ = require('jquery');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
+    var secureDergee = new Remoter('SECURE_DEGREE');
 
 
     function init() {
@@ -19,10 +20,21 @@ define(function (require) {
 
     function bindEvent() {
 
-        $('.testing-link').click(function () {
+        //重新检测
+        $('.finish-grade-refresh').click(function () {
 
+            secureDergee.remote();
+        });
+
+        //secureDergeeCb
+        secureDergee.on('success', function (data) {
+            if(data && data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+
+            }
         })
-
 
     }
 
