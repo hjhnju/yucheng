@@ -32,12 +32,21 @@ class OverviewController extends Base_Controller_Response {
 		$objUser = User_Api::getUserObject($userId); 
 		//$objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'18611015043','realname'=>'jiangbianliming',)));//for test
 		//$data = array('name' => $objUser->name, 'phone' => $objUser->phone,);
-		$balance = Finance_Api::queryBalanceBg($huifuid);
-		$avlBal = isset($balance['avlBal']) ? $balance['avlBal'] : 0.00;//可用余额
+		//$balance = Finance_Api::queryBalanceBg($huifuid);
+		$balance = array();
+/* 		$avlBal = isset($balance['avlBal']) ? $balance['avlBal'] : 0.00;//可用余额
 		$acctBal = isset($balance['acctBal']) ? $balance['acctBal'] : 0.00;//资产总计
-		$frzBal = isset($balance['frzBal']) ? $balance['frzBal'] : 0.00;//冻结金额
+		$frzBal = isset($balance['frzBal']) ? $balance['frzBal'] : 0.00;//冻结金额 */
+		$avlBal = 0.00;
+		$acctBal = 0.00;
+		$frzBal = 0.00;
+		$totalProfit = 0.00;
+		$totalInvest = 0.00;
+		$reposPrifit = 0.00;
+		$reposPrincipal = 0.00;
+		$openthirdpay = 0.00;
 		//$totalProfit = Invest_Api:: 累计收益
-		$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
+		//$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
 		//$reposPrifit = Invest_Api:: 待收收益
 		//$reposPrincipal = Invest_Api:: 待收本金
 		$this->getView()->assign("avlBal",$avlBal);
@@ -46,7 +55,8 @@ class OverviewController extends Base_Controller_Response {
 		$this->getView()->assign("totalProfit",$totalProfit);
 		$this->getView()->assign("totalInvest",$totalInvest);
 		$this->getView()->assign("reposPrifit",$reposPrifit);
-		$this->getView()->assign("reposPrincipal",$reposPrincipal);				
+		$this->getView()->assign("reposPrincipal",$reposPrincipal);	
+		$this->getView()->assign("openthirdpay",$openthirdpay);			
 	}
 	
 	/**

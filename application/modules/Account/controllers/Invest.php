@@ -332,7 +332,7 @@ class InvestController extends Base_Controller_Response {
                 'all' => 3,
 				'list'    => array(
 						0 =>    array(
-							 	    'time '           => 1419419678,
+							 	    'time'           => 1419419678,
 								    'repossPrincipal' => 0.00,
 	                                'repossProfit'    => 0.02,
 	                                'recePrincipal'   => 0.00,
