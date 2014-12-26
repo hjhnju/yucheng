@@ -1,9 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Circle', [
-    'require',
-    './Base',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Circle', function (require) {
     'use strict';
     var Base = require('./Base');
     var Circle = function (options) {

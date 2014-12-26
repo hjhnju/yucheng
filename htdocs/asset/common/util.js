@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('common/util', [], function () {
+define('common/util', function () {
     function addCommas(x) {
         if (isNaN(x)) {
             return '-';

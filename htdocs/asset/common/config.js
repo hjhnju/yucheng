@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('common/config', [], function () {
+define('common/config', function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             REGIST_CHECKNAME_CHECK: rootUrl + '/user/registapi/checkname',
@@ -18,11 +18,11 @@ define('common/config', [], function () {
             EDIT_EMAILCONFIRM: rootUrl + '/test/account/edit/emailConfirm.json',
             INVEST_LIST: rootUrl + '/invest/api',
             INVEST_DETAIL_CONFIRM: rootUrl + '/test/invest/detail.json',
-            MY_INVEST_GET: rootUrl + '/test/account/invest/index.json',
-            MY_INVEST_DETAIL: rootUrl + '/test/account/invest/repayplan.json',
-            MY_INVEST_ENDED: rootUrl + '/test/account/invest/ended.json',
-            MY_INVEST_TENDERING: rootUrl + '/test/account/invest/tendering.json',
-            MY_INVEST_TENDERFAIL: rootUrl + '/test/account/invest/tenderfail.json'
+            MY_INVEST_GET: rootUrl + '/account/invest/backing',
+            MY_INVEST_DETAIL: rootUrl + '/account/invest/repayplan',
+            MY_INVEST_ENDED: rootUrl + '/account/invest/ended',
+            MY_INVEST_TENDERING: rootUrl + '/account/invest/tendering',
+            MY_INVEST_TENDERFAIL: rootUrl + '/account/invest/tenderfail'
         };
     return { URL: URL };
 });

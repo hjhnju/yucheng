@@ -1,11 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/Cross', [
-    'require',
-    'zrender/shape/Base',
-    'zrender/shape/Line',
-    'zrender/tool/util',
-    './normalIsCover'
-], function (require) {
+define('echarts/util/shape/Cross', function (require) {
     var Base = require('zrender/shape/Base');
     var LineShape = require('zrender/shape/Line');
     var zrUtil = require('zrender/tool/util');

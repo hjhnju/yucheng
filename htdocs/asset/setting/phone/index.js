@@ -1,11 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('setting/phone/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './phone.tpl'
-], function (require) {
+define('setting/phone/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var checkPhone = new Remoter('EDIT_CHECKPHONE_CHECK');

@@ -1,10 +1,10 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('common/header', [
-    'require',
-    'jquery'
-], function (require) {
+define('common/header', function (require) {
     var $ = require('jquery');
+    var etpl = require('etpl');
+    var tpl = require('./common.tpl');
     function init() {
+        etpl.compile(tpl);
         easy();
     }
     function easy() {
