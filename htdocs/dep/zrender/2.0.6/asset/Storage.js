@@ -1,5 +1,9 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/Storage', function (require) {
+define('zrender/Storage', [
+    'require',
+    './tool/util',
+    './Group'
+], function (require) {
     'use strict';
     var util = require('./tool/util');
     var Group = require('./Group');

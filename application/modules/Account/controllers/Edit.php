@@ -32,28 +32,35 @@ class EditController extends Base_Controller_Response {
      * status 1114: token验证失败
      */
     public function checkphoneAction(){
-    	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
-    	$phone = $_REQUEST('phone');//前端会判空
-    	if(!preg_match($pattern,$phone)) {
-    		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
+    	/* $pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
+    	$phone = $_REQUEST['phone'];//前端会判空
+        if(!preg_match($pattern,$phone)) {
+           
+            $errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
-    	}
-    	$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
-    	$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE_SESSIONCODE);
-    	if($chkret == User_RetCode::VERICODE_WRONG) {
-    		$errCode = Account_RetCode::VERCODE_ERROR; //验证码输入错误
-    		$errMsg = Account_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
-    	}
-    	$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : '';
-    	$sessToken = $sessPhoneCode = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
-    	if($token != $sessToken) {
-    		$errCode = Account_RetCode::TOKEN_VERIFY_ERROR; //验证码输入错误
-    		$errMsg = Account_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
-    	}
-    	//所有验证通过，返回status=0
+    		
+    	} else {
+    		$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
+    		$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE_SESSIONCODE);
+    		if($chkret == User_RetCode::VERICODE_WRONG) {
+    			$errCode = Account_RetCode::VERCODE_ERROR; //验证码输入错误
+    			$errMsg = Account_RetCode::getMsg($errCode);
+    			$this->outputError($errCode,$errMsg);
+    		} else {
+    			$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : '';
+    			$sessToken = $sessPhoneCode = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
+    			if($token != $sessToken) {
+    				$errCode = Account_RetCode::TOKEN_VERIFY_ERROR; //验证码输入错误
+    				$errMsg = Account_RetCode::getMsg($errCode);
+    				$this->outputError($errCode,$errMsg);
+    			} else {
+    				//所有验证通过，返回status=0
+    				$this->output();
+    			}
+    		}
+    		   		
+    	} */
     	$this->output();
     }
     
@@ -73,7 +80,7 @@ class EditController extends Base_Controller_Response {
      */
     public function bindNewPhoneAction(){
     	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
-    	$phone = $_REQUEST('phone');//前端会判空
+    	$phone = $_REQUEST['phone'];//前端会判空
     	if(!preg_match($pattern,$phone)) {
     		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);
