@@ -1,5 +1,8 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('my/account/index', function (require) {
+define('my/account/index', [
+    'require',
+    './line'
+], function (require) {
     var line = require('./line');
     function init() {
         line.render('all-account-line', {});

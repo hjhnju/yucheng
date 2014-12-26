@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/mapData/geoJson/an_hui_geo', function () {
+define('echarts/util/mapData/geoJson/an_hui_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

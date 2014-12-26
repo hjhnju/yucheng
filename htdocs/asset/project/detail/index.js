@@ -1,5 +1,9 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('project/detail/index', function (require) {
+define('project/detail/index', [
+    'require',
+    'jquery',
+    'common/Remoter'
+], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var confirm = new Remoter('INVEST_DETAIL_CONFIRM');

@@ -1,12 +1,16 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('setting/phone/index', function (require) {
+define('setting/phone/index', [
+    'require',
+    'jquery',
+    'common/Remoter',
+    'etpl',
+    './phone.tpl'
+], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
-    var checkPhone = new Remoter('EDIT_CHECKPHONE_CHECK');
-    var sendsmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var phoneSubmite = new Remoter('EDIT_PHONE_SUBMITE');
+    var phoneSubmite2nd = new Remoter('EDIT_PHONE_SUBMITE');
     var getSmscode = new Remoter('EDIT_GETSMSCODE_CHECK');
-    var getSmscode2nd = new Remoter('EDIT_GETSMSCODE2ND_CHECK');
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
     function init() {
@@ -34,15 +38,6 @@ define('setting/phone/index', function (require) {
                 $('#login-phonenew-error').html('\u624B\u673A\u53F7\u7801\u4E0D\u80FD\u4E3A\u7A7A');
                 return;
             }
-            $(this).addClass('phone-current');
-            checkPhone.remote({ oldphone: value });
-        });
-        checkPhone.on('success', function (data) {
-            if (data && data.bizError) {
-                alert(data.statusInfo);
-            } else {
-                $('#login-phonenew-error').html('<span class="username-error-span"></span>');
-            }
         });
         box_id.delegate('#sendsmscode', 'click', function () {
             var value = $('#login-phonenew').val();
@@ -51,8 +46,10 @@ define('setting/phone/index', function (require) {
             }
         });
         getSmscode.on('success', function (data) {
+            var error = $('#login-phonenew-error');
             if (data && data.bizError) {
-                alert(data.statusInfo);
+                error.parent().addClass('current');
+                error.html(data.statusInfo);
             } else {
                 var timer;
                 var value = 300;
@@ -80,12 +77,12 @@ define('setting/phone/index', function (require) {
         });
         box_id.delegate('#confirm', 'click', function (e) {
             e.preventDefault();
-            !$('#login-phonenew').hasClass('phone-current') && $('.login-input').trigger('blur');
+            $('.login-input').trigger('blur');
             var errors = $('.login-username.current');
             if (errors.length) {
                 return;
             }
-            phoneSubmite.remote({ oldPhone: phone_id.val() });
+            phoneSubmite.remote({ oldPhone: $('#login-phonenew').val() });
         });
         phoneSubmite.on('success', function (data) {
             if (data && data.bizError) {
@@ -96,14 +93,14 @@ define('setting/phone/index', function (require) {
         });
         box_id.delegate('#confirm2nd', 'click', function (e) {
             e.preventDefault();
-            !$('#confirm2nd').hasClass('phone-current') && $('.login-input').trigger('blur');
+            $('.login-input').trigger('blur');
             var errors = $('.login-username.current');
             if (errors.length) {
                 return;
             }
-            getSmscode2nd.remote({ newPhone: phone_id.val() });
+            phoneSubmite2nd.remote({ newPhone: $('#login-phonenew2nd').val() });
         });
-        getSmscode2nd.on('success', function (data) {
+        phoneSubmite2nd.on('success', function (data) {
             if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {

@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/mapData/geoJson/world_geo', function () {
+define('echarts/util/mapData/geoJson/world_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'offset': {
