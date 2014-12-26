@@ -47,7 +47,7 @@ define(function () {
         LOGIN_IMGCODE_CHECK: rootUrl
             + '/user/loginapi/checkauthimage',
         EDIT_CHECKPHONE_CHECK: rootUrl
-            //+ '/account/edit/checkphone.json',
+            //+ '/account/edit/checkphone',
             + '/test/account/edit/checkphone.json',
         EDIT_GETSMSCODE_CHECK: rootUrl
             //+ '/account/edit/getsmscode.json',

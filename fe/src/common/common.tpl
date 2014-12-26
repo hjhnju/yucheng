@@ -7,12 +7,12 @@
 -->
 
 <!-- target: Loading -->
-<div class="mb-loading">&nbsp;</div>
+<div class="xjd-loading">&nbsp;</div>
 <!-- /target -->
 
 <!-- target: Error -->
-<div class="mb-error">
-    <div class="mb-error-msg">${errorMsg}</div>
+<div class="xjd-error">
+    <div class="xjd-error-msg">${errorMsg}</div>
 </div>
 <!-- /target -->
 

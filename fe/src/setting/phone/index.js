@@ -47,16 +47,18 @@ define(function (require) {
         // 验证手机
         box_id.delegate('#login-phonenew', 'blur', function () {
 
-                var value = $(this).val();
-                if(!value) {
-                    $(this).parent().addClass('current');
-                    $('#login-phonenew-error').html('手机号码不能为空');
-                    return;
-                }
+            var value = $(this).val();
 
-                checkPhone.remote({
-                    oldphone: value
-                });
+            if(!value) {
+                $(this).parent().addClass('current');
+                $('#login-phonenew-error').html('手机号码不能为空');
+                return;
+            }
+            $(this).addClass('phone-current')
+
+            checkPhone.remote({
+                oldphone: value
+            });
 
         });
 
@@ -125,8 +127,10 @@ define(function (require) {
         // 点击下一步
         box_id.delegate('#confirm','click', function (e) {
             e.preventDefault();
-            $('.login-input').trigger('blur');
-            //$('.login-input.testing').trigger('blur');
+            !$('#login-phonenew').hasClass('phone-current') && $('.login-input').trigger('blur');
+            //if('#login-phonenew'.hasClass('phone-current')) {
+            //
+            //}
 
             var errors = $('.login-username.current');
 
@@ -145,15 +149,14 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
-                //$('.login-username').removeClass('current');
-                //$('#login-phonenew-error').html('');
                 $("#checkphone").html(etpl.render('list2nd'));
             }
         });
 
+        //第二次点击确定
         box_id.delegate('#confirm2nd','click', function (e) {
             e.preventDefault();
-            $('.login-input').trigger('blur');
+            !$('#confirm2nd').hasClass('phone-current') && $('.login-input').trigger('blur');
 
             var errors = $('.login-username.current');
 
