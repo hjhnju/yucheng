@@ -34,6 +34,8 @@ class SecureController extends Base_Controller_Response{
 	 * 'emailnum' 邮件
 	 * 'emailpay' email后的url
 	 * 
+	 * 'chpwdurl' 修改url的接口 
+	 * 
 	 * 'bindthirdlogin'是否绑定第三方登录  1--是  2--否
 	 * 'thirdPlatform' 第三方绑定平台  qq weixin wenbo
 	 * 'thirdNickName' 第三方平台昵称 
@@ -79,6 +81,7 @@ class SecureController extends Base_Controller_Response{
 			$this->retData['email']['url'] = $webroot.'/account/secure/bindemail';
 		}
 		
+		$this->retData['chpwd']['url'] = $webroot.'/account/edit/chpwd';
 	/* 	
 		$thirdLogin = array('qq','weibo','weixin');		
 		foreach ($thirdLogin as $k=>$v) {
@@ -88,6 +91,8 @@ class SecureController extends Base_Controller_Response{
 				break;
 			}
 		} */
+		//for test
+		$this->retData['thirdPlatform'] = 1;
 		if(!isset($this->retData['thirdPlatform'])) {
 			$this->retData['bindthirdlogin'] = 2;
 			$this->retData['thirdloginurl'] = $webroot.'/account/secure/bindthirdlogin';
@@ -114,8 +119,9 @@ class SecureController extends Base_Controller_Response{
 		$this->getView()->assign('emailurl', $this->retData['email']['url']);
 		$this->getView()->assign('emailnum', $email);
 		
-		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);	
-			
+		$this->getView()->assign('chpwdurl',$this->retData['chpwd']['url']);
+		
+		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);				
 		$this->getView()->assign('thirdPlatform','qq');//mock
 		$this->getView()->assign('thirdNickName','海阔天空');
 		$this->getView()->assign('thirdloginurl',$this->retData['thirdloginurl']);
@@ -201,6 +207,12 @@ class SecureController extends Base_Controller_Response{
 	public function bindthirdloginAction() {
 
 	}
-
-	
+    
+	/**
+	 * 接口/account/secure/unbindthirdlogin
+	 * 解绑入口 
+	 */
+	public function unbindthirdloginAction() {
+		
+	}
 }
