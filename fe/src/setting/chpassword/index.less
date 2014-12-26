@@ -1,0 +1,59 @@
+@import "../../common/css/common.less";
+
+@import "../common/css/index.less";
+
+
+.chpwd-box {
+    width: 500px;
+    margin: 50px auto;
+}
+.chpwd-box-main {
+    margin-bottom: 20px;
+    height: 30px;
+    font-size: 14px;
+    position: relative;
+
+    .clearfix;
+}
+.chpwd-box-main-text {
+    float: left;
+    width: 120px;
+    text-align: right;
+    line-height: 30px;
+}
+.chpwd-input {
+    float: left;
+    width: 200px;
+    border: 1px solid #d4d4d4;
+    padding: 5px;
+    outline: none;
+
+    &.current {
+        border-color: #ff0000;
+    }
+}
+.error {
+    position: absolute;
+    right: 175px;
+    top: 6px;
+    font-size: 12px;
+    color: #ff0000;
+}
+.chpwd-link {
+    float: left;
+    display: block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    background-color: @color-green;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 14px;
+    text-decoration: none;
+
+    .border-radius(3px);
+
+    &:hover {
+        background-color: #2c9818;
+    }
+}
