@@ -152,7 +152,7 @@ class SecureController extends Base_Controller_Response{
 	 * 返回标准json
 	 * status 0:成功
 	 */
-	public function bindcertinfo() {
+	public function bindcertinfoAction() {
 		$this->ajax = false;
 		$this->output();
 	}
@@ -178,29 +178,7 @@ class SecureController extends Base_Controller_Response{
 		$this->ajax = false;
 		$this->output();
 	}
-	
-	/**
-	 * 接口/account/secure/modifyphone
-	 * 绑定手机后修改入口
-	 * 返回标准json
-	 * status 0:成功
-	 */
-	public function modifyphoneAction() {
-		$this->ajax = false;
-		$this->output();
-	}
-	
-	/**
-	 * 接口/account/secure/modifyemail
-	 * 绑定邮箱后修改入口
-	 * 返回标准json
-	 * status 0:成功
-	 */
-	public function modifyemailAction() {
-		$this->ajax = false;
-		$this->output();
-	}
-	
+		
 	/**
 	 * 接口/account/secure/viewthirdPay
 	 * 查看第三方支付
@@ -222,18 +200,6 @@ class SecureController extends Base_Controller_Response{
 		$this->ajax = false;
 		$this->output();
 	}
-	
-	/**
-	 * 接口 /account/secure/unbindthirdlogin
-	 * 解绑第三方登录
-	 * 返回标准json
-	 * status 0:成功
-	 */
-	public function unbindthirdloginAction() {
-		$this->ajax = false;
-		$this->output();
-	}
-	
-	
+
 	
 }

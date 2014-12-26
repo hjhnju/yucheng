@@ -101,8 +101,12 @@ class InvestController extends Base_Controller_Response {
 	 * status 0 处理成功
 	 * status 1108 获取投资列表失败
 	 * data=
-	 * { 
-	 *     { 
+	 * {
+	 *     'page'页码
+	 *     'pageall':10 总共页码
+	 *     'all' 数据条数
+	 *     'list’
+	 *      {
 	 *         'proId' 投资项目id
 	 *         'investPro' 投资项目名称
 	 *         'annlnterestRate' 年利率
@@ -110,9 +114,9 @@ class InvestController extends Base_Controller_Response {
 	 *         'deadline' 期限
 	 *         'tenderTime'投标时间
 	 *         'tenderProgress' 进度
-	 *     }
+	 *      }
 	 *  }
-	 */
+	 */	
 	public function  tenderingAction() {
 		$status = InvestController::TENDERING;
 		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
@@ -156,7 +160,11 @@ class InvestController extends Base_Controller_Response {
 	 * status 1108 获取投资列表失败
 	 * data=
 	 * { 
-	 *     { 
+	 *     'page'页码
+	 *     'pageall':10 总共页码 
+	 *     'all' 数据条数
+	 *     'list'=
+	 *      { 
 	 *         'proId' 投资项目id
 	 *         'investPro' 投资项目名称
 	 *         'annlnterestRate' 年利率
@@ -166,8 +174,8 @@ class InvestController extends Base_Controller_Response {
 	 *         'endTime' 合同结束时间
 	 *         'totalRetAmt' 总回款
 	 *         'totalProfit'总收益
-	 *     }
-	 *  }
+	 *      }
+	 * }
 	 */
 	public function  endedAction() {
 		$status = InvestController::ENDED;
@@ -216,8 +224,12 @@ class InvestController extends Base_Controller_Response {
 	 * status 0 处理成功
 	 * status 1108 获取投资列表失败
 	 * data=
-	 * { 
-	 *     { 
+	 * {
+	 *     'page'页码
+	 *     'pageall':10 总共页码 
+	 *     'all' 数据条数
+	 *     'list'=
+	 *      { 
 	 *         'proId' 投资项目id
 	 *         'investPro' 投资项目名称
 	 *         'annlnterestRate' 年利率
@@ -225,7 +237,7 @@ class InvestController extends Base_Controller_Response {
 	 *         'deadline' 期限
 	 *         'tenderTime'投标时间
      *         'failReason' 失败原因
-	 *     }
+	 *      }
 	 *  }
 	 * 
 	 */

@@ -16,7 +16,8 @@ class EditController extends Base_Controller_Response {
      */
     public function chphoneAction() {
     	//渲染验证原手机号页面
-    	$this->output();
+    	$this->outputView = 'edit/chphone.phtml';
+     	$this->output(); 
     }
     /**
      * 接口: /account/edit/checkphone
@@ -32,7 +33,7 @@ class EditController extends Base_Controller_Response {
      */
     public function checkphoneAction(){
     	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
-    	$phone = isset($_REQUEST('phone')) ? $_REQUEST['phone'] : '';
+    	$phone = $_REQUEST('phone');//前端会判空
     	if(!preg_match($pattern,$phone)) {
     		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);
@@ -72,7 +73,7 @@ class EditController extends Base_Controller_Response {
      */
     public function bindNewPhoneAction(){
     	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
-    	$phone = isset($_REQUEST('phone')) ? $_REQUEST['phone'] : '';
+    	$phone = $_REQUEST('phone');//前端会判空
     	if(!preg_match($pattern,$phone)) {
     		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);

@@ -13,6 +13,7 @@ class CashController extends Base_Controller_Response {
 	/**
 	 * 调用财务模块Finance_Api获取 账户余额
 	 * assign至前端即可
+	 * 
 	 */
 	public function indexAction() {
 		
@@ -40,13 +41,17 @@ class CashController extends Base_Controller_Response {
 	 * status 1107:获取充值提现列表失败
 	 * data
 	 * {
-	 *     { 
-	 *         'time'      时间
-	 *         'transType' 交易类型
-	 *         'serialNo'  交易流水号
-	 *         'tranAmt'   交易金额
-	 *         'avalBg'    可用余额
-	 *     }
+	 * 	   'page'页码
+	 *     'pageall':10 总共页码 
+	 *     'all' 数据条数
+	 *     'list'=
+	 *         { 
+	 *             'time'      时间
+	 *             'transType' 交易类型
+	 *             'serialNo'  交易流水号
+	 *             'tranAmt'   交易金额
+	 *             'avalBg'    可用余额
+	 *         }
 	 * }
 	 */
 	public function listAction() {

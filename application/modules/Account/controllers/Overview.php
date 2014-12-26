@@ -16,7 +16,7 @@ class OverviewController extends Base_Controller_Response {
 	 * 
 	 * 1.调用Finance_Api获取账户余额等信息
 	 * 2.调用Invest_Api获取收益信息     assign 数值至前端
-	 * 
+	 * 'openthirdpay' 1--开通  2--未开通
 	 * 'avlBal' 可用余额
 	 * 'acctBal' 资产总计
 	 * 'frzBal' 冻结金额
@@ -50,6 +50,7 @@ class OverviewController extends Base_Controller_Response {
 	}
 	
 	/**
+	 * /account/overview/profitCurve
 	 * 近半年收益曲线
 	 * @return 标准json
 	 * status 0 处理成功

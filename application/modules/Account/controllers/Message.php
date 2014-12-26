@@ -19,6 +19,10 @@ class MessageController extends Base_Controller_Response {
 	 * status 1106:获取消息列表失败
 	 * data=
 	 * {
+	 * 	   'page'页码
+	 *     'pageall':10 总共页码 
+	 *     'all' 数据条数
+	 *     'list'=
 	 *     {
 	 *         'msgId' 消息id
      *         'msgIType' 消息类型
