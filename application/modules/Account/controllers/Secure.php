@@ -140,7 +140,7 @@ class SecureController extends Base_Controller_Response{
 	 * }
 	 * 
 	 */
-	public function secureDegreeAction() {
+	public function securedegreeAction() {
 		$this->retData['phone'] = 1;  //若设置手机，前端assign值1，否则assign值0，下同
 		$this->retData['certificateInfo'] =  1;
 		$this->retData['thirdPay'] = 2;
