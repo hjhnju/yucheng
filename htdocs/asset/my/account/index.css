@@ -133,9 +133,9 @@ p{margin:0;padding:0}
 .finish-main-grade:before,.finish-main-grade:after{display:table;content:""}
 .finish-main-grade:after{clear:both}
 .finish-grade-left{font-size:16px;float:left;margin-right:20px}
-.finish-main-grade-box{width:350px;float:left;height:16px;background-color:#ebebeb;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;margin-right:20px}
+.finish-main-grade-box{width:300px;float:left;height:16px;background-color:#ebebeb;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;margin-right:20px}
 .finish-main-grade-box .finish-main-grade-box-internal{height:16px;min-width:10%;background-color:#76cf65;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
-.finish-grade-refresh{font-size:14px;color:#76cf65;text-decoration:none;margin-top:1px}
+.finish-grade-refresh{font-size:14px;color:#76cf65;text-decoration:none;margin-top:1px;cursor:pointer}
 .infor-data{margin-bottom:30px}
 .infor-data-title{height:40px;line-height:40px;font-size:18px;margin-bottom:10px}
 .infor-data-box{height:56px;padding-left:20px;border-top:1px solid #eaeaea;line-height:56px;*zoom:1}
@@ -182,3 +182,4 @@ p{margin:0;padding:0}
 .all-box-dredge-link{width:170px;height:38px;font-size:16px;text-align:center;text-decoration:none;display:block;line-height:38px;margin:0 auto;background-color:#f2736a;color:#fff;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .return{display:block;position:absolute;right:-30px;top:10px;color:#333;font-size:14px;width:60px;height:24px;line-height:24px;padding-left:30px;text-decoration:none;background:url(../common/img/return_icon.png) 0 center no-repeat}
 .return:hover{color:#76cf65}
+.fen{font-size:20px;color:#76cf65}

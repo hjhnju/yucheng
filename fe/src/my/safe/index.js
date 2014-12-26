@@ -24,6 +24,7 @@ define(function (require) {
         $('.finish-grade-refresh').click(function () {
 
             secureDergee.remote();
+            $('.fen').html('检测中...');
         });
 
         //secureDergeeCb
@@ -33,6 +34,7 @@ define(function (require) {
             }
             else {
                 $('.finish-main-grade-box-internal').css('width',data.score + '%');
+                $('.fen').html(data.score + '分')
             }
         })
 

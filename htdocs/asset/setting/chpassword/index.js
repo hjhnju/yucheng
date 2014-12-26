@@ -6,6 +6,7 @@ define('setting/chpassword/index', [
 ], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
+    var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
     function init() {
         bingEvent();
     }
@@ -25,6 +26,27 @@ define('setting/chpassword/index', [
                 }
                 $(this).next().html('');
             }
+        });
+        $('#confirm-new-ipt').blur(function () {
+            var newval = +$('#new-ipt').val();
+            var me = +$(this).val();
+            if (newval !== me) {
+                $(this).addClass('current');
+                $('#repeat-ipt-error').html('\u4E24\u6B21\u5BC6\u7801\u4E0D\u4E00\u81F4');
+            }
+            console.log(typeof newval);
+            console.log(me);
+        });
+        $('.chpwd-link').click(function () {
+            var error = $('.chpwd-input.current');
+            $('.chpwd-input').trigger('blur');
+            if (error.length) {
+                return;
+            }
+            chpwdSubmite.remote({
+                oldpwd: $('#old-ipt').val(),
+                newpwd: $('#new-ipt').val()
+            });
         });
     }
     return { init: init };
