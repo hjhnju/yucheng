@@ -94,7 +94,7 @@ class SecureController extends Base_Controller_Response{
 			$this->retData['bindthirdlogin'] = 1;
 			$this->retData['thirdloginurl'] = $webroot.'/account/secure/unbindthirdlogin';
 		}
-		var_dump($this->retData);die;
+		//var_dump($this->retData);die;
 		$this->getView()->assign('phone', $this->retData['phone']['bind']);
 		$this->getView()->assign('phoneurl',$this->retData['phone']['url']);
 		

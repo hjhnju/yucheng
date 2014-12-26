@@ -40,11 +40,11 @@ class OverviewController extends Base_Controller_Response {
 		$avlBal = 0.00;
 		$acctBal = 0.00;
 		$frzBal = 0.00;
-		$totalProfit = 0.00;
+		$totalProfit = 1.00;
 		$totalInvest = 0.00;
 		$reposPrifit = 0.00;
 		$reposPrincipal = 0.00;
-		$openthirdpay = 0.00;
+		$openthirdpay = 1;
 		//$totalProfit = Invest_Api:: 累计收益
 		//$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
 		//$reposPrifit = Invest_Api:: 待收收益
