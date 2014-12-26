@@ -100,7 +100,8 @@ exports.getLocations = function () {
                     '/account/invest/repayplan',
                     '/account/invest/ended',
                     '/account/invest/tendering',
-                    '/account/invest/tenderfail'
+                    '/account/invest/tenderfail',
+                    '/secure/index'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
