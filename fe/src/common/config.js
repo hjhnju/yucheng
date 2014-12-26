@@ -65,20 +65,20 @@ define(function () {
             //+ '/account/edit/getvericode.json',
         + '/test/invest/detail.json',
         MY_INVEST_GET: rootUrl
-            // + '/account/invest/index',
-            + '/test/account/invest/index.json',
+            + '/account/invest/backing',
+            //+ '/test/account/invest/backing.json',
         MY_INVEST_DETAIL: rootUrl
-            // + '/account/invest/repayplan',
-            + '/test/account/invest/repayplan.json',
+            + '/account/invest/repayplan',
+            //+ '/test/account/invest/repayplan.json',
         MY_INVEST_ENDED: rootUrl
-            // + '/account/invest/ended',
-            + '/test/account/invest/ended.json',
+            + '/account/invest/ended',
+            //+ '/test/account/invest/ended.json',
         MY_INVEST_TENDERING: rootUrl
-            // + '/account/invest/tendering',
-            + '/test/account/invest/tendering.json',
+            + '/account/invest/tendering',
+            //+ '/test/account/invest/tendering.json',
         MY_INVEST_TENDERFAIL: rootUrl
-            // + '/account/invest/tenderfail'
-            + '/test/account/invest/tenderfail.json'
+            + '/account/invest/tenderfail'
+            //+ '/test/account/invest/tenderfail.json'
     };
 
     return {

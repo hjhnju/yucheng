@@ -34,8 +34,8 @@ exports.getLocations = function () {
         {
             location: /\.php($|\?)/,
             handler: [
-                php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
-                //php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
+                //php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
+                php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
             ]
         },
         { 
@@ -94,8 +94,16 @@ exports.getLocations = function () {
                     '/user/loginapi/getauthimage',
                     '/user/loginapi/checkauthimage',
                     '/invest/api',
+<<<<<<< HEAD
                     '/account/edit/getsmscode',
                     '/account/edit/checkphone'
+=======
+                    '/account/invest/backing',
+                    '/account/invest/repayplan',
+                    '/account/invest/ended',
+                    '/account/invest/tendering',
+                    '/account/invest/tenderfail'
+>>>>>>> f2145b1c359ab7f0048e3181dc41a35e95299d90
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
@@ -104,7 +112,7 @@ exports.getLocations = function () {
             handler: [
                 proxy('123.57.46.229', 8082)  //李璐
                 //proxy('123.57.46.229', 8801)  //胡伟
-                //proxy('123.57.46.229', 8600)  //松芳
+                // proxy('123.57.46.229', 8600)  //松芳
             ]
         },
         { 

@@ -109,10 +109,10 @@ define(function (require) {
      * @inner
      */
     function ajaxCallBack() {
-        // 回款中列表
+        // 回款中列表 成功
         getReturnList.on('success', function (data) {
             if (data.bizError) {
-                 alert(data.statusInfo);
+                renderError(data);
             }
             else {
                 if (!pager) {
@@ -131,18 +131,26 @@ define(function (require) {
                 renderHTML('returnMoneyList', data);
             }
         });
+
+        // 回款中列表 失败
+        getReturnList.on('fail', function (data) {
+            renderError(data);
+        });
         
         // 还款计划
         getReturnDetail.on('success', function (data) {
+            var container = $(item).closest('.my-invest-item')
+                .addClass('current').find('.my-invest-detail');
+
             if (data.bizError) {
-                alert(data.statusInfo);
+                container.render(etpl.render('Error', {
+                    msg: data.statusInfo
+                }));
             }
             else {
                 if (!item) {
                     return;
                 }
-                var container = $(item).closest('.my-invest-item')
-                    .addClass('current').find('.my-invest-detail');
 
                 $(item).addClass('hasDetail');
 
@@ -156,38 +164,60 @@ define(function (require) {
             }
         });
 
-        // 投标中列表
+        // 投标中列表 成功
         getTenderingList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             }
             else {
                 renderHTML('tenderingList', data);
             }
         });
 
-        // 已结束列表
+        // 投标中列表 失败
+        getTenderingList.on('fail', function (data) {
+            renderError(data);
+        });
+
+        // 已结束列表 成功
         getEndedList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             }
             else {
                 renderHTML('endedList', data);
             }
         });
 
-        // 投标失败
+        // 已结束列表 失败
+        getEndedList.on('fail', function (data) {
+            renderError(data);
+        });
+
+        // 投标失败 成功
         getTenderFailList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             }
             else {
                 renderHTML('tenderFailList', data);
             }
         });
+
+        // 投标失败 失败
+        getTenderFailList.on('fail', function (data) {
+            renderError(data);
+        });
     }
-    
+
+    /**
+     * 发送请求
+     * @param {number} page 页码
+     */
     function getRemoteList(page) {
+        htmlContainer.html(etpl.render('Loading'));
+        $('#my-invest-pager').html('');
+
         switch (status) {
             case 1:
                 getReturnList.remote({
@@ -212,7 +242,16 @@ define(function (require) {
         }
     }
 
+    /**
+     * 渲染页码
+     * @param {string} tpl 模板target
+     * @param {*} data 请求返回数据
+     */
     function renderHTML(tpl, data) {
+
+        pager.setOpt('pageall', +data.pageall);
+        pager.render(+data.page);
+
         // 格式化时间
         for (var i = 0, l = data.list.length; i < l; i++) {
             data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format(FORMATER);
@@ -223,6 +262,16 @@ define(function (require) {
 
         htmlContainer.html(etpl.render(tpl, {
             list: data.list
+        }));
+    }
+
+    /**
+     * 渲染错误提示
+     * @param {*} data 请求返回的错误提示
+     */
+    function renderError(data) {
+        htmlContainer.render(etpl.render('Error', {
+            msg: data.statusInfo
         }));
     }
 

@@ -1,8 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/ecQuery', [
-    'require',
-    'zrender/tool/util'
-], function (require) {
+define('echarts/util/ecQuery', function (require) {
     var zrUtil = require('zrender/tool/util');
     function query(optionTarget, optionLocation) {
         if (typeof optionTarget == 'undefined') {

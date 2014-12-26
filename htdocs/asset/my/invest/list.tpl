@@ -7,6 +7,7 @@
 -->
 
 <!-- target: returnMoneyList -->
+<ul>
 <li class="my-invest-header">
     <span class="my-invest-title invest-name">投资项目</span>
     <span class="my-invest-title invest-balance">年化利率</span>
@@ -33,6 +34,7 @@
     </div>
 </li>
 <!-- /for -->
+</ul>
 <!-- /target -->
 
 <!-- target: returnMoneyDetail -->

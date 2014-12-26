@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/mapData/params', ['require'], function (require) {
+define('echarts/util/mapData/params', function (require) {
     function decode(json) {
         if (!json.UTF8Encoding) {
             return json;

@@ -7,11 +7,20 @@ exports.output = path.resolve( __dirname, 'output' );
 // var pageEntries = 'html,htm,phtml,tpl,vm';
 
 exports.getProcessors = function () {
-    var lessProcessor = new LessCompiler();
+    var lessProcessor = new LessCompiler({
+        files: [
+            'src/setting/login/index.less',
+            'src/setting/regist/index.less',
+            'src/my/invest/index.less',
+            'src/my/account/index.less'
+        ]
+    });
     var cssProcessor = new CssCompressor({
         files: [
             'src/setting/login/index.less',
-            'src/setting/regist/index.less'
+            'src/setting/regist/index.less',
+            'src/my/invest/index.less',
+            'src/my/account/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -21,14 +30,23 @@ exports.getProcessors = function () {
             'src/setting/regist/index.js'
         ]
     });
+    var html2JsProcessor = new Html2JsCompiler({
+        mode: 'compress',
+        extnames: [ 'tpl' ],
+        combine: true
+    });
+    var html2jsClearPorcessor = new Html2JsCompiler({
+        extnames: 'tpl',
+        clean: true
+    });
     var pathMapperProcessor = new PathMapper();
     var addCopyright = new AddCopyright();
 
     return {
         'release': [ lessProcessor, moduleProcessor, pathMapperProcessor ],
         'default': [
-            lessProcessor, cssProcessor, moduleProcessor,
-            jsProcessor, pathMapperProcessor, addCopyright
+            lessProcessor, cssProcessor, html2JsProcessor, moduleProcessor,
+            html2jsClearPorcessor, jsProcessor, pathMapperProcessor, addCopyright
         ]
     };
 };

@@ -1,0 +1,34 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/invest/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/invest/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='common/nav.phtml' current="2"%}
+        <div class="finish-main">
+            <div class="finish-main-title">我的投资</div>
+            <div class="my-invest-tab">
+                <span class="my-invest-tab-item current" data-value="1">回款中</span>
+                <span class="my-invest-tab-item" data-value="2">投标中</span>
+                <span class="my-invest-tab-item" data-value="3">已结束</span>
+                <span class="my-invest-tab-item" data-value="4">投标失败</span>
+            </div>
+            <div id="my-invest-list" class="my-invest-list">
+                <div class="xjd-loading">&nbsp;</div>
+            </div>
+            <div id="my-invest-pager" class="my-invest-pager"></div>
+        </div>
+    </div>
+</div>
+{%/block%}

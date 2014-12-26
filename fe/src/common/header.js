@@ -8,11 +8,14 @@
 define(function (require) {
 
     var $ = require('jquery');
+    var etpl = require('etpl');
+
+    var tpl = require('./common.tpl');
+
 
     function init() {
-
+        etpl.compile(tpl);
         easy();
-
     }
 
     function easy() {

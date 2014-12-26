@@ -1,12 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('project/list/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './list.tpl',
-    'common/ui/Pager/Pager'
-], function (require) {
+define('project/list/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var getList = new Remoter('INVEST_LIST');

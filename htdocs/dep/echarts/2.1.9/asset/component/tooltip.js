@@ -1,20 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/tooltip', [
-    'require',
-    './base',
-    '../util/shape/Cross',
-    'zrender/shape/Line',
-    'zrender/shape/Rectangle',
-    '../config',
-    '../util/ecData',
-    'zrender/config',
-    'zrender/tool/event',
-    'zrender/tool/area',
-    'zrender/tool/color',
-    'zrender/tool/util',
-    'zrender/shape/Base',
-    '../component'
-], function (require) {
+define('echarts/component/tooltip', function (require) {
     var Base = require('./base');
     var CrossShape = require('../util/shape/Cross');
     var LineShape = require('zrender/shape/Line');

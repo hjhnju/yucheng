@@ -1,11 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/loadingEffect/Bubble', [
-    'require',
-    './Base',
-    '../tool/util',
-    '../tool/color',
-    '../shape/Circle'
-], function (require) {
+define('zrender/loadingEffect/Bubble', function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
     var zrColor = require('../tool/color');

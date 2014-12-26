@@ -1,9 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('common/XEmitter', [
-    'require',
-    'saber-emitter',
-    'jquery'
-], function (require) {
+define('common/XEmitter', function (require) {
     var Emitter = require('saber-emitter');
     var $ = require('jquery');
     Emitter.mixin = function (target) {

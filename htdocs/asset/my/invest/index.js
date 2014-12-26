@@ -1,15 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('my/invest/index', [
-    'require',
-    'jquery',
-    'etpl',
-    'moment',
-    'common/data',
-    'common/header',
-    'common/ui/Pager/Pager',
-    'common/Remoter',
-    './list.tpl'
-], function (require) {
+define('my/invest/index', function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var moment = require('moment');
@@ -66,7 +56,7 @@ define('my/invest/index', [
     function ajaxCallBack() {
         getReturnList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             } else {
                 if (!pager) {
                     pager = new Pager($.extend({}, commonDate.pagerOpt, {
@@ -81,14 +71,17 @@ define('my/invest/index', [
                 renderHTML('returnMoneyList', data);
             }
         });
+        getReturnList.on('fail', function (data) {
+            renderError(data);
+        });
         getReturnDetail.on('success', function (data) {
+            var container = $(item).closest('.my-invest-item').addClass('current').find('.my-invest-detail');
             if (data.bizError) {
-                alert(data.statusInfo);
+                container.render(etpl.render('Error', { msg: data.statusInfo }));
             } else {
                 if (!item) {
                     return;
                 }
-                var container = $(item).closest('.my-invest-item').addClass('current').find('.my-invest-detail');
                 $(item).addClass('hasDetail');
                 for (var i = 0, l = data.list.length; i < l; i++) {
                     data.list[i].timeInfo = moment.unix(data.list[i].time).format(FORMATER);
@@ -98,27 +91,38 @@ define('my/invest/index', [
         });
         getTenderingList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             } else {
                 renderHTML('tenderingList', data);
             }
         });
+        getTenderingList.on('fail', function (data) {
+            renderError(data);
+        });
         getEndedList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             } else {
                 renderHTML('endedList', data);
             }
         });
+        getEndedList.on('fail', function (data) {
+            renderError(data);
+        });
         getTenderFailList.on('success', function (data) {
             if (data.bizError) {
-                alert(data.statusInfo);
+                renderError(data);
             } else {
                 renderHTML('tenderFailList', data);
             }
         });
+        getTenderFailList.on('fail', function (data) {
+            renderError(data);
+        });
     }
     function getRemoteList(page) {
+        htmlContainer.html(etpl.render('Loading'));
+        $('#my-invest-pager').html('');
         switch (status) {
         case 1:
             getReturnList.remote({ page: page });
@@ -135,6 +139,8 @@ define('my/invest/index', [
         }
     }
     function renderHTML(tpl, data) {
+        pager.setOpt('pageall', +data.pageall);
+        pager.render(+data.page);
         for (var i = 0, l = data.list.length; i < l; i++) {
             data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format(FORMATER);
             if (data.list[i].endTime) {
@@ -142,6 +148,9 @@ define('my/invest/index', [
             }
         }
         htmlContainer.html(etpl.render(tpl, { list: data.list }));
+    }
+    function renderError(data) {
+        htmlContainer.render(etpl.render('Error', { msg: data.statusInfo }));
     }
     return { init: init };
 });
