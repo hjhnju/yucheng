@@ -1,5 +1,8 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('setting/password/index', function (require) {
+define('setting/password/index', [
+    'require',
+    'jquery'
+], function (require) {
     var $ = require('jquery');
     var a = $('.login-username').children('.user-lable');
     function init() {

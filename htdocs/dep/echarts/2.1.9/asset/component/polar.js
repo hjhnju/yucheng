@@ -1,5 +1,19 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/polar', function (require) {
+define('echarts/component/polar', [
+    'require',
+    './base',
+    'zrender/shape/Text',
+    'zrender/shape/Line',
+    'zrender/shape/Polygon',
+    'zrender/shape/Circle',
+    'zrender/shape/Ring',
+    '../config',
+    'zrender/tool/util',
+    '../util/coordinates',
+    '../util/accMath',
+    '../util/smartSteps',
+    '../component'
+], function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var LineShape = require('zrender/shape/Line');

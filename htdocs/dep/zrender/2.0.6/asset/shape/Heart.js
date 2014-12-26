@@ -1,5 +1,11 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Heart', function (require) {
+define('zrender/shape/Heart', [
+    'require',
+    './Base',
+    './util/PathProxy',
+    'zrender/tool/area',
+    '../tool/util'
+], function (require) {
     'use strict';
     var Base = require('./Base');
     var PathProxy = require('./util/PathProxy');

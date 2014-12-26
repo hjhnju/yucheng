@@ -1,5 +1,10 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/HandlePolygon', function (require) {
+define('echarts/util/shape/HandlePolygon', [
+    'require',
+    'zrender/shape/Base',
+    'zrender/shape/Polygon',
+    'zrender/tool/util'
+], function (require) {
     var Base = require('zrender/shape/Base');
     var PolygonShape = require('zrender/shape/Polygon');
     var zrUtil = require('zrender/tool/util');

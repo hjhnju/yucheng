@@ -1,5 +1,9 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/mixin/Transformable', function (require) {
+define('zrender/mixin/Transformable', [
+    'require',
+    '../tool/matrix',
+    '../tool/vector'
+], function (require) {
     'use strict';
     var matrix = require('../tool/matrix');
     var vector = require('../tool/vector');
