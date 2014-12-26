@@ -93,16 +93,21 @@ exports.getLocations = function () {
                     '/user/loginapi/index',
                     '/user/loginapi/getauthimage',
                     '/user/loginapi/checkauthimage',
-                    '/invest/api'
+                    '/invest/api',
+                    '/account/invest/backing',
+                    '/account/invest/repayplan',
+                    '/account/invest/ended',
+                    '/account/invest/tendering',
+                    '/account/invest/tenderfail'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
 
             },
             handler: [
-                //proxy('123.57.46.229', 8301)  //李璐
+                proxy('123.57.46.229', 8082)  //李璐
                 //proxy('123.57.46.229', 8801)  //胡伟
-                proxy('123.57.46.229', 8600)  //松芳
+                // proxy('123.57.46.229', 8600)  //松芳
             ]
         },
         { 
