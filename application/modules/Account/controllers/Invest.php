@@ -21,7 +21,7 @@ class InvestController extends Base_Controller_Response {
 	 * 接口/account/invest/index
 	 * 渲染入口界面
 	 */
-	public function index() {
+	public function indexAction() {
 		
 	}
 	
@@ -51,7 +51,7 @@ class InvestController extends Base_Controller_Response {
 	 *  }
 	 * 
 	 */
-	public function indexAction() {
+	public function backingAction() {
 		$status = InvestController::BACKING;
 		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
 
