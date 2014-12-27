@@ -1,10 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Text', [
-    'require',
-    '../tool/area',
-    './Base',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Text', function (require) {
     var area = require('../tool/area');
     var Base = require('./Base');
     var Text = function (options) {

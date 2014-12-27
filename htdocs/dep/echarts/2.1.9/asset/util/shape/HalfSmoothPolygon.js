@@ -1,11 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/HalfSmoothPolygon', [
-    'require',
-    'zrender/shape/Base',
-    'zrender/shape/util/smoothBezier',
-    'zrender/tool/util',
-    'zrender/shape/Polygon'
-], function (require) {
+define('echarts/util/shape/HalfSmoothPolygon', function (require) {
     var Base = require('zrender/shape/Base');
     var smoothBezier = require('zrender/shape/util/smoothBezier');
     var zrUtil = require('zrender/tool/util');

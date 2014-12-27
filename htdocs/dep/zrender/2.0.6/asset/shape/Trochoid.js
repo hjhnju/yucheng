@@ -1,10 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Trochoid', [
-    'require',
-    './Base',
-    '../tool/math',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Trochoid', function (require) {
     var Base = require('./Base');
     var Trochoid = function (options) {
         this.brushTypeOnly = 'stroke';
