@@ -9,6 +9,8 @@ define(function (require) {
 
     var $ = require('jquery');
     var a = $('.login-username').children('.user-lable');
+    var Remoter = require('common/Remoter');
+    var submit = new Remoter('EDIT_CHANGEPWD_SUBMIT')
 
     function init (){
         $('.login-input').on({
@@ -20,7 +22,14 @@ define(function (require) {
                 var val = $(this).val();
                 !val && a.hasClass('hidden') && a.removeClass('hidden');
             }
+        });
+
+        $('.login-fastlogin').click(function () {
+            submit.remote({
+
+            })
         })
+
     }
 
     return {init:init};

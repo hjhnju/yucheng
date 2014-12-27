@@ -50,8 +50,8 @@ define(function () {
             + '/account/edit/getsmscode',
         //+ '/test/account/edit/getsmscode.json',
         EDIT_PHONE_SUBMITE: rootUrl
-            + '/account/edit/checkphone',
-        //+ '/test/account/edit/phoneSubmite.json',
+            //+ '/account/edit/checkphone',
+        + '/test/account/edit/phoneSubmite.json',
         EDIT_PHONE_SUBMITE2ND: rootUrl
         + '/account/edit/checkphone',
         //+ '/test/account/edit/phoneSubmite.json',
@@ -61,6 +61,9 @@ define(function () {
         EDIT_CHPWD_SUBMITE: rootUrl
             + '/account/edit/chpwd',
         //+ '/test/account/edit/emailConfirm.json',
+        EDIT_CHANGEPWD_SUBMIT:rootUrl
+        //+ '/account/edit/chpwd',
+        + '/test/account/edit/chpwd.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl

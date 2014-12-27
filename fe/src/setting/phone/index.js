@@ -11,7 +11,7 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var phoneSubmite = new Remoter('EDIT_PHONE_SUBMITE');
     var phoneSubmite2nd = new Remoter('EDIT_PHONE_SUBMITE');
-    var getSmscode = new Remoter('EDIT_GETSMSCODE_CHECK');
+    var getSmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
 
@@ -43,17 +43,17 @@ define(function (require) {
         });
 
         // 验证手机
-        box_id.delegate('#login-phonenew', 'blur', function () {
-
-            var value = $(this).val();
-
-            if(!value) {
-                $(this).parent().addClass('current');
-                $('#login-phonenew-error').html('手机号码不能为空');
-                return;
-            }
-
-        });
+        //box_id.delegate('#login-phonenew', 'blur', function () {
+        //
+        //    var value = $(this).val();
+        //
+        //    if(!value) {
+        //        $(this).parent().addClass('current');
+        //        $('#login-phonenew-error').html('手机号码不能为空');
+        //        return;
+        //    }
+        //
+        //});
 
 
         //获取验证码
@@ -62,7 +62,8 @@ define(function (require) {
 
             if(value) {
                 getSmscode.remote({
-                    newphone: value
+                    phone: value,
+                    type: 3
                 })
             }
 
@@ -95,36 +96,14 @@ define(function (require) {
             }
         });
 
-        //检查验证码
-        box_id.delegate('#login-test', 'blur', function () {
-
-            var value = $(this).val();
-            var error = $('#username-error-error');
-            if(!value) {
-                $(this).parent().addClass('current');
-                error.html('验证码不正确');
-                return;
-            }
-
-            error.html('<span class="username-error-span"></span>');
-
-        });
-
         // 点击下一步
         box_id.delegate('#confirm','click', function (e) {
             e.preventDefault();
-            $('.login-input').trigger('blur');
-            //if('#login-phonenew'.hasClass('phone-current')) {
-            //
-            //}
 
-            var errors = $('.login-username.current');
 
-            if(errors.length) {
-                return;
-            }
             phoneSubmite.remote({
-                oldPhone: $('#login-phonenew').val()
+                oldPhone: $('#login-phonenew').val(),
+                vericode: $('#login-test').val()
             });
 
         });
@@ -132,7 +111,7 @@ define(function (require) {
         //phoneSubmiteCb
         phoneSubmite.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+                $('.error').html(data.statusInfo);
             }
             else {
                 $("#checkphone").html(etpl.render('list2nd'));
