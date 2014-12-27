@@ -90,12 +90,11 @@ define(function (require) {
 
             if (parent.hasClass('current')) {
                 parent.removeClass('current');
-                return;
             }
             else {
                 parent.addClass('current');
                 setRead.remote({
-                    id: id
+                    mid: id
                 });
             }
         });

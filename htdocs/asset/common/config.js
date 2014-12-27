@@ -24,7 +24,9 @@ define('common/config', function () {
             MY_INVEST_DETAIL: rootUrl + '/account/invest/repayplan',
             MY_INVEST_ENDED: rootUrl + '/account/invest/ended',
             MY_INVEST_TENDERING: rootUrl + '/account/invest/tendering',
-            MY_INVEST_TENDERFAIL: rootUrl + '/account/invest/tenderfail'
+            MY_INVEST_TENDERFAIL: rootUrl + '/account/invest/tenderfail',
+            MY_MSG_LIST: rootUrl + '/msg/list',
+            MY_MSG_SETREAD_ADD: rootUrl + '/msg/read'
         };
     return { URL: URL };
 });
