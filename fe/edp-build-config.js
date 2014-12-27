@@ -30,7 +30,9 @@ exports.getProcessors = function () {
         files: [
             'src/setting/login/index.js',
             'src/setting/regist/index.js',
-            'src/my/safe/index.js'
+            'src/my/safe/index.js',
+            'src/my/account/index.js',
+            'src/my/invest/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
