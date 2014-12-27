@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/layout/eventRiver', function (require) {
+define('echarts/layout/eventRiver', ['require'], function (require) {
     function eventRiverLayout(series, intervalX, area) {
         var space = 5;
         var scale = intervalX;

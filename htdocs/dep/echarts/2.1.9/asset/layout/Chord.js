@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/layout/Chord', function (require) {
+define('echarts/layout/Chord', ['require'], function (require) {
     var ChordLayout = function (opts) {
         opts = opts || {};
         this.sort = opts.sort || null;

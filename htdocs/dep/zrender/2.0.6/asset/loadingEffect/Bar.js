@@ -1,5 +1,11 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/loadingEffect/Bar', function (require) {
+define('zrender/loadingEffect/Bar', [
+    'require',
+    './Base',
+    '../tool/util',
+    '../tool/color',
+    '../shape/Rectangle'
+], function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
     var zrColor = require('../tool/color');

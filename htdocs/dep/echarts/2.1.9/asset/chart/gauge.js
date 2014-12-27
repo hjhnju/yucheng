@@ -1,5 +1,20 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/gauge', function (require) {
+define('echarts/chart/gauge', [
+    'require',
+    '../component/base',
+    './base',
+    '../util/shape/GaugePointer',
+    'zrender/shape/Text',
+    'zrender/shape/Line',
+    'zrender/shape/Rectangle',
+    'zrender/shape/Circle',
+    'zrender/shape/Sector',
+    '../config',
+    '../util/ecData',
+    '../util/accMath',
+    'zrender/tool/util',
+    '../chart'
+], function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var GaugePointerShape = require('../util/shape/GaugePointer');

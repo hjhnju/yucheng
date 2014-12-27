@@ -14,7 +14,9 @@ exports.getProcessors = function () {
             'src/my/invest/index.less',
             'src/my/account/index.less',
             'src/my/safe/index.less',
-            'src/my/message/index.less'
+            'src/my/message/index.less',
+            'src/project/detail/index.less',
+            'src/project/list/index.less'
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -24,7 +26,9 @@ exports.getProcessors = function () {
             'src/my/invest/index.less',
             'src/my/account/index.less',
             'src/my/safe/index.less',
-            'src/my/message/index.less'
+            'src/my/message/index.less',
+            'src/project/detail/index.less',
+            'src/project/list/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -35,7 +39,9 @@ exports.getProcessors = function () {
             'src/my/safe/index.js',
             'src/my/account/index.js',
             'src/my/invest/index.js',
-            'src/my/message/index.js'
+            'src/my/message/index.js',
+            'src/project/detail/index.js',
+            'src/project/list/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

@@ -229,6 +229,35 @@ $smarty->assign('attach',
         )
     )
 );
+$smarty->assign('refunds',
+    array(
+        0 => array(
+            'period' => 1,
+            'amount' => '2,038.36',
+            'capital' => 0,
+            'interest' => '2,038.36',
+            'promise_time' => 1484848484,
+            'status' => 1
+        ),
+        1 => array(
+            'period' => 1,
+            'amount' => 2,038.36,
+            'capital' => 0,
+            'interest' => 2,038.36,
+            'promise_time' => 1484848484,
+            'status' => 2
+        ),
+        2 => array(
+            'period' => 1,
+            'amount' => 2,038.36,
+            'capital' => 0,
+            'interest' => 2,038.36,
+            'promise_time' => 1484848484,
+            'status' => 3
+        )
+    )
+);
+
 
 $smarty->caching = false;
 $smarty->compile_check = true;

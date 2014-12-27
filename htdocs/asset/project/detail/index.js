@@ -1,18 +1,2 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('project/detail/index', function (require) {
-    var $ = require('jquery');
-    var Remoter = require('common/Remoter');
-    var confirm = new Remoter('INVEST_DETAIL_CONFIRM');
-    function init() {
-        bindEvent();
-    }
-    function bindEvent() {
-        var valBox = +$('#money-all').text();
-        var valIpt = $('.right-top-ipt-input');
-        var valMy = +$('#my-money').text();
-        $('.right-top-btn-confirm').click(function () {
-            confirm;
-        });
-    }
-    return { init: init };
-});
+define("project/detail/index",["require","jquery","common/Remoter","etpl","./detail.tpl","moment","common/ui/Pager/Pager"],function(require){function e(e){s.compile(a),t(),o.remote({page:1,id:e}),o.on("success",function(t){if(t&&t.bizError)alert(t.statusInfo);else{if(!r)r=new c({total:+t.pageall,main:n("#page"),startPage:1}),r.on("change",function(t){o.remote({page:t.value,id:e})});r.render(+t.page);for(var i=0,a=t.list.length;a>i;i++){var m=t.list[i];m.timeInfo=l.unix(+m.create_time).format("YYYY-MM-DD hh:mm:ss")}n("#toulist").html(s.render("list",{list:t.list}))}})}function t(){n(".showproject").click(function(){n(this).closest(".project-main").attr("class","project-main project")}),n(".showfile").click(function(){n(this).closest(".project-main").attr("class","project-main file")}),n(".showrecord").click(function(){n(this).closest(".project-main").attr("class","project-main record")})}var r,n=require("jquery"),i=require("common/Remoter"),o=new i("INVEST_DETAIL_START"),s=require("etpl"),a=require("./detail.tpl"),l=require("moment"),c=require("common/ui/Pager/Pager");return{init:e}});

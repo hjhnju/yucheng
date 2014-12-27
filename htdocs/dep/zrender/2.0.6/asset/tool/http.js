@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/tool/http', function (require) {
+define('zrender/tool/http', ['require'], function (require) {
     function get(url, onsuccess, onerror, opts) {
         if (typeof url === 'object') {
             var obj = url;

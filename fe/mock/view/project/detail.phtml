@@ -329,16 +329,22 @@
                         <div class="btm-main-title-box yinghuan">应还本息</div>
                         <div class="btm-main-title-box status">还款状态</div>
                     </div>
+                    {%foreach $refunds as $key => $item%}
                     <div class="btm-main-box">
-                        <div class="btm-main-title-box time">{%$update_time|date_format:'%Y-%m-%d'%}</div>
-                        <div class="btm-main-title-box yinghuan">￥1,000,000.00</div>
-                        <div class="btm-main-title-box status">未到期</div>
+                        <div class="btm-main-title-box time">{%$item.promise_time|date_format:'%Y-%m-%d'%}</div>
+                        <div class="btm-main-title-box yinghuan">￥{%$item.interest%}</div>
+
+                        <div class="btm-main-title-box status">
+                            {%if $item.status == 1%}
+                            未到期
+                            {%else if $item.status == 2%}
+                            已还款
+                            {%else%}
+                            已逾期
+                            {%/if%}
+                        </div>
                     </div>
-                    <div class="btm-main-box btm-bg-color">
-                        <div class="btm-main-title-box time">2014-12-12</div>
-                        <div class="btm-main-title-box yinghuan">￥1,000,000.00</div>
-                        <div class="btm-main-title-box status">未到期</div>
-                    </div>
+                    {%/foreach%}
 
                 </div>
             </div>
