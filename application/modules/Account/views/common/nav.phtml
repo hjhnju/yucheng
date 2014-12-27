@@ -1,18 +1,27 @@
 <div class="finish-nav">
     <div class="finish-nav-top">
-        <div class="finish-nav-top-user">Hi,xxx</div>
+        <div class="finish-nav-top-user">Hi,{%$userinfo.username%}</div>
         <div class="finish-top-icon">
-            <a href="###" class="top-icon-link user" title="实名认证"></a>
-            <a href="{%$webroot%}/account/edit/chphone" title="修改手机" class="top-icon-link phone current"></a>
-            <a href="###" class="top-icon-link other" title="第三方支付"></a>
+
+            <a href="{%$userinfo.realname.url%}" class="top-icon-link user {%if $userinfo.realname.isopen == 1%}current{%/if%}" title="实名认证"></a>
+            <a href="{%$userinfo.phone.url%}" class="top-icon-link phone {%if $userinfo.phone.isopen == 1%}current{%/if%}" title="手机绑定"></a>
+            <a href="{%$userinfo.huifu.url%}" class="top-icon-link other {%if $userinfo.huifu.isopen == 1%}current{%/if%}" title="第三方托管"></a>
         </div>
         <div class="finish-top-schedule">
             <div class="top-schedule-internal"></div>
         </div>
         <div class="finish-top-grade">
             <span>安全等级</span>
-            <a href="###" class="grade-high">低</a>
-            <a href="###" class="grade-high">[提升]</a>
+            <a href="{%$userinfo.securedegree.up%}" class="grade-high">
+                {%if $userinfo.securedegree.degree == 1%}
+                低
+                {%else if $userinfo.securedegree.degree == 2%}
+                中
+                {%else%}
+                高
+                {%/if%}
+            </a>
+            <a href="{%$userinfo.securedegree.up%}" class="grade-high">[提升]</a>
         </div>
     </div>
     <ul class="finish-nav-item">
