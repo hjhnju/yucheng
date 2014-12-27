@@ -10,6 +10,7 @@ define(function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
+    var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
 
     function init (){
         bingEvent();
@@ -34,6 +35,12 @@ define(function (require) {
 
                     return;
                 }
+                if(!testPwd.test(value)) {
+                    me.addClass('current');
+                    $(this).next().html('密码不符合要求');
+
+                    return;
+                }
                 $(this).next().html('');
             }
         });
@@ -49,8 +56,6 @@ define(function (require) {
                 $('#repeat-ipt-error').html('两次密码不一致');
 
             }
-            console.log(typeof (newval));
-            console.log(me);
         });
 
         // 点击发送请求

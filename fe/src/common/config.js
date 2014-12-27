@@ -59,8 +59,8 @@ define(function () {
             //+ '/account/edit/getvericode.json',
         + '/test/account/edit/emailConfirm.json',
         EDIT_CHPWD_SUBMITE: rootUrl
-            //+ '/account/edit/chpwd',
-        + '/test/account/edit/emailConfirm.json',
+            + '/account/edit/chpwd',
+        //+ '/test/account/edit/emailConfirm.json',
         SECURE_DEGREE: rootUrl
         + '/account/secure/securedegree',
         //    + '/test/account/secure/secureDegree.json',
