@@ -179,7 +179,8 @@ define(function (require) {
 
             if (value) {
                 sendsmscode.remote({
-                    phone: value
+                    phone: value,
+                    type: 1
                 });
             }
 
