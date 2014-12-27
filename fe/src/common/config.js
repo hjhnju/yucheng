@@ -85,8 +85,14 @@ define(function () {
             + '/account/invest/tendering',
             //+ '/test/account/invest/tendering.json',
         MY_INVEST_TENDERFAIL: rootUrl
-            + '/account/invest/tenderfail'
-            //+ '/test/account/invest/tenderfail.json'
+            + '/account/invest/tenderfail',
+            //+ '/test/account/invest/tenderfail.json',
+        MY_MSG_LIST: rootUrl
+            //+ ''
+            + '/test/account/message/msglist.json',
+        MY_MSG_SETREAD_ADD: rootUrl
+            + ''
+            + '/test/account/message/setread.json'
     };
 
     return {

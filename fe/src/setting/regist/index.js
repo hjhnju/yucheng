@@ -47,6 +47,22 @@ define(function (require) {
         tuiJianError: $('#regist-tuijian-error')
     };
 
+    var allStatus = {
+        user: 0,
+        phone: 0,
+        pwd: 0,
+        test: 0,
+        tui: 1
+    };
+
+    var mapInput = {
+        user: 'loginUser',
+        phone: 'loginPhone',
+        pwd: 'loginPwd',
+        test: 'loginTest',
+        tui: 'loginTuiJian'
+    };
+
     function init() {
         header.init();
         picScroll.init();
@@ -92,7 +108,9 @@ define(function (require) {
                     name: value
                 });
             }
-
+            else {
+                allStatus.user = 0;
+            }
         });
 
         // 密码格式验证
@@ -100,10 +118,12 @@ define(function (require) {
             var value = $.trim($(this).val());
 
             if (!value) {
+                allStatus.pwd = 0;
                 return;
             }
 
             if (!testPwd.test(value)) {
+                allStatus.pwd = 0;
                 $(this).parent().addClass('current');
                 error.pwdError.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
                 return;
@@ -122,7 +142,9 @@ define(function (require) {
                     phone: value
                 });
             }
-
+            else {
+                allStatus.phone = 0;
+            }
         });
 
 
@@ -133,6 +155,7 @@ define(function (require) {
 
             if (!phone) {
                 loginInput.loginPhone.trigger('blur');
+                allStatus.test = 0;
                 return;
             }
 
@@ -143,7 +166,9 @@ define(function (require) {
                     type: 1
                 });
             }
-
+            else {
+                allStatus.test = 0;
+            }
         });
 
         // 检查是否获取验证码
@@ -176,19 +201,23 @@ define(function (require) {
         $('.regist .login-fastlogin').click(function (e) {
             e.preventDefault();
 
-            $('.regist .login-input').trigger('blur');
-            var errors = $('.regist .login-username.current');
+            var status = 1;
 
             if (!$('#tiaoyue-itp')[0].checked) {
                 alert('请同意用户条约');
                 return;
             }
 
-            if (errors.length) {
-                return;  // 跳出click方法，不往下执行
+            for (var name in allStatus) {
+                if (allStatus.hasOwnProperty(name)) {
+                    if (!allStatus[name]) {
+                        loginInput[mapInput[name]].trigger('blur');
+                        status = 0;
+                    }
+                }
             }
 
-            registSubmit.remote({
+            status && registSubmit.remote({
                 name: loginInput.loginUser.val(),
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
@@ -208,9 +237,11 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginUser.parent().addClass('current');
                 error.userError.html(data.statusInfo);
+                allStatus.user = 0;
             }
             else {
                 error.userError.html(CORRECT);
+                allStatus.user = 1;
             }
         });
 
@@ -219,9 +250,11 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginPhone.parent().addClass('current');
                 error.phoneError.html(data.statusInfo);
+                allStatus.pwd = 0;
             }
             else {
                 error.phoneError.html(CORRECT);
+                allStatus.pwd = 1;
             }
         });
 
@@ -230,9 +263,11 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginTuiJian.parent().addClass('current');
                 error.tuiJianError.html(data.statusInfo);
+                allStatus.tui = 0;
             }
             else {
                 error.tuiJianError.html(CORRECT);
+                allStatus.tui = 1;
             }
         });
 
@@ -264,9 +299,11 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginTest.parent().addClass('current');
                 error.testError.html(data.statusInfo);
+                allStatus.test = 0;
             }
             else {
                 error.testError.html(CORRECT);
+                allStatus.test = 1;
             }
         });
 
@@ -275,7 +312,7 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
-                window.location.href = 'http://www.baidu.com';
+                window.location.href = '/account/overview/index';
             }
         });
     }
