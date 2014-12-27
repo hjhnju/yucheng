@@ -273,7 +273,7 @@ define(function (require) {
 
         // sendsmscodeCb
         sendsmscode.on('success', function (data) {
-            var value = 300;
+            var value = 60;
             if (data && data.bizError) {
                 alert(data.statusInfo);
             }

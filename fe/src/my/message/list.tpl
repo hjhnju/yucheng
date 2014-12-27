@@ -14,9 +14,13 @@
         <span class="my-invest-title msg-time">发送时间</span>
     </li>
     <!-- for: ${list} as ${item} -->
+    <!-- if: ${list.status} == 1 -->
     <li class="my-invest-item">
+    <!-- else -->
+    <li class="my-invest-item unread">
+    <!-- /if -->
         <div class="my-invest-content">
-            <span class="my-invest-project msg-type">${item.typeInfo}</span>
+            <span class="my-invest-project msg-type">充值</span>
             <span class="my-invest-project msg-content"><span class="msg-content-text" data-id="${item.mid}">${item.content}</span></span>
             <span class="my-invest-project msg-time">${item.timeInfo}</span>
         </div>

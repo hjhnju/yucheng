@@ -88,11 +88,11 @@ define(function () {
             + '/account/invest/tenderfail',
             //+ '/test/account/invest/tenderfail.json',
         MY_MSG_LIST: rootUrl
-            //+ ''
-            + '/test/account/message/msglist.json',
+            + '/msg/list',
+            //+ '/test/account/message/msglist.json',
         MY_MSG_SETREAD_ADD: rootUrl
-            + ''
-            + '/test/account/message/setread.json'
+            + '/msg/read'
+            //+ '/test/account/message/setread.json'
     };
 
     return {

@@ -42,6 +42,15 @@ define(function (require) {
                 container.html(etpl.render('Error', data.statusInfo));
             }
             else {
+
+                if (!data.list.length) {
+                    container.html(etpl.render('Error', {
+                        msg: '您当前还没有消息哟'
+                    }));
+                    $('#my-msg-pager').html('');
+                    return;
+                }
+
                 if (!pager) {
                     pager = new Pager($.extend({}, commonData.pagerOpt, {
                         main: $('#my-msg-pager'),
@@ -64,6 +73,9 @@ define(function (require) {
                     tmp.typeInfo = mapType[tmp.type];
                 }
 
+
+
+
                 container.html(etpl.render('msgList', {
                     list: data.list
                 }));
@@ -73,6 +85,8 @@ define(function (require) {
         container.delegate('.msg-content-text', 'click', function () {
             var id = $(this).attr('data-id');
             var parent = $(this).closest('.my-invest-item');
+
+            parent.removeClass('unread');
 
             if (parent.hasClass('current')) {
                 parent.removeClass('current');
@@ -92,7 +106,9 @@ define(function (require) {
 
         $('.my-invest-tab-item').click(function () {
             status = +$(this).attr('data-value');
-            getList.remove({
+            $('.my-invest-tab-item').removeClass('current');
+            $(this).addClass('current');
+            getList.remote({
                 status: status,
                 page: 1
             });

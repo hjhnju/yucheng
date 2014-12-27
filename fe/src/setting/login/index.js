@@ -96,7 +96,7 @@ define(function (require) {
                 $('#login-error').html(data.statusInfo);
             }
             else {
-                window.location.href = 'http://www.baidu.com';
+                window.location.href = '/account/overview/index';
             }
         });
 

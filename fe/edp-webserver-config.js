@@ -103,7 +103,9 @@ exports.getLocations = function () {
                     '/account/invest/tenderfail',
                     '/account/secure/securedegree',
                     '/account/edit/chpwd',
-                    '/account/overview/profitCurve'
+                    '/account/overview/profitCurve',
+                    '/msg/list',
+                    '/msg/read'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
