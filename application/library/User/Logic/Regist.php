@@ -10,35 +10,47 @@ class User_Logic_Regist{
     /**
      * 
      * @param string $strName,用户名
-     * @return int,0表示用户名不存在，1表示用户名存在，2表示输入的用户名不合法
+     * @return int $retCode
+     * SUCCESS 表示用户名可用
+     * USERNAME_EXIST 表示用户名已存在
+     * USERNAME_SYNTEX_ERROR 表示输入的用户名不合法
      */
     public function checkName($strName){        
-        if(empty($strName)||(User_Api::checkReg('name',$strName))){
+        Base_Log::debug('H3LLO'.$strName);
+        if(empty($strName) || !User_Logic_Validate::checkName($strName)){
             return User_RetCode::USERNAME_SYNTEX_ERROR;
         }
+        
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('name'=>$strName));
-        if(empty($objLogin->name)) {
-            return User_RetCode::SUCCESS;
+
+
+
+        if(!empty($objLogin->name)) {
+            return User_RetCode::USERNAME_EXIST;
         }
-        return User_RetCode::USERNAME_EXIST;
+        return User_RetCode::SUCCESS;
     }
     
     /**
      *
      * @param string $strPhone,手机号
-     * @return int,0表示手机存在，1表示手机不存在
+     * @return 
+     * SUCCESS 表示手机可用
+     * USERPHONE_EXIST 表示手机不存在
+     * USERPHONE_SYNTEX_ERROR 表示手机格式错误
      */
     public function checkPhone($strPhone){
-        if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
+        if(empty($strPhone) || !User_Logic_Validate::checkPhone($strPhone)){
             return User_RetCode::USERPHONE_SYNTEX_ERROR;
         }
+
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('phone'=>$strPhone));
-        if(empty($objLogin->phone)) {
-            return User_RetCode::SUCCESS;
+        if(!empty($objLogin->phone)) {
+            return User_RetCode::USERPHONE_EXIST;
         }
-        return User_RetCode::USERPHONE_EXIST;
+        return User_RetCode::SUCCESS;
     }
     
     /**
@@ -46,16 +58,18 @@ class User_Logic_Regist{
      * @param string $strPhone,手机号
      * @return int,0表示手机存在，1表示手机不存在
      */
-    public function checkInviter($strPhone){
-        if(empty($strPhone)||(User_Api::checkReg('phone',$strPhone))){
+    public function checkInviter($strPhone){  
+        //邀请人可为空      
+        if(!empty($strPhone) && !User_Logic_Validate::checkPhone($strPhone)){
             return User_RetCode::USERPHONE_SYNTEX_ERROR;
         }
+
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('phone'=>$strPhone));
-        if(empty($objLogin->userid)) {
-            return User_RetCode::INVALID_USER;
+        if(!empty($objLogin->phone)) {
+            return User_RetCode::USERPHONE_EXIST;
         }
-        return $objLogin->userid;
+        return User_RetCode::SUCCESS;
     }
     
     /**
@@ -63,21 +77,31 @@ class User_Logic_Regist{
      * @param array $arrParam注册所需要的信息
      * @return int $uid,成功注册返回用户id，否则返回0
      */
-    public function regist($arrParam){
-        $regis = new User_Object_Login();
-        $regis->name = $arrParam['name'];
-        $regis->passwd = $arrParam['passwd'];
-        $regis->phone = $arrParam['phone'];
-        $ret = $regis->save();
-        $uid = $regis->userid;        
-        $info = new User_Object_Info();
-        $info->userid = $uid;
-        $info->usertype = 1;
-        $ret = $info->save();
-        if(!$ret){
-            return User_RetCode::INVALID_USER;
+    public function regist($username, $passwd, $phone, $inviter = ''){
+        $objLogin         = new User_Object_Login();
+        $objLogin->name   = $username;
+        $objLogin->passwd = $passwd;
+        $objLogin->phone  = $phone;
+        $ret1             = $objLogin->save();
+
+        if(!$ret1){
+            return 0;
         }
-        return $uid;
+
+        $objInfo           = new User_Object_objInfo();
+        $objInfo->userid   = $objLogin->userid;
+        //个人用户
+        $objInfo->usertype = 1;
+        $objInfo->save();
+
+        //TODO:绑定第三方账户的注册
+        $openid   = Yaf_Session::get(User_Keys::getOpenidKey());
+        $authtype = Yaf_Session::get(User_Keys::getAuthTypeKey());
+
+        //邀请通知
+        //TODO:获取inviterid
+        // Awards_Api::registNotify($objLogin->userid, $inviterid);
+        return $objLogin->userid;
     }
     
 }

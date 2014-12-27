@@ -5,25 +5,27 @@
 class RegistController extends Base_Controller_Page{
     
     public function init(){
-
         $this->setNeedLogin(false);
-
         parent::init();
-        $this->registLogic = new User_Logic_Regist();
-        $this->loginLogic = new User_Logic_Login();
     }
-    
     
     /**
      * 用户注册类
+     * 若有第三方登陆，则显示绑定提示
      */
     public function IndexAction(){
-        $strType = Yaf_Session::getInstance()->get("idtype");
-        if(!empty($strType)){
-            $openid = Yaf_Session::getInstance()->get("openid");
-            $login = new User_Object_Third($openid);
-            $this->getView()->assign("type",$strType);
-            $this->getView()->assign("third",$login->nickname);
+        $openid = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
+        if(!empty($openid)){
+            $strType      = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
+            $accessToken  = Base_Redis::getInstance()->get(User_Keys::getAccessTokenKey($openid));
+            
+            if(!empty($accessToken)){
+                $logic     = new User_Logic_Third();
+                $thirdUser = $logic->getUserThirdInfo($accessToken, $openid);
+
+                $this->getView()->assign("type", $strType);
+                $this->getView()->assign("third", $thirdUser->nickname);
+            }
         }
     }
 }

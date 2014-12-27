@@ -9,7 +9,6 @@ class RegistApiController extends Base_Controller_Api{
         $this->setNeedLogin(false);
 
         parent::init();
-        $this->registLogic = new User_Logic_Regist();
         $this->loginLogic = new User_Logic_Login();
     }
     
@@ -18,12 +17,14 @@ class RegistApiController extends Base_Controller_Api{
      * 
      */
     public function checkNameAction(){
-       $strName = trim($_REQUEST['name']);
-       $data = $this->registLogic->checkName($strName);
-       if(User_RetCode::SUCCESS == $data){
-           return $this->ajax();
-       }
-       return $this->ajaxError($data,User_RetCode::getMsg($data));
+        $strName = trim($_REQUEST['name']);
+        $logic   = new User_Logic_Regist();
+        $retCode = $logic->checkName($strName);
+        if(User_RetCode::SUCCESS !== $retCode){
+            $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
+        }else{
+            $this->ajax();
+        }
     }
     
     /**
@@ -31,11 +32,15 @@ class RegistApiController extends Base_Controller_Api{
      */
     public function checkPhoneAction(){
         $strPhone = trim($_REQUEST['phone']);
-        $data = $this->registLogic->checkPhone($strPhone);
-        if(User_RetCode::SUCCESS == $data){
-           return $this->ajax();
-       }
-       return $this->ajaxError($data,User_RetCode::getMsg($data));     
+
+        $logic   = new User_Logic_Regist();
+        $retCode = $logic->checkPhone($strPhone);
+
+        if(User_RetCode::SUCCESS !== $retCode){
+            $this->ajaxError($retCode, User_RetCode::getMsg($retCode));     
+        }else{
+            $this->ajax();
+        }
     }
     
     /**
@@ -55,9 +60,9 @@ class RegistApiController extends Base_Controller_Api{
      * 验证用户输入的验证码是否正确
      */
     public function checkSmsCodeAction(){
-        $strPhone   = trim($_REQUEST['phone']);
-        $strType   = trim($_REQUEST['type']);
-        $strVeriCode   = trim($_REQUEST['vericode']);
+        $strPhone    = trim($_REQUEST['phone']);
+        $strType     = trim($_REQUEST['type']);
+        $strVeriCode = trim($_REQUEST['vericode']);
         $ret = User_Api::checkSmsCode($strPhone, $strVeriCode,$strType);
         if($ret){
            return $this->ajax();
@@ -65,60 +70,55 @@ class RegistApiController extends Base_Controller_Api{
        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
     
-    /**
-     * 检验推荐人是否存在
-     * 
-     */
+    /** 
+    * 接口4: /user/regist/checkinviter
+    * 检查推荐人是否存在
+    * @param string $inviter
+    * @param string $token
+    * @return 标准Json格式
+    * status 0:成功，表示推荐人存在
+    * status 1031:推荐人不存在
+    */
     public function checkInviterAction(){
         $inviter = trim($_REQUEST['inviter']);
-        if(empty($inviter)||(User_Api::checkReg('phone', $inviter))){
-            return $this->ajaxError(User_RetCode::REFEREE_SNYTEX_ERROR,User_RetCode::getMsg(User_RetCode::REFEREE_SNYTEX_ERROR));
+
+        $logic   = new User_Logic_Regist();
+        $retCode = $logic->checkInviter($inviter);
+        if(User_RetCode::SUCCESS !== $retCode){
+            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode)); 
         }
-        $ret = $this->registLogic->checkInviter($inviter);
-        if(User_RetCode::INVALID_USER== $ret){
-           return $this->ajaxError(User_RetCode::INVITER_NOT_EXIST,User_RetCode::getMsg(User_RetCode::INVITER_NOT_EXIST)); 
-       }
-       return $this->ajax();
+        return $this->ajax();
     }
     
-    /**
-     * 用户注册类
-     */
-    public function IndexAction(){
+    /** 
+    * 接口5: /user/registapi/index
+    * 用户注册接口
+    * @param string $name
+    * @param string $passwd
+    * @param string $phone
+    * @param string $inviter, option
+    * @return 标准Json格式
+    * status 0:成功
+    * status 1033:注册失败
+    * 
+    * 
+    */
+    public function indexAction(){
         $strName    = trim($_REQUEST['name']);
-        $strPasswd = trim($_REQUEST['passwd']);
-        if(User_RetCode::USER_PASSWD_FORMAT_ERROR == User_Api::checkReg('passwd',$strPasswd)){
-            return $this->ajaxError(User_RetCode::USER_PASSWD_FORMAT_ERROR,User_RetCode::getMsg(User_Api::USER_PASSWD_FORMAT_ERROR));
-        }
-        $strPasswd  = md5($strPasswd);
+        $strPasswd  = md5(trim($_REQUEST['passwd']));
         $strPhone   = trim($_REQUEST['phone']);
-        $strReferee = "";
-        if(isset($_REQUEST['referee'])){
-           $intReferee = trim($_REQUEST['referee']);
-           $inviterid = $this->registLogic->checkInviter($intReferee);
-           if(User_RetCode::INVALID_USER == $inviterid) {
-               return $this->ajaxError($inviterid,User_RetCode::getMsg($inviterid));
-           }
+        $strInviter = isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
+
+        //各字段再验证过一遍
+        //TODO::
+        
+        //注册
+        $logic   = new User_Logic_Regist();
+        $retCode = $logic->regist($strName, $strPasswd, $strPhone, $strInviter);
+        if(User_RetCode::SUCCESS !== $retCode){  
+            $this->ajaxError($retCode, User_RetCode::getMsg($retCode));   
+        }else{
+            $this->ajax();
         }
-        $arrParam = array(
-            'name'   => $strName,
-            'passwd' => $strPasswd,
-            'phone'  => $strPhone,
-            'refere' => $strReferee,
-        );
-        $uid = $this->registLogic->regist($arrParam);
-        if(User_RetCode::INVALID_USER != $uid){  //注册成功时判用户是否已经QQ等第三方登录
-            //Awards_Api::registNotify($uid, $inviterid);
-            $openid = Yaf_Session::getInstance()->get("openid");
-            if(!empty($openid)){
-               $type = Yaf_Session::getInstance()->get("idtype");
-               $ret = $this->loginLogic->thirdLogin($uid,$openid,$type);
-               if($ret){
-                   return $this->ajaxError($ret,User_RetCode::getMsg($ret));
-               }
-            }
-            return $this->ajax();
-        }
-        return $this->ajaxError(User_RetCode::UNKNOWN_ERROR,User_RetCode::getMsg(User_RetCode::UNKNOWN_ERROR));   
     }
 }

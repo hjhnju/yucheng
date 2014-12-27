@@ -5,19 +5,6 @@
 class User_Api{
     
     const LAST_TIME = 5;     //验证码过期时间,5分钟
- 
-    /**
-     * User_Api::checkReg()
-     * 检验$value是否是$type规定的类型,正则在User_Logic_Api类中
-     * 正则匹配验证：返回true为成功，其它为失败
-     */
-    public static function checkReg($strType, $strValue){
-        $ret = preg_match(User_Logic_Api::$_arrRegMap[$strType],$strValue);
-        if($ret == User_RetCode::REG_FORMAT_WRONG) {
-            return true;
-        }
-        return false;
-    }
     
     /** 
      * User_Api::checkLogin()
@@ -34,8 +21,9 @@ class User_Api{
         ));
         return $objUser;
     }
+
     /** 
-     *User_Api::getUserObject($userid)
+     * User_Api::getUserObject($userid)
      * 获取用户Object
      * @return object User_Object | null
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
