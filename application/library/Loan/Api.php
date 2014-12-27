@@ -48,11 +48,13 @@ class Loan_Api {
      * @param number $pagesize
      * @return Array
      */
-    public static function getUserLoans($uid, $page = 1, $pagesize = 10) {
+    public static function getUserLoans($uid, $page = 1, $pagesize = 10, $filters = array()) {
         $list = new Loan_List_Loan();
         $list->setPage($page);
         $list->setPagesize($pagesize);
-        $list->setFilter(array('user_id' => $uid));
+        
+        $filters['user_id'] = $uid;
+        $list->setFilter($filters);
         return $list->toArray();
     }
     
@@ -79,9 +81,7 @@ class Loan_Api {
         $list->joinType($refund, 'refund_type');
         $data = $list->toArray();
         foreach ($data['list'] as $key => $row) {
-            $data['list'][$key]['percent'] = number_format($row['invest_amount'] / $row['amount'], 2);
-            $data['list'][$key]['amount'] = number_format($row['amount'], 2);
-            $data['list'][$key]['invest_amount'] = number_format($row['invest_amount'], 2);
+            $data['list'][$key] = self::formatLoan($row);
         }
         return $data;
     }
@@ -94,10 +94,41 @@ class Loan_Api {
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
+        $data = self::formatLoan($data);
+        
+        return $data;
+    }
+    
+    /**
+     * 格式化借款数据
+     * @param array $data
+     * @return array
+     */
+    private static function formatLoan($data) {
         $data['amount'] = number_format($data['amount'], 2);
         $data['invest_amount'] = number_format($data['invest_amount'], 2);
         
+        $duration = new Loan_Type_Duration();
+        $data['duration_name'] = $duration->getTypeName($data['duration']);
         return $data;
+    }
+    
+    /**
+     * 更新借款当前的状态
+     * @param integer $loan_id
+     * @param integer $status
+     * @return boolean
+     */
+    public static function updateLoanStatus($loan_id, $status) {
+        $loan = new Loan_Object_Loan($loan_id);
+        $loan->status = $status;
+        $res = $loan->save();
+        if ($res) {
+            $type = new Loan_Type_LoanStatus();
+            $content = "更新借款状态为" . $type->getTypeName($status);
+            self::AddLog($loan_id, $content);
+        }
+        return $res;
     }
     
     /**
@@ -117,26 +148,23 @@ class Loan_Api {
      * @return array
      */
     public static function getLoanDetail($loan_id) {
-        $loan = new Loan_Object_Loan($loan_id);
-        $data = $loan->toArray();
+        $data = self::getLoanInfo($loan_id);
         $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();
         $safe = new Loan_Type_SafeMode();
         $refund = new Loan_Type_RefundType();
-        $data['loan_type'] = $type->getTypeName($loan->typeId);
-        $data['loan_cat'] = $cat->getTypeName($loan->catId);
+        $data['loan_type'] = $type->getTypeName($data['type_id']);
+        $data['loan_cat'] = $cat->getTypeName($data['cat_id']);
         $data['safemode'] = $safe->getTypeName($loan->safeId);
-        $data['refund_typename'] = $refund->getTypeName($loan->refundType);
-        $data['amount'] = number_format($data['amount'], 2);
-        $data['invest_amount'] = number_format($data['invest_amount'], 2);
+        $data['refund_typename'] = $refund->getTypeName($data['refund_type']);
 
         $cond = array('loan_id' => $loan_id);
         $company = new Loan_Object_Company($cond);
         $data['company'] = $company->toArray();
         
-        $counter = new Loan_Object_Counter($loan->userId);
+        $counter = new Loan_Object_Counter($data['user_id']);
         $data['counter'] = $counter->toArray();
         
         $guarantee = new Loan_Object_Guarantee($cond);
