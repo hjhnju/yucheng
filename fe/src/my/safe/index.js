@@ -16,7 +16,7 @@ define(function (require) {
     function init() {
         header.init();
         bindEvent();
-        $('.finish-grade-refresh').trigger('click');
+        // $('.finish-grade-refresh').trigger('click');
     }
 
     function bindEvent() {
