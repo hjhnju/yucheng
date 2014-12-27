@@ -50,7 +50,6 @@ class User_RetCode extends Base_RetCode{
     const INVALID_URL       = 0;  //无效的URL
     
     const BOUND             = 0; //用户已绑定第三方账号
-    
 
     /* 消息函数
      * @var array
@@ -73,20 +72,6 @@ class User_RetCode extends Base_RetCode{
         self::IMAGE_CODE_WRONG         => '图形验证码错误',
         self::GET_AUTHCODE_FAIL        => '第三方登录授权出错',
         self::UNBOUND                  => '用户未绑定第三方账号',
-        
     );
-    
-     /**
-     * 获取信息描述
-     * @param  int    $exceptionCode 错误码
-     * @return string            描述
-     */
-    public static function getMsg($exceptionCode) {
 
-        if (isset(self::$_arrErrMap[$exceptionCode])) {
-            return self::$_arrErrMap[$exceptionCode];
-        } else {
-            return self::$_arrErrMap[self::UNKNOWN_ERROR];
-        }
-    }
 }
