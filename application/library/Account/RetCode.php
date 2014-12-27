@@ -24,7 +24,7 @@ class Account_RetCode extends Base_RetCode {
 	CONST TOKEN_VERIFY_ERROR         = 1115;//token验证失败
 	CONST MODIFY_EMAIL_FAIL          = 1116;//修改邮箱失败
 	CONST OLDPWD_INPUT_ERROR         = 1117;//原密码输入错误
-	
+	CONST EMAIL_NOT_CHANGE           = 1118;//邮箱没有发生变化
 	/* 消息函数
 	 * @var array
 	*/
@@ -45,6 +45,7 @@ class Account_RetCode extends Base_RetCode {
 		self::EMAIL_FOEMAT_ERROR         => '邮箱格式错误',
 		self::TOKEN_VERIFY_ERROR         => 'token验证失败',
 		self::OLDPWD_INPUT_ERROR         => '原密码输入错误',
+		self::EMAIL_NOT_CHANGE           => '邮箱没有发生变化',
 	);
 	
 	/**
