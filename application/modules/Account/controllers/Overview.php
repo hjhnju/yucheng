@@ -73,7 +73,7 @@ class OverviewController extends Base_Controller_Response {
 	public function profitcurveAction() {
 		//$userId = $this->getUserId();
 		//$objUser = User_Api::getUserObject($userId);
-		$objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'15901538467','realname'=>'jiangbianliming',)));//for test
+		$objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'15901538467','realname'=>'jiangbianliming','huifuid'=>1001,)));//for test
 		$data = array('name' => $objUser->name, 'phone' => $objUser->phone,);
 		$huifuid = $objUser->huifuid;
 		if(!isset($huifuid)) {//TODO !isset
