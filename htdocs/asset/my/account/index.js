@@ -1,2 +1,2 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define("my/account/index",function(require){function r(r){var i=e("#all-account-line");if(1===+r)o.remote();o.on("success",function(r){if(r.bizError)i.html(n.render("Error",r.statusInfo));else t.render("all-account-line",r)})}var e=require("jquery"),n=require("etpl"),t=require("./line"),i=require("common/Remoter"),o=new i("LINE_GET");return{init:r}});
+define("my/account/index",function(require){function e(e){var i=r("#all-account-line");if(1===+e)o.remote();o.on("success",function(e){if(e.bizError)i.html(n.render("Error",e.statusInfo));else t.render("all-account-line",e)})}var r=require("jquery"),n=require("etpl"),t=require("./line"),i=require("common/Remoter"),o=new i("LINE_GET");return{init:e}});
