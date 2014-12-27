@@ -1,20 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/line', [
-    'require',
-    '../component/base',
-    './base',
-    'zrender/shape/BrokenLine',
-    '../util/shape/Icon',
-    '../util/shape/HalfSmoothPolygon',
-    '../component/axis',
-    '../component/grid',
-    '../component/dataZoom',
-    '../config',
-    '../util/ecData',
-    'zrender/tool/util',
-    'zrender/tool/color',
-    '../chart'
-], function (require) {
+define('echarts/chart/line', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var BrokenLineShape = require('zrender/shape/BrokenLine');

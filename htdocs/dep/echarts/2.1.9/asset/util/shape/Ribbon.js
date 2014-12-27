@@ -1,11 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/Ribbon', [
-    'require',
-    'zrender/shape/Base',
-    'zrender/shape/util/PathProxy',
-    'zrender/tool/util',
-    'zrender/tool/area'
-], function (require) {
+define('echarts/util/shape/Ribbon', function (require) {
     var Base = require('zrender/shape/Base');
     var PathProxy = require('zrender/shape/util/PathProxy');
     var zrUtil = require('zrender/tool/util');

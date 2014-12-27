@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/smartSteps', [], function () {
+define('echarts/util/smartSteps', function () {
     var mySteps = [
             10,
             25,

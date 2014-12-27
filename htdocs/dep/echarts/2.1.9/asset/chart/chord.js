@@ -1,22 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/chord', [
-    'require',
-    '../component/base',
-    './base',
-    'zrender/shape/Text',
-    'zrender/shape/Line',
-    'zrender/shape/Sector',
-    '../util/shape/Ribbon',
-    '../util/shape/Icon',
-    'zrender/shape/BezierCurve',
-    '../config',
-    '../util/ecData',
-    'zrender/tool/util',
-    'zrender/tool/vector',
-    '../data/Graph',
-    '../layout/Chord',
-    '../chart'
-], function (require) {
+define('echarts/chart/chord', function (require) {
     'use strict';
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');

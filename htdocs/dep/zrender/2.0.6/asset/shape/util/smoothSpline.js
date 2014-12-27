@@ -1,8 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/util/smoothSpline', [
-    'require',
-    '../../tool/vector'
-], function (require) {
+define('zrender/shape/util/smoothSpline', function (require) {
     var vector = require('../../tool/vector');
     function interpolate(p0, p1, p2, p3, t, t2, t3) {
         var v0 = (p2 - p0) * 0.5;

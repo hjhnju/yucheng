@@ -1,8 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/layout/Tree', [
-    'require',
-    'zrender/tool/vector'
-], function (require) {
+define('echarts/layout/Tree', function (require) {
     var vec2 = require('zrender/tool/vector');
     function TreeLayout(opts) {
         opts = opts || {};
