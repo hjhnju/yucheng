@@ -46,13 +46,16 @@
                     <a href="{%$rechargeurl%}" class="all-box-pay-link">充值</a>
                 </div>
             </div>
+            {%if $openthirdpay == 2%}
             <div class="all-account-box-dredge">
                 <div class="all-box-dredge-name">尚未开通资金托管账户</div>
                 <a href="###" class="all-box-dredge-link">立即开通</a>
             </div>
+            {%else%}
             <div id="all-account-line" class="all-account-box-dredge quxian">
                 加载中
             </div>
+            {%/if%}
         </div>
     </div>
 </div>
