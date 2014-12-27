@@ -91,7 +91,7 @@
                     <span class="project-time-start">开始时间：{%$create_time|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
                     <span class="project-time-start">截止日期：{%$deadline|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
                 </div>
-                <div class="project-main project">
+                <div class="project-main project file record">
                     <div class="project-main-title">
                         <div class="main-title-box showproject current">项目详情</div>
                         <div class="main-title-box showfile">文件资料</div>
@@ -222,12 +222,6 @@
                                     {%foreach $audit['1'] as $key => $item%}
                                     <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
                                     {%/foreach%}
-<!--                                    <div class="renzheng-pic shidi"></div>-->
-<!--                                    <div class="renzheng-pic shuiwu"></div>-->
-<!--                                    <div class="renzheng-pic bank"></div>-->
-<!--                                    <div class="renzheng-pic zuzhi"></div>-->
-<!--                                    <div class="renzheng-pic zengxin"></div>-->
-<!--                                    <div class="renzheng-pic diya"></div>-->
                                 </div>
                             </div>
                             <div class="renzheng-box">
@@ -237,11 +231,6 @@
                                     <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
                                     {%/foreach%}
 
-<!--                                    <div class="renzheng-pic shenfen"></div>-->
-<!--                                    <div class="renzheng-pic hukou"></div>-->
-<!--                                    <div class="renzheng-pic jiehun"></div>-->
-<!--                                    <div class="renzheng-pic fangchan"></div>-->
-<!--                                    <div class="renzheng-pic xingshi"></div>-->
                                 </div>
                             </div>
                         </div>
@@ -251,7 +240,31 @@
                             <div class="detail-symbol"></div>
                         </div>
                     </div>
-                    <div class="main-box-details showfile-main"></div>
+                    <div class="main-box-details showfile-main">
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">借款企业</div>
+                            <div class="main-detail-content">
+                                <ul class="detail-item">
+                                    <li class="detail-item-list">
+                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
+                                        <p class="detail-item-p">身份证</p>
+                                    </li>
+                                    <li class="detail-item-list">
+                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
+                                    </li>
+                                    <li class="detail-item-list">
+                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
+                                    </li>
+                                    <li class="detail-item-list">
+                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
+                                    </li>
+                                    <li class="detail-item-list">
+                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="main-box-details showrecord-main"></div>
                 </div>
             </div>
