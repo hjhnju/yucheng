@@ -139,7 +139,8 @@ define(function (require) {
             if (value) {
                 checksmscode.remote({
                     vericode: value,
-                    phone: phone
+                    phone: phone,
+                    type: 1
                 });
             }
 

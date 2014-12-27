@@ -12,7 +12,8 @@ exports.getProcessors = function () {
             'src/setting/login/index.less',
             'src/setting/regist/index.less',
             'src/my/invest/index.less',
-            'src/my/account/index.less'
+            'src/my/account/index.less',
+            'src/my/safe/index.less'
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -20,14 +21,18 @@ exports.getProcessors = function () {
             'src/setting/login/index.less',
             'src/setting/regist/index.less',
             'src/my/invest/index.less',
-            'src/my/account/index.less'
+            'src/my/account/index.less',
+            'src/my/safe/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
     var jsProcessor = new JsCompressor({
         files: [
             'src/setting/login/index.js',
-            'src/setting/regist/index.js'
+            'src/setting/regist/index.js',
+            'src/my/safe/index.js',
+            'src/my/account/index.js',
+            'src/my/invest/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

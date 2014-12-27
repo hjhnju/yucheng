@@ -15,7 +15,7 @@ define('common/config', [], function () {
             EDIT_PHONE_SUBMITE: rootUrl + '/account/edit/checkphone',
             EDIT_PHONE_SUBMITE2ND: rootUrl + '/account/edit/checkphone',
             EDIT_EMAILCONFIRM: rootUrl + '/test/account/edit/emailConfirm.json',
-            EDIT_CHPWD_SUBMITE: rootUrl + '/test/account/edit/emailConfirm.json',
+            EDIT_CHPWD_SUBMITE: rootUrl + '/account/edit/chpwd',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
             INVEST_LIST: rootUrl + '/invest/api',
             INVEST_DETAIL_CONFIRM: rootUrl + '/test/invest/detail.json',

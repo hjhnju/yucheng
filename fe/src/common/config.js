@@ -61,6 +61,8 @@ define(function () {
         EDIT_CHPWD_SUBMITE: rootUrl
             + '/account/edit/chpwd',
         //+ '/test/account/edit/emailConfirm.json',
+        LINE_GET: rootUrl
+            + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl
         + '/account/secure/securedegree',
         //    + '/test/account/secure/secureDegree.json',

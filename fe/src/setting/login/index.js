@@ -53,8 +53,9 @@ define(function (require) {
                 return;
             }
 
-            imgcodeCheck.remove({
-                imgcode: value
+            imgcodeCheck.remote({
+                imgcode: value,
+                type: 2
             });
         });
 

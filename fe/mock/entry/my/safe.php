@@ -31,7 +31,7 @@ $smarty->assign('thirdPlatform','第三方绑定平台，qq,weibo');
 $smarty->assign('thirdNickName','第三方昵称');
 $smarty->assign('thirdloginurl','http://');
 $smarty->assign('bindthirdlogin', 2);
-$smarty->assign('score', 10);
+$smarty->assign('score', 0);
 
 
 $smarty->caching = false;

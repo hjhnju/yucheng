@@ -7,6 +7,7 @@ define('setting/chpassword/index', [
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
+    var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
     function init() {
         bingEvent();
     }
@@ -24,6 +25,11 @@ define('setting/chpassword/index', [
                     $(this).next().html('\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A');
                     return;
                 }
+                if (!testPwd.test(value)) {
+                    me.addClass('current');
+                    $(this).next().html('\u5BC6\u7801\u4E0D\u7B26\u5408\u8981\u6C42');
+                    return;
+                }
                 $(this).next().html('');
             }
         });
@@ -34,8 +40,6 @@ define('setting/chpassword/index', [
                 $(this).addClass('current');
                 $('#repeat-ipt-error').html('\u4E24\u6B21\u5BC6\u7801\u4E0D\u4E00\u81F4');
             }
-            console.log(typeof newval);
-            console.log(me);
         });
         $('.chpwd-link').click(function () {
             var error = $('.chpwd-input.current');
