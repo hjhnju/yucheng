@@ -7,7 +7,7 @@
 {%block name="script"%}
 <script>
     require(['my/account/index'], function (main) {
-        main.init();
+        main.init('{%$openthirdpay%}');
     });
 </script>
 {%/block%}
