@@ -57,7 +57,7 @@ exports.getProcessors = function () {
 };
 
 exports.exclude = [
-    'tool',
+    //'tool',
     'doc',
     'test',
     'entry',
