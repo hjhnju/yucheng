@@ -5,7 +5,9 @@
 class RegistApiController extends Base_Controller_Api{
     
     public function init(){
+       
         $this->setNeedLogin(false);
+
         parent::init();
         $this->registLogic = new User_Logic_Regist();
         $this->loginLogic = new User_Logic_Login();
