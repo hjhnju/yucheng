@@ -21,7 +21,7 @@ $smarty->assign('totalInvest',1000);
 $smarty->assign('reposPrifit',10);
 $smarty->assign('reposPrincipal',100000000);
 $smarty->assign('rechargeurl','http://www.baidu.com');
-
+$smarty->assign('openthirdpay', 1);
 
 
 $smarty->caching = false;

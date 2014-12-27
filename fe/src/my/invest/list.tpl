@@ -20,7 +20,7 @@
 <!-- for: ${list} as ${item} -->
 <li class="my-invest-item">
     <div class="my-invest-content">
-        <span class="my-invest-project invest-name">${item.investPro}</span>
+        <a href="###" class="my-invest-project invest-name">${item.investPro}</a>
         <span class="my-invest-project invest-balance"><span class="invest-em">${item.annlnterestRate}</span>%</span>
         <span class="my-invest-project invest-money">￥${item.tenderAmt}</span>
         <span class="my-invest-project invest-time">${item.timeInfo}</span>
@@ -98,7 +98,7 @@
     </tr>
     <!-- for: ${list} as ${item} -->
     <tr>
-        <td>${item.investPro}</td>
+        <td><a href="###" class="invest-name">${item.investPro}</a></td>
         <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
         <td>￥${item.tenderAmt}</td>
         <td>${item.deadline}个月</td>
@@ -126,7 +126,7 @@
     </tr>
     <!-- for: ${list} as ${item} -->
     <tr>
-        <td>${item.investPro}</td>
+        <td><a href="###" class="invest-name">${item.investPro}</a></td>
         <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
         <td>￥${item.tenderAmt}</td>
         <td>${item.deadline}个月</td>
@@ -151,7 +151,7 @@
     </tr>
     <!-- for: ${list} as ${item} -->
     <tr>
-        <td>${item.investPro}</td>
+        <td><a href="###" class="invest-name">${item.investPro}</a></td>
         <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
         <td>￥${item.tenderAmt}</td>
         <td>${item.deadline}个月</td>
