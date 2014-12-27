@@ -1,5 +1,17 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/k', function (require) {
+define('echarts/chart/k', [
+    'require',
+    '../component/base',
+    './base',
+    '../util/shape/Candle',
+    '../component/axis',
+    '../component/grid',
+    '../component/dataZoom',
+    '../config',
+    '../util/ecData',
+    'zrender/tool/util',
+    '../chart'
+], function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var CandleShape = require('../util/shape/Candle');

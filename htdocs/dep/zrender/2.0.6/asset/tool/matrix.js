@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/tool/matrix', function () {
+define('zrender/tool/matrix', [], function () {
     var ArrayCtor = typeof Float32Array === 'undefined' ? Array : Float32Array;
     var matrix = {
             create: function () {

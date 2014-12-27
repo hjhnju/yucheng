@@ -99,7 +99,7 @@
     width: 380px;
 }
 .gaishu-guard-baozhang {
-    height: 20px;
+
     margin-bottom: 8px;
 
     span {
@@ -107,6 +107,22 @@
         color: #333333;
         display: inline-block;
         height: 20px;
+    }
+    .span {
+        vertical-align: top;
+    }
+
+    .baozhang-box {
+        display: inline-block;
+        width: 300px;
+        margin-top: -4px;
+
+        .clearfix;
+
+        .baozhang-type {
+            float: left;
+
+        }
     }
 
     .baozhang-type {
@@ -184,17 +200,51 @@
 }
 .project-main {
 
-    &.project .showproject-main {
-        display: block;
-        display: none;
-    }
-
-    &.file .showfile-main {
+    .showproject-main,
+    .showfile-main,
+    .showrecord-main {
         display: block;
     }
 
-    &.record .showrecord-main {
-        display: block;
+    &.project {
+        .showproject {
+            .title-current;
+        }
+
+        .showproject-main {
+            display: block;
+        }
+        .showfile-main,
+        .showrecord-main {
+            display: none;
+        }
+    }
+
+    &.file {
+        .showfile {
+            .title-current;
+        }
+
+        .showfile-main {
+            display: block;
+        }
+        .showproject-main,
+        .showrecord-main {
+            display: none;
+        }
+    }
+
+    &.record {
+        .showrecord {
+            .title-current;
+        }
+        .showrecord-main {
+            display: block;
+        }
+        .showproject-main,
+        .showfile-main {
+            display: none;
+        }
     }
 }
 .project-main-title {
@@ -212,15 +262,15 @@
     font-size: 14px;
     width: 120px;
     text-align: center;
-
-    &.current {
-        border-top: 2px solid @color-green;
-        border-left: 1px solid #dfdfdf;
-        border-right: 1px solid #dfdfdf;
-        border-bottom: 1px solid #FFFFFF;
-        margin-bottom: -1px;
-        color: @color-green;
-    }
+}
+.title-current {
+    border-top: 2px solid @color-green;
+    border-left: 1px solid #dfdfdf;
+    border-right: 1px solid #dfdfdf;
+    border-bottom: 1px solid #FFFFFF;
+    margin-bottom: -1px;
+    color: @color-green;
+    line-height: 40px;
 }
 .main-box-details {
     display: none;
@@ -538,21 +588,20 @@
 }
 .btm-main-title-box {
     float: left;
-    width: 100px;
+    width: 90px;
     line-height: 30px;
-    text-align: center;
-
+    padding-left: 10px;
 
     &.time {
-        width: 90px;
+        width: 80px;
     }
 
     &.yinghuan {
-        width: 100px;
+        width: 90px;
     }
 
     &.status {
-        width: 64px;
+        width: 54px;
         float: right;
     }
 }
@@ -573,6 +622,7 @@
 .detail-item {
     .clearfix;
     width: 680px;
+    padding-bottom: 10px;
 }
 .detail-item-list {
     float: left;
@@ -580,8 +630,48 @@
     margin-right: 40px;
     margin-bottom: 20px;
 
+    &.img-city {
+        width: 200px;
+
+        .detail-item-list-img {
+            width: 200px;
+            height: 180px;
+        }
+    }
+
+    .detail-item-list-img {
+        width: 130px;
+        height: 180px;
+    }
+
     .detail-item-p {
         text-align: center;
         height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+        color: #333333;
+    }
+}
+.item-last {
+    border-bottom: none;
+}
+//投资记录
+table {
+    border-top: 1px solid #ededed;
+    tr {
+        height: 30px;
+        padding-left: 20px;
+
+        &.color-white {
+            background-color: #FFFFFF;
+        }
+
+        &.color-hui {
+            background-color: #f8f8f8;
+        }
+
+        td {
+            padding-left: 20px;
+        }
     }
 }

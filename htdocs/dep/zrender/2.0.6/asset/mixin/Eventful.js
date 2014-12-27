@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/mixin/Eventful', function (require) {
+define('zrender/mixin/Eventful', ['require'], function (require) {
     var Eventful = function () {
         this._handlers = {};
     };

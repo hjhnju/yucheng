@@ -2,12 +2,13 @@
     <div class="finish-nav-top">
         <div class="finish-nav-top-user">Hi,{%$userinfo.username%}</div>
         <div class="finish-top-icon">
+
             <a href="{%$userinfo.realname.url%}" class="top-icon-link user {%if $userinfo.realname.isopen == 1%}current{%/if%}" title="实名认证"></a>
             <a href="{%$userinfo.phone.url%}" class="top-icon-link phone {%if $userinfo.phone.isopen == 1%}current{%/if%}" title="手机绑定"></a>
             <a href="{%$userinfo.huifu.url%}" class="top-icon-link other {%if $userinfo.huifu.isopen == 1%}current{%/if%}" title="第三方托管"></a>
         </div>
         <div class="finish-top-schedule">
-            <div class="top-schedule-internal"></div>
+            <div class="top-schedule-internal" style="min-width: 10%;width: {%$userinfo.securedegree.score%}%;"></div>
         </div>
         <div class="finish-top-grade">
             <span>安全等级</span>

@@ -1,5 +1,15 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/categoryAxis', function (require) {
+define('echarts/component/categoryAxis', [
+    'require',
+    './base',
+    'zrender/shape/Text',
+    'zrender/shape/Line',
+    'zrender/shape/Rectangle',
+    '../config',
+    'zrender/tool/util',
+    'zrender/tool/area',
+    '../component'
+], function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var LineShape = require('zrender/shape/Line');
