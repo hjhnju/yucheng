@@ -91,7 +91,7 @@ exports.getLocations = function () {
                     '/user/registapi/checkinviter',
                     '/user/registapi/checksmscode',
                     '/user/loginapi/index',
-                    '/user/loginapi/getauthimage',
+                    '/user/loginapi/getauthimageurl',
                     '/user/loginapi/checkauthimage',
                     '/invest/api',
                     '/account/edit/getsmscode',

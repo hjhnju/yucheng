@@ -9,7 +9,7 @@ define('common/config', function () {
             REGIST_INDEX_CHECK: rootUrl + '/user/registapi/index',
             REGIST_CHECKINVITER_CHECK: rootUrl + '/user/registapi/checkinviter',
             LOGIN_INDEX_CHECK: rootUrl + '/user/loginapi/index',
-            LOGIN_IMGCODE_ADD: rootUrl + '/user/loginapi/getauthimage',
+            LOGIN_IMGCODE_ADD: rootUrl + '/user/loginapi/getauthimageurl',
             LOGIN_IMGCODE_CHECK: rootUrl + '/user/loginapi/checkauthimage',
             EDIT_GETSMSCODE_CHECK: rootUrl + '/account/edit/getsmscode',
             EDIT_PHONE_SUBMITE: rootUrl + '/account/edit/checkphone',

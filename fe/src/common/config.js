@@ -43,7 +43,7 @@ define(function () {
             + '/user/loginapi/index',
 //            + '/test/user/login/index.json',
         LOGIN_IMGCODE_ADD: rootUrl
-            + '/user/loginapi/getauthimage',
+            + '/user/loginapi/getauthimageurl',
         LOGIN_IMGCODE_CHECK: rootUrl
             + '/user/loginapi/checkauthimage',
         EDIT_GETSMSCODE_CHECK: rootUrl
