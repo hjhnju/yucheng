@@ -8,9 +8,9 @@
 <script>
     require(['project/list/index'], function (main) {
         main.init({
-            page: '{%$page%}',
-            pageall: '{%$pageall%}',
-            pagesize: '{%$pagesize%}'
+            page: '{%$data.page%}',
+            pageall: '{%$data.pageall%}',
+            pagesize: '{%$data.pagesize%}'
         });
     });
 </script>
@@ -59,7 +59,7 @@
                 </div>
                 <div id="invest-main">
                     <div class="investlist-box-title">
-                        {%foreach $list as $key => $item%}
+                        {%foreach $data.list as $key => $item%}
                         <div class="investlist-box-title-name name">
                             <span class="name-shi">实</span>
                             <span class="school">{%$item.title%}</span>
