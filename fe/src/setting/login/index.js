@@ -62,7 +62,9 @@ define(function (require) {
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
-            imgcodeGet.remote();
+            imgcodeGet.remote({
+                type: 2
+            });
         });
 
         // 登录按钮
@@ -96,7 +98,7 @@ define(function (require) {
                 $('#login-error').html(data.statusInfo);
             }
             else {
-                window.location.href = 'http://www.baidu.com';
+                window.location.href = '/account/overview/index';
             }
         });
 

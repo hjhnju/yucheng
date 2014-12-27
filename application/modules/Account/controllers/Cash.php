@@ -7,25 +7,31 @@ class CashController extends Base_Controller_Response {
 	
 	public function init() {
 		parent::init();
+		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax = true;
 	}
 	
 	/**
 	 * 调用财务模块Finance_Api获取 账户余额
 	 * assign至前端即可
-	 * 
+	 * avlBal 可用余额
+	 * acctBal 账户余额
+	 * freBal 冻结余额
+	 * userInfo 左上角用户信息
 	 */
 	public function indexAction() {
-		
+		$userid = $this->getUserId();
+		$userinfo = $this->userInfoLogic->getUserInfo();
 		//$userCustId = User_Api::getUserCustId()  用户模块封装接口获取用户在汇付天下的唯一ID
 		$info = Finance_Api::queryBalanceBg($userCustId);
 		$data = $info['data'];
 		$avlBal = isset($data['AvlBal']) ? $data['AvlBal'] : 0.00;//可用余额
 		$acctBal = isset($data['AcctBal']) ? $data['AcctBal'] : 0.00;//账户余额     
 		$frzBal = isset($data['FrzBal']) ? $data['FrzBal'] : 0.00;//冻结余额  
-		$this->getView()->assign("avlBal", $avlBal);
-		$this->getView()->assign("acctBal", $acctBal);
-		$this->getView()->assign("frzBal", $frzBal);	
+		$this->getView()->assign('avlBal', $avlBal);
+		$this->getView()->assign('acctBal', $acctBal);
+		$this->getView()->assign('frzBal', $frzBal);	
+		$this->getView()->assign('userInfo',$userinfo);
 	}
 	
 	/**

@@ -14,7 +14,8 @@ class InvestController extends Base_Controller_Response {
 	public function init(){
         $this->setNeedLogin(false);
         parent::init();
-		$this->ajax = true;
+        $this->userInfoLogic = new Account_Logic_UserInfo();
+        $this->ajax = true;
 	}
 	
 	/**
@@ -22,6 +23,9 @@ class InvestController extends Base_Controller_Response {
 	 * 渲染入口界面
 	 */
 	public function indexAction() {
+		$userid = $this->getUserId();
+		$userInfo = $this->userInfoLogic->getUserInfo($userid);		
+		$this->getView()->assign('userinfo',$userInfo);
 		
 	}
 	

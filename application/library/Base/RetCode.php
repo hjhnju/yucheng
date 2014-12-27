@@ -62,6 +62,8 @@ class Base_RetCode {
 
         if (isset(self::$_arrErrMap[$exceptionCode])) {
             return self::$_arrErrMap[$exceptionCode];
+        } elseif(isset(static::$_arrErrMap[$exceptionCode])) {
+            return static::$_arrErrMap[$exceptionCode];
         } else {
             return self::$_arrErrMap[self::UNKNOWN_ERROR];
         }

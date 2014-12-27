@@ -11,37 +11,13 @@ class MessageController extends Base_Controller_Response {
 	
 	/**
 	 * 接口7/account/message/index
-	 * 获取Msg_Api消息列表，消息详情
-	 * @param type 0--全部  1--未读  2--已读
-	 * @param page 前端页码
-	 * @return 标准json
-	 * status 0:成功
-	 * status 1106:获取消息列表失败
-	 * data=
-	 * {
-	 * 	   'page'页码
-	 *     'pageall':10 总共页码 
-	 *     'all' 数据条数
-	 *     'list'=
-	 *     {
-	 *         'msgId' 消息id
-     *         'msgIType' 消息类型
-     *         'msgIContent' 消息内容
-     *         'sendTime' 发送时间
-     *         'isReaded' 1--未读  2--已读   
-	 *     }
-	 * }
+	 * 渲染我的消息页面smarty
+	 * userinfo 左上角用户信息
 	 */
 	public function indexAction() {
-		$type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 0;
-		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 0;
-		
-		
-		//$msg = Msg_Api::getMsg($msgType);
-		//$msg合法性判断
-		//$this->output($msg);
-		//$this->outputError()
-        
+		$userid = $this->getUserId();
+		$userInfo = $this->userInfoLogic->getUserInfo($userid);
+		$this->getView()->assign('userinfo',$userInfo);
 	}
 	
 	/**

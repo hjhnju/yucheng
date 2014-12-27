@@ -8,15 +8,22 @@ class AwardController extends Base_Controller_Response {
 	
 	public function init() {
 		parent::init();
+		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax = true;
 	}
 	
+	/**
+	 * assign至前端邀请url
+	 * inviteUrl 用户的专属邀请链接
+	 * userinfo 左上角信息
+	 */
 	public function indexAction() {				
         $userid = $this->getUserId();	
-        $userid = isset($userid) ? $userid : 0;
-		$inviteUrl = Awards_Api::getInviteUrl($userid);
+        $userInfo = $this->userInfoLogic->getUserInfo($userid);
+        $inviteUrl = Awards_Api::getInviteUrl($userid);
 		$inviteUrl = ($inviteUrl != false) ? $inviteUrl : ""; //获取该用户的专属邀请链接
-		$this->getView()->assign("inviteUrl", $inviteUrl);			
+		$this->getView()->assign('inviteUrl', $inviteUrl);	
+		$this->getView()->assign('userinfo',$userInfo);
 	}
 	
 	/**

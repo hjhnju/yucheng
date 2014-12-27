@@ -1,0 +1,50 @@
+@import "../invest/index.less";
+
+.my-invest-list {
+    .msg-type {
+        width: 100px;
+    }
+    .msg-content {
+        width: 450px;
+        .ellipsis();
+    }
+    .msg-time {
+        width: 150px;
+    }
+    .msg-content-text {
+        cursor: pointer;
+    }
+}
+
+.my-invest-item {
+
+    &.unread {
+        color: @color-green;
+    }
+    .my-msg-detail {
+        padding: 30px;
+        background-color: @color-gray-bg;
+        line-height: 24px;
+        min-height: 0;
+        position: relative;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    
+    a {
+        color: @color-green;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .close-detail {
+        color: @color-green;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+}

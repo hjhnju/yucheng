@@ -96,17 +96,20 @@ class User_Api{
      * 设置用户密码
      * @param int $uid
      * @param string $strPasswd
-     * @return boolean
+     * @return int
      */
     public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
         if(empty($objInfo->userid)){
-            return false;
+            return User_RetCode::ORIGIN_PASSWD_WRONG;
         }
         $objInfo->passwd = md5($strPasswdNew);
         $ret = $objInfo->save();
-        return $ret;
+        if(!$ret) {
+            return User_RetCode::SAVE_PASSWD_WRONG;
+        }
+        return User_RetCode::SUCCESS;
     }
  
     /**
@@ -151,16 +154,21 @@ class User_Api{
     
     /**
      * 返回获取图片验证码的URL
+     * @param $strType:类型
      */
-    public static function getAuthImageUrl($strToken){
-        return "http://123.57.46.229:8301/User/loginapi/getAuthImage?&token=$strToken";
+    public static function getAuthImageUrl($strType){
+        $strId = session_id().$strType;
+        return "http://123.57.46.229:8301/User/loginapi/getAuthImage?&token=$strId";
     }
     
     /**
      * 验证图片验证码
+     * @param $strImageCode:图片验证码
+     * @param $strType:类型
      */
-    public static function checkAuthImage($strImageCode,$strToken){
-        $storedImageCode = Base_Redis::getInstance()->get($strToken);
+    public static function checkAuthImage($strImageCode,$strType){
+        $strId = session_id().$strType;
+        $storedImageCode = Base_Redis::getInstance()->get($strId);
         if(strtolower($storedImageCode) == strtolower($strImageCode)){
             return true;
         }
