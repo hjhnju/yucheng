@@ -60,7 +60,7 @@ class OverviewController extends Base_Controller_Response {
 	}
 	
 	/**
-	 * /account/overview/profitCurve
+	 * /account/overview/profitcurve
 	 * 近半年收益曲线
 	 * @return 标准json
 	 * status 0 处理成功
@@ -70,7 +70,7 @@ class OverviewController extends Base_Controller_Response {
      *  y: [100, 1000]
      *  }
 	 */
-	public function profitCurveAction() {
+	public function profitcurveAction() {
 		//$userId = $this->getUserId();
 		//$objUser = User_Api::getUserObject($userId);
 		$objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'15901538467','realname'=>'jiangbianliming',)));//for test
@@ -85,7 +85,7 @@ class OverviewController extends Base_Controller_Response {
 			//TODO:真正数据要从投资模块而来
 			$ret = array(
 				x => array('2014-05','2014-06','2014-07','2014-08','2014-09','2014-10'),
-				y => array(10,20,500,60,49,1000),
+				y => array('10','20','500','60','49','1000'),
 			);			
 			if($ret==false) {
 				$this->outputError(Account_RetCode::GET_PROFIT_CURVE_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_PROFIT_CURVE_FAIL));

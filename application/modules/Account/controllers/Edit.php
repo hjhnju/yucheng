@@ -9,7 +9,7 @@ class EditController extends Base_Controller_Response {
 
     /**
      * 接口/account/edit/chphone
-     * 修改手机号
+     * 修改手机号smarty入口
      * @return 标准json
      * status 0:成功
      * 
@@ -92,9 +92,9 @@ class EditController extends Base_Controller_Response {
     		$this->outputError($errCode,$errMsg);
     	}
     	$token = isset($_REQUEST['token']) ? $_REQUEST['token'] : '';
-    	$sessToken = $sessPhoneCode = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
+    	$sessToken = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
     	if($token != $sessToken) {
-    		$errCode = Account_RetCode::TOKEN_VERIFY_ERROR; //验证码输入错误
+    		$errCode = Account_RetCode::TOKEN_VERIFY_ERROR; //token验证失败
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
     	}
@@ -110,17 +110,54 @@ class EditController extends Base_Controller_Response {
     	$this->output();
     }
     
+     /**
+      * 接口:/account/edit/chpwd
+      * 密码修改smarty入口
+      */
+    public function chpwdAction() {
+    	
+    }
+    
     /** 
-     * 接口: /account/edit/chpwd
-     * 用户密码修改接口
+     * 接口: /account/edit/modifypwd
+     * 用户密码修改实现接口
      * @param $oldpwd
      * @param $newpwd
      * @param $token, csrf token
      * @return 标准json格式
      * status 0: 成功
+     * status 1115:token验证失败
      * status 1101: 修改密码失败
      */
-    public function chpwdAction(){
+    public function modifypwdAction(){
+    	$_oldpwd = $_REQUEST['oldpwd'];
+    	$_newpwd = $_REQUEST['newpwd'];
+    	$_token = $_REQUEST['token'];
+    	
+    	$userId = $this->getUserId();
+    	$oldpwd = isset($_oldpwd) ? $_oldpwd : '';
+    	$newpwd = isset($_newpwd) ? $_newpwd : '';
+    	$token = isset($_token) ? $_token : '';
+    	
+    	$sessToken = $sessPhoneCode = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
+    	if($token != $sessToken) {
+    		$errCode = Account_RetCode::TOKEN_VERIFY_ERROR; //token验证失败
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    	} else {    		
+    		$ret = User_Api::setPasswd($userId,$oldpwd,$newpwd);
+    		if($ret == User_RetCode::ORIGIN_PASSWD_WRONG) {
+    			$errCode = Account_RetCode::OLDPWD_INPUT_ERROR;//原密码输入错误
+    			$errMsg = Account_RetCode::getMsg($errCode);
+    			$this->outputError($errCode,$errMsg);
+    		} else if($ret == false){
+    			$errCode = Account_RetCode::MODIFY_PWD_FAIL;//密码修改错误
+    			$errMsg = Account_RetCode::getMsg($errCode);
+    			$this->outputError($errCode,$errMsg);
+    		} else {
+    			$this->output();
+    		}
+    	}
     	
     }
     
