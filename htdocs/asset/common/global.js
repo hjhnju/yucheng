@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('common/global', ['jquery'], function () {
+define('common/global', function () {
     var $ = require('jquery');
     var _cache = {};
     var cache = {

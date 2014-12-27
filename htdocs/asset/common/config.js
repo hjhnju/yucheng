@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('common/config', [], function () {
+define('common/config', function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             REGIST_CHECKNAME_CHECK: rootUrl + '/user/registapi/checkname',
@@ -16,6 +16,7 @@ define('common/config', [], function () {
             EDIT_PHONE_SUBMITE2ND: rootUrl + '/account/edit/checkphone',
             EDIT_EMAILCONFIRM: rootUrl + '/test/account/edit/emailConfirm.json',
             EDIT_CHPWD_SUBMITE: rootUrl + '/account/edit/chpwd',
+            LINE_GET: rootUrl + '/account/overview/profitCurve',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
             INVEST_LIST: rootUrl + '/invest/api',
             INVEST_DETAIL_CONFIRM: rootUrl + '/test/invest/detail.json',
