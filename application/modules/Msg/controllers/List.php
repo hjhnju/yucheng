@@ -18,7 +18,6 @@ class ListController extends Base_Controller_Response {
 	    $intPage = trim($_REQUEST['page']) - 1;
         $this->msgLogic = new Msg_Logic_Msg();
         $uid = $this->getUserId();
-        $uid = 2;
         $arrReturn = array();
         $arrData = $this->msgLogic->getList($uid, $intType);
         if(empty($arrData)){
