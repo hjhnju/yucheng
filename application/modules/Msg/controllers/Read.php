@@ -2,9 +2,20 @@
 /**
  * 消息标记已读
  */
-class ReadController extends Base_Controller_Api {
+class ReadController extends Base_Controller_Response {
     protected $ajax = true;
 	
+    /**
+     * 设置消息为已读状态
+     * @param mid : 消息id
+     */
 	public function indexAction() {
+        $this->msgLogic = new Msg_Logic_Msg();
+        $mid = trim($_REQUEST['mid']);
+        $ret = $this->msgLogic->setRead($mid);
+        if(!$ret){
+            $this->ajaxError($ret,Msg_RetCode::getMsg($ret));
+        }
+        $this->ajax();
 	}
 }

@@ -13,7 +13,8 @@ exports.getProcessors = function () {
             'src/setting/regist/index.less',
             'src/my/invest/index.less',
             'src/my/account/index.less',
-            'src/my/safe/index.less'
+            'src/my/safe/index.less',
+            'src/my/message/index.less'
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -22,7 +23,8 @@ exports.getProcessors = function () {
             'src/setting/regist/index.less',
             'src/my/invest/index.less',
             'src/my/account/index.less',
-            'src/my/safe/index.less'
+            'src/my/safe/index.less',
+            'src/my/message/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -32,7 +34,8 @@ exports.getProcessors = function () {
             'src/setting/regist/index.js',
             'src/my/safe/index.js',
             'src/my/account/index.js',
-            'src/my/invest/index.js'
+            'src/my/invest/index.js',
+            'src/my/message/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
@@ -57,7 +60,7 @@ exports.getProcessors = function () {
 };
 
 exports.exclude = [
-    'tool',
+    //'tool',
     'doc',
     'test',
     'entry',

@@ -1,9 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/ecAnimation', [
-    'require',
-    'zrender/tool/util',
-    'zrender/shape/Polygon'
-], function (require) {
+define('echarts/util/ecAnimation', function (require) {
     var zrUtil = require('zrender/tool/util');
     function pointList(zr, oldShape, newShape, duration, easing) {
         var newPointList = newShape.style.pointList;

@@ -43,7 +43,7 @@ define(function () {
             + '/user/loginapi/index',
 //            + '/test/user/login/index.json',
         LOGIN_IMGCODE_ADD: rootUrl
-            + '/user/loginapi/getauthimage',
+            + '/user/loginapi/getauthimageurl',
         LOGIN_IMGCODE_CHECK: rootUrl
             + '/user/loginapi/checkauthimage',
         EDIT_GETSMSCODE_CHECK: rootUrl
@@ -88,8 +88,14 @@ define(function () {
             + '/account/invest/tendering',
             //+ '/test/account/invest/tendering.json',
         MY_INVEST_TENDERFAIL: rootUrl
-            + '/account/invest/tenderfail'
-            //+ '/test/account/invest/tenderfail.json'
+            + '/account/invest/tenderfail',
+            //+ '/test/account/invest/tenderfail.json',
+        MY_MSG_LIST: rootUrl
+            + '/msg/list',
+            //+ '/test/account/message/msglist.json',
+        MY_MSG_SETREAD_ADD: rootUrl
+            + '/msg/read'
+            //+ '/test/account/message/setread.json'
     };
 
     return {

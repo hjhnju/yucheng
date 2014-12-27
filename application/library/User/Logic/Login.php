@@ -10,8 +10,8 @@ class User_Logic_Login{
     
     //第三方登录需要的配置信息
     protected $third_login_array = array(
-    	'auth_code_redirect_url'         => 'http://www.xingjiaodai.cn:8301/User/Loginapi/thirdLogin',
-        'access_token_redirect_url'      => 'http://www.xingjiaodai.cn:8301/User/Loginapi/thirdLogin',
+    	'auth_code_redirect_url'         => 'http://www.xingjiaodai.com:8301/User/Loginapi/thirdLogin',
+        'access_token_redirect_url'      => 'http://www.xingjiaodai.com:8301/User/Loginapi/thirdLogin',
         'qq'                             => array(
     	    'host'           => 'https://graph.qq.com',
             'appid'          => '101177204',

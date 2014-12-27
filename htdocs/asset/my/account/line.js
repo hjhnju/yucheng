@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('my/account/line', ['jquery'], function () {
+define('my/account/line', function () {
     var $ = require('jquery');
     var echarts;
     var hisCharts;
@@ -45,14 +45,7 @@ define('my/account/line', ['jquery'], function () {
                     },
                     axisTick: { show: false },
                     boundaryGap: true,
-                    data: [
-                        '2014-06',
-                        '2014-07',
-                        '2014-08',
-                        '2014-09',
-                        '2014-10',
-                        '2014-11'
-                    ]
+                    data: []
                 }],
             yAxis: [{
                     type: 'value',
@@ -76,14 +69,7 @@ define('my/account/line', ['jquery'], function () {
                     symbolColor: '#F3746B',
                     symbolSize: 4,
                     itemStyle: {},
-                    data: [
-                        0,
-                        0,
-                        0,
-                        500,
-                        1000,
-                        0
-                    ]
+                    data: []
                 }]
         };
     function render(containerId, data) {
@@ -94,20 +80,14 @@ define('my/account/line', ['jquery'], function () {
             echarts = ec;
             dispose();
             hisCharts = echarts.init($('#' + containerId)[0]);
+            initData(data);
             hisCharts.setOption(option);
         });
     }
     function initData(data) {
-        var dataList = $.extend(true, [], data.y);
-        dataList.sort(function (a, b) {
-            return a - b;
-        });
+        option.xAxis[0].data = data.x;
+        option.series[0].data = data.y;
         hisCharts.setOption(option);
-        hisCharts.setOption({
-            yAxis: [{ max: dataList[dataList.length - 1] }],
-            xAxis: [{ data: data.user.x }],
-            series: [{ data: data.user.y }]
-        });
     }
     function dispose() {
         if (hisCharts && hisCharts.dispose) {

@@ -1,0 +1,24 @@
+{
+    "status": 0,
+    "statusInfo": "",
+    "data": {
+        "page": 1,
+        "pageall": 10,
+        "list": [
+            {
+                "mid": 1,
+                "type": 1,
+                "status": 1,
+                "content": "jfkdsjafkdjskl;afjkdls;ajfkldjskaljfkdlsjfkldsjakjfkdsljakfjdsakljfkdlsa",
+                "time": 1419662365
+            },
+            {
+                "mid": 1,
+                "type": 1,
+                "status": 2,
+                "content": "jfkdsjafkdjskl;afjkdls;ajfkldjskaljfkdlsjfkldsjakjfkdsljakfjdsakljfkdlsa",
+                "time": 1419662365
+            }
+        ]
+    }
+}

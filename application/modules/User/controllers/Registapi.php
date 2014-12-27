@@ -5,6 +5,9 @@
 class RegistApiController extends Base_Controller_Api{
     
     public function init(){
+       
+        $this->setNeedLogin(false);
+
         parent::init();
         $this->registLogic = new User_Logic_Regist();
         $this->loginLogic = new User_Logic_Login();
@@ -40,7 +43,8 @@ class RegistApiController extends Base_Controller_Api{
      */
     public function sendSmsCodeAction(){
        $strPhone   = trim($_REQUEST['phone']);
-       $ret = User_Api::sendSmsCode($strPhone,1);
+       $strType   = trim($_REQUEST['type']);
+       $ret = User_Api::sendSmsCode($strPhone,$strType);
        if($ret){
            return $this->ajax();
        }
@@ -52,8 +56,9 @@ class RegistApiController extends Base_Controller_Api{
      */
     public function checkSmsCodeAction(){
         $strPhone   = trim($_REQUEST['phone']);
+        $strType   = trim($_REQUEST['type']);
         $strVeriCode   = trim($_REQUEST['vericode']);
-        $ret = User_Api::checkSmsCode($strPhone, $strVeriCode,1);
+        $ret = User_Api::checkSmsCode($strPhone, $strVeriCode,$strType);
         if($ret){
            return $this->ajax();
        }
@@ -82,7 +87,7 @@ class RegistApiController extends Base_Controller_Api{
     public function IndexAction(){
         $strName    = trim($_REQUEST['name']);
         $strPasswd = trim($_REQUEST['passwd']);
-        if(User_RetCode::USER_PASSWD_FORMAT_ERROR == User_Api::checkReg($strPasswd)){
+        if(User_RetCode::USER_PASSWD_FORMAT_ERROR == User_Api::checkReg('passwd',$strPasswd)){
             return $this->ajaxError(User_RetCode::USER_PASSWD_FORMAT_ERROR,User_RetCode::getMsg(User_Api::USER_PASSWD_FORMAT_ERROR));
         }
         $strPasswd  = md5($strPasswd);

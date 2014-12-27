@@ -91,7 +91,7 @@ exports.getLocations = function () {
                     '/user/registapi/checkinviter',
                     '/user/registapi/checksmscode',
                     '/user/loginapi/index',
-                    '/user/loginapi/getauthimage',
+                    '/user/loginapi/getauthimageurl',
                     '/user/loginapi/checkauthimage',
                     '/invest/api',
                     '/account/edit/getsmscode',
@@ -103,7 +103,9 @@ exports.getLocations = function () {
                     '/account/invest/tenderfail',
                     '/account/secure/securedegree',
                     '/account/edit/chpwd',
-                    '/account/overview/profitCurve'
+                    '/account/overview/profitCurve',
+                    '/msg/list',
+                    '/msg/read'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;

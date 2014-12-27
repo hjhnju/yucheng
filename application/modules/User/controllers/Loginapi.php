@@ -104,7 +104,8 @@ class LoginApiController extends Base_Controller_Api{
      * 返回获取图片验证码的URL
      */
     public function getAuthImageUrlAction(){
-        $strToken = trim($_REQUEST['token']);
+        $strType = trim($_REQUEST['type']);
+        $strId = session_id().$strType;
         return $this->ajaxError(User_RetCode::NEED_PICTURE,'',array('url'=>"http://123.57.46.229:8301/User/loginapi/getAuthImage?&token=$strToken"));
     }
     
@@ -112,8 +113,9 @@ class LoginApiController extends Base_Controller_Api{
      * 获取图片验证码
      */
     public function getAuthImageAction(){
-        $strToken = trim($_REQUEST['token']);
-        User_Logic_Api::getAuthImage($strToken);
+        $strType = trim($_REQUEST['type']);
+        $strId = session_id().$strType;
+        User_Logic_Api::getAuthImage($strId);
     }
     
     /**
@@ -121,8 +123,10 @@ class LoginApiController extends Base_Controller_Api{
      */
     public function checkAuthImageAction(){
         $strToken = trim($_REQUEST['token']);
+        $strType = trim($_REQUEST['type']);
         $strImageCode= trim($_REQUEST['imagecode']);
-        $storedImageCode = Base_Redis::getInstance()->get($strToken);
+        $strId = session_id().$strType;
+        $storedImageCode = Base_Redis::getInstance()->get($strId);
         if(strtolower($storedImageCode) == strtolower($strImageCode)){
             $this->ajax();
         }

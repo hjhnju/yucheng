@@ -1,11 +1,2 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('my/account/index', [
-    'require',
-    './line'
-], function (require) {
-    var line = require('./line');
-    function init() {
-        line.render('all-account-line', {});
-    }
-    return { init: init };
-});
+define("my/account/index",function(require){function r(r){var i=e("#all-account-line");if(1===+r)o.remote();o.on("success",function(r){if(r.bizError)i.html(n.render("Error",r.statusInfo));else t.render("all-account-line",r)})}var e=require("jquery"),n=require("etpl"),t=require("./line"),i=require("common/Remoter"),o=new i("LINE_GET");return{init:r}});
