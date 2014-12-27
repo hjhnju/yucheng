@@ -1,12 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/Chain', [
-    'require',
-    'zrender/shape/Base',
-    './Icon',
-    'zrender/shape/util/dashedLineTo',
-    'zrender/tool/util',
-    'zrender/tool/matrix'
-], function (require) {
+define('echarts/util/shape/Chain', function (require) {
     var Base = require('zrender/shape/Base');
     var IconShape = require('./Icon');
     var dashedLineTo = require('zrender/shape/util/dashedLineTo');
