@@ -69,6 +69,9 @@ define(function () {
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',
+        INVEST_DETAIL_START: rootUrl
+        //+ '/invest/list',
+        + '/test/invest/list.json',
         INVEST_DETAIL_CONFIRM: rootUrl
             //+ '/account/edit/getvericode.json',
         + '/test/invest/detail.json',

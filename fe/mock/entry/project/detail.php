@@ -37,7 +37,20 @@ $smarty->assign('full_time', '');
 $smarty->assign('pay_time', '');
 $smarty->assign('loan_type', '实地认证标');
 $smarty->assign('loan_cat', '学校助力贷');
-$smarty->assign('safemode', '本金保障计划');
+$smarty->assign('safemode', array(
+    0 => array(
+        'id' => 1,
+        'name' => '本金保障计划'
+    ),
+    1 => array(
+        'id' => 2,
+        'name' => '保障计划'
+    ),
+    2 => array(
+        'id' => 3,
+        'name' => '保障计划安全'
+    )
+));
 $smarty->assign('refund_typename', '等额本息');
 $smarty->assign('percent', 0.00);
 $smarty->assign('company',
@@ -171,8 +184,8 @@ $smarty->assign('attach',
                 'id' => 5,
                 'loan_id' => 1,
                 'user_id' => 1,
-                'type' => 1,
-                'title' => '身份证',
+                'type' => 2,
+                'title' => '合同',
                 'url' => 'http://b.hiphotos.baidu.com/news/q%3D100/sign=09a4f4ac2ef5e0fee8188d016c6134e5/4610b912c8fcc3ce3a4632869145d688d53f2085.jpg',
                 'status' => 0,
                 'create_time' => '2014-12-20 12:15:50',
@@ -182,8 +195,32 @@ $smarty->assign('attach',
                 'id' => 5,
                 'loan_id' => 1,
                 'user_id' => 1,
-                'type' => 1,
-                'title' => '身份证',
+                'type' => 2,
+                'title' => '合同',
+                'url' => 'http://b.hiphotos.baidu.com/news/q%3D100/sign=09a4f4ac2ef5e0fee8188d016c6134e5/4610b912c8fcc3ce3a4632869145d688d53f2085.jpg',
+                'status' => 0,
+                'create_time' => '2014-12-20 12:15:50',
+                'update_time' => '2014-12-20 12:15:50'
+            )
+        ),
+        '3' => array(
+            0 => array(
+                'id' => 5,
+                'loan_id' => 1,
+                'user_id' => 1,
+                'type' => 3,
+                'title' => '场地',
+                'url' => 'http://b.hiphotos.baidu.com/news/q%3D100/sign=09a4f4ac2ef5e0fee8188d016c6134e5/4610b912c8fcc3ce3a4632869145d688d53f2085.jpg',
+                'status' => 0,
+                'create_time' => '2014-12-20 12:15:50',
+                'update_time' => '2014-12-20 12:15:50'
+            ),
+            1 => array(
+                'id' => 5,
+                'loan_id' => 1,
+                'user_id' => 1,
+                'type' => 3,
+                'title' => '场地',
                 'url' => 'http://b.hiphotos.baidu.com/news/q%3D100/sign=09a4f4ac2ef5e0fee8188d016c6134e5/4610b912c8fcc3ce3a4632869145d688d53f2085.jpg',
                 'status' => 0,
                 'create_time' => '2014-12-20 12:15:50',

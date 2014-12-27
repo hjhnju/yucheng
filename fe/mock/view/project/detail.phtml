@@ -7,7 +7,7 @@
 {%block name="script"%}
 <script>
     require(['project/detail/index'], function (main) {
-        main.init();
+        main.init('{%$id%}');
     });
 </script>
 {%/block%}
@@ -62,9 +62,14 @@
                     <div class="project-gaishu-bottom">
                         <div class="gaishu-bottom-guard">
                             <div class="gaishu-guard-baozhang">
-                                <span>保障方式：</span>
-                                <span class="baozhang-type benxi">{%$safemode%}</span>
-                                <span class="baozhang-type gudong">大股东联保</span>
+                                <span class="span">保障方式：</span>
+                                <div class="baozhang-box">
+                                    {%foreach $safemode as $key => $item%}
+                                    <span class="baozhang-type benxi">{%$item.name%}</span>
+                                    {%/foreach%}
+
+                                </div>
+
                             </div>
                             <div class="gaishu-guard-baozhang">
                                 <span>还款方式：</span>
@@ -91,7 +96,7 @@
                     <span class="project-time-start">开始时间：{%$create_time|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
                     <span class="project-time-start">截止日期：{%$deadline|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
                 </div>
-                <div class="project-main project file record">
+                <div class="project-main project">
                     <div class="project-main-title">
                         <div class="main-title-box showproject current">项目详情</div>
                         <div class="main-title-box showfile">文件资料</div>
@@ -245,27 +250,52 @@
                             <div class="main-box-detail-title">借款企业</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
+                                    {%foreach $attach['1'] as $key => $item%}
                                     <li class="detail-item-list">
-                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
-                                        <p class="detail-item-p">身份证</p>
+                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
-                                    <li class="detail-item-list">
-                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
-                                    </li>
-                                    <li class="detail-item-list">
-                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
-                                    </li>
-                                    <li class="detail-item-list">
-                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
-                                    </li>
-                                    <li class="detail-item-list">
-                                        <img class="detail-item-list-img" width="100%" height="100%" src="###" />
-                                    </li>
+                                    {%/foreach%}
                                 </ul>
                             </div>
                         </div>
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">合同协议</div>
+                            <div class="main-detail-content">
+                                <ul class="detail-item">
+                                    {%foreach $attach['2'] as $key => $item%}
+                                    <li class="detail-item-list">
+                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <p class="detail-item-p">{%$item.title%}</p>
+                                    </li>
+                                    {%/foreach%}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="details-main-box item-last">
+                            <div class="main-box-detail-title">实地图片</div>
+                            <div class="main-detail-content">
+                                <ul class="detail-item">
+                                    {%foreach $attach['3'] as $key => $item%}
+                                    <li class="detail-item-list img-city">
+                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <p class="detail-item-p">{%$item.title%}</p>
+                                    </li>
+                                    {%/foreach%}
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="main-box-details showrecord-main"></div>
+                    <div class="main-box-details showrecord-main">
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">投资记录</div>
+                            <div class="main-detail-content" id="toulist">
+
+                            </div>
+                        </div>
+                        <div id="page"></div>
+                    </div>
                 </div>
             </div>
         </div>

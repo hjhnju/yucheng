@@ -1,6 +1,116 @@
-<html>
-<head><title>我是测试页面</title></head>
-<body>
-<p>您好，苏州街 {%$street%} 号</p>
-</body>
-</html>
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/project/list/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['project/list/index'], function (main) {
+        main.init({
+            page: '{%$page%}',
+            pageall: '{%$pageall%}',
+            pagesize: '{%$pagesize%}'
+        });
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="toulist">
+    <div class="container">
+        <div class="toulist-top">
+            <div class="toulist-top-title">我来投资<span>&gt;</span>投资列表</div>
+            <div class="toulist-top-box">
+                <div class="toulist-box-class" id="type_id">
+                    <span class="toulist-box-class-name">标的类型：</span>
+                    <a href="###" class="toulist-box-class-all type_id current" data-value="0">全部</a>
+                    <a href="###" class="toulist-box-class-all type_id" data-value="1">实地认正标</a>
+                    <a href="###" class="toulist-box-class-all type_id" data-value="2">信用认证标</a>
+                    <a href="###" class="toulist-box-class-all type_id" data-value="3">机构担保标</a>
+                </div>
+                <div class="toulist-box-class" id="cat_id">
+                    <span class="toulist-box-class-name">借款类型：</span>
+                    <a href="###" class="toulist-box-class-all cat_id current" data-value="0">全部</a>
+                    <a href="###" class="toulist-box-class-all cat_id"  data-value="1">学校助力贷</a>
+                    <a href="###" class="toulist-box-class-all cat_id" data-value="2">教师圆梦贷</a>
+                </div>
+                <div class="toulist-box-class" id="qixian">
+                    <span class="toulist-box-class-name">借款期限：</span>
+                    <a href="###" class="toulist-box-class-all qixian current">全部</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="0">1-3月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="1">4-6月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="2">7-12月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="3">13-24月</a>
+                    <a href="###" class="toulist-box-class-all qixian" data-value="4">24月以上</a>
+                </div>
+            </div>
+        </div>
+        <div class="investlist toulist-border-btm">
+            <div class="investlist-box">
+                <div class="investlist-box-title border-bottom">
+                    <div class="investlist-box-title-name name name-height">借款标题</div>
+                    <div class="investlist-box-title-name grade">评估等级</div>
+                    <div class="investlist-box-title-name lilv">年利率</div>
+                    <div class="investlist-box-title-name price">金额</div>
+                    <div class="investlist-box-title-name time">期限</div>
+                    <div class="investlist-box-title-name jindu">进度</div>
+                    <div class="investlist-box-title-name status">状态</div>
+                </div>
+                <div id="invest-main">
+                    <div class="investlist-box-title">
+                        {%foreach $list as $key => $item%}
+                        <div class="investlist-box-title-name name">
+                            <span class="name-shi">实</span>
+                            <span class="school">{%$item.title%}</span>
+                        </div>
+                        <div class="investlist-box-title-name grade">
+                            <span class="grade-star all"></span><span class="grade-star hale"></span><span class="grade-star none"></span>
+                        </div>
+                        <div class="investlist-box-title-name lilv">
+                            <span class="lilv-number">{%$item.interest%}</span>
+                            <span class="lilv-bai">%</span>
+                        </div>
+                        <div class="investlist-box-title-name price">
+                            <span class="lilv-number color-blank">{%$item.amount%}</span>
+                            <span class="lilv-bai">元</span>
+                        </div>
+                        <div class="investlist-box-title-name time">
+                            <span class="lilv-number color-blank">{%$item.duration%}</span>
+                            <span class="lilv-bai">个月</span>
+                        </div>
+                        <div class="investlist-box-title-name jindu">
+                            <div class="jindu-box">
+                                <div class="jindu-box-inline" style="width: {%$item.percent%}%;"></div>
+                            </div>
+                            <div class="jindu-number">
+                                <span class="lilv-number">{%$item.percent%}</span>
+                                <span class="lilv-bai">%</span>
+                            </div>
+                        </div>
+                        <div class="investlist-box-title-name status">
+                            {%if $item.status == 1%}
+                            <a class="status-biding" href="###">投标中</a>
+                            {%else if $item.status == 2%}
+                            <span class="status-biding current">回款中</span>
+                            {%else if $item.status == 3%}
+                            <span class="status-biding current">投标失败</span>
+                            {%else%}
+                            <span class="status-biding current">投标结束</span>
+                            {%/if%}
+                        </div>
+                        {%/foreach%}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="test">
+
+                <div id="test2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}
