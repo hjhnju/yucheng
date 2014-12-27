@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/util/dashedLineTo', [], function () {
+define('zrender/shape/util/dashedLineTo', function () {
     var dashPattern = [
             5,
             5

@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define(['require'], function (require) {
+define(function (require) {
     function BMapExt(obj, BMap, ec) {
         this._init(obj, BMap, ec);
     }

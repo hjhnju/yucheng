@@ -1,16 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/roamController', [
-    'require',
-    './base',
-    'zrender/shape/Rectangle',
-    'zrender/shape/Sector',
-    'zrender/shape/Circle',
-    '../config',
-    'zrender/tool/util',
-    'zrender/tool/color',
-    'zrender/tool/event',
-    '../component'
-], function (require) {
+define('echarts/component/roamController', function (require) {
     var Base = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');
     var SectorShape = require('zrender/shape/Sector');

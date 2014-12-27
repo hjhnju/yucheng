@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/data/Tree', ['require'], function (require) {
+define('echarts/data/Tree', function (require) {
     function TreeNode(id) {
         this.id = id;
         this.depth = 0;

@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/dep/excanvas3', ['require'], function (require) {
+define('zrender/dep/excanvas3', function (require) {
     if (!document.createElement('canvas').getContext) {
         (function () {
             var m = Math;

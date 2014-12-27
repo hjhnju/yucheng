@@ -1,8 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/tool/event', [
-    'require',
-    '../mixin/Eventful'
-], function (require) {
+define('zrender/tool/event', function (require) {
     'use strict';
     var Eventful = require('../mixin/Eventful');
     function getX(e) {
