@@ -1,5 +1,11 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/Symbol', function (require) {
+define('echarts/util/shape/Symbol', [
+    'require',
+    'zrender/shape/Base',
+    'zrender/shape/Polygon',
+    'zrender/tool/util',
+    './normalIsCover'
+], function (require) {
     var Base = require('zrender/shape/Base');
     var PolygonShape = require('zrender/shape/Polygon');
     var polygonInstance = new PolygonShape({});

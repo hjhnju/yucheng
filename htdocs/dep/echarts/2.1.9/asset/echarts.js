@@ -1,5 +1,31 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/echarts', function (require) {
+define('echarts/echarts', [
+    'require',
+    './config',
+    'zrender/tool/util',
+    'zrender/tool/event',
+    'zrender/tool/env',
+    'zrender',
+    'zrender/config',
+    './chart/island',
+    './component/toolbox',
+    './component',
+    './component/title',
+    './component/tooltip',
+    './component/legend',
+    './util/ecData',
+    './chart',
+    'zrender/tool/color',
+    './component/timeline',
+    'zrender/shape/Image',
+    'zrender/loadingEffect/Bar',
+    'zrender/loadingEffect/Bubble',
+    'zrender/loadingEffect/DynamicLine',
+    'zrender/loadingEffect/Ring',
+    'zrender/loadingEffect/Spin',
+    'zrender/loadingEffect/Whirling',
+    './theme/default'
+], function (require) {
     var ecConfig = require('./config');
     var zrUtil = require('zrender/tool/util');
     var zrEvent = require('zrender/tool/event');

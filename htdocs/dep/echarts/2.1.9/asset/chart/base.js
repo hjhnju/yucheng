@@ -1,5 +1,18 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/base', function (require) {
+define('echarts/chart/base', [
+    'require',
+    'zrender/shape/Image',
+    '../util/shape/Icon',
+    '../util/shape/MarkLine',
+    '../util/shape/Symbol',
+    '../config',
+    '../util/ecData',
+    '../util/ecAnimation',
+    '../util/ecEffect',
+    '../util/accMath',
+    'zrender/tool/util',
+    'zrender/tool/area'
+], function (require) {
     var ImageShape = require('zrender/shape/Image');
     var IconShape = require('../util/shape/Icon');
     var MarkLineShape = require('../util/shape/MarkLine');
