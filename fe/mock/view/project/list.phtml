@@ -65,7 +65,19 @@
                             <span class="school">{%$item.title%}</span>
                         </div>
                         <div class="investlist-box-title-name grade">
-                            <span class="grade-star all"></span><span class="grade-star hale"></span><span class="grade-star none"></span>
+                            {%if $level == 0.5%}
+                            <span class="grade-star half"></span><span class="grade-star none"></span><span class="grade-star none"></span>
+                            {%else if $level == 1%}
+                            <span class="grade-star all"></span><span class="grade-star none"></span><span class="grade-star none"></span>
+                            {%else if $level == 1.5%}
+                            <span class="grade-star all"></span><span class="grade-star half"></span><span class="grade-star none"></span>
+                            {%else if $level == 2%}
+                            <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star none"></span>
+                            {%else if $level == 2.5%}
+                            <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star half"></span>
+                            {%else $level == 3%}
+                            <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star all"></span>
+                            {%/if%}
                         </div>
                         <div class="investlist-box-title-name lilv">
                             <span class="lilv-number">{%$item.interest%}</span>

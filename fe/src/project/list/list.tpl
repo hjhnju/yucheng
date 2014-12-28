@@ -12,9 +12,19 @@
         <span class="school">${item.title}</span>
     </div>
     <div class="investlist-box-title-name grade">
-        <span class="grade-star all"></span>
-        <span class="grade-star hale"></span>
-        <span class="grade-star none"></span>
+        <!--if: ${item.level} == 0.5 -->
+        <span class="grade-star half"></span><span class="grade-star none"></span><span class="grade-star none"></span>
+        <!--elif: ${item.level} == 1 -->
+        <span class="grade-star all"></span><span class="grade-star none"></span><span class="grade-star none"></span>
+        <!--elif: ${item.level} == 1.5 -->
+        <span class="grade-star all"></span><span class="grade-star half"></span><span class="grade-star none"></span>
+        <!--elif: ${item.level} == 2 -->
+        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star none"></span>
+        <!--elif: ${item.level} == 2.5 -->
+        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star half"></span>
+        <!--else-->
+        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star all"></span>
+        <!--/if-->
     </div>
     <div class="investlist-box-title-name lilv">
         <span class="lilv-number">${item.interest}</span>

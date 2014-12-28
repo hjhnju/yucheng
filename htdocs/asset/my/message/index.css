@@ -64,8 +64,8 @@ p{margin:0;padding:0}
 .investlist-box-title-name.grade{width:60px;text-align:center}
 .investlist-box-title-name.grade .grade-star{display:inline-block;width:16px;height:16px;margin-right:4px;background:url(../../common/img/star_icon.png) 0 0 no-repeat}
 .investlist-box-title-name.grade .grade-star.all{background-position:0 0}
-.investlist-box-title-name.grade .grade-star.half{background-position:0 -50px}
-.investlist-box-title-name.grade .grade-star.none{background-position:0 -100px}
+.investlist-box-title-name.grade .grade-star.none{background-position:0 -50px}
+.investlist-box-title-name.grade .grade-star.half{background-position:0 -100px}
 .investlist-box-title-name.lilv{width:60px;text-align:center}
 .investlist-box-title-name.price{width:130px;text-align:center}
 .investlist-box-title-name.time{width:48px;text-align:center}
