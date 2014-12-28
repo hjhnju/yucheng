@@ -101,14 +101,10 @@
                             </div>
                         </div>
                         <div class="investlist-box-title-name status">
-                            {%if $item.status == 1%}
-                            <a class="status-biding" href="###">投标中</a>
-                            {%else if $item.status == 2%}
-                            <span class="status-biding current">回款中</span>
-                            {%else if $item.status == 3%}
-                            <span class="status-biding current">投标失败</span>
+                            {%if $item.status == 2%}
+                            <a class="status-biding" href="###">{%$item.status_name%}</a>
                             {%else%}
-                            <span class="status-biding current">投标结束</span>
+                            <span class="status-biding current">{%$item.status_name%}</span>
                             {%/if%}
                         </div>
                         {%/foreach%}

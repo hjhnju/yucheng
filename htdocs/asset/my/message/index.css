@@ -57,22 +57,22 @@ p{margin:0;padding:0}
 .investlist-title{height:56px;line-height:56px;font-size:20px;color:#333}
 .investlist-box-title{border-bottom:1px dashed #d8d8d8;padding-left:12px;height:64px;line-height:64px}
 .investlist-box-title.border-bottom{border-bottom:none}
-.investlist-box-title-name{float:left;margin-right:40px;color:#999;font-size:14px}
-.investlist-box-title-name.name{width:200px;text-align:center;*zoom:1}
+.investlist-box-title-name{float:left;color:#999;font-size:14px}
+.investlist-box-title-name.name{width:240px;text-align:center;*zoom:1}
 .investlist-box-title-name.name:before,.investlist-box-title-name.name:after{display:table;content:""}
 .investlist-box-title-name.name:after{clear:both}
-.investlist-box-title-name.grade{width:60px;text-align:center}
+.investlist-box-title-name.grade{width:100px;text-align:center}
 .investlist-box-title-name.grade .grade-star{display:inline-block;width:16px;height:16px;margin-right:4px;background:url(../../common/img/star_icon.png) 0 0 no-repeat}
 .investlist-box-title-name.grade .grade-star.all{background-position:0 0}
 .investlist-box-title-name.grade .grade-star.none{background-position:0 -50px}
 .investlist-box-title-name.grade .grade-star.half{background-position:0 -100px}
-.investlist-box-title-name.lilv{width:60px;text-align:center}
-.investlist-box-title-name.price{width:130px;text-align:center}
-.investlist-box-title-name.time{width:48px;text-align:center}
-.investlist-box-title-name.jindu{width:130px;*zoom:1}
+.investlist-box-title-name.lilv{width:100px;text-align:center}
+.investlist-box-title-name.price{width:170px;text-align:center}
+.investlist-box-title-name.time{width:88px;text-align:center}
+.investlist-box-title-name.jindu{width:170px;*zoom:1}
 .investlist-box-title-name.jindu:before,.investlist-box-title-name.jindu:after{display:table;content:""}
 .investlist-box-title-name.jindu:after{clear:both}
-.investlist-box-title-name.status{width:80px;text-align:center}
+.investlist-box-title-name.status{width:120px;text-align:center}
 .jindu-box{width:70px;height:8px;background-color:#ccc;float:left;margin:28px 10px 0 0;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-box .jindu-box-inline{min-width:10%;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-number{float:left}
@@ -81,7 +81,7 @@ p{margin:0;padding:0}
 .lilv-number{font-size:16px;color:#f2736a;font-weight:700}
 .lilv-number.color-blank{color:#000}
 .lilv-bai{font-size:12px;color:#949494}
-.status-biding{display:block;width:80px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#fff;margin-top:18px;background-color:#76cf65;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.status-biding{display:inline-block;width:80px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#fff;margin-top:18px;background-color:#76cf65;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .status-biding:hover{background-color:#2c9818;color:#fff}
 .status-biding.current{color:#666;background-color:#e5e5e5}
 .investlist-more{display:block;text-decoration:none;height:30px;line-height:30px;margin-top:20px;text-align:center;color:#999;font-size:14px}
