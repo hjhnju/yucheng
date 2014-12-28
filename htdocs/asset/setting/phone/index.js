@@ -47,10 +47,10 @@ define('setting/phone/index', [
                 error.html(data.statusInfo);
             } else {
                 var timer;
-                var value = 300;
+                var value = 60;
                 var wait = $('#testing-wait');
                 setInterval(function () {
-                    wait.text('300\u79D2\u540E\u91CD\u65B0\u53D1\u9001');
+                    wait.text('60\u79D2\u540E\u91CD\u65B0\u53D1\u9001');
                     wait.addClass('show');
                     wait.text(--value + '\u79D2\u540E\u91CD\u65B0\u53D1\u9001');
                     if (value < 0) {
@@ -62,9 +62,15 @@ define('setting/phone/index', [
         });
         box_id.delegate('#confirm', 'click', function (e) {
             e.preventDefault();
+            var phonenew = $('#login-phonenew').val();
+            var test = $('#login-test').val();
+            if (!phonenew || !test) {
+                $('.error').html('\u624B\u673A\u6216\u9A8C\u8BC1\u7801\u4E0D\u80FD\u4E3A\u7A7A');
+                return;
+            }
             phoneSubmite.remote({
-                oldPhone: $('#login-phonenew').val(),
-                vericode: $('#login-test').val()
+                oldPhone: phonenew,
+                vericode: test
             });
         });
         phoneSubmite.on('success', function (data) {
@@ -81,7 +87,10 @@ define('setting/phone/index', [
             if (errors.length) {
                 return;
             }
-            phoneSubmite2nd.remote({ newPhone: $('#login-phonenew2nd').val() });
+            phoneSubmite2nd.remote({
+                newPhone: $('#login-phonenew2nd').val(),
+                vericode: $('#login-test').val()
+            });
         });
         phoneSubmite2nd.on('success', function (data) {
             if (data && data.bizError) {

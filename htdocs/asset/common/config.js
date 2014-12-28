@@ -12,7 +12,7 @@ define('common/config', [], function () {
             LOGIN_IMGCODE_ADD: rootUrl + '/user/loginapi/getauthimageurl',
             LOGIN_IMGCODE_CHECK: rootUrl + '/user/loginapi/checkauthimage',
             EDIT_GETSMSCODE_CHECK: rootUrl + '/account/edit/getsmscode',
-            EDIT_PHONE_SUBMITE: rootUrl + '/test/account/edit/phoneSubmite.json',
+            EDIT_PHONE_SUBMITE: rootUrl + '/account/editapi/checkphone',
             EDIT_PHONE_SUBMITE2ND: rootUrl + '/account/edit/checkphone',
             EDIT_EMAILCONFIRM: rootUrl + '/test/account/edit/emailConfirm.json',
             EDIT_CHPWD_SUBMITE: rootUrl + '/account/edit/chpwd',

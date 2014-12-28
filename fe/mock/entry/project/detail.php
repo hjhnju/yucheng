@@ -37,19 +37,15 @@ $smarty->assign('full_time', '');
 $smarty->assign('pay_time', '');
 $smarty->assign('loan_type', '实地认证标');
 $smarty->assign('loan_cat', '学校助力贷');
+$smarty->assign('duration_type', '个月');
 $smarty->assign('safemode', array(
-    0 => array(
-        'id' => 1,
-        'name' => '本金保障计划'
-    ),
-    1 => array(
-        'id' => 2,
-        'name' => '保障计划'
-    ),
-    2 => array(
-        'id' => 3,
-        'name' => '保障计划安全'
-    )
+
+    '1' => '本金保障计划',
+    '2' => '本金计划',
+    '3' => '妈蛋计划'
+
+
+
 ));
 $smarty->assign('refund_typename', '等额本息');
 $smarty->assign('percent', 0.00);

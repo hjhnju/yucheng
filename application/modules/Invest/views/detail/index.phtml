@@ -47,14 +47,14 @@
                             <div class="gaishu-top-rental-icon lilv">借款年利率</div>
                             <div class="gaishu-top-rental-number">
                                 <span class="rental-number-big">{%$data.interest%}</span>
-                                <span>.00%</span>
+                                <span>%</span>
                             </div>
                         </div>
                         <div class="gaisu-top-rental">
                             <div class="gaishu-top-rental-icon time">借款期限</div>
                             <div class="gaishu-top-rental-number">
-                                <span class="rental-number-big">{%$data.duration%}</span>
-                                <span>个月</span>
+                                <span class="rental-number-big">{%$data.duration_days%}</span>
+                                <span>{%$data.duration_type%}</span>
                             </div>
                         </div>
 
@@ -65,7 +65,7 @@
                                 <span class="span">保障方式：</span>
                                 <div class="baozhang-box">
                                     {%foreach $data.safemode as $key => $item%}
-                                    <span class="baozhang-type benxi">{%$item.name%}</span>
+                                    <span class="baozhang-type benxi">{%$item%}</span>
                                     {%/foreach%}
 
                                 </div>
