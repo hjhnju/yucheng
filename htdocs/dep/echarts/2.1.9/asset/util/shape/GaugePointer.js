@@ -1,5 +1,10 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/shape/GaugePointer', function (require) {
+define('echarts/util/shape/GaugePointer', [
+    'require',
+    'zrender/shape/Base',
+    'zrender/tool/util',
+    './normalIsCover'
+], function (require) {
     var Base = require('zrender/shape/Base');
     var zrUtil = require('zrender/tool/util');
     function GaugePointer(options) {

@@ -1,5 +1,20 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/eventRiver', function (require) {
+define('echarts/chart/eventRiver', [
+    'require',
+    '../component/base',
+    './base',
+    '../layout/eventRiver',
+    'zrender/shape/Polygon',
+    '../component/axis',
+    '../component/grid',
+    '../component/dataZoom',
+    '../config',
+    '../util/ecData',
+    '../util/date',
+    'zrender/tool/util',
+    'zrender/tool/color',
+    '../chart'
+], function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var eventRiverLayout = require('../layout/eventRiver');

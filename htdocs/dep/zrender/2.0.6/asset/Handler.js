@@ -1,5 +1,14 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/Handler', function (require) {
+define('zrender/Handler', [
+    'require',
+    './config',
+    './tool/env',
+    './tool/event',
+    './tool/util',
+    './tool/vector',
+    './tool/matrix',
+    './mixin/Eventful'
+], function (require) {
     'use strict';
     var config = require('./config');
     var env = require('./tool/env');
