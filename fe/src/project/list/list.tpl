@@ -35,8 +35,8 @@
         <span class="lilv-bai">元</span>
     </div>
     <div class="investlist-box-title-name time">
-        <span class="lilv-number color-blank">${item.duration}</span>
-        <span class="lilv-bai">个月</span>
+        <span class="lilv-number color-blank">${item.duration_day}</span>
+        <span class="lilv-bai">${item.duration_type}</span>
     </div>
     <div class="investlist-box-title-name jindu">
         <div class="jindu-box">
