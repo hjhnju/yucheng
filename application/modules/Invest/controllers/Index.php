@@ -3,6 +3,10 @@
  * 投资列表
  */
 class IndexController extends Base_Controller_Page {
+    public function init() {
+        $this->needLogin = false;
+        parent::init();
+    }
 	
 	public function indexAction() {
 	    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -12,7 +16,7 @@ class IndexController extends Base_Controller_Page {
 	    $pagesize = 10;
 	    $filter = $this->getFilters();
 	    $list = Loan_Api::getLoans($page, $pagesize, $filter);
-	    $this->output($list);
+	    $this->_view->assign('data', $list);
 	}
 	
 	private function getFilters() {

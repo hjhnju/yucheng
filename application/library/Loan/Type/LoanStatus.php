@@ -16,10 +16,10 @@ class Loan_Type_LoanStatus extends Base_Type {
      */
     const LENDING = 2;
     /**
-     * 3放款审核 
+     * 3满标 放款审核 
      * @var integer
      */
-    const PAY_CHECK = 3;
+    const FULL_CHECK = 3;
     /**
      * 4打款中 
      * @var integer

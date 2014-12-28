@@ -28,4 +28,25 @@ class LoanModel extends BaseModel {
         }
         return true;
     }
+    
+    /**
+     * 开始事务
+     */
+    public function beginTransaction() {
+        return $this->db->beginTransaction();
+    }
+    
+    /**
+     * 提交事务
+     */
+    public function commit() {
+        return $this->db->commit();
+    }
+    
+    /**
+     * 回滚
+     */
+    public function rollback() {
+        return $this->db->rollBack();
+    }
 }

@@ -18,17 +18,17 @@ class Base_Controller_Api extends Base_Controller_Abstract {
         $csrftoken = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
         if($token !== $csrftoken){
             Base_Log::warn(array(
-                'msg'        =>'Csrf token invalid', 
-                'post_token' =>$token,
-                'csrf_token' =>$csrftoken,
+                'msg'        => 'Csrf token invalid', 
+                'post_token' => $token,
+                'csrf_token' => $csrftoken,
             ));
-            $this->ajaxError(Base_RetCode::CSRFTOKEN_INVALID,
+            return $this->ajaxError(Base_RetCode::CSRFTOKEN_INVALID,
                 Base_RetCode::getMsg(Base_RetCode::CSRFTOKEN_INVALID));
         }else{
             Base_Log::debug(array(
-                'msg'        =>'Csrf token valid', 
-                'post_token' =>$token,
-                'csrf_token' =>$csrftoken,
+                'msg'        => 'Csrf token valid', 
+                'post_token' => $token,
+                'csrf_token' => $csrftoken,
             ));
         }
     }

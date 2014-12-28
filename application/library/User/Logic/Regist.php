@@ -16,11 +16,10 @@ class User_Logic_Regist{
      * USERNAME_SYNTEX_ERROR 表示输入的用户名不合法
      */
     public function checkName($strName){        
-        Base_Log::debug('H3LLO'.$strName);
         if(empty($strName) || !User_Logic_Validate::checkName($strName)){
             return User_RetCode::USERNAME_SYNTEX_ERROR;
         }
-        
+
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('name'=>$strName));
 
@@ -66,8 +65,8 @@ class User_Logic_Regist{
 
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('phone'=>$strPhone));
-        if(!empty($objLogin->phone)) {
-            return User_RetCode::USERPHONE_EXIST;
+        if(empty($objLogin->phone)) {
+            return User_RetCode::REFEREE_NOT_EXIST;
         }
         return User_RetCode::SUCCESS;
     }
@@ -88,7 +87,7 @@ class User_Logic_Regist{
             return 0;
         }
 
-        $objInfo           = new User_Object_objInfo();
+        $objInfo           = new User_Object_Info();
         $objInfo->userid   = $objLogin->userid;
         //个人用户
         $objInfo->usertype = 1;

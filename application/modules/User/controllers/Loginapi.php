@@ -14,18 +14,28 @@ class LoginApiController extends Base_Controller_Api{
      * 状态返回0表示登录成功
      */    
     public function indexAction(){
-        $strName   = trim($_REQUEST['name']);
-        $strPasswd = trim($_REQUEST['passwd']);
+        $strName   = trim($_POST['name']);
+        $strPasswd = trim($_POST['passwd']);
+        $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
         
         //检查错误次数
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
-        if($intFails >= 3) {
+        if(!$strCode && $intFails >= 3) {
             return $this->ajaxError(
                 User_RetCode::NEED_PICTURE,
                 User_RetCode::getMsg(User_RetCode::NEED_PICTURE),
                 array('url' => Base_Config::getConfig('web')->root 
-                    . '/user/authimage/getauthimage?type=login')
+                    . '/user/imagecode/getimage?type=login')
             );
+        }
+
+        //检查验证码
+        if($strCode){
+            $bolRet = User_Logic_ImageCode::checkCode('login', $strCode);
+            if(!$bolRet){
+                return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG,
+                    User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
+            }
         }
   
         //检查用户名语法
@@ -41,6 +51,7 @@ class LoginApiController extends Base_Controller_Api{
         $logic   = new User_Logic_Login();
         $retCode = $logic->login($$strName,$strPasswd);
         if(User_RetCode::SUCCESS === $retCode) {
+            Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
             // $this->ajaxJump($redirectUri);
             $this->ajax();
         }else{

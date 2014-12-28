@@ -91,7 +91,7 @@ class Invest_Api {
     
     /**
      * 获取单笔投资的收款计划
-     * @param unknown $invest_id
+     * @param integer $invest_id
      * @return array
      */
     public static function getRefunds($invest_id) {
@@ -109,7 +109,7 @@ class Invest_Api {
     
     /**
      * 获取用户的投资总额
-     * @param unknown $uid
+     * @param integer $uid
      * @return number
      */
     public static function getUserAmount($uid) {
@@ -131,10 +131,10 @@ class Invest_Api {
     
     /**
      * 进行投标
-     * @param unknown $uid
-     * @param unknown $loan_id
-     * @param unknown $amount
-     * @param unknown $interest
+     * @param integer $uid
+     * @param integer $loan_id
+     * @param integer $amount
+     * @param integer $interest
      */
     public static function invest($uid, $loan_id, $amount, $interest) {
         //@todo 自动投标使用
@@ -142,7 +142,7 @@ class Invest_Api {
     
     /**
      * 获取用户的帐户余额
-     * @param unknown $uid
+     * @param integer $uid
      * @return number
      */
     public static function getAccountAmout($uid) {
@@ -151,12 +151,153 @@ class Invest_Api {
     
     /**
      * 获取用户在某借款上最大的可投标金额
-     * @param unknown $uid
-     * @param unknown $loan_id
+     * @param integer $uid
+     * @param integer $loan_id
      */
     public static function getUserCanInvest($uid, $loan_id) {
         $logic = new Invest_Logic_Invest();
         $amount = self::getAccountAmout($uid);
         return $logic->getUserCanInvest($uid, $loan_id, $amount);
+    }
+    
+    /**
+     * 获取投资的信息
+     * @param integer $invest_id
+     * @param array
+     */
+    public static function getInvest($invest_id) {
+        $logic = new Invest_Logic_Invest();
+        return $logic->getInvest($invest_id);
+    }
+    
+    /**
+     * 创建收款计划
+     * @param integer $invest_id
+     * @param boolean
+     */
+    public static function buildRefunds($invest_id) {
+        $invest = self::getInvest($invest_id);
+        $loan = Loan_Api::getLoanInfo($invest['loan_id']);
+        
+        if ($loan['duration'] < 30) {
+            $date = new DateTime('tomorrow');
+            $date->modify('+' . $loan['duration'] . 'days');
+            $time = $date->getTimestamp() - 1;
+            
+            $income = self::getInterestByDay($invest['amount'], $invest['interest'], $loan['duration']);
+            return self::addRefund($invest, 1, $invest['amount'], $income, $time);
+        }
+        
+        //超过30天 按月还款
+        $periods = ceil($loan['duration'] / 30);
+        if ($loan['refund_type'] == Invest_Type_RefundType::MONTH_INTEREST) {
+            $date = new DateTime('tomorrow');
+            $start = $date->getTimestamp() - 1;
+            for ($period = 1; $period <= $periods; $period++) {
+                $date->modify('+1month');
+                $promise = $date->getTimestamp() - 1;
+                $days = ($promise - $start) / 3600 / 24;
+                $income = self::getInterestByDay($invest['amount'], $loan['interest'], $days);
+                if ($period == $periods) {
+                    $capital = $invest['amount'];
+                } else {
+                    $capital = 0;
+                }
+                $res = self::addRefund($invest, $period, $capital, $income, $promise);
+                
+                if (!$res) {
+                    $msg = array(
+                        'msg'    => 'add refund error',
+                        'invest' => json_encode($invest),
+                        'period' => $period,
+                        'capital'=> 0,
+                        'income' => $income,
+                        'promise'=> $promise,
+                    );
+                    Base_Log::error($msg);
+                    return false;
+                }
+                
+                $start = $promise;
+            }
+        } elseif ($loan['refund_type'] == Invest_Type_RefundType::AVERAGE) {
+            $date = new DateTime('tomorrow');
+            $start = $date->getTimestamp() - 1;
+            $b = $loan['interest'] / 12;
+            $a = $invest['amount'];
+            $n = $periods;
+            for ($period = 1; $period <= $periods; $period++) {
+                /*  收益计算公式
+                    P = A * b% * (1 + b%)^n / ((1 + b%)^n - 1)
+                    P: 每月还款额
+                    A: 借款本金
+                    b: 月利率
+                    n: 还款总期数
+                    
+                    每月月供额=〔贷款本金×月利率×(1＋月利率)＾还款月数〕÷〔(1＋月利率)＾还款月数-1〕
+                    每月应还利息=贷款本金×月利率×〔(1+月利率)^还款月数-(1+月利率)^(还款月序号-1)〕÷〔(1+月利率)^还款月数-1〕
+                    每月应还本金=贷款本金×月利率×(1+月利率)^(还款月序号-1)÷〔(1+月利率)^还款月数-1〕
+                    总利息=还款月数×每月月供额-贷款本金
+                */
+                $date->modify('+1month');
+                $promise = $date->getTimestamp() - 1;
+                $days = ($promise - $start) / 3600 / 24;
+                $income = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1)) / (pow(1 + $b, $periods) - 1);
+                $capital = $a * $b * pow(1 + $b, $period - 1) / (pow(1 + $b, $periods) - 1);
+                $res = self::addRefund($invest, $period, $capital, $income, $promise);
+                
+                if (!$res) {
+                    $msg = array(
+                        'msg'    => 'add refund error',
+                        'invest' => json_encode($invest),
+                        'period' => $period,
+                        'capital'=> $capital,
+                        'income' => $income,
+                        'promise'=> $promise,
+                    );
+                    Base_Log::error($msg);
+                    return false;
+                }
+                
+                $start = $promise;
+            }
+        }
+        
+        return true;
+    }
+    
+    /**
+     * 新增一个收款计划
+     * @param unknown $invest
+     * @param unknown $period
+     * @param unknown $capital
+     * @param unknown $income
+     * @param unknown $time
+     * @return boolean
+     */
+    private static function addRefund($invest, $period, $capital, $income, $time) {
+        $refund = new Invest_Object_Refund();
+        $refund->amount = $capital + $income;
+        $refund->interest = $income;
+        $refund->capital = $capital;
+        $refund->investId = $invest['id'];
+        $refund->lateCharge = 0;
+        $refund->loanId = $invest['loan_id'];
+        $refund->period = $period;
+        $refund->userId = $invest['user_id'];
+        $refund->promiseTime = $time;
+        return $refund->save();
+    }
+    
+    /**
+     * 按月付息 到期还本 按天计算的利息收入
+     * @param number $amount
+     * @param number $interest
+     * @param number $days
+     * @return number
+     */
+    private static function getInterestByDay($amount, $interest, $days) {
+        $money = $amount * $interest * $days / 365 / 100;
+        return $money;
     }
 }

@@ -10,7 +10,69 @@ class Loan_Api {
      * @param integer $lid
      */
     public static function buildRefunds($loan_id) {
+    }
+    
+    public static function buildInvestRefunds($invest_id) {
         
+    }
+    
+    private static function sendMoney($from, $to) {
+        
+    }
+    
+    /**
+     * 对成功的借款进行打款
+     * @param integer $loan_id
+     * @return boolean
+     */
+    public static function sendLendMoney($loan_id) {
+        if (empty($loan_id)) {
+            return false;
+        }
+
+        $logic = new Loan_Logic_Loan();
+        $loan = $logic->getLoanInfo($loan_id);
+        $res = false;
+        if ($loan['status'] == Loan_Type_LoanStatus::PAYING) {
+            $res = $logic->sendMoney($loan_id);
+        }
+        
+        if ($res) {
+            $content = "给客户打款成功";
+            self::AddLog($loan_id, $content);
+        } else {
+            $content = "给客户打款失败";
+            self::AddLog($loan_id, $content);
+        }
+        return $res;
+    }
+    
+    /**
+     * 借款成功
+     * @param integer $loan_id
+     * @return boolean
+     */
+    public static function lendSuccess($loan_id) {
+        if (empty($loan_id)) {
+            return false;
+        }
+        
+        $logic = new Loan_Logic_Loan();
+        $loan = $logic->getLoanInfo($loan_id);
+        $res = false;
+        if ($loan['status'] == Loan_Type_LoanStatus::FULL_CHECK) {
+            $res = $logic->lendSuccess($loan_id);
+        }
+        
+        if ($res) {
+            $content = "生成还款计划成功";
+            self::AddLog($loan_id, $content);
+        } else {
+            $content = "生成还款计划失败";
+            self::AddLog($loan_id, $content);
+        }
+        
+        return $res;
     }
     
     /**
@@ -75,10 +137,14 @@ class Loan_Api {
         $cat = new Loan_Type_LoanCat();
         $safe = new Loan_Type_SafeMode();
         $refund = new Loan_Type_Refund();
+        $duration = new Loan_Type_Duration();
+        
         $list->joinType($type, 'type_id');
         $list->joinType($cat, 'cat_id');
         $list->joinType($safe, 'safe_id');
         $list->joinType($refund, 'refund_type');
+        $list->joinType($duration, 'duration');
+        
         $data = $list->toArray();
         foreach ($data['list'] as $key => $row) {
             $data['list'][$key] = self::formatLoan($row);
@@ -110,6 +176,16 @@ class Loan_Api {
         
         $duration = new Loan_Type_Duration();
         $data['duration_name'] = $duration->getTypeName($data['duration']);
+        if ($data['duration'] < 15) {
+            $data['duration_day'] = $data['duration'];
+            $data['duration_type'] = '天';
+        } elseif ($data['duration'] == 15) {
+            $data['duration_day'] = '半';
+            $data['duration_type'] = '个月';
+        } else {
+            $data['duration_day'] = $data['duration'] / 30;
+            $data['duration_type'] = '个月';
+        }
         return $data;
     }
     
@@ -150,6 +226,7 @@ class Loan_Api {
     public static function getLoanDetail($loan_id) {
         $data = self::getLoanInfo($loan_id);
         $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
+        $data['days'] = self::getDays($data['duration']);
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();
@@ -157,7 +234,11 @@ class Loan_Api {
         $refund = new Loan_Type_RefundType();
         $data['loan_type'] = $type->getTypeName($data['type_id']);
         $data['loan_cat'] = $cat->getTypeName($data['cat_id']);
-        $data['safemode'] = $safe->getTypeName($loan->safeId);
+        
+        $safe_ids = explode(',', $data['safe_id']);
+        foreach ($safe_ids as $safeid) {
+            $data['safemode'][$safeid] = $safe->getTypeName($safeid);
+        }
         $data['refund_typename'] = $refund->getTypeName($data['refund_type']);
 
         $cond = array('loan_id' => $loan_id);
@@ -180,10 +261,39 @@ class Loan_Api {
         $attachs_data = $attachs->toArray();
         $data['attach'] = self::stepArray($attachs_data['list'], 'type');
         
+        $data['refunds'] = self::getRefunds($loan_id);
         //$invests = Invest_Api::getLoanInvests($loan_id);
         //$data['invest'] = $invests['list'];
         
         return $data;
+    }
+    
+    /**
+     * 获取周期对应的总天数
+     * @param number $duration
+     * @return number
+     */
+    private static function getDays($duration) {
+        if ($duration < 30) {
+            return $duration;
+        }
+        
+        $periods = $duration / 30;
+        //@todo 对于半个月的处理
+        $date = new DateTime('today');
+        $start = $date->getTimestamp();
+        $date->modify('+' . $periods . 'months');
+        
+        $time = $date->getTimestamp() - $start;
+        $days = ceil($time / 3600 / 24);
+        
+        return $days;
+    }
+    
+    public static function getRefunds($loan_id) {
+        $logic = new Loan_Logic_Loan();
+        $refunds = $logic->getRefunds($loan_id);
+        return $refunds;
     }
     
     /**

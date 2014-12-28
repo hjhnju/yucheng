@@ -11,6 +11,6 @@ class DetailController extends Base_Controller_Response {
 	    }
 	    
 	    $loan = Loan_Api::getLoanDetail($id);
-	    $this->_view->assign('loan', $loan);
+	    $this->_view->assign('data', $loan);
 	}
 }
