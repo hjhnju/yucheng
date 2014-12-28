@@ -4,15 +4,30 @@
  * @author huwei04
  *
  */
-class User_Logic_AuthImage {
+class User_Logic_ImageCode {
+
+    /**
+     * 验证图片验证码
+     * @param  string $strType 自定义验证码类型，e.g. login, editemail
+     * @param  string $code 验证码
+     * @return  boolean 
+     */
+    public static function checkCode($strType, $code){
+
+        $storeCode = Base_Redis::getInstance()->get(User_Keys::getImageCodeKey($strType));
+        $bolRet    = strtolower($storeCode) === strtolower($code) ? true : false;
+
+        return $bolRet;
+    }
     
     /**
      * $im_x,$im_y指明验证码图片的长和宽
      * 生成图片验证码
      */
-    public static function genImage($token, $im_x=162, $im_y=35){
+    public static function genImage($strType, $im_x=162, $im_y=35){
+        //存储验证码
         $text = self::makeRand(4);
-        Base_Redis::getInstance()->set($token,$text);
+        Base_Redis::getInstance()->set(User_Keys::getImageCodeKey($strType), $text);
 
         $im       = imagecreatetruecolor($im_x,$im_y);
         $text_c   = ImageColorAllocate($im, mt_rand(0,100),mt_rand(0,100),mt_rand(0,100));
@@ -63,19 +78,12 @@ class User_Logic_AuthImage {
                 imagesetpixel($distortion_im, $px+80, $py+$yy, $text_c);
             }
         }
-    
-        //设置文件头;
-        Header("Content-type: image/png");
-    
-        //以PNG格式将图像输出到浏览器或文件;
-        Imagepng($distortion_im);
-    
-        //销毁一图像,释放与image关联的内存;
-        ImageDestroy($distortion_im);
-        ImageDestroy($im);
+        imageDestroy($im);
+
+        return $distortion_im;
     }
     
-    private static function  makeRand($length="32"){//验证码文字生成函数
+    private static function makeRand($length="32"){//验证码文字生成函数
         $str    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $result = "";
         for($i=0;$i<$length;$i++){

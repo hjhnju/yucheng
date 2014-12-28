@@ -95,6 +95,7 @@ class User_Logic_Third {
         //缓存access_token
         Base_Redis::getInstance()->set(User_Keys::getAccessTokenKey($openid), $accessToken, 30*24*3600);
 
+        //保存openid
         Yaf_Session::getInstance()->set(User_Keys::getOpenidKey(), $openid);
 
         $objThird = new User_Object_Third();

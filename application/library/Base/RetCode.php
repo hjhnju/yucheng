@@ -48,7 +48,7 @@ class Base_RetCode {
         self::DATA_NULL         => '数据为空',
         self::SERVICE_DEGRADED  => '服务降级',
         self::NEED_PICTURE      => '需要图片验证码',
-        self::CSRFTOKEN_INVALID => '会话已过期，请重新刷新页面',
+        self::CSRFTOKEN_INVALID => '会话token实效，请重新刷新页面',
 
         self::NEED_REDIRECT     => '前端跳转',
     );

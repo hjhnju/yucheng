@@ -141,15 +141,6 @@ class User_Api{
     }
     
     /**
-     * 返回获取图片验证码的URL
-     * @param $strType:类型
-     */
-    public static function getAuthImageUrl($strType){
-        $strId = session_id().$strType;
-        return "http://123.57.46.229:8301/User/loginapi/getAuthImage?&token=$strId";
-    }
-    
-    /**
      * 验证图片验证码
      * @param $strImageCode:图片验证码
      * @param $strType:类型

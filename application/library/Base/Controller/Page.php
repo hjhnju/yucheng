@@ -16,7 +16,7 @@ class Base_Controller_Page extends Base_Controller_Abstract {
         $this->getView()->assign('feroot', $webroot . '/asset');
 
         //set csrf token
-        $token = time() . mt_rand(5, 5);
+        $token = time() . mt_rand(10000, 99999);
         $ret   = Yaf_Session::getInstance()->set(Base_Keys::getCsrfTokenKey(), $token);
         //防止错误时验证无法访问
         $token = $ret ? $token : '';

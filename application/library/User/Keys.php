@@ -11,6 +11,8 @@ class User_Keys {
 
     const SESSION_LOGINFAIL_KEY= 'login_fails';
 
+    const IMAGE_CODE_KEY       = 'imagecode_%s_%s';
+
     public static function getOpenidKey(){
         return self::SESSION_OPENID_KEY;
     }
@@ -29,5 +31,9 @@ class User_Keys {
 
     public static function getFailTimesKey(){
         return self::SESSION_LOGINFAIL_KEY;
+    }
+
+    public static function getImageCodeKey($strType){
+        return sprintf(self::IMAGE_CODE_KEY, session_id(), $strType);
     }
 }
