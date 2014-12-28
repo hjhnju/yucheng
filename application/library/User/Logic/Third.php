@@ -3,7 +3,7 @@
  * 第三方登录Logic层
  * @author hejunhua
  */
-class User_Logic_Third{
+class User_Logic_Third {
 
     //第三方登陆类型
     const TYPE_QQ     = 1;

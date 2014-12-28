@@ -7,9 +7,9 @@ class SecureController extends Base_Controller_Response{
 	private $retData;
 	public function init() {
 		$this->setNeedLogin(false);// for test
-		$this->secureLogic = new Account_Logic_Secure();
 		$this->retData = array();
 		parent::init();
+		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax= true;
 	}
 	
@@ -32,57 +32,57 @@ class SecureController extends Base_Controller_Response{
 	 * 
 	 * 'email' 1--绑定  2--未绑定 
 	 * 'emailnum' 邮件
-	 * 'emailpay' email后的url
+	 * 'emailurl' email后的url
 	 * 
 	 * 'chpwdurl' 修改url的接口 
 	 * 
 	 * 'bindthirdlogin'是否绑定第三方登录  1--是  2--否
-	 * 'thirdPlatform' 第三方绑定平台  qq weixin wenbo
+	 * 'thirdPlatform' 第三方绑定平台  1--qq 2--weixin 3--wenbo
 	 * 'thirdNickName' 第三方平台昵称 
 	 * 'thirdloginurl' 第三方平台登录url
 	 */
 	public function indexAction() {	
 		$webroot = Base_Config::getConfig('web')->root;
-		//$userid = $this->getUserId();
+		$userid = $this->getUserId();
+		$userid = intval($userid);
 		//$userObj = User_Api::getUserObject($userid);
-		$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
-		$phone = $userObj->phone;//获取用户手机号码
-		
-		$realname = $userObj->realname;//获取用户真实姓名
-		$certificateContent = $userObj->certificateContent;//获取用户的证件信息
-		$huifuid = $userObj->huifuid;//获取用户的汇付id--判断用户有没有开通汇付
-		$email = $userObj->email;
-		 
-		$this->retData['phone']['bind'] = isset($phone) ? 1 : 2;//若设置手机，前端assign值1，否则assign值0，下同
-		if($this->retData['phone'] == 1) {
-			$this->retData['phone']['url'] = $webroot.'/account/secure/bindphone';
+		//$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
+		$userinfo = $this->userInfoLogic->getUserInfo($userid);
+				
+		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
+		$phonenum = $userinfo['phone']['value'];//用户手机号码
+		if($phone == 2) {
+			$phoneurl = $webroot.'/account/secure/bindphone';
 		} else {
-			$this->retData['phone']['url'] = $webroot.'/account/edit/chphone';
+			$phoneurl = $webroot.'/account/edit/chphone';
+		}		
+		$certinfo = $userinfo['realname']['isopen'];//实名认证是否开通
+		$realname = $userinfo['realname']['realnameValue'];//用户实名
+		$certinfonum = $userinfo['realname']['certValue'];//用户的证件值
+		if($certinfo == 2) {
+			$certinfourl = $webroot.'/account/secure/bindcertinfo';
+		} else {
+			$certinfourl = '';
 		}
 		
-		$this->retData['certificateInfo']['bind'] = (isset($realname) && isset($certificateContent)) ? 1 : 2;
-		if($this->retData['certificateInfo'] == 1) {
-			$this->retData['certificateInfo']['url'] = $webroot.'/account/secure/bindcertinfo';
+		$thirdpay = $userinfo['huifu']['isopen'];//用户是否开通了汇付托管
+		$huifuid = $userinfo['huifu']['value'];//用户的汇付id			
+		if($thirdpay == 2) {
+			$thirdpayurl = $webroot.'/account/secure/bindthirdpay';
 		} else {
-			$this->retData['certificateInfo']['url'] = '';
+			$thirdpayurl = $webroot.'/account/secure/viewthirdPay';
 		}
 		
-		$this->retData['thirdPay']['bind'] = isset($huifuid) ? 1 : 2;
-		if($this->retData['thirdPay']['bind'] == 1) {
-			$this->retData['thirdpay']['url'] = $webroot.'/account/secure/bindthirdpay';
+		$email = $userinfo['email']['isopen'];//用户是否开通了email
+		$emailnum = $userinfo['email']['value'];
+		if($email == 2) {
+			$emailurl = $webroot.'/account/secure/bindemail';
 		} else {
-			$this->retData['thirdpay']['url'] = $webroot.'/account/secure/viewthirdPay';
+			$emailurl = $webroot.'/account/edit/chemail';				
 		}
 		
-		$this->retData['email']['bind'] = isset($email) ? 1 : 2;	
-		if($this->retData['email']['bind'] == 1) {
-			$this->retData['email']['url'] = $webroot.'/account/edit/chemail';
-		} else {
-			$this->retData['email']['url'] = $webroot.'/account/secure/bindemail';
-		}
-		
-		$this->retData['chpwd']['url'] = $webroot.'/account/edit/chpwd';
-	/* 	
+		$chpwdurl = $webroot.'/account/edit/chpwd';
+	   /* 	
 		$thirdLogin = array('qq','weibo','weixin');		
 		foreach ($thirdLogin as $k=>$v) {
 			if($userObj->getOpenid($v)!=false) {
@@ -90,41 +90,45 @@ class SecureController extends Base_Controller_Response{
 				$this->retData['thirdNickName'] = $userObj->getNickname($v);
 				break;
 			}
-		} */
+		}
+		*/
 		//for test
 		$this->retData['thirdPlatform'] = 1;
 		if(!isset($this->retData['thirdPlatform'])) {
 			$this->retData['bindthirdlogin'] = 2;
-			$this->retData['thirdloginurl'] = $webroot.'/account/secure/bindthirdlogin';
+			$thirdloginurl = $webroot.'/account/secure/bindthirdlogin';
 		} else {
 			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdloginurl'] = $webroot.'/account/secure/unbindthirdlogin';
+			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
 		}
 		//var_dump($this->retData);die;
-		$this->getView()->assign('phone', $this->retData['phone']['bind']);
-		$this->getView()->assign('phoneurl',$this->retData['phone']['url']);
-		$this->getView()->assign('phonenum',$phone);
+		//像前端传递左上角信息
+        $this->getView()->assign('userinfo',$userinfo);		
 		
-		$this->getView()->assign('certinfo', $this->retData['certificateInfo']['bind']);
-		$this->getView()->assign('certinfourl', $this->retData['certificateInfo']['url']);
+		$this->getView()->assign('phone', $phone);
+		$this->getView()->assign('phoneurl',$phoneurl);
+		$this->getView()->assign('phonenum',$phonenum);
+		
+		$this->getView()->assign('certinfo', $certinfo);
+		$this->getView()->assign('certinfourl', $certinfourl);
 		$this->getView()->assign('realname',$realname);
-		$this->getView()->assign('certinfonum',$certificateContent);
+		$this->getView()->assign('certinfonum',$certinfonum);
 		
-		$this->getView()->assign('thirdpay', $this->retData['thirdPay']['bind']);
-		$this->getView()->assign('thirdpayurl',$this->retData['thirdpay']['url']);
+		$this->getView()->assign('thirdpay', $thirdpay);
+		$this->getView()->assign('thirdpayurl',$thirdpayurl);
 		$this->getView()->assign('huifuid', $huifuid);
 		
 		
-		$this->getView()->assign('email', $this->retData['email']['bind']);
-		$this->getView()->assign('emailurl', $this->retData['email']['url']);
-		$this->getView()->assign('emailnum', $email);
+		$this->getView()->assign('email', $email);
+		$this->getView()->assign('emailurl', $emailurl);
+		$this->getView()->assign('emailnum', $emailnum);
 		
-		$this->getView()->assign('chpwdurl',$this->retData['chpwd']['url']);
+		$this->getView()->assign('chpwdurl',$chpwdurl);
 		
 		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);				
 		$this->getView()->assign('thirdPlatform','qq');//mock
 		$this->getView()->assign('thirdNickName','海阔天空');
-		$this->getView()->assign('thirdloginurl',$this->retData['thirdloginurl']);
+		$this->getView()->assign('thirdloginurl',$thirdloginurl);
 	}
 
 	/**
@@ -141,11 +145,13 @@ class SecureController extends Base_Controller_Response{
 	 * 
 	 */
 	public function securedegreeAction() {
-		$this->retData['phone'] = 1;  //若设置手机，前端assign值1，否则assign值0，下同
-		$this->retData['certificateInfo'] =  1;
-		$this->retData['thirdPay'] = 2;
-		$this->retData['email'] = 2;
-		$ret = $this->secureLogic->scoreDegree($this->retData);
+		$userid = $this->getUserId();	    
+		$userinfo = $this->userInfoLogic->getUserInfo($userid);
+		
+		$ret = array(
+		    'score'         => $userinfo['securedegree']['score'],
+		    'secureDegree'  => $userinfo['securedegree']['degree'],  
+		);
 		$this->output($ret);		
 	}	
 	
