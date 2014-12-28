@@ -34,8 +34,8 @@ exports.getLocations = function () {
         {
             location: /\.php($|\?)/,
             handler: [
-                //php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
-                php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
+                php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
+                //php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
             ]
         },
         { 
@@ -95,7 +95,7 @@ exports.getLocations = function () {
                     '/user/loginapi/checkauthimage',
                     '/invest/api',
                     '/account/edit/getsmscode',
-                    '/account/edit/checkphone',
+                    '/account/editapi/checkphone',
                     '/account/invest/backing',
                     '/account/invest/repayplan',
                     '/account/invest/ended',
@@ -112,8 +112,8 @@ exports.getLocations = function () {
 
             },
             handler: [
-                //proxy('123.57.46.229', 8082)  //李璐
-                proxy('123.57.46.229', 8301)  //胡伟
+                proxy('123.57.46.229', 8082)  //李璐
+                //proxy('123.57.46.229', 8301)  //胡伟
                 // proxy('123.57.46.229', 8600)  //松芳
             ]
         },

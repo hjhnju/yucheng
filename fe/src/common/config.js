@@ -50,8 +50,8 @@ define(function () {
             + '/account/edit/getsmscode',
         //+ '/test/account/edit/getsmscode.json',
         EDIT_PHONE_SUBMITE: rootUrl
-            //+ '/account/edit/checkphone',
-        + '/test/account/edit/phoneSubmite.json',
+            + '/account/editapi/checkphone',
+        //+ '/test/account/edit/phoneSubmite.json',
         EDIT_PHONE_SUBMITE2ND: rootUrl
         + '/account/edit/checkphone',
         //+ '/test/account/edit/phoneSubmite.json',

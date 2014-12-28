@@ -79,11 +79,11 @@ define(function (require) {
             }
             else {
                 var timer;
-                var value = 300;
+                var value = 60;
                 var wait = $('#testing-wait');
 
                 setInterval(function () {
-                    wait.text('300秒后重新发送');
+                    wait.text('60秒后重新发送');
                     wait.addClass('show');
 
                     wait.text(--value + '秒后重新发送');
@@ -99,11 +99,17 @@ define(function (require) {
         // 点击下一步
         box_id.delegate('#confirm','click', function (e) {
             e.preventDefault();
+            var phonenew = $('#login-phonenew').val();
+            var test = $('#login-test').val();
+            if(!phonenew || !test) {
+                $('.error').html('手机或验证码不能为空');
 
+                return;
+            }
 
             phoneSubmite.remote({
-                oldPhone: $('#login-phonenew').val(),
-                vericode: $('#login-test').val()
+                oldPhone: phonenew,
+                vericode: test
             });
 
         });
@@ -114,6 +120,7 @@ define(function (require) {
                 $('.error').html(data.statusInfo);
             }
             else {
+
                 $("#checkphone").html(etpl.render('list2nd'));
             }
         });
@@ -131,7 +138,8 @@ define(function (require) {
                 return;
             }
             phoneSubmite2nd.remote({
-                newPhone: $('#login-phonenew2nd').val()
+                newPhone: $('#login-phonenew2nd').val(),
+                vericode: $('#login-test').val()
             });
 
         });
