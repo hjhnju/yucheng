@@ -137,29 +137,29 @@ class InvestController extends Base_Controller_Response {
 	    //for test
 	    //TODO:remove
 	    $mockdata = array(
-	    		'page'    => $page,
-                'pageall' => 10,
-                'all' => 2,
-	    		'list'    => array(
-	    		    0 => array(
-	    		    	'proId'          => 1,
-	    		    	'investPro'      => '测试用投标中项目1',
-	    		    	'annlnterestRate'=> 12,
-	    		    	'tenderAmt'      => 3000.00,
-	    		    	'deadline'       => 6,
-	    		    	'tenderTime'     => 1419419678,
-	    		    	'tenderProgress' => 85,
-	    		    ),
-	    			1 => array(
-	    					'proId'          => 1,
-	    					'investPro'      => '测试用投标中项目2',
-	    					'annlnterestRate'=> 12,
-	    					'tenderAmt'      => 3000.00,
-	    					'deadline'       => 6,
-	    					'tenderTime'     => 1419419678,
-	    					'tenderProgress' => 85,
-	    			),    				
-	    		),	    
+	    	'page'    => $page,
+            'pageall' => 10,
+            'all' => 2,
+	    	'list'    => array(
+	    	    0 => array(
+	    	    	'proId'          => 1,
+	    	    	'investPro'      => '测试用投标中项目1',
+	    	    	'annlnterestRate'=> 12,
+	    	    	'tenderAmt'      => 3000.00,
+	    	    	'deadline'       => 6,
+	    	    	'tenderTime'     => 1419419678,
+	    	    	'tenderProgress' => 85,
+	    	    ),
+	    		1 => array(
+	    			'proId'          => 1,
+	    			'investPro'      => '测试用投标中项目2',
+	    			'annlnterestRate'=> 12,
+	    			'tenderAmt'      => 3000.00,
+	    			'deadline'       => 6,
+	    			'tenderTime'     => 1419419678,
+	    			'tenderProgress' => 85,
+	    		),    				
+	    	),	    
 	    );
 	    $this->output($mockdata);
 	}
@@ -197,34 +197,34 @@ class InvestController extends Base_Controller_Response {
 		//for test
 		//TODO:remove
 		$mockdata = array(
-				'page'    => $page,
-                'pageall' => 10,
-                'all'     => 2,
-				'list'    => array(
-				    0 => array(
-				    		'proId'          => 1,
-				    		'investPro'      => '测试用已结束项目1',
-				    		'annlnterestRate'=> 12,
-				    		'tenderAmt'      => 3000.00,
-				    		'deadline'       => 6,
-				    		'tenderTime'     => 1419419678,
-				    		'endTime'        => 1419420656,
-				    		'totalRetAmt'    => 104.48,
-				    		'totalProfit'    => 4.48,
-				    ),
-					1 => array(
-							'proId'          => 1,
-							'investPro'      => '测试用已结束项目2',
-							'annlnterestRate'=> 12,
-							'tenderAmt'      => 3000.00,
-							'deadline'       => 6,
-							'tenderTime'     => 1419419678,
-							'endTime'        => 1419420656,
-							'totalRetAmt'    => 104.48,
-							'totalProfit'    => 4.48,
-				    ),
-						
-				),
+			'page'    => $page,
+            'pageall' => 10,
+            'all'     => 2,
+			'list'    => array(
+			    0 => array(
+			    		'proId'          => 1,
+			    		'investPro'      => '测试用已结束项目1',
+			    		'annlnterestRate'=> 12,
+			    		'tenderAmt'      => 3000.00,
+			    		'deadline'       => 6,
+			    		'tenderTime'     => 1419419678,
+			    		'endTime'        => 1419420656,
+			    		'totalRetAmt'    => 104.48,
+			    		'totalProfit'    => 4.48,
+			    ),
+				1 => array(
+						'proId'          => 1,
+						'investPro'      => '测试用已结束项目2',
+						'annlnterestRate'=> 12,
+						'tenderAmt'      => 3000.00,
+						'deadline'       => 6,
+						'tenderTime'     => 1419419678,
+						'endTime'        => 1419420656,
+						'totalRetAmt'    => 104.48,
+						'totalProfit'    => 4.48,
+			    ),
+					
+			),
 		);
 		$this->output($mockdata);
 	}
@@ -261,29 +261,29 @@ class InvestController extends Base_Controller_Response {
 		//for test
 		//TODO:remove
 		$mockdata = array(
-				'page'    => $page,
-				'pageall' => $this->PAGEALL,
-                'all'=>2,
-                'list'    => array(
-				        0 =>	array(
-					 		'proId'          => 1,
-					 		'investPro'      => '测试用投标失败项目',
-					 		'annlnterestRate'=> 12,
-					 		'tenderAmt'      => 3000.00,
-					 		'deadline'       => 6,
-					 		'tenderTime'     => 1419419678,
-					 		'failReason'    => '余额不足导致投标失败',
-				        ),     
-						1 =>	array(
-								'proId'          => 1,
-								'investPro'      => '测试用投标失败项目',
-								'annlnterestRate'=> 12,
-								'tenderAmt'      => 3000.00,
-								'deadline'       => 6,
-								'tenderTime'     => 1419419678,
-								'failReason'    => '余额不足导致投标失败',
-						),
-				 ),
+			'page'    => $page,
+			'pageall' => $this->PAGEALL,
+            'all'     =>2,
+            'list'    => array(
+		        0 =>array(
+				    'proId'          => 1,
+					'investPro'      => '测试用投标失败项目',
+					'annlnterestRate'=> 12,
+					'tenderAmt'      => 3000.00,
+					'deadline'       => 6,
+					'tenderTime'     => 1419419678,
+					'failReason'     => '余额不足导致投标失败',
+				),     
+				1 =>array(
+					'proId'          => 1,
+					'investPro'      => '测试用投标失败项目',
+					'annlnterestRate'=> 12,
+					'tenderAmt'      => 3000.00,
+					'deadline'       => 6,
+					'tenderTime'     => 1419419678,
+					'failReason'     => '余额不足导致投标失败',
+			    ),
+		    ),
 				 			
 		);
 		$this->output($mockdata);

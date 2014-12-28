@@ -61,14 +61,14 @@ class OverviewController extends Base_Controller_Response {
 		$acctBal = isset($balance['acctBal']) ? $balance['acctBal'] : 0.00;//资产总计
 		$frzBal = isset($balance['frzBal']) ? $balance['frzBal'] : 0.00;//冻结金额 
 		*/
-		$avlBal = 0.00;
-		$acctBal = 0.00;
-		$frzBal = 0.00;
-		$totalProfit = 1.00;
-		$totalInvest = 0.00;
-		$reposPrifit = 0.00;
-		$reposPrincipal = 0.00;
-		$openthirdpay = 2;
+		$avlBal = '0.00';
+		$acctBal = '0.00';
+		$frzBal = '0.00';
+		$totalProfit = '1.00';
+		$totalInvest = '0.00';
+		$reposPrifit = '0.00';
+		$reposPrincipal = number_format("10000000.01231", 2);
+		$openthirdpay = 1;
 		//$totalProfit = Invest_Api:: 累计收益
 		//$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
 		//$reposPrifit = Invest_Api:: 待收收益
@@ -117,9 +117,7 @@ class OverviewController extends Base_Controller_Response {
 				$this->outputError(Account_RetCode::GET_PROFIT_CURVE_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_PROFIT_CURVE_FAIL));
 			} else {
 				$this->output($ret);
-			}
-					
-		}
-		
+			}			
+		}		
 	}
 }

@@ -41,13 +41,17 @@ class Account_Logic_UserInfo {
      *  )
 	 */
 	public function getUserInfo($userid){
-		if($userid <= 0) {
+		//for test
+		
+		/* if($userid <= 0) {
 			return false;
-		}
+		} */
+		
 		$webroot = Base_Config::getConfig('web')->root;
 		$ret = array();
 		$userid = intval($userid);
 		$objUser = User_Api::getUserObject($userid);
+		$objUser = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
 		
 		//用户名
 		$username = $objUser->name;
@@ -79,7 +83,7 @@ class Account_Logic_UserInfo {
 		$ret['realname']['realnameValue'] = isset($realname) ? $realname : '';
 		$ret['realname']['certType'] = isset($certType) ? $certType : '';
 		$ret['realname']['certValue'] = isset($certValue) ? $certValue : '';
-		$ret['realname']['isopen'] = (isset($realname) && isset($certValue)) ? 1 : 2;
+		$ret['realname']['isopen'] = (isset($realname) && isset($certValue)) ? 2 : 2;
 		$ret['realname']['url'] = '';
 		
 		$param = array('phone'           =>$ret['phone']['isopen'],
@@ -87,8 +91,10 @@ class Account_Logic_UserInfo {
 		               'thirdpay'        =>$ret['huifu']['isopen'],
 		               'email'           =>$ret['email']['isopen'],
 		         );
-		$ret['_securedegree'] = $this->scoreDegree($param);
-		$ret['_securedegree']['up'] = $webroot.'/account/secure/index';        
+		$ret['securedegree'] = $this->scoreDegree($param);
+		$ret['securedegree']['up'] = $webroot.'/account/secure/index';     
+		return $ret;   
+
 	}
 	
    	/**
@@ -100,7 +106,7 @@ class Account_Logic_UserInfo {
 		$ret = array();
 		$sum = 0;
 		foreach ($paramData as $k=>$v) {
-			if($v==1) {
+			if($v == 1) {
 				$sum += 25;
 			}
 		}

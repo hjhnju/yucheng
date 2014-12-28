@@ -6,6 +6,7 @@ class MessageController extends Base_Controller_Response {
 	
 	public function init() {
 		parent::init();
+		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax = true;
 	}
 	

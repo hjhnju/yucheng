@@ -21,7 +21,6 @@ class EditApiController extends Base_Controller_Api {
      * status 0: 成功
      * status 1102: 验证码输入错误
      * status 1113: 手机号码格式错误
-     * status 1114: token验证失败
      */
     public function checkphoneAction(){
     	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
@@ -58,7 +57,6 @@ class EditApiController extends Base_Controller_Api {
      * status 0: 成功
      * status 1102: 验证码输入错误
      * status 1113: 手机号码格式错误
-     * status 1114: token验证失败
      * status 1103: 修改手机失败
      * 若前端检测返回值为0,即可以跳入至修改成功页面
      */
