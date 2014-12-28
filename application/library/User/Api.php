@@ -48,7 +48,7 @@ class User_Api{
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid));
         $objInfo->realname = $strRealName;
-        $ret = $objInfo->save();
+        $ret               = $objInfo->save();
         return $ret;
     }
     
@@ -62,7 +62,7 @@ class User_Api{
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid));
         $objInfo->email = $strEmail;
-        $ret = $objInfo->save();
+        $ret            = $objInfo->save();
         return $ret;
     }
     
@@ -76,7 +76,7 @@ class User_Api{
         $objInfo = new User_Object_Info();
         $objInfo->fetch(array('userid'=>$uid));
         $objInfo->phone = $strPhone;
-        $ret = $objInfo->save();
+        $ret            = $objInfo->save();
         return $ret;
     }
     
@@ -119,9 +119,9 @@ class User_Api{
      */
     public static function sendSmsCode($strPhone,$intType){
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
-        $arrArgs = array($srandNum, self::LAST_TIME);
-        $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-        $bResult = Base_Sms::getInstance()->send($strPhone,$tplid, $arrArgs);
+        $arrArgs  = array($srandNum, self::LAST_TIME);
+        $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+        $bResult  = Base_Sms::getInstance()->send($strPhone,$tplid, $arrArgs);
         Base_Redis::getInstance()->setex($strPhone.$intType,60*(self::LAST_TIME),$srandNum);
         if(!empty($bResult)){
             return true;
