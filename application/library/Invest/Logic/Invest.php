@@ -232,6 +232,16 @@ class Invest_Logic_Invest {
     }
     
     /**
+     * 获取单笔投资信息
+     * @param integer $invest_id
+     * @return array
+     */
+    public function getInvest($invest_id) {
+        $invest = new Invest_Object_Invest($invest_id);
+        return $invest->toArray();
+    }
+    
+    /**
      * 获取用户累计投资收益情况
      * @param integer $uid
      * @return array <pre>(
