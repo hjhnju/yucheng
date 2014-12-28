@@ -18,11 +18,14 @@ class ImageCodeController extends Base_Controller_Api {
         imageDestroy($distortionIm);
     }
     
-    /**
-     * /user/imagecode/checkcode
-     * 验证图片验证码
-     * @param  string $type 自定义类型
-     * @param  string $imagecode 验证码
+    /** 
+     * 接口11: /user/imagecode/checkcode
+     * 获取图片验证码
+     * @param string $token
+     * @param string $imagecode
+     * @return 标准Json格式
+     * status 0:成功
+     * status 1040:图形验证码错误
      */
     public function checkCodeAction(){
         $strType         = trim($_REQUEST['type']);

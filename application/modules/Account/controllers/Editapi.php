@@ -3,7 +3,7 @@
  * 修改api类
  * @author lilu
  */
-class EditApiController extends Base_Controller_Api {
+class EditapiController extends Base_Controller_Api {
 
     public function init(){
     	$this->setNeedLogin(false);
@@ -22,7 +22,7 @@ class EditApiController extends Base_Controller_Api {
      * status 1102: 验证码输入错误
      * status 1113: 手机号码格式错误
      */
-    public function checkphoneAction(){
+    public function checkphoneAction() {
     	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
     	$phone = $_REQUEST['phone'];//前端会判空
         if(!preg_match($pattern,$phone)) {
@@ -44,8 +44,7 @@ class EditApiController extends Base_Controller_Api {
     			}
     		}    		   		
     	} 
-    	$this->output();
-    }
+    
     
     /**
      * 接口3: /account/editapi/bindNewPhone
