@@ -1,5 +1,18 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/bar', function (require) {
+define('echarts/chart/bar', [
+    'require',
+    '../component/base',
+    './base',
+    'zrender/shape/Rectangle',
+    '../component/axis',
+    '../component/grid',
+    '../component/dataZoom',
+    '../config',
+    '../util/ecData',
+    'zrender/tool/util',
+    'zrender/tool/color',
+    '../chart'
+], function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');

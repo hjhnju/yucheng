@@ -1,5 +1,8 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/tool/color', function (require) {
+define('zrender/tool/color', [
+    'require',
+    '../tool/util'
+], function (require) {
     var util = require('../tool/util');
     var _ctx;
     var palette = [

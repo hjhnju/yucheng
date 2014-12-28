@@ -1,5 +1,16 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/zrender', function (require) {
+define('zrender/zrender', [
+    'require',
+    './dep/excanvas',
+    './tool/util',
+    './tool/log',
+    './tool/guid',
+    './Handler',
+    './Painter',
+    './Storage',
+    './animation/Animation',
+    './tool/env'
+], function (require) {
     require('./dep/excanvas');
     var util = require('./tool/util');
     var log = require('./tool/log');

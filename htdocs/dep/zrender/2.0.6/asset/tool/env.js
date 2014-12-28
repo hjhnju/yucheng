@@ -1,5 +1,5 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/tool/env', function () {
+define('zrender/tool/env', [], function () {
     function detect(ua) {
         var os = this.os = {};
         var browser = this.browser = {};

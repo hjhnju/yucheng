@@ -1,5 +1,10 @@
 /*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Rose', function (require) {
+define('zrender/shape/Rose', [
+    'require',
+    './Base',
+    '../tool/math',
+    '../tool/util'
+], function (require) {
     var Base = require('./Base');
     var Rose = function (options) {
         this.brushTypeOnly = 'stroke';
