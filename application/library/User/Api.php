@@ -117,13 +117,14 @@ class User_Api{
     /**
      * 获取短信验证码信息,需要参数手机号及类型
      */
-    public static function sendSmsCode($strPhone,$intType){
+    public static function sendSmsCode($strPhone, $strType){
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
         $arrArgs  = array($srandNum, self::LAST_TIME);
         $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-        $bResult  = Base_Sms::getInstance()->send($strPhone,$tplid, $arrArgs);
-        Base_Redis::getInstance()->setex($strPhone.$intType,60*(self::LAST_TIME),$srandNum);
+        $bResult  = Base_Sms::getInstance()->send($strPhone, $tplid, $arrArgs);
         if(!empty($bResult)){
+            Base_Redis::getInstance()->setex(User_Keys::getSmsCodeKey($strPhone, $strType),
+                60*(self::LAST_TIME), $srandNum));
             return true;
         }
         return false;
@@ -132,9 +133,9 @@ class User_Api{
     /**
      * 验证用户输入的短信验证码是否正确
      */
-    public static function checkSmscode($strPhone,$strVeriCode,$intType){
-        $strStoredCode = Base_Redis::getInstance()->get($strPhone.$intType);
-        if($strVeriCode == $strStoredCode){
+    public static function checkSmscode($strPhone, $strVeriCode, $strType){
+        $storeCode = Base_Redis::getInstance()->get(User_Keys::getSmsCodeKey($strPhone, $strType));
+        if($strVeriCode === $storeCode){
             return true;
         }
         return false;

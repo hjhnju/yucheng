@@ -13,6 +13,8 @@ class User_Keys {
 
     const IMAGE_CODE_KEY       = 'imagecode_%s_%s';
 
+    const SMS_CODE_KEY         = 'smscode_%s_%s';
+
     public static function getOpenidKey(){
         return self::SESSION_OPENID_KEY;
     }
@@ -35,5 +37,9 @@ class User_Keys {
 
     public static function getImageCodeKey($strType){
         return sprintf(self::IMAGE_CODE_KEY, session_id(), $strType);
+    }
+
+    public static function getSmsCodeKey($strPhone, $strType){
+        return sprintf(self::SMS_CODE_KEY, $strPhone, $strType);
     }
 }
