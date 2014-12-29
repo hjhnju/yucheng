@@ -1,2 +1,64 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define("project/list/index",["require","jquery","common/Remoter","etpl","./list.tpl","common/ui/Pager/Pager"],function(require){function e(e){c.pagesize=+e.pagesize,s.compile(a),t(),r=new l({total:+e.pageall,main:n("#test2"),startPage:1}),r.render(+e.page),r.on("change",function(e){c.page=e.value,o.remote(c)})}function t(){n(".type_id").click(function(){n(".type_id").removeClass("current"),n(this).addClass("current"),c.type_id=+n(this).attr("data-value"),c.page=1,o.remote("post",c)}),o.on("success",function(e){if(e&&e.bizError)alert(e.statusInfo);else r.setOpt("total",+e.pageall),r.render(+e.page),n("#invest-main").html(s.render("list",{list:e.list}))}),n(".cat_id").click(function(){n(".cat_id").removeClass("current"),n(this).addClass("current"),c.cat_id=+n(this).attr("data-value"),c.page=1,o.remote("post",c)}),n(".qixian").click(function(){n(".qixian").removeClass("current"),n(this).addClass("current"),c.duration=+n(this).attr("data-value"),o.remote("post",c)})}var r,n=require("jquery"),i=require("common/Remoter"),o=new i("INVEST_LIST"),s=require("etpl"),a=require("./list.tpl"),l=require("common/ui/Pager/Pager"),c={type_id:0,cat_id:0,duration:0,page:1,pagesize:10};return{init:e}});
+define('project/list/index', function (require) {
+    var $ = require('jquery');
+    var Remoter = require('common/Remoter');
+    var getList = new Remoter('INVEST_LIST');
+    var etpl = require('etpl');
+    var tpl = require('./list.tpl');
+    var Pager = require('common/ui/Pager/Pager');
+    var pager;
+    var type;
+    var option = {
+            'type_id': 0,
+            'cat_id': 0,
+            'duration': 0,
+            'page': 1,
+            'pagesize': 10
+        };
+    function init(opt) {
+        option.pagesize = +opt.pagesize;
+        etpl.compile(tpl);
+        bindEvent();
+        pager = new Pager({
+            total: +opt.pageall,
+            main: $('#test2'),
+            startPage: 1
+        });
+        pager.render(+opt.page);
+        pager.on('change', function (data) {
+            option.page = data.value;
+            getList.remote(option);
+        });
+    }
+    function bindEvent() {
+        $('.type_id').click(function () {
+            $('.type_id').removeClass('current');
+            $(this).addClass('current');
+            option.type_id = +$(this).attr('data-value');
+            option.page = 1;
+            getList.remote('post', option);
+        });
+        getList.on('success', function (data) {
+            if (data && data.bizError) {
+                alert(data.statusInfo);
+            } else {
+                pager.setOpt('total', +data.pageall);
+                pager.render(+data.page);
+                $('#invest-main').html(etpl.render('list', { list: data.list }));
+            }
+        });
+        $('.cat_id').click(function () {
+            $('.cat_id').removeClass('current');
+            $(this).addClass('current');
+            option.cat_id = +$(this).attr('data-value');
+            option.page = 1;
+            getList.remote('post', option);
+        });
+        $('.qixian').click(function () {
+            $('.qixian').removeClass('current');
+            $(this).addClass('current');
+            option.duration = +$(this).attr('data-value');
+            getList.remote('post', option);
+        });
+    }
+    return { init: init };
+});

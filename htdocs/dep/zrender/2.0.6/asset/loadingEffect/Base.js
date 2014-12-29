@@ -1,10 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/loadingEffect/Base', [
-    'require',
-    '../tool/util',
-    '../shape/Text',
-    '../shape/Rectangle'
-], function (require) {
+define('zrender/loadingEffect/Base', function (require) {
     var util = require('../tool/util');
     var TextShape = require('../shape/Text');
     var RectangleShape = require('../shape/Rectangle');

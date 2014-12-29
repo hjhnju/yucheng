@@ -1,11 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Droplet', [
-    'require',
-    './Base',
-    './util/PathProxy',
-    'zrender/tool/area',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Droplet', function (require) {
     'use strict';
     var Base = require('./Base');
     var PathProxy = require('./util/PathProxy');

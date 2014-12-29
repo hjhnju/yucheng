@@ -1,11 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/dataView', [
-    'require',
-    './base',
-    '../config',
-    'zrender/tool/util',
-    '../component'
-], function (require) {
+define('echarts/component/dataView', function (require) {
     var Base = require('./base');
     var ecConfig = require('../config');
     var zrUtil = require('zrender/tool/util');

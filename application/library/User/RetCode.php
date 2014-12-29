@@ -10,14 +10,14 @@ class User_RetCode extends Base_RetCode{
     const USERNAME_EXIST            = 1025; //用户 名已存在
     const USERNAME_SYNTEX_ERROR     = 1026; //用户名语法错误
     
-    const USERPHONE_EXIST           = 1027;  //手机号已存在
-    const USERPHONE_SYNTEX_ERROR    = 1028;  //手机号不合法
+    const USERPHONE_EXIST           = 1027; //手机号已存在
+    const USERPHONE_SYNTEX_ERROR    = 1028; //手机号不合法
     
-    const GETVERICODE_FAIL          = 1029;  //获取短信验证码失败
-    const VERICODE_WRONG            = 1030;  //短信验证码不正确
+    const GETVERICODE_FAIL          = 1029; //获取短信验证码失败
+    const VERICODE_WRONG            = 1030; //短信验证码不正确
     
-    const REFEREE_NOT_EXIST         = 1031;  //推荐人不存在
-    const REFEREE_SNYTEX_ERROR      = 1032;  //推荐人拼写语法错误
+    const REFEREE_NOT_EXIST         = 1031; //推荐人不存在
+    const REFEREE_SNYTEX_ERROR      = 1032; //推荐人拼写语法错误
     
     const REGIST_FAIL               = 1033; //注册失败
     

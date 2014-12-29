@@ -24,24 +24,24 @@ define(function () {
     var URL = {
         REGIST_CHECKNAME_CHECK: rootUrl
             + '/user/registapi/checkname',
-//            + '/test/user/regist/checkname.json',
+//            + '/test/user/registapi/checkname.json',
         REGIST_CHECKPHONE_CHECK: rootUrl
             + '/user/registapi/checkphone',
-//            + '/test/user/regist/checkphone.json',
+//            + '/test/user/registapi/checkphone.json',
         REGIST_SENDSMSCODE_CHECK: rootUrl
             + '/user/registapi/sendsmscode',
-//            + '/test/user/regist/sendsmscode.json',
+//            + '/test/user/registapi/sendsmscode.json',
         REGIST_CHECKSMSCODE_CHECK: rootUrl
             + '/user/registapi/checksmscode',
         REGIST_INDEX_CHECK: rootUrl
             + '/user/registapi/index',
-//            + '/test/user/regist/index.json',
+//            + '/test/user/registapi/index.json',
         REGIST_CHECKINVITER_CHECK: rootUrl
             + '/user/registapi/checkinviter',
-//            + '/test/user/regist/checkinviter.json',
+//            + '/test/user/registapi/checkinviter.json',
         LOGIN_INDEX_CHECK: rootUrl
             + '/user/loginapi/index',
-//            + '/test/user/login/index.json',
+//            + '/test/user/loginapi/index.json',
         LOGIN_IMGCODE_ADD: rootUrl
             + '/user/loginapi/getauthimageurl',
         LOGIN_IMGCODE_CHECK: rootUrl

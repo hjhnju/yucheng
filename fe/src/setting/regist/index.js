@@ -129,6 +129,7 @@ define(function (require) {
                 return;
             }
 
+            allStatus.pwd = 1;
             error.pwdError.html(CORRECT);
         });
 

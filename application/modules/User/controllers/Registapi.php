@@ -45,29 +45,37 @@ class RegistApiController extends Base_Controller_Api{
     
     /**
      * 获取验证码信息
+     * @param  string $phone 
+     * @param  string $type, 自定义类型, e.g:'regist'-注册
      */
     public function sendSmsCodeAction(){
-       $strPhone   = trim($_REQUEST['phone']);
-       $strType   = trim($_REQUEST['type']);
-       $ret = User_Api::sendSmsCode($strPhone,$strType);
-       if($ret){
-           return $this->ajax();
-       }
-       return $this->ajaxError($ret);
+        $strPhone = trim($_REQUEST['phone']);
+        $strType  = trim($_REQUEST['type']);
+        $ret      = User_Api::sendSmsCode($strPhone, $strType);
+        if($ret){
+            return $this->ajax();
+        }
+        
+        return $this->ajaxError(User_RetCode::GETVERICODE_FAIL,
+            User_RetCode::getMsg(User_RetCode::GETVERICODE_FAIL));
     }
     
     /**
      * 验证用户输入的验证码是否正确
+     * @param  string $phone 
+     * @param  string $type, 自定义类型,e.g'regist':注册
+     * @param  string $vericode, 验证码 
      */
     public function checkSmsCodeAction(){
         $strPhone    = trim($_REQUEST['phone']);
         $strType     = trim($_REQUEST['type']);
         $strVeriCode = trim($_REQUEST['vericode']);
-        $ret = User_Api::checkSmsCode($strPhone, $strVeriCode,$strType);
+        $ret         = User_Api::checkSmsCode($strPhone, $strVeriCode, $strType);
         if($ret){
            return $this->ajax();
-       }
-       return $this->ajaxError($ret,User_RetCode::getMsg($ret));
+        }
+        return $this->ajaxError(User_RetCode::VERICODE_WRONG,
+            User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
     }
     
     /** 

@@ -1,5 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define(['require'], function (require) {
+define(function (require) {
     if (window['ActiveXObject'] && !window['CanvasRenderingContext2D']) {
         var NULL = null;
         var CANVAS = 'canvas';

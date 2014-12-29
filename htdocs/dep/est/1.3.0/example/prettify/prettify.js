@@ -1,4 +1,3 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
 !function () {
     var q = null;
     window.PR_SHOULD_USE_CONTINUATION = !0;
