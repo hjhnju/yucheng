@@ -53,10 +53,13 @@ define(function () {
             + '/account/editapi/checkphone',
         //+ '/test/account/edit/phoneSubmite.json',
         EDIT_PHONE_SUBMITE2ND: rootUrl
-        + '/account/edit/checkphone',
+        + '/account/editapi/bindnewphone',
         //+ '/test/account/edit/phoneSubmite.json',
         EDIT_EMAILCONFIRM: rootUrl
-            + '/account/edit/chemail',
+            + '/account/editapi/newemail',
+        //+ '/test/account/edit/emailConfirm.json',
+        EDIT_lVERIEMAIL: rootUrl
+        + '/account/editapi/veriemail',
         //+ '/test/account/edit/emailConfirm.json',
         EDIT_CHPWD_SUBMITE: rootUrl
             + '/account/editapi/modifypwd',
