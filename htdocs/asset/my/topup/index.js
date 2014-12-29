@@ -17,7 +17,7 @@ define('my/topup/index', [
             $(this).addClass('current');
             $(this).find('.topup-select-ipt').attr('checked', 'check');
         });
-        $('#topup-select-ipt').click(function () {
+        $('#pay').click(function () {
             var value = $('#box-ipt').val();
             if (!value) {
                 $('#topup-error').html('\u5145\u503C\u91D1\u989D\u4E0D\u80FD\u4E3A\u7A7A');

@@ -1,0 +1,40 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/setting/select3rd/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/select3rd/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="kaitong">
+    <div class="container">
+        <div class="kaitong-box">
+            <div class="kaitong-box-top">
+                <div class="kaitong-box-pic">
+                </div>
+                <div class="kaitong-title">开通第三方资金托管账户保证您的资金安全</div>
+                <a class="kaitong-mast" href="###">立即开通</a>
+                <a href="###" class="kaitong-none">暂不开通</a>
+            </div>
+            <div class="kaitong-box-bottom">
+                <div class="kaitong-box-bottom-textl">
+                    <div class="bottom-textl-title">什么是第三方资金托管</div>
+                    <div class="bottom-textl-tx">兴教贷平台不直接接触资金, 资金流统一由首批获得第三方支付牌照的汇付天下托管，确保投资人的资金安全。</div>
+                </div>
+                <div class="kaitong-box-bottom-textl textr">
+                    <div class="bottom-textl-title">汇付天下简介</div>
+                    <div class="bottom-textl-tx">2011年5月汇付天下首批获得央行颁发的《支付业务许可证》，2013年10月首批获得国家外汇管理局跨境支付业务试点牌照，是中国支付清算协会常务理事单位。</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%/block%}

@@ -27,7 +27,8 @@ define(function (require) {
         });
 
         //点击充值
-        $('#topup-select-ipt').click(function () {
+        $('#pay').click(function () {
+
             var value = $('#box-ipt').val();
 
             if(!value) {
