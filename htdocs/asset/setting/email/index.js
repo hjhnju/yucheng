@@ -9,48 +9,60 @@ define('setting/email/index', [
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');
+    var getSmscode = new Remoter('LOGIN_IMGCODE_ADD');
+    var sendSmscode = new Remoter('LOGIN_IMGCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./email.tpl');
+    var emailVal;
     function init() {
         changeEmail();
         etpl.compile(tpl);
+        getSmscode.remote({ type: 4 });
     }
     function changeEmail() {
         $('.login-input').on({
             focus: function () {
                 var parent = $(this).parent();
                 $(this).next().addClass('hidden');
-                parent.removeClass('current');
-                parent.find($('.username-error')).html('');
             },
             blur: function () {
                 var value = $(this).val();
-                if (!value) {
-                    $(this).next().removeClass('hidden');
-                    $(this).parent().addClass('current');
-                    $(this).parent().find('.username-error').html('\u5185\u5BB9\u4E0D\u80FD\u4E3A\u7A7A');
-                    return;
-                }
+                !value && $(this).next().removeClass('hidden');
+            }
+        });
+        $('#email-img').click(function () {
+            getSmscode.remote({ type: 4 });
+        });
+        getSmscode.on('success', function (data) {
+            if (data && data.bizError) {
+                alert(data.statusInfo);
+            } else {
+                $('#email-img').attr('src', data.url);
             }
         });
         $('#confirm').click(function () {
-            $('.login-input').trigger('blur');
-            var emailVal = $('#login-email').val();
-            var errors = $('.login-username.current');
+            emailVal = $('#login-email').val();
             var smscodeVal = $('#login-testing').val();
-            if (errors.length) {
-                return;
-            }
             emailConfirm.remote({
                 email: emailVal,
-                smscode: smscodeVal
+                smscode: smscodeVal,
+                type: 4
             });
         });
         emailConfirm.on('success', function (data) {
             if (data && data.bizError) {
-                alert(data.statusInfo);
+                $('.error').html(data.statusInfo);
             } else {
-                $('#checkemial').html(etpl.render('list2nd', {}));
+                var timer;
+                var value = 8;
+                $('#checkemial').html(etpl.render('list2nd', { email: emailVal }));
+                timer = setInterval(function () {
+                    $('#time-span').text(--value + '\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C');
+                    if (value === 0) {
+                        clearInterval(timer);
+                        window.location.href = '/account/views/overview/index';
+                    }
+                }, 1000);
             }
         });
     }

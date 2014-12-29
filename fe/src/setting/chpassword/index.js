@@ -11,70 +11,61 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
     var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
+    var etpl = require('etpl');
+    var tpl = require('./chpassword.tpl');
 
     function init (){
         bingEvent();
+        etpl.compile(tpl);
 
     }
 
     function bingEvent() {
 
-        $('.chpwd-input').on({
-
-            focus: function () {
-                $(this).removeClass('current');
-                $(this).next().html('');
-            },
-            blur: function () {
-                var me = $(this);
-                var value = $(this).val();
-
-                if(!value) {
-                    me.addClass('current');
-                    $(this).next().html('密码不能为空');
-
-                    return;
-                }
-                if(!testPwd.test(value)) {
-                    me.addClass('current');
-                    $(this).next().html('密码不符合要求');
-
-                    return;
-                }
-                $(this).next().html('');
-            }
-        });
-
-        // 确认新密码
-        $('#confirm-new-ipt').blur(function () {
-
-            var newval = +$('#new-ipt').val();
-            var me = +$(this).val();
-
-            if(newval !== me) {
-                $(this).addClass('current');
-                $('#repeat-ipt-error').html('两次密码不一致');
-
-            }
-        });
-
         // 点击发送请求
         $('.chpwd-link').click(function () {
+            var newIpt = $('#new-ipt');
 
-            var error = $('.chpwd-input.current');
-            $('.chpwd-input').trigger('blur');
+            var newval = +newIpt.val();
+            var me = +$('#confirm-new-ipt').val();
 
-
-            if(error.length) {
+            if(newval !== me) {
+                $('#error').html('两次密码不一致');
 
                 return;
             }
 
             chpwdSubmite.remote({
                 oldpwd: $('#old-ipt').val(),
-                newpwd: $('#new-ipt').val()
+                newpwd: newIpt.val()
             });
         });
+
+        // chpwdSubmiteCb
+        chpwdSubmite.on('success', function (data) {
+            if(data && data.bizError) {
+                $('#error').html(data.statusInfo);
+            }
+            else {
+
+                var value = 8;
+                var timer;
+
+                timer = setInterval(function () {
+
+                    $('#time-span').text(--value + '秒后自动跳转');
+                    if(value === 0) {
+                        clearInterval(timer);
+                        window.location.href = '/account/views/overview/index';
+                    }
+
+                },1000);
+
+                $('#error').html('');
+                $('#chpwd-box').html(etpl.render('list'));
+
+            }
+        })
     }
 
     return {

@@ -13,6 +13,7 @@ define('setting/phone/index', [
     var getSmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
+    var testPhone = /\d{11}/g;
     function init() {
         changePhone();
         etpl.compile(tpl);
@@ -32,8 +33,13 @@ define('setting/phone/index', [
             !value && $(this).next().removeClass('hidden');
         });
         box_id.delegate('#sendsmscode', 'click', function () {
-            var value = $('#login-phonenew').val();
+            var value = +$('#login-phonenew').val();
+            if (!testPhone.test(value)) {
+                $('.error').html('\u624B\u673A\u53F7\u7801\u683C\u5F0F\u4E0D\u6B63\u786E');
+                return;
+            }
             if (value) {
+                $('.error').html('');
                 getSmscode.remote({
                     phone: value,
                     type: 3
@@ -70,7 +76,8 @@ define('setting/phone/index', [
             }
             phoneSubmite.remote({
                 oldPhone: phonenew,
-                vericode: test
+                vericode: test,
+                type: 3
             });
         });
         phoneSubmite.on('success', function (data) {
@@ -82,21 +89,32 @@ define('setting/phone/index', [
         });
         box_id.delegate('#confirm2nd', 'click', function (e) {
             e.preventDefault();
-            $('.login-input').trigger('blur');
-            var errors = $('.login-username.current');
-            if (errors.length) {
+            var phonenew = $('#login-phonenew').val();
+            var test = $('#login-test').val();
+            if (!phonenew || !test) {
+                $('.error').html('\u624B\u673A\u6216\u9A8C\u8BC1\u7801\u4E0D\u80FD\u4E3A\u7A7A');
                 return;
             }
             phoneSubmite2nd.remote({
-                newPhone: $('#login-phonenew2nd').val(),
-                vericode: $('#login-test').val()
+                newPhone: phonenew,
+                vericode: test,
+                type: 3
             });
         });
         phoneSubmite2nd.on('success', function (data) {
             if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {
+                var value = 8;
+                var timer;
                 $('#checkphone').html(etpl.render('list3th', { user: data }));
+                timer = setInterval(function () {
+                    $('#time-span').text(--value + '\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C');
+                    if (value === 0) {
+                        clearInterval(timer);
+                        window.location.href = '/account/views/overview/index';
+                    }
+                }, 1000);
             }
         });
     }

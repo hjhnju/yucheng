@@ -10,13 +10,20 @@ define(function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');
+    var getSmscode = new Remoter('LOGIN_IMGCODE_ADD');
+    var sendSmscode = new Remoter('LOGIN_IMGCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./email.tpl');
+    var emailVal;
 
 
     function init (){
         changeEmail();
         etpl.compile(tpl);
+
+        getSmscode.remote({
+            type: 4
+        });
 
     }
 
@@ -30,47 +37,68 @@ define(function (require) {
                 var parent = $(this).parent();
 
                 $(this).next().addClass('hidden');
-                parent.removeClass('current');
-                parent.find($('.username-error')).html('');
 
             },
             blur: function () {
                 var value = $(this).val();
-                if(!value) {
-                    $(this).next().removeClass('hidden');
-                    $(this).parent().addClass('current');
-                    $(this).parent().find('.username-error').html('内容不能为空');
-                    return;
-                }
+                !value && $(this).next().removeClass('hidden');
             }
         });
 
-
-        $('#confirm').click(function () {
-            $('.login-input').trigger('blur');
-            var emailVal = $('#login-email').val();
-            var errors = $('.login-username.current');
-            var smscodeVal = $('#login-testing').val();
-
-            if(errors.length) {
-                return;
-            }
-
-            emailConfirm.remote({
-                email: emailVal,
-                smscode: smscodeVal
-            });
-
+        // 点击刷新验证码
+        $('#email-img').click(function () {
+            getSmscode.remote({
+                type: 4
+            })
         });
 
-        emailConfirm.on('success', function (data) {
+        // getSmscodeCb
+        getSmscode.on('success', function (data) {
             if(data && data.bizError) {
                 alert(data.statusInfo);
             }
             else {
-                $('#checkemial').html(etpl.render('list2nd', {
+                $('#email-img').attr('src', data.url);
 
+            }
+        });
+
+
+        //确定点击
+        $('#confirm').click(function () {
+
+            emailVal = $('#login-email').val();
+            var smscodeVal = $('#login-testing').val();
+
+            emailConfirm.remote({
+                email: emailVal,
+                smscode: smscodeVal,
+                type:4
+            });
+
+        });
+
+        // emailConfirmCb
+        emailConfirm.on('success', function (data) {
+            if(data && data.bizError) {
+                $('.error').html(data.statusInfo);
+            }
+            else {
+                var timer;
+                var value = 8;
+                $('#checkemial').html(etpl.render('list2nd', {
+                    email: emailVal
                 }));
+
+                timer = setInterval(function () {
+
+                    $('#time-span').text(--value + '秒后自动跳转');
+                    if(value === 0) {
+                        clearInterval(timer);
+                        window.location.href = '/account/views/overview/index';
+                    }
+
+                },1000);
             }
         })
 

@@ -15,6 +15,8 @@ define(function (require) {
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
 
+    var testPhone = /\d{11}/g;
+
 
     function init (){
         changePhone();
@@ -58,20 +60,26 @@ define(function (require) {
 
         //获取验证码
         box_id.delegate('#sendsmscode', 'click', function () {
-            var value = $('#login-phonenew').val();
+            var value = +$('#login-phonenew').val();
+
+            if (!testPhone.test(value)) {
+                $('.error').html('手机号码格式不正确');
+                return;
+            }
 
             if(value) {
+                $('.error').html('');
                 getSmscode.remote({
                     phone: value,
                     type: 3
-                })
+                });
             }
 
         });
 
         //getSmscodeCb
         getSmscode.on('success', function (data) {
-            var error = $('#login-phonenew-error')
+            var error = $('#login-phonenew-error');
             if(data && data.bizError) {
                 error.parent().addClass('current');
                 error.html(data.statusInfo);
@@ -109,7 +117,8 @@ define(function (require) {
 
             phoneSubmite.remote({
                 oldPhone: phonenew,
-                vericode: test
+                vericode: test,
+                type: 3
             });
 
         });
@@ -130,16 +139,18 @@ define(function (require) {
         //第二次点击确定
         box_id.delegate('#confirm2nd','click', function (e) {
             e.preventDefault();
-            $('.login-input').trigger('blur');
+            var phonenew = $('#login-phonenew').val();
+            var test = $('#login-test').val();
+            if(!phonenew || !test) {
+                $('.error').html('手机或验证码不能为空');
 
-            var errors = $('.login-username.current');
-
-            if(errors.length) {
                 return;
             }
+
             phoneSubmite2nd.remote({
-                newPhone: $('#login-phonenew2nd').val(),
-                vericode: $('#login-test').val()
+                newPhone: phonenew,
+                vericode: test,
+                type: 3
             });
 
         });
@@ -149,9 +160,23 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
+                var value = 8;
+                var timer;
+
                 $("#checkphone").html(etpl.render('list3th', {
                     user: data
                 }));
+
+
+                timer = setInterval(function () {
+
+                    $('#time-span').text(--value + '秒后自动跳转');
+                    if(value === 0) {
+                        clearInterval(timer);
+                        window.location.href = '/account/views/overview/index';
+                    }
+
+                },1000);
             }
         })
 
