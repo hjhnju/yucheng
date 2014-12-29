@@ -18,8 +18,7 @@ define(function (require) {
     var testPhone = /\d{11}/g;
 
 
-    function init (e){
-        e.preventDefault();
+    function init (){
         changePhone();
         etpl.compile(tpl);
 

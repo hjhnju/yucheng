@@ -13,8 +13,7 @@ define('setting/phone/index', [
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
     var testPhone = /\d{11}/g;
-    function init(e) {
-        e.preventDefault();
+    function init() {
         changePhone();
         etpl.compile(tpl);
     }
