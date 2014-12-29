@@ -58,9 +58,6 @@ define(function () {
         EDIT_EMAILCONFIRM: rootUrl
             + '/account/editapi/newemail',
         //+ '/test/account/edit/emailConfirm.json',
-        EDIT_lVERIEMAIL: rootUrl
-        + '/account/editapi/veriemail',
-        //+ '/test/account/edit/emailConfirm.json',
         EDIT_CHPWD_SUBMITE: rootUrl
             + '/account/editapi/modifypwd',
         //+ '/test/account/edit/emailConfirm.json',

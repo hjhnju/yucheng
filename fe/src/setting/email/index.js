@@ -11,7 +11,6 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');
     var getSmscode = new Remoter('LOGIN_IMGCODE_ADD');
-    var veriemail = new Remoter('EDIT_lVERIEMAIL');
     var etpl = require('etpl');
     var tpl = require('./email.tpl');
     var emailVal;
@@ -89,9 +88,6 @@ define(function (require) {
                 $('#checkemial').html(etpl.render('list2nd', {
                     email: emailVal
                 }));
-                veriemail.remote({
-                   newemail: emailVal
-                });
 
                 timer = setInterval(function () {
 

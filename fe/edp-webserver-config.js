@@ -96,7 +96,6 @@ exports.getLocations = function () {
                     '/invest/api',
                     '/account/edit/getsmscode',
                     '/account/editapi/newemail',
-                    '/account/editapi/veriemail',
                     '/account/editapi/checkphone',
                     '/account/editapi/bindnewphone',
                     '/account/invest/backing',
