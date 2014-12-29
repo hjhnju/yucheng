@@ -59,7 +59,7 @@ define(function () {
             + '/account/edit/chemail',
         //+ '/test/account/edit/emailConfirm.json',
         EDIT_CHPWD_SUBMITE: rootUrl
-            + '/account/edit/chpwd',
+            + '/account/editapi/modifypwd',
         //+ '/test/account/edit/emailConfirm.json',
         //EDIT_CHANGEPWD_SUBMIT:rootUrl
         //+ '/account/edit/chpwd',

@@ -51,18 +51,20 @@ define(function (require) {
                 var value = 8;
                 var timer;
 
+
+                $('#error').html('');
+                $('#chpwd-box').html(etpl.render('list'));
+
                 timer = setInterval(function () {
 
                     $('#time-span').text(--value + '秒后自动跳转');
                     if(value === 0) {
                         clearInterval(timer);
-                        window.location.href = '/account/views/overview/index';
+                        window.location.href = '/account/overview/index';
                     }
 
                 },1000);
 
-                $('#error').html('');
-                $('#chpwd-box').html(etpl.render('list'));
 
             }
         })
