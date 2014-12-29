@@ -35,15 +35,15 @@ define('setting/chpassword/index', [
             } else {
                 var value = 8;
                 var timer;
+                $('#error').html('');
+                $('#chpwd-box').html(etpl.render('list'));
                 timer = setInterval(function () {
                     $('#time-span').text(--value + '\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C');
                     if (value === 0) {
                         clearInterval(timer);
-                        window.location.href = '/account/views/overview/index';
+                        window.location.href = '/account/overview/index';
                     }
                 }, 1000);
-                $('#error').html('');
-                $('#chpwd-box').html(etpl.render('list'));
             }
         });
     }

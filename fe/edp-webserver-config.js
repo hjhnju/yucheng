@@ -102,7 +102,7 @@ exports.getLocations = function () {
                     '/account/invest/tendering',
                     '/account/invest/tenderfail',
                     '/account/secure/securedegree',
-                    '/account/edit/chpwd',
+                    '/account/editapi/modifypwd',
                     '/account/overview/profitCurve',
                     '/msg/list',
                     '/msg/read'
