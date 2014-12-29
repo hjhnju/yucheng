@@ -1,8 +1,4 @@
-define('setting/password/index', [
-    'require',
-    'jquery',
-    'common/Remoter'
-], function (require) {
+define('setting/password/index', function (require) {
     var $ = require('jquery');
     var a = $('.login-username').children('.user-lable');
     var Remoter = require('common/Remoter');

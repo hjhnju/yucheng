@@ -1,12 +1,12 @@
-define('common/config', [], function () {
+define('common/config', function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
-            REGIST_CHECKNAME_CHECK: rootUrl + '/user/registapi/checkname',
-            REGIST_CHECKPHONE_CHECK: rootUrl + '/user/registapi/checkphone',
-            REGIST_SENDSMSCODE_CHECK: rootUrl + '/user/registapi/sendsmscode',
-            REGIST_CHECKSMSCODE_CHECK: rootUrl + '/user/registapi/checksmscode',
-            REGIST_INDEX_CHECK: rootUrl + '/user/registapi/index',
-            REGIST_CHECKINVITER_CHECK: rootUrl + '/user/registapi/checkinviter',
+            REGIST_CHECKNAME_CHECK: rootUrl + '/test/user/registapi/checkname.json',
+            REGIST_CHECKPHONE_CHECK: rootUrl + '/test/user/registapi/checkphone.json',
+            REGIST_SENDSMSCODE_CHECK: rootUrl + '/test/user/registapi/sendsmscode.json',
+            REGIST_CHECKSMSCODE_CHECK: rootUrl + '/test/user/registapi/sendsmscode.json',
+            REGIST_INDEX_CHECK: rootUrl + '/test/user/registapi/index.json',
+            REGIST_CHECKINVITER_CHECK: rootUrl + '/test/user/registapi/checkinviter.json',
             LOGIN_INDEX_CHECK: rootUrl + '/user/loginapi/index',
             LOGIN_IMGCODE_ADD: rootUrl + '/user/loginapi/getauthimageurl',
             LOGIN_IMGCODE_CHECK: rootUrl + '/user/loginapi/checkauthimage',

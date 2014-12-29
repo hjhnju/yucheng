@@ -1,10 +1,4 @@
-define('setting/login/index', [
-    'require',
-    'jquery',
-    '../common/picScroll',
-    'common/header',
-    'common/Remoter'
-], function (require) {
+define('setting/login/index', function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');

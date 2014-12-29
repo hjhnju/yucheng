@@ -1,10 +1,4 @@
-define('setting/regist/index', [
-    'require',
-    'jquery',
-    '../common/picScroll',
-    'common/header',
-    'common/Remoter'
-], function (require) {
+define('setting/regist/index', function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
@@ -103,6 +97,7 @@ define('setting/regist/index', [
                 checkphone.remote({ phone: value });
             } else {
                 allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
             }
         });
         loginInput.loginTest.blur(function () {
@@ -126,7 +121,7 @@ define('setting/regist/index', [
         $('.login-username-testing').click(function (e) {
             e.preventDefault();
             var value = $.trim(loginInput.loginPhone.val());
-            if (value) {
+            if (!$(this).hasClass('disabled') && value) {
                 sendsmscode.remote({
                     phone: value,
                     type: 1
@@ -181,9 +176,11 @@ define('setting/regist/index', [
                 loginInput.loginPhone.parent().addClass('current');
                 error.phoneError.html(data.statusInfo);
                 allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
             } else {
                 error.phoneError.html(CORRECT);
                 allStatus.phone = 1;
+                $('.login-username-testing').removeClass('disabled');
             }
         });
         checkInviter.on('success', function (data) {
@@ -202,7 +199,7 @@ define('setting/regist/index', [
                 alert(data.statusInfo);
             } else {
                 var wait = $('#testing-wait');
-                wait.text('300\u79D2\u540E\u91CD\u65B0\u53D1\u9001');
+                wait.text('60\u79D2\u540E\u91CD\u65B0\u53D1\u9001');
                 wait.addClass('show');
                 timer = setInterval(function () {
                     wait.text(--value + '\u79D2\u540E\u91CD\u65B0\u53D1\u9001');
