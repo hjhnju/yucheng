@@ -23,22 +23,23 @@ define(function () {
      */
     var URL = {
         REGIST_CHECKNAME_CHECK: rootUrl
-            + '/user/registapi/checkname',
-//            + '/test/user/registapi/checkname.json',
+//            + '/user/registapi/checkname',
+            + '/test/user/registapi/checkname.json',
         REGIST_CHECKPHONE_CHECK: rootUrl
-            + '/user/registapi/checkphone',
-//            + '/test/user/registapi/checkphone.json',
+//            + '/user/registapi/checkphone',
+            + '/test/user/registapi/checkphone.json',
         REGIST_SENDSMSCODE_CHECK: rootUrl
-            + '/user/registapi/sendsmscode',
-//            + '/test/user/registapi/sendsmscode.json',
+//            + '/user/registapi/sendsmscode',
+            + '/test/user/registapi/sendsmscode.json',
         REGIST_CHECKSMSCODE_CHECK: rootUrl
-            + '/user/registapi/checksmscode',
+//            + '/user/registapi/checksmscode',
+              + '/test/user/registapi/sendsmscode.json',
         REGIST_INDEX_CHECK: rootUrl
-            + '/user/registapi/index',
-//            + '/test/user/registapi/index.json',
+//            + '/user/registapi/index',
+            + '/test/user/registapi/index.json',
         REGIST_CHECKINVITER_CHECK: rootUrl
-            + '/user/registapi/checkinviter',
-//            + '/test/user/registapi/checkinviter.json',
+//            + '/user/registapi/checkinviter',
+            + '/test/user/registapi/checkinviter.json',
         LOGIN_INDEX_CHECK: rootUrl
             + '/user/loginapi/index',
 //            + '/test/user/loginapi/index.json',

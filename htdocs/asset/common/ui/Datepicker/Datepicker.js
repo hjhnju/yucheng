@@ -1,7 +1,4 @@
-define('common/ui/Datepicker/Datepicker', [
-    'require',
-    'jquery'
-], function (require) {
+define('common/ui/Datepicker/Datepicker', function (require) {
     var $ = require('jquery');
     var Datepicker = function (element, options) {
         this.element = $(element);

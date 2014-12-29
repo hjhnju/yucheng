@@ -145,6 +145,7 @@ define(function (require) {
             }
             else {
                 allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
             }
         });
 
@@ -178,7 +179,7 @@ define(function (require) {
 
             var value = $.trim(loginInput.loginPhone.val());
 
-            if (value) {
+            if (!$(this).hasClass('disabled') && value) {
                 sendsmscode.remote({
                     phone: value,
                     type: 1
@@ -256,10 +257,12 @@ define(function (require) {
                 loginInput.loginPhone.parent().addClass('current');
                 error.phoneError.html(data.statusInfo);
                 allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
             }
             else {
                 error.phoneError.html(CORRECT);
                 allStatus.phone = 1;
+                $('.login-username-testing').removeClass('disabled');
             }
         });
 
@@ -285,7 +288,7 @@ define(function (require) {
             else {
                 var wait = $('#testing-wait');
 
-                wait.text('300秒后重新发送');
+                wait.text('60秒后重新发送');
                 wait.addClass('show');
 
                 timer = setInterval(function () {

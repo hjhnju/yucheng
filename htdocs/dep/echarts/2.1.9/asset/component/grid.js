@@ -1,11 +1,4 @@
-define('echarts/component/grid', [
-    'require',
-    './base',
-    'zrender/shape/Rectangle',
-    '../config',
-    'zrender/tool/util',
-    '../component'
-], function (require) {
+define('echarts/component/grid', function (require) {
     var Base = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');
     var ecConfig = require('../config');
