@@ -124,7 +124,7 @@ class User_Api{
         $bResult  = Base_Sms::getInstance()->send($strPhone, $tplid, $arrArgs);
         if(!empty($bResult)){
             Base_Redis::getInstance()->setex(User_Keys::getSmsCodeKey($strPhone, $strType),
-                60*(self::LAST_TIME), $srandNum));
+                60*(self::LAST_TIME), $srandNum);
             return true;
         }
         return false;
