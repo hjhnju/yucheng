@@ -935,6 +935,15 @@ p {
   background-color: #d4d4d4;
   border-color: #a6a6a6;
 }
+.login-username-testing.disabled {
+  cursor: default;
+  background-color: #f8f8f8;
+  border-color: #e3e3e3;
+}
+.login-username-testing.disabled:hover {
+  background-color: #f8f8f8;
+  border-color: #e3e3e3;
+}
 .login-username-testing-box {
   width: 162px;
   height: 35px;
