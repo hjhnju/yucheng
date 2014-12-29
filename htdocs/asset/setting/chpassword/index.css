@@ -173,5 +173,15 @@ p{margin:0;padding:0}
 .success-text{height:30px;line-height:30px;font-size:24px;color:#76cf65;text-align:center}
 .success-box-time{text-align:center;height:20px;line-height:20px}
 .success-box-time .success-link{text-decoration:none;color:#76cf65}
-.error{line-height:24px;color:#f2736a;font-size:14px;height:24px}
-.changephone-title{margin-bottom:10px}
+.chpwd-box{width:500px;margin:50px auto;background-color:#f8f8f8;padding:80px 0 80px 100px}
+.chpwd-box-main{margin-bottom:20px;height:30px;font-size:14px;position:relative;*zoom:1}
+.chpwd-box-main:before,.chpwd-box-main:after{display:table;content:""}
+.chpwd-box-main:after{clear:both}
+.chpwd-box-main-text{float:left;width:120px;text-align:right;line-height:30px}
+.chpwd-input{float:left;width:200px;border:1px solid #d4d4d4;padding:5px;outline:0}
+.chpwd-input.current{border-color:red}
+.chpwd-link{float:left;display:block;width:100px;height:30px;line-height:30px;background-color:#76cf65;color:#fff;text-align:center;font-size:14px;text-decoration:none;cursor:pointer;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.chpwd-link:hover{background-color:#2c9818}
+.error{height:24px;line-height:24px;font-size:14px;color:#f2736a;padding-left:120px}
+.error .fl-left{float:left}
+.success-main{margin-top:50px}

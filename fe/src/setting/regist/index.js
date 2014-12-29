@@ -193,7 +193,9 @@ define(function (require) {
             if (value) {
                 checkInviter.remote({
                     inviter: value
+
                 });
+                return;
             }
 
         });
@@ -222,7 +224,8 @@ define(function (require) {
                 name: loginInput.loginUser.val(),
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
-                inviter: loginInput.loginTuiJian.val()
+                inviter: loginInput.loginTuiJian.val(),
+                test: loginInput.loginTest.val()
             });
 
         });
@@ -251,11 +254,11 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginPhone.parent().addClass('current');
                 error.phoneError.html(data.statusInfo);
-                allStatus.pwd = 0;
+                allStatus.phone = 0;
             }
             else {
                 error.phoneError.html(CORRECT);
-                allStatus.pwd = 1;
+                allStatus.phone = 1;
             }
         });
 

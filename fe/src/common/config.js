@@ -56,14 +56,14 @@ define(function () {
         + '/account/edit/checkphone',
         //+ '/test/account/edit/phoneSubmite.json',
         EDIT_EMAILCONFIRM: rootUrl
-            + '/account/edit/getvericode.json',
+            + '/account/edit/chemail',
         //+ '/test/account/edit/emailConfirm.json',
         EDIT_CHPWD_SUBMITE: rootUrl
             + '/account/edit/chpwd',
         //+ '/test/account/edit/emailConfirm.json',
-        EDIT_CHANGEPWD_SUBMIT:rootUrl
-        + '/account/edit/chpwd',
-        //+ '/test/account/edit/chpwd.json',
+        //EDIT_CHANGEPWD_SUBMIT:rootUrl
+        //+ '/account/edit/chpwd',
+        ////+ '/test/account/edit/chpwd.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl

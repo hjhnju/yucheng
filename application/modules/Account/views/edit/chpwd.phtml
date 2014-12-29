@@ -1,0 +1,46 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%webroot%}/setting/chpassword/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/chpassword/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="chpwd">
+    <div class="container">
+        <div id="chpwd-box">
+            <div class="chpwd-box" >
+                <div class="chpwd-box-main">
+                    <div class="error fl-left" id="error"></div>
+                </div>
+
+                <div class="chpwd-box-main">
+                    <div class="chpwd-box-main-text">原始密码：</div>
+                    <input type="password" class="chpwd-input" id="old-ipt" />
+                </div>
+                <div class="chpwd-box-main">
+                    <div class="chpwd-box-main-text">新密码：</div>
+                    <input type="password" class="chpwd-input" id="new-ipt" />
+                </div>
+
+                <div class="chpwd-box-main">
+                    <div class="chpwd-box-main-text">确认新密码：</div>
+                    <input type="password" class="chpwd-input" id="confirm-new-ipt" />
+                </div>
+                <div class="chpwd-box-main">
+                    <div class="chpwd-box-main-text">&nbsp;</div>
+                    <a class="chpwd-link">确定修改</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}
