@@ -2,7 +2,8 @@
 
 today=`date +'%Y%m%d'`
 
-BASEPATH=$HOME'/Dev'
+#BASEPATH=$HOME'/Dev'
+BASEPATH=$HOME
 echo $BASEPATH
 
 NGINX_LOG=$BASEPATH'/var/access.log'

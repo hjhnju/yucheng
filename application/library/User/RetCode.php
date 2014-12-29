@@ -11,13 +11,13 @@ class User_RetCode extends Base_RetCode{
     const USERNAME_SYNTEX_ERROR     = 1026; //用户名语法错误
     
     const USERPHONE_EXIST           = 1027; //手机号已存在
-    const USERPHONE_SYNTEX_ERROR    = 1028; //手机号不合法
+    const USERPHONE_SYNTEX_ERROR    = 1028; //手机号格式错误
     
     const GETVERICODE_FAIL          = 1029; //获取短信验证码失败
     const VERICODE_WRONG            = 1030; //短信验证码不正确
     
-    const REFEREE_NOT_EXIST         = 1031; //推荐人不存在
-    const REFEREE_SNYTEX_ERROR      = 1032; //推荐人拼写语法错误
+    const INVITER_NOT_EXIST         = 1031; //推荐人不存在
+    const INVITER_SNYTEX_ERROR      = 1032; //推荐人拼写语法错误
     
     const REGIST_FAIL               = 1033; //注册失败
     
@@ -28,8 +28,6 @@ class User_RetCode extends Base_RetCode{
     const USER_NAME_OR_PASSWD_ERROR = 1036; //用户名或密码错误
     
     const USER_PASSWD_ERROR         = 1037; //用户密码格式错误
-    
-    const INVITER_NOT_EXIST         = 1039; //邀请人不存在
     
     const IMAGE_CODE_WRONG          = 1040; //图片验证码错误
     
@@ -47,11 +45,11 @@ class User_RetCode extends Base_RetCode{
         self::USERNAME_EXIST           => '用户名已存在',
         self::USERNAME_SYNTEX_ERROR    => '用户名请使用英文字母、数字、下划线或横线，最少5个字符，首字符必须为字母。',
         self::USERPHONE_EXIST          => '手机号已存在',
-        self::USERPHONE_SYNTEX_ERROR   => '手机号不合法',
+        self::USERPHONE_SYNTEX_ERROR   => '手机号格式错误',
         self::GETVERICODE_FAIL         => '获取短信验证码失败',
         self::VERICODE_WRONG           => '短信验证码不正确',
-        self::REFEREE_NOT_EXIST        => '推荐人不存在',
-        self::REFEREE_SNYTEX_ERROR     => '推荐人拼写语法错误',
+        self::INVITER_NOT_EXIST        => '推荐人不存在',
+        self::INVITER_SNYTEX_ERROR     => '推荐人拼写语法错误',
         self::REGIST_FAIL              => '注册失败',
         self::INVITER_NOT_EXIST        => '邀请人不存在',
         self::USER_PASSWD_ERROR        => '密码只能为6-32位数字，字母及常用符号组成。',
