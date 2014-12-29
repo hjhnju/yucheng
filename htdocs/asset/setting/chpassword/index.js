@@ -1,8 +1,10 @@
-<<<<<<< HEAD
-/*! 2014 Baidu Inc. All Rights Reserved */
-define("setting/chpassword/index",["require","jquery","common/Remoter","etpl","./chpassword.tpl"],function(require){function e(){t(),o.compile(s)}function t(){r(".chpwd-link").click(function(){var e=r("#new-ipt"),t=+e.val(),n=+r("#confirm-new-ipt").val();if(t!==n)return void r("#error").html("两次密码不一致");else return void i.remote({oldpwd:r("#old-ipt").val(),newpwd:e.val()})}),i.on("success",function(e){if(e&&e.bizError)r("#error").html(e.statusInfo);else{var t,n=8;t=setInterval(function(){if(r("#time-span").text(--n+"秒后自动跳转"),0===n)clearInterval(t),window.location.href="/account/views/overview/index"},1e3),r("#error").html(""),r("#chpwd-box").html(o.render("list"))}})}var r=require("jquery"),n=require("common/Remoter"),i=new n("EDIT_CHPWD_SUBMITE"),o=require("etpl"),s=require("./chpassword.tpl");return{init:e}});
-=======
-define('setting/chpassword/index', function (require) {
+define('setting/chpassword/index', [
+    'require',
+    'jquery',
+    'common/Remoter',
+    'etpl',
+    './chpassword.tpl'
+], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
@@ -47,4 +49,3 @@ define('setting/chpassword/index', function (require) {
     }
     return { init: init };
 });
->>>>>>> 08911090d2f27b93d9e16a217078d267fd454503
