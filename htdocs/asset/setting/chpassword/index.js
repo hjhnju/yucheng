@@ -2,55 +2,50 @@
 define('setting/chpassword/index', [
     'require',
     'jquery',
-    'common/Remoter'
+    'common/Remoter',
+    'etpl',
+    './chpassword.tpl'
 ], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
     var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
+    var etpl = require('etpl');
+    var tpl = require('./chpassword.tpl');
     function init() {
         bingEvent();
+        etpl.compile(tpl);
     }
     function bingEvent() {
-        $('.chpwd-input').on({
-            focus: function () {
-                $(this).removeClass('current');
-                $(this).next().html('');
-            },
-            blur: function () {
-                var me = $(this);
-                var value = $(this).val();
-                if (!value) {
-                    me.addClass('current');
-                    $(this).next().html('\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A');
-                    return;
-                }
-                if (!testPwd.test(value)) {
-                    me.addClass('current');
-                    $(this).next().html('\u5BC6\u7801\u4E0D\u7B26\u5408\u8981\u6C42');
-                    return;
-                }
-                $(this).next().html('');
-            }
-        });
-        $('#confirm-new-ipt').blur(function () {
-            var newval = +$('#new-ipt').val();
-            var me = +$(this).val();
-            if (newval !== me) {
-                $(this).addClass('current');
-                $('#repeat-ipt-error').html('\u4E24\u6B21\u5BC6\u7801\u4E0D\u4E00\u81F4');
-            }
-        });
         $('.chpwd-link').click(function () {
-            var error = $('.chpwd-input.current');
-            $('.chpwd-input').trigger('blur');
-            if (error.length) {
+            var newIpt = $('#new-ipt');
+            var newval = +newIpt.val();
+            var me = +$('#confirm-new-ipt').val();
+            if (newval !== me) {
+                $('#error').html('\u4E24\u6B21\u5BC6\u7801\u4E0D\u4E00\u81F4');
                 return;
             }
             chpwdSubmite.remote({
                 oldpwd: $('#old-ipt').val(),
-                newpwd: $('#new-ipt').val()
+                newpwd: newIpt.val()
             });
+        });
+        chpwdSubmite.on('success', function (data) {
+            if (data && data.bizError) {
+                $('#error').html(data.statusInfo);
+            } else {
+                var value = 8;
+                var timer;
+                timer = setInterval(function () {
+                    $('#time-span').text(--value + '\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C');
+                    if (value === 0) {
+                        clearInterval(timer);
+                        window.location.href = '/account/views/overview/index';
+                    }
+                }, 1000);
+                $('#error').html('');
+                $('#chpwd-box').html(etpl.render('list'));
+            }
         });
     }
     return { init: init };

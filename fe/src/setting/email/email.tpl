@@ -14,7 +14,7 @@
             <div class="username-error"></div>
         </div>
         <div class="login-username">
-            <input class="login-input testing" id="login-testing" type="password" />
+            <input class="login-input testing email-test" id="login-testing" type="password" />
             <label class="user-lable" for="login-testing">验证码</label>
             <span class="login-username-testing testing_span"></span>
             <div class="username-error"></div>
@@ -33,6 +33,11 @@
         </div>
     </div>
     <div class="changephone-box">
-        正在处理中...
+        <div class="success-pic"></div>
+        <div class="success-text email-box">认证邮箱已经发至 <span class="email-box-span">${email}</span></div>
+        <div class="success-box-time">
+            <span class="timer-span" id="time-span">8秒后自动跳转至</span>&nbsp;
+            <a class="success-link" href="/account/views/overview/index">我的账户</a>
+        </div>
     </div>
 </div>

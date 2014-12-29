@@ -9,13 +9,14 @@
         </div>
     </div>
     <div class="changephone-box">
+        <div class="error"></div>
         <div class="login-username">
-            <input class="login-input login-input2nd" id="login-phonenew2nd" type="text" />
+            <input class="login-input login-input2nd" id="login-phonenew" type="text" />
             <label class="user-lable" for="login-phonenew">新手机号</label>
             <div class="username-error" id="login-phonenew-error"></div>
         </div>
         <div class="login-username">
-            <input class="login-input testing login-input2nd" id="login-test" type="text" />
+            <input class="login-input testing login-input" id="login-test" type="text" />
             <label class="user-lable" for="login-test">验证码</label>
             <a href="###" class="login-username-testing" id="sendsmscode">获取验证码</a>
             <div class="username-error yanzma"id="username-error-error"></div>
@@ -34,8 +35,13 @@
             <p class="number-p three last current">修改成功</p>
         </div>
     </div>
-    <div class="changephone-box" style="text-align: center;font-size: 30px;color: #75cf64;">
+    <div class="changephone-box success-main">
+        <div class="success-pic"></div>
+        <div class="success-text">修改成功</div>
+        <div class="success-box-time">
+            <span class="timer-span" id="time-span">8秒后自动跳转至</span>&nbsp;
+            <a class="success-link" href="/account/views/overview/index">我的账户</a>
+        </div>
 
-        修改成功
     </div>
 </div>
