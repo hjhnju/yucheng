@@ -44,18 +44,6 @@ define(function (require) {
             !value && $(this).next().removeClass('hidden');
         });
 
-        // 验证手机
-        //box_id.delegate('#login-phonenew', 'blur', function () {
-        //
-        //    var value = $(this).val();
-        //
-        //    if(!value) {
-        //        $(this).parent().addClass('current');
-        //        $('#login-phonenew-error').html('手机号码不能为空');
-        //        return;
-        //    }
-        //
-        //});
 
 
         //获取验证码

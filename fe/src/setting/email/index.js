@@ -11,7 +11,6 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');
     var getSmscode = new Remoter('LOGIN_IMGCODE_ADD');
-    var sendSmscode = new Remoter('LOGIN_IMGCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./email.tpl');
     var emailVal;
@@ -85,7 +84,7 @@ define(function (require) {
             }
             else {
                 var timer;
-                var value = 8;
+                var value = 6;
                 $('#checkemial').html(etpl.render('list2nd', {
                     email: emailVal
                 }));
@@ -95,7 +94,7 @@ define(function (require) {
                     $('#time-span').text(--value + '秒后自动跳转');
                     if(value === 0) {
                         clearInterval(timer);
-                        window.location.href = '/account/views/overview/index';
+                        window.location.href = '/account/overview/index';
                     }
 
                 },1000);

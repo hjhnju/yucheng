@@ -1,9 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/shape/Ellipse', [
-    'require',
-    './Base',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Ellipse', function (require) {
     var Base = require('./Base');
     var Ellipse = function (options) {
         Base.call(this, options);

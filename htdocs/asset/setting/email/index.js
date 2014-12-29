@@ -1,16 +1,8 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('setting/email/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './email.tpl'
-], function (require) {
+define('setting/email/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');
     var getSmscode = new Remoter('LOGIN_IMGCODE_ADD');
-    var sendSmscode = new Remoter('LOGIN_IMGCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./email.tpl');
     var emailVal;
@@ -54,13 +46,13 @@ define('setting/email/index', [
                 $('.error').html(data.statusInfo);
             } else {
                 var timer;
-                var value = 8;
+                var value = 6;
                 $('#checkemial').html(etpl.render('list2nd', { email: emailVal }));
                 timer = setInterval(function () {
                     $('#time-span').text(--value + '\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C');
                     if (value === 0) {
                         clearInterval(timer);
-                        window.location.href = '/account/views/overview/index';
+                        window.location.href = '/account/overview/index';
                     }
                 }, 1000);
             }

@@ -129,6 +129,7 @@ define(function (require) {
                 return;
             }
 
+            allStatus.pwd = 1;
             error.pwdError.html(CORRECT);
         });
 
@@ -144,6 +145,7 @@ define(function (require) {
             }
             else {
                 allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
             }
         });
 
@@ -177,7 +179,7 @@ define(function (require) {
 
             var value = $.trim(loginInput.loginPhone.val());
 
-            if (value) {
+            if (!$(this).hasClass('disabled') && value) {
                 sendsmscode.remote({
                     phone: value,
                     type: 1
@@ -193,7 +195,9 @@ define(function (require) {
             if (value) {
                 checkInviter.remote({
                     inviter: value
+
                 });
+                return;
             }
 
         });
@@ -222,7 +226,8 @@ define(function (require) {
                 name: loginInput.loginUser.val(),
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
-                inviter: loginInput.loginTuiJian.val()
+                inviter: loginInput.loginTuiJian.val(),
+                test: loginInput.loginTest.val()
             });
 
         });
@@ -251,11 +256,13 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginPhone.parent().addClass('current');
                 error.phoneError.html(data.statusInfo);
-                allStatus.pwd = 0;
+                allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
             }
             else {
                 error.phoneError.html(CORRECT);
-                allStatus.pwd = 1;
+                allStatus.phone = 1;
+                $('.login-username-testing').removeClass('disabled');
             }
         });
 
@@ -281,7 +288,7 @@ define(function (require) {
             else {
                 var wait = $('#testing-wait');
 
-                wait.text('300秒后重新发送');
+                wait.text('60秒后重新发送');
                 wait.addClass('show');
 
                 timer = setInterval(function () {

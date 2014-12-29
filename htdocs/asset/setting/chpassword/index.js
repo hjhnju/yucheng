@@ -1,11 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('setting/chpassword/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './chpassword.tpl'
-], function (require) {
+define('setting/chpassword/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');
@@ -36,15 +29,15 @@ define('setting/chpassword/index', [
             } else {
                 var value = 8;
                 var timer;
+                $('#error').html('');
+                $('#chpwd-box').html(etpl.render('list'));
                 timer = setInterval(function () {
                     $('#time-span').text(--value + '\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C');
                     if (value === 0) {
                         clearInterval(timer);
-                        window.location.href = '/account/views/overview/index';
+                        window.location.href = '/account/overview/index';
                     }
                 }, 1000);
-                $('#error').html('');
-                $('#chpwd-box').html(etpl.render('list'));
             }
         });
     }

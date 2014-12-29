@@ -1,4 +1,3 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
 ;
 (function () {
     'use strict';
@@ -634,7 +633,7 @@
         return platform;
     }
     if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
-        define([], function () {
+        define(function () {
             return parse();
         });
     } else if (freeExports && freeModule) {

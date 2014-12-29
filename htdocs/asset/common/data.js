@@ -1,5 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('common/data', [], function () {
+define('common/data', function () {
     return {
         pagerOpt: {
             startPage: 1,

@@ -23,25 +23,26 @@ define(function () {
      */
     var URL = {
         REGIST_CHECKNAME_CHECK: rootUrl
-            + '/user/registapi/checkname',
-//            + '/test/user/regist/checkname.json',
+//            + '/user/registapi/checkname',
+            + '/test/user/registapi/checkname.json',
         REGIST_CHECKPHONE_CHECK: rootUrl
-            + '/user/registapi/checkphone',
-//            + '/test/user/regist/checkphone.json',
+//            + '/user/registapi/checkphone',
+            + '/test/user/registapi/checkphone.json',
         REGIST_SENDSMSCODE_CHECK: rootUrl
-            + '/user/registapi/sendsmscode',
-//            + '/test/user/regist/sendsmscode.json',
+//            + '/user/registapi/sendsmscode',
+            + '/test/user/registapi/sendsmscode.json',
         REGIST_CHECKSMSCODE_CHECK: rootUrl
-            + '/user/registapi/checksmscode',
+//            + '/user/registapi/checksmscode',
+              + '/test/user/registapi/sendsmscode.json',
         REGIST_INDEX_CHECK: rootUrl
-            + '/user/registapi/index',
-//            + '/test/user/regist/index.json',
+//            + '/user/registapi/index',
+            + '/test/user/registapi/index.json',
         REGIST_CHECKINVITER_CHECK: rootUrl
-            + '/user/registapi/checkinviter',
-//            + '/test/user/regist/checkinviter.json',
+//            + '/user/registapi/checkinviter',
+            + '/test/user/registapi/checkinviter.json',
         LOGIN_INDEX_CHECK: rootUrl
             + '/user/loginapi/index',
-//            + '/test/user/login/index.json',
+//            + '/test/user/loginapi/index.json',
         LOGIN_IMGCODE_ADD: rootUrl
             + '/user/loginapi/getauthimageurl',
         LOGIN_IMGCODE_CHECK: rootUrl
@@ -53,17 +54,17 @@ define(function () {
             + '/account/editapi/checkphone',
         //+ '/test/account/edit/phoneSubmite.json',
         EDIT_PHONE_SUBMITE2ND: rootUrl
-        + '/account/edit/checkphone',
+        + '/account/editapi/bindnewphone',
         //+ '/test/account/edit/phoneSubmite.json',
         EDIT_EMAILCONFIRM: rootUrl
-            + '/account/edit/getvericode.json',
+            + '/account/editapi/newemail',
         //+ '/test/account/edit/emailConfirm.json',
         EDIT_CHPWD_SUBMITE: rootUrl
-            + '/account/edit/chpwd',
+            + '/account/editapi/modifypwd',
         //+ '/test/account/edit/emailConfirm.json',
-        EDIT_CHANGEPWD_SUBMIT:rootUrl
-        + '/account/edit/chpwd',
-        //+ '/test/account/edit/chpwd.json',
+        //EDIT_CHANGEPWD_SUBMIT:rootUrl
+        //+ '/account/edit/chpwd',
+        ////+ '/test/account/edit/chpwd.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl
