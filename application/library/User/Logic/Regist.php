@@ -24,6 +24,7 @@ class User_Logic_Regist{
         $objLogin->fetch(array('name'=>$strName));
 
         if(!empty($objLogin->name)) {
+        echo "empty checkname:" . User_RetCode::USERNAME_EXIST;
             return User_RetCode::USERNAME_EXIST;
         }
         return User_RetCode::SUCCESS;

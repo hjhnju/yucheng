@@ -11,7 +11,7 @@ class TestBase extends PHPUnit_Framework_TestCase {
     
     // 初始化实例化YAF应用，YAF application只能实例化一次
     public function __construct() {
-        if ( ! $this->__application = Yaf_Registry::get('Application') ) {
+        if (!$this->__application = Yaf_Registry::get('Application')) {
             $conf    = new Yaf_Config_INI(CONF_PATH. "/application.ini", ENVIRON);
             $conf    = $conf->toArray();
             $conf['application']['library']   = MODULE_PATH . '/library';
@@ -25,7 +25,7 @@ class TestBase extends PHPUnit_Framework_TestCase {
     
     // 创建一个简单请求，并利用调度器接受Repsonse信息，指定分发请求。
     protected function __requestActionAndParseBody($controller, $action, $params=array()) {
-        $request = new Yaf_Request_Simple("CLI", MODULE, $controller, $action, $params);
+        $request  = new Yaf_Request_Simple("CLI", MODULE, $controller, $action, $params);
         $response = $this->__application->getDispatcher()
         ->returnResponse(TRUE)
         ->dispatch($request);

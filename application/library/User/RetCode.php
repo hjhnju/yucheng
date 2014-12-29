@@ -29,8 +29,6 @@ class User_RetCode extends Base_RetCode{
     
     const USER_PASSWD_ERROR         = 1037; //用户密码格式错误
     
-    const INVITER_NOT_EXIST         = 1039; //邀请人不存在
-    
     const IMAGE_CODE_WRONG          = 1040; //图片验证码错误
     
     const GET_AUTHCODE_FAIL         = 1041; //第三方登录授权出错
