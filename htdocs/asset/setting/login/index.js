@@ -1,2 +1,89 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define("setting/login/index",["require","jquery","../common/picScroll","common/header","common/Remoter"],function(require){function n(){t.init(),o.init(),e(),r()}function e(){i(".login .login-input").on({focus:function(){var n=i(this).parent(),e=n.children(".username-error");n.removeClass("current"),e.html(""),i(this).next().addClass("hidden")},blur:function(){var n=i.trim(i(this).val());!n&&i(this).next().removeClass("hidden")}}),i("#login-testing").blur(function(){var n=i.trim(i(this).val());if(!n)return i(this).parent().addClass("current"),void i("#login-testing-error").html("验证码不能为空");else return void a.remote({imgcode:n,type:2})}),m.click(function(n){n.preventDefault(),c.remote({type:2})}),i(".login .login-fastlogin").click(function(n){n.preventDefault();var e=i.trim(i("#login-user").val()),r=i.trim(i("#login-pwd").val());if(!e||!r)u.html("用户名或密码不能为空");else l.remote({name:e,passwd:r})})}function r(){l.on("success",function(n){if(n.imgCode){var e=i(".login-display-none:eq(0)");e.removeClass("login-display-none"),m.attr("src",n.data.url)}else if(n.bizError)i("#login-error").html(n.statusInfo);else window.location.href="/account/overview/index"}),c.on("success",function(n){if(n.bizError)alert(n.statusInfo);else m.attr("src",n.url)}),a.on("success",function(n){if(n.bizError)alert(n.statusInfo);else i("#login-testing-error").html('<span class="username-error-span"></span>')})}var i=require("jquery"),o=require("../common/picScroll"),t=require("common/header"),s=require("common/Remoter"),l=new s("LOGIN_INDEX_CHECK"),a=new s("LOGIN_IMGCODE_CHECK"),c=new s("LOGIN_IMGCODE_ADD"),u=i("#login-error"),m=i("#login-img-url");return{init:n}});
+define('setting/login/index', function (require) {
+    var $ = require('jquery');
+    var picScroll = require('../common/picScroll');
+    var header = require('common/header');
+    var Remoter = require('common/Remoter');
+    var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
+    var imgcodeCheck = new Remoter('LOGIN_IMGCODE_CHECK');
+    var imgcodeGet = new Remoter('LOGIN_IMGCODE_ADD');
+    var loginError = $('#login-error');
+    var imgUrl = $('#login-img-url');
+    function init() {
+        header.init();
+        picScroll.init();
+        bindEvents();
+        bindCallback();
+    }
+    function bindEvents() {
+        $('.login .login-input').on({
+            focus: function () {
+                var parent = $(this).parent();
+                var error = parent.children('.username-error');
+                parent.removeClass('current');
+                error.html('');
+                $(this).next().addClass('hidden');
+            },
+            blur: function () {
+                var value = $.trim($(this).val());
+                !value && $(this).next().removeClass('hidden');
+            }
+        });
+        $('#login-testing').blur(function () {
+            var value = $.trim($(this).val());
+            if (!value) {
+                $(this).parent().addClass('current');
+                $('#login-testing-error').html('\u9A8C\u8BC1\u7801\u4E0D\u80FD\u4E3A\u7A7A');
+                return;
+            }
+            imgcodeCheck.remote({
+                imgcode: value,
+                type: 2
+            });
+        });
+        imgUrl.click(function (e) {
+            e.preventDefault();
+            imgcodeGet.remote({ type: 2 });
+        });
+        $('.login .login-fastlogin').click(function (e) {
+            e.preventDefault();
+            var user = $.trim($('#login-user').val());
+            var pwd = $.trim($('#login-pwd').val());
+            if (!user || !pwd) {
+                loginError.html('\u7528\u6237\u540D\u6216\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A');
+            } else {
+                loginCheck.remote({
+                    name: user,
+                    passwd: pwd
+                });
+            }
+        });
+    }
+    function bindCallback() {
+        loginCheck.on('success', function (data) {
+            if (data.imgCode) {
+                var imgBox = $('.login-display-none:eq(0)');
+                imgBox.removeClass('login-display-none');
+                imgUrl.attr('src', data.data.url);
+            } else if (data.bizError) {
+                $('#login-error').html(data.statusInfo);
+            } else {
+                window.location.href = '/account/overview/index';
+            }
+        });
+        imgcodeGet.on('success', function (data) {
+            if (data.bizError) {
+                alert(data.statusInfo);
+            } else {
+                imgUrl.attr('src', data.url);
+            }
+        });
+        imgcodeCheck.on('success', function (data) {
+            if (data.bizError) {
+                alert(data.statusInfo);
+            } else {
+                $('#login-testing-error').html('<span class="username-error-span"></span>');
+            }
+        });
+    }
+    return { init: init };
+});

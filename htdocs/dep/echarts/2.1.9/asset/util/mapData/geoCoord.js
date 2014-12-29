@@ -1,5 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/util/mapData/geoCoord', [], function () {
+define('echarts/util/mapData/geoCoord', function () {
     return {
         'Russia': [
             100,

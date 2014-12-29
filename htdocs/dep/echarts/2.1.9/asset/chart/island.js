@@ -1,17 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/island', [
-    'require',
-    '../component/base',
-    './base',
-    'zrender/shape/Circle',
-    '../config',
-    '../util/ecData',
-    'zrender/tool/util',
-    'zrender/tool/event',
-    'zrender/tool/color',
-    '../util/accMath',
-    '../chart'
-], function (require) {
+define('echarts/chart/island', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var CircleShape = require('zrender/shape/Circle');

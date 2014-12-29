@@ -1,4 +1,3 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
 (function (root) {
     function extend(target, source) {
         for (var key in source) {
@@ -660,7 +659,7 @@
     if (typeof exports == 'object' && typeof module == 'object') {
         exports = module.exports = etpl;
     } else if (typeof define == 'function' && define.amd) {
-        define([], etpl);
+        define(etpl);
     } else {
         root.etpl = etpl;
     }

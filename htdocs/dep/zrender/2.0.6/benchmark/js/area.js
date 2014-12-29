@@ -1,14 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define([
-    'require',
-    'benchmark',
-    'zrender',
-    'etpl',
-    'zrender/tool/area',
-    'zrender/tool/util',
-    './shapes',
-    'zrender/shape/util/PathProxy'
-], function (require) {
+define(function (require) {
     var Benchmark = require('benchmark');
     var zrender = require('zrender');
     var etpl = require('etpl');

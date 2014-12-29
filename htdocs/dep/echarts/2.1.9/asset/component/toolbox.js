@@ -1,18 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/toolbox', [
-    'require',
-    './base',
-    'zrender/shape/Line',
-    'zrender/shape/Image',
-    'zrender/shape/Rectangle',
-    '../util/shape/Icon',
-    '../config',
-    'zrender/tool/util',
-    'zrender/config',
-    'zrender/tool/event',
-    './dataView',
-    '../component'
-], function (require) {
+define('echarts/component/toolbox', function (require) {
     var Base = require('./base');
     var LineShape = require('zrender/shape/Line');
     var ImageShape = require('zrender/shape/Image');

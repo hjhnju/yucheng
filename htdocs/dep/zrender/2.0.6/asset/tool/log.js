@@ -1,8 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/tool/log', [
-    'require',
-    '../config'
-], function (require) {
+define('zrender/tool/log', function (require) {
     var config = require('../config');
     return function () {
         if (config.debugMode === 0) {

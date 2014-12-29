@@ -1,8 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('zrender/animation/Clip', [
-    'require',
-    './easing'
-], function (require) {
+define('zrender/animation/Clip', function (require) {
     var Easing = require('./easing');
     function Clip(options) {
         this._targetPool = options.target || {};

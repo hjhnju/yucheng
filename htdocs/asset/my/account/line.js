@@ -1,5 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('my/account/line', ['jquery'], function () {
+define('my/account/line', function () {
     var $ = require('jquery');
     var echarts;
     var hisCharts;

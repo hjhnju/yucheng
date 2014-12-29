@@ -1,17 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/legend', [
-    'require',
-    './base',
-    'zrender/shape/Text',
-    'zrender/shape/Rectangle',
-    'zrender/shape/Sector',
-    '../util/shape/Icon',
-    '../util/shape/Candle',
-    '../config',
-    'zrender/tool/util',
-    'zrender/tool/area',
-    '../component'
-], function (require) {
+define('echarts/component/legend', function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var RectangleShape = require('zrender/shape/Rectangle');

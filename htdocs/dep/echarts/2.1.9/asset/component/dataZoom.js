@@ -1,15 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/component/dataZoom', [
-    'require',
-    './base',
-    'zrender/shape/Rectangle',
-    'zrender/shape/Polygon',
-    '../util/shape/Icon',
-    '../config',
-    '../util/date',
-    'zrender/tool/util',
-    '../component'
-], function (require) {
+define('echarts/component/dataZoom', function (require) {
     var Base = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');
     var PolygonShape = require('zrender/shape/Polygon');

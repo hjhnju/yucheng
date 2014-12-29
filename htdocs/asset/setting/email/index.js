@@ -1,11 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('setting/email/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './email.tpl'
-], function (require) {
+define('setting/email/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');

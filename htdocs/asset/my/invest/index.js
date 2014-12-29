@@ -1,2 +1,155 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define("my/invest/index",["require","jquery","etpl","moment","common/data","common/header","common/ui/Pager/Pager","common/Remoter","./list.tpl"],function(require){function e(){a=l("#my-invest-list"),f.init(),u.compile(w),g.remote({page:1}),n(),r()}function r(){l(".my-invest-tab-item").click(function(){if(!l(this).hasClass("current"))l(".my-invest-tab-item").removeClass("current"),l(this).addClass("current"),I=+l.trim(l(this).attr("data-value")),t(1)}),l(".my-invest-list").delegate(".view-plan-btn","click",function(){var e=l(".my-invest-item");if(l(this).hasClass("current"))return e.removeClass("current"),void l(this).removeClass("current");var r=l.trim(l(this).attr("data-id"));if(b=l(this),e.removeClass("current"),l(".view-plan-btn").removeClass("current"),l(this).closest(".my-invest-item").addClass("current"),l(this).addClass("current"),!l(this).hasClass("hasDetail"))v.remote({id:r})})}function n(){g.on("success",function(e){if(e.bizError)o(e);else{if(!s)s=new d(l.extend({},m.pagerOpt,{main:l("#my-invest-pager"),total:+e.pageall})),s.render(+e.page),s.on("change",function(e){t(e.value)});i("returnMoneyList",e)}}),g.on("fail",function(e){o(e)}),v.on("success",function(e){var r=l(b).closest(".my-invest-item").addClass("current").find(".my-invest-detail");if(e.bizError)r.render(u.render("Error",{msg:e.statusInfo}));else{if(!b)return;l(b).addClass("hasDetail");for(var n=0,t=e.list.length;t>n;n++)e.list[n].timeInfo=c.unix(e.list[n].time).format(y);r.html(u.render("returnMoneyDetail",{data:e}))}}),p.on("success",function(e){if(e.bizError)o(e);else i("tenderingList",e)}),p.on("fail",function(e){o(e)}),E.on("success",function(e){if(e.bizError)o(e);else i("endedList",e)}),E.on("fail",function(e){o(e)}),C.on("success",function(e){if(e.bizError)o(e);else i("tenderFailList",e)}),C.on("fail",function(e){o(e)})}function t(e){switch(a.html(u.render("Loading")),l("#my-invest-pager").html(""),I){case 1:g.remote({page:e});break;case 2:p.remote({page:e});break;case 3:E.remote({page:e});break;case 4:C.remote({page:e})}}function i(e,r){s.setOpt("pageall",+r.pageall),s.render(+r.page);for(var n=0,t=r.list.length;t>n;n++)if(r.list[n].timeInfo=c.unix(r.list[n].tenderTime).format("YYYY-MM-DD hh:mm"),r.list[n].endTime)r.list[n].endTimeInfo=c.unix(r.list[n].endTime).format(y);a.html(u.render(e,{list:r.list}))}function o(e){a.render(u.render("Error",{msg:e.statusInfo}))}var s,a,l=require("jquery"),u=require("etpl"),c=require("moment"),m=require("common/data"),f=require("common/header"),d=require("common/ui/Pager/Pager"),h=require("common/Remoter"),g=new h("MY_INVEST_GET"),v=new h("MY_INVEST_DETAIL"),p=new h("MY_INVEST_TENDERING"),E=new h("MY_INVEST_ENDED"),C=new h("MY_INVEST_TENDERFAIL"),w=require("./list.tpl"),I=1,b=null,y="YYYY-MM-DD";return{init:e}});
+define('my/invest/index', function (require) {
+    var $ = require('jquery');
+    var etpl = require('etpl');
+    var moment = require('moment');
+    var commonDate = require('common/data');
+    var header = require('common/header');
+    var Pager = require('common/ui/Pager/Pager');
+    var Remoter = require('common/Remoter');
+    var getReturnList = new Remoter('MY_INVEST_GET');
+    var getReturnDetail = new Remoter('MY_INVEST_DETAIL');
+    var getTenderingList = new Remoter('MY_INVEST_TENDERING');
+    var getEndedList = new Remoter('MY_INVEST_ENDED');
+    var getTenderFailList = new Remoter('MY_INVEST_TENDERFAIL');
+    var tpl = require('./list.tpl');
+    var pager;
+    var status = 1;
+    var item = null;
+    var FORMATER = 'YYYY-MM-DD';
+    var htmlContainer;
+    function init() {
+        htmlContainer = $('#my-invest-list');
+        header.init();
+        etpl.compile(tpl);
+        getReturnList.remote({ page: 1 });
+        ajaxCallBack();
+        bindEvents();
+    }
+    function bindEvents() {
+        $('.my-invest-tab-item').click(function () {
+            if (!$(this).hasClass('current')) {
+                $('.my-invest-tab-item').removeClass('current');
+                $(this).addClass('current');
+                status = +$.trim($(this).attr('data-value'));
+                getRemoteList(1);
+            }
+        });
+        $('.my-invest-list').delegate('.view-plan-btn', 'click', function () {
+            var allItem = $('.my-invest-item');
+            if ($(this).hasClass('current')) {
+                allItem.removeClass('current');
+                $(this).removeClass('current');
+                return;
+            }
+            var value = $.trim($(this).attr('data-id'));
+            item = $(this);
+            allItem.removeClass('current');
+            $('.view-plan-btn').removeClass('current');
+            $(this).closest('.my-invest-item').addClass('current');
+            $(this).addClass('current');
+            if (!$(this).hasClass('hasDetail')) {
+                getReturnDetail.remote({ id: value });
+            }
+        });
+    }
+    function ajaxCallBack() {
+        getReturnList.on('success', function (data) {
+            if (data.bizError) {
+                renderError(data);
+            } else {
+                if (!pager) {
+                    pager = new Pager($.extend({}, commonDate.pagerOpt, {
+                        main: $('#my-invest-pager'),
+                        total: +data.pageall
+                    }));
+                    pager.render(+data.page);
+                    pager.on('change', function (e) {
+                        getRemoteList(e.value);
+                    });
+                }
+                renderHTML('returnMoneyList', data);
+            }
+        });
+        getReturnList.on('fail', function (data) {
+            renderError(data);
+        });
+        getReturnDetail.on('success', function (data) {
+            var container = $(item).closest('.my-invest-item').addClass('current').find('.my-invest-detail');
+            if (data.bizError) {
+                container.render(etpl.render('Error', { msg: data.statusInfo }));
+            } else {
+                if (!item) {
+                    return;
+                }
+                $(item).addClass('hasDetail');
+                for (var i = 0, l = data.list.length; i < l; i++) {
+                    data.list[i].timeInfo = moment.unix(data.list[i].time).format(FORMATER);
+                }
+                container.html(etpl.render('returnMoneyDetail', { data: data }));
+            }
+        });
+        getTenderingList.on('success', function (data) {
+            if (data.bizError) {
+                renderError(data);
+            } else {
+                renderHTML('tenderingList', data);
+            }
+        });
+        getTenderingList.on('fail', function (data) {
+            renderError(data);
+        });
+        getEndedList.on('success', function (data) {
+            if (data.bizError) {
+                renderError(data);
+            } else {
+                renderHTML('endedList', data);
+            }
+        });
+        getEndedList.on('fail', function (data) {
+            renderError(data);
+        });
+        getTenderFailList.on('success', function (data) {
+            if (data.bizError) {
+                renderError(data);
+            } else {
+                renderHTML('tenderFailList', data);
+            }
+        });
+        getTenderFailList.on('fail', function (data) {
+            renderError(data);
+        });
+    }
+    function getRemoteList(page) {
+        htmlContainer.html(etpl.render('Loading'));
+        $('#my-invest-pager').html('');
+        switch (status) {
+        case 1:
+            getReturnList.remote({ page: page });
+            break;
+        case 2:
+            getTenderingList.remote({ page: page });
+            break;
+        case 3:
+            getEndedList.remote({ page: page });
+            break;
+        case 4:
+            getTenderFailList.remote({ page: page });
+            break;
+        }
+    }
+    function renderHTML(tpl, data) {
+        pager.setOpt('pageall', +data.pageall);
+        pager.render(+data.page);
+        for (var i = 0, l = data.list.length; i < l; i++) {
+            data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format('YYYY-MM-DD hh:mm');
+            if (data.list[i].endTime) {
+                data.list[i].endTimeInfo = moment.unix(data.list[i].endTime).format(FORMATER);
+            }
+        }
+        htmlContainer.html(etpl.render(tpl, { list: data.list }));
+    }
+    function renderError(data) {
+        htmlContainer.render(etpl.render('Error', { msg: data.statusInfo }));
+    }
+    return { init: init };
+});

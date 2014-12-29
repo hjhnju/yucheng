@@ -1,20 +1,4 @@
-/*! 2014 Baidu Inc. All Rights Reserved */
-define('echarts/chart/pie', [
-    'require',
-    '../component/base',
-    './base',
-    'zrender/shape/Text',
-    'zrender/shape/Ring',
-    'zrender/shape/Circle',
-    'zrender/shape/Sector',
-    'zrender/shape/BrokenLine',
-    '../config',
-    '../util/ecData',
-    'zrender/tool/util',
-    'zrender/tool/math',
-    'zrender/tool/color',
-    '../chart'
-], function (require) {
+define('echarts/chart/pie', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var TextShape = require('zrender/shape/Text');

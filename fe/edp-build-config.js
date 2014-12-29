@@ -57,8 +57,9 @@ exports.getProcessors = function () {
     var addCopyright = new AddCopyright();
 
     return {
-        'release': [ lessProcessor, moduleProcessor, pathMapperProcessor ],
-        'default': [
+        'default': [ lessProcessor, html2JsProcessor, moduleProcessor,
+            html2jsClearPorcessor, pathMapperProcessor ],
+        'release': [
             lessProcessor, cssProcessor, html2JsProcessor, moduleProcessor,
             html2jsClearPorcessor, jsProcessor, pathMapperProcessor, addCopyright
         ]
