@@ -1,4 +1,10 @@
-define('setting/email/index', function (require) {
+define('setting/email/index', [
+    'require',
+    'jquery',
+    'common/Remoter',
+    'etpl',
+    './email.tpl'
+], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');

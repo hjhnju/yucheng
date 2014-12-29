@@ -160,16 +160,72 @@
                             <div class="operation-money-acc-price">￥0.00</div>
                             <div class="operation-money-acc-text">账户余额</div>
                         </div>
-                        <div class="money-acc-"></div>
+                        <div class="operation-border"></div>
+                        <div class="operation-money-account">
+                            <div class="operation-money-acc-price use-price">￥0.00</div>
+                            <div class="operation-money-acc-text use-price">账户余额<a class="link-help" href="###"></a></div>
+                        </div>
+                        <div class="operation-right-box">
+                            <a class="operation-right-box-link red" href="###">充值</a>
+                            <a class="operation-right-box-link green" href="###">提现</a>
+                        </div>
                     </div>
+                    <div class="operation-time">
+                        <div class="operation-time-data">
+                            <div class="time-data-calendar">
+                                <div class="time-data-calendar-text">起止时间</div>
+                                <div class="time-data-calendar-box">
+                                    <input type="text" class="time-data-ipt" id="time-start" />
+                                    <label class="ipt-lable" for="time-start">12</label>
+                                </div>
+                                <div class="time-data-symbol">-</div>
+                                <div class="time-data-calendar-box mar-right">
+                                    <input type="text" class="time-data-ipt" id="time-end" />
+                                    <label class="ipt-lable" for="time-end"></label>
+                                </div>
+                                <div class="time-data-type" id="one">
+                                    <a class="time-data-type-link current" data-value="1">今天</a>
+                                    <a class="time-data-type-link" data-value="2">最近一周</a>
+                                    <a class="time-data-type-link" data-value="3">1个月</a>
+                                    <a class="time-data-type-link" data-value="4">3个月</a>
+                                    <a class="time-data-type-link" data-value="5">半年</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="operation-time-type" id="two">
+                            <div class="time-data-calendar-text">交易类型</div>
+                            <div class="time-data-type">
+                                <a class="time-data-type-link current" data-value="1">全部</a>
+                                <a class="time-data-type-link" data-value="2">充值</a>
+                                <a class="time-data-type-link" data-value="3">提现</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="operation-list">
+                        <table border="0" cellspacing="0" cellpadding="0" class="my-invest-table operation-table">
+                            <tr>
+                                <th>时间</th>
+                                <th>交易类型</th>
+                                <th>交易流水号</th>
+                                <th>金额</th>
+                                <th>可用余额</th>
+                            </tr>
+                            <tr>
+                                <td>2014-12-12 12：12</td>
+                                <td>充值</td>
+                                <td>123456789001</td>
+                                <td>3,000元</td>
+                                <td>3,000元</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="page"></div>
                 </div>
 
 
             </div>
         </div>
-    </div>接口 /account/secure/bindthirdpay   对应的smarty的路径地址就跟平常一样
-
-
+    </div>
 
     <div class="footer">
         <div class="container">

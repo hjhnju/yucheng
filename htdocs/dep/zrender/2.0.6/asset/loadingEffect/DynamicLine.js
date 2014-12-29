@@ -1,4 +1,10 @@
-define('zrender/loadingEffect/DynamicLine', function (require) {
+define('zrender/loadingEffect/DynamicLine', [
+    'require',
+    './Base',
+    '../tool/util',
+    '../tool/color',
+    '../shape/Line'
+], function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
     var zrColor = require('../tool/color');

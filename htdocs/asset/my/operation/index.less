@@ -1,10 +1,164 @@
 @import "../../common/css/common.less";
 @import "../common/css/index.less";
+@import "../../my/invest/index.less";
 
 .operation {
 
 }
 .operation-money {
-    padding: 40px 0;
+    padding: 40px;
     background-color: #f8f8f8;
+    margin-bottom: 20px;
+    .clearfix;
+}
+.operation-money-account {
+    float: left;
+
+    .operation-money-acc-price {
+        font-size: 24px;
+        color: @color-red;
+        height: 28px;
+        line-height: 28px;
+        margin-bottom: 10px;
+
+        &.use-price {
+             font-size: 14px;
+             color: #000000;
+         }
+    }
+    .operation-money-acc-text {
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        color: #333333;
+
+        &.use-price {
+            color: #333333;
+            font-size: 12px;
+            line-height: 22px;
+            height: 22px;
+        }
+
+
+    }
+}
+.operation-border{
+    float: left;
+    height: 46px;
+    border-right: 1px solid #dedede;
+    margin: 0 20px;
+}
+.money-acc-use {
+    float: left;
+}
+.link-help {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../common/img/help.png) center center no-repeat;
+    vertical-align: middle;
+}
+.operation-right-box {
+    float: right;
+    margin-top: 20px;
+
+    .clearfix;
+
+    .operation-right-box-link {
+        margin-right: 20px;
+        width: 90px;
+        height: 34px;
+        text-align: center;
+        line-height: 34px;
+        color: #FFFFFF;
+        background-color: #cccccc;
+        display: block;
+        float: left;
+        font-size: 14px;
+        text-decoration: none;
+
+        .border-radius(3px);
+
+        &.red {
+            background-color: @color-red;
+        }
+
+        &.green {
+            background-color: @color-green;
+        }
+    }
+}
+.operation-time {
+    padding: 14px 0 14px 14px;
+    border: 1px solid #dedede;
+    margin-bottom: 20px;
+}
+.operation-time-data {
+    margin-bottom: 20px;
+}
+.time-data-calendar {
+    .clearfix;
+}
+.time-data-calendar-text {
+    float: left;
+    width: 70px;
+    text-align: right;
+    margin-right: 10px;
+    height: 28px;
+    line-height: 28px;
+    color: #333333;
+    font-size: 14px;
+}
+.time-data-calendar-box {
+    float: left;
+    width: 128px;
+    height: 26px;
+    border: 1px solid #dedede;
+    line-height: 26px;
+    position: relative;
+
+    &.mar-right {
+        margin-right: 20px;
+    }
+
+    .time-data-ipt {
+        width: 120px;
+        outline: none;
+        border: none;
+        padding-left: 6px;
+    }
+    .ipt-lable {
+        position: absolute;
+        right: 10px;
+        top: 0;
+    }
+}
+.time-data-symbol {
+    height: 24px;
+    line-height: 24px;
+    margin: 0 10px;
+    float: left;
+}
+.time-data-type {
+    float: left;
+    margin-top: 7px;
+
+    .time-data-type-link {
+        padding: 5px 10px;
+        color: #333333;
+
+        &:hover,
+        &.current {
+            background-color: @color-red;
+            color: #FFFFFF;
+            .border-radius(3px);
+        }
+    }
+}
+.operation-time-type {
+
+    .clearfix;
+}
+.operation-table {
+    text-align: center;
 }

@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/tai_wan_geo', function () {
+define('echarts/util/mapData/geoJson/tai_wan_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [{

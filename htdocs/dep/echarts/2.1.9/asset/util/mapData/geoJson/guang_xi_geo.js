@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/guang_xi_geo', function () {
+define('echarts/util/mapData/geoJson/guang_xi_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

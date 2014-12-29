@@ -1,4 +1,4 @@
-define('common/global', function () {
+define('common/global', ['jquery'], function () {
     var $ = require('jquery');
     var _cache = {};
     var cache = {
