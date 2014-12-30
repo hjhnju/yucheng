@@ -51,7 +51,7 @@ define(function (require) {
         user: 0,
         phone: 0,
         pwd: 0,
-        test: 0,
+        vericode: 0,
         tui: 1
     };
 
@@ -59,7 +59,7 @@ define(function (require) {
         user: 'loginUser',
         phone: 'loginPhone',
         pwd: 'loginPwd',
-        test: 'loginTest',
+        vericode: 'loginTest',
         tui: 'loginTuiJian'
     };
 
@@ -160,7 +160,7 @@ define(function (require) {
 
             if (!phone) {
                 loginInput.loginPhone.trigger('blur');
-                allStatus.test = 0;
+                allStatus.vericode = 0;
                 return;
             }
 
@@ -172,7 +172,7 @@ define(function (require) {
                 });
             }
             else {
-                allStatus.test = 0;
+                allStatus.vericode = 0;
             }
         });
 
@@ -198,9 +198,7 @@ define(function (require) {
             if (value) {
                 checkInviter.remote({
                     inviter: value
-
                 });
-                return;
             }
 
         });
@@ -230,7 +228,7 @@ define(function (require) {
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
                 inviter: loginInput.loginTuiJian.val(),
-                test: loginInput.loginTest.val(),
+                vericode: loginInput.loginTest.val(),
                 isthird: isthird
             });
 
@@ -311,11 +309,11 @@ define(function (require) {
             if (data && data.bizError) {
                 loginInput.loginTest.parent().addClass('current');
                 error.testError.html(data.statusInfo);
-                allStatus.test = 0;
+                allStatus.vericode = 0;
             }
             else {
                 error.testError.html(CORRECT);
-                allStatus.test = 1;
+                allStatus.vericode = 1;
             }
         });
 

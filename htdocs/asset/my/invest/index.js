@@ -1,4 +1,14 @@
-define('my/invest/index', function (require) {
+define('my/invest/index', [
+    'require',
+    'jquery',
+    'etpl',
+    'moment',
+    'common/data',
+    'common/header',
+    'common/ui/Pager/Pager',
+    'common/Remoter',
+    './list.tpl'
+], function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var moment = require('moment');

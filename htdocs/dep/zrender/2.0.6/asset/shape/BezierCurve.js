@@ -1,4 +1,8 @@
-define('zrender/shape/BezierCurve', function (require) {
+define('zrender/shape/BezierCurve', [
+    'require',
+    './Base',
+    '../tool/util'
+], function (require) {
     'use strict';
     var Base = require('./Base');
     var BezierCurve = function (options) {

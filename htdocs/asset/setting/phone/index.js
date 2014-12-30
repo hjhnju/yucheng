@@ -1,4 +1,10 @@
-define('setting/phone/index', function (require) {
+define('setting/phone/index', [
+    'require',
+    'jquery',
+    'common/Remoter',
+    'etpl',
+    './phone.tpl'
+], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var phoneSubmite = new Remoter('EDIT_PHONE_SUBMITE');

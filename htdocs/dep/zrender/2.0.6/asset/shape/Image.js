@@ -1,4 +1,8 @@
-define('zrender/shape/Image', function (require) {
+define('zrender/shape/Image', [
+    'require',
+    './Base',
+    '../tool/util'
+], function (require) {
     var Base = require('./Base');
     var ZImage = function (options) {
         Base.call(this, options);

@@ -1,4 +1,10 @@
-define('setting/regist/index', function (require) {
+define('setting/regist/index', [
+    'require',
+    'jquery',
+    '../common/picScroll',
+    'common/header',
+    'common/Remoter'
+], function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
@@ -29,14 +35,14 @@ define('setting/regist/index', function (require) {
             user: 0,
             phone: 0,
             pwd: 0,
-            test: 0,
+            vericode: 0,
             tui: 1
         };
     var mapInput = {
             user: 'loginUser',
             phone: 'loginPhone',
             pwd: 'loginPwd',
-            test: 'loginTest',
+            vericode: 'loginTest',
             tui: 'loginTuiJian'
         };
     function init() {
@@ -105,7 +111,7 @@ define('setting/regist/index', function (require) {
             var phone = $.trim(loginInput.loginPhone.val());
             if (!phone) {
                 loginInput.loginPhone.trigger('blur');
-                allStatus.test = 0;
+                allStatus.vericode = 0;
                 return;
             }
             if (value) {
@@ -115,7 +121,7 @@ define('setting/regist/index', function (require) {
                     type: 1
                 });
             } else {
-                allStatus.test = 0;
+                allStatus.vericode = 0;
             }
         });
         $('.login-username-testing').click(function (e) {
@@ -155,7 +161,7 @@ define('setting/regist/index', function (require) {
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
                 inviter: loginInput.loginTuiJian.val(),
-                test: loginInput.loginTest.val()
+                vericode: loginInput.loginTest.val()
             });
         });
     }
@@ -214,10 +220,10 @@ define('setting/regist/index', function (require) {
             if (data && data.bizError) {
                 loginInput.loginTest.parent().addClass('current');
                 error.testError.html(data.statusInfo);
-                allStatus.test = 0;
+                allStatus.vericode = 0;
             } else {
                 error.testError.html(CORRECT);
-                allStatus.test = 1;
+                allStatus.vericode = 1;
             }
         });
         registSubmit.on('success', function (data) {

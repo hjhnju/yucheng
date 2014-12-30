@@ -23,8 +23,6 @@ class User_Logic_Regist{
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('name'=>$strName));
 
-
-
         if(!empty($objLogin->name)) {
             return User_RetCode::USERNAME_EXIST;
         }
@@ -55,51 +53,48 @@ class User_Logic_Regist{
     /**
      *
      * @param string $strPhone,手机号
-     * @return int,0表示手机存在，1表示手机不存在
+     * @return 标准json格式
      */
     public function checkInviter($strPhone){  
         //邀请人可为空      
-        if(!empty($strPhone) && !User_Logic_Validate::checkPhone($strPhone)){
-            return User_RetCode::USERPHONE_SYNTEX_ERROR;
+        if(empty($strPhone)){
+            return new Base_Result(User_RetCode::SUCCESS);
+        }
+        if(!User_Logic_Validate::checkPhone($strPhone)){
+            return new Base_Result(User_RetCode::PHONE_FORMAT_ERROR, null,
+                User_RetCode::getMsg(User_RetCode::PHONE_FORMAT_ERROR));
         }
 
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('phone'=>$strPhone));
-        if(empty($objLogin->phone)) {
-            return User_RetCode::REFEREE_NOT_EXIST;
+        if(empty($objLogin->userid)) {
+            return new Base_Result(User_RetCode::INVITER_NOT_EXIST, null,
+                User_RetCode::getMsg(User_RetCode::INVITER_NOT_EXIST));
         }
-        return User_RetCode::SUCCESS;
+        return new Base_Result(User_RetCode::SUCCESS, array('inviterid'=>$objLogin->userid));
     }
     
     /**
      * 注册的同时要添加信息进`user_info`表
-     * @param array $arrParam注册所需要的信息
-     * @return int $uid,成功注册返回用户id，否则返回0
+     * @return $userid | false
      */
     public function regist($username, $passwd, $phone, $inviter = ''){
         $objLogin         = new User_Object_Login();
         $objLogin->name   = $username;
         $objLogin->passwd = $passwd;
         $objLogin->phone  = $phone;
-        $ret1             = $objLogin->save();
 
-        if(!$ret1){
-            return 0;
+        $ret = $objLogin->save();
+        if(!$ret){
+            return false;
         }
 
-        $objInfo           = new User_Object_Info();
-        $objInfo->userid   = $objLogin->userid;
+        $objInfo         = new User_Object_Info();
+        $objInfo->userid = $objLogin->userid;
         //个人用户
         $objInfo->usertype = 1;
         $objInfo->save();
 
-        //TODO:绑定第三方账户的注册
-        $openid   = Yaf_Session::get(User_Keys::getOpenidKey());
-        $authtype = Yaf_Session::get(User_Keys::getAuthTypeKey());
-
-        //邀请通知
-        //TODO:获取inviterid
-        // Awards_Api::registNotify($objLogin->userid, $inviterid);
         return $objLogin->userid;
     }
     

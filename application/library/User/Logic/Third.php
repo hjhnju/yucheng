@@ -12,19 +12,19 @@ class User_Logic_Third {
 
     //第三方登录需要的配置信息
     protected static $arrConfig = array(
-        'auth_code_redirect_url'         => '/user/login/third',
-        'access_token_redirect_url'      => '/user/login/third',
-        'qq'                             => array(
-            'host'           => 'https://graph.qq.com',
-            'appid'          => '101177204',
-            'appkey'         => 'd3aed93ef6e8e009ca30dcd33eb12093',
-            'authcode_url'   => '/oauth2.0/authorize?response_type=code&client_id=',
-            'acctoken_url'   => '/oauth2.0/token?grant_type=authorization_code&client_id=',
-            'openid_url'     => '/oauth2.0/me?access_token=',
-            'getinfo_url'    => '/user/get_user_info?format=json&oauth_consumer_key=d3aed93ef6e8e009ca30dcd33eb12093&access_token=',
+        'auth_code_redirect_url'    => '/user/login/third',
+        'access_token_redirect_url' => '/user/login/third',
+        'qq'               => array(
+            'host'         => 'https://graph.qq.com',
+            'appid'        => '101177204',
+            'appkey'       => 'd3aed93ef6e8e009ca30dcd33eb12093',
+            'authcode_url' => '/oauth2.0/authorize?response_type=code&client_id=',
+            'acctoken_url' => '/oauth2.0/token?grant_type=authorization_code&client_id=',
+            'openid_url'   => '/oauth2.0/me?access_token=',
+            'getinfo_url'  => '/user/get_user_info',
         ),
-        'weibo'                          => array(),
-        'weixin'                         => array(),
+        'weibo'   => array(),
+        'weixin'  => array(),
     );
     
     private $userid;
@@ -75,42 +75,64 @@ class User_Logic_Third {
     /**
      * 第三方登陆
      * @param   $strAuthCode 授权code
-     * @return  User_Object $objUser
+     * @return  $openid || false
      */
-    public function login($strAuthCode){
-        if(empty($strAuthCode)){
+    public function login($authtype, $strAuthCode){
+        if(empty($authtype) || empty($strAuthCode)){
             return false;
         }
         
-        $accessToken = $this->getAccessToken($strAuthCode);
+        $accessToken = $this->getAccessToken($authtype, $strAuthCode);
         if(empty($accessToken)){
+            Base_Log::warn(array(
+                'msg' => 'cannot get access_token',
+                'code'=> $strAuthCode,
+            ));
             return false;
         }
 
-        $openid = $this->getOpenidByAccessToken($accessToken);
+        $openid = $this->getOpenidByAccessToken($authtype, $accessToken);
         if(empty($openid)){
+            Base_Log::warn(array(
+                'msg' => 'cannot get openid',
+                'code'=> $accessToken,
+            ));
             return false;
         }
-
         //缓存access_token
-        Base_Redis::getInstance()->set(User_Keys::getAccessTokenKey($openid), $accessToken, 30*24*3600);
+        Base_Redis::getInstance()->set(User_Keys::getAccessTokenKey($authtype, $openid), $accessToken, 30*24*3600);
 
-        //保存openid
-        Yaf_Session::getInstance()->set(User_Keys::getOpenidKey(), $openid);
+        return $openid;
+    }
 
+    /**
+     * 获取绑定的userid
+     * @param string $openid
+     * @param string $authtype, qq|weibo|weixin
+     * @return $userid || false
+     */
+    public function getBindUserid($openid, $authtype){
         $objThird = new User_Object_Third();
         $objThird->fetch(array(
             'openid'   => $openid,
-            'authtype' => $this->getAuthType($strType))
-        );
-
-        if(empty($objThird->userid)){
-            return false;
-        }   
-        $objUser = new User_Object($objThird->userid);
-
-        return $objUser;
+            'authtype' => $this->getAuthType($authtype),
+        ));
+        return isset($objThird->userid) ? $objThird->userid : false;
     }
+
+    public function getUserNickname($openid, $authtype){
+        $accessToken = Base_Redis::getInstance()->get(User_Keys::getAccessTokenKey($authtype, $openid));
+        if(empty($accessToken)){
+            Base_Log::warn(array(
+                'msg'    => 'access_token not exists in redis',
+                'openid' => $openid,
+            ));
+            return false;
+        }
+        $objThird = $this->getUserInfo($accessToken, $openid, $authtype);
+        return isset($objThird->nickname) ? $objThird->nickname : false;
+    }
+
 
      /**
      * 根据$intType类型获取auth code
@@ -120,27 +142,56 @@ class User_Logic_Third {
     public function getAuthCodeUrl($strType){
 
         $redirectUrl  = Base_Config::getConfig('web')->root . self::$arrConfig['auth_code_redirect_url'];
-        $arrData      = self::$arrConfig[$strType];
-        $host         = $arrData['host'];
-        $randnum      = md5(uniqid(rand(), TRUE));
+        $arrData = self::$arrConfig[$strType];
+        $host    = $arrData['host'];
+        $randnum = md5(uniqid(rand(), TRUE));
         Yaf_Session::getInstance()->set("state", $randnum);
-        $url          = $arrData['authcode_url'] . $arrData['appid'] . "&redirect_uri="
-            . $redirectUrl . "&scope=get_user_info&state=" . $randnum;
+        $url     = $arrData['authcode_url'] . $arrData['appid'] . "&redirect_uri=" . $redirectUrl . "&scope=get_user_info&state=" . $randnum;
         if(empty($host)||empty($url))  {
             return false;
         }
         return $host . $url;
     }
-    
+        
+    /**
+     * 第三方账号绑定
+     * @param unknown $openid
+     * @param unknown $authtype
+     * @param unknown $userid
+     * 成功返回true,失败返回false
+     */
+    public function binding($userid, $openid, $authtype){
+
+        $objThird           = new User_Object_Third();
+        $objLogin->userid   = intval($userid); 
+        $objThird->authtype = $this->getAuthType($authtype);
+        $objThird->openid   = $openid;
+
+        $accessToken = Base_Redis::getInstance()->get(User_Keys::getAccessTokenKey($authtype, $openid));
+        if(empty($accessToken)){
+            Base_Log::warn(array('msg'=>'No access_token in redis',
+                'userid'=>$userid, 'openid'=>$openid, 'authtype'=>$authtype));
+            return false;
+        }
+        $thirdUser   = $this->getUserInfo($accessToken, $openid, $authtype);
+        $objThird->nickname = $thirdUser->nickname;
+        $ret = $objThird->save();
+        if(!$ret){
+            Base_Log::warn(array('msg'=>'save objThrid failed',
+                'userid'=>$userid, 'openid'=>$openid, 'authtype'=>$authtype));
+            return false;
+        }
+        return true;
+    }
+   
     /**
      * 获取access token
      */
-    protected function getAccessToken($strAuthCode){
-        $strType      = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());     
-        $redirect_url = Base_Config::getConfig('web')->root . self::$arrConfig['access_token_redirect_url'];
-        $arrData      = self::$arrConfig[$strType];
-        $host         = $arrData['host'];
-        $url          = $arrData['acctoken_url'].$arrData['appid']."&client_secret=".$arrData['appkey']."&code=$strAuthCode"."&redirect_uri=".$redirect_url;
+    private function getAccessToken($strType, $strAuthCode){
+        $redirectUri = Base_Config::getConfig('web')->root . self::$arrConfig['access_token_redirect_url'];
+        $arrData     = self::$arrConfig[$strType];
+        $host        = $arrData['host'];
+        $url         = $arrData['acctoken_url'].$arrData['appid']."&client_secret=".$arrData['appkey']."&code=$strAuthCode"."&redirect_uri=".$redirectUri;
         $post         = Base_Network_Http::instance()->url($host, $url);
 
         $accessToken  = '';
@@ -167,86 +218,50 @@ class User_Logic_Third {
     /**
      * 获取open id
      */
-    protected function getOpenidByAccessToken($accessToken){
-        $strType      = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
-        $redirectUrl  = self::$arrConfig['access_token_url'];
-        $arrData      = self::$arrConfig[$strType];
-        $host         = $arrData['host'];
-        $redirectUrl  = $arrData['openid_url'] . $accessToken;
-        $post         = Base_Network_Http::instance()->url($host, $redirectUrl);
-        $response     = $post->exec();
-        if (strpos($response, "callback") !== false){
-            return 0;
+    private function getOpenidByAccessToken($strType, $accessToken){
+        $arrData   = self::$arrConfig[$strType];
+        $host      = $arrData['host'];
+        $openidUrl = $arrData['openid_url'] . $accessToken;
+        $post      = Base_Network_Http::instance()->url($host, $openidUrl);
+        $response  = $post->exec();
+        //trim callback for jsonp
+        $response  = preg_replace("/[^{]*({.*})[^}]*/", "$1", $response);
+        $resp = json_decode($response);
+        
+        Base_Log::debug(array('resp'=>$resp));
+        if (isset($resp->error)){
+            return false;
         }
-        $user = json_decode($response);
-        if (isset($user->error)){
-            return 0;
-        }
-        return $user->openid;
+        return $resp->openid;
     }
     
     /**
      * 获取第三方站点信息, 如果为空返回NULL,否则返回user的json对象
      * 失败返回空串
      */
-    protected function getUserThirdInfo($accessToken, $openid){
-        $strType      = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
-        
-        $arrData      = self::$arrConfig[$strType];
-        $host         = $arrData['host'];
-        $redirect_url = $arrData['getinfo_url'] . $accessToken . 'openid=' . $openid;
-        $post         = Base_Network_Http::instance()->url($host,$redirect_url);
-        $response     = $post->exec();
-        $user         = json_decode($response);
-        if (!isset($user->nickname)){
+    private function getUserInfo($accessToken, $openid, $authtype){
+
+        //redis先取，否则api取
+        $arrData = self::$arrConfig[$authtype];
+        $host    = $arrData['host'];
+        $infoUrl = $arrData['getinfo_url'] . '?' . http_build_query(array(
+            'oauth_consumer_key' => $arrData['appid'],
+            'access_token' => $accessToken,
+            'openid' => $openid, 
+        ));
+        $post     = Base_Network_Http::instance()->url($host, $infoUrl);
+        $response = $post->exec();
+        $resp     = json_decode($response);
+        Base_Log::debug(array(
+            'response' => $response,
+            'infourl' => $infoUrl,
+        ));
+        if (!isset($resp->nickname)){
             return null;
         }
-        return $user;
+        return $resp;
     }
-    
-    /**
-     * 检查第三方的绑定状态
-     * @param unknown $openid
-     * @param unknown $intType
-     * 绑定返回true,没绑定返回false
-     */
-    protected function getBindUser($openid, $strType){
-        $objThird = new User_Object_Third();
-        $objThird->fetch(array('openid'=>$openid,
-            'authtype'=>$this->getAuthType($strType)));
-        if(empty($objThird->userid)){
-            return false;
-        }   
-        return new User_Object($objThird->userid);
-    }
-    
-    /**
-     * 设置第三方绑定状态
-     * @param unknown $openid
-     * @param unknown $type
-     * @param unknown $strName
-     * @param unknown $strPasswd
-     * 成功返回true,失败返回false
-     */
-    public function setBind($openid, $type,$strName,$strPasswd){
-        $objLogin         = new User_Object_Login();
-        $objLogin->fetch(array($this->checkType($strName)=>$strName,'passwd'=>md5($strPasswd)));
-        if(empty($objLogin->userid)){
-            return false;
-        }
-        $this->setLogin($objLogin);
-        $objThird           = new User_Object_Third();
-        $objThird->authtype = $this->getAuthType($type);
-        $objLogin->userid   = $objLogin->userid;
-        $objThird->nickname = $this->getUserThirdInfo($openid);
-        $objThird->openid   = $openid;
-        $ret = $objThird->save();
-        if($ret){
-            return true;
-        }
-        return false;
-    }
-
+      
     /**
      * @param  $authtype = 'weibo', 'qq', 'weixin'
      * @return intType

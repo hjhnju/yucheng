@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/ao_men_geo', function () {
+define('echarts/util/mapData/geoJson/ao_men_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [{

@@ -1,4 +1,15 @@
-define('echarts/component/timeline', function (require) {
+define('echarts/component/timeline', [
+    'require',
+    './base',
+    'zrender/shape/Rectangle',
+    '../util/shape/Icon',
+    '../util/shape/Chain',
+    '../config',
+    'zrender/tool/util',
+    'zrender/tool/area',
+    'zrender/tool/event',
+    '../component'
+], function (require) {
     var Base = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');
     var IconShape = require('../util/shape/Icon');
