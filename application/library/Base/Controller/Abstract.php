@@ -27,10 +27,9 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
     public function init(){
 
         $this->webroot = Base_Config::getConfig('web')->root;
-
         $this->baselog();
-
         $this->objUser = User_Api::checkLogin();
+
         //未登录自动跳转
         if($this->needLogin && empty($this->objUser)){
             $u        = isset($_REQUEST['HTTP_REFERER']) ? $_REQUEST['HTTP_REFERER'] : null;
@@ -38,12 +37,19 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
             if(!empty($u)){
                 $loginUrl = $loginUrl . '?' . http_build_query(array('u'=>$u));
             }
-            //jump
             if($this->isAjax()){
-                $this->ajaxJump($loginUrl);
+                return $this->ajaxJump($loginUrl);
             }else{
-                $this->redirect($loginUrl);
+                return $this->redirect($loginUrl);
             }
+        }
+        
+        //为页面统一assign用户信息
+        if(!$this->isAjax() && !empty($this->objUser)){
+            $user = array(
+                'username' =>  $this->objUser->name,
+            );
+            $this->getView()->assign('user', $user);
         }
     }
 

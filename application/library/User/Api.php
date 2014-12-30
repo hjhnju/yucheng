@@ -146,12 +146,14 @@ class User_Api{
      * @param $strImageCode:图片验证码
      * @param $strType:类型
      */
-    public static function checkAuthImage($strImageCode,$strType){
-        $strId = session_id().$strType;
-        $storedImageCode = Base_Redis::getInstance()->get($strId);
-        if(strtolower($storedImageCode) == strtolower($strImageCode)){
-            return true;
-        }
-        return false;
+    public static function checkImageCode($strImageCode, $strType){
+        $logic = new User_Logic_ImageCode();
+        $bolRet= $logic->checkCode($strType, $strImageCode);
+        Base_Log::notice(array(
+            'bolRet' => $bolRet,
+            'code'=>$strImageCode, 
+            'type' => $strType
+        ));
+        return $bolRet;
     }
 }

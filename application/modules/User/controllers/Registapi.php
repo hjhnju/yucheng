@@ -186,6 +186,7 @@ class RegistApiController extends Base_Controller_Api{
         }
        
         Base_Log::notice($_REQUEST);
+        //return $this->ajaxJump('/user/open');
         return $this->ajax();
     }
 }
