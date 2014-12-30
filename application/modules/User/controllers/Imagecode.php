@@ -1,5 +1,10 @@
 <?php
-class ImageCodeController extends Base_Controller_Api {
+class ImagecodeController extends Base_Controller_Api {
+
+    public function init(){
+        $this->setNeedLogin(false);
+        parent::init();
+    }
 
     /**
      * /user/imagecode/getimage?type=

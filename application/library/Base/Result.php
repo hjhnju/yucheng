@@ -1,62 +1,32 @@
 <?php 
-
 /**
- * 统一返回格式---简单格式
- * @format [retcode,retmsg,result]
+ * 统一返回格式
+ * @format [status,statusInfo,data]
  *
  */
 class Base_Result{
     
-    protected $_intRetCode = 0;
-    protected $_strRetMsg = '';
-    protected $_mixResult = null;
+    public $status;
 
-    public function getRetCode() {
-        return $this->_intRetCode;
-    }
-    
-    /**
-     * @param intRetCode int
-     * @param strRetMsg string|null
-     * @return Base_Result
-     */
-    public function setRetCode($intRetCode,$strRetMsg = null){
-        if($strRetMsg === null){
-            $this->_strRetMsg = Logic_Retcode::getMsg($intRetCode);
-        }else{
-            $this->_strRetMsg = $strRetMsg;
-        }
-        
-        $this->_intRetCode = $intRetCode;
+    public $statusInfo;
 
-        return $this;
-    }
-    
-    public function setRetMsg($strErrMsg){
-        $this->_strRetMsg = $strErrMsg;
-    }
+    public $data;
 
-    public function getRetMsg() {
-        if (empty($this->_strRetMsg)) {
-            $this->_strRetMsg = Logic_Retcode::getMsg($this->_intRetCode);
-        }
-        return $this->_strRetMsg;
-    }
-    
-    public function setResult($mixResut){
-        $this->_mixResult = $mixResut;
-    }
+    public function __construct($status = Base_RetCode::SUCCESS, $data = null,
+        $statusInfo = ''){
 
-    public function getResult() {
-        return $this->_mixResult;
+        $this->data       = $data;
+        $this->status     = $status;
+        $this->statusInfo = $statusInfo; 
     }
-    
+   
     public function format(){
         return array(
-            'retcode' => $this->_intRetCode,
-            'retmsg'  => $this->_strRetMsg,
-            'result'  => $this->_mixResult,
+            'status'     => $this->status,
+            'statusInfo' => $this->statusInfo,
+            'data'       => $this->data,
         );
     }
 }
+
 

@@ -30,7 +30,6 @@ class User_Logic_Validate {
         }
         $pattern  = self::$_arrRegMap[$strType];
         $intNum   = preg_match($pattern, $value);
-        Base_Log::debug($intNum);
         return $intNum > 0 ? true : false; 
     }
 

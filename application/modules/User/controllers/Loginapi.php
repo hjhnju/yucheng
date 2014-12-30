@@ -2,7 +2,7 @@
 /**
  * 用户登录相关操作
  */
-class LoginApiController extends Base_Controller_Api{
+class LoginapiController extends Base_Controller_Api{
     
     public function init(){
         $this->setNeedLogin(false);
@@ -17,15 +17,13 @@ class LoginApiController extends Base_Controller_Api{
         $strName   = trim($_POST['name']);
         $strPasswd = trim($_POST['passwd']);
         $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
-        
         //检查错误次数
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
-        if(!$strCode && $intFails >= 3) {
+        if(empty($strCode) && $intFails >= 3) {
             return $this->ajaxError(
                 User_RetCode::NEED_PICTURE,
-                User_RetCode::getMsg(User_RetCode::NEED_PICTURE),
-                array('url' => Base_Config::getConfig('web')->root 
-                    . '/user/imagecode/getimage?type=login')
+                User_RetCode::getMsg(User_RetCode::NEED_PICTURE), array(
+                    'url' => $this->webroot . '/user/imagecode/getimage?type=login')
             );
         }
 
@@ -49,7 +47,7 @@ class LoginApiController extends Base_Controller_Api{
        
         //登陆
         $logic   = new User_Logic_Login();
-        $retCode = $logic->login($$strName,$strPasswd);
+        $retCode = $logic->login($strName, $strPasswd);
         if(User_RetCode::SUCCESS === $retCode) {
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
             // $this->ajaxJump($redirectUri);

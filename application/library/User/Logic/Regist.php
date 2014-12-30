@@ -24,7 +24,6 @@ class User_Logic_Regist{
         $objLogin->fetch(array('name'=>$strName));
 
         if(!empty($objLogin->name)) {
-        echo "empty checkname:" . User_RetCode::USERNAME_EXIST;
             return User_RetCode::USERNAME_EXIST;
         }
         return User_RetCode::SUCCESS;
@@ -54,20 +53,25 @@ class User_Logic_Regist{
     /**
      *
      * @param string $strPhone,手机号
-     * @return int,0表示手机存在，1表示手机不存在
+     * @return 标准json格式
      */
     public function checkInviter($strPhone){  
         //邀请人可为空      
-        if(!empty($strPhone) && !User_Logic_Validate::checkPhone($strPhone)){
-            return User_RetCode::USERPHONE_SYNTEX_ERROR;
+        if(empty($strPhone)){
+            return new Base_Result(User_RetCode::SUCCESS);
+        }
+        if(!User_Logic_Validate::checkPhone($strPhone)){
+            return new Base_Result(User_RetCode::PHONE_FORMAT_ERROR, null,
+                User_RetCode::getMsg(User_RetCode::PHONE_FORMAT_ERROR));
         }
 
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('phone'=>$strPhone));
         if(empty($objLogin->userid)) {
-            return User_RetCode::INVITER_NOT_EXIST;
+            return new Base_Result(User_RetCode::INVITER_NOT_EXIST, null,
+                User_RetCode::getMsg(User_RetCode::INVITER_NOT_EXIST));
         }
-        return User_RetCode::SUCCESS;
+        return new Base_Result(User_RetCode::SUCCESS, array('inviterid'=>$objLogin->userid));
     }
     
     /**
