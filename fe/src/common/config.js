@@ -62,6 +62,9 @@ define(function () {
         EDIT_CHPWD_SUBMITE: rootUrl
             + '/account/editapi/modifypwd',
         //+ '/test/account/edit/emailConfirm.json',
+        ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl
+        + '/account/award/receiveawards',
+        //+ '/test/account/award/receiveAwards.json',
         //EDIT_CHANGEPWD_SUBMIT:rootUrl
         //+ '/account/edit/chpwd',
         ////+ '/test/account/edit/chpwd.json',
