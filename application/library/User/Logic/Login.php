@@ -52,7 +52,7 @@ class User_Logic_Login {
      */
     public function login($strName, $strPasswd){
         $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('username'=>$strName));
+        $objLogin->fetch(array('name'=>$strName));
 
         $objRecord     = new User_Object_Record();
         $lastip        = Base_Util_Ip::getClientIp();

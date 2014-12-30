@@ -20,8 +20,10 @@ class RegistApiController extends Base_Controller_Api{
         $strName = trim($_REQUEST['name']);
         $logic   = new User_Logic_Regist();
         $retCode = $logic->checkName($strName);
+
+        Base_Log::notice(array('retCode'=>$retCode));
         if(User_RetCode::SUCCESS !== $retCode){
-            $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
+            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
         }
      
         return $this->ajax();
@@ -66,10 +68,10 @@ class RegistApiController extends Base_Controller_Api{
      * @param  string $vericode, 验证码 
      */
     public function checkSmsCodeAction(){
-        $strPhone    = trim($_REQUEST['phone']);
-        $strType     = trim($_REQUEST['type']);
-        $strVeriCode = trim($_REQUEST['vericode']);
-        $ret         = User_Api::checkSmsCode($strPhone, $strVeriCode, $strType);
+        $strPhone = trim($_REQUEST['phone']);
+        $strType  = trim($_REQUEST['type']);
+        $strCode  = trim($_REQUEST['vericode']);
+        $ret      = User_Api::checkSmsCode($strPhone, $strCode, $strType);
         $ret = true;//for test
         if(!$ret){
             return $this->ajaxError(User_RetCode::VERICODE_WRONG,
@@ -79,7 +81,7 @@ class RegistApiController extends Base_Controller_Api{
     }
     
     /** 
-    * 接口4: /user/regist/checkinviter
+    * 接口4: /user/registapi/checkinviter
     * 检查推荐人是否存在
     * @param string $inviter
     * @param string $token
@@ -88,12 +90,12 @@ class RegistApiController extends Base_Controller_Api{
     * status 1031:推荐人不存在
     */
     public function checkInviterAction(){
-        $inviter = trim($_REQUEST['inviter']);
+        $strInviter = trim($_REQUEST['inviter']);
 
         $logic   = new User_Logic_Regist();
-        $retCode = $logic->checkInviter($inviter);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode)); 
+        $objRet = $logic->checkInviter($strInviter);
+        if(User_RetCode::SUCCESS !== $objRet->status){
+            return $this->ajaxError($objRet->status, $objRet->statusInfo); 
         }
         return $this->ajax();
     }
@@ -105,7 +107,8 @@ class RegistApiController extends Base_Controller_Api{
     * @param string $passwd
     * @param string $phone
     * @param string $vericode
-    * @param string $inviter, option
+    * @param int $isthird, 0|1 是否第三方绑定注册
+    * @param string $inviter, 推荐人手机号
     * @return 标准Json格式
     * status 0:成功
     * status 1033:注册失败
@@ -113,17 +116,18 @@ class RegistApiController extends Base_Controller_Api{
     * 
     */
     public function indexAction(){
-        $strName    = trim($_REQUEST['name']);
-        $strPasswd  = md5(trim($_REQUEST['passwd']));
-        $strPhone   = trim($_REQUEST['phone']);
-        $strVeriCode= isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
-        $strInviter = isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
+        $strName   = trim($_REQUEST['name']);
+        $strPasswd = md5(trim($_REQUEST['passwd']));
+        $strPhone  = trim($_REQUEST['phone']);
+        $strCode   = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
+        $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
+        $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
 
         //各字段再验证过一遍
         $logic   = new User_Logic_Regist();
         $retCode = $logic->checkName($strName);
         if(User_RetCode::SUCCESS !== $retCode){
-            $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
+            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
         }
 
         $retCode = $logic->checkPhone($strPhone);
@@ -131,33 +135,56 @@ class RegistApiController extends Base_Controller_Api{
             return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));     
         }
 
-        $ret = User_Api::checkSmsCode($strPhone, $strVeriCode, $strType);
+        $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
+        $ret = true;//for test
         if(!$ret){
             return $this->ajaxError(User_RetCode::VERICODE_WRONG,
                 User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
         }
         
-        $retCode = $logic->checkInviter($strInviter);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode)); 
+        $objRet = $logic->checkInviter($strInviter);
+        if(User_RetCode::SUCCESS !== $objRet->status){
+            return $this->ajaxError($objRet->status, $objRet->statusInfo); 
         }
+        $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : false;
         
         //进行注册
-        $logic   = new User_Logic_Regist();
-        $retCode = $logic->regist($strName, $strPasswd, $strPhone);
-        if(User_RetCode::SUCCESS !== $retCode){  
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));   
+        $userid  = $logic->regist($strName, $strPasswd, $strPhone);
+        if(empty($userid)){  
+            return $this->ajaxError(User_RetCode::REGIST_FAIL,
+                User_RetCode::getMsg(User_RetCode::REGIST_FAIL));   
+        }
+
+        //登记邀请人
+        Base_Log::debug(array('userid'=>$userid, 'inviterid'=>$inviterid));
+        if($inviterid){
+            Awards_Api::registNotify($userid, $inviterid);
         }
 
         //进行绑定第三方账户
-        //TODO:
-        $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
-        $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
-
-        //邀请通知
-        //TODO:获取inviterid
-        //Awards_Api::registNotify($objLogin->userid, $inviterid);
-        
+        if($isThird > 0){
+            $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
+            $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
+            if(!empty($openid) && !empty($authtype)){
+                $logic    = new User_Logic_Third();
+                $bolRet   = $logic->binding($userid, $openid, $authtype);
+                if(!$bolRet){
+                    Base_Log::warn(array(
+                        'openid' => $openid,
+                        'authtype' => $authtype,
+                    ));
+                    return $this->ajaxError(User_RetCode::BINDING_FAIL,
+                        User_RetCode::getMsg(User_RetCode::BINDING_FAIL));
+                }
+    
+                Base_Log::notice(array(
+                    'msg'    => 'binding success',
+                    'openid' => $openid,
+                    'authtype' => $authtype,
+                ));
+            }
+        }
+       
         Base_Log::notice($_REQUEST);
         return $this->ajax();
     }

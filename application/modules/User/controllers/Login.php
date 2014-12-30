@@ -20,14 +20,19 @@ class LoginController extends Base_Controller_Page{
   
     /**
      * 第三方登录跳转中间页
-     * @param   $strType qq|weibo|weixin
-     * 点击QQ\Weibo icon
+     * @param string $type, qq|weibo|weixin
+     * 点击qq,weibo icon
      */
     public function authAction(){
         $strType = strtolower(trim($_REQUEST['type']));
+
+        //设置登陆类型qq|weibo|weixin
         Yaf_Session::getInstance()->set(User_Keys::getAuthTypeKey(), $strType);
-        $logic   = new User_Logic_Third();
-        $url     = $logic->getAuthCodeUrl($strType);
+
+        $logic = new User_Logic_Third();
+        $url   = $logic->getAuthCodeUrl($strType);
+
+        Base_Log::debug(array('authtype' => $strType));
         $this->redirect($url);
     }
 
@@ -47,27 +52,50 @@ class LoginController extends Base_Controller_Page{
      * @param string $state, rand num
      */
     public function thirdAction(){
-        if(!isset($_REQUEST['code'])){   //auth code
+        $state    = trim($_REQUEST['state']);
+        //TODO:check state
+        $strAuthCode  = trim($_REQUEST['code']);
+        if(empty($state) || empty($strAuthCode)){   //auth code
             return $this->ajaxError(User_RetCode::GET_AUTHCODE_FAIL,
                 User_RetCode::getMsg(User_RetCode::GET_AUTHCODE_FAIL));    
         }
 
-        $strType      = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
-        $state        = trim($_REQUEST['state']);
-        //TODO:check state
-        $strAuthCode  = trim($_REQUEST['code']);
+        //获取登陆类型qq|weibo|weixin
+        $strType = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
+        //授权登录并保存openid
+        $logic   = new User_Logic_Third();
+        $openid  = $logic->login($strType, $strAuthCode);
+        if(empty($openid)){
+            return $this->ajaxError(User_RetCode::GET_OPENID_FAIL,
+                User_RetCode::getMsg(User_RetCode::GET_OPENID_FAIL));
+        }
+        Yaf_Session::getInstance()->set(User_Keys::getOpenidKey(), $openid);
 
-        $logic        = new User_Logic_Third();
-        $objUser      = $logic->login($strAuthCode);
+        //是否已有绑定账号
+        $userid = $logic->getBindUserid($openid, $strType);
 
-        if(!empty($objUser)){
-            //用户登录成功并已经绑定账号
+        if(!empty($userid)){
+            //已绑定的用户登录成功
+            $objUser = new User_Object($userid);
+            $logic   = new User_Logic_Login();
             $logic->setLogin($objUser);
+            Base_Log::notice(array(
+                'msg'  => 'success',
+                'type' => $strType,
+                'code' => $strAuthCode,
+                'openid' => $openid,
+            ));
             $this->redirect('/account/overview');
         }else{
             //用户未绑定账号
             //session 中已存openid
+            Base_Log::notice(array(
+                'msg' => 'redirect to regist bind',
+                'type' => $strType,
+                'code' => $strAuthCode,
+                'openid' => $openid,
+            ));
             $this->redirect('/user/regist');
-        }       
+        }
     }
 }
