@@ -546,6 +546,11 @@ class Base_Log {
         $strParams = self::EMPTYFILED;
 
         if (is_array($mixMsg)) {
+            foreach ($mixMsg as $key => $value) {
+                if(is_null($mixMsg[$key])){
+                    $mixMsg[$key] = '-';
+                }
+            }
             $strParams = http_build_query($mixMsg, 'param_');
             $strParams = urldecode($strParams);
         } elseif (is_string($mixMsg)) {
