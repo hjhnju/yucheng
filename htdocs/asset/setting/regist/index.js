@@ -230,7 +230,7 @@ define('setting/regist/index', [
             if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {
-                window.location.href = '/account/overview/index';
+                window.location.href = '/user/open/index';
             }
         });
     }
