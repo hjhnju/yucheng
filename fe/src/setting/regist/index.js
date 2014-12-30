@@ -63,7 +63,10 @@ define(function (require) {
         tui: 'loginTuiJian'
     };
 
-    function init() {
+    var isthird;
+
+    function init(third) {
+        isthird = third ? 1 : 0;
         header.init();
         picScroll.init();
         bindEvents();
@@ -195,9 +198,7 @@ define(function (require) {
             if (value) {
                 checkInviter.remote({
                     inviter: value
-
                 });
-                return;
             }
 
         });
@@ -227,7 +228,8 @@ define(function (require) {
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
                 inviter: loginInput.loginTuiJian.val(),
-                vericode: loginInput.loginTest.val()
+                vericode: loginInput.loginTest.val(),
+                isthird: isthird
             });
 
         });

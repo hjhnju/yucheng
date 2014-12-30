@@ -9,20 +9,17 @@ define(function (require) {
 
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
+    var config = require('common/config');
     var emailConfirm = new Remoter('EDIT_EMAILCONFIRM');
-    var getSmscode = new Remoter('LOGIN_IMGCODE_ADD');
+
     var etpl = require('etpl');
     var tpl = require('./email.tpl');
     var emailVal;
-
+    var IMGURL = config.URL.IMG_GET + 'email';
 
     function init (){
         changeEmail();
         etpl.compile(tpl);
-
-        getSmscode.remote({
-            type: 4
-        });
 
     }
 
@@ -46,9 +43,7 @@ define(function (require) {
 
         // 点击刷新验证码
         $('#email-img').click(function () {
-            getSmscode.remote({
-                type: 4
-            })
+            $(this).attr('src', IMGURL);
         });
 
         // getSmscodeCb

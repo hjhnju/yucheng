@@ -22,6 +22,8 @@ define(function () {
      * @type {Object}
      */
     var URL = {
+        IMG_GET: rootUrl
+            + '/user/imagecode/getimage?type=',
         REGIST_CHECKNAME_CHECK: rootUrl
             + '/user/registapi/checkname',
 //            + '/test/user/registapi/checkname.json',

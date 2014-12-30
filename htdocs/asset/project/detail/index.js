@@ -1,12 +1,4 @@
-define('project/detail/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './detail.tpl',
-    'moment',
-    'common/ui/Pager/Pager'
-], function (require) {
+define('project/detail/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var start = new Remoter('INVEST_DETAIL_START');

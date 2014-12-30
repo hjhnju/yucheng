@@ -1,9 +1,4 @@
-define('my/topup/index', [
-    'require',
-    'jquery',
-    'common/header',
-    'common/Remoter'
-], function (require) {
+define('my/topup/index', function (require) {
     var $ = require('jquery');
     var header = require('common/header');
     var Remoter = require('common/Remoter');

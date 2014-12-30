@@ -1,10 +1,4 @@
-define('setting/chpassword/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './chpassword.tpl'
-], function (require) {
+define('setting/chpassword/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var chpwdSubmite = new Remoter('EDIT_CHPWD_SUBMITE');

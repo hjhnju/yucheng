@@ -1,17 +1,12 @@
-define('setting/login/index', [
-    'require',
-    'jquery',
-    '../common/picScroll',
-    'common/header',
-    'common/Remoter'
-], function (require) {
+define('setting/login/index', function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
+    var config = require('common/config');
     var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
     var imgcodeCheck = new Remoter('LOGIN_IMGCODE_CHECK');
-    var imgcodeGet = new Remoter('LOGIN_IMGCODE_ADD');
+    var IMGURL = config.URL.IMG_GET + 'login';
     var loginError = $('#login-error');
     var imgUrl = $('#login-img-url');
     function init() {
@@ -48,7 +43,7 @@ define('setting/login/index', [
         });
         imgUrl.click(function (e) {
             e.preventDefault();
-            imgcodeGet.remote({ type: 2 });
+            $(this).attr('src', IMGURL);
         });
         $('.login .login-fastlogin').click(function (e) {
             e.preventDefault();
@@ -74,13 +69,6 @@ define('setting/login/index', [
                 $('#login-error').html(data.statusInfo);
             } else {
                 window.location.href = '/account/overview/index';
-            }
-        });
-        imgcodeGet.on('success', function (data) {
-            if (data.bizError) {
-                alert(data.statusInfo);
-            } else {
-                imgUrl.attr('src', data.url);
             }
         });
         imgcodeCheck.on('success', function (data) {

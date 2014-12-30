@@ -7,7 +7,7 @@
 {%block name="script"%}
 <script>
     require(['setting/regist/index', 'setting/login/index'], function (regist, login) {
-        regist.init();
+        regist.init('{%$type%}');
         // login.init();
     });
 </script>

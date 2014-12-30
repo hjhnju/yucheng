@@ -109,7 +109,8 @@ exports.getLocations = function () {
                     '/account/overview/profitCurve',
                     '/account/award/receiveawards',
                     '/msg/list',
-                    '/msg/read'
+                    '/msg/read',
+                    '/user/imagecode/getimage'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;

@@ -11,9 +11,11 @@ define(function (require) {
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
+    var config = require('common/config');
     var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
     var imgcodeCheck = new Remoter('LOGIN_IMGCODE_CHECK');
-    var imgcodeGet = new Remoter('LOGIN_IMGCODE_ADD');
+
+    var IMGURL = config.URL.IMG_GET + 'login';
 
     var loginError = $('#login-error');
     var imgUrl = $('#login-img-url');
@@ -62,9 +64,7 @@ define(function (require) {
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
-            imgcodeGet.remote({
-                type: 2
-            });
+            $(this).attr('src', IMGURL);
         });
 
         // 登录按钮
@@ -99,16 +99,6 @@ define(function (require) {
             }
             else {
                 window.location.href = '/account/overview/index';
-            }
-        });
-
-        // imgcodeGetCb
-        imgcodeGet.on('success', function (data) {
-            if (data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-                imgUrl.attr('src', data.url);
             }
         });
 
