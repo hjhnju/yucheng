@@ -19,7 +19,8 @@ exports.getProcessors = function () {
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
-            'src/setting/email/index.less'
+            'src/setting/email/index.less',
+            'src/setting/select3rd/index.less'
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -34,7 +35,8 @@ exports.getProcessors = function () {
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
-            'src/setting/email/index.less'
+            'src/setting/email/index.less',
+            'src/setting/select3rd/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -50,7 +52,8 @@ exports.getProcessors = function () {
             'src/project/list/index.js',
             'src/setting/chpassword/index.js',
             'src/setting/phone/index.js',
-            'src/setting/email/index.js'
+            'src/setting/email/index.js',
+            'src/setting/select3rd/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

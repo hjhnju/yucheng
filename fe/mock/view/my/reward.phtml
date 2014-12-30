@@ -1,0 +1,100 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/my/reward/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/reward/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='common/nav.phtml' current="1"%}
+        <div class="finish-main">
+            <div class="finish-main-title">好友邀请奖励计划</div>
+            <div class="reward">
+                <div class="reward-rule">
+                    <div class="reward-rule-title">奖励规则:</div>
+                    <div class="reward-rule-main">
+                        <div class="reward-main-list">
+                            <span class="round-span">•</span>
+                            新注册兴教贷的用户,累计投资10000元即可获得
+                            <span class="rule-spam">30元</span>现金奖励
+                        </div>
+                        <div class="reward-main-list">
+                            <span class="round-span">•</span>
+                            邀请一位好友注册成功,好友累计投资满10000元,邀请人即可获得
+                            <span class="rule-spam">20元</span>现金奖励
+                        </div>
+                        <div class="reward-main-list">
+                            <span class="round-span">•</span>
+                            邀请好友人数不设上限,获得奖励可以累加
+                        </div>
+                        <div class="reward-main-list">
+                            <span class="round-span">•</span>
+                            活动时间将从2015年1月15日开始
+                        </div>
+                        <div class="reward-main-list">
+                            <span class="round-span">•</span>
+                            本活动最终解释权归兴教贷所有,活动如有修改,请以当前页面显示的内容为准
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="reward-type">
+                    <div class="reward-type-box">
+                        <div class="reward-type-box-title number-one">邀请方式一：(手机就是您的邀请号)</div>
+                        <div class="reward-type-box-text">让好友注册时填入您的手机号：{%$userphone%}</div>
+                        <div class="reward-type-box-text">或使用您的专属注册链接:
+                            <a class="reward-type-link-http" href="{%$userurl%}">{%$userurl%}</a>
+                            <span class="reward-type-link-span">复制给好友</span>
+                        </div>
+                    </div>
+                    <div class="reward-type-box">
+                        <div class="reward-type-box-title number-two">邀请方式二：(微信朋友圈分享)</div>
+                        <div class="erweima"></div>
+                        <div class="reward-type-two-text">打开微信扫一扫~~</div>
+                        <div class="reward-type-two-text">快乐分享，于好友一起赚钱去~~</div>
+                    </div>
+                </div>
+                <div class="reward-item">
+                    <table class="reward-item-table" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th class="text-align">好友</th>
+                            <th>注册进度</th>
+                            <th>投资满额</th>
+                            <th>领取奖励</th>
+                        </tr>
+                        {%foreach $inviterinfo as $key => $item%}
+                        <tr>
+                            <td class="text-align">{%$item.name%}{%$item.phone%}</td>
+                            <td>
+                                {%if $item.registprogress == 1%}已开通资金托管
+                                {%else%}未开通资金托管
+                                {%/if%}
+                            </td>
+                            <td><div class="jindu"><div class="within" style="width: {%$item.tenderAmount%}%;"></div></div></td>
+                            <td>
+                                {%if $item.canBeAwarded%}
+                                <span class="table-tr-span" data-id="{%$item.id%}">点击领取{%$item.award%}元</span>
+                                {%else%}
+                                <span class="table-tr-span current">点击领取{%$item.award%}元</span>
+                                {%/if%}
+                            </td>
+                        </tr>
+                        {%/foreach%}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}
