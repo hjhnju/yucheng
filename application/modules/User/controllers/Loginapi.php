@@ -15,7 +15,7 @@ class LoginapiController extends Base_Controller_Api{
      */    
     public function indexAction(){
         $strName   = trim($_POST['name']);
-        $strPasswd = trim($_POST['passwd']);
+        $strPasswd = md5(trim($_POST['passwd']));
         $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
         //检查错误次数
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
@@ -41,23 +41,30 @@ class LoginapiController extends Base_Controller_Api{
             $intFails = intval($intFails) + 1;
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), $intFails);
     
-            return $this->ajaxError(User_RetCode::USER_NAME_NOTEXIT,
-                User_RetCode::getMsg(User_RetCode::USER_NAME_NOTEXIT));
+            return $this->ajaxError(User_RetCode::USERNAME_SYNTEX_ERROR,
+                User_RetCode::getMsg(User_RetCode::USERNAME_SYNTEX_ERROR)
+            );
         }
        
         //登陆
         $logic   = new User_Logic_Login();
         $retCode = $logic->login($strName, $strPasswd);
-        if(User_RetCode::SUCCESS === $retCode) {
-            Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
-            // $this->ajaxJump($redirectUri);
-            $this->ajax();
-        }else{
+        if(User_RetCode::SUCCESS !== $retCode) {
             $intFails = intval($intFails) + 1;
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), $intFails);
 
-            $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
+            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
         }
+
+        Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
+        // $this->ajaxJump($redirectUri);
+        Base_Log::notice(array(
+            'msg'   => 'login success',
+            'name'  => $name,
+            'useid' => $userid,
+        ));
+        $this->ajax();
+ 
     }
     
 }
