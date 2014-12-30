@@ -1,4 +1,10 @@
-define('zrender/Group', function (require) {
+define('zrender/Group', [
+    'require',
+    './tool/guid',
+    './tool/util',
+    './mixin/Transformable',
+    './mixin/Eventful'
+], function (require) {
     var guid = require('./tool/guid');
     var util = require('./tool/util');
     var Transformable = require('./mixin/Transformable');

@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/china_geo', function () {
+define('echarts/util/mapData/geoJson/china_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

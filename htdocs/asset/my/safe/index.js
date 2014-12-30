@@ -1,4 +1,9 @@
-define('my/safe/index', function (require) {
+define('my/safe/index', [
+    'require',
+    'jquery',
+    'common/header',
+    'common/Remoter'
+], function (require) {
     var $ = require('jquery');
     var header = require('common/header');
     var Remoter = require('common/Remoter');

@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/xin_jiang_geo', function () {
+define('echarts/util/mapData/geoJson/xin_jiang_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

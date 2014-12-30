@@ -1,4 +1,4 @@
-define('common/config', function () {
+define('common/config', [], function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             IMG_GET: rootUrl + '/user/imagecode/getimage?type=',
@@ -17,6 +17,7 @@ define('common/config', function () {
             EDIT_EMAILCONFIRM: rootUrl + '/account/editapi/newemail',
             EDIT_CHPWD_SUBMITE: rootUrl + '/account/editapi/modifypwd',
             ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl + '/account/award/receiveawards',
+            ACCOUNT_CASH_LIST: rootUrl + '/test/account/cash/list.json',
             LINE_GET: rootUrl + '/account/overview/profitCurve',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
             INVEST_LIST: rootUrl + '/invest/api',

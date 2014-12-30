@@ -1,4 +1,13 @@
-define('my/message/index', function (require) {
+define('my/message/index', [
+    'require',
+    'jquery',
+    'etpl',
+    'moment',
+    'common/data',
+    'common/ui/Pager/Pager',
+    'common/Remoter',
+    './list.tpl'
+], function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var moment = require('moment');
