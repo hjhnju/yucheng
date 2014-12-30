@@ -1,7 +1,4 @@
-define('echarts/util/coordinates', [
-    'require',
-    'zrender/tool/math'
-], function (require) {
+define('echarts/util/coordinates', function (require) {
     var zrMath = require('zrender/tool/math');
     function polar2cartesian(r, theta) {
         return [

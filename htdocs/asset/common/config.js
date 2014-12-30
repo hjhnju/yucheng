@@ -1,6 +1,7 @@
-define('common/config', [], function () {
+define('common/config', function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
+            IMG_GET: rootUrl + '/user/imagecode/getimage?type=',
             REGIST_CHECKNAME_CHECK: rootUrl + '/user/registapi/checkname',
             REGIST_CHECKPHONE_CHECK: rootUrl + '/user/registapi/checkphone',
             REGIST_SENDSMSCODE_CHECK: rootUrl + '/user/registapi/sendsmscode',

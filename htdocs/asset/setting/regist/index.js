@@ -1,10 +1,4 @@
-define('setting/regist/index', [
-    'require',
-    'jquery',
-    '../common/picScroll',
-    'common/header',
-    'common/Remoter'
-], function (require) {
+define('setting/regist/index', function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
@@ -45,7 +39,9 @@ define('setting/regist/index', [
             vericode: 'loginTest',
             tui: 'loginTuiJian'
         };
-    function init() {
+    var isthird;
+    function init(third) {
+        isthird = third ? 1 : 0;
         header.init();
         picScroll.init();
         bindEvents();
@@ -138,7 +134,6 @@ define('setting/regist/index', [
             var value = $.trim($(this).val());
             if (value) {
                 checkInviter.remote({ inviter: value });
-                return;
             }
         });
         $('.regist .login-fastlogin').click(function (e) {
@@ -161,7 +156,8 @@ define('setting/regist/index', [
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
                 inviter: loginInput.loginTuiJian.val(),
-                vericode: loginInput.loginTest.val()
+                vericode: loginInput.loginTest.val(),
+                isthird: isthird
             });
         });
     }
