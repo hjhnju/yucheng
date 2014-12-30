@@ -1,0 +1,30 @@
+{
+    "status": 0,
+    "statusInfo": "",
+    "data": {
+        "page": 1,
+        "pageall": 10,
+        "list":
+        [{
+            "time": 1231231231,
+            "transType": 1,
+            "serialNo": "9218734912873492873",
+            "tranAmt": "3,000",
+            "avalBg": "3,000"
+         },
+         {
+            "time": 1231231231,
+            "transType": 1,
+            "serialNo": "9218734912873492873",
+            "tranAmt": "3,000",
+            "avalBg": "3,000"
+        }]
+
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+<div class="finish-nav">
+    <div class="finish-nav-top">
+        <div class="finish-nav-top-user">Hi,{%$userinfo.username%}</div>
+        <div class="finish-top-icon">
+
+            <a href="{%$userinfo.realname.url%}" class="top-icon-link user {%if $userinfo.realname.isopen == 1%}current{%/if%}" title="实名认证"></a>
+            <a href="{%$userinfo.phone.url%}" class="top-icon-link phone {%if $userinfo.phone.isopen == 1%}current{%/if%}" title="手机绑定"></a>
+            <a href="{%$userinfo.huifu.url%}" class="top-icon-link other {%if $userinfo.huifu.isopen == 1%}current{%/if%}" title="第三方托管"></a>
+        </div>
+        <div class="finish-top-schedule">
+            <div class="top-schedule-internal" style="min-width: 10%;width: {%$userinfo.securedegree.score%}%;"></div>
+        </div>
+        <div class="finish-top-grade">
+            <span>安全等级</span>
+            <a href="{%$userinfo.securedegree.up%}" class="grade-high">
+                {%if $userinfo.securedegree.degree == 1%}
+                低
+                {%else if $userinfo.securedegree.degree == 2%}
+                中
+                {%else%}
+                高
+                {%/if%}
+            </a>
+            <a href="{%$userinfo.securedegree.up%}" class="grade-high">[提升]</a>
+        </div>
+    </div>
+    <ul class="finish-nav-item">
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/overview/index" class="finish-nav-item-link all {%if $current == '1'%}current{%/if%}">账户总览</a>
+        </li>
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/invest/index" class="finish-nav-item-link mymoney {%if $current == '2'%}current{%/if%}">我的投资</a>
+        </li>
+        <li class="finish-nav-item-list">
+            <a href="###" class="finish-nav-item-link pay {%if $current == '3'%}current{%/if%}">充值提现</a>
+        </li>
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/secure/index" class="finish-nav-item-link safe {%if $current == '4'%}current{%/if%}">安全中心</a>
+        </li>
+        <li class="finish-nav-item-list">
+            <a href="###" class="finish-nav-item-link jiangli {%if $current == '5'%}current{%/if%}">邀请奖励</a>
+        </li>
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/message/index" class="finish-nav-item-link mynews {%if $current == '6'%}current{%/if%}">我的消息</a>
+        </li>
+    </ul>
+</div>
