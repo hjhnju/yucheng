@@ -16,7 +16,10 @@ define(function (require) {
     var Pager = require('common/ui/Pager/Pager');
     var pager;
 
-
+    /**
+     * 初始化方法
+     * @param {string} id
+     */
     function init(id) {
 
         etpl.compile(tpl);
@@ -57,25 +60,25 @@ define(function (require) {
             }
         })
 
-
-
-
     }
-     function bindEvent() {
 
-         $('.showproject').click(function () {
-             $(this).closest('.project-main').attr('class', 'project-main project');
-         });
+    /**
+     * 绑定事件
+     */
+    function bindEvent() {
 
-         $('.showfile').click(function () {
-             $(this).closest('.project-main').attr('class', 'project-main file');
-         });
+        $('.showproject').click(function () {
+            $(this).closest('.project-main').attr('class', 'project-main project');
+        });
 
-         $('.showrecord').click(function () {
-             $(this).closest('.project-main').attr('class', 'project-main record');
-         });
-     }
+        $('.showfile').click(function () {
+            $(this).closest('.project-main').attr('class', 'project-main file');
+        });
 
+        $('.showrecord').click(function () {
+            $(this).closest('.project-main').attr('class', 'project-main record');
+        });
+    }
 
 
     return {
