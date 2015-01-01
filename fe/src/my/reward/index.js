@@ -7,7 +7,7 @@
 
 define(function (require) {
 
-    var $ = require('jquery');
+    var util = require('common/util');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
     var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
@@ -16,10 +16,7 @@ define(function (require) {
     function init() {
         header.init();
         bindEvent();
-        $('.reward-type-link-span').click(function () {
-            jscopy();
 
-        });
     }
 
     function bindEvent() {
@@ -33,7 +30,7 @@ define(function (require) {
 
             receiveAwards.remote({
                 id: $(this).attr('data-id')
-            })
+            });
         });
         //receiveAwardsCb
         receiveAwards.on('success', function (data) {
@@ -45,21 +42,26 @@ define(function (require) {
                 alert('领取成功');
             }
         });
+        
+        // 邀请奖励
+        $('.reward-type-link-span').zclip({
+            path: 'http://img.jb51.net/js/ZeroClipboard.swf',
+            copy: $.trim($('.reward-type-link-http').html()),
+            afterCopy: function() {
+                alert('复制成功');
+            }
+        });
 
+        // 生成二维码
+        var qrcode = new QRCode(
+            $('.erweima')[0], {
+                width: 126, //宽度
+                height: 126, //高度
+            }
+        );
+
+        qrcode.makeCode('www.baidu.com');
     }
-
-    function jscopy() {
-
-        //var content = $('.reward-type-link-http').innerHTML;
-        //
-        //window.clipboardData.setData("Text",content);
-
-        window.clipboardData.setData("Text",document.getElementsByTagName("reward-type-link-http").innerHTML);
-
-
-    }
-
-
 
     return {
         init:init

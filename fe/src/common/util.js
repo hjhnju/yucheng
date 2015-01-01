@@ -17,10 +17,57 @@ define(function () {
             return '0.00';
         }
         x = (x + '').split('.');
-        return x[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')
+        return x[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,')
             + (x.length > 1 ? ('.' + x[1]) : '');
     }
+
+    /**
+     * 复制到剪切板js代码
+     * @param {string} s 复制内容
+     */
+    function copyToClipBoard(s) {
+        //alert(s);
+        if (window.clipboardData) {
+            window.clipboardData.setData("Text", s);
+            alert("已经复制到剪切板！" + "\n" + s);
+        }
+        else if (navigator.userAgent.indexOf("Opera") != -1) {
+            window.location = s;
+        }
+        else if (window.netscape) {
+            try {
+                netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+            }
+            catch (e) {
+                alert("被浏览器拒绝！\n请在浏览器地址栏输入'about:config'并回车\n然后将'signed.applets.codebase_principal_support'设置为'true'");
+            }
+            var clip = Components.classes['@mozilla.org/widget/clipboard;1']
+                .createInstance(Components.interfaces.nsIClipboard);
+            if (!clip)
+                return;
+            var trans = Components.classes['@mozilla.org/widget/transferable;1']
+                .createInstance(Components.interfaces.nsITransferable);
+            if (!trans)
+                return;
+            trans.addDataFlavor('text/unicode');
+
+            // var str = new Object();
+            // var len = new Object();
+
+            var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+            var copytext = s;
+            str.data = copytext;
+            trans.setTransferData("text/unicode", str, copytext.length * 2);
+            var clipid = Components.interfaces.nsIClipboard;
+            if (!clip)
+                return false;
+            clip.setData(trans, null, clipid.kGlobalClipboard);
+            alert("已经复制到剪切板！" + "\n" + s);
+        }
+    }
+
     return {
-        addCommas: addCommas
+        addCommas: addCommas,
+        copyToClipBoard: copyToClipBoard
     };
 });
