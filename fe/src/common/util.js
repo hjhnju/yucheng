@@ -14,7 +14,7 @@ define(function () {
      */
     function addCommas(x) {
         if (isNaN(x)) {
-            return '-';
+            return '0.00';
         }
         x = (x + '').split('.');
         return x[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g,'$1,')

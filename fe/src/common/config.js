@@ -81,9 +81,8 @@ define(function () {
         INVEST_DETAIL_START: rootUrl
         //+ '/invest/list',
         + '/test/invest/list.json',
-        INVEST_DETAIL_CONFIRM: rootUrl
-            //+ '/account/edit/getvericode.json',
-        + '/test/invest/detail.json',
+        INVEST_DETAIL_CONFIRM_ADD: rootUrl
+            + '/invest/tender',
         MY_INVEST_GET: rootUrl
             + '/account/invest/backing',
             //+ '/test/account/invest/backing.json',

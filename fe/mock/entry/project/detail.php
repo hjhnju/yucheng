@@ -12,6 +12,12 @@ require('../../libs/Smarty.class.php');
 
 $smarty = new Smarty();
 
+$smarty->assign('user',
+    array(
+        'amount' => '100,000.00'
+    )
+);
+
 $smarty->assign('id', 'JK_201412181222');
 $smarty->assign('user_id', 1);
 $smarty->assign('title', '借点钱买车');
@@ -24,17 +30,19 @@ $smarty->assign('level', 1);
 $smarty->assign('amount', '200000.00');
 $smarty->assign('interest', '12');
 $smarty->assign('invest_cnt', 1000000);
+$smarty->assign('amount_rest', '200,000.00');
 $smarty->assign('invest_amount', 0.00);
 $smarty->assign('safe_id', 1);
 $smarty->assign('refund_type', 1);
 $smarty->assign('audit_info', '经过审核可以借');
-$smarty->assign('deadline', 1419312345);
+$smarty->assign('deadline', 1420291877);
 $smarty->assign('status', 1);
 $smarty->assign('create_time', 1419312345);
 $smarty->assign('update_time', 1419344538);
 $smarty->assign('create_uid', 1);
 $smarty->assign('full_time', '');
 $smarty->assign('pay_time', '');
+$smarty->assign('days', 365);
 $smarty->assign('loan_type', '实地认证标');
 $smarty->assign('loan_cat', '学校助力贷');
 $smarty->assign('duration_type', '个月');
