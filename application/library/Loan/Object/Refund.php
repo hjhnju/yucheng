@@ -26,26 +26,28 @@ class Loan_Object_Refund extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'period', 'capital', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'period', 'capital', 'capital_rest', 'capital_refund', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'id'          => 'id',
-        'loan_id'     => 'loanId',
-        'user_id'     => 'userId',
-        'period'      => 'period',
-        'capital'     => 'capital',
-        'interest'    => 'interest',
-        'amount'      => 'amount',
-        'late_charge' => 'lateCharge',
-        'promise_time'=> 'promiseTime',
-        'refund_time' => 'refundTime',
-        'status'      => 'status',
-        'create_time' => 'createTime',
-        'update_time' => 'updateTime',
+        'id'              => 'id',
+        'loan_id'         => 'loanId',
+        'user_id'         => 'userId',
+        'period'          => 'period',
+        'capital'         => 'capital',
+        'capital_rest'    => 'capitalRest',
+        'capital_refund'  => 'capitalRefund',
+        'interest'        => 'interest',
+        'amount'          => 'amount',
+        'late_charge'     => 'lateCharge',
+        'promise_time'    => 'promiseTime',
+        'refund_time'     => 'refundTime',
+        'status'          => 'status',
+        'create_time'     => 'createTime',
+        'update_time'     => 'updateTime',
     );
 
     /**
@@ -53,15 +55,15 @@ class Loan_Object_Refund extends Base_Object {
      * @var array
      */
     protected $intProps = array(
-        'id'          => 1,
-        'loan_id'     => 1,
-        'user_id'     => 1,
-        'period'      => 1,
-        'promise_time'=> 1,
-        'refund_time' => 1,
-        'status'      => 1,
-        'create_time' => 1,
-        'update_time' => 1,
+        'id'              => 1,
+        'loan_id'         => 1,
+        'user_id'         => 1,
+        'period'          => 1,
+        'promise_time'    => 1,
+        'refund_time'     => 1,
+        'status'          => 1,
+        'create_time'     => 1,
+        'update_time'     => 1,
     );
 
     /**
@@ -101,6 +103,18 @@ class Loan_Object_Refund extends Base_Object {
      * @var number
      */
     public $capital;
+
+    /**
+     * 剩余本金
+     * @var number
+     */
+    public $capitalRest;
+
+    /**
+     * 已还本金
+     * @var number
+     */
+    public $capitalRefund;
 
     /**
      * 利息

@@ -38,4 +38,13 @@ class Loan_List_Company extends Base_List {
         'update_time' => 1,
     );
 
+    /**
+     * 获取数据的对象数组
+     * @return array|Loan_Object_Company[]
+     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
+     */
+    public function getObjects() {
+        return parent::getObjects('Loan_Object_Company');
+    }
+
 }

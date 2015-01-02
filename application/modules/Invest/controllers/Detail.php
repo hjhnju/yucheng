@@ -1,6 +1,6 @@
 <?php
 /**
- * 投资列表
+ * 投资项目详情
  */
 class DetailController extends Base_Controller_Response {
 	
@@ -11,9 +11,12 @@ class DetailController extends Base_Controller_Response {
 	    }
 	    
 	    $loan = Loan_Api::getLoanDetail($id);
-	    $this->_view->assign('data', $loan);
-	    
 	    $uid = $this->getUserId();
+	    
+	    //检查是否允许投标
+	    $logic = new Invest_Logic_Invest();
+	    $loan['allow_invest'] = $logic->allowInvest($uid, $loan['id']);
+	    
 	    if (!empty($uid)) {
     	    $amount = Invest_Api::getAccountAmout($uid);
     	    $user = array(
@@ -23,5 +26,6 @@ class DetailController extends Base_Controller_Response {
     	    );
     	    $this->_view->assign('user', $user);
 	    }
+	    $this->_view->assign('data', $loan);
 	}
 }

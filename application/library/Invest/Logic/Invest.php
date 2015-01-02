@@ -84,6 +84,28 @@ class Invest_Logic_Invest {
     }
     
     /**
+     * 是否允许投标 如果命中某个限制策略 则不允许投标
+     * @param integer $uid
+     * @param integer $loan_id
+     * @return boolean
+     */
+    public function allowInvest($uid, $loan_id) {
+        $loan = Loan_Api::getLoanInfo($loan_id);
+        if ($loan['fresh'] == 0) {
+            return true;
+        }
+        
+        $fresh = new Invest_Object_Fresh();
+        $fresh->set('user_id', $uid);
+        $fresh->fetch();
+        
+        if (empty($fresh->id)) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * 获取登录用户ID
      * @return number
      */
