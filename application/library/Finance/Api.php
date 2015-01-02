@@ -1,16 +1,19 @@
 <?php
 /**
  * 财务模块封装汇付逻辑实现类
- * 
  * @author lilu
- *
  */
 class Finance_Api {
 	
+	CONST VERSION_10 = "10";
+	CONST VERSION_20 = "20";
+	
+	CONST MERCUSTID  = "6000060000677575";  
+
 	/**
 	 * 订单类型mapping
 	 */
-	Const PAY_TYPE = array(
+	private static $pay_type = array(
 		0 => 'netSave',//充值
 		1 => 'cash',//提现
 		2 => 'initiativeTender',//主动投标
@@ -21,12 +24,13 @@ class Finance_Api {
 	/**
 	 * 订单状态mapping
 	 */
-	Const STATUS = array(
+	private static $status = array(
 		0 => 'processing',//处理中
 		1 => 'endWithFail',//处理结束，失败
 		2 => 'endWithSuccedd'//处理结束，成功
 	);
 	
+
 	/**
 	 * 余额查询接口 Finance_Api::queryBalanceBg
 	 * @param String $UserCustId 用户客户号(require)
@@ -40,10 +44,27 @@ class Finance_Api {
      *    'acctBal' 账户余额         
      *    'frzBal' 冻结余额   
 	 * )
-	 * 
 	 */	
 	public static function queryBalanceBg($userCustId) {
-	
+		$webroot = Base_Config::getConfig('web')->root;
+		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
+		$method = "queryBalanceBg";
+		$cmd= '$result= $chinapnr->'.$method.'(';
+		$params = array();		
+		$params['usrCustId']   = $userCustId;
+		$params['merCustId']   = self::MERCUSTID;		
+		foreach ($params as $k => $v){
+			$cmd.= '"'.$v.'",';
+		}
+		$cmd= substr($cmd, 0, strlen($cmd)-1);
+		$cmd.=');';
+		//print ($cmd);die;
+		$result = eval($cmd);
+		$ret = array();
+		$ret['avlBal']  = $result['AvlBal'];
+		$ret['acctBal'] = $result['AcctBal'];
+		$ret['frzBal']  = $result['FrzBal'];
+	    return $ret;
 	}
 	
 	/**
@@ -286,8 +307,32 @@ class Finance_Api {
       *         'UsrName' 真实名称
       *       )
       */
-     public static function userRegister($userId='',$usrName='',$idType='',$idNo='',$usrMp='',$usrEmail=''){
-     
+     public static function userRegister($userId="", $usrName="", $idType="", $idNo="", $usrMp="", $usrEmail=""){
+     	 $webroot = Base_Config::getConfig('web')->root;
+     	 $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
+         $method = "userRegister";
+         $cmd= '$result= $chinapnr->'.$method.'(';
+         $params = array();
+         $params['merCustId']   = self::MERCUSTID;
+         $params['bgRetUrl']    = $webroot.'/finance/bgcall/userregist';
+         $params['retUrl']      = '';
+         $params['usrId']       = $userId;
+         $params['usrName']     = $usrName;
+         $params['idType']      = $idType;
+         $params['idNo']        = $idNo;
+         $params['$usrMp']      = $usrMp;
+         $params['usrEmail']    = $usrEmail;
+         $params['merPriv']     = "";
+         $params['charSet']     = "";
+
+         foreach ($params as $k => $v){
+         	$cmd.= '"'.$v.'",';
+         }
+         $cmd= substr($cmd, 0, strlen($cmd)-1);
+         $cmd.=');';
+        // print ($cmd);die;
+         $result = eval($cmd);         
+         print_r($result); 
      }
      
      /**
@@ -314,7 +359,25 @@ class Finance_Api {
       *      
       */
      public static function userBindCard($usrCustId){
-     
+     	 $webroot = Base_Config::getConfig('web')->root;
+     	 $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
+         $method = "userBindCard";
+         $cmd= '$result= $chinapnr->'.$method.'(';
+         $params = array();
+         $params['merCustId']   = self::MERCUSTID;
+         $params['usrCustId']   = "6000060000696947";
+         $params['bgRetUrl']   = $webroot.'/finance/bgcall/userbindcard';
+         $params['merPriv']    = "";
+
+         foreach ($params as $k => $v){
+         	$cmd.= '"'.$v.'",';
+         }
+         $cmd= substr($cmd, 0, strlen($cmd)-1);
+         $cmd.=');';
+         //print ($cmd);die;
+         $result = eval($cmd);         
+         print_r($result); 
+         
      }
      
      /**
@@ -430,5 +493,5 @@ class Finance_Api {
      	}
      	return $ret;
      	    	
-     }
+     }     
 }

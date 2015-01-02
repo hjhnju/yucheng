@@ -67,7 +67,7 @@ class User_Api{
     }
     
     /**
-     * 设置用户邮箱
+     * 设置用户手机
      * @param int $uid
      * @param string $strPhone
      * @return boolean

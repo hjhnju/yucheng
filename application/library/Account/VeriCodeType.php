@@ -4,11 +4,8 @@ class Account_VeriCodeType {
 	/**
 	 * 账户中心获取验证码的类型
 	 */	
-	CONST MODIFY_PHONE = 2;
-	CONST MODIFY_EMAIL = 3;
-	
-	CONST MODIFY_PHONE_SESSIONCODE = 'modifyPhoneSessionCode';
-	CONST MODIFY_EMAIL_SESSIONCODE = 'modifyEmailSessionCode';
+	CONST MODIFY_PHONE = 3;
+	CONST MODIFY_EMAIL = 4;
 	
 	/**
 	 * code映射
