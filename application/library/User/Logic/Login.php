@@ -42,6 +42,7 @@ class User_Logic_Login {
      */
     public function signOut(){
         $ret = Yaf_Session::getInstance()->del(User_Keys::getLoginUserKey());
+        //$obj = new User_Object_Record();  应该要做条记录
         return $ret;
     }
 
@@ -83,6 +84,7 @@ class User_Logic_Login {
 
         //正确保存
         $objLogin->lastip = $lastip;
+        $objLogin->loginTime = time();
         $objLogin->save();
         //保存正确纪录
         $objRecord->userid = $objLogin->userid;

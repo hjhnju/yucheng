@@ -60,8 +60,8 @@ class LoginapiController extends Base_Controller_Api{
         // $this->ajaxJump($redirectUri);
         Base_Log::notice(array(
             'msg'   => 'login success',
-            'name'  => $name,
-            'useid' => $userid,
+            'name'  => $strName,
+            'useid' => $logic->checkLogin()->userid,
         ));
         $this->ajax();
  
