@@ -51,18 +51,19 @@ class User_Object {
     }
 
     public function __get($name){
+        $test = $name;
         $name = strtolower($name);
         if(in_array($name, $this->loginProps)){
             if(!$this->loginObj){
                 $this->loginObj = new User_Object_Login($this->userid);
             }
-            return $this->loginObj->$name;
+            return $this->loginObj->$test;
         }
         if(in_array($name, $this->infoProps)){
             if(!$this->infoObj){
                 $this->infoObj = new User_Object_Info($this->userid);
             }
-            return $this->infoObj->$name;
+            return $this->infoObj->$test;
         }
 
         return null;

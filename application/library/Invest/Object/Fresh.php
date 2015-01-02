@@ -1,14 +1,14 @@
 <?php
 /**
- * 用户登录历史纪录表
+ * 新手标投资记录
  * @author jiangsongfang
  */
-class User_Object_Record extends Base_Object {
+class Invest_Object_Fresh extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'user_record';
+    protected $table = 'invest_fresh';
 
     /**
      * 主键
@@ -20,13 +20,13 @@ class User_Object_Record extends Base_Object {
      * 类名
      * @var string
      */
-    const CLASSNAME = 'User_Object_Record';
+    const CLASSNAME = 'Invest_Object_Fresh';
 
     /**
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'userid', 'status', 'ip', 'create_time');
+    protected $fields = array('id', 'user_id', 'loan_id', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -34,10 +34,11 @@ class User_Object_Record extends Base_Object {
      */
     public $properties = array(
         'id'          => 'id',
-        'userid'      => 'userid',
+        'user_id'     => 'userId',
+        'loan_id'     => 'loanId',
         'status'      => 'status',
-        'ip'          => 'ip',
         'create_time' => 'createTime',
+        'update_time' => 'updateTime',
     );
 
     /**
@@ -46,47 +47,55 @@ class User_Object_Record extends Base_Object {
      */
     protected $intProps = array(
         'id'          => 1,
-        'userid'      => 1,
+        'user_id'     => 1,
+        'loan_id'     => 1,
         'status'      => 1,
         'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
      * @param array $data
-     * @return User_Object_Record
+     * @return Invest_Object_Fresh
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);
     }
 
     /**
-     * 自增id
+     * ID
      * @var integer
      */
     public $id;
 
     /**
-     * 用户id
+     * 用户ID
      * @var integer
      */
-    public $userid;
+    public $userId;
 
     /**
-     * 登录状态
+     * 借款ID
+     * @var integer
+     */
+    public $loanId;
+
+    /**
+     * 
      * @var integer
      */
     public $status;
 
     /**
-     * IP
-     * @var string
-     */
-    public $ip;
-
-    /**
-     * 登录时间
+     * 创建时间
      * @var integer
      */
     public $createTime;
+
+    /**
+     * 更新时间
+     * @var integer
+     */
+    public $updateTime;
 
 }

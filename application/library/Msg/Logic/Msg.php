@@ -10,18 +10,28 @@ class Msg_Logic_Msg {
     }
     
     /**
-     * 消息未读数
-     * @param unknown $uid
-     * @return number
+     * 获取消息未读数
+     * @param string $uid
+     * @return number|0
      */
     public function getUnread($uid){
-        $objMsg = new Msg_List_Msg();
-        $num = $objMsg->countAll();
+        $objsMsg = new Msg_List_Msg();
+        $num = 0;
+        $objsMsg->setFilter(array('receiver'=>$uid));
+        $arrObj = $objsMsg->getObjects();
+        if(empty($arrObj)){
+            return $num;
+        }
+        foreach ($arrObj as $obj){
+            if(Msg_RetCode::MSG_UNREAD == $obj->status){
+                $num += 1;
+            }
+        }
         return $num;
     }
     
     /**
-     * 消息标记为已读
+     * 将消息标记为已读
      * @param  $mid
      */
     public function setRead($mid){
@@ -57,7 +67,14 @@ class Msg_Logic_Msg {
     public function getDetail($mid){
         $objMsg = new Msg_Object_Msg();
         $objMsg->fetch(array('mid'=>$mid));
-        return $objMsg;
+        if(empty($objMsg)){
+            return array();
+        }
+        $arrRet = array(
+            'title'   => $objMsg->title,
+        	'content' => $objMsg->content,
+        );
+        return $arrRet;
     }
     
     /**

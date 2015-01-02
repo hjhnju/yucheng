@@ -26,7 +26,7 @@ class Msg_Object_Msg extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('mid', 'sender', 'receiver', 'title', 'content', 'status', 'create_time', 'update_time', 'read_time');
+    protected $fields = array('mid', 'sender', 'receiver', 'title', 'type', 'content', 'status', 'create_time', 'update_time', 'read_time');
 
     /**
      * 字段与属性隐射关系
@@ -37,6 +37,7 @@ class Msg_Object_Msg extends Base_Object {
         'sender'      => 'sender',
         'receiver'    => 'receiver',
         'title'       => 'title',
+        'type'        => 'type',
         'content'     => 'content',
         'status'      => 'status',
         'create_time' => 'createTime',
@@ -91,13 +92,19 @@ class Msg_Object_Msg extends Base_Object {
     public $title;
 
     /**
+     * 消息类型
+     * @var string
+     */
+    public $type;
+
+    /**
      * 消息内容
      * @var string
      */
     public $content;
 
     /**
-     * 状态 0未读 1已读 -1删除
+     * 状态 1已读 2未读 -1删除
      * @var integer
      */
     public $status;

@@ -49,6 +49,7 @@ class User_Object_Third extends Base_Object {
         'id'          => 1,
         'userid'      => 1,
         'authtype'    => 1,
+        'create_time' => 1,
     );
 
     /**
@@ -91,7 +92,7 @@ class User_Object_Third extends Base_Object {
 
     /**
      * 绑定时间
-     * @var 
+     * @var integer
      */
     public $createTime;
 

@@ -1,14 +1,14 @@
 <?php
 /**
- * 借款的投标记录 列表类
+ * 新手标投资记录 列表类
  * @author jiangsongfang
  */
-class Invest_List_Invest extends Base_List {
+class Invest_List_Fresh extends Base_List {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'invest';
+    protected $table = 'invest_fresh';
 
     /**
      * 主键
@@ -20,7 +20,7 @@ class Invest_List_Invest extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'duration', 'interest', 'name', 'amount', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'user_id', 'loan_id', 'status', 'create_time', 'update_time');
 
     /**
      * 整数类型的字段
@@ -28,9 +28,8 @@ class Invest_List_Invest extends Base_List {
      */
     protected $intProps = array(
         'id'          => 1,
-        'loan_id'     => 1,
         'user_id'     => 1,
-        'duration'    => 1,
+        'loan_id'     => 1,
         'status'      => 1,
         'create_time' => 1,
         'update_time' => 1,
@@ -38,11 +37,11 @@ class Invest_List_Invest extends Base_List {
 
     /**
      * 获取数据的对象数组
-     * @return array|Invest_Object_Invest[]
+     * @return array|Invest_Object_Fresh[]
      * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
      */
     public function getObjects() {
-        return parent::getObjects('Invest_Object_Invest');
+        return parent::getObjects('Invest_Object_Fresh');
     }
 
 }

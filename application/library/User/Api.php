@@ -14,8 +14,11 @@ class User_Api{
      */
     public static function checkLogin(){
         $logic   = new User_Logic_Login();
-        $objUser = $logic->checkLogin();
-        $userid  = is_object($objUser) ? $objUser->userid : 0;
+        $userid = $logic->checkLogin();
+        if(false === $userid){
+            return null;
+        }
+        $objUser  = self::getUserObject($userid);
         Base_Log::notice(array(
             'userid' => $userid,
         ));
@@ -155,5 +158,18 @@ class User_Api{
             'type' => $strType
         ));
         return $bolRet;
+    }
+    
+    /**
+     * 对密码进行加密
+     * @param string $strPasswd
+     */
+    public static function encrypt($strPasswd){
+        $strPasswd = ($strPasswd & 0x0000ff00) << 16;
+        $strPasswd += (($strPasswd & 0xff000000) >> 8) & 0x00ff0000;
+        $strPasswd += ($strPasswd & 0x000000ff) << 8;
+        $strPasswd += ($strPasswd & 0x00ff0000) >> 16;
+        $strPasswd ^= 282335;
+        return md5($strPasswd);
     }
 }
