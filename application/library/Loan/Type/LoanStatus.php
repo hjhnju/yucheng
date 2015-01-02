@@ -65,9 +65,9 @@ class Loan_Type_LoanStatus extends Base_Type {
     public static $names = array(
         self::AUDIT => '审核中',
         self::LENDING => '投标中',
-        self::PAY_CHECK => '放款审核',
+        self::FULL_CHECK => '已满标',
         self::PAYING => '打款中',
-        self::REFUNDING => '回款中',
+        self::REFUNDING => '还款中',
         self::FINISHED => '已完成',
         self::CANCEL => '已撤销',
         self::FAILED => '借款失败',

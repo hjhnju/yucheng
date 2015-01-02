@@ -254,12 +254,12 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
      * 前端跳转
      * @param   $url jump url
      */
-    public function ajaxJump($url, $arrData = null){
+    public function ajaxJump($url){
         header("Content-Type: application/json; charset=UTF-8"); 
         $arrRtInfo               = array();
         $arrRtInfo['status']     = Base_RetCode::NEED_REDIRECT;
-        $arrRtInfo['statusInfo'] = $url;
-        $arrRtInfo['data']       = $arrData;
+        $arrRtInfo['statusInfo'] = Base_RetCode::getMsg(Base_RetCode::NEED_REDIRECT);
+        $arrRtInfo['data']       = array('url' => $url);
         
         $output = json_encode($arrRtInfo);
         echo $output;

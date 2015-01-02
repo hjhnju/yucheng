@@ -7,7 +7,15 @@
 {%block name="script"%}
 <script>
     require(['project/detail/index'], function (main) {
-        main.init('{%$id%}');
+        main.init({
+            id: '{%$id%}',
+            amountRest: '{%$amount_rest%}',
+            userAmount: '{%if isset($user.amount)%}{%$user.amount%}{%else%}0.00{%/if%}',
+            interest: +'{%$interest%}',
+            days: +'{%$days%}',
+            sTime: +'{%$create_time%}',
+            eTime: +'{%$deadline%}'
+        });
     });
 </script>
 {%/block%}
@@ -304,7 +312,7 @@
                 <div class="right-top-title">我来投资</div>
                 <div class="right-top-allmoney">
                     <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$invest_cnt%}</span>元</div>
-                    <div class="right-top-allmoney-time">剩余时间：<span>1天1小时22分钟</span></div>
+                    <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
                     <input type="text" class="right-top-ipt-input" />
@@ -314,7 +322,7 @@
                     <div class="chongzhi-right">预期收益<span class="chongzhi-span">0.66</span></div>
                 </div>
                 <div class="right-top-btn">
-                    <a class="right-top-btn-confirm">确定投资</a>
+                    <a class="right-top-btn-confirm confirm-submit">确定投资</a>
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
             </div>

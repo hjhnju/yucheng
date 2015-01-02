@@ -4,13 +4,28 @@
  * @author lilu
  */
 class EditapiController extends Base_Controller_Api {
-
+	
+	const REG_EMAIL = 'email';
+	const REG_PHONE = 'phone';
+	
+	protected static $_arrRegMap = array(
+			self::REG_EMAIL          => '/^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,3}$/',
+			self::REG_PHONE          => '/^(13[0-9]|15[0|3|6|7|8|9]|18[0|8|9])\d{8}$/',		
+	);
+	
     public function init(){
     	$this->setNeedLogin(false);
         parent::init();
         $this->ajax = true;
     }
 
+    public function checkReg($type, $value){
+        if(preg_match(self::$_arrErrMap[$type],$value)) {
+        	return true;
+        } else {
+        	return false;
+        }        
+    }
     /**
      * 接口: /account/editapi/checkphone
      * 用户验证原手机号
@@ -21,33 +36,39 @@ class EditapiController extends Base_Controller_Api {
      * status 0: 成功
      * status 1102: 验证码输入错误
      * status 1113: 手机号码格式错误
+     * status 1120: 手机号输入与原手机号不同
      */
     public function checkphoneAction() {
-    	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
+    	$objUser = $this->objUser;
+    	$userId = !empty($this->objUser) ? $this->objUser->userid : 0;
+    	$_originPhone = $objUser->phone;
+    	$originPhone = isset($_originPhone) ? $_originPhone : '';
     	$phone = $_REQUEST['phone'];//前端会判空
-        if(!preg_match($pattern,$phone)) {
-           
-            $errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
+    	$checkRet = $this->checkReg(self::REG_PHONE,$phone);
+    	if(!$checkRet) {
+    		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
-    		
+    	} else if($phone != $originPhone) {
+    		$errCode = Account_RetCode::PHONE_INPUT_ERROR;//手机号输入与原手机号不同
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
     	} else {
     		$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
-    		$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE_SESSIONCODE);
+    		$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE);
     		if($chkret == User_RetCode::VERICODE_WRONG) {
     			$errCode = Account_RetCode::VERCODE_ERROR; //验证码输入错误
     			$errMsg = Account_RetCode::getMsg($errCode);
     			$this->outputError($errCode,$errMsg);
     		} else {
-    				//所有验证通过，返回status=0
-    				$this->output();
-    			}
-    		}    		   		
-    	} 
+    			$this->output();  			 
+    		}  
+        }      
+    } 
     
     
     /**
-     * 接口3: /account/editapi/bindNewPhone
+     * 接口3: /account/editapi/bindnewphone
      * 用户绑定新手机号
      * @param $phone
      * @param $vericode
@@ -56,34 +77,43 @@ class EditapiController extends Base_Controller_Api {
      * status 0: 成功
      * status 1102: 验证码输入错误
      * status 1113: 手机号码格式错误
+     * status 1119: 手机号未发生改变
      * status 1103: 修改手机失败
      * 若前端检测返回值为0,即可以跳入至修改成功页面
      */
-    public function bindNewPhoneAction(){
-    	$pattern = '/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/';
+    public function bindnewphoneAction(){
+    	$objUser = $this->objUser;
+    	$userId = !empty($this->objUser) ? $this->objUser->userid : 0;
+    	$_oldphone = $objUser->phone;
+    	$oldphone = isset($_oldphone) ? $_oldphone : '';     	
     	$phone = $_REQUEST['phone'];//前端会判空
-    	if(!preg_match($pattern,$phone)) {
+    	$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
+    	$checkReg = $this->checkReg(self::REG_PHONE,$phone);
+    	$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE);
+    	if(!$checkReg) {
     		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
-    	}
-    	$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
-    	$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE_SESSIONCODE);
-    	if($chkret == User_RetCode::VERICODE_WRONG) {
+    	} else if($phone == $oldphone) {
+    		$errCode = Account_RetCode::PHONE_NOT_CHANGE; //验证码输入错误
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    	}else if(!$chkret) {
     		$errCode = Account_RetCode::VERCODE_ERROR; //验证码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
-    	}
-       	 
-    	$userId = $this->getUserId();
-    	$ret = User_Api::setPhone($userId,$phone);///新的手机号码入库
-    	if($ret==false) {
-    		$errCode = Account_RetCode::MODIFY_PHONE_FAIL; //修改手机号码失败
-    		$errMsg = Account_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
-    	}
-    	//所有验证通过，返回status=0
-    	$this->output();
+    	} else {
+    		$ret = User_Api::setPhone($userId,$phone);///新的手机号码入库
+    		if($ret==false) {
+    			$errCode = Account_RetCode::MODIFY_PHONE_FAIL; //修改手机号码失败
+    			$errMsg = Account_RetCode::getMsg($errCode);
+    			$this->outputError($errCode,$errMsg);
+    		} else {
+    			//所有验证通过，返回status=0
+    			$this->output();
+    		}
+    		
+    	}    	   	
     }
         
     /** 
@@ -100,12 +130,12 @@ class EditapiController extends Base_Controller_Api {
     	$_oldpwd = $_REQUEST['oldpwd'];
     	$_newpwd = $_REQUEST['newpwd'];
     	
-    	$userId = $this->getUserId();
-    	$oldpwd = isset($_oldpwd) ? $_oldpwd : '';
+        $userid = !empty($this->objUser) ? $this->objUser->userid : 0;
+        $oldpwd = isset($_oldpwd) ? $_oldpwd : '';
     	$newpwd = isset($_newpwd) ? $_newpwd : '';
     	   	    		
     	$ret = User_Api::setPasswd($userId,$oldpwd,$newpwd);
-    	if($ret == User_RetCode::ORIGIN_PASSWD_WRONG) {
+        if($ret == User_RetCode::ORIGIN_PASSWD_WRONG) {
     		$errCode = Account_RetCode::OLDPWD_INPUT_ERROR;//原密码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
@@ -115,8 +145,7 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     	} else {
     		$this->output();
-    	}
-    	   	
+    	}       
     }
     
     /**
@@ -132,12 +161,13 @@ class EditapiController extends Base_Controller_Api {
      * status 1118: 邮箱没有发生变化
      */
     public function newemailAction() {
-    	
+    	$this->output();
     }
     
     /**
      * 接口/account/editapi/veriemail
      * @param newemail
+     * @param $$token, csrf token
      * 验证新邮箱接口
      */
     public function veriemailAction() {

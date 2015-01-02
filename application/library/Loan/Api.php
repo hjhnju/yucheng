@@ -141,7 +141,6 @@ class Loan_Api {
         
         $list->joinType($type, 'type_id');
         $list->joinType($cat, 'cat_id');
-        $list->joinType($safe, 'safe_id');
         $list->joinType($refund, 'refund_type');
         $list->joinType($duration, 'duration');
         
@@ -171,8 +170,19 @@ class Loan_Api {
      * @return array
      */
     private static function formatLoan($data) {
+        $data['amount_rest'] = $data['amount'] - $data['invest_amount'];
         $data['amount'] = number_format($data['amount'], 2);
         $data['invest_amount'] = number_format($data['invest_amount'], 2);
+        $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
+        $data['days'] = self::getDays($data['duration']);
+
+        $safe = new Loan_Type_SafeMode();
+        $refund = new Loan_Type_RefundType();
+        $safe_ids = explode(',', $data['safe_id']);
+        foreach ($safe_ids as $safeid) {
+            $data['safemode'][$safeid] = $safe->getTypeName($safeid);
+        }
+        $data['refund_typename'] = $refund->getTypeName($data['refund_type']);
         
         $duration = new Loan_Type_Duration();
         $data['duration_name'] = $duration->getTypeName($data['duration']);
@@ -225,21 +235,11 @@ class Loan_Api {
      */
     public static function getLoanDetail($loan_id) {
         $data = self::getLoanInfo($loan_id);
-        $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
-        $data['days'] = self::getDays($data['duration']);
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();
-        $safe = new Loan_Type_SafeMode();
-        $refund = new Loan_Type_RefundType();
         $data['loan_type'] = $type->getTypeName($data['type_id']);
         $data['loan_cat'] = $cat->getTypeName($data['cat_id']);
-        
-        $safe_ids = explode(',', $data['safe_id']);
-        foreach ($safe_ids as $safeid) {
-            $data['safemode'][$safeid] = $safe->getTypeName($safeid);
-        }
-        $data['refund_typename'] = $refund->getTypeName($data['refund_type']);
 
         $cond = array('loan_id' => $loan_id);
         $company = new Loan_Object_Company($cond);

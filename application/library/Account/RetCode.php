@@ -26,6 +26,8 @@ class Account_RetCode extends Base_RetCode {
 	CONST MODIFY_EMAIL_FAIL          = 1116;//修改邮箱失败
 	CONST OLDPWD_INPUT_ERROR         = 1117;//原密码输入错误
 	CONST EMAIL_NOT_CHANGE           = 1118;//邮箱没有发生变化
+	CONST PHONE_NOT_CHANGE           = 1119;//手机号未发生改变
+	CONST PHONE_INPUT_ERROR          = 1120;//手机号输入与原手机号不同
 	/* 消息函数
 	 * @var array
 	*/
@@ -47,6 +49,8 @@ class Account_RetCode extends Base_RetCode {
 		self::TOKEN_VERIFY_ERROR         => 'token验证失败',
 		self::OLDPWD_INPUT_ERROR         => '原密码输入错误',
 		self::EMAIL_NOT_CHANGE           => '邮箱没有发生变化',
+		self::PHONE_NOT_CHANGE           => '手机号未发生改变',
+		self::PHONE_INPUT_ERROR          =>'手机号输入与原手机号不同',
 	);
 	
 	/**

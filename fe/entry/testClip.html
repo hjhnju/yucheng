@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>兴教贷</title>
-    <!--[if lt IE 7]>
-    <script>
-        // window.location.href = '{%$webroot%}/static/ieup/index.html';
-    </script>
-    <![endif]-->
-
+    <meta charset="utf-8">
+    <title>wuqi</title>
+    <link rel="stylesheet" type="text/css" href="/src/home/index.less" />
     <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="/dep/zclip/1.1.1/jquery.zclip.js"></script>
     <script>
         require.config({
             'baseUrl': '/src',
@@ -31,11 +28,6 @@
                     'main': 'main'
                 },
                 {
-                    'name': 'jquery',
-                    'location': '../dep/jquery/1.9.1/src',
-                    'main': 'jquery'
-                },
-                {
                     'name': 'moment',
                     'location': '../dep/moment/2.7.0/src',
                     'main': 'moment'
@@ -49,16 +41,24 @@
                     'name': 'zrender',
                     'location': '../dep/zrender/2.0.6/src',
                     'main': 'zrender'
-                },
-                {
-                    'name': 'zclip',
-                    'location': '../dep/zclip/1.1.1',
-                    'main': 'jquery.zclip'
                 }
             ]
         });
-
-        window.GLOBAL = {
-            token: '1243543'
-        };
     </script>
+</head>
+<body>
+    <div class="test" style="text-align: center">
+        <span id="testContent">fjdkslajfkdjsklajfkds</span>
+        <button id="testBtn">复制</button>
+    </div>
+
+    <script>
+//        require(['zclip'], function() {
+            $('#testBtn').zclip({
+                path: 'http://img.jb51.net/js/ZeroClipboard.swf',
+                copy: $.trim($('#testContent').html())
+            });
+//        });
+    </script>
+</body>
+</html>

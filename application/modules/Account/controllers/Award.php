@@ -27,23 +27,25 @@ class AwardController extends Base_Controller_Response {
 	}
 	
 	/**
-	 * 接口  /account/award/receiveAwards
+	 * 接口  /account/award/receiveawards
 	 * 领取奖励
 	 * @param userId 用户id
 	 * @return 标准json格式
 	 * status 0: 成功
 	 * status 1104:领取奖励失败
 	 */
-	public function receiveAwardsAction() {
+	public function receiveawardsAction() {
 		
-		$ret = Awards_Api::receiveAwards($userid);
-		if($ret === false) {
+	//	$ret = Awards_Api::receiveAwards($userid);
+	/*	if($ret === false) {
 			$errCode = Account_RetCode::RECEIVE_AWARDS_FAIL;
 			$errMsg = Account_RetCode::getMsg(Account_RetCode::RECEIVE_AWARDS_FAIL);
 			$this->outputError($errCode,$errMsg);
 		} else {
 			$this->output();
-		}
+        }
+     */
+        $this->output();
 	}
 	
 	/**

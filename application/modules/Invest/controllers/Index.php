@@ -16,6 +16,11 @@ class IndexController extends Base_Controller_Page {
 	    $pagesize = 10;
 	    $filter = $this->getFilters();
 	    $list = Loan_Api::getLoans($page, $pagesize, $filter);
+	    
+	    $status = new Invest_Type_InvestStatus();
+	    foreach ($list['list'] as $key => $val) {
+	        $list['list'][$key]['status_name'] = $status->getTypeName($val['status']);
+	    }
 	    $this->_view->assign('data', $list);
 	}
 	
