@@ -1,4 +1,4 @@
-{%extends file="common/page.phtml"%}
+{%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/project/detail/index.css" />
@@ -7,7 +7,15 @@
 {%block name="script"%}
 <script>
     require(['project/detail/index'], function (main) {
-        main.init('{%$data.id%}');
+        main.init({
+            id: '{%$data.id%}',
+            amountRest: '{%$data.amount_rest%}',
+            userAmount: '{%if isset($user.amount)%}{%$user.amount%}{%else%}0.00{%/if%}',
+            interest: +'{%$data.interest%}',
+            days: +'{%$data.days%}',
+            sTime: +'{%$data.create_time%}',
+            eTime: +'{%$data.deadline%}'
+        });
     });
 </script>
 {%/block%}
@@ -22,7 +30,7 @@
             <div class="detail-left-title">
                 <a href="###" class="left-title-link">我来投资</a>
                 <span class="left-title-greater">></span>
-                <a href="###" class="left-title-link">项目列表</a>
+                <a href="/invest/index" class="left-title-link">项目列表</a>
                 <span class="left-title-greater">></span>
                 <span class="left-title-link">项目详情</span>
             </div>
@@ -304,7 +312,7 @@
                 <div class="right-top-title">我来投资</div>
                 <div class="right-top-allmoney">
                     <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$data.amount_rest%}</span>元</div>
-                    <div class="right-top-allmoney-time">剩余时间：<span>1天1小时22分钟</span></div>
+                    <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
                     <input type="text" class="right-top-ipt-input" />
@@ -314,7 +322,7 @@
                     <div class="chongzhi-right">预期收益<span class="chongzhi-span">0.00</span></div>
                 </div>
                 <div class="right-top-btn">
-                    <a class="right-top-btn-confirm">确定投资</a>
+                    <a class="right-top-btn-confirm confirm-submit">确定投资</a>
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
             </div>

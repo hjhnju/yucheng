@@ -37,6 +37,11 @@ class Invest_Logic_Invest {
             return false;
         }
         
+        $loan = Loan_Api::getLoanInfo($loan_id);
+        if ($loan['status'] != 2) {
+            return false; //投标已结束
+        }
+        
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
         //$url = Finance_Api::initiativeTender($transAmt, $usrCustId, $maxTenderRate);
         $url = '/invest/confirm';

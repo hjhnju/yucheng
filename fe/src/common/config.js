@@ -67,9 +67,9 @@ define(function () {
         ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl
         + '/account/award/receiveawards',
         //+ '/test/account/award/receiveAwards.json',
-        //EDIT_CHANGEPWD_SUBMIT:rootUrl
-        //+ '/account/edit/chpwd',
-        ////+ '/test/account/edit/chpwd.json',
+        ACCOUNT_CASH_LIST: rootUrl
+        //+ '/account/cash/list',
+        + '/test/account/cash/list.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl
@@ -81,9 +81,8 @@ define(function () {
         INVEST_DETAIL_START: rootUrl
         //+ '/invest/list',
         + '/test/invest/list.json',
-        INVEST_DETAIL_CONFIRM: rootUrl
-            //+ '/account/edit/getvericode.json',
-        + '/test/invest/detail.json',
+        INVEST_DETAIL_CONFIRM_ADD: rootUrl
+            + '/invest/tender',
         MY_INVEST_GET: rootUrl
             + '/account/invest/backing',
             //+ '/test/account/invest/backing.json',

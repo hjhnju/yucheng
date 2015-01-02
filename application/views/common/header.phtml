@@ -20,14 +20,17 @@
                 </span>
         </div>
         <div class="header-right">
+            {%if isset($user)%}
+            <div class="header-right-login">
+                <span class="default-fastlogin">您好，{%$user.username%}</span>
+                <a class="default-login" href="/user/loginapi/signout">退出</a>
+            </div>
+            {%else%}
             <div class="header-right-default">
                 <a href="{%$webroot%}/user/regist/index" class="default-fastlogin">快速注册</a>
                 <a class="default-login" href="{%$webroot%}/user/login/index">登录</a>
             </div>
-            <div class="header-right-login">
-                <span class="default-fastlogin">您好，XXX</span>
-                <a class="default-login" href="###">退出</a>
-            </div>
+            {%/if%}
         </div>
     </div>
 </div>
@@ -36,7 +39,7 @@
         <a href="###" class="logo"><img width="100%" height="100%" src="{%$feroot%}/common/img/logo.png" /></a>
         <ul class="nav-item">
             <li class="nav-item-list">
-                <a href="###" class="nav-item-link">我来投资</a>
+                <a href="/invest/index" class="nav-item-link">我来投资</a>
             </li>
             <li class="nav-item-list">
                 <a href="###" class="nav-item-link">我要借款</a>
@@ -51,6 +54,6 @@
                 <a href="###" class="nav-item-link">关于我们</a>
             </li>
         </ul>
-        <a href="###" class="nav-myaccount">我的账户</a>
+        <a href="/account/overview/index" class="nav-myaccount">我的账户</a>
     </div>
 </div>

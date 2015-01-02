@@ -1,15 +1,30 @@
 <?php
 /**
- * 投标状态
+ * 投资标的状态
  * @author jiangsongfang
  *
  */
 class Invest_Type_InvestStatus extends Base_Type {
     /**
+     * 1审核中 
+     * @var integer
+     */
+    const AUDIT = 1;
+    /**
      * 2投标中 
      * @var integer
      */
     const LENDING = 2;
+    /**
+     * 3满标 放款审核 
+     * @var integer
+     */
+    const FULL_CHECK = 3;
+    /**
+     * 4打款中 
+     * @var integer
+     */
+    const PAYING = 4;
     /**
      * 5回款中
      * @var integer
@@ -26,7 +41,7 @@ class Invest_Type_InvestStatus extends Base_Type {
      */
     const CANCEL = 7;
     /**
-     * 9投标失败
+     * 9借款失败
      * @var integer
      */
     const FAILED = 9;
@@ -48,8 +63,11 @@ class Invest_Type_InvestStatus extends Base_Type {
      * @var array
      */
     public static $names = array(
+        self::AUDIT => '审核中',
         self::LENDING => '投标中',
-        self::REFUNDING => '回款中',
+        self::FULL_CHECK => '已满标',
+        self::PAYING => '已满标',
+        self::REFUNDING => '还款中',
         self::FINISHED => '已完成',
         self::CANCEL => '已撤销',
         self::FAILED => '借款失败',

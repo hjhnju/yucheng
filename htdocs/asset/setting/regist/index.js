@@ -1,4 +1,10 @@
-define('setting/regist/index', function (require) {
+define('setting/regist/index', [
+    'require',
+    'jquery',
+    '../common/picScroll',
+    'common/header',
+    'common/Remoter'
+], function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
