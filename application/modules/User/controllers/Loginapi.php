@@ -15,7 +15,7 @@ class LoginapiController extends Base_Controller_Api{
      */    
     public function indexAction(){
         $strName   = trim($_POST['name']);
-        $strPasswd = md5(trim($_POST['passwd']));
+        $strPasswd = User_Api::encrypt((trim($_POST['passwd'])));
         $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
         //检查错误次数
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());

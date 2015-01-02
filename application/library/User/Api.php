@@ -157,4 +157,17 @@ class User_Api{
         ));
         return $bolRet;
     }
+    
+    /**
+     * 对密码进行加密
+     * @param string $strPasswd
+     */
+    public static function encrypt($strPasswd){
+        $strPasswd = ($strPasswd & 0x0000ff00) << 16;
+        $strPasswd += (($strPasswd & 0xff000000) >> 8) & 0x00ff0000;
+        $strPasswd += ($strPasswd & 0x000000ff) << 8;
+        $strPasswd += ($strPasswd & 0x00ff0000) >> 16;
+        $strPasswd ^= 282335;
+        return md5($strPasswd);
+    }
 }
