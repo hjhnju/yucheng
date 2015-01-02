@@ -34,9 +34,10 @@ class User_Api{
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
      */
     public static function getUserObject($userid){
-        $logic   = new User_Logic_Info();
-        $objUser = $logic->getUserObject($userid);
-        $userid  = is_object($objUser) ? $objUser->userid : 0;
+        $objUser = null;
+        if(!empty($userid)){
+            $objUser = new User_Object($userid);
+        }
         Base_Log::notice(array(
             'userid' => $userid,
         ));

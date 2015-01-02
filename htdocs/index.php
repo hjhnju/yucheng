@@ -20,13 +20,13 @@ if($intPos !== false){
     $uri = substr($uri, 0, $intPos); 
 }
 $params  = explode('/', $uri);
-$module  = isset($params[1]) ? ucfirst(strtolower($params[1])) : '';
+$module  = empty($params[1]) ? 'Index' : ucfirst(strtolower($params[1]));
 $module  = in_array($module, array('I')) ? 'Awards' : $module;
+define('MODULE', $module);
 
 $conf    = $conf->toArray();
 if (in_array($module, $modules) && $module !== 'Index') {
     //设置module相关常量
-    define('MODULE', $module);
     define('MODULE_PATH', APP_PATH . '/application/modules/' . $module);
     define('MODULE_CONF_PATH', MODULE_PATH . '/conf');
     //改变应用所在路径

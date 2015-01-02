@@ -18,6 +18,8 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
     
     protected $outputView  = 'output.phtml';
 
+    protected $userid      = null;
+
     //User_Object实例
     protected $objUser     = null;
     
@@ -28,8 +30,8 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
 
         $this->webroot = Base_Config::getConfig('web')->root;
         $this->baselog();
-        $userid = User_Api::checkLogin();
-        $this->objUser = User_Api::getUserObject($userid);
+        $this->userid  = User_Api::checkLogin();
+        $this->objUser = User_Api::getUserObject($this->userid);
         //未登录自动跳转
         if($this->needLogin && empty($this->objUser)){
             $u        = isset($_REQUEST['HTTP_REFERER']) ? $_REQUEST['HTTP_REFERER'] : null;
