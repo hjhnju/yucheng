@@ -26,7 +26,7 @@ class Loan_Object_Loan extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'user_id', 'title', 'pic', 'content', 'type_id', 'cat_id', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
+    protected $fields = array('id', 'user_id', 'title', 'pic', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
 
     /**
      * 字段与属性隐射关系
@@ -40,6 +40,7 @@ class Loan_Object_Loan extends Base_Object {
         'content'         => 'content',
         'type_id'         => 'typeId',
         'cat_id'          => 'catId',
+        'fresh'           => 'fresh',
         'duration'        => 'duration',
         'level'           => 'level',
         'amount'          => 'amount',
@@ -67,10 +68,10 @@ class Loan_Object_Loan extends Base_Object {
         'user_id'         => 1,
         'type_id'         => 1,
         'cat_id'          => 1,
+        'fresh'           => 1,
         'duration'        => 1,
         'level'           => 1,
         'invest_cnt'      => 1,
-        'safe_id'         => 1,
         'refund_type'     => 1,
         'deadline'        => 1,
         'status'          => 1,
@@ -132,6 +133,12 @@ class Loan_Object_Loan extends Base_Object {
     public $catId;
 
     /**
+     * 是否新手标
+     * @var integer
+     */
+    public $fresh;
+
+    /**
      * 借款期限
      * @var integer
      */
@@ -168,8 +175,8 @@ class Loan_Object_Loan extends Base_Object {
     public $investAmount;
 
     /**
-     * 保障方式
-     * @var integer
+     * 保障方式 逗号分隔
+     * @var string
      */
     public $safeId;
 
