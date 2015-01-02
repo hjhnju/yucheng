@@ -10,7 +10,7 @@
         <span class="name-shi">机</span>
         <!--/if-->
         <div class="school">
-            <a href="###" class="school-link">${item.title}</a>
+            <a href="/invest/detail?id=${item.id}" class="school-link">${item.title}</a>
         </div>
     </div>
     <div class="investlist-box-title-name grade">
