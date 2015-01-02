@@ -4,7 +4,9 @@ define('my/reward/index', function (require) {
     var Remoter = require('common/Remoter');
     var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
     var event;
-    function init() {
+    var codeUrl;
+    function init(url) {
+        codeUrl = url;
         header.init();
         bindEvent();
     }
@@ -35,7 +37,7 @@ define('my/reward/index', function (require) {
                 width: 126,
                 height: 126
             });
-        qrcode.makeCode('www.baidu.com');
+        qrcode.makeCode(codeUrl);
     }
     return { init: init };
 });

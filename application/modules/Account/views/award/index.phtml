@@ -1,13 +1,13 @@
 {%extends file="common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="/src/my/reward/index.less" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/reward/index.css" />
 {%/block%}
 
 {%block name="script"%}
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
-<script src="/src/common/extra/jquery.zclip.js"></script>
-<script src="/src/common/extra/jquery.qrcode.js"></script>
+<script src="{%$feroot%}/common/extra/jquery.zclip.js"></script>
+<script src="{%$feroot%}/common/extra/jquery.qrcode.js"></script>
 <script>
     require(['my/reward/index'], function (main) {
         main.init('{%$inviteUrl%}');
@@ -18,7 +18,7 @@
 {%block name="content"%}
 <div class="finish">
     <div class="container finish-bg-color">
-        {%include file='common/nav.phtml' current="1"%}
+        {%include file='common/nav.phtml' current="5"%}
         <div class="finish-main">
             <div class="finish-main-title">好友邀请奖励计划</div>
             <div class="reward">
@@ -56,7 +56,7 @@
                         <div class="reward-type-box-title number-one">邀请方式一：(手机就是您的邀请号)</div>
                         <div class="reward-type-box-text">让好友注册时填入您的手机号：{%$userphone%}</div>
                         <div class="reward-type-box-text">或使用您的专属注册链接:
-                            <a class="reward-type-link-http" href="{%$userurl%}">{%$userurl%}</a>
+                            <a class="reward-type-link-http" href="{%$inviteUrl%}">{%$inviteUrl%}</a>
                             <span class="reward-type-link-span">复制给好友</span>
                         </div>
                     </div>

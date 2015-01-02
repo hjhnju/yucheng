@@ -12,8 +12,10 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
     var event;
+    var codeUrl;
 
-    function init() {
+    function init(url) {
+        codeUrl = url;
         header.init();
         bindEvent();
 
@@ -56,11 +58,11 @@ define(function (require) {
         var qrcode = new QRCode(
             $('.erweima')[0], {
                 width: 126, //宽度
-                height: 126, //高度
+                height: 126 //高度
             }
         );
 
-        qrcode.makeCode('www.baidu.com');
+        qrcode.makeCode(codeUrl);
     }
 
     return {
