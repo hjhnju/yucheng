@@ -1,11 +1,4 @@
-define('setting/email/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'common/config',
-    'etpl',
-    './email.tpl'
-], function (require) {
+define('setting/email/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var config = require('common/config');

@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/shan_xi_2_geo', [], function () {
+define('echarts/util/mapData/geoJson/shan_xi_2_geo', function () {
     return {
         'type': 'FeatureCollection',
         'features': [

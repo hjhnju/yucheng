@@ -68,19 +68,19 @@ define(function () {
         + '/account/award/receiveawards',
         //+ '/test/account/award/receiveAwards.json',
         ACCOUNT_CASH_LIST: rootUrl
-        //+ '/account/cash/list',
-        + '/test/account/cash/list.json',
+        + '/account/cash/list',
+//        + '/test/account/cash/list.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl
-        + '/account/secure/securedegree',
+            + '/account/secure/securedegree',
         //    + '/test/account/secure/secureDegree.json',
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',
         INVEST_DETAIL_START: rootUrl
-        //+ '/invest/list',
-        + '/test/invest/list.json',
+            + '/invest/list',
+//        + '/test/invest/list.json',
         INVEST_DETAIL_CONFIRM_ADD: rootUrl
             + '/invest/tender',
         MY_INVEST_GET: rootUrl

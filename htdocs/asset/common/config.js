@@ -1,4 +1,4 @@
-define('common/config', [], function () {
+define('common/config', function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             IMG_GET: rootUrl + '/user/imagecode/getimage?type=',
@@ -17,12 +17,12 @@ define('common/config', [], function () {
             EDIT_EMAILCONFIRM: rootUrl + '/account/editapi/newemail',
             EDIT_CHPWD_SUBMITE: rootUrl + '/account/editapi/modifypwd',
             ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl + '/account/award/receiveawards',
-            ACCOUNT_CASH_LIST: rootUrl + '/test/account/cash/list.json',
+            ACCOUNT_CASH_LIST: rootUrl + '/account/cash/list',
             LINE_GET: rootUrl + '/account/overview/profitCurve',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
             INVEST_LIST: rootUrl + '/invest/api',
-            INVEST_DETAIL_START: rootUrl + '/test/invest/list.json',
-            INVEST_DETAIL_CONFIRM: rootUrl + '/test/invest/detail.json',
+            INVEST_DETAIL_START: rootUrl + '/invest/list',
+            INVEST_DETAIL_CONFIRM_ADD: rootUrl + '/invest/tender',
             MY_INVEST_GET: rootUrl + '/account/invest/backing',
             MY_INVEST_DETAIL: rootUrl + '/account/invest/repayplan',
             MY_INVEST_ENDED: rootUrl + '/account/invest/ended',

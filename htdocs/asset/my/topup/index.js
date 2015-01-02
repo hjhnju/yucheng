@@ -1,9 +1,4 @@
-define('my/topup/index', [
-    'require',
-    'jquery',
-    'common/header',
-    'common/Remoter'
-], function (require) {
+define('my/topup/index', function (require) {
     var $ = require('jquery');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
@@ -15,7 +10,7 @@ define('my/topup/index', [
         $('.topup-select-con-box').click(function () {
             $('.topup-select-con-box').removeClass('current');
             $(this).addClass('current');
-            $(this).find('.topup-select-ipt').attr('checked', 'check');
+            $(this).find('.topup-select-ipt').prop('checked', true);
         });
         $('#pay').click(function () {
             var value = $('#box-ipt').val();

@@ -1,10 +1,4 @@
-define('my/account/index', [
-    'require',
-    'jquery',
-    'etpl',
-    './line',
-    'common/Remoter'
-], function (require) {
+define('my/account/index', function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var line = require('./line');

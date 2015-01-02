@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/he_bei_geo', [], function () {
+define('echarts/util/mapData/geoJson/he_bei_geo', function () {
     return {
         'type': 'FeatureCollection',
         'features': [

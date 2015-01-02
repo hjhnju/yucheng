@@ -1,26 +1,27 @@
-define('project/detail/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'etpl',
-    './detail.tpl',
-    'moment',
-    'common/ui/Pager/Pager'
-], function (require) {
+define('project/detail/index', function (require) {
     var $ = require('jquery');
+    var util = require('common/util');
+    var countDown = require('common/countDown');
     var Remoter = require('common/Remoter');
     var start = new Remoter('INVEST_DETAIL_START');
     var etpl = require('etpl');
     var tpl = require('./detail.tpl');
     var moment = require('moment');
     var Pager = require('common/ui/Pager/Pager');
+    var investTender = new Remoter('INVEST_DETAIL_CONFIRM_ADD');
     var pager;
-    function init(id) {
+    var model = {};
+    function init(initData) {
+        $.extend(model, initData);
+        model.amountRest = +initData.amountRest.replace(',', '');
+        model.days = +initData.days;
+        model.userAmount = +initData.userAmount.replace(',', '');
+        model.interest = +initData.interest;
         etpl.compile(tpl);
         bindEvent();
         start.remote({
             page: 1,
-            id: id
+            id: model.id
         });
         start.on('success', function (data) {
             if (data && data.bizError) {
@@ -35,7 +36,7 @@ define('project/detail/index', [
                     pager.on('change', function (e) {
                         start.remote({
                             page: e.value,
-                            id: id
+                            id: model.id
                         });
                     });
                 }
@@ -58,6 +59,47 @@ define('project/detail/index', [
         $('.showrecord').click(function () {
             $(this).closest('.project-main').attr('class', 'project-main record');
         });
+        $('.confirm-all').click(function () {
+            $('.right-top-ipt-input').val(Math.min(model.userAmount, model.amountRest));
+        });
+        $('.confirm-submit').click(function () {
+            investTender.remote({
+                id: model.id,
+                amount: +$('.right-top-ipt-input').val() || 0
+            });
+        });
+        $('.right-top-ipt-input').on({
+            keydown: function () {
+                var value = +$.trim($(this).val());
+                var min = Math.min(model.userAmount, model.amountRest);
+                if (isNaN(value)) {
+                    return;
+                }
+                if (value > min) {
+                    $(this).val(min);
+                    value = min;
+                }
+                $('.chongzhi-span').html(caculateIncome(value));
+            },
+            keyup: function () {
+                var value = +$.trim($(this).val());
+                var min = Math.min(model.userAmount, model.amountRest);
+                if (isNaN(value)) {
+                    return;
+                }
+                if (value > min) {
+                    $(this).val(min);
+                }
+            }
+        });
+        if ($('.right-top-allmoney-time span').length > 0) {
+            countDown.init('.right-top-allmoney-time span', model.sTime * 1000, model.eTime * 1000);
+        }
+    }
+    function caculateIncome(money) {
+        var income = money * model.interest / 100 * model.days / 365;
+        income = income.toFixed(2);
+        return util.addCommas(income);
     }
     return { init: init };
 });
