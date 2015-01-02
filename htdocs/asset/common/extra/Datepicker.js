@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 /*! =========================================================
  * bootstrap-datepicker.js 
  * Original Idea: http://www.eyecon.ro/bootstrap-datepicker (Copyright 2012 Stefan Petre)

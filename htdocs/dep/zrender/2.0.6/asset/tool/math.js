@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/math', function () {
     var _radians = Math.PI / 180;
     function sin(angle, isDegrees) {

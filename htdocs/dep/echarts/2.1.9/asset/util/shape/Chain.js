@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/shape/Chain', function (require) {
     var Base = require('zrender/shape/Base');
     var IconShape = require('./Icon');

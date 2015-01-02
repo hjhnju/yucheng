@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Sector', function (require) {
     var math = require('../tool/math');
     var computeBoundingBox = require('../tool/computeBoundingBox');

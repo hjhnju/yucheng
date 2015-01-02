@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/projection/normal', function () {
     function getBbox(json, specialArea) {
         specialArea = specialArea || {};

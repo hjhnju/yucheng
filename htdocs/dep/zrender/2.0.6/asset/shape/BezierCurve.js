@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/BezierCurve', function (require) {
     'use strict';
     var Base = require('./Base');

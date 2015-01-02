@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/loadingEffect/Base', function (require) {
     var util = require('../tool/util');
     var TextShape = require('../shape/Text');

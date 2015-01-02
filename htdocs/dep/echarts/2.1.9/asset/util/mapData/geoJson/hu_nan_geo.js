@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/geoJson/hu_nan_geo', function () {
     return {
         'type': 'FeatureCollection',

@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/mixin/Eventful', function (require) {
     var Eventful = function () {
         this._handlers = {};

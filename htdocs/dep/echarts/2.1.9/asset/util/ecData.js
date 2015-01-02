@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/ecData', function () {
     function pack(shape, series, seriesIndex, data, dataIndex, name, special, special2) {
         var value;

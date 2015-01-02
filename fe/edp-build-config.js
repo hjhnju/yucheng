@@ -88,7 +88,7 @@ exports.getProcessors = function () {
             html2jsClearPorcessor, pathMapperProcessor ],
         'default': [
             lessProcessor, cssProcessor, html2JsProcessor, moduleProcessor,
-            html2jsClearPorcessor, jsProcessor, pathMapperProcessor, addCopyright
+            html2jsClearPorcessor, jsProcessor, pathMapperProcessor
         ]
     };
 };

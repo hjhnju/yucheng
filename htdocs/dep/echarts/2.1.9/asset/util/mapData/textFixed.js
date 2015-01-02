@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/textFixed', function () {
     return {
         '\u5E7F\u4E1C': [

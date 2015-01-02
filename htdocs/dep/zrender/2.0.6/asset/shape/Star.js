@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Star', function (require) {
     var math = require('../tool/math');
     var sin = math.sin;

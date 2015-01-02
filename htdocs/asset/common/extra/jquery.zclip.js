@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 /*
  * zClip :: jQuery ZeroClipboard v1.1.1
  * http://steamdev.com/zclip

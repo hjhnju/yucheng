@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/shape/Candle', function (require) {
     var Base = require('zrender/shape/Base');
     var zrUtil = require('zrender/tool/util');

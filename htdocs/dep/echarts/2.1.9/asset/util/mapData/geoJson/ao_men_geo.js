@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/geoJson/ao_men_geo', function () {
     return {
         'type': 'FeatureCollection',

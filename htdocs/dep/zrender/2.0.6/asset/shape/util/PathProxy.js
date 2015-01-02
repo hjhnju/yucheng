@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/util/PathProxy', function (require) {
     var vector = require('../../tool/vector');
     var PathSegment = function (command, points) {

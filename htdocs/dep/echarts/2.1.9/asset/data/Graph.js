@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/data/Graph', function (require) {
     var util = require('zrender/tool/util');
     'use strict';

@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('common/countDown', function () {
     var $ = require('jquery');
     var moment = require('moment');

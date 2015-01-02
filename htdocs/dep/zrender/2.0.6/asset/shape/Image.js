@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Image', function (require) {
     var Base = require('./Base');
     var ZImage = function (options) {

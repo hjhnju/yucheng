@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 (function (root) {
     function extend(target, source) {
         for (var key in source) {

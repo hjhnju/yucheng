@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/accMath', function () {
     function accDiv(arg1, arg2) {
         var s1 = arg1.toString();

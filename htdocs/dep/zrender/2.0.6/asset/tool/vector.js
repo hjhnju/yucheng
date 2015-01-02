@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/vector', function () {
     var ArrayCtor = typeof Float32Array === 'undefined' ? Array : Float32Array;
     var vector = {

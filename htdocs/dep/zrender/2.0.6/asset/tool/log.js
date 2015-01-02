@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/log', function (require) {
     var config = require('../config');
     return function () {

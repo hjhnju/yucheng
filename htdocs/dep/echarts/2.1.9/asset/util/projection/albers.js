@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/projection/albers', function () {
     function _albers() {
         var radians = Math.PI / 180;

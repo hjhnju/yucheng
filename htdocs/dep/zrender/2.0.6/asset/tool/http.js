@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/http', function (require) {
     function get(url, onsuccess, onerror, opts) {
         if (typeof url === 'object') {

@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define(function (require) {
     var Benchmark = require('benchmark');
     var zrender = require('zrender');

@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/Group', function (require) {
     var guid = require('./tool/guid');
     var util = require('./tool/util');

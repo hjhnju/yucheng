@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 /**
  * @fileoverview
  * - Using the 'QRCode for Javascript library'

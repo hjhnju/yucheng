@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/geoJson/an_hui_geo', function () {
     return {
         'type': 'FeatureCollection',

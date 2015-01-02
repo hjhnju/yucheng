@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 //docs.google.com/presentation/d/1XgKaFEgPIzF2psVgY62-KnylV81gsjCWu999h4QtaOE/
 var fs = require('fs');
 var glob = require('glob');

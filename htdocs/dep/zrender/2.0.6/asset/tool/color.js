@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/color', function (require) {
     var util = require('../tool/util');
     var _ctx;

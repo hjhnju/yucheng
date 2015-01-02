@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/coordinates', function (require) {
     var zrMath = require('zrender/tool/math');
     function polar2cartesian(r, theta) {

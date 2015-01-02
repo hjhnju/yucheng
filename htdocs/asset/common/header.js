@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('common/header', function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');

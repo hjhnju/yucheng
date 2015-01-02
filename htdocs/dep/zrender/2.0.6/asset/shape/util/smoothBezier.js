@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/util/smoothBezier', function (require) {
     var vector = require('../../tool/vector');
     return function (points, smooth, isLoop, constraint) {

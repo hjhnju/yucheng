@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/number', function () {
     function _trim(str) {
         return str.replace(/^\s+/, '').replace(/\s+$/, '');

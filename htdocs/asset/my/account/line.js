@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('my/account/line', function () {
     var $ = require('jquery');
     var echarts;

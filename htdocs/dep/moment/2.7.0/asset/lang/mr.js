@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         define('moment/lang/mr', ['moment'], factory);

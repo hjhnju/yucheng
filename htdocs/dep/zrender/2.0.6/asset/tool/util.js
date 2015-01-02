@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/util', function (require) {
     var BUILTIN_OBJECT = {
             '[object Function]': 1,

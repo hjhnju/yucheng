@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 /*
  Copyright (C) 2011 Google Inc.
 

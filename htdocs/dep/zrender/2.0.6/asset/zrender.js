@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/zrender', function (require) {
     require('./dep/excanvas');
     var util = require('./tool/util');

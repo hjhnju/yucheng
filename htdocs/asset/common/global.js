@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('common/global', function () {
     var $ = require('jquery');
     var _cache = {};

@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/data/Tree', function (require) {
     function TreeNode(id) {
         this.id = id;

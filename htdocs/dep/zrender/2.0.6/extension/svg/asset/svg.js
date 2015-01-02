@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define(function (require) {
     'use strict';
     var http = require('zrender/tool/http');

@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/chart/force', function (require) {
     'use strict';
     var ComponentBase = require('../component/base');

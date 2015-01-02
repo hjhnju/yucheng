@@ -1,2 +1,1 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define("my/topup/index",function(require){function e(){i.init(),t()}function t(){n(".topup-select-con-box").click(function(){n(".topup-select-con-box").removeClass("current"),n(this).addClass("current"),n(this).find(".topup-select-ipt").prop("checked",!0)}),n("#pay").click(function(){var e=n("#box-ipt").val();if(!e)return void n("#topup-error").html("充值金额不能为空");else return void 0})}{var n=require("jquery"),i=require("common/header");require("common/Remoter")}return{init:e}});

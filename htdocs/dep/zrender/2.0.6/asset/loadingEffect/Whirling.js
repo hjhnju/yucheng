@@ -1,4 +1,3 @@
-/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/loadingEffect/Whirling', function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
