@@ -1,12 +1,12 @@
-{%extends file="common/page.phtml"%}
+{%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="/src/my/operation/index.less" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/operation/index.css" />
 {%/block%}
 
 {%block name="script"%}
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
-<script src="/src/common/extra/Datepicker.js"></script>
+<script src="{%$feroot%}/common/extra/Datepicker.js"></script>
 
 <script>
     require(['my/operation/index'], function (main) {
@@ -22,9 +22,9 @@
 {%block name="content"%}
 <div class="finish">
     <div class="container finish-bg-color">
-        {%include file='common/nav.phtml' current="3"%}
+        {%include file='../../../views/common/nav.phtml' current="3"%}
         <div class="finish-main">
-            <div class="finish-main-title">充值提现 </div>
+            <div class="finish-main-title">充值提现</div>
             <div class="operation">
                 <div class="operation-money">
                     <div class="operation-money-account">

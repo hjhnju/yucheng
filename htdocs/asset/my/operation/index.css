@@ -1508,6 +1508,18 @@ p {
   margin: 0 10px;
   float: left;
 }
+.time-data-search {
+  float: left;
+  margin: 2px 15px 2px 0;
+  padding: 4px 10px;
+  color: #000000;
+  background-color: #f8f8f8;
+  border: 1px solid #e3e3e3;
+  cursor: pointer;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
 .time-data-type {
   float: left;
   margin-top: 7px;
