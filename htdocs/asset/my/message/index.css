@@ -58,7 +58,6 @@ p{margin:0;padding:0}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .header-right-default .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.header-right-login{display:none}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:300px;height:60px;display:block;margin-right:16px}
 .nav-item{float:left;margin-top:24px;*zoom:1}

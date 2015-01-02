@@ -27,7 +27,7 @@
         <div class="my-invest-detail my-msg-detail">
             <span class="close-detail">收起</span>
             <p>${item.content}</p>
-            <div>查看 <a href="###">充值提现</a></div>
+            <div>查看 <a href="/account/cash/index">充值提现</a></div>
         </div>
     </li>
     <!-- /for -->
