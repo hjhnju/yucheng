@@ -111,7 +111,8 @@ exports.getLocations = function () {
                     '/msg/list',
                     '/msg/read',
                     '/user/imagecode/getimage',
-                    '/invest/tender'
+                    '/invest/tender',
+                    '/account/cash/list'
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
@@ -119,9 +120,9 @@ exports.getLocations = function () {
             },
             handler: [
 
-                // proxy('123.57.46.229', 8082)  //李璐
+                proxy('123.57.46.229', 8082)  //李璐
                 //proxy('123.57.46.229', 8301)  //胡伟
-                proxy('123.57.46.229', 8600)  //松芳
+                // proxy('123.57.46.229', 8600)  //松芳
                 //proxy('123.57.46.229', 8081)  //俊华
 
             ]
