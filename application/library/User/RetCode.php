@@ -7,7 +7,7 @@
 class User_RetCode extends Base_RetCode{
 
     //定义错误码：
-    const USERNAME_EXIST            = 1025; //用户 名已存在
+    const USERNAME_EXIST            = 1025; //用户名已存在
     const USERNAME_SYNTEX_ERROR     = 1026; //用户名语法错误
     
     const USERPHONE_EXIST           = 1027; //手机号已存在
@@ -49,7 +49,7 @@ class User_RetCode extends Base_RetCode{
      */
     protected static $_arrErrMap = array(
         self::USERNAME_EXIST           => '用户名已存在',
-        self::USERNAME_SYNTEX_ERROR    => '用户名请使用英文字母、数字、下划线或横线，最少5个字符，首字符必须为字母。',
+        self::USERNAME_SYNTEX_ERROR    => '用户名请使用6～25位字母、数字、下划线或横线组合，首字符必须为字母。',
         self::USERPHONE_EXIST          => '手机号已存在',
         self::PHONE_FORMAT_ERROR       => '手机号格式有误',
         self::GETVERICODE_FAIL         => '获取短信验证码失败',
