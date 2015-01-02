@@ -7,7 +7,11 @@
 {%block name="script"%}
 <script>
     require(['my/operation/index'], function (main) {
-        main.init();
+        main.init({
+            page: '{%$page%}',
+            pageall: '{%$pageall%}',
+            pagesize: '{%$pagesize%}'
+        });
     });
 </script>
 {%/block%}
@@ -40,14 +44,14 @@
                             <div class="time-data-calendar-text">起止时间</div>
                             <div class="time-data-calendar-box">
                                 <input type="text" class="time-data-ipt" id="time-start" />
-                                <label class="ipt-lable" for="time-start">12</label>
+                                <label class="ipt-lable" for="time-start"></label>
                             </div>
                             <div class="time-data-symbol">-</div>
                             <div class="time-data-calendar-box mar-right">
                                 <input type="text" class="time-data-ipt" id="time-end" />
                                 <label class="ipt-lable" for="time-end"></label>
                             </div>
-                            <div class="time-data-type" id="operation-type">
+                            <div class="time-data-type" id="operation-data">
                                 <a class="time-data-type-link current" data-value="1">今天</a>
                                 <a class="time-data-type-link" data-value="2">最近一周</a>
                                 <a class="time-data-type-link" data-value="3">1个月</a>
@@ -56,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="operation-time-type" id="operation-data">
+                    <div class="operation-time-type" id="operation-type">
                         <div class="time-data-calendar-text">交易类型</div>
                         <div class="time-data-type">
                             <a class="time-data-type-link current" data-value="1">全部</a>

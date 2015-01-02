@@ -3,7 +3,9 @@
     "statusInfo": "",
     "data": {
         "page": 1,
-        "pageall": 10,
+        "pagesize": 10,
+        "pageall": 1,
+        "total": "1",
         "list":
         [{
             "time": 1231231231,

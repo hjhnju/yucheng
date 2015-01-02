@@ -9,7 +9,9 @@
         <!--else-->
         <span class="name-shi">机</span>
         <!--/if-->
-        <span class="school">${item.title}</span>
+        <div class="school">
+            <a href="###" class="school-link">${item.title}</a>
+        </div>
     </div>
     <div class="investlist-box-title-name grade">
         <!--if: ${item.level} == 0.5 -->

@@ -23,7 +23,8 @@ define(function (require) {
         $('.topup-select-con-box').click(function () {
             $('.topup-select-con-box').removeClass('current');
             $(this).addClass('current');
-            $(this).find('.topup-select-ipt').attr('checked', 'check');
+
+            $(this).find('.topup-select-ipt').prop('checked', true);
         });
 
         //点击充值
