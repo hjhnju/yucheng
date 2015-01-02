@@ -14,14 +14,15 @@ class User_Logic_Login {
     
     /**
      * 判断用户的登录状态
-     * @return object || null
+     * @return userid || false
      */
     public function checkLogin(){
-        $objUser = Yaf_Session::getInstance()->get(User_Keys::getLoginUserKey());
-        if($objUser){
-            return $objUser;
+        $userid = Yaf_Session::getInstance()->get(User_Keys::getLoginUserKey());
+        if(!empty($userid)){
+            $userid = intval($userid);
+            return $userid;
         }
-       return null;
+       return false;
     }
 
     /**
@@ -29,8 +30,8 @@ class User_Logic_Login {
      * @return boolean
      */ 
     protected function setLogin($objUser){
-        if($objUser){
-            Yaf_Session::getInstance()->set(User_Keys::getLoginUserKey(), $objUser);
+        if(is_object($objUser)){
+            Yaf_Session::getInstance()->set(User_Keys::getLoginUserKey(), $objUser->userid);
             return true;
         }
         return false;

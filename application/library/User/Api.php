@@ -14,11 +14,13 @@ class User_Api{
      */
     public static function checkLogin(){
         $logic   = new User_Logic_Login();
-        $objUser = $logic->checkLogin();
-        $userid  = is_object($objUser) ? $objUser->userid : 0;
-        Base_Log::debug(array(
-            'userid'   => $userid,
-            'username' => $objUser->name,
+        $userid = $logic->checkLogin();
+        if(false === $userid){
+            return null;
+        }
+        $objUser  = self::getUserObject($userid);
+        Base_Log::notice(array(
+            'userid' => $userid,
         ));
         return $objUser;
     }
