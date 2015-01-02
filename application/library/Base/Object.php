@@ -112,7 +112,6 @@ class Base_Object {
         }
         foreach ($data as $field => $val) {
             if (!isset($this->properties[$field])) {
-                echo "!isset $field \n";
                 continue;
             }
             if (isset($this->intProps[$field])) {
