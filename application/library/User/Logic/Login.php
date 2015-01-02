@@ -35,6 +35,15 @@ class User_Logic_Login {
         }
         return false;
     }
+    
+    /**
+     * 用户退出登陆
+     * @return boolean
+     */
+    public function signOut(){
+        $ret = Yaf_Session::getInstance()->del(User_Keys::getLoginUserKey());
+        return $ret;
+    }
 
     /**
      * 获取用户对象

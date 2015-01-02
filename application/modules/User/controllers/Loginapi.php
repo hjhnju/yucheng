@@ -67,4 +67,18 @@ class LoginapiController extends Base_Controller_Api{
  
     }
     
+    /**
+     * 标准退出登录过程
+     * 状态返回0表示登出成功
+     */
+    public function signOutAction(){
+    	$logic   = new User_Logic_Login();
+    	$ret = $logic->signOut();
+    	if($ret){
+    		$redirectUri = '/user/login/index';
+    		$this->redirect($redirectUri);
+    	}
+    	$this->ajaxError();
+    }
+    
 }

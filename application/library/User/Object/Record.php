@@ -48,6 +48,7 @@ class User_Object_Record extends Base_Object {
         'id'          => 1,
         'userid'      => 1,
         'status'      => 1,
+        'create_time' => 1,
     );
 
     /**
@@ -84,7 +85,7 @@ class User_Object_Record extends Base_Object {
 
     /**
      * 登录时间
-     * @var 
+     * @var integer
      */
     public $createTime;
 

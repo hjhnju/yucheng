@@ -5,12 +5,7 @@
 class OpenController extends Base_Controller_Page{
     
     public function init(){
-<<<<<<< HEAD
-        //TODO:remove
-        $this->setNeedLogin(false);
-=======
         $this->setNeedLogin(true);
->>>>>>> b3806bcef9a903e4d3c7c7609934d8d94763427b
         parent::init();
     }
     

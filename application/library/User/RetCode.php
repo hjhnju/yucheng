@@ -42,6 +42,8 @@ class User_RetCode extends Base_RetCode{
 
     const GET_OPENID_FAIL           = 1055; //获取openid失败
 
+    const SIGN_OUT_FIAL             = 1056; //登出失败
+    
     /* 消息函数
      * @var array
      */
@@ -65,6 +67,7 @@ class User_RetCode extends Base_RetCode{
         self::UNBOUND                  => '用户未绑定第三方账号',
         self::BINDING_FAIL             => '绑定第三方账号出错',
         self::GET_OPENID_FAIL          => '获取openid失败',
+        self::SIGN_OUT_FIAL            => '登出失败',
     );
 
 }
