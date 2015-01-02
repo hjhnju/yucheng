@@ -196,6 +196,18 @@ class Base_List {
     }
     
     /**
+     * 设置要查询的字段，默认会查询数据表所有的字段<br>
+     * 通过设置fields来查询指定的字段，减少数据量
+     * 例如：array('id', 'name')
+     * @param array $fields
+     * @return boolean
+     */
+    public function setFields($fields) {
+        $this->fields = $fields;
+        return true;
+    }
+    
+    /**
      * 从数据库中获取数据 未来会增加缓存，通过forcedb参数强制直接从db中读数据
      * @param string $forcedb
      */
@@ -313,12 +325,14 @@ class Base_List {
         if ($this->pagesize == PHP_INT_MAX) {
             $pagesize = 0;
         }
+        
+        $data = $this->getData();
         $list = array(
             'page' => $this->page,
             'pagesize' => $pagesize,
             'pageall' => $this->pageall,
             'total' => $this->total,
-            'list' => $this->data,
+            'list' => $data,
         );
         return $list;
     }
