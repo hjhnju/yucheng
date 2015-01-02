@@ -3,7 +3,10 @@
  * 消息标记已读
  */
 class ReadController extends Base_Controller_Response {
-    protected $ajax = true;
+    public function init(){
+        $this->setNeedLogin(true);
+        parent::init();
+    }
 	
     /**
      * 设置消息为已读状态
