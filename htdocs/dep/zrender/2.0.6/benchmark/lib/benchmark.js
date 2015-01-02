@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 ;
 (function () {
     'use strict';

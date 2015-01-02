@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Rectangle', function (require) {
     var Base = require('./Base');
     var Rectangle = function (options) {

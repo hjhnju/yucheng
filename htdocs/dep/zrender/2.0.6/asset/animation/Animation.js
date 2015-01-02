@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/animation/Animation', function (require) {
     'use strict';
     var Clip = require('./Clip');

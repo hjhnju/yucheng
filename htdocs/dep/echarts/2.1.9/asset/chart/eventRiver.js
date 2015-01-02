@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/chart/eventRiver', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');

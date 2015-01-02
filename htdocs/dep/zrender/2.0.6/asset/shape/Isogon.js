@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Isogon', function (require) {
     var math = require('../tool/math');
     var sin = math.sin;

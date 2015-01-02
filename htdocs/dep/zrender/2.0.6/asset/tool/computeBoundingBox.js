@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/computeBoundingBox', function (require) {
     var vec2 = require('./vector');
     var curve = require('./curve');

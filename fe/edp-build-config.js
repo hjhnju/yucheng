@@ -24,7 +24,8 @@ exports.getProcessors = function () {
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
-            'src/setting/select3rd/index.less'
+            'src/setting/select3rd/index.less',
+            'src/home/index.less'
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -44,7 +45,8 @@ exports.getProcessors = function () {
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
-            'src/setting/select3rd/index.less'
+            'src/setting/select3rd/index.less',
+            'src/home/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -65,7 +67,8 @@ exports.getProcessors = function () {
             'src/setting/chpassword/index.js',
             'src/setting/phone/index.js',
             'src/setting/email/index.js',
-            'src/setting/select3rd/index.js'
+            'src/setting/select3rd/index.js',
+            'src/home/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
@@ -81,9 +84,9 @@ exports.getProcessors = function () {
     var addCopyright = new AddCopyright();
 
     return {
-        'default': [ lessProcessor, html2JsProcessor, moduleProcessor,
+        'release': [ lessProcessor, html2JsProcessor, moduleProcessor,
             html2jsClearPorcessor, pathMapperProcessor ],
-        'release': [
+        'default': [
             lessProcessor, cssProcessor, html2JsProcessor, moduleProcessor,
             html2jsClearPorcessor, jsProcessor, pathMapperProcessor, addCopyright
         ]

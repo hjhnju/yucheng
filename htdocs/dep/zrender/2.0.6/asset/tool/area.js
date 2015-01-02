@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/area', function (require) {
     'use strict';
     var util = require('./util');

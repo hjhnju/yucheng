@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/shape/Symbol', function (require) {
     var Base = require('zrender/shape/Base');
     var PolygonShape = require('zrender/shape/Polygon');

@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/config', function () {
     var config = {
             CHART_TYPE_LINE: 'line',

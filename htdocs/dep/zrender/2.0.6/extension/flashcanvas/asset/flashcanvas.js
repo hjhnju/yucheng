@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define(function (require) {
     if (window['ActiveXObject'] && !window['CanvasRenderingContext2D']) {
         var NULL = null;

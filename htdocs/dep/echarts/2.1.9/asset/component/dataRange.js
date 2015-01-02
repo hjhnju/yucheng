@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/component/dataRange', function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');

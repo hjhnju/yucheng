@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/shape/normalIsCover', function () {
     return function (x, y) {
         var originPos = this.getTansform(x, y);

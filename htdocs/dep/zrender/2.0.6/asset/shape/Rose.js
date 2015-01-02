@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Rose', function (require) {
     var Base = require('./Base');
     var Rose = function (options) {

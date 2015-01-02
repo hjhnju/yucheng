@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('common/XEmitter', function (require) {
     var Emitter = require('saber-emitter');
     var $ = require('jquery');

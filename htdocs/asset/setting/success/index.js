@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('setting/success/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');

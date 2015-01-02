@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('common/ui/Pager/Pager', function (require) {
     var XEmitter = require('common/XEmitter');
     var $ = require('jquery');

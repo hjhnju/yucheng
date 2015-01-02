@@ -1,24 +1,2 @@
-define('my/topup/index', function (require) {
-    var $ = require('jquery');
-    var header = require('common/header');
-    var Remoter = require('common/Remoter');
-    function init() {
-        header.init();
-        bindEvent();
-    }
-    function bindEvent() {
-        $('.topup-select-con-box').click(function () {
-            $('.topup-select-con-box').removeClass('current');
-            $(this).addClass('current');
-            $(this).find('.topup-select-ipt').prop('checked', true);
-        });
-        $('#pay').click(function () {
-            var value = $('#box-ipt').val();
-            if (!value) {
-                $('#topup-error').html('\u5145\u503C\u91D1\u989D\u4E0D\u80FD\u4E3A\u7A7A');
-                return;
-            }
-        });
-    }
-    return { init: init };
-});
+/*! 2015 Baidu Inc. All Rights Reserved */
+define("my/topup/index",function(require){function e(){i.init(),t()}function t(){n(".topup-select-con-box").click(function(){n(".topup-select-con-box").removeClass("current"),n(this).addClass("current"),n(this).find(".topup-select-ipt").prop("checked",!0)}),n("#pay").click(function(){var e=n("#box-ipt").val();if(!e)return void n("#topup-error").html("充值金额不能为空");else return void 0})}{var n=require("jquery"),i=require("common/header");require("common/Remoter")}return{init:e}});

@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('common/util', function () {
     function addCommas(x) {
         if (isNaN(x)) {

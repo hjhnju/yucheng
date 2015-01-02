@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/dep/excanvas3', function (require) {
     if (!document.createElement('canvas').getContext) {
         (function () {

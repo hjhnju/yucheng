@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/Handler', function (require) {
     'use strict';
     var config = require('./config');

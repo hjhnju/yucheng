@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/echarts', function (require) {
     var ecConfig = require('./config');
     var zrUtil = require('zrender/tool/util');

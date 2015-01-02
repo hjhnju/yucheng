@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/mixin/Transformable', function (require) {
     'use strict';
     var matrix = require('../tool/matrix');

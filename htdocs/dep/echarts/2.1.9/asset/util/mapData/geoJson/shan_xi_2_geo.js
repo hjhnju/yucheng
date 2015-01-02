@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/util/mapData/geoJson/shan_xi_2_geo', function () {
     return {
         'type': 'FeatureCollection',

@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/tool/env', function () {
     function detect(ua) {
         var os = this.os = {};

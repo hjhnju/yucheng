@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/loadingEffect/Spin', function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');

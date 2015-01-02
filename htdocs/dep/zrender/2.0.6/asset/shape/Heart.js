@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Heart', function (require) {
     'use strict';
     var Base = require('./Base');

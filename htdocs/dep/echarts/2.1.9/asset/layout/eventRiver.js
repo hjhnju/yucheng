@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('echarts/layout/eventRiver', function (require) {
     function eventRiverLayout(series, intervalX, area) {
         var space = 5;

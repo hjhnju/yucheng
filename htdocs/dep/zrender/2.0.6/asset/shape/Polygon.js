@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/shape/Polygon', function (require) {
     var Base = require('./Base');
     var smoothSpline = require('./util/smoothSpline');

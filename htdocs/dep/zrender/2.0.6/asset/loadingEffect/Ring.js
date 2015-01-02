@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('zrender/loadingEffect/Ring', function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');

@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define(function (require) {
     var CircleShape = require('zrender/shape/Circle');
     var LineShape = require('zrender/shape/Line');

@@ -1,3 +1,4 @@
+/*! 2015 Baidu Inc. All Rights Reserved */
 define('etpl/tpl', function (require, exports, module) {
     var etpl = require('.');
     return {
