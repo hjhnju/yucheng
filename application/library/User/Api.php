@@ -16,8 +16,9 @@ class User_Api{
         $logic   = new User_Logic_Login();
         $objUser = $logic->checkLogin();
         $userid  = is_object($objUser) ? $objUser->userid : 0;
-        Base_Log::notice(array(
-            'userid' => $userid,
+        Base_Log::debug(array(
+            'userid'   => $userid,
+            'username' => $objUser->name,
         ));
         return $objUser;
     }
