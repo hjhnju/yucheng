@@ -167,6 +167,6 @@ class User_Api{
      * @param string $strPasswd
      */
     public static function encrypt($strPasswd){
-        return Base_Util_Secure::encodeSand(self::PASSWD_KEY,$strPasswd,1);
+        return md5(self::PASSWD_KEY.$strPasswd);
     }
 }
