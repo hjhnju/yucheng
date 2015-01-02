@@ -5,14 +5,15 @@
  */
 class Base_Controller_Admin extends Base_Controller_Response {
     public function init() {
-        parent::init();
-    }
-    
-    public function checkLogin() {
+        // 定义的默认的action
+        $controller = $this->_request->controller;
+        $action = $this->_request->action;
+        $filename = 'modules/' . MODULE . '/actions/' . $controller . '/' . ucfirst($action) . '.php';
+        $actions = array(
+            $action => $filename,
+        );
+        $this->actions = $actions;
         
-    }
-    
-    public function getAdminId() {
-        return 1;
+        parent::init();
     }
 }
