@@ -1152,215 +1152,131 @@ p {
   font-size: 20px;
   color: #76cf65;
 }
-.extract {
-  padding: 20px 40px;
+.reward-rule {
+  padding: 20px;
   background-color: #f8f8f8;
-}
-.extract-title {
-  height: 30px;
-  border-bottom: 1px dashed #d3d3d3;
-  padding-bottom: 20px;
   margin-bottom: 20px;
-  font-size: 14px;
-  line-height: 30px;
-  *zoom: 1;
 }
-.extract-title:before,
-.extract-title:after {
-  display: table;
-  content: "";
-}
-.extract-title:after {
-  clear: both;
-}
-.extract-title-text {
-  float: left;
-  margin-right: 14px;
-  color: #333333;
-  line-height: 30px;
-}
-.extract-title-bank {
-  float: left;
-  width: 200px;
-  line-height: 30px;
-  background: url(../common/img/small_bank.png) 0 0 no-repeat;
-  padding-left: 24px;
-}
-.extract-title-bank.zhaoshang {
-  background-position: 0 4px;
-}
-.extract-title-bank.gongshang {
-  background-position: 0 -46px;
-}
-.extract-title-bank.youzheng {
-  background-position: 0px -96px;
-}
-.extract-title-bank.minsheng {
-  background-position: 0 -146px;
-}
-.extract-title-bank.jianshe {
-  background-position: 0 -199px;
-}
-.extract-title-bank.zhongguo {
-  background-position: 0 -246px;
-}
-.extract-title-bank.pufa {
-  background-position: 0 -295px;
-}
-.extract-title-bank.xingye {
-  background-position: 0 -346px;
-}
-.extract-title-bank.nongye {
-  background-position: 0 -396px;
-}
-.extract-title-bank.jiaotong {
-  background-position: 0 -446px;
-}
-.extract-title-bank.guangda {
-  background-position: 0 -496px;
-}
-.extract-title-bank.shanghai {
-  background-position: 0 -546px;
-}
-.extract-title-other {
-  float: right;
-  height: 26px;
-  border: 1px solid #d4d4d4;
-  background-color: #ededed;
-  padding: 1px 20px;
-  color: #333333;
-  text-decoration: none;
-  line-height: 26px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-.extract-title-other:hover {
-  background-color: #76cf65;
-  border-color: #76cf65;
-  color: #FFFFFF;
-}
-.extract-main-remind {
+.reward-rule-title {
   height: 30px;
   line-height: 30px;
+  font-size: 14px;
+  color: #333333;
+}
+.reward-main-list {
+  height: 26px;
+  line-height: 26px;
+  color: #333333;
+  padding-left: 10px;
+}
+.reward-main-list .round-span {
+  color: #333333;
+  margin-right: 5px;
+}
+.reward-main-list .rule-spam {
+  font-size: 14px;
   color: #f2736a;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-.extract-main-title {
-  height: 24px;
-  line-height: 24px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #333333;
-}
-.extract-main-box {
-  border-bottom: 1px dashed #d4d4d4;
-  padding-bottom: 30px;
-  margin-bottom: 10px;
-  *zoom: 1;
-}
-.extract-main-box:before,
-.extract-main-box:after {
-  display: table;
-  content: "";
-}
-.extract-main-box:after {
-  clear: both;
-}
-.extract-box-left {
-  float: left;
-  width: 120px;
-  margin-right: 10px;
-}
-.extract-left-text {
-  height: 40px;
-  line-height: 40px;
-  color: #333333;
-  font-size: 14px;
-  text-align: right;
-}
-.extract-box-right {
-  float: left;
-}
-.extract-right-money {
-  height: 40px;
-  line-height: 40px;
-  color: #333333;
-  font-size: 14px;
-  position: relative;
-}
-.extract-right-money .money-weight {
   font-weight: bold;
 }
-.ext-ipt {
-  width: 110px;
-  padding: 5px;
-  background-color: #FFFFFF;
-  border: 1px solid #efefef;
-  outline: none;
-  margin-right: 10px;
+.reward-type-box {
+  margin-bottom: 20px;
 }
-.get-sms {
-  display: inline-block;
-  background-color: #ededed;
-  border: 1px solid #d4d4d4;
-  width: 100px;
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  cursor: pointer;
-  font-size: 12px;
-}
-.get-sms-box {
-  background-color: #ffffff;
-  border: 1px solid #d4d4d4;
-  width: 100px;
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  font-size: 12px;
-  position: absolute;
-  top: 8px;
-  left: 135px;
-  display: none;
-}
-.success-sms {
-  display: none;
-}
-.button-link {
-  display: inline-block;
-  width: 70px;
-  text-align: center;
-  height: 28px;
-  line-height: 28px;
+.reward-type-box-title {
+  height: 32px;
+  line-height: 32px;
+  background: url(../common/img/number_icon.png) 0 0 no-repeat;
+  padding-left: 35px;
   font-size: 14px;
   color: #333333;
+}
+.reward-type-box-title.number-one {
+  background-position: 0 5px;
+}
+.reward-type-box-title.number-two {
+  background-position: 0 -45px;
+}
+.reward-type-box-text {
+  padding-left: 35px;
+  height: 28px;
+  line-height: 28px;
+  color: #333333;
+}
+.reward-type-box-text .reward-type-link-http {
+  color: #f2736a;
   text-decoration: none;
-  background-color: #ededed;
-  border: 1px solid #d4d4d4;
   margin-right: 10px;
+}
+.reward-type-box-text .reward-type-link-span {
+  padding: 7px 10px;
+  background-color: #76cf65;
+  color: #FFFFFF;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.erweima {
+  width: 126px;
+  height: 126px;
+  margin: 20px 0 0 65px;
+}
+.reward-type-two-text {
+  width: 260px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  color: #333333;
+}
+.reward-item {
+  border-top: 1px dashed #dedede;
+  padding-bottom: 30px;
+}
+.reward-item-table {
+  width: 100%;
+  text-align: center;
+}
+.reward-item-table tr th {
+  border-bottom: 1px solid #dedede;
+  height: 40px;
+  padding-left: 20px;
+  color: #a0a0a0;
+}
+.reward-item-table tr td {
+  height: 60px;
+  border-bottom: 1px dashed #dedede;
+  padding-left: 20px;
+  color: #333333;
+}
+.reward-item-table .jindu {
+  width: 70px;
+  height: 8px;
+  background-color: #cccccc;
+  margin: 0 auto;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.reward-item-table .jindu .within {
+  min-width: 10px;
+  background-color: #76cf65;
+  height: 8px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.reward-item-table .text-align {
+  text-align: left;
+}
+.reward-item-table .table-tr-span {
+  padding: 7px 10px;
+  background-color: #76cf65;
+  color: #FFFFFF;
+  cursor: pointer;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-.button-link:hover,
-.button-link.current {
-  color: #FFFFFF;
-  background-color: #76cf65;
-  border-color: #76cf65;
-}
-.extract-main-bottom-title {
-  height: 30px;
-  line-height: 30px;
-  font-size: 18px;
-  color: #333333;
-  margin-bottom: 10px;
-}
-.extract-main-bottom-text {
-  padding-left: 10px;
-  height: 24px;
-  line-height: 24px;
-  color: #333333;
-  font-size: 12px;
+.reward-item-table .table-tr-span.current {
+  cursor: default;
+  background-color: #cccccc;
 }
