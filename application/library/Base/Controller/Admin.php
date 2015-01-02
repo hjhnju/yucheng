@@ -4,7 +4,11 @@
  * @author jiangsongfang
  */
 class Base_Controller_Admin extends Base_Controller_Response {
+    protected $loginUrl = '/admin/login';
+    
     public function init() {
+        parent::init();
+        
         // 定义的默认的action
         $controller = $this->_request->controller;
         $action = $this->_request->action;
@@ -13,7 +17,5 @@ class Base_Controller_Admin extends Base_Controller_Response {
             $action => $filename,
         );
         $this->actions = $actions;
-        
-        parent::init();
     }
 }
