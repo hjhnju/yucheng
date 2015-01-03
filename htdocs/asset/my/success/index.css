@@ -211,26 +211,11 @@ p{margin:0;padding:0}
 .return{display:block;position:absolute;right:-30px;top:10px;color:#333;font-size:14px;width:60px;height:24px;line-height:24px;padding-left:30px;text-decoration:none;background:url(../common/img/return_icon.png) 0 center no-repeat}
 .return:hover{color:#76cf65}
 .fen{font-size:20px;color:#76cf65}
-.reward-rule{padding:20px;background-color:#f8f8f8;margin-bottom:20px}
-.reward-rule-title{height:30px;line-height:30px;font-size:14px;color:#333}
-.reward-main-list{height:26px;line-height:26px;color:#333;padding-left:10px}
-.reward-main-list .round-span{color:#333;margin-right:5px}
-.reward-main-list .rule-spam{font-size:14px;color:#f2736a;font-weight:700}
-.reward-type-box{margin-bottom:20px}
-.reward-type-box-title{height:32px;line-height:32px;background:url(../common/img/number_icon.png) 0 0 no-repeat;padding-left:35px;font-size:14px;color:#333}
-.reward-type-box-title.number-one{background-position:0 5px}
-.reward-type-box-title.number-two{background-position:0 -45px}
-.reward-type-box-text{padding-left:35px;height:28px;line-height:28px;color:#333}
-.reward-type-box-text .reward-type-link-http{color:#f2736a;text-decoration:none;margin-right:10px}
-.reward-type-box-text .reward-type-link-span{padding:7px 10px;background-color:#76cf65;color:#fff;cursor:pointer;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
-.erweima{width:126px;height:126px;margin:20px 0 0 65px}
-.reward-type-two-text{width:260px;text-align:center;height:30px;line-height:30px;color:#333}
-.reward-item{border-top:1px dashed #dedede;padding-bottom:30px}
-.reward-item-table{width:100%;text-align:center}
-.reward-item-table tr th{border-bottom:1px solid #dedede;height:40px;padding-left:20px;color:#a0a0a0}
-.reward-item-table tr td{height:60px;border-bottom:1px dashed #dedede;padding-left:20px;color:#333}
-.reward-item-table .jindu{width:70px;height:8px;background-color:#ccc;margin:0 auto;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
-.reward-item-table .jindu .within{min-width:10px;background-color:#76cf65;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
-.reward-item-table .text-align{text-align:left}
-.reward-item-table .table-tr-span{padding:7px 10px;background-color:#76cf65;color:#fff;cursor:pointer;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.reward-item-table .table-tr-span.current{cursor:default;background-color:#ccc}
+.success-pic{height:102px;background:url(../common/img/success.png) center center no-repeat;margin:20px 0}
+.success-text{height:30px;line-height:30px;font-size:24px;color:#76cf65;text-align:center}
+.success-box-time{text-align:center;height:20px;line-height:20px}
+.success-box-time .success-link{text-decoration:none;color:#76cf65}
+.success{background-color:#efefef}
+.kaitong-box{padding:50px;min-height:450px}
+.changephone-box{background-color:#fff;padding:30px 70px 100px}
+.color-red{color:#f2736a}

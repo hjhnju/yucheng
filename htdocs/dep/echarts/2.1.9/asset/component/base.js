@@ -1,4 +1,12 @@
-define('echarts/component/base', function (require) {
+define('echarts/component/base', [
+    'require',
+    '../config',
+    '../util/ecData',
+    '../util/ecQuery',
+    '../util/number',
+    'zrender/tool/util',
+    'zrender/tool/env'
+], function (require) {
     var ecConfig = require('../config');
     var ecData = require('../util/ecData');
     var ecQuery = require('../util/ecQuery');

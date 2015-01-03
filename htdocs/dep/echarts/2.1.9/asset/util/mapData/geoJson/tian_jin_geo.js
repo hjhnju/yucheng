@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/tian_jin_geo', function () {
+define('echarts/util/mapData/geoJson/tian_jin_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

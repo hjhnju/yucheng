@@ -1,4 +1,9 @@
-define('etpl/tpl', function (require, exports, module) {
+define('etpl/tpl', [
+    'require',
+    'exports',
+    'module',
+    '.'
+], function (require, exports, module) {
     var etpl = require('.');
     return {
         load: function (resourceId, req, load) {

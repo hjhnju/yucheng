@@ -3,7 +3,7 @@
 .ui-pager-box:before,.ui-pager-box:after{display:table;content:""}
 .ui-pager-box:after{clear:both}
 .ui-pager-box .ui-pager-item{float:left;padding:6px 10px;border:1px solid #ccc;margin:30px 10px 30px 0;color:#000;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.ui-pager-box .ui-pager-item:hover,.ui-pager-box .ui-pager-item.current{background-color:#76cf65;color:#FFF;border-color:#76cf65}
+.ui-pager-box .ui-pager-item:hover,.ui-pager-box .ui-pager-item.current{background-color:#76cf65;color:#fff;border-color:#76cf65}
 .ui-pager-box .ui-pager-select.current{cursor:default}
 /*!
 * Datepicker for Bootstrap
@@ -51,13 +51,13 @@ p{margin:0;padding:0}
 .header-left-attention .attention-me{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
 .header-left-attention .attention-me.xinlang{background-position:0 -50px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
-.header-left-attention .xinlang-erweima{width:200px;height:200px;position:absolute;left:-88px;top:27px;background-color:#FFF;z-index:5;border:1px solid #ccc;display:none}
+.header-left-attention .xinlang-erweima{width:200px;height:200px;position:absolute;left:-88px;top:27px;background-color:#fff;z-index:5;border:1px solid #ccc;display:none}
 .header-left-attention .xinlang-erweima.current{display:block}
 .header-left-attention .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:90px;top:-8px}
-.header-left-attention .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #FFF;left:90px;top:-6px}
+.header-left-attention .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:90px;top:-6px}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
-.header-right-default .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.header-right-default .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:200px;height:60px;display:block;margin-right:16px}
 .nav-item{float:left;margin-top:24px;*zoom:1}
@@ -105,20 +105,20 @@ p{margin:0;padding:0}
 .jindu-box{width:70px;height:8px;background-color:#ccc;float:left;margin:28px 10px 0 0;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-box .jindu-box-inline{min-width:10%;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-number{float:left}
-.name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#FFF;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#fff;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .school{text-align:left;float:left;width:154px;overflow:hidden;color:#323232;font-size:14px}
 .lilv-number{font-size:16px;color:#f2736a;font-weight:700}
 .lilv-number.color-blank{color:#000}
 .lilv-bai{font-size:12px;color:#949494}
-.status-biding{display:inline-block;width:80px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#FFF;margin-top:18px;background-color:#76cf65;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.status-biding:hover{background-color:#2c9818;color:#FFF}
+.status-biding{display:inline-block;width:80px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#fff;margin-top:18px;background-color:#76cf65;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.status-biding:hover{background-color:#2c9818;color:#fff}
 .status-biding.current{color:#666;background-color:#e5e5e5}
 .investlist-more{display:block;text-decoration:none;height:30px;line-height:30px;margin-top:20px;text-align:center;color:#999;font-size:14px}
 .pager{*zoom:1;width:460px;margin:40px auto 0}
 .pager:before,.pager:after{display:table;content:""}
 .pager:after{clear:both}
 .pager-link{float:left;padding:6px 10px;border:1px solid #ccc;margin-right:10px;color:#000;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.pager-link:hover,.pager-link.current{background-color:#76cf65;color:#FFF;border-color:#76cf65}
+.pager-link:hover,.pager-link.current{background-color:#76cf65;color:#fff;border-color:#76cf65}
 .pager-span{float:left;padding:6px 10px;border:1px solid #ccc;margin-right:10px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .xjd-loading{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../../common/css/img/loading.gif) no-repeat center center}
 .xjd-error{position:absolute;top:0;left:0;right:0;bottom:0;vertical-align:middle;text-align:center}
@@ -170,20 +170,20 @@ p{margin:0;padding:0}
 .project-time{height:70px;padding:0 20px;border:1px solid #dfdfdf;background-color:#f8f8f8;margin-bottom:20px}
 .project-time-start{line-height:70px;font-size:14px;color:#333;margin-right:90px}
 .project-main .showproject-main,.project-main .showfile-main,.project-main .showrecord-main{display:block}
-.project-main.project .showproject{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #FFF;margin-bottom:-1px;color:#76cf65;line-height:40px}
+.project-main.project .showproject{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #fff;margin-bottom:-1px;color:#76cf65;line-height:40px}
 .project-main.project .showproject-main{display:block}
 .project-main.project .showfile-main,.project-main.project .showrecord-main{display:none}
-.project-main.file .showfile{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #FFF;margin-bottom:-1px;color:#76cf65;line-height:40px}
+.project-main.file .showfile{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #fff;margin-bottom:-1px;color:#76cf65;line-height:40px}
 .project-main.file .showfile-main{display:block}
 .project-main.file .showproject-main,.project-main.file .showrecord-main{display:none}
-.project-main.record .showrecord{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #FFF;margin-bottom:-1px;color:#76cf65;line-height:40px}
+.project-main.record .showrecord{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #fff;margin-bottom:-1px;color:#76cf65;line-height:40px}
 .project-main.record .showrecord-main{display:block}
 .project-main.record .showproject-main,.project-main.record .showfile-main{display:none}
 .project-main-title{border-bottom:1px solid #dfdfdf;margin-bottom:30px;*zoom:1}
 .project-main-title:before,.project-main-title:after{display:table;content:""}
 .project-main-title:after{clear:both}
 .main-title-box{float:left;cursor:pointer;height:44px;line-height:44px;color:#333;font-size:14px;width:120px;text-align:center}
-.title-current{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #FFF;margin-bottom:-1px;color:#76cf65;line-height:40px}
+.title-current{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #fff;margin-bottom:-1px;color:#76cf65;line-height:40px}
 .main-box-details{display:none}
 .main-box-detail-title{width:96px;height:28px;border-left:4px solid #76cf65;line-height:28px;text-align:center;background-color:#f1f1f1;color:#76cf65;font-size:14px;margin-bottom:20px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .main-detail-content{*zoom:1}
@@ -246,7 +246,7 @@ p{margin:0;padding:0}
 .right-top-btn{height:34px;*zoom:1}
 .right-top-btn:before,.right-top-btn:after{display:table;content:""}
 .right-top-btn:after{clear:both}
-.right-top-btn .right-top-btn-confirm{float:left;width:170px;line-height:34px;background-color:#76cf65;color:#FFF;text-decoration:none;font-size:14px;text-align:center;cursor:pointer;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.right-top-btn .right-top-btn-confirm{float:left;width:170px;line-height:34px;background-color:#76cf65;color:#fff;text-decoration:none;font-size:14px;text-align:center;cursor:pointer;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .right-top-btn .right-top-btn-confirm.confirm-all{width:80px;background-color:#f2736a;float:right;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .right-bottom-title{height:30px;*zoom:1}
 .right-bottom-title:before,.right-bottom-title:after{display:table;content:""}
@@ -276,7 +276,7 @@ p{margin:0;padding:0}
 .item-last{border-bottom:none}
 table{border-top:1px solid #ededed}
 table tr{height:30px;padding-left:20px}
-table tr.color-white{background-color:#FFF}
+table tr.color-white{background-color:#fff}
 table tr.color-hui{background-color:#f8f8f8}
 table tr td{padding-left:20px}
 .right-box-top{background-color:#f8f8f8;padding:30px 0 30px 30px;border:1px solid #dedede}

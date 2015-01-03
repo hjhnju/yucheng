@@ -1,4 +1,4 @@
-define('echarts/util/ecData', function () {
+define('echarts/util/ecData', [], function () {
     function pack(shape, series, seriesIndex, data, dataIndex, name, special, special2) {
         var value;
         if (typeof data != 'undefined') {
