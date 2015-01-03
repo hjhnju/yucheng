@@ -1,0 +1,51 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/contact/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/common/common'], function(main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="container company">
+    {%include file="common/menu.phtml" current="5"%}
+    <div class="company-box">
+        <div class="company-part-title">
+            <h2 class="company-part-titlectx">联系我们</h2>
+        </div>
+        <div class="company-address">
+            <img src="http://api.map.baidu.com/staticimage?center=银丰大厦&markers=银丰大厦&width=740&height=370&zoom=15" />
+        </div>
+        <div class="company-address-intro">
+            <div class="company-address-intro-left">
+                <div class="company-address-title">公司总部</div>
+                <div class="company-address-ctx">
+                    地址：北京市海淀区苏州街20号银丰大厦907
+                </div>
+                <div class="company-address-ctx">
+                    邮编：100080
+                </div>
+            </div>
+            <div class="company-address-intro-left">
+                <div class="company-address-title">客服服务</div>
+                <div class="company-address-ctx">
+                    客服热线：400 xxx xxxx(免长途费)，周一至周日8:00-22:00
+                </div>
+                <div class="company-address-ctx">
+                    在线客服：点击在线客服按钮与客服进行即时在线沟通
+                </div>
+                <div class="company-address-ctx">
+                    客服邮箱：kefu@xingjiaodai.com
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}
