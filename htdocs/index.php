@@ -22,10 +22,11 @@ if($intPos !== false){
 $params  = explode('/', $uri);
 $module  = empty($params[1]) ? 'Index' : ucfirst(strtolower($params[1]));
 $module  = in_array($module, array('I')) ? 'Awards' : $module;
+$module  = in_array($module, $modules) ? $module : 'Index';
 define('MODULE', $module);
 
 $conf    = $conf->toArray();
-if (in_array($module, $modules) && $module !== 'Index') {
+if ($module !== 'Index') {
     //设置module相关常量
     define('MODULE_PATH', APP_PATH . '/application/modules/' . $module);
     define('MODULE_CONF_PATH', MODULE_PATH . '/conf');
