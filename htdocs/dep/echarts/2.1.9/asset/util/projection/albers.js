@@ -1,4 +1,4 @@
-define('echarts/util/projection/albers', [], function () {
+define('echarts/util/projection/albers', function () {
     function _albers() {
         var radians = Math.PI / 180;
         var origin = [

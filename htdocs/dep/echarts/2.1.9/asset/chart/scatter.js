@@ -1,17 +1,4 @@
-define('echarts/chart/scatter', [
-    'require',
-    '../component/base',
-    './base',
-    '../util/shape/Symbol',
-    '../component/axis',
-    '../component/grid',
-    '../component/dataZoom',
-    '../component/dataRange',
-    '../config',
-    'zrender/tool/util',
-    'zrender/tool/color',
-    '../chart'
-], function (require) {
+define('echarts/chart/scatter', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var SymbolShape = require('../util/shape/Symbol');

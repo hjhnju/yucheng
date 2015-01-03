@@ -1,1 +1,1 @@
-define("setting/select3rd/index",["require","jquery","common/Remoter"],function(require){function e(){}require("jquery"),require("common/Remoter");return{init:e}});
+define("setting/select3rd/index",function(require){function e(){}require("jquery"),require("common/Remoter");return{init:e}});

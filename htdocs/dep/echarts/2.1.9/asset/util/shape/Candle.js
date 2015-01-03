@@ -1,9 +1,4 @@
-define('echarts/util/shape/Candle', [
-    'require',
-    'zrender/shape/Base',
-    'zrender/tool/util',
-    './normalIsCover'
-], function (require) {
+define('echarts/util/shape/Candle', function (require) {
     var Base = require('zrender/shape/Base');
     var zrUtil = require('zrender/tool/util');
     function Candle(options) {

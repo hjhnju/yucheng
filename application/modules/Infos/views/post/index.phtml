@@ -8,8 +8,8 @@
 <script>
     require(['company/infos/index'], function(main) {
         main.init({
-            pageall: '{%$pageall%}',
-            page: '{%$page%}'
+            pageall: '{%$data.pageall%}',
+            page: '{%$data.page%}'
         });
     });
 </script>
@@ -24,7 +24,7 @@
         </div>
         <div id="infos-list">
             <ul class="infos-list">
-                {%foreach $list as $key => $item%}
+                {%foreach $data.list as $key => $item%}
                 <li class="infos-item">
                     <span class="infos-dot">•</span>
                     <div class="infos-box">

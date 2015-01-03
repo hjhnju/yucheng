@@ -1,9 +1,4 @@
-define('zrender/shape/Star', [
-    'require',
-    '../tool/math',
-    './Base',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Star', function (require) {
     var math = require('../tool/math');
     var sin = math.sin;
     var cos = math.cos;

@@ -1,1 +1,1 @@
-define("company/detail/index",[],function(){return{}});
+define("company/detail/index",function(){return{}});
