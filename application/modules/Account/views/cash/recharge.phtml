@@ -1,0 +1,122 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/topup/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/topup/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='../../../views/common/nav.phtml' current="3"%}
+        <div class="finish-main">
+            <div class="finish-main-title">充值
+                <a class="return" href="###">返回</a>
+            </div>
+            <div class="extract topup">
+                <div class="topup-main">
+                    <div class="topup-main-select">
+                        <div class="topup-main-select-title">选择充值网银</div>
+                        <div class="topup-select-content">
+                            <div class="topup-select-con-box current zhaoshang">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" checked="true" data-value="1" />
+                            </div>
+                            <div class="topup-select-con-box gongshang">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="2"/>
+                            </div>
+                            <div class="topup-select-con-box youzheng">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="3"/>
+                            </div>
+                            <div class="topup-select-con-box minsheng">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="4"/>
+                            </div>
+                            <div class="topup-select-con-box jianshe">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="5"/>
+                            </div>
+                            <div class="topup-select-con-box zhongguo">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="6"/>
+                            </div>
+                            <div class="topup-select-con-box pufa">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="7"/>
+                            </div>
+                            <div class="topup-select-con-box xingye">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="8"/>
+                            </div>
+                            <div class="topup-select-con-box nongye">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="9"/>
+                            </div>
+                            <div class="topup-select-con-box jiaotong">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="10"/>
+                            </div>
+                            <div class="topup-select-con-box guangda">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="11"/>
+                            </div>
+                            <div class="topup-select-con-box shanghai">
+                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="12"/>
+                            </div>
+                        </div>
+                        <div class="topup-select-prompt">
+                            <div class="topup-prompt-title">请关注您的充值金额是否超限:</div>
+                            <div class="topup-prompt-box">
+                                <table border="0" cellpadding="0" cellspacing="0" class="top-prompt-table">
+                                    <tr>
+                                        <td>单笔限额(元)</td>
+                                        <td>每日限额(元)</td>
+                                        <td>需要满足条件</td>
+                                        <td>备注</td>
+                                    </tr>
+                                    <tr>
+                                        <td>500</td>
+                                        <td>500</td>
+                                        <td>开通大众版网上银行</td>
+                                        <td rowspan="2">开通专业版网上银行</td>
+                                    </tr>
+                                    <tr>
+                                        <td>无限额</td>
+                                        <td>无限额</td>
+                                        <td>开通大众版网上银行</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="topop-money">
+                            <div class="topop-money-box">
+                                <div class="topop-money-box-text">输入充值金额</div>
+                                <div class="topop-money-box-right">
+                                    <input class="topup-money-box-ipt" type="text" id="box-ipt" />
+                                </div>
+                                <div class="topup-money-box-error" id="topup-error"></div>
+                            </div>
+                            <div class="topop-money-box">
+                                <div class="topop-money-box-text"></div>
+                                <div class="topop-money-box-right right-link">
+                                    <a class="topop-money-box-link" href="###" id="pay">充值</a>
+                                    <a class="topop-money-box-link" href="###">返回</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="extract-main-bottom">
+                        <div class="extract-main-bottom-title">温馨提示：</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{%/block%}

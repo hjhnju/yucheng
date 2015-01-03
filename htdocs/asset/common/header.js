@@ -1,4 +1,9 @@
-define('common/header', function (require) {
+define('common/header', [
+    'require',
+    'jquery',
+    'etpl',
+    './common.tpl'
+], function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var tpl = require('./common.tpl');

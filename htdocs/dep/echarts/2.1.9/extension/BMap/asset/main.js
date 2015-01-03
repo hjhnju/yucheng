@@ -1,4 +1,4 @@
-define(function (require) {
+define(['require'], function (require) {
     function BMapExt(obj, BMap, ec) {
         this._init(obj, BMap, ec);
     }

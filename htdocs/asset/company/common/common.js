@@ -1,1 +1,1 @@
-define("company/common/common",function(require){function e(){t.init()}var t=require("common/header");return{init:e}});
+define("company/common/common",["require","common/header"],function(require){function e(){t.init()}var t=require("common/header");return{init:e}});

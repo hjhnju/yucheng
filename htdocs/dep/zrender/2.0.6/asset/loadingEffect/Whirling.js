@@ -1,4 +1,12 @@
-define('zrender/loadingEffect/Whirling', function (require) {
+define('zrender/loadingEffect/Whirling', [
+    'require',
+    './Base',
+    '../tool/util',
+    '../tool/area',
+    '../shape/Ring',
+    '../shape/Droplet',
+    '../shape/Circle'
+], function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
     var zrArea = require('../tool/area');

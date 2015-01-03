@@ -112,11 +112,11 @@ exports.getLocations = function () {
                     '/msg/read',
                     '/user/imagecode/getimage',
                     '/invest/tender',
-                    '/account/cash/list',
-                    '/infos/post/list',
-                    '/account/cash/recharge',
-                    '/account/cash/withdraw',
-                    '/account/cash/list'
+                    '/account/cashapi/recharge',
+                    '/account/cashapi/withdraw',
+                    '/account/cashapi/list',
+                    '/infos/post/list'
+
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
