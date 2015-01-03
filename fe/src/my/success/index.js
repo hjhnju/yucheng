@@ -19,7 +19,6 @@ define(function (require) {
 
     function changeEmail() {
 
-
         var timer;
         var value = 6;
 
