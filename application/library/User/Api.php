@@ -6,8 +6,6 @@ class User_Api{
     
     const LAST_TIME = 5;     //验证码过期时间,5分钟
     
-    const PASSWD_KEY = 'fjwwjo123977!2318';   //对passwd加密的密钥
-    
     /** 
      * User_Api::checkLogin()
      * 判断登陆状态，获取用户Object
@@ -161,13 +159,5 @@ class User_Api{
             'type' => $strType
         ));
         return $bolRet;
-    }
-    
-    /**
-     * 对密码字符串进行加密
-     * @param string $strPasswd
-     */
-    public static function encrypt($strPasswd){
-        return md5(self::PASSWD_KEY.$strPasswd);
     }
 }

@@ -25,6 +25,22 @@ class PostController extends Base_Controller_Page {
         Base_Log::notice($ret);
         $this->getView()->assign('data', $ret);
     }
+    
+    /**
+     * 公告列表每页数据
+     *
+     * /infos/post/list
+     * @param   $page, MUST, [1,-), index of page
+     * @return  json data=>array('page', 'pagesize', 'pageall', 'list', 'total')
+     */
+    public function listAction() {
+        $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
+        $pagesize = 10;
+        $logic    = new Infos_Logic_Post();
+        $ret      = $logic->getList($page, $pagesize);
+        Base_Log::notice($ret);
+        $this->ajax($ret);
+    }
 
     /**
      * 公告详情页
