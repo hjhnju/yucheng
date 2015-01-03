@@ -1,4 +1,28 @@
-define('echarts/chart/map', function (require) {
+define('echarts/chart/map', [
+    'require',
+    '../component/base',
+    './base',
+    'zrender/shape/Text',
+    'zrender/shape/Path',
+    'zrender/shape/Circle',
+    'zrender/shape/Rectangle',
+    'zrender/shape/Line',
+    'zrender/shape/Polygon',
+    'zrender/shape/Ellipse',
+    '../component/dataRange',
+    '../component/roamController',
+    '../config',
+    '../util/ecData',
+    'zrender/tool/util',
+    'zrender/config',
+    'zrender/tool/event',
+    '../util/mapData/params',
+    '../util/mapData/textFixed',
+    '../util/mapData/geoCoord',
+    '../util/projection/svg',
+    '../util/projection/normal',
+    '../chart'
+], function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var TextShape = require('zrender/shape/Text');

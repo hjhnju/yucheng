@@ -79,6 +79,7 @@ class User_Logic_Regist{
      * @return $userid | false
      */
     public function regist($username, $passwd, $phone, $inviter = ''){
+        $passwd = Base_Util_Secure::encrypt($passwd);
         $objLogin         = new User_Object_Login();
         $objLogin->name   = $username;
         $objLogin->passwd = $passwd;

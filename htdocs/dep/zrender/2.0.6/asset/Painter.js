@@ -1,4 +1,13 @@
-define('zrender/Painter', function (require) {
+define('zrender/Painter', [
+    'require',
+    './config',
+    './tool/util',
+    './tool/log',
+    './tool/matrix',
+    './loadingEffect/Base',
+    './mixin/Transformable',
+    './shape/Image'
+], function (require) {
     'use strict';
     var config = require('./config');
     var util = require('./tool/util');

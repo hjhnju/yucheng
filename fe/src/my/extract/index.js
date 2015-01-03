@@ -146,11 +146,7 @@ define(function (require) {
 
         });
 
-
-
-
     }
-
 
 
     return {

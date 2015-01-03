@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/xiang_gang_geo', function () {
+define('echarts/util/mapData/geoJson/xiang_gang_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [{

@@ -1,4 +1,7 @@
-define('echarts/data/Graph', function (require) {
+define('echarts/data/Graph', [
+    'require',
+    'zrender/tool/util'
+], function (require) {
     var util = require('zrender/tool/util');
     'use strict';
     var Graph = function (directed) {
