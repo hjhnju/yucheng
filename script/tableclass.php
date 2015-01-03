@@ -3,9 +3,10 @@ $host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
 $user      = 'xingjiaodai';
 $pass      = 'xingjiaodai';
 $dbname    = 'xjd';
-$tb_pre    = 'infos';
-$save_path = '/Users/hejunhua/Dev/yucheng/application/library/Infos';
-$author    = 'hejunhua';
+$module    = 'invest';
+$lib_path  = '/Users/jiangsongfang/Documents/website/yucheng/application/library/';
+$author    = 'jiangsongfang';
+$save_path = $lib_path . ucfirst($module);
 
 if(!file_exists($save_path)){
     mkdir($save_path, 0775); 
@@ -32,19 +33,28 @@ function getAll($sql) {
 
 $types = array(
 	'int' => 'integer',
-	'varchar' => 'string',
 	'tinyint' => 'integer',
 	'bigint' => 'integer',
 	'smallint' => 'integer',
+	'mediumint' => 'integer',
 	'decimal' => 'number',
+	'float' => 'number',
+	'double' => 'number',
+	'real' => 'number',
+	'varchar' => 'string',
+	'char' => 'string',
+	'tinytext' => 'string',
 	'text' => 'string',
+	'mediumtext' => 'string',
+	'longtext' => 'string',
 	'timestamp' => 'string',
 	'date' => 'string',
+	'blob' => 'string',
 );
 
 $sql = "select * from information_schema.tables where table_schema='$dbname'";
-if (!empty($tb_pre)) {
-	$sql .= " and table_name like '%$tb_pre%'";
+if (!empty($module)) {
+	$sql .= " and table_name like '%$module%'";
 }
 $tables = getAll($sql);
 //mysql_select_db('information_schema');
@@ -52,15 +62,15 @@ foreach($tables as $table) {
 	$tbname = $table['TABLE_NAME'];
 	$sql = "select * from information_schema.columns where table_schema='$dbname' and table_name='$tbname'";
 	$columns = getAll($sql);
-	$tb = str_replace($tb_pre . '_', '', $tbname);
+	$tb = str_replace($module . '_', '', $tbname);
 	dumpClass($table, $tb, $columns);
 	dumpList($table, $tb, $columns);
 }
 
 function dumpClass($table, $tb, $columns) {
-	global $save_path, $tb_pre, $tb_class, $types;
+	global $save_path, $module, $tb_class, $types, $author;
 	$tbname = $table['TABLE_NAME'];
-	$tbclass = ucfirst($tb_pre) . '_Object_' . ucfirst($tb);
+	$tbclass = ucfirst($module) . '_Object_' . ucfirst($tb);
 	$content = '<?php';
 	$content .= "\n";
 	$content .= "/**\n";
@@ -182,9 +192,10 @@ function dumpClass($table, $tb, $columns) {
 }
 
 function dumpList($table, $tb, $columns) {
-	global $save_path, $tb_pre, $tb_class, $types;
+	global $save_path, $module, $tb_class, $types, $author;
 	$tbname = $table['TABLE_NAME'];
-	$tbclass = ucfirst($tb_pre) . '_List_' . ucfirst($tb);
+	$tbclass = ucfirst($module) . '_List_' . ucfirst($tb);
+	$objclass = ucfirst($module) . '_Object_' . ucfirst($tb);
 	$content = '<?php';
 	$content .= "\n";
 	$content .= "/**\n";
@@ -248,10 +259,21 @@ function dumpList($table, $tb, $columns) {
 	$content .= "    protected \$intProps = array(\n$intstr    );\n";
 	$content .= "\n";
 	
+	$intstr = implode("", $intary);
+	$content .= "    /**\n";
+	$content .= "     * 获取数据的对象数组\n";
+	$content .= "     * @return array|{$objclass}[]\n";
+	$content .= "     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象\n";
+	$content .= "     */\n";
+	$content .= "    public function getObjects() {\n";
+	$content .= "        return parent::getObjects('$objclass');\n";
+	$content .= "    }\n";
+	$content .= "\n";
+	
 	$content .= "}";
 	$filename = $save_path . '/List/' . ucfirst($tb) . ".php";
 	file_put_contents($filename, $content);
-	echo $content;
+	//echo $content;
 	echo "\nsaved to $filename\n";
 }
 

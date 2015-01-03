@@ -15,12 +15,17 @@ exports.getProcessors = function () {
             'src/my/account/index.less',
             'src/my/safe/index.less',
             'src/my/message/index.less',
+            'src/my/reward/index.less',
+            'src/my/extract/index.less',
+            'src/my/operation/index.less',
+            'src/my/topup/index.less',
             'src/project/detail/index.less',
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
-            'src/setting/select3rd/index.less'
+            'src/setting/select3rd/index.less',
+            'src/home/index.less'
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -31,12 +36,17 @@ exports.getProcessors = function () {
             'src/my/account/index.less',
             'src/my/safe/index.less',
             'src/my/message/index.less',
+            'src/my/reward/index.less',
+            'src/my/extract/index.less',
+            'src/my/operation/index.less',
+            'src/my/topup/index.less',
             'src/project/detail/index.less',
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
-            'src/setting/select3rd/index.less'
+            'src/setting/select3rd/index.less',
+            'src/home/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -48,12 +58,17 @@ exports.getProcessors = function () {
             'src/my/account/index.js',
             'src/my/invest/index.js',
             'src/my/message/index.js',
+            'src/my/reward/index.js',
+            'src/my/extract/index.js',
+            'src/my/operation/index.js',
+            'src/my/topup/index.js',
             'src/project/detail/index.js',
             'src/project/list/index.js',
             'src/setting/chpassword/index.js',
             'src/setting/phone/index.js',
             'src/setting/email/index.js',
-            'src/setting/select3rd/index.js'
+            'src/setting/select3rd/index.js',
+            'src/home/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
@@ -69,11 +84,11 @@ exports.getProcessors = function () {
     var addCopyright = new AddCopyright();
 
     return {
-        'default': [ lessProcessor, html2JsProcessor, moduleProcessor,
+        'release': [ lessProcessor, html2JsProcessor, moduleProcessor,
             html2jsClearPorcessor, pathMapperProcessor ],
-        'release': [
+        'default': [
             lessProcessor, cssProcessor, html2JsProcessor, moduleProcessor,
-            html2jsClearPorcessor, jsProcessor, pathMapperProcessor, addCopyright
+            html2jsClearPorcessor, jsProcessor, pathMapperProcessor
         ]
     };
 };

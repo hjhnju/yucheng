@@ -28,10 +28,58 @@
     width: 150px;
     height: 40px;
     border: 1px solid #ededed;
-    background: url(../common/img/bank.png) 30px center no-repeat;
+    background: url(../common/img/bank.png) 0 0 no-repeat;
     background-color: #FFFFFF;
     margin: 0 20px 20px 0;
     cursor: pointer;
+
+    &.zhaoshang {
+        background-position: 30px 6px;
+    }
+
+    &.gongshang {
+        background-position: 30px -99px;
+    }
+
+    &.youzheng {
+        background-position: 30px -196px;
+    }
+
+    &.minsheng {
+        background-position: 30px -298px;
+    }
+
+    &.jianshe {
+        background-position: 30px -399px;
+    }
+
+    &.zhongguo {
+        background-position: 30px -497px;
+    }
+
+    &.pufa {
+        background-position: 30px -595px;
+    }
+
+    &.xingye {
+        background-position: 30px -698px;
+    }
+
+    &.nongye {
+        background-position: 30px -797px;
+    }
+
+    &.jiaotong {
+        background-position: 30px -897px;
+    }
+
+    &.guangda {
+        background-position: 30px -998px;
+    }
+
+    &.shanghai {
+        background-position: 30px -1097px;
+    }
 
     &.current {
         border-color: @color-red;
@@ -105,6 +153,7 @@
         padding-left: 10px;
         border: none;
         outline: none;
+        border-color: #FFFFFF;
     }
     .topop-money-box-link {
         width: 68px;

@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/hu_nan_geo', [], function () {
+define('echarts/util/mapData/geoJson/hu_nan_geo', function () {
     return {
         'type': 'FeatureCollection',
         'features': [

@@ -1,12 +1,1 @@
-define('home/index', [
-    'require',
-    'jquery',
-    'common/header'
-], function (require) {
-    var $ = require('jquery');
-    function init() {
-        var header = require('common/header');
-        header.init();
-    }
-    return { init: init };
-});
+define("home/index",function(require){function e(){var e=require("common/header");e.init()}require("jquery");return{init:e}});

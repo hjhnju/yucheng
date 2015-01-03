@@ -1,6 +1,159 @@
-<html>
-<head><title>我是测试页面</title></head>
-<body>
-<p>您好，苏州街 {%$street%} 号</p>
-</body>
-</html>
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/home/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['home/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="banner">
+    <div class="container">
+        <div class="banner-floation"></div>
+        <div class="banner-select">
+            <a href="###" class="banner-select-link current">●</a>
+            <a href="###" class="banner-select-link">●</a>
+            <a href="###" class="banner-select-link">●</a>
+        </div>
+    </div>
+
+</div>
+<div class="introduce">
+    <div class="container">
+        <div class="introduce-left">
+            <div class="introduce-left-title"><span>兴教贷</span>是什么?</div>
+            <div class="introduce-left-text">兴教贷是国内首家专注于教育平台的投融资公司兴教贷是国内首家专注于教育平台的投融资公司兴教贷是国内首家专注于教育平台的投融资公司。<a href="###">查看更多></a></div>
+        </div>
+        <div class="introduce-right">
+            <div class="introduce-right-list">
+                <div class="introduce-list-logo income"></div>
+                <div class="introduce-list-title">低门槛高收入</div>
+                <p class="introduce-list-link-text">互联网理财100元起投</p>
+                <p class="introduce-list-link-text">超过银行存款利率30倍</p>
+            </div>
+            <div class="introduce-right-list">
+                <div class="introduce-list-logo baozhang"></div>
+                <div class="introduce-list-title">全方位投资保障</div>
+                <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
+                <p class="introduce-list-link-text">第三方资金托管</p>
+            </div>
+            <div class="introduce-right-list last">
+                <div class="introduce-list-logo teaching"></div>
+                <div class="introduce-list-title">专注教育行业</div>
+                <p class="introduce-list-link-text">深挖教育行业特性</p>
+                <p class="introduce-list-link-text">最权威教育行业评估体系</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="container">
+        <div class="newgonggao">
+            <span class="newgonggao-title">最新公告</span>
+            {%foreach $data.newpost as $key => $item%}
+            <a href="###" class="newgonggao-txt">
+                <span class="symbol">•</span>{%$item.title%}<span class="newgonggao-time">{%$item.publish_time|date_format:'%Y-%m-%d'%}</span>
+            </a>
+            {%/foreach%}
+            <a class="newgonggao-more" href="###">更多 &gt; &gt;</a>
+        </div>
+        <div class="investlist">
+            <div class="investlist-title">投资列表</div>
+            <div class="investlist-box">
+                <div class="investlist-box-title border-bottom">
+                    <div class="investlist-box-title-name name">借款标题</div>
+                    <div class="investlist-box-title-name grade">评估等级</div>
+                    <div class="investlist-box-title-name lilv">年利率</div>
+                    <div class="investlist-box-title-name price">金额</div>
+                    <div class="investlist-box-title-name time">期限</div>
+                    <div class="investlist-box-title-name jindu">进度</div>
+                    <div class="investlist-box-title-name status">状态</div>
+                </div>
+                <div class="investlist-box-title">
+                    {%foreach $data.list as $key => $item%}
+                    <div class="investlist-box-title-name name">
+                        <span class="name-shi">实</span>
+                        <div class="school">
+                            <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
+                        </div>
+                    </div>
+                    <div class="investlist-box-title-name grade">
+                        {%if $item.level == 0.5%}
+                        <span class="grade-star half"></span><span class="grade-star none"></span><span class="grade-star none"></span>
+                        {%else if $item.level == 1%}
+                        <span class="grade-star all"></span><span class="grade-star none"></span><span class="grade-star none"></span>
+                        {%else if $item.level == 1.5%}
+                        <span class="grade-star all"></span><span class="grade-star half"></span><span class="grade-star none"></span>
+                        {%else if $item.level == 2%}
+                        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star none"></span>
+                        {%else if $item.level == 2.5%}
+                        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star half"></span>
+                        {%else%}
+                        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star all"></span>
+                        {%/if%}
+                    </div>
+                    <div class="investlist-box-title-name lilv">
+                        <span class="lilv-number">{%$item.interest%}</span>
+                        <span class="lilv-bai">%</span>
+                    </div>
+                    <div class="investlist-box-title-name price">
+                        <span class="lilv-number color-blank">{%$item.amount%}</span>
+                        <span class="lilv-bai">元</span>
+                    </div>
+                    <div class="investlist-box-title-name time">
+                        <span class="lilv-number color-blank">{%$item.duration_day%}</span>
+                        <span class="lilv-bai">{%$item.duration_type%}</span>
+                    </div>
+                    <div class="investlist-box-title-name jindu">
+                        <div class="jindu-box">
+                            <div class="jindu-box-inline" style="width: {%$item.percent%}%;"></div>
+                        </div>
+                        <div class="jindu-number">
+                            <span class="lilv-number">{%$item.percent%}</span>
+                            <span class="lilv-bai">%</span>
+                        </div>
+                    </div>
+                    <div class="investlist-box-title-name status">
+                        {%if $item.status == 2%}
+                        <a class="status-biding" href="###">{%$item.status_name%}</a>
+                        {%else%}
+                        <span class="status-biding current">{%$item.status_name%}</span>
+                        {%/if%}
+                    </div>
+                    {%/foreach%}
+                </div>
+            </div>
+            <a href="{%$webroot%}/invest/index" class="investlist-more">查看更多标的></a>
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <div class="container">
+        <div class="investlist-title btm-bank-title">合作伙伴</div>
+        <div class="bottom-content">
+            <a href="###" class="bottom-bank first">
+                <img src="{%$feroot%}/index/img/bank.png" width="100%" height="100%" />
+            </a>
+            <a href="###" class="bottom-bank">
+                <img src="{%$feroot%}/index/img/bank.png" width="100%" height="100%" />
+            </a>
+            <a href="###" class="bottom-bank">
+                <img src="{%$feroot%}/index/img/bank.png" width="100%" height="100%" />
+            </a>
+            <a href="###" class="bottom-bank">
+                <img src="{%$feroot%}/index/img/bank.png" width="100%" height="100%" />
+            </a>
+            <a href="###" class="bottom-bank">
+                <img src="{%$feroot%}/index/img/bank.png" width="100%" height="100%" />
+            </a>
+        </div>
+
+    </div>
+</div>
+{%/block%}

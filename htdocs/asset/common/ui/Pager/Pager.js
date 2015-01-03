@@ -1,10 +1,4 @@
-define('common/ui/Pager/Pager', [
-    'require',
-    'common/XEmitter',
-    'jquery',
-    'etpl',
-    './pager.tpl'
-], function (require) {
+define('common/ui/Pager/Pager', function (require) {
     var XEmitter = require('common/XEmitter');
     var $ = require('jquery');
     var etpl = require('etpl');

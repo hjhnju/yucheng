@@ -7,7 +7,7 @@
 
 define(function (require) {
 
-    var $ = require('jquery');
+    // var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var getList = new Remoter('ACCOUNT_CASH_LIST');
     var etpl = require('etpl');
@@ -23,6 +23,14 @@ define(function (require) {
         'pagesize': 10
     };
 
+    /**
+     * 时间选择
+     * @type {Object}
+     */
+    var selectDate = {
+        stime: 0,
+        etime: 0
+    };
 
     function init(opt) {
 
@@ -52,7 +60,9 @@ define(function (require) {
             $('#operation-data .time-data-type-link').removeClass('current');
             $(this).addClass('current');
 
-
+            $('#time-start, #time-end').val('');
+            selectDate.stime = 0;
+            selectDate.etime = 0;
 
             option.data = +$(this).attr('data-value');
             option.page = 1;
@@ -69,7 +79,45 @@ define(function (require) {
             getList.remote('post', option);
         });
 
+        // 开始时间选择
+        $('#time-start').datepicker({
+            format: 'yyyy-mm-dd'
+        }).on('changeDate', function (e) {
+            if (selectDate.etime && e.date.getTime() > selectDate.etime) {
+                alert('开始时间不得大于结束时间');
+                $(this).val('');
+            }
+            else {
+                selectDate.stime = e.date.getTime();
+            }
+        });
 
+        $('#time-end').datepicker({
+            format: 'yyyy-mm-dd'
+        }).on('changeDate', function (e) {
+            if (e.date.getTime() < selectDate.stime) {
+                alert('结束时间必须大于开始时间');
+                $(this).val('');
+            }
+            else {
+                selectDate.etime = e.date.getTime();
+            }
+        });
+
+        // 搜索
+        $('.time-data-search').click(function () {
+            if (selectDate.stime && selectDate.etime) {
+                $('#operation-data .time-data-type-link').removeClass('current');
+                option.page = 1;
+                getList.remote($.extend({}, option, {
+                    startTime: selectDate.stime / 1000,
+                    endTime: selectDate.etime / 1000
+                }));
+            }
+            else {
+                alert('请选择开始时间和结束时间');
+            }
+        });
 
         // startCb
         getList.on('success', function (data) {

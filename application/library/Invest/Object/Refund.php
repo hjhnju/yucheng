@@ -26,27 +26,30 @@ class Invest_Object_Refund extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'capital_refund', 'capital_reset', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'transfer', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'id'          => 'id',
-        'invest_id'   => 'investId',
-        'loan_id'     => 'loanId',
-        'user_id'     => 'userId',
-        'period'      => 'period',
-        'capital'     => 'capital',
-        'interest'    => 'interest',
-        'amount'      => 'amount',
-        'late_charge' => 'lateCharge',
-        'promise_time'=> 'promiseTime',
-        'refund_time' => 'refundTime',
-        'status'      => 'status',
-        'create_time' => 'createTime',
-        'update_time' => 'updateTime',
+        'id'              => 'id',
+        'invest_id'       => 'investId',
+        'loan_id'         => 'loanId',
+        'user_id'         => 'userId',
+        'period'          => 'period',
+        'capital'         => 'capital',
+        'capital_refund'  => 'capitalRefund',
+        'capital_reset'   => 'capitalReset',
+        'interest'        => 'interest',
+        'amount'          => 'amount',
+        'late_charge'     => 'lateCharge',
+        'promise_time'    => 'promiseTime',
+        'refund_time'     => 'refundTime',
+        'transfer'        => 'transfer',
+        'status'          => 'status',
+        'create_time'     => 'createTime',
+        'update_time'     => 'updateTime',
     );
 
     /**
@@ -54,14 +57,17 @@ class Invest_Object_Refund extends Base_Object {
      * @var array
      */
     protected $intProps = array(
-        'id'          => 1,
-        'invest_id'   => 1,
-        'loan_id'     => 1,
-        'user_id'     => 1,
-        'period'      => 1,
-        'status'      => 1,
-        'create_time' => 1,
-        'update_time' => 1,
+        'id'              => 1,
+        'invest_id'       => 1,
+        'loan_id'         => 1,
+        'user_id'         => 1,
+        'period'          => 1,
+        'promise_time'    => 1,
+        'refund_time'     => 1,
+        'transfer'        => 1,
+        'status'          => 1,
+        'create_time'     => 1,
+        'update_time'     => 1,
     );
 
     /**
@@ -109,6 +115,18 @@ class Invest_Object_Refund extends Base_Object {
     public $capital;
 
     /**
+     * 已回收本金
+     * @var number
+     */
+    public $capitalRefund;
+
+    /**
+     * 剩余本金
+     * @var number
+     */
+    public $capitalReset;
+
+    /**
      * 利息
      * @var number
      */
@@ -128,15 +146,21 @@ class Invest_Object_Refund extends Base_Object {
 
     /**
      * 应还日期
-     * @var string
+     * @var integer
      */
     public $promiseTime;
 
     /**
      * 回款时间
-     * @var string
+     * @var integer
      */
     public $refundTime;
+
+    /**
+     * 是否打款 0未打款 1已打款
+     * @var integer
+     */
+    public $transfer;
 
     /**
      * 状态 1正常 2已还 3逾期

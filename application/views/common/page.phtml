@@ -1,16 +1,27 @@
-{%include file='../../../views/common/top.phtml'%}
+{%if $smarty.const.MODULE eq 'Index'%}
+	{%include file='../views/common/top.phtml'%}
+{%else%}
+	{%include file='../../../views/common/top.phtml'%}
+{%/if%}
 {%block name="link"%}{%/block%}
 <script>
     require(['common/global']);
 </script>
 </head>
 <body class="result-op">
-    {%include file='../../../views/common/header.phtml'%}
+	{%if $smarty.const.MODULE eq 'Index'%}
+	    {%include file='../views/common/header.phtml'%}
+	{%else%}
+		{%include file='../../../views/common/header.phtml'%}
+	{%/if%}
     <div id="main-wraper">
         {%block name="content"%}{%/block%}
     </div>
-    {%include file='../../../views/common/footer.phtml'%}
-
+    {%if $smarty.const.MODULE eq 'Index'%}
+    	{%include file='../views/common/footer.phtml'%}
+	{%else%}
+		{%include file='../../../views/common/footer.phtml'%}
+	{%/if%}
     {%block name="script"%}{%/block%}
 </body>
 </html>

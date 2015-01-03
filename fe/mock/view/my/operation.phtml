@@ -5,6 +5,9 @@
 {%/block%}
 
 {%block name="script"%}
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+<script src="/src/common/extra/Datepicker.js"></script>
+
 <script>
     require(['my/operation/index'], function (main) {
         main.init({
@@ -51,6 +54,7 @@
                                 <input type="text" class="time-data-ipt" id="time-end" />
                                 <label class="ipt-lable" for="time-end"></label>
                             </div>
+                            <div class="time-data-search">搜索</div>
                             <div class="time-data-type" id="operation-data">
                                 <a class="time-data-type-link current" data-value="1">今天</a>
                                 <a class="time-data-type-link" data-value="2">最近一周</a>

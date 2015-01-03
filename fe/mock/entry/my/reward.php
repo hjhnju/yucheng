@@ -14,7 +14,8 @@ require('../../libs/Smarty.class.php');
 $smarty = new Smarty();
 
 $smarty->assign('userphone', '189****1234');
-$smarty->assign('userurl','http://');
+$smarty->assign('userurl','http://www.baidu.com');
+$smarty->assign('inviteUrl', 'http://www.baidu.com');
 $smarty->assign('inviterinfo',
     array(
         0 => array(

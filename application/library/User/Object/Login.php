@@ -26,7 +26,7 @@ class User_Object_Login extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'status', 'name', 'passwd', 'phone', 'email', 'lastip', 'login_time', 'create_time');
+    protected $fields = array('userid', 'status', 'name', 'passwd', 'phone', 'email', 'lastip', 'login_time', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -42,6 +42,7 @@ class User_Object_Login extends Base_Object {
         'lastip'      => 'lastip',
         'login_time'  => 'loginTime',
         'create_time' => 'createTime',
+        'update_time' => 'updateTime',
     );
 
     /**
@@ -53,6 +54,7 @@ class User_Object_Login extends Base_Object {
         'status'      => 1,
         'login_time'  => 1,
         'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -112,9 +114,15 @@ class User_Object_Login extends Base_Object {
     public $loginTime;
 
     /**
-     * 注册时间
+     * 更新信息时间
      * @var integer
      */
     public $createTime;
+
+    /**
+     * 
+     * @var integer
+     */
+    public $updateTime;
 
 }

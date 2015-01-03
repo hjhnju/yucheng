@@ -1,0 +1,86 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/operation/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+<script src="{%$feroot%}/common/extra/Datepicker.js"></script>
+
+<script>
+    require(['my/operation/index'], function (main) {
+        main.init({
+            page: '{%$page%}',
+            pageall: '{%$pageall%}',
+            pagesize: '{%$pagesize%}'
+        });
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='../../../views/common/nav.phtml' current="3"%}
+        <div class="finish-main">
+            <div class="finish-main-title">充值提现</div>
+            <div class="operation">
+                <div class="operation-money">
+                    <div class="operation-money-account">
+                        <div class="operation-money-acc-price">￥{%$acctBal%}</div>
+                        <div class="operation-money-acc-text">账户余额</div>
+                    </div>
+                    <div class="operation-border"></div>
+                    <div class="operation-money-account">
+                        <div class="operation-money-acc-price use-price">￥{%$avlBal%}</div>
+                        <div class="operation-money-acc-text use-price">可用余额<a class="link-help" href="###"></a></div>
+                    </div>
+                    <div class="operation-right-box">
+                        <a class="operation-right-box-link red" href="{%$rechargeurl%}">充值</a>
+                        <a class="operation-right-box-link green" href="{%$withdrawurl%}">提现</a>
+                    </div>
+                </div>
+                <div class="operation-time">
+                    <div class="operation-time-data">
+                        <div class="time-data-calendar">
+                            <div class="time-data-calendar-text">起止时间</div>
+                            <div class="time-data-calendar-box">
+                                <input type="text" class="time-data-ipt" id="time-start" />
+                                <label class="ipt-lable" for="time-start"></label>
+                            </div>
+                            <div class="time-data-symbol">-</div>
+                            <div class="time-data-calendar-box mar-right">
+                                <input type="text" class="time-data-ipt" id="time-end" />
+                                <label class="ipt-lable" for="time-end"></label>
+                            </div>
+                            <div class="time-data-search">搜索</div>
+                            <div class="time-data-type" id="operation-data">
+                                <a class="time-data-type-link current" data-value="1">今天</a>
+                                <a class="time-data-type-link" data-value="2">最近一周</a>
+                                <a class="time-data-type-link" data-value="3">1个月</a>
+                                <a class="time-data-type-link" data-value="4">3个月</a>
+                                <a class="time-data-type-link" data-value="5">半年</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="operation-time-type" id="operation-type">
+                        <div class="time-data-calendar-text">交易类型</div>
+                        <div class="time-data-type">
+                            <a class="time-data-type-link current" data-value="1">全部</a>
+                            <a class="time-data-type-link" data-value="2">充值</a>
+                            <a class="time-data-type-link" data-value="3">提现</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="operation-list">
+
+                </div>
+                <div id="page"></div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{%/block%}

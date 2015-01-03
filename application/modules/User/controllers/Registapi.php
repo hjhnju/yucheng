@@ -117,7 +117,7 @@ class RegistApiController extends Base_Controller_Api{
     */
     public function indexAction(){
         $strName   = trim($_REQUEST['name']);
-        $strPasswd = md5(trim($_REQUEST['passwd']));
+        $strPasswd = User_Api::encrypt((trim($_REQUEST['passwd'])));
         $strPhone  = trim($_REQUEST['phone']);
         $strCode   = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
         $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
@@ -186,7 +186,6 @@ class RegistApiController extends Base_Controller_Api{
         }
        
         Base_Log::notice($_REQUEST);
-        //return $this->ajaxJump('/user/open');
-        return $this->ajax();
+        return $this->ajaxJump('/user/open');
     }
 }

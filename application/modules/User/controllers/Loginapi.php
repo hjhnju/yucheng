@@ -15,7 +15,7 @@ class LoginapiController extends Base_Controller_Api{
      */    
     public function indexAction(){
         $strName   = trim($_POST['name']);
-        $strPasswd = md5(trim($_POST['passwd']));
+        $strPasswd = User_Api::encrypt((trim($_POST['passwd'])));
         $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
         //检查错误次数
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
@@ -60,11 +60,25 @@ class LoginapiController extends Base_Controller_Api{
         // $this->ajaxJump($redirectUri);
         Base_Log::notice(array(
             'msg'   => 'login success',
-            'name'  => $name,
-            'useid' => $userid,
+            'name'  => $strName,
+            'useid' => $logic->checkLogin()->userid,
         ));
         $this->ajax();
  
+    }
+    
+    /**
+     * 标准退出登录过程
+     * 状态返回0表示登出成功
+     */
+    public function signOutAction(){
+    	$logic   = new User_Logic_Login();
+    	$ret = $logic->signOut();
+    	if($ret){
+    		$redirectUri = '/user/login/index';
+    		$this->redirect($redirectUri);
+    	}
+    	$this->ajaxError();
     }
     
 }

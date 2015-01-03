@@ -14,15 +14,12 @@ require('../../libs/Smarty.class.php');
 $smarty = new Smarty();
 
 
-//$smarty->assign('page', 1);
-//$smarty->assign('pagesize', 10);
-//$smarty->assign('pageall', 10);
-//$smarty->assign('total', 10);
-//$smarty->assign('avlBal', 10000);
-//$smarty->assign('acctBal', 1000000);
-//$smarty->assign('frzBal', 0.1);
-//$smarty->assign('rechargeurl', 'http://充值');
-//$smarty->assign('withdrawurl', 'http://提现');
+$smarty->assign('bindbank', 1);
+$smarty->assign('banknum', '123123123123123');
+$smarty->assign('avlBal', '100');
+$smarty->assign('withdrawfee', '1');
+$smarty->assign('bankID', 1);
+$smarty->assign('phone', '18911491525');
 
 
 $smarty->caching = false;

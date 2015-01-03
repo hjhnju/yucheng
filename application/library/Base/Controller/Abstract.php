@@ -18,22 +18,26 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
     
     protected $outputView  = 'output.phtml';
 
+    protected $userid      = null;
+
     //User_Object实例
     protected $objUser     = null;
     
     //子类增加的base日志字段
     protected $addBaseLogs = array();
     
+    protected $loginUrl = null;
+    
     public function init(){
 
         $this->webroot = Base_Config::getConfig('web')->root;
         $this->baselog();
-        $this->objUser = User_Api::checkLogin();
-
+        $this->userid  = User_Api::checkLogin();
+        $this->objUser = User_Api::getUserObject($this->userid);
         //未登录自动跳转
-        if($this->needLogin && empty($this->objUser)){
+        if($this->needLogin && empty($userid)){
             $u        = isset($_REQUEST['HTTP_REFERER']) ? $_REQUEST['HTTP_REFERER'] : null;
-            $loginUrl = Base_Config::getConfig('web')->loginurl;
+            $loginUrl = $this->loginUrl ? $this->loginUrl : Base_Config::getConfig('web')->loginurl;
             if(!empty($u)){
                 $loginUrl = $loginUrl . '?' . http_build_query(array('u'=>$u));
             }
