@@ -1,7 +1,7 @@
 {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="{%$webroot%}/company/infos/index.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/infos/index.css" />
 {%/block%}
 
 {%block name="script"%}
@@ -29,7 +29,7 @@
                     <span class="infos-dot">•</span>
                     <div class="infos-box">
                         <div class="infos-title">
-                            <a href="{%$webroot%}/infos/post/detail?id={%$item.id}">{%$item.title%}</a>
+                            <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}">{%$item.title%}</a>
                         </div>
                         <div class="infos-ctx">
                             {%$item.content%}
