@@ -75,6 +75,12 @@ define(function () {
         SECURE_DEGREE: rootUrl
             + '/account/secure/securedegree',
         //    + '/test/account/secure/secureDegree.json',
+        ACCOUNT_CASH_RECHARGE_ADD: rootUrl
+        + '/account/cashapi/recharge',
+            //+ '/test/account/cash/recharge.json',
+        ACCOUNT_CASH_WITHDRAW_ADD: rootUrl
+        + '/account/cashapi/withdraw',
+        //+ '/test/account/cash/withdraw.json',
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',

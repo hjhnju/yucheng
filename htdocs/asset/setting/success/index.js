@@ -2,14 +2,10 @@ define('setting/success/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var config = require('common/config');
-    var etpl = require('etpl');
-    var tpl = require('./success.tpl');
     function init() {
-        etpl.compile(tpl);
         changeEmail();
     }
     function changeEmail() {
-        $('#success-id').html(etpl.render('successList'));
         var timer;
         var value = 6;
         timer = setInterval(function () {

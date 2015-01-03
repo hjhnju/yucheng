@@ -59,7 +59,7 @@ p{margin:0;padding:0}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .header-right-default .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
-.logo{float:left;width:300px;height:60px;display:block;margin-right:16px}
+.logo{float:left;width:200px;height:60px;display:block;margin-right:16px}
 .nav-item{float:left;margin-top:24px;*zoom:1}
 .nav-item:before,.nav-item:after{display:table;content:""}
 .nav-item:after{clear:both}
@@ -200,10 +200,6 @@ p{margin:0;padding:0}
 .changephone-title-box-half{width:50%}
 .changephone-title-box-half.current{background-color:#76cf65;height:2px}
 .bound-name{color:#76cf65;padding:0 5px}
-.success-pic{height:102px;background:url(../common/img/success.png) center center no-repeat;margin:20px 0}
-.success-text{height:30px;line-height:30px;font-size:24px;color:#76cf65;text-align:center}
-.success-box-time{text-align:center;height:20px;line-height:20px}
-.success-box-time .success-link{text-decoration:none;color:#76cf65}
 .email-test{border:none}
 .error{color:#f2736a;height:24px;line-height:24px;font-size:14px}
 .mar-btm{margin-bottom:20px}
