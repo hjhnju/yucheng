@@ -102,8 +102,10 @@ define(function () {
             + '/msg/list',
             //+ '/test/account/message/msglist.json',
         MY_MSG_SETREAD_ADD: rootUrl
-            + '/msg/read'
-            //+ '/test/account/message/setread.json'
+            + '/msg/read',
+            //+ '/test/account/message/setread.json',
+        COMPANY_INFOS_LIST: rootUrl
+            + '/infos/post/list'
     };
 
     return {

@@ -1,10 +1,15 @@
-{%extends file="../../../views/common/page.phtml"%}
+{%extends file="common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/detail/index.css"/>
+<link rel="stylesheet" type="text/css" href="/src/company/detail/index.less"/>
 {%/block%}
 
 {%block name="script"%}
+<script>
+    require(['company/detail/index'], function (main) {
+//        main.init();
+    });
+</script>
 <script>
     window._bd_share_config = {
         "common": {
@@ -26,7 +31,7 @@
 
 {%block name="content"%}
 <div class="container company">
-    {%include file="../../../views/common/menu.phtml" current="4"%}
+    {%include file="common/menu.phtml" current="4"%}
     <div class="company-box">
         <div class="company-part-title">
             <h2 class="company-part-titlectx">官方公告</h2>

@@ -1,0 +1,36 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/company/us/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/common/common'], function(main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="container company">
+    {%include file="common/menu.phtml" current="1"%}
+    <div class="company-box">
+        <div class="company-part-title">
+            <h2 class="company-part-titlectx">关于我们</h2>
+        </div>
+        <div class="company-logo"></div>
+        <p class="company-intro">
+            兴教贷是P2P教育行业领导者，系北京百年兴教网络技术有限公司旗下从事网络借贷业务的互联网金融产品。公司由一帮曾在国内顶级投资银行及顶级互联网工作的从业者创立，是国家首家专注于教育行业融资理财业务的企业，我们致力于“做您最好的投资”，助力中国教育事业发展。
+        </p>
+        <p class="company-intro">
+            作为首家专注于教育行业的互联网P2P借贷服务平台，我们努力为投资人与教育机构等借款人创造透明、安全的平台环境。我们积累的丰富的教育领域投融资经验，建立了完善的教育行业风险评估体系，为投资人提供全方位的投资安全保障措施。
+        </p>
+        <div class="company-kouhao">
+            我们坚信：教育，是您最好的投资。<br />
+            我们的愿景 ——“助力教育，投资未来” “做您最好的投资”
+        </div>
+    </div>
+</div>
+
+{%/block%}
