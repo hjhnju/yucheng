@@ -117,7 +117,7 @@ class RegistApiController extends Base_Controller_Api{
     */
     public function indexAction(){
         $strName   = trim($_REQUEST['name']);
-        $strPasswd = User_Api::encrypt((trim($_REQUEST['passwd'])));
+        $strPasswd = trim($_REQUEST['passwd']);
         $strPhone  = trim($_REQUEST['phone']);
         $strCode   = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
         $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';

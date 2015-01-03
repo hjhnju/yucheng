@@ -25,7 +25,11 @@ class ListController extends Base_Controller_Response {
         $arrReturn = array();
         $arrData = $this->msgLogic->getList($uid, $intType);
         if(empty($arrData)){
-            $this->ajax();
+            $this->ajax(array(
+                'page'=>0,
+                'pageall'=>0,
+                'list'=>array()
+            ));
         }
         foreach($arrData as $index => $val){
             $arrReturn[$index]['type'] = $val->type;

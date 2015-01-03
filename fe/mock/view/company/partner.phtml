@@ -1,0 +1,60 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/company/team/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/common/common'], function(main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="container company">
+    {%include file="common/menu.phtml" current="3"%}
+    <div class="company-box">
+        <div class="company-part-title">
+            <h2 class="company-part-titlectx">合作伙伴</h2>
+        </div>
+        <ul class="team-list">
+            <li class="team-item">
+                <img src="/src/company/us/img/logo.png" />
+                <div class="team-item-intro">
+                    <div class="team-name">
+                        招商银行
+                    </div>
+                    <p class="team-intro">
+                        招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行
+                    </p>
+                </div>
+            </li>
+            <li class="team-item">
+                <img src="/src/company/us/img/logo.png" />
+                <div class="team-item-intro">
+                    <div class="team-name">
+                        招商银行
+                    </div>
+                    <p class="team-intro">
+                        招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行
+                    </p>
+                </div>
+            </li>
+            <li class="team-item">
+                <img src="/src/company/us/img/logo.png" />
+                <div class="team-item-intro">
+                    <div class="team-name">
+                        招商银行
+                    </div>
+                    <p class="team-intro">
+                        招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行招商银行
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{%/block%}

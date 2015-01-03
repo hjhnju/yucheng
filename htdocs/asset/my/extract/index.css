@@ -59,7 +59,7 @@ p{margin:0;padding:0}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .header-right-default .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
-.logo{float:left;width:300px;height:60px;display:block;margin-right:16px}
+.logo{float:left;width:200px;height:60px;display:block;margin-right:16px}
 .nav-item{float:left;margin-top:24px;*zoom:1}
 .nav-item:before,.nav-item:after{display:table;content:""}
 .nav-item:after{clear:both}
@@ -244,8 +244,12 @@ p{margin:0;padding:0}
 .ext-ipt{width:110px;padding:5px;background-color:#FFF;border:1px solid #efefef;outline:0;margin-right:10px}
 .get-sms{display:inline-block;background-color:#ededed;border:1px solid #d4d4d4;width:100px;height:24px;line-height:24px;text-align:center;cursor:pointer;font-size:12px}
 .get-sms-box{background-color:#fff;border:1px solid #d4d4d4;width:100px;height:24px;line-height:24px;text-align:center;font-size:12px;position:absolute;top:8px;left:135px;display:none}
+.get-sms-box.show{display:block}
 .success-sms{display:none}
 .button-link{display:inline-block;width:70px;text-align:center;height:28px;line-height:28px;font-size:14px;color:#333;text-decoration:none;background-color:#ededed;border:1px solid #d4d4d4;margin-right:10px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .button-link:hover,.button-link.current{color:#FFF;background-color:#76cf65;border-color:#76cf65}
 .extract-main-bottom-title{height:30px;line-height:30px;font-size:18px;color:#333;margin-bottom:10px}
 .extract-main-bottom-text{padding-left:10px;height:24px;line-height:24px;color:#333;font-size:12px}
+.bindbank{color:#76cf65;text-decoration:none}
+.money-error{color:#f2736a}
+.smscode-error{color:#f2736a}

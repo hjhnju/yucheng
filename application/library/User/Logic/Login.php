@@ -53,8 +53,7 @@ class User_Logic_Login {
      * @return User_RetCode::USER_NAME_NOTEXIT | USER_PASSWD_ERROR | SUCCESS
      */
     public function login($strName, $strPasswd){
-        
-        //$strPasswd = $this->encrypt($strPasswd);
+        $strPasswd = Base_Util_Secure::encrypt($strPasswd);
 
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('name'=>$strName));
@@ -62,8 +61,8 @@ class User_Logic_Login {
         $objRecord     = new User_Object_Record();
         $lastip        = Base_Util_Ip::getClientIp();
         $objRecord->ip = $lastip;
-
-        //用户名不存在
+        
+        //用户名不存在 
         if(empty($objLogin->userid)){
             $objRecord->status = self::STATUS_LOGIN_FAIL;
             $objRecord->save();
@@ -90,13 +89,4 @@ class User_Logic_Login {
 
         return User_RetCode::SUCCESS;
     }
-
-    /**
-     * 对密码字符串进行加密
-     * @param string $strPasswd
-     */
-    private function encrypt($strPasswd){
-        return md5(self::PASSWD_KEY.$strPasswd);
-    }
-  
 }

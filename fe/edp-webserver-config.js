@@ -114,17 +114,18 @@ exports.getLocations = function () {
                     '/invest/tender',
                     '/account/cashapi/recharge',
                     '/account/cashapi/withdraw',
-                    '/account/cashapi/list'
+                    '/account/cashapi/list',
+                    '/infos/post/list'
+
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
 
             },
             handler: [
-
-                proxy('123.57.46.229', 8082)  //李璐
-                //proxy('123.57.46.229', 8301)  //胡伟
-                //proxy('123.57.46.229', 8600)  //松芳
+                // proxy('123.57.46.229', 8082)  //李璐
+                proxy('123.57.46.229', 8301)  //胡伟
+                // proxy('123.57.46.229', 8600)  //松芳
                 //proxy('123.57.46.229', 8081)  //俊华
 
             ]
