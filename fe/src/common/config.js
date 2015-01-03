@@ -68,7 +68,7 @@ define(function () {
         + '/account/award/receiveawards',
         //+ '/test/account/award/receiveAwards.json',
         ACCOUNT_CASH_LIST: rootUrl
-        + '/account/cash/list',
+        + '/account/cashapi/list',
 //        + '/test/account/cash/list.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',

@@ -19,13 +19,14 @@ exports.getProcessors = function () {
             'src/my/extract/index.less',
             'src/my/operation/index.less',
             'src/my/topup/index.less',
+            'src/my/success/index.less',
             'src/project/detail/index.less',
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
             'src/setting/select3rd/index.less',
-            'src/home/index.less'
+            'src/home/index.less',
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -40,6 +41,7 @@ exports.getProcessors = function () {
             'src/my/extract/index.less',
             'src/my/operation/index.less',
             'src/my/topup/index.less',
+            'src/my/success/index.less',
             'src/project/detail/index.less',
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
@@ -62,6 +64,7 @@ exports.getProcessors = function () {
             'src/my/extract/index.js',
             'src/my/operation/index.js',
             'src/my/topup/index.js',
+            'src/my/success/index.js',
             'src/project/detail/index.js',
             'src/project/list/index.js',
             'src/setting/chpassword/index.js',

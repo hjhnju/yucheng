@@ -59,9 +59,6 @@ define(function (require) {
             if(data && data.bizError) {
                 alert(data.statusInfo);
             }
-            else {
-                window.location.href = '/mock/entry/my/success.php';
-            }
         })
 
     }

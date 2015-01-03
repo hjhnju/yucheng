@@ -1,0 +1,49 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/success/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/success/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+{%if $status == 0%}
+<div class="success">
+    <div class="container">
+        <div class="kaitong-box" id="success-id">
+            <div class="changephone-box">
+                <div class="success-pic"></div>
+                <div class="success-text email-box">充值成功,您的充值金额为 <span class="email-box-span color-red">{%$transamt%}</span>元</div>
+                <div class="success-box-time">
+                    <span class="timer-span" id="time-span">6秒后自动跳转至</span>&nbsp;
+                    <a class="success-link" href="/account/overview/index">我的账户</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%else%}
+<div class="success">
+    <div class="container">
+        <div class="kaitong-box" id="success-id">
+            <div class="changephone-box">
+                <div class="success-pic"></div>
+                <div class="success-text email-box">提现成功,您的提现金额为 <span class="email-box-span color-red">{%$transamt%}</span>元</div>
+                <div class="success-box-time">
+                    <span class="timer-span" id="time-span">6秒后自动跳转至</span>&nbsp;
+                    <a class="success-link" href="/account/overview/index">我的账户</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%/if%}
+{%/block%}
