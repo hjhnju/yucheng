@@ -14,15 +14,15 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
      * @param string
      * @param array
      */
-	public function userRegist($userName,$usrMp) {
+	public function userRegist($userName,$userMp) {
 	    $webroot = Base_Config::getConfig('web')->root;
 		$userid = $this->getUserId();
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
 		$merCustId   = self::MERCUSTID;
 		$bgRetUrl    = $webroot.'/finance/bgcall/userregist';
-		$retUrl      = "";
+		$retUrl      = $webroot;
 		$usrId       = $userName;
-		$usrMp       = $usrMp;
+		$usrMp       = $userMp;
 		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp);
 		
 	}

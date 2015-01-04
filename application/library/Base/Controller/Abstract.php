@@ -74,6 +74,7 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
      * @param boolean
      */
     protected function setNeedLogin($needLogin) {
+    	
         $this->needLogin = $needLogin;
     }
 

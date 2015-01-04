@@ -6,6 +6,8 @@
 class CashController extends Base_Controller_Response {
 	
 	public function init() {
+		$this->setNeedLogin(false);
+		
 		parent::init();
 		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax = true;

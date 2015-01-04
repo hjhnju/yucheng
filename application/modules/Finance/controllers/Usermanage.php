@@ -19,13 +19,13 @@ class UsermanageController extends Base_Controller_Page{
      *
      */
     public function userregistAction(){
-    	$webroot = Base_Config::getConfig('web')->root;
         $objUser = $this->objUser;
-        //$userid = !empty($objUser) ? $objUser->userid : 0;
-        //$phone = $objUser->phone;
-        //$userid = 1;
-        //$phone = 15901538467;
-        Finance_Api::userRegist("","15901538467");//调用财务模块Api实现用户开户功能       
+        $userName = !empty($objUser) ? $objUser->name : "";
+        $phone = !empty($objUser) ? $objUser->phone : "";
+        //Finance_Api::userRegist($userName,$phone);//调用财务模块Api实现用户开户功能       
+        //TODO: remove
+        //FOR TEST
+        Finance_Api::userRegist('lyx661228','');//调用财务模块Api实现用户开户功能       
         
     }
 
@@ -73,5 +73,9 @@ class UsermanageController extends Base_Controller_Page{
     
     /**
      * 删除银行卡Action层
+     * FOR TEST
      */
+    public function delbankcardAction() {
+    	
+    }
 }
