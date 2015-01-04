@@ -115,7 +115,8 @@ exports.getLocations = function () {
                     '/account/cashapi/recharge',
                     '/account/cashapi/withdraw',
                     '/account/cashapi/list',
-                    '/infos/post/list'
+                    '/infos/post/list',
+                    '/user/registapi/modifypwd'
 
                 ];
 

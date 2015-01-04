@@ -20,14 +20,18 @@
                 </span>
         </div>
         <div class="header-right">
+            {%if isset($user)%}
+            <div class="header-right-login">
+                <span class="default-fastlogin">{%$user.username%}</span>
+                <a class="default-login" href="###">退出</a>
+            </div>
+
+            {%else%}
             <div class="header-right-default">
                 <a href="###" class="default-fastlogin">快速注册</a>
                 <a class="default-login" href="###">登录</a>
             </div>
-            <div class="header-right-login">
-                <span class="default-fastlogin">您好，XXX</span>
-                <a class="default-login" href="###">退出</a>
-            </div>
+            {%/if%}
         </div>
     </div>
 </div>

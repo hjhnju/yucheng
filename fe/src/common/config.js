@@ -111,8 +111,11 @@ define(function () {
             + '/msg/read',
             //+ '/test/account/message/setread.json',
         COMPANY_INFOS_LIST: rootUrl
-            + '/infos/post/list'
-    };
+            + '/infos/post/list',
+        USER_REGISTAPI_MODIFYPWD: rootUrl
+            + '/user/registapi/modifypwd'
+            //+ '/test/user/registapi/modifypwd.json'
+        };
 
     return {
         URL: URL
