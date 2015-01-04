@@ -8,8 +8,10 @@
 class TransactionController extends Base_Controller_Api{
    
    public function init(){
-        parent::init();
-        $this->transactionLogic = new Finance_Logic_Transaction();
+       //for test
+       //TODO remove
+       $this->setNeedLogin(false);
+       parent::init();
    }
    
    /**
@@ -20,13 +22,18 @@ class TransactionController extends Base_Controller_Api{
     * @param String dcFlag 借贷记标记(optional)
     *
     */ 
-   public function netSave(){
+   public function netsaveAction(){
+       $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';  	
        $transAmt = $_REQUEST['transAmt'];
        $openBankId = $_REQUEST['openBankId'];
        $gateBusiId = $_REQUEST['gateBusiId'];
        $dcFlag = $_REQUEST['dcFlag'];
+       
        //1.调用其他模块lib库得到所需参数
        //2.调用Logic层方法
+       //Finance_Api::netSave($huifuid,"20.00",$gateBusiId,$openBankId,$dcFlag);
+       Finance_Api::netSave($huifuid,"20.00","B2C","ICBC","D");
+       
      
    }
 

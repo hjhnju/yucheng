@@ -8,14 +8,14 @@
  * 该代码仅供学习和研究汇付天下p2p接口使用，只是提供一个参考。
  *
  */
-class SecureTool{
+class Finance_Chinapnr_SecureTool{
 	private $privateKey=array();
 	private $publicKey=array();
 	
 	const DES_KEY= "SCUBEPGW";
 	const HASH_PAD= "0001ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff003021300906052b0e03021a05000414";
 
-	public function SecureTool($priKey,$pubKey){
+	public function Finance_Chinapnr_SecureTool($priKey,$pubKey){
 		$this->privateKey= $this->buildPrivateKeyString($priKey);
 		$this->publicKey= $this->buildPublicKeyString($pubKey);	
 	}	
