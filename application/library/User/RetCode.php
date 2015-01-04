@@ -44,6 +44,8 @@ class User_RetCode extends Base_RetCode{
 
     const SIGN_OUT_FIAL             = 1056; //登出失败
     
+    const USER_NAME_OR_PHONE_ERROR  = 1057; //用户名或手机号错误
+    
     /* 消息函数
      * @var array
      */
@@ -68,6 +70,7 @@ class User_RetCode extends Base_RetCode{
         self::BINDING_FAIL             => '绑定第三方账号出错',
         self::GET_OPENID_FAIL          => '获取openid失败',
         self::SIGN_OUT_FIAL            => '登出失败',
+        self::USER_NAME_OR_PHONE_ERROR => '用户名或手机号错误',
     );
 
 }

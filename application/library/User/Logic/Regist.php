@@ -99,4 +99,27 @@ class User_Logic_Regist{
         return $objLogin->userid;
     }
     
+    /**
+     * 用户忘了密码后重置密码
+     * @param string $strName
+     * @param string $strPhone
+     * @param string $strPasswd
+     * @return int 0:表示成功，其它为相应错误码
+     */
+    public function modifyPwd($strName,$strPhone,$strPasswd){
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('name'=>$strName,'phone'=>$strPhone));
+        if(!empty($objLogin)){
+            $objLogin->passwd = Base_Util_Secure::encrypt($strPasswd);
+            $ret = $objLogin->save();
+            if($ret){
+                $ret = User_RetCode::SUCCESS;
+            }else{
+                $ret = User_RetCode::UNKNOWN_ERROR;
+            }
+        }else{
+            $ret = User_RetCode::USER_NAME_OR_PHONE_ERROR;
+        }
+        return $ret;
+    }   
 }
