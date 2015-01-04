@@ -1,0 +1,45 @@
+@import "../common/css/common.less";
+
+#infos-list {
+    min-height: 200px;
+}
+
+.infos-list {
+    margin: 0;
+    padding: 0;
+}
+
+.infos-item {
+    .clearfix;
+    border-bottom: 1px dashed @color-gray-border;
+    padding: 20px 10px;
+}
+.infos-dot {
+    float: left;
+    margin-right: 10px;
+    font-size: 14px;
+    width: 14px;
+    color: #999;
+    line-height: 32px;
+}
+.infos-box {
+    float: left;
+    width: 690px;
+    line-height: 20px;
+}
+.infos-title {
+    font-size: 16px;
+    line-height: 32px;
+
+    a {
+        color: @color-black;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+.infos-ctx {
+    color: #707070;
+}

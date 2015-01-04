@@ -1,0 +1,100 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/my/extract/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/extract/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+{%assign var=mapBank value=['1'=>'zhaoshang', '2'=>'gongshang', '3'=>'youzheng', '4'=>'minsheng',
+'5'=>'jianshe', '6'=>'zhongguo', '7'=>'pufa', '8'=>'xingye', '9'=>'nongye',
+'10'=>'jiaotong', '11'=>'guangda', '12'=>'shanghai']%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='common/nav.phtml' current="3"%}
+
+        <div class="finish-main">
+            <div class="finish-main-title">提现
+                <a class="return" href="###">返回</a>
+            </div>
+            <div class="extract">
+                {%if $bindbank == 1%}
+                <div class="extract-title">
+                    <div class="extract-title-text">绑定的提现银行卡:</div>
+                    <div class="extract-title-bank {%$mapBank[$bankID]%}">{%$banknum%}</div>
+                    <a href="###" class="extract-title-other">设置其他提现银行卡</a>
+                </div>
+                <div class="extract-main">
+                    <div class="extract-main-remind">温馨提醒：如果您需要资金周转请记得关闭自动投标系统</div>
+                    <div class="extract-main-title">填写提现金额</div>
+                    <div class="extract-main-box">
+                        <div class="extract-box-left">
+                            <div class="extract-left-text">可用金额:</div>
+                            <div class="extract-left-text">提现金额:</div>
+                            <div class="extract-left-text">提现费用:</div>
+                            <div class="extract-left-text">预计到账日期:</div>
+                            <div class="extract-left-text">手机验证码:</div>
+                        </div>
+                        <div class="extract-box-right">
+                            <div class="extract-right-money"><span class="money-weight">{%$avlBal%}</span>元</div>
+                            <div class="extract-right-money ext">
+                                <input type="text" class="ext-ipt" id="search-ipt" />元
+                                <span class="money-error" id="money-error"></span>
+                            </div>
+                            <div class="extract-right-money"><span class="money-weight">{%$withdrawfee%}</span>元</div>
+                            <div class="extract-right-money">T+1个工作日(T日21点之前申请)</div>
+                            <div class="extract-right-money smscode">
+                                <input type="text"class="ext-ipt" id="sms-ipt" />
+                                <span class="get-sms" data-value="{%$phone%}">获取验证码</span>
+                                <span class="smscode-error" id="smscode-error"></span>
+                                <div class="get-sms-box" id="testing-wait"></div>
+                                <div class="success-sms" ></div>
+                            </div>
+                            <div class="extract-right-money success-sms" id="success-sms"></div>
+                            <div class="extract-right-money">
+                                <a href="###" class="button-link current" id="submit">确定</a>
+                                <a href="###" class="button-link" id="return">返回</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="extract-main-bottom">
+                        <div class="extract-main-bottom-title">温馨提示：</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                    </div>
+                </div>
+
+                {%else%}
+                <div class="extract-title">
+                    <div class="extract-title-text">未绑定提现银行卡:</div>
+                    <a href="{%$webroot%}/finance/usermanage/userbindcard" class="bindbank">立刻绑定银行卡</a>
+                </div>
+                <div class="extract-main">
+                    <div class="extract-main-remind">温馨提醒：如果您需要资金周转请记得关闭自动投标系统</div>
+                    <div class="extract-main-bottom">
+                        <div class="extract-main-bottom-title">温馨提示：</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                        <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
+                    </div>
+                </div>
+                {%/if%}
+            </div>
+        </div>
+    </div>
+</div>
+{%/block%}

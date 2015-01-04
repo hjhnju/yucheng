@@ -34,8 +34,8 @@ exports.getLocations = function () {
         {
             location: /\.php($|\?)/,
             handler: [
-                //php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
-                php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
+                php('/usr/local/Cellar/php54/5.4.35/bin/php-cgi')  //斌斌的
+                //php('/usr/local/Cellar/php54/5.4.31/bin/php-cgi')  //老婆的
             ]
         },
         { 
@@ -112,16 +112,19 @@ exports.getLocations = function () {
                     '/msg/read',
                     '/user/imagecode/getimage',
                     '/invest/tender',
-                    '/account/cash/list'
+                    '/account/cashapi/recharge',
+                    '/account/cashapi/withdraw',
+                    '/account/cashapi/list',
+                    '/infos/post/list'
+
                 ];
 
                 return mapper.indexOf(request.pathname) !== -1;
 
             },
             handler: [
-
-                proxy('123.57.46.229', 8082)  //李璐
-                //proxy('123.57.46.229', 8301)  //胡伟
+                // proxy('123.57.46.229', 8082)  //李璐
+                proxy('123.57.46.229', 8301)  //胡伟
                 // proxy('123.57.46.229', 8600)  //松芳
                 //proxy('123.57.46.229', 8081)  //俊华
 

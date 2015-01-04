@@ -11,11 +11,7 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var config = require('common/config');
 
-    var etpl = require('etpl');
-    var tpl = require('./success.tpl');
-
     function init (){
-        etpl.compile(tpl);
         changeEmail();
 
 
@@ -23,7 +19,6 @@ define(function (require) {
 
     function changeEmail() {
 
-        $('#success-id').html(etpl.render('successList'));
 
         var timer;
         var value = 6;

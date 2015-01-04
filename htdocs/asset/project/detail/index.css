@@ -57,9 +57,10 @@ p{margin:0;padding:0}
 .header-left-attention .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #FFF;left:90px;top:-6px}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
-.header-right-default .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.header-right-login{margin-top:10px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
-.logo{float:left;width:300px;height:60px;display:block;margin-right:16px}
+.logo{float:left;width:200px;height:60px;display:block;margin-right:16px}
 .nav-item{float:left;margin-top:24px;*zoom:1}
 .nav-item:before,.nav-item:after{display:table;content:""}
 .nav-item:after{clear:both}

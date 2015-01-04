@@ -7,3 +7,13 @@
         <a class="success-link" href="/account/overview/index">我的账户</a>
     </div>
 </div>
+
+<!--target: Recharge -->
+<div class="changephone-box">
+    <div class="success-pic"></div>
+    <div class="success-text email-box">充值成功,您的充值金额为 <span class="email-box-span color-red">100</span>元</div>
+    <div class="success-box-time">
+        <span class="timer-span" id="time-span">6秒后自动跳转至</span>&nbsp;
+        <a class="success-link" href="/account/overview/index">我的账户</a>
+    </div>
+</div>
