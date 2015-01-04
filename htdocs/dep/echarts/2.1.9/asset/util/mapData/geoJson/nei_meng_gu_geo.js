@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/nei_meng_gu_geo', function () {
+define('echarts/util/mapData/geoJson/nei_meng_gu_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

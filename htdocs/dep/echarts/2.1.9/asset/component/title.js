@@ -1,4 +1,14 @@
-define('echarts/component/title', function (require) {
+define('echarts/component/title', [
+    'require',
+    './base',
+    'zrender/shape/Text',
+    'zrender/shape/Rectangle',
+    '../config',
+    'zrender/tool/util',
+    'zrender/tool/area',
+    'zrender/tool/color',
+    '../component'
+], function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var RectangleShape = require('zrender/shape/Rectangle');

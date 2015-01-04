@@ -1,4 +1,7 @@
-define('zrender/shape/util/PathProxy', function (require) {
+define('zrender/shape/util/PathProxy', [
+    'require',
+    '../../tool/vector'
+], function (require) {
     var vector = require('../../tool/vector');
     var PathSegment = function (command, points) {
         this.command = command;

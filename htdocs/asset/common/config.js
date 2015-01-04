@@ -1,4 +1,4 @@
-define('common/config', function () {
+define('common/config', [], function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             IMG_GET: rootUrl + '/user/imagecode/getimage?type=',
@@ -32,7 +32,8 @@ define('common/config', function () {
             MY_INVEST_TENDERFAIL: rootUrl + '/account/invest/tenderfail',
             MY_MSG_LIST: rootUrl + '/msg/list',
             MY_MSG_SETREAD_ADD: rootUrl + '/msg/read',
-            COMPANY_INFOS_LIST: rootUrl + '/infos/post/list'
+            COMPANY_INFOS_LIST: rootUrl + '/infos/post/list',
+            USER_REGISTAPI_MODIFYPWD: rootUrl + '/user/registapi/modifypwd'
         };
     return { URL: URL };
 });

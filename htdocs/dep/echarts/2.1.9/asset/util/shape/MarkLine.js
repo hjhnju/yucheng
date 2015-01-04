@@ -1,4 +1,15 @@
-define('echarts/util/shape/MarkLine', function (require) {
+define('echarts/util/shape/MarkLine', [
+    'require',
+    'zrender/shape/Base',
+    './Icon',
+    'zrender/shape/Line',
+    'zrender/shape/BrokenLine',
+    'zrender/tool/matrix',
+    'zrender/tool/area',
+    'zrender/shape/util/dashedLineTo',
+    'zrender/shape/util/smoothSpline',
+    'zrender/tool/util'
+], function (require) {
     var Base = require('zrender/shape/Base');
     var IconShape = require('./Icon');
     var LineShape = require('zrender/shape/Line');

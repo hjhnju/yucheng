@@ -1,4 +1,4 @@
-define('common/data', function () {
+define('common/data', [], function () {
     return {
         pagerOpt: {
             startPage: 1,
