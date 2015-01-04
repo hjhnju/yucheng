@@ -5,16 +5,16 @@
  * 企业开户
  * 用户绑卡
  */
-class UsermanageController extends Base_Controller_Api{
+class UsermanageController extends Base_Controller_Page{
 
     public function init(){
+    	Yaf_Dispatcher::getInstance()->disableView();    	 
     	$this->setNeedLogin(false);
         parent::init();
-        $this->userManageLogic = new Finance_Logic_UserManage();
-    
     }
 
     /**
+     * @param 
      * 用户开户Action层
      *
      */
@@ -25,7 +25,8 @@ class UsermanageController extends Base_Controller_Api{
         //$phone = $objUser->phone;
         //$userid = 1;
         //$phone = 15901538467;
-        Finance_Api::userRegister("", "", "", "", "", "");//调用财务模块Api实现用户开户功能       
+        Finance_Api::userRegist("","15901538467");//调用财务模块Api实现用户开户功能       
+        
     }
 
     /**
@@ -47,8 +48,30 @@ class UsermanageController extends Base_Controller_Api{
     public function userbindcardAction(){
     	//若还没有绑定汇付，此时应该提示用户去绑定汇付
         //$objUser = $this->objUser;
-        $huifuid =!empty($objUser) ? $objUser->huifuid : 0;      
+        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';      
         Finance_Api::userBindCard($huifuid);
     }
-
+    
+    /**
+     * 用户登录Action层
+     * FOR TEST
+     */
+    public function loginAction() {
+    	$huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';
+    	Finance_Api::userLogin($huifuid);
+    }
+    
+    /**
+     * 账户信息修改Action层
+     * FOR TEST
+     * 
+     */
+    public function acctmodifyAction() {
+    	$huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';
+    	Finance_Api::acctModify($huifuid);
+    }
+    
+    /**
+     * 删除银行卡Action层
+     */
 }

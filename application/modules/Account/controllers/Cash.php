@@ -14,9 +14,13 @@ class CashController extends Base_Controller_Response {
 	/**
 	 * 调用财务模块Finance_Api获取 账户余额
 	 * assign至前端即可
-	 * avlBal 可用余额
-	 * acctBal 账户余额
-	 * freBal 冻结余额
+	 * phone 用户手机号码
+	 * bindbank 0--未绑定  1--绑定了银行卡
+	 * banknum  银行卡号
+	 * bankID  银行编号
+	 * avlBal 可用金额
+	 * withdrawfee 提现费用
+     *
 	 * userInfo 左上角用户信息
 	 */
 	public function indexAction() {
@@ -35,56 +39,37 @@ class CashController extends Base_Controller_Response {
 	}
 	
 	/**
-	 * 接口 /account/cash/list
-	 * 获取充值提现列表
-	 * @param type 0--全部 1--充值  2--提现
-	 * @param startTime 
-	 * @param endTime 
-	 * @param date 0--今天  1--最近一周  2--1个月  3--3个月  4--半年
-	 * @param page
-	 * @return 标准json
-	 * status 0: 处理成功
-	 * status 1107:获取充值提现列表失败
-	 * data
-	 * {
-	 * 	   'page'页码
-	 *     'pageall':10 总共页码 
-	 *     'all' 数据条数
-	 *     'list'=
-	 *         { 
-	 *             'time'      时间
-	 *             'transType' 交易类型
-	 *             'serialNo'  交易流水号
-	 *             'tranAmt'   交易金额
-	 *             'avalBg'    可用余额
-	 *         }
-	 * }
-	 */
-	public function listAction() {
-		$type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 0;
-		$startTime = isset($_REQUEST['startTime']) ? $_REQUEST['startTime'] : 0;
-		$endTime = isset($_REQUEST['startTime']) ? $_REQUEST['endTime'] : 0;
-		$date = isset($_REQUEST['date']) ? $_REQUEST['date'] : 0;
-		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;//约定接口page从第一页开始
-		$userId = $this->getUserId();
-		$ret = Finance_Api::getRechargeWithDrawRecord($userId, $type, $startTime, $endTime, $date);
-		//如果返回正常处理结果
-		if($ret['status'] == 0) {
-			$this->output($ret);
-		} else {
-			$errCode = Account_RetCode::GET_WITHDRAW_RECHARGE_FAIL; //1107错误码表示获取充值提现列表失败
-			$errMsg = Account_RetCode::getMsg($errCode);
-			$this->outputError($errCode,$errMsg);
-		}		
-	}
-
-	/**
 	 * /account/cash/recharge
 	 * 充值入口
-	 * @return 标准json
-	 * status 0:成功
 	 */
 	public function rechargeAction() {
 		
+	}
+	
+	/**
+	 * 提现入口
+	 */
+	public function withdrawAction() {
+		
+	}
+	
+	/**
+	 * /account/cash/rechargesuc
+	 * assign
+	 * status 0--充值  1--提现
+	 * 充值成功
+	 */
+	public function rechargesucAction() {
+	
+	}
+
+	/**
+	 * /account/cash/rechargesuc
+	 * assign 
+	 * status 0--充值  1--提现
+	 * 提现成功
+	 */
+	public function withdrawsucAction() {
+	
 	}
 }

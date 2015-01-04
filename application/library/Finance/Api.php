@@ -4,12 +4,8 @@
  * @author lilu
  */
 class Finance_Api {
-	
-	CONST VERSION_10 = "10";
-	CONST VERSION_20 = "20";
-	
-	CONST MERCUSTID  = "6000060000677575";  
 
+	
 	/**
 	 * 订单类型mapping
 	 */
@@ -46,25 +42,9 @@ class Finance_Api {
 	 * )
 	 */	
 	public static function queryBalanceBg($userCustId) {
-		$webroot = Base_Config::getConfig('web')->root;
-		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-		$method = "queryBalanceBg";
-		$cmd= '$result= $chinapnr->'.$method.'(';
-		$params = array();		
-		$params['usrCustId']   = $userCustId;
-		$params['merCustId']   = self::MERCUSTID;		
-		foreach ($params as $k => $v){
-			$cmd.= '"'.$v.'",';
-		}
-		$cmd= substr($cmd, 0, strlen($cmd)-1);
-		$cmd.=');';
-		//print ($cmd);die;
-		$result = eval($cmd);
-		$ret = array();
-		$ret['avlBal']  = $result['AvlBal'];
-		$ret['acctBal'] = $result['AcctBal'];
-		$ret['frzBal']  = $result['FrzBal'];
-	    return $ret;
+		$queryLogic = new Finance_Logic_Query();
+		$ret = $queryLogic->queryBalanceBg($userCustId);
+		return $ret;
 	}
 	
 	/**
@@ -237,8 +217,37 @@ class Finance_Api {
       *        )
       *  
       */
-     public static function netSave($usrCustId,$transAmt,$gateBusiId='B2C',$ppenBankId='ICBC',$dcFlag='D'){
-     
+     public static function netSave($usrCustId,$transAmt,$gateBusiId="B2C",$openBankId="ICBC",$dcFlag="D"){
+         $transLogic = new Finance_Logic_Transaction();
+         $orderInfo = $transLogic->genOrderInfo();
+         $orderDate = $orderInfo['date'];
+         $orderId = $orderInfo['orderId'];               
+         $webroot = Base_Config::getConfig('web')->root;
+         $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
+         $method = "netSave";
+         $cmd= '$result= $chinapnr->'.$method.'(';
+         $params = array();
+         $params['merCustId']   = self::MERCUSTID;
+         $params['usrCustId']   = "6000060000696947";
+         $params['ordId']       = $orderId;
+         $params['ordDate']     = $orderDate;
+         $params['gateBusiId']  = $gateBusiId;
+         $params['openBankId']  = $openBankId;
+         $params['dcFlag']      = $dcFlag;
+         $params['transAmt']    = $transAmt;
+         $params['retUrl']      ='';
+         $params['bgRetUrl']    = $webroot.'/finance/bgcall/userregist';
+         $params['merPriv']     = '';
+         
+         foreach ($params as $k => $v){
+         	$cmd.= '"'.$v.'",';
+         }
+         $cmd= substr($cmd, 0, strlen($cmd)-1);
+         $cmd.=');';
+         //print ($cmd);die;
+         $result = eval($cmd);
+         print_r($result);
+         
      }
      
      /**
@@ -307,32 +316,9 @@ class Finance_Api {
       *         'UsrName' 真实名称
       *       )
       */
-     public static function userRegister($userId="", $usrName="", $idType="", $idNo="", $usrMp="", $usrEmail=""){
-     	 $webroot = Base_Config::getConfig('web')->root;
-     	 $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-         $method = "userRegister";
-         $cmd= '$result= $chinapnr->'.$method.'(';
-         $params = array();
-         $params['merCustId']   = self::MERCUSTID;
-         $params['bgRetUrl']    = $webroot.'/finance/bgcall/userregist';
-         $params['retUrl']      = '';
-         $params['usrId']       = $userId;
-         $params['usrName']     = $usrName;
-         $params['idType']      = $idType;
-         $params['idNo']        = $idNo;
-         $params['$usrMp']      = $usrMp;
-         $params['usrEmail']    = $usrEmail;
-         $params['merPriv']     = "";
-         $params['charSet']     = "";
-
-         foreach ($params as $k => $v){
-         	$cmd.= '"'.$v.'",';
-         }
-         $cmd= substr($cmd, 0, strlen($cmd)-1);
-         $cmd.=');';
-        // print ($cmd);die;
-         $result = eval($cmd);         
-         print_r($result); 
+     public static function userRegist($userName,$usrMp){
+     	 $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userRegist($userName,$usrMp);     	 
      }
      
      /**
@@ -359,25 +345,8 @@ class Finance_Api {
       *      
       */
      public static function userBindCard($usrCustId){
-     	 $webroot = Base_Config::getConfig('web')->root;
-     	 $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-         $method = "userBindCard";
-         $cmd= '$result= $chinapnr->'.$method.'(';
-         $params = array();
-         $params['merCustId']   = self::MERCUSTID;
-         $params['usrCustId']   = "6000060000696947";
-         $params['bgRetUrl']   = $webroot.'/finance/bgcall/userbindcard';
-         $params['merPriv']    = "";
-
-         foreach ($params as $k => $v){
-         	$cmd.= '"'.$v.'",';
-         }
-         $cmd= substr($cmd, 0, strlen($cmd)-1);
-         $cmd.=');';
-         //print ($cmd);die;
-         $result = eval($cmd);         
-         print_r($result); 
-         
+         $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userBindCard($usrCustId);
      }
      
      /**
@@ -417,6 +386,23 @@ class Finance_Api {
      	 
      }
      
+     /**
+      * 用户登录汇付login接口
+      * redirect 
+      */
+     public static function userLogin($usrCustId) {
+         $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userLogin($usrCustId);
+     }
+     
+     /**
+      * 用户信息修改接口
+      * redirect
+      */
+     public static function acctModify($usrCustId) {
+         $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userLogin($usrCustId);
+     }
      /**
       * 获取充值提现列表数据
       * @param String $userId 用户号(require)

@@ -10,7 +10,7 @@ class Awards_Logic_Invite {
      */
     public function getInviteUrl($userid) {
         $code = $this->encode($userid);
-        return Base_Config::getConfig('webroot') . "/i/$code";
+        return Base_Config::getConfig('web')->root . "/i/$code";
     }
 
     /**
