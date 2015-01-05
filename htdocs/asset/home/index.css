@@ -51,10 +51,13 @@ p{margin:0;padding:0}
 .header-left-attention .attention-me{display:inline-block;width:20px;height:20px;background:url(../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
 .header-left-attention .attention-me.xinlang{background-position:0 -50px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
-.header-left-attention .xinlang-erweima{width:200px;height:200px;position:absolute;left:-88px;top:27px;background-color:#fff;z-index:5;border:1px solid #ccc;display:none}
-.header-left-attention .xinlang-erweima.current{display:block}
-.header-left-attention .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:90px;top:-8px}
-.header-left-attention .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:90px;top:-6px}
+.xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:5;border:1px solid #ccc;display:none;background:url(../common/img/weixin.jpg) 0 0 no-repeat}
+.xinlang-erweima.footer-erweima{top:-270px}
+.xinlang-erweima.current{display:block}
+.triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:119px;top:-8px}
+.triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
+.triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
+.triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
@@ -79,7 +82,7 @@ p{margin:0;padding:0}
 .footer-vertical{margin:0 5px;color:#b1b1b3}
 .footer-site-left{color:#b1b1b3;margin-right:20px}
 .footer-site-me{color:#b1b1b3}
-.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px}
+.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative}
 .footer-site-me-xinlang.xinlang{background-position:0 -150px}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../common/img/footer_phone.png) 0 0 no-repeat}
@@ -104,7 +107,7 @@ p{margin:0;padding:0}
 .investlist-box-title-name.jindu:after{clear:both}
 .investlist-box-title-name.status{width:120px;text-align:center}
 .jindu-box{width:70px;height:8px;background-color:#ccc;float:left;margin:28px 10px 0 0;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
-.jindu-box .jindu-box-inline{min-width:10%;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
+.jindu-box .jindu-box-inline{min-width:10px;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-number{float:left}
 .name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#fff;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .school{text-align:left;float:left;width:154px;overflow:hidden;color:#323232;font-size:14px}
@@ -124,12 +127,12 @@ p{margin:0;padding:0}
 .xjd-loading{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../common/css/img/loading.gif) no-repeat center center}
 .xjd-error{position:absolute;top:0;left:0;right:0;bottom:0;vertical-align:middle;text-align:center}
 .xjd-error .xjd-error-msg{color:#999;height:100px;position:absolute;left:0;right:0;top:50%;margin-top:-50px;line-height:100px;font-size:14px}
-.banner{height:370px;background-color:#76cf65}
-.banner-select{*zoom:1;width:100px;margin:330px auto 0}
+.banner{height:370px}
+.banner-select{*zoom:1;width:100px;position:absolute;z-index:5;top:330px;left:50%}
 .banner-select:before,.banner-select:after{display:table;content:""}
 .banner-select:after{clear:both}
 .banner-select .banner-select-link{display:block;float:left;margin-right:10px;font-size:14px;color:#f2736a;text-decoration:none}
-.banner-select .banner-select-link:hover,.banner-select .banner-select-link.current{color:#fff}
+.banner-select .banner-select-link:hover,.banner-select .banner-select-link.current{color:#000}
 .introduce{height:220px;background-color:#f8f8f8;padding-top:60px}
 .introduce-left{float:left;width:360px;overflow:hidden}
 .introduce-left .introduce-left-title{height:56px;line-height:56px;font-size:26px;font-weight:700}
@@ -158,8 +161,39 @@ p{margin:0;padding:0}
 .newgonggao-more{float:right;line-height:70px;text-decoration:none;color:#333}
 .bottom{padding-bottom:40px}
 .btm-bank-title{margin-bottom:20px}
-.bottom-content{*zoom:1}
+.bottom-content{*zoom:1;padding-left:20px;margin-right:-40px}
 .bottom-content:before,.bottom-content:after{display:table;content:""}
 .bottom-content:after{clear:both}
-.bottom-bank{width:146px;height:40px;display:block;text-decoration:none;margin-right:40px;float:left}
-.bottom-bank.first{padding-left:20px}
+.bottom-bank{width:150px;height:40px;display:block;text-decoration:none;margin-right:15px;float:left;background:url(../common/img/bank_icon.png) 0 0 no-repeat;margin-bottom:20px}
+.bottom-bank.zhaoshang{background-position:0 0}
+.bottom-bank.gongshang{background-position:0 -100px}
+.bottom-bank.youzheng{background-position:0 -198px}
+.bottom-bank.minsheng{background-position:0 -300px}
+.bottom-bank.jianshe{background-position:0 -402px}
+.bottom-bank.zhongguo{background-position:0 -500px}
+.bottom-bank.pufa{background-position:0 -600px}
+.bottom-bank.xingye{background-position:0 -702px}
+.bottom-bank.nongye{background-position:0 -800px}
+.bottom-bank.jiaotong{background-position:0 -902px}
+.bottom-bank.guangda{background-position:0 -1002px}
+.bottom-bank.shanghai{background-position:0 -1100px}
+.banner-floation{width:100%;overflow:hidden;position:relative;height:370px}
+.banner-item{position:absolute;left:0;top:0;width:300%;z-index:2;*zoom:1}
+.banner-item:before,.banner-item:after{display:table;content:""}
+.banner-item:after{clear:both}
+.banner-item-list{width:33.333%;float:left;height:370px}
+.banner-item-list-link{width:100%;display:block;background-color:#76cf65;height:370px}
+.banner-item-list-link.color-green{background-color:#ff0}
+.banner-item-list-link.color-red{background-color:#00f}
+.banner-item-list-link.color-blank{background-color:orange}
+.banner-container{padding:40px 0;background-color:transparent;width:280px;position:absolute;left:900px;top:0}
+.fix-box{width:280px;float:right;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;background-color:#fff}
+.fix-box-title{height:108px;background:url(../common/img/fix_title.png) 0 0 no-repeat;padding-top:40px}
+.fix-title-number{color:#fff;font-size:42px;height:50px;line-height:50px;text-align:center}
+.fix-title-number .fix-title-number-bai{font-size:14px}
+.fix-title-text{font-size:20px;color:#fff;text-align:center}
+.fix-box-main{padding:40px 0;background-color:#fff;text-align:center}
+.fix-box-main-regist{width:166px;height:36px;line-height:36px;text-align:center;background-color:#76cf65;color:#fff;font-size:16px;display:block;text-decoration:none;margin:0 auto 10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.fix-box-main-box{height:20px;line-height:20px;color:#333}
+.fix-box-main-box .fix-box-main-box-login{color:#76cf65;text-decoration:none}
+.fix-box-main-box .fix-box-main-box-login:hover{text-decoration:underline}

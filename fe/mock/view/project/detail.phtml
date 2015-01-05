@@ -14,7 +14,8 @@
             interest: +'{%$interest%}',
             days: +'{%$days%}',
             sTime: +'{%$create_time%}',
-            eTime: +'{%$deadline%}'
+            eTime: +'{%$deadline%}',
+            fullTime: +'{%$full_time%}'
         });
     });
 </script>
@@ -308,34 +309,36 @@
             </div>
         </div>
         <div class="detail-right">
+            {%if $status == 6%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                <div class="right-box-top">
+                    <div class="right-top2nd-title">已满标</div>
+                    <div class="right-top2nd-box">满标时间:{%$full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时:<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">投标人数:{%$invest_cnt%}人</div>
+                </div>
+            </div>
+            {%else%}
             <div class="right-top">
                 <div class="right-top-title">我来投资</div>
                 <div class="right-top-allmoney">
-                    <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$invest_cnt%}</span>元</div>
+                    <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$amount_rest%}</span>元</div>
                     <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
                     <input type="text" class="right-top-ipt-input" />
                 </div>
                 <div class="right-top-chongzhi">
-                    <div class="chongzhi-left">可用金额：<span id="my-money">1000.00</span>元<a href="###" class="chongzhi-link">[充值]</a></div>
-                    <div class="chongzhi-right">预期收益<span class="chongzhi-span">0.66</span></div>
+                    <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount%}</span>元{%else%}<a href="/user/login/index">立即登录</a>{%/if%}<a href="###" class="chongzhi-link">[充值]</a></div>
+                    <div class="chongzhi-right">预期收益<span class="chongzhi-span">0.00</span></div>
                 </div>
                 <div class="right-top-btn">
                     <a class="right-top-btn-confirm confirm-submit">确定投资</a>
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
             </div>
-            <div class="right-top right-bg-color">
-                <div class="right-top-title">我来投资</div>
-                <div class="right-box-top">
-                    <div class="right-top2nd-title">已满标</div>
-                    <div class="right-top2nd-box">满标时间:1212121212 </div>
-                    <div class="right-top2nd-box">满标耗时:12小时12分钟</div>
-                    <div class="right-top2nd-box">投标人数:122人</div>
-                </div>
-
-            </div>
+            {%/if%}
             <div class="right-bottom">
                 <div class="right-bottom-title">
                     <div class="bottom-title-name">还款计划</div>

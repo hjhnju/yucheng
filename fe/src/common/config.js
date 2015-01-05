@@ -86,7 +86,7 @@ define(function () {
         //+ '/test/invest/api.json',
         INVEST_DETAIL_START: rootUrl
             + '/invest/list',
-//        + '/test/invest/list.json',
+        //+ '/test/invest/list.json',
         INVEST_DETAIL_CONFIRM_ADD: rootUrl
             + '/invest/tender',
         MY_INVEST_GET: rootUrl

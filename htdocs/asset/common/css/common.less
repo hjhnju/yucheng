@@ -73,40 +73,64 @@ p {
         }
 
     }
-    .xinlang-erweima {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        left: -88px;
-        top: 27px;
-        background-color: #FFFFFF;
-        z-index: 5;
-        border: 1px solid #cccccc;
-        display: none;
 
-        &.current {
-            display: block;
-        }
+}
+.xinlang-erweima {
+    width: 258px;
+    height: 258px;
+    position: absolute;
+    left: -117px;
+    top: 27px;
+    //        background-color: #FFFFFF;
+    z-index: 5;
+    border: 1px solid #cccccc;
+    display: none;
+    background: url(../img/weixin.jpg) 0 0 no-repeat;
+
+    &.footer-erweima {
+        top: -270px;
     }
-    .triangle-top {
-        position: absolute;
-        width: 0;
-        height: 0;
+
+    &.current {
+        display: block;
+    }
+}
+.triangle-top {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #cccccc;
+    left: 119px;
+    top: -8px;
+
+    &.footer-erweima-top {
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-bottom: 8px solid #cccccc;
-        left: 90px;
-        top: -8px;
+        border-top: 8px solid #cccccc;
+        border-bottom: none;
+        top: 258px;
+        left: 116px;
     }
-    .triangle-bottom {
-        position: absolute;
-        width: 0;
-        height: 0;
+}
+.triangle-bottom {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #FFFFFF;
+    left: 119px;
+    top: -6px;
+
+    &.footer-erweima-bottom {
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-bottom: 8px solid #FFFFFF;
-        left: 90px;
-        top: -6px;
+        border-top: 8px solid #ffffff;
+        top: 258px;
+        border-bottom: none;
+        left: 116px;
     }
 }
 .header-right {
@@ -238,6 +262,7 @@ p {
     background: url("../img/header_icon.png") 0 0 no-repeat;
     vertical-align: middle;
     margin-left: 5px;
+    position: relative;
 
     &.xinlang {
         background-position: 0 -150px;
@@ -361,7 +386,7 @@ p {
     .border-radius(20px);
 
     .jindu-box-inline {
-        min-width: 10%;
+        min-width: 10px;
         background-color: @color-red;
         height: 8px;
 
