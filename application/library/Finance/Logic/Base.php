@@ -61,15 +61,16 @@ class Finance_Logic_Base {
 	/**
 	 * 订单表的入库统一入口
 	 * @param array $param 参数数组
-	 * @return array
+	 * @return array || boolean
 	 */
 	public function payOrderEnterDB($param) {
-		$regOrder = new Finance_List_Order();
-		$filters = array();
+		$regOrder = new Fiance_Object_Order();
 		$logParam = array();
 		if(is_null($param)) {
 			//未给出参数，无法插入或者更新
-			Base_Log::fatal(array('msg'=>'no params'));
+			Base_Log::error("请求参数错误",array(
+			    'msg'=>'no params'
+			));
 			return false;
 		}
 		foreach ($param as $key => $value) {
@@ -79,25 +80,24 @@ class Finance_Logic_Base {
 		$ret = $regOrder->save();
 		if(!$ret){
 			$logParam['msg'] = 'Fail to create fiance order';
-			Base_Log::fatal($logParam);
+			Base_Log::error($logParam);
+			return false;
 		} else {
 			$logParam = array();
 			$logParam['msg'] = 'Success to create finance order';
 			Base_Log::notice($logParam);
 			return true;
 		}
-		return false;
-		 
+		return false;		 
 	}
 	
 	/**
 	 * 订单资金记录表入库统一入口
 	 * @param array $param 参数数组
-	 * @return array
+	 * @return array || boolean
 	 */
 	public function payRecordEnterDB($param) {
-		$regRecord = new Finance_List_Record();
-		$filters = array();
+		$regRecord = new Finance_Object_Record();
 		$logParam = array();
 		if(is_null($param)) {
 			//未给出参数，无法插入或者更新
@@ -105,7 +105,7 @@ class Finance_Logic_Base {
 			return false;
 		}
 		foreach ($param as $key => $value) {
-			$regOrder->$key =  $value;
+			$regOrder->$key = $value;
 			$logParam[$key] = $value;
 		}
 		$ret = $regOrder->save();

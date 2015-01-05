@@ -3,7 +3,7 @@
  * 资金记录表
  * @author lilu
  */
-class Finance_Logic_Record extends Base_Object {
+class Finance_Object_Record extends Base_Object {
 	
 	/**
 	 * 数据表名

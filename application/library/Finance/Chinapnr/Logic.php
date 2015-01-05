@@ -213,8 +213,6 @@ HTML;
 	 */
 	public function userRegister($merCustId, $bgRetUrl, $retUrl="", $usrId="", $usrMp="", $usrName="", $idType="", $idNo="",  $usrEmail="", $merPriv="", $charSet=""){
 		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_USER_REGISTER.$merCustId.$bgRetUrl.$retUrl.$usrId.$usrName.$idType.$idNo.$usrMp.$usrEmail.$merPriv);
-		//var_dump($this::VERSION_10.$this::CMDID_USER_REGISTER.$merCustId.$bgRetUrl.$retUrl.$usrId.$usrName.$idType.$idNo.$usrMp.$usrEmail.$merPriv);die;
-		
 		$reqData=array(
 				"Version"	=>	$this::VERSION_10,
 				"CmdId"		=>	$this::CMDID_USER_REGISTER,
@@ -231,7 +229,6 @@ HTML;
 				"CharSet"	=>	$charSet,
 				"ChkValue"	=>	$checkValue,
 		);
-		//var_dump($reqData);die;
 		$this->autoRedirect($reqData);
 	}
 
@@ -827,6 +824,7 @@ HTML;
 				"MerPriv"	=>	$merPriv,
 				"ChkValue"	=>	$checkValue,
 		);
+		//var_dump($reqData);die;
 		$this->autoRedirect($reqData);
 	}
 	/**

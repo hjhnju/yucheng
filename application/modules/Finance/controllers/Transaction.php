@@ -7,32 +7,32 @@
  */
 class TransactionController extends Base_Controller_Api{
    
-   public function init(){
-       //for test
-       //TODO remove
-       $this->setNeedLogin(false);
-       parent::init();
-   }
+    public function init(){
+        //for test
+        //TODO remove
+        $this->setNeedLogin(false);
+        parent::init();
+    }
    
-   /**
-    * 充值controller层入口
-    * @param String transAmt 交易金额(required)
-    * @param String openBankId 开户银行代号(optional)
-    * @param String gateBusiId 支付网关业务代号(optional)
-    * @param String dcFlag 借贷记标记(optional)
-    *
-    */ 
-   public function netsaveAction(){
-       $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';  	
-       $transAmt = $_REQUEST['transAmt'];
-       $openBankId = $_REQUEST['openBankId'];
-       $gateBusiId = $_REQUEST['gateBusiId'];
-       $dcFlag = $_REQUEST['dcFlag'];
-       
-       //1.调用其他模块lib库得到所需参数
-       //2.调用Logic层方法
-       //Finance_Api::netSave($huifuid,"20.00",$gateBusiId,$openBankId,$dcFlag);
-       Finance_Api::netSave($huifuid,"20.00","B2C","ICBC","D");
+    /**
+     * 充值controller层入口
+     * @param String transAmt 交易金额(required)
+     * @param String openBankId 开户银行代号(optional)
+     * @param String gateBusiId 支付网关业务代号(optional)
+     * @param String dcFlag 借贷记标记(optional)
+     *
+     */ 
+    public function netsaveAction(){
+        $userid = $this->userid;
+        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';  	
+        $transAmt = round($_REQUEST['transAmt'],2);
+        $openBankId = $_REQUEST['openBankId'];
+        $gateBusiId = $_REQUEST['gateBusiId'];
+        $dcFlag = $_REQUEST['dcFlag'];
+        //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
+        //TODO:remove
+        //FOR TEST
+        Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
        
      
    }
@@ -48,6 +48,8 @@ class TransactionController extends Base_Controller_Api{
        $transAmt = $_REQUEST['transAmt'];
        $captcha = $_REQUEST['captcha'];
        $openAcctId = $__REQUEST['openAcctId'];
+       
+       
        //1.验证验证码操作
        //2.调用其他模块lib库得到所需参数
        //3.调用Logic层方法
