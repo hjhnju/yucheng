@@ -10,43 +10,62 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 	
     /**
      * 用户开户
-     * @param string
-     * @param string
-     * @param array
+     * @param string userName
+     * @param string userMp
+     * @param string userid
      */
-	public function userRegist($userName,$userMp) {
+	public function userRegist($userName,$userMp,$userid) {
 	    $webroot = Base_Config::getConfig('web')->root;
-		$userid = $this->getUserId();
-		$chinapnr= Finance_Chinapnr_Logic::getInstance();
-		$merCustId   = self::MERCUSTID;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		$merCustId   = strval(self::MERCUSTID);
 		$bgRetUrl    = $webroot.'/finance/bgcall/userregist';
 		$retUrl      = $webroot;
-		$usrId       = $userName;
-		$usrMp       = $userMp;
-		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp);
-		
+		$usrId       = strval($userName);
+		$usrMp       = strval($userMp);
+		$merPriv     = base64_encode(strval($userid));
+		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, "", "", "", "", $merPriv, "");		
 	}
 	
 	/**
 	 * 用户绑卡
-	 * @param string 
+	 * @param string userCusId 
+	 * @param string userid
 	 */
-    public function userBindCard($usrCustId) {
+    public function userBindCard($usrCustId,$userid) {
 		$webroot = Base_Config::getConfig('web')->root;
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
 		$merCustId = self::MERCUSTID;
 		$usrCustId = "6000060000696947";
 		$bgRetUrl = $webroot.'/finance/bgcall/userbindcard';
-		$merPriv = "";
+		$merPriv = strval(base64_encode($userid));
 		$chinapnr->userBindCard($merCustId,$usrCustId,$bgRetUrl,$merPriv);		
 	}
 	
+    /**
+     * 删除银行卡
+     * @param string usrCusId
+     * @param string cardId
+     * @return array || boolean
+     * 
+     */
+	public function delCard($usrCustId,$cardId) {
+		$merCustId = strval(self::MERCUSTID);
+		$usrCustId = strval($usrCustId);
+		$cardId    = strval($cardId);
+		$chinapnr= Finance_Chinapnr_Logic::getInstance();
+		$return = $chinapnr->delCard($merCustId,$usrCustId,$cardId);
+		if(is_null($return)) {
+			return false;
+		} else {
+			return $return;
+			//var_dump($return);
+		}
+	}
 	/**
 	 * 汇付登录
 	 * @param string
 	 */
 	public function userLogin($usrCustId) {
-		$webroot = Base_Config::getConfig('web')->root;
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
 		$chinapnr->userLogin(self::MERCUSTID,"6000060000696947");
 	}
@@ -56,7 +75,6 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 	 * @param string
 	 */
 	public function  acctModify($usrCustId) {
-	    $webroot = Base_Config::getConfig('web')->root;
 		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
         $chinapnr->accModify(self::MERCUSTID,"6000060000696947");
 	}

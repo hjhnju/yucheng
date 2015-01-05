@@ -4,7 +4,49 @@
  * @author lilu
  */
 class Finance_Logic_Transaction extends Finance_Logic_Base{
-    
+
+	/**
+	 * 网银充值logic层
+	 * @param integer userid
+	 * @param integer huifuid
+	 * @param integer transAmt 
+	 * @param integer openBankId
+	 * @param integer gateBusiId
+	 * @param integer dcFlag
+	 * 
+	 */
+	public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
+		$webroot = Base_Config::getConfig('web')->root;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		$orderInfo = $this->genOrderInfo();
+		$orderDate = strval($orderInfo['date']);
+		$orderId = strval($orderInfo['orderId']);
+		$merCustId = strval(self::MERCUSTID);
+		$huifuid = '6000060000696947';
+		$strTransAmt = strval($transAmt);
+		$bgRetUrl  = $webroot.'/finance/bgcall/userregist';
+		$retUrl    = '';
+		$merPriv = strval($userid);
+		//充值订单入库
+		$timeNow = time();
+		$param = array(
+		    'order_id'     => $orderId,
+			'user_id'      => $userid,
+			'type'         => Finance_TypeStatus::NETSAVE,
+			'amount'       => $transAmt,
+			'status'       => Finance_TypeStatus::PROCESSING,
+			'create_time'  => $timeNow,
+			'update_time'  => $timeNow,
+			'comment'      => '充值订单入库',	
+		);
+		$ret = $this->payOrderEnterDB($param);
+		if($ret == false) {
+			BaseLog::error("fail to create finance order");
+		}
+		//调用汇付API进行充值处理
+		$chinapnr->netSave($merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, $dcFlag, $strTransAmt, $retUrl, $bgRetUrl, $merPriv);
+	}
+	
     /**
      * 根据userId获取用户充值提现记录
      * @param String $userId
@@ -62,14 +104,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
     }
     
 
-    /**
-     * 签名生成方法
-     * @param array $param 将需要组合起来生成签名的参数置入array作为参数
-     * @return string 返回签名字符串
-     */
-    public function generateSign($param) {
-    	
-    }
 
 }
 
