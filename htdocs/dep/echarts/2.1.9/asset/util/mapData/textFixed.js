@@ -1,4 +1,4 @@
-define('echarts/util/mapData/textFixed', function () {
+define('echarts/util/mapData/textFixed', [], function () {
     return {
         '\u5E7F\u4E1C': [
             0,

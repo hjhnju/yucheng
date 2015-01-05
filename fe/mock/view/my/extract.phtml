@@ -13,9 +13,9 @@
 {%/block%}
 
 {%block name="content"%}
-{%assign var=mapBank value=['1'=>'zhaoshang', '2'=>'gongshang', '3'=>'youzheng', '4'=>'minsheng',
-'5'=>'jianshe', '6'=>'zhongguo', '7'=>'pufa', '8'=>'xingye', '9'=>'nongye',
-'10'=>'jiaotong', '11'=>'guangda', '12'=>'shanghai']%}
+{%assign var=mapBank value=['CMB'=>'zhaoshang', 'ICBC'=>'gongshang', 'PSBC'=>'youzheng', 'CMBC'=>'minsheng',
+'CCB'=>'jianshe', 'BOC'=>'zhongguo', 'SPDB'=>'pufa', 'CIB'=>'xingye', 'ABC'=>'nongye',
+'BOCOM'=>'jiaotong', 'CEB'=>'guangda', 'BOS'=>'shanghai']%}
 <div class="finish">
     <div class="container finish-bg-color">
         {%include file='common/nav.phtml' current="3"%}
@@ -25,7 +25,7 @@
                 <a class="return" href="###">返回</a>
             </div>
             <div class="extract">
-                {%if $bindbank == 1%}
+                {%if $bindbank == CMB%}
                 <div class="extract-title">
                     <div class="extract-title-text">绑定的提现银行卡:</div>
                     <div class="extract-title-bank {%$mapBank[$bankID]%}">{%$banknum%}</div>

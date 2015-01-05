@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/jiang_su_geo', function () {
+define('echarts/util/mapData/geoJson/jiang_su_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

@@ -5922,7 +5922,7 @@
         });
     });
     if (typeof define === 'function' && define.amd) {
-        define('jquery/jquery', function () {
+        define('jquery/jquery', [], function () {
             return jQuery;
         });
     }

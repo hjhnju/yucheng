@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/si_chuan_geo', function () {
+define('echarts/util/mapData/geoJson/si_chuan_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

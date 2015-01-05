@@ -11,6 +11,7 @@ exports.getProcessors = function () {
         files: [
             'src/setting/login/index.less',
             'src/setting/regist/index.less',
+            'src/setting/password/index.less',
             'src/my/invest/index.less',
             'src/my/account/index.less',
             'src/my/safe/index.less',
@@ -38,6 +39,7 @@ exports.getProcessors = function () {
         files: [
             'src/setting/login/index.less',
             'src/setting/regist/index.less',
+            'src/setting/password/index.less',
             'src/my/invest/index.less',
             'src/my/account/index.less',
             'src/my/safe/index.less',
@@ -66,6 +68,7 @@ exports.getProcessors = function () {
         files: [
             'src/setting/login/index.js',
             'src/setting/regist/index.js',
+            'src/setting/password/index.js',
             'src/my/safe/index.js',
             'src/my/account/index.js',
             'src/my/invest/index.js',
