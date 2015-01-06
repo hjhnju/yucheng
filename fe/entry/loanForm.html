@@ -123,6 +123,7 @@
                 <div class="loan-form">
                     <div class="loan-form-title">您好，请留下您的需求及联系方式，我们将尽快与您联系</div>
                     <div class="loan-form-content">
+                        <div class="form-error"></div>
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款标题:</div>
                             <div class="loan-form-content-right">
@@ -132,21 +133,26 @@
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>学校类型:</div>
                             <div class="loan-form-content-right">
-                                <select class="select-mar-right">
-                                    <option>基础教育</option>
-                                    <option>高等教育</option>
-                                    <option>基础教育</option>
-                                </select>
+                                <div class="select-box">
+                                    <select class="select-mar-right">
+                                        <option>改建扩建</option>
+                                        <option>师资加强</option>
+                                        <option>基础教育</option>
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款用途:</div>
                             <div class="loan-form-content-right">
-                                <select class="select-mar-right">
-                                    <option>改建扩建</option>
-                                    <option>师资加强</option>
-                                    <option>基础教育</option>
-                                </select>
+                                <div class="select-box">
+                                    <select class="select-mar-right">
+                                        <option>改建扩建</option>
+                                        <option>师资加强</option>
+                                        <option>基础教育</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="loan-form-con-box">
@@ -156,19 +162,15 @@
                             </div>
                         </div>
                         <div class="loan-form-con-box">
-                            <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款年利率:</div>
-                            <div class="loan-form-content-right">
-                                <input type="text" class="loan-form-right-ipt" />%
-                            </div>
-                        </div>
-                        <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款期限:</div>
                             <div class="loan-form-content-right">
-                                <select class="select-mar-right">
-                                    <option>1个月</option>
-                                    <option>6个月</option>
-                                    <option>1年</option>
-                                </select>
+                                <div class="select-box">
+                                    <select class="select-mar-right">
+                                        <option>一个月</option>
+                                        <option>6个月</option>
+                                        <option>一年</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="loan-form-con-box">
@@ -180,16 +182,15 @@
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>所在地:</div>
                             <div class="loan-form-content-right">
-                                <div class="select-box">
-                                    <select class="select-mar-right">
-                                        <option>北京</option>
-                                        <option>天津</option>
-                                        <option>上海</option>
-                                    </select>
-                                    省/市
-                                </div>
-
+                            <div class="select-box">
+                                <select class="select-mar-right">
+                                    <option>北京</option>
+                                    <option>天津</option>
+                                    <option>上海</option>
+                                </select>
                             </div>
+                            <div class="select-box-last">省/市</div>
+                        </div>
                         </div>
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>联系方式:</div>
@@ -200,17 +201,21 @@
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>还款方式:</div>
                             <div class="loan-form-content-right">
-                                <select class="select-mar-right">
-                                    <option>每月还息，到期归还本金</option>
-                                    <option>天津</option>
-                                    <option>上海</option>
-                                </select>
+                                <div class="loan-form-content-right">
+                                    <div class="select-box">
+                                        <select class="select-mar-right">
+                                            <option>每月还息，到期归还本金</option>
+                                            <option>天津</option>
+                                            <option>上海</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="loan-form-con-box">
                             <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款描述:</div>
                             <div class="loan-form-content-right">
-                                <textarea class="right-textarea"></textarea>
+                                <textarea class="loan-form-right-ipt right-textarea"></textarea>
                             </div>
                         </div>
                         <div class="loan-form-con-box">
@@ -224,9 +229,6 @@
             </div>
         </div>
     </div>
-
-
-
 
     <div class="footer">
         <div class="container">

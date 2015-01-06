@@ -20,6 +20,7 @@ define(function (require) {
 
     function lunbox(overbox, item, list, btn) {
 
+
         var oDiv = overbox;
         var oUl = item;
         var timer;
@@ -30,6 +31,8 @@ define(function (require) {
         var small = btn;
 
         function lunbo() {
+
+            timer && clearInterval(timer);
             if(now === aLi.size()-1) {
                 list.eq(0).css({
                     "position": "relative",

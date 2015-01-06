@@ -1,0 +1,72 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/loan/loanstart/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['loan/loanstart/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="loan">
+    <div class="container">
+        <div class="loan-start">
+            <div class="loan-start-title">
+                <a class="loan-start-title-link" href="/mock/entry/loan/index.php">我要借款</a>
+                <span class="loan-start-title-symbol">></span>
+                <span class="loan-start-title-span">贷款种类</span>
+            </div>
+            <div class="loan-start-main">
+                <div class="loan-start-main-box">
+                    <div class="loan-start-box-title">学校助业贷</div>
+                    <div class="loan-start-content">
+                        <div class="loan-start-con-box">
+                            <div class="loan-con-box-name">贷款用途：</div>
+                            <div class="loan-con-box-right">流动资金、设备更新、改扩建等</div>
+                        </div>
+                        <div class="loan-start-con-box">
+                            <div class="loan-con-box-name">额度范围：</div>
+                            <div class="loan-con-box-right">10-500万元</div>
+                        </div>
+                        <div class="loan-start-con-box">
+                            <div class="loan-con-box-name">申请对象：</div>
+                            <div class="loan-con-box-right">学前教育、基础教育、职业教育、高等教育等学校或教育培训机构等</div>
+                        </div>
+                        <div class="link-box">
+                            <p class="link-box-text"></p>
+                            <a class="loan-start-main-box-link" href="###">我要申请</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="loan-start-main-box">
+                    <div class="loan-start-box-title bg-color">教师圆梦贷</div>
+                    <div class="loan-start-content">
+                        <div class="loan-start-con-box">
+                            <div class="loan-con-box-name">贷款用途：</div>
+                            <div class="loan-con-box-right">房子装修、家电消费、教育培训、婚姻大事、旅游休闲等</div>
+                        </div>
+                        <div class="loan-start-con-box">
+                            <div class="loan-con-box-name">额度范围：</div>
+                            <div class="loan-con-box-right">1-30万元</div>
+                        </div>
+                        <div class="loan-start-con-box">
+                            <div class="loan-con-box-name">申请对象：</div>
+                            <div class="loan-con-box-right">当前在职满6个月的学校员工</div>
+                        </div>
+                        <div class="link-box">
+                            <p class="link-box-text">开通中....敬请期待</p>
+                            <span class="loan-start-main-box-link current">我要申请</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}

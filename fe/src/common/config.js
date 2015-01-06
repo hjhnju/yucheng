@@ -113,8 +113,11 @@ define(function () {
         COMPANY_INFOS_LIST: rootUrl
             + '/infos/post/list',
         USER_REGISTAPI_MODIFYPWD: rootUrl
-            + '/user/registapi/modifypwd'
+            + '/user/registapi/modifypwd',
             //+ '/test/user/registapi/modifypwd.json'
+        LOAN_REQUEST: rootUrl
+            //+ '/loan/request'
+            + '/test/loan/request.json'
         };
 
     return {

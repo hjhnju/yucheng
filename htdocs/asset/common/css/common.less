@@ -26,6 +26,8 @@ p {
     width: 1000px;
     margin: 0 auto;
     position: relative;
+    left: 0;
+    top: 0;
 
     .clearfix;
 }
@@ -263,6 +265,8 @@ p {
     vertical-align: middle;
     margin-left: 5px;
     position: relative;
+    left: 0;
+    top: 0;
 
     &.xinlang {
         background-position: 0 -150px;
@@ -308,7 +312,7 @@ p {
 .investlist-box-title {
     border-bottom: 1px dashed #d8d8d8;
     padding-left: 12px;
-    height: 64px;
+    min-height: 64px;
     line-height: 64px;
 
     &.border-bottom {
@@ -329,7 +333,9 @@ p {
 
     &.grade {
         width: 100px;
-        text-align: center;
+        text-align: left;
+        height: 64px;
+        .clearfix;
 
         .grade-star {
             display: inline-block;
@@ -337,6 +343,9 @@ p {
             height: 16px;
             margin-right: 4px;
             background: url("../img/star_icon.png") 0 0 no-repeat;
+            line-height: 64px;
+            float: left;
+            margin-top: 20px;
 
             &.all {
                 background-position: 0 0;
