@@ -174,7 +174,8 @@ class Invest_Api {
      * 获取投资列表，通过filter过滤列表数据
      * @param integer $page
      * @param integer $pagesize
-     * @param array $filter
+     * @param array $filter 过滤参数 目前支持type cat period
+     * array('type' => 1, 'cat' => 1, period => 1);
      * @return array
      * array(
      *      'page' => 1,
@@ -184,7 +185,8 @@ class Invest_Api {
      * )
      */
     public static function getInvestList($page = 1, $pagesize = 10, $filter = array()) {
-        $list = Loan_Api::getLoans($page, $pagesize, $filter);
+        $logic = new Invest_Logic_Invest();
+        $list = $logic->getInvestList($page, $pagesize, $filter);
          
         $status = new Invest_Type_InvestStatus();
         foreach ($list['list'] as $key => $val) {
