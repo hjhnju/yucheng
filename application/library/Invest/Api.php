@@ -171,6 +171,29 @@ class Invest_Api {
     }
     
     /**
+     * 获取投资列表，通过filter过滤列表数据
+     * @param integer $page
+     * @param integer $pagesize
+     * @param array $filter
+     * @return array
+     * array(
+     *      'page' => 1,
+     *      'pagesize' => 10,
+     *      'pageall' => 100,
+     *      'list' => array(),
+     * )
+     */
+    public static function getInvestList($page = 1, $pagesize = 10, $filter = array()) {
+        $list = Loan_Api::getLoans($page, $pagesize, $filter);
+         
+        $status = new Invest_Type_InvestStatus();
+        foreach ($list['list'] as $key => $val) {
+            $list['list'][$key]['status_name'] = $status->getTypeName($val['status']);
+        }
+        return $list;
+    }
+    
+    /**
      * 创建收款计划
      * @param integer $invest_id
      * @param boolean
