@@ -48,28 +48,21 @@ class User_Logic_Login {
     }
 
     /**
-     * 获取用户对象
-     * @return User_Object
-     */
-    public function getUserObject($userid) {
-        $objUser = new User_Object($userid);
-        return $objUser;
-    }
-    
-    /**
      * @param string $strName,用户名
      * @param string $strPasswd,用户密码
      * @return User_RetCode::USER_NAME_NOTEXIT | USER_PASSWD_ERROR | SUCCESS
      */
     public function login($strName, $strPasswd){
+        $strPasswd = Base_Util_Secure::encrypt($strPasswd);
+
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('name'=>$strName));
 
         $objRecord     = new User_Object_Record();
         $lastip        = Base_Util_Ip::getClientIp();
         $objRecord->ip = $lastip;
-
-        //用户名不存在
+        
+        //用户名不存在 
         if(empty($objLogin->userid)){
             $objRecord->status = self::STATUS_LOGIN_FAIL;
             $objRecord->save();
@@ -96,5 +89,4 @@ class User_Logic_Login {
 
         return User_RetCode::SUCCESS;
     }
-  
 }

@@ -4,7 +4,7 @@ include_once "SecureTool.php";
   * 汇付接口最终实现类
   * 
   */
-class Finance_Chinapnr_ChinapnrLogic {
+class Finance_Chinapnr_Logic {
 	private static $self=null;
 	private $merId;
 	private $scureTool;
@@ -69,10 +69,10 @@ class Finance_Chinapnr_ChinapnrLogic {
 	 * @desc depends npc sign server.
 	 * @param string $merId
 	 */
-	private function Finance_Chinapnr_ChinapnrLogic($params){
+	private function __construct($params){
 		$this->merId= $params['merId'];
 		$this->platformUrl= $params['serverLocation'];
-		$this->scureTool= new SecureTool($params['merchantPrivateKey'],$params['chinapnrPublicKey']);
+		$this->scureTool= new Finance_Chinapnr_SecureTool($params['merchantPrivateKey'],$params['chinapnrPublicKey']);
 
 	}
 
@@ -186,8 +186,8 @@ HTML;
 	//
 	public static function getInstance(){
 		if(self::$self == null){
-			$params= require_once 'ChinapnrConf.php';
-			self::$self= new Finance_Chinapnr_ChinapnrLogic($params);
+			$params= require_once 'Conf.php';
+			self::$self= new Finance_Chinapnr_Logic($params);
 		}
 		return  self::$self;
 	}
@@ -211,7 +211,7 @@ HTML;
 	 *
 	 * @return 无返回，使用autoRedirect方式重定向用户浏览器页面
 	 */
-	public function userRegister($merCustId, $bgRetUrl, $retUrl="", $usrId="", $usrName="", $idType="", $idNo="", $usrMp="", $usrEmail="", $merPriv="", $charSet=""){
+	public function userRegister($merCustId, $bgRetUrl, $retUrl="", $usrId="", $usrMp="", $usrName="", $idType="", $idNo="",  $usrEmail="", $merPriv="", $charSet=""){
 		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_USER_REGISTER.$merCustId.$bgRetUrl.$retUrl.$usrId.$usrName.$idType.$idNo.$usrMp.$usrEmail.$merPriv);
 		$reqData=array(
 				"Version"	=>	$this::VERSION_10,
@@ -229,7 +229,6 @@ HTML;
 				"CharSet"	=>	$charSet,
 				"ChkValue"	=>	$checkValue,
 		);
-
 		$this->autoRedirect($reqData);
 	}
 
@@ -395,7 +394,6 @@ HTML;
 				"ChkValue"	=>	$checkValue,
 		);
 		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","AvlBal","AcctBal","FrzBal"));
-		var_dump($response);die;
 		return $response;
 
 	}
@@ -815,7 +813,7 @@ HTML;
 				"CmdId"		=>	$this::CMDID_NET_SAVE,
 				"MerCustId"	=>	$merCustId,
 				"UsrCustId"	=>	$usrCustId,
-				"OrdId"	=>	$ordId,
+				"OrdId"	    =>	$ordId,
 				"OrdDate"	=>	$ordDate,
 				"GateBusiId"	=>	$gateBusiId,
 				"OpenBankId"	=>	$openBankId,
@@ -826,6 +824,7 @@ HTML;
 				"MerPriv"	=>	$merPriv,
 				"ChkValue"	=>	$checkValue,
 		);
+		//var_dump($reqData);die;
 		$this->autoRedirect($reqData);
 	}
 	/**

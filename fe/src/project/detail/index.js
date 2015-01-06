@@ -138,6 +138,9 @@ define(function (require) {
         if ($('.right-top-allmoney-time span').length > 0) {
             countDown.init('.right-top-allmoney-time span', model.sTime * 1000, model.eTime * 1000);
         }
+
+        // 加入满标时间
+        countDown.init('#full-time', model.sTime * 1000, model.fullTime * 1000);
     }
 
     function caculateIncome(money) {

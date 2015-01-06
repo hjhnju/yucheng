@@ -1,69 +1,81 @@
-<?php
+<?php 
 /**
- * 用户管理类接口逻辑实现类
- * 传入的参数除必须字段外，若无则传入null即可
- * 参数均以数组形式传入
+ * 用户管理逻辑类
+ * 用户开户
+ * 用户绑卡
+ * 企业开户
+ * @author lilu
  */
-class Finance_Logic_UserManage{
-
+class Finance_Logic_UserManage extends Finance_Logic_Base{
+	
     /**
-     * 封装汇付天下API实现用户管理类功能
-     * @param array $userRegisterParam(
-     * String $version 版本号,目前固定为10(必须),
-     * String $merCusId 商户客户号(必须),
-     * String $UsrId 用户号,
-     * String $UsrName 真实名称,
-     * String $IdType 证件类型 身份证或其他...,
-     * String $IdNo 证件号码,
-     * String $UsrMp 手机号,
-     * String $UsrEmail 用户Email,
-     * String $retUrl 页面返回URL 将把处理结果返回至该页面上,
-     * )
-     *
+     * 用户开户
+     * @param string userName
+     * @param string userMp
+     * @param string userid
      */
-    public function userRegister($userRegisterParam){
-        
-    
-    
-    
-    }
-
+	public function userRegist($userName,$userMp,$userid) {
+	    $webroot = Base_Config::getConfig('web')->root;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		$merCustId   = strval(self::MERCUSTID);
+		$bgRetUrl    = $webroot.'/finance/bgcall/userregist';
+		$retUrl      = $webroot;
+		$usrId       = strval($userName);
+		$usrMp       = strval($userMp);
+		$merPriv     = base64_encode(strval($userid));
+		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, "", "", "", "", $merPriv, "");		
+	}
+	
+	/**
+	 * 用户绑卡
+	 * @param string userCusId 
+	 * @param string userid
+	 */
+    public function userBindCard($usrCustId,$userid) {
+		$webroot = Base_Config::getConfig('web')->root;
+		$chinapnr= Finance_Chinapnr_Logic::getInstance();
+		$merCustId = self::MERCUSTID;
+		$usrCustId = "6000060000696947";
+		$bgRetUrl = $webroot.'/finance/bgcall/userbindcard';
+		$merPriv = strval(base64_encode($userid));
+		$chinapnr->userBindCard($merCustId,$usrCustId,$bgRetUrl,$merPriv);		
+	}
+	
     /**
-     * 用户绑卡实现
-     * $param array $userBindCardParam(
-     * String $version 版本号,目前固定为10(必须),
-     * String $merCusId 商户客户号(必须),
-     * String $usrCustId 用户客户号(必须) 即汇付用户ID,
-     * )
-     *
-     */
-    public function userBindCard($userBindCardParam){
-    
-    }
-
-    /**
-     * 企业开户实现
-     * $param array $corpRegisterParam(
-     * String $version 版本号,目前固定为10(必须),
-     * String $merCusId 商户客户号(必须),
-     * String $UsrId 用户号,
-     * String $UsrName 真实名称,
-     * String $InstuCode 组织机构代码,
-     * String $BusiCode 营业执照编号(必须),
-     * String $TaxCode 税务登记号,
-     * String $GuarType 担保类型,
-     * )
-     *
+     * 删除银行卡
+     * @param string usrCusId
+     * @param string cardId
+     * @return array || boolean
      * 
      */
-    public function corpRegister($corpRegisterParam){
-    
-    
-    
-    }
-
-
-} 
-
-
-
+	public function delCard($usrCustId,$cardId) {
+		$merCustId = strval(self::MERCUSTID);
+		$usrCustId = strval($usrCustId);
+		$cardId    = strval($cardId);
+		$chinapnr= Finance_Chinapnr_Logic::getInstance();
+		$return = $chinapnr->delCard($merCustId,$usrCustId,$cardId);
+		if(is_null($return)) {
+			return false;
+		} else {
+			return $return;
+			//var_dump($return);
+		}
+	}
+	/**
+	 * 汇付登录
+	 * @param string
+	 */
+	public function userLogin($usrCustId) {
+		$chinapnr= Finance_Chinapnr_Logic::getInstance();
+		$chinapnr->userLogin(self::MERCUSTID,"6000060000696947");
+	}
+	
+	/**
+	 * 汇付用户信息修改
+	 * @param string
+	 */
+	public function  acctModify($usrCustId) {
+		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
+        $chinapnr->accModify(self::MERCUSTID,"6000060000696947");
+	}
+}

@@ -1,0 +1,65 @@
+@import "../../../common/css/common.less";
+
+.company {
+    padding-top: 20px;
+    .clearfix;
+}
+
+.company-menu {
+    float: left;
+    width: 220px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    .clearfix;
+
+    .company-menu-item {
+        display: block;
+        border-left: 6px solid #f2f2f2;
+        background-color: #f2f2f2;
+        text-align: center;
+        text-decoration: none;
+        color: #0d0d0d;
+        height: 46px;
+        line-height: 46px;
+        font-size: 14px;
+        border-bottom: 1px solid @color-white;
+
+        &:hover,
+        &.current {
+            border-color: #2d9817;
+            background-color: @color-green;
+            color: @color-white;
+        }
+    }
+}
+
+.company-box {
+    float: left;
+    width: 740px;
+    margin-bottom: 100px;
+}
+
+.company-part-title {
+    border-bottom: 1px solid @color-gray-border;
+    margin-bottom: 10px;
+    .clearfix;
+}
+
+.company-part-titlectx {
+    float: left;
+    font-size: 22px;
+    height: 44px;
+    line-height: 44px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 2px solid @color-green;
+}
+
+.company-part-back {
+    font-size: 12px;
+    line-height: 44px;
+    float: right;
+    color: @color-black;
+    text-decoration: none;
+    cursor: pointer;
+}

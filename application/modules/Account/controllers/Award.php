@@ -19,10 +19,12 @@ class AwardController extends Base_Controller_Response {
 	 */
 	public function indexAction() {				
         $userid = $this->getUserId();	
+        $webroot = Base_Config::getConfig('web')->root;
+        
         $userInfo = $this->userInfoLogic->getUserInfo($userid);
         $inviteUrl = Awards_Api::getInviteUrl($userid);
 		$inviteUrl = ($inviteUrl != false) ? $inviteUrl : ""; //获取该用户的专属邀请链接
-		$this->getView()->assign('inviteUrl', $inviteUrl);	
+		$this->getView()->assign('inviteUrl',$inviteUrl);	
 		$this->getView()->assign('userinfo',$userInfo);
 	}
 	

@@ -68,19 +68,25 @@ define(function () {
         + '/account/award/receiveawards',
         //+ '/test/account/award/receiveAwards.json',
         ACCOUNT_CASH_LIST: rootUrl
-        + '/account/cash/list',
+        + '/account/cashapi/list',
 //        + '/test/account/cash/list.json',
         LINE_GET: rootUrl
             + '/account/overview/profitCurve',
         SECURE_DEGREE: rootUrl
             + '/account/secure/securedegree',
         //    + '/test/account/secure/secureDegree.json',
+        ACCOUNT_CASH_RECHARGE_ADD: rootUrl
+        + '/account/cashapi/recharge',
+            //+ '/test/account/cash/recharge.json',
+        ACCOUNT_CASH_WITHDRAW_ADD: rootUrl
+        + '/account/cashapi/withdraw',
+        //+ '/test/account/cash/withdraw.json',
         INVEST_LIST: rootUrl
             + '/invest/api',
         //+ '/test/invest/api.json',
         INVEST_DETAIL_START: rootUrl
             + '/invest/list',
-//        + '/test/invest/list.json',
+        //+ '/test/invest/list.json',
         INVEST_DETAIL_CONFIRM_ADD: rootUrl
             + '/invest/tender',
         MY_INVEST_GET: rootUrl
@@ -102,9 +108,14 @@ define(function () {
             + '/msg/list',
             //+ '/test/account/message/msglist.json',
         MY_MSG_SETREAD_ADD: rootUrl
-            + '/msg/read'
-            //+ '/test/account/message/setread.json'
-    };
+            + '/msg/read',
+            //+ '/test/account/message/setread.json',
+        COMPANY_INFOS_LIST: rootUrl
+            + '/infos/post/list',
+        USER_REGISTAPI_MODIFYPWD: rootUrl
+            + '/user/registapi/modifypwd'
+            //+ '/test/user/registapi/modifypwd.json'
+        };
 
     return {
         URL: URL

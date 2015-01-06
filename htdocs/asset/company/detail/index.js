@@ -1,0 +1,1 @@
+define("company/detail/index",[],function(){return{}});

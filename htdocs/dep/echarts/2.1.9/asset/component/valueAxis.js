@@ -1,4 +1,16 @@
-define('echarts/component/valueAxis', function (require) {
+define('echarts/component/valueAxis', [
+    'require',
+    './base',
+    'zrender/shape/Text',
+    'zrender/shape/Line',
+    'zrender/shape/Rectangle',
+    '../config',
+    '../util/date',
+    'zrender/tool/util',
+    '../util/smartSteps',
+    '../util/accMath',
+    '../component'
+], function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var LineShape = require('zrender/shape/Line');

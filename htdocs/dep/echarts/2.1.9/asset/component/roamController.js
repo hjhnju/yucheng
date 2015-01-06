@@ -1,4 +1,15 @@
-define('echarts/component/roamController', function (require) {
+define('echarts/component/roamController', [
+    'require',
+    './base',
+    'zrender/shape/Rectangle',
+    'zrender/shape/Sector',
+    'zrender/shape/Circle',
+    '../config',
+    'zrender/tool/util',
+    'zrender/tool/color',
+    'zrender/tool/event',
+    '../component'
+], function (require) {
     var Base = require('./base');
     var RectangleShape = require('zrender/shape/Rectangle');
     var SectorShape = require('zrender/shape/Sector');

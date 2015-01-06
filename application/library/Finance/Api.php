@@ -4,33 +4,32 @@
  * @author lilu
  */
 class Finance_Api {
-	
-	CONST VERSION_10 = "10";
-	CONST VERSION_20 = "20";
-	
-	CONST MERCUSTID  = "6000060000677575";  
 
 	/**
-	 * 订单类型mapping
+	 * 商户子账户信息查询 Finance_Api::queryAccts
+	 * @return 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
+	 * status=0请求成功  返回正常数据
+	 * status=Finance_RetCode::REQUEST_API_ERROR 请求汇付API接口失败
+	 * data=array(
+	 * 
+	 * )
 	 */
-	private static $pay_type = array(
-		0 => 'netSave',//充值
-		1 => 'cash',//提现
-		2 => 'initiativeTender',//主动投标
-		3 => 'tenderCancle',//投标撤销
-		4 => 'loans',//满标打款
-	);
-	
-	/**
-	 * 订单状态mapping
-	 */
-	private static $status = array(
-		0 => 'processing',//处理中
-		1 => 'endWithFail',//处理结束，失败
-		2 => 'endWithSuccedd'//处理结束，成功
-	);
-	
-
+	public static function queryAccts() {
+		$queryLogic = new Finance_Logic_Query();
+		$return = $queryLogic->queryAccts();
+		if($return == false) {
+			$ret = array(
+		        'status' => Base_RetCode::REQUEST_API_ERROR,
+				'data'   => array(),
+			);
+		} else {
+			$ret = array(
+				'status' => Base_RetCode::SUCCESS,
+				'data'   => $return,
+			);
+		}
+		return $ret;
+	}
 	/**
 	 * 余额查询接口 Finance_Api::queryBalanceBg
 	 * @param String $UserCustId 用户客户号(require)
@@ -38,7 +37,7 @@ class Finance_Api {
 	 * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
 	 * status=0 请求成功 返回正常数据
 	 * status=Base_RetCode::PARAM_ERROR 参数错误
-	 * status=
+	 * status=Finance_RetCode::REQUEST_API_ERROR 请求汇付API接口失败
 	 * data=array(
 	 *    'avlBal' 可用余额         
      *    'acctBal' 账户余额         
@@ -46,25 +45,38 @@ class Finance_Api {
 	 * )
 	 */	
 	public static function queryBalanceBg($userCustId) {
-		$webroot = Base_Config::getConfig('web')->root;
-		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-		$method = "queryBalanceBg";
-		$cmd= '$result= $chinapnr->'.$method.'(';
-		$params = array();		
-		$params['usrCustId']   = $userCustId;
-		$params['merCustId']   = self::MERCUSTID;		
-		foreach ($params as $k => $v){
-			$cmd.= '"'.$v.'",';
+		$queryLogic = new Finance_Logic_Query();
+		$return = $queryLogic->queryBalanceBg($userCustId);
+		if($return == false) {
+			$ret = array(
+			    'status' => Finance_RetCode::REQUEST_API_ERROR,
+				'data'   => array(
+				    'avlBal'  => '0.00',
+					'acctBal' => '0.00',
+					'frzBal'  => '0.00',
+			    ),
+			);
+		} elseif($return['RespCode'] != '000') {
+			$ret = array(
+				'status' => $return['RespCode'],
+				'data'   => array(
+					'respDesc' => $return['RespDesc'],
+					'avlBal'  => '0.00',
+					'acctBal' => '0.00',
+					'frzBal'  => '0.00',
+			    ),
+			);
+		} else {
+			$ret = array(
+				'status' => Base_RetCode::SUCCESS,
+				'data'   => array(
+					'avlBal'  => $return['AvlBal'],
+					'acctBal' => $return['AcctBal'],
+					'frzBal'  => $return['FrzBal'],
+			    ),
+			);
 		}
-		$cmd= substr($cmd, 0, strlen($cmd)-1);
-		$cmd.=');';
-		//print ($cmd);die;
-		$result = eval($cmd);
-		$ret = array();
-		$ret['avlBal']  = $result['AvlBal'];
-		$ret['acctBal'] = $result['AcctBal'];
-		$ret['frzBal']  = $result['FrzBal'];
-	    return $ret;
+		return $ret;
 	}
 	
 	/**
@@ -126,8 +138,69 @@ class Finance_Api {
      * )
      *  
 	 */ 
-	public static function queryCardInfo($userCustId,$carId='') {
-		
+	public static function queryCardInfo($userCustId,$cardId='') {
+		//TODO
+		//升级判断填进去的卡号是不是该用户的卡。。目前平台还不需要根据用户卡号来查询银行卡信息，待升级
+		$queryLogic = new Finance_Logic_Query();
+		$return = $queryLogic->queryBankCard($userCustId,$cardId);
+		if($return == false) {
+	        $ret = array(
+	        	'status' => Finance_RetCode::REQUEST_API_ERROR,
+	            'data'   => array(),
+	        );
+		} elseif($return['RespCode'] != '000') {
+			$ret = array(
+				'status' => $return['RespCode'],
+				'data'   => $return,
+			);
+		} elseif (empty($return['UsrCardInfolist'])) {
+			$ret = array(
+				'status' => Finance_RetCode::NOTBINDANYCARD,
+				'data'   => array(),
+			);
+		} else {
+			$ret = array(
+				'status' => Finance_RetCode::SUCCESS,
+				'data'   => $return,
+			);			
+		}
+		//var_dump($ret);die;
+		return $ret;
+	}
+	
+	/**
+	 * 删除银行卡接口
+	 * @param string huifuid
+	 * @param string cardId
+	 * @return array
+	 * status:0   删除成功
+	 * status:Finance_RetCode::REQUEST_API_ERROR 请求汇付API接口失败
+	 * status:汇付返回值的RespCode
+	 * data=array(
+	 *     'huifuid'
+	 *     'cardId'
+	 * )
+	 */
+	public function delCard($huifuid,$card) {
+		$userManageLogic = new Finance_Logic_UserManage();
+		$return = $userManageLogic->delCard($huifuid,$card);
+		if($return == false) {
+			$ret = array(
+				'status' => Finance_RetCode::REQUEST_API_ERROR,
+				'data'   => array(),
+			);
+		} elseif ($return['RespCode'] != "000") { //汇付返回值为非正常处理结构
+			$ret = array(
+				'status' => $return['RespCode'],
+				'data'   => $return,
+			);					
+		} else {
+			$ret = array(
+				'status' => Finance_RetCode::SUCCESS,
+				'data'   => $return,
+			);
+		}
+		return  $ret;
 	}
 	
 	/**
@@ -237,8 +310,9 @@ class Finance_Api {
       *        )
       *  
       */
-     public static function netSave($usrCustId,$transAmt,$gateBusiId='B2C',$ppenBankId='ICBC',$dcFlag='D'){
-     
+     public static function netSave($userid,$usrCustId,$transAmt,$gateBusiId,$openBankId,$dcFlag){
+         $transLogic = new Finance_Logic_Transaction();
+         $transLogic->netsave($userid, $usrCustId, $transAmt, $gateBusiId, $openBankId, $dcFlag);         
      }
      
      /**
@@ -307,32 +381,9 @@ class Finance_Api {
       *         'UsrName' 真实名称
       *       )
       */
-     public static function userRegister($userId="", $usrName="", $idType="", $idNo="", $usrMp="", $usrEmail=""){
-     	 $webroot = Base_Config::getConfig('web')->root;
-     	 $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-         $method = "userRegister";
-         $cmd= '$result= $chinapnr->'.$method.'(';
-         $params = array();
-         $params['merCustId']   = self::MERCUSTID;
-         $params['bgRetUrl']    = $webroot.'/finance/bgcall/userregist';
-         $params['retUrl']      = '';
-         $params['usrId']       = $userId;
-         $params['usrName']     = $usrName;
-         $params['idType']      = $idType;
-         $params['idNo']        = $idNo;
-         $params['$usrMp']      = $usrMp;
-         $params['usrEmail']    = $usrEmail;
-         $params['merPriv']     = "";
-         $params['charSet']     = "";
-
-         foreach ($params as $k => $v){
-         	$cmd.= '"'.$v.'",';
-         }
-         $cmd= substr($cmd, 0, strlen($cmd)-1);
-         $cmd.=');';
-        // print ($cmd);die;
-         $result = eval($cmd);         
-         print_r($result); 
+     public static function userRegist($userName,$usrMp,$userid){
+     	 $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userRegist($userName,$usrMp,$userid);     	 
      }
      
      /**
@@ -359,25 +410,8 @@ class Finance_Api {
       *      
       */
      public static function userBindCard($usrCustId){
-     	 $webroot = Base_Config::getConfig('web')->root;
-     	 $chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-         $method = "userBindCard";
-         $cmd= '$result= $chinapnr->'.$method.'(';
-         $params = array();
-         $params['merCustId']   = self::MERCUSTID;
-         $params['usrCustId']   = "6000060000696947";
-         $params['bgRetUrl']   = $webroot.'/finance/bgcall/userbindcard';
-         $params['merPriv']    = "";
-
-         foreach ($params as $k => $v){
-         	$cmd.= '"'.$v.'",';
-         }
-         $cmd= substr($cmd, 0, strlen($cmd)-1);
-         $cmd.=');';
-         //print ($cmd);die;
-         $result = eval($cmd);         
-         print_r($result); 
-         
+         $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userBindCard($usrCustId,$userid);
      }
      
      /**
@@ -417,6 +451,23 @@ class Finance_Api {
      	 
      }
      
+     /**
+      * 用户登录汇付login接口
+      * redirect 
+      */
+     public static function userLogin($usrCustId) {
+         $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userLogin($usrCustId);
+     }
+     
+     /**
+      * 用户信息修改接口
+      * redirect
+      */
+     public static function acctModify($usrCustId) {
+         $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->userLogin($usrCustId);
+     }
      /**
       * 获取充值提现列表数据
       * @param String $userId 用户号(require)

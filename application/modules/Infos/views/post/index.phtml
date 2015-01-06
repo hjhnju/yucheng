@@ -1,6 +1,46 @@
-<html>
-<head><title>官方公告</title></head>
-<body>
-<p>公告列表 总：{%$data.page%}/{%$data.pageall%} 页</p>
-</body>
-</html>
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/infos/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/infos/index'], function(main) {
+        main.init({
+            pageall: '{%$data.pageall%}',
+            page: '{%$data.page%}'
+        });
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="container company">
+    {%include file="../../../views/common/menu.phtml" current="4"%}
+    <div class="company-box">
+        <div class="company-part-title">
+            <h2 class="company-part-titlectx">官方公告</h2>
+        </div>
+        <div id="infos-list">
+            <ul class="infos-list">
+                {%foreach $data.list as $key => $item%}
+                <li class="infos-item">
+                    <span class="infos-dot">•</span>
+                    <div class="infos-box">
+                        <div class="infos-title">
+                            <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}">{%$item.title%}</a>
+                        </div>
+                        <div class="infos-ctx">
+                            {%$item.content%}
+                        </div>
+                    </div>
+                </li>
+                {%/foreach%}
+            </ul>
+        </div>
+        <div id="pager"></div>
+    </div>
+</div>
+
+{%/block%}

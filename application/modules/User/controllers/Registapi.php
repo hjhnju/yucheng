@@ -117,7 +117,7 @@ class RegistApiController extends Base_Controller_Api{
     */
     public function indexAction(){
         $strName   = trim($_REQUEST['name']);
-        $strPasswd = User_Api::encrypt((trim($_REQUEST['passwd'])));
+        $strPasswd = trim($_REQUEST['passwd']);
         $strPhone  = trim($_REQUEST['phone']);
         $strCode   = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
         $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
@@ -187,5 +187,28 @@ class RegistApiController extends Base_Controller_Api{
        
         Base_Log::notice($_REQUEST);
         return $this->ajaxJump('/user/open');
+    }
+    
+    /**
+     * 忘记密码后重置密码接口
+     */
+    public function modifypwdAction(){
+        $strName     = trim($_REQUEST['name']);
+        $strPasswd   = trim($_REQUEST['passwd']);
+        $strPhone    = trim($_REQUEST['phone']);
+        //$strType     = trim($_REQUEST['type']);
+        $strVericode = trim($_REQUEST['vericode']);
+        $ret = User_Api::checkSmscode($strPhone, $strVericode, 'setpwd');
+        $ret = true;   //for test
+        if(!$ret){
+            return $this->ajaxError(User_RetCode::VERICODE_WRONG,
+                    User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
+        }
+        $logic   = new User_Logic_Regist();
+        $ret = $logic->modifyPwd($strName,$strPhone,$strPasswd);
+        if(User_RetCode::SUCCESS === $ret){
+            return $this->ajax();
+        }
+        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
 }

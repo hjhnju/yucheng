@@ -2,15 +2,13 @@
 /**
  * 安全中心页面
  */
-class SecureController extends Base_Controller_Response{
+class SecureController extends Base_Controller_Api{
 	
 	private $retData;
 	public function init() {
-		$this->setNeedLogin(false);// for test
 		$this->retData = array();
 		parent::init();
 		$this->userInfoLogic = new Account_Logic_UserInfo();
-		$this->ajax= true;
 	}
 	
 	/**

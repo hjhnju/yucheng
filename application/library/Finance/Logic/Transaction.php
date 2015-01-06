@@ -1,94 +1,112 @@
 <?php
 /**
- * 交易类接口逻辑实现类
- * 传入的参数除必须字段外，若无则传入null即可
- * 参数均以数组形式传入
+ * 财务模块公共逻辑层
+ * @author lilu
  */
-class Finance_Logic_Transaction{
-  
+class Finance_Logic_Transaction extends Finance_Logic_Base{
+
+	/**
+	 * 网银充值logic层
+	 * @param integer userid
+	 * @param integer huifuid
+	 * @param integer transAmt 
+	 * @param integer openBankId
+	 * @param integer gateBusiId
+	 * @param integer dcFlag
+	 * 
+	 */
+	public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
+		$webroot = Base_Config::getConfig('web')->root;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		$orderInfo = $this->genOrderInfo();
+		$orderDate = strval($orderInfo['date']);
+		$orderId = strval($orderInfo['orderId']);
+		$merCustId = strval(self::MERCUSTID);
+		$huifuid = '6000060000696947';
+		$strTransAmt = strval($transAmt);
+		$bgRetUrl  = $webroot.'/finance/bgcall/userregist';
+		$retUrl    = '';
+		$merPriv = strval($userid);
+		//充值订单入库
+		$timeNow = time();
+		$param = array(
+		    'order_id'     => $orderId,
+			'user_id'      => $userid,
+			'type'         => Finance_TypeStatus::NETSAVE,
+			'amount'       => $transAmt,
+			'status'       => Finance_TypeStatus::PROCESSING,
+			'create_time'  => $timeNow,
+			'update_time'  => $timeNow,
+			'comment'      => '充值订单入库',	
+		);
+		$ret = $this->payOrderEnterDB($param);
+		if($ret == false) {
+			BaseLog::error("fail to create finance order");
+		}
+		//调用汇付API进行充值处理
+		$chinapnr->netSave($merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, $dcFlag, $strTransAmt, $retUrl, $bgRetUrl, $merPriv);
+	}
+	
     /**
-     * 网银充值实现
-     * @param String usrCustId 用户客户号(必须)
-     * @param String gateBusiId 支付网关业务代号:
-     *              包括 B2C--B2C网银支付 
-     *                   B2B--B2B网银支付 
-     *                   FPAY--快捷支付 
-     *                   POS--POS支付 
-     *                   WPAY--定向支付 
-     *                   WH--代扣
-     * @param String OpenBankId 开户银行代号
-     * @param String DcFlag 借贷记标记 D--借记,储蓄卡  C--贷记,信用卡
-     * @param String TransAmt 交易金额(必须)
-     * @param String retUrl 页面返回URL 交易结果将通过页面方式，发送至该地址上
-     * @return json 
-     * [
-     *     {
-     *         'cmdId' 消息类型
-     *         'respCode' 应答返回码
-     *         'respDesc' 应答描述
-     *         'merCustId' 商户客户号
-     *         'usrCustId' 用户客户号
-     *         'ordId' 订单号
-     *         'ordDate' 订单日期
-     *         'transAmt' 交易金额
-     *         'trxId' 本平台交易唯一标识(可选)
-     *         'retUrl'页面返回URL(可选)
-     *         'bgRetUrl' 商户后台应答地址
-     *         'merPriv' 商户私有域(可选)
-     *         'gateBusiId' 支付网关业务代号(可选)
-     *         'gateBankId' 开户银行代号(可选)
-     *         'chkValue' 签名
-     *         'feeAmt' 手续费金额
-     *         'feeCustId' 手续费扣款客户号
-     *         'feeAccId' 手续费扣款子账户号
-     *     }
-     * ]
-     */        
-     public function netSave($version,$merCustId,$usrCustId,$GateBusiId,$OpenBankId,$DcFlag,$TransAmt,$retUrl){
+     * 根据userId获取用户充值提现记录
+     * @param String $userId
+     * @return array
+     */
+    public function getRechargeWithDrawRecord($userId,$type) {
+    	$recordList = new Finance_List_Record();
+    	if($type === 0) {
+    		$filterStr = '`type` IN (1,2)';
+    	}
+    	else {
+    		$filterStr = "`type` = `{$type}`";
+    	}
+    	$recordList->setFilterString($filterStr);
+    	$recordList->setOrder('create_time desc');
+    	$recordList->setPagesize(PHP_INT_MAX);
+    	$list = $recordList->toArray();
+    	
+    	var_dump($list);
+    	return $list;
+    }
+   
+    /**
+     * 根据userId获取某个用户的总投资额
+     * @param String $userId
+     * @return array
+     */
+    public function fetchTenderAmonut($userId) {
+    	$recordList = new Finance_List_Record();
+    	$filters = array('user_id' => $userId,
+    	                 'type' => 2);//type=2 为主动投标
+    	$recordList->setFilter($filters);
+    	// $list = array(
+        //    'page' => $this->page,
+        //    'pagesize' => $this->pagesize,
+        //    'pageall' => $this->pageall,
+        //    'total' => $this->total,
+        //    'list' => $this->data,
+        // );
+    	$list = $refunds->toArray();
+    	$totle = $list['total'];//取出的记录总条数
+    	$data = $list['list'];
+    	$sum = 0;
+    	if(empty($data)){
+    		$ret = array('data' => 0,
+    		);
+    	} else {
+    		foreach ($data as $key => $val) {
+    			$sum += $val['amount'];
+    		}
+    		$ret = array('data' => $sum);
+    	}
+    	   	   	
+    	return $ret;
+    }
     
-     }
-     
-    /**
-     * 主动投标
-     * @param String transAmt 交易金额
-     * @param String usrCustId 用户客户号
-     * @param String maxTenderRate 最大投资手续费率 
-     * @param String borrowDetails 借款人信息
-     * @return
-     * @return
-     *  
-     *
-     */
-     public function initiativeTender($version,$merCustId,$transAmt,$usrCustId,$maxTenderRate,$borrowDetails){
-     }
-  
-    /**
-     * 投标撤销
-     * @param String transAmt 交易金额
-     * @param String usrCustId 用户客户号
-     * @return json
-     * [
-     *     {
-     *         'cmdId' 消息类型
-     *         'respCode' 应答返回码
-     *         'respDesc' 应答描述
-     *         'merCusId' 商户客户号
-     *         'OrdId' 订单号
-     *         'OrdDate' 订单日期
-     *         'TransAmt' 交易金额
-     *         'usrCustId' 用户客户号
-     *         'retUrl' 页面返回URL(可选)
-     *         'BgRetUrl' 商户后台应答地址
-     *         'MerPriv' 商户私有域
-     *         'ChkValue' 签名
-     *     }
-     * ]
-     */
-     public function tenderCancel($version,$merCustId,$transAmt,$usrCustId){
-     }
-     
+
+
+}
 
 
 
 
-} 

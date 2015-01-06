@@ -10,6 +10,9 @@ class Base_Util_Secure {
      *
      * @return array('key'=>int, 'auth'=>'charn') 返回加密时使用的时间戳和加密后的密文
      */
+    
+    const PASSWD_KEY = 'fjwwjo123977!2318';   //对passwd加密的密钥  
+    
     public static function encodeSand($strSecKey, $strData, $intTm = false) {
         
         $intTm = ($intTm ? $intTm : time());        
@@ -147,5 +150,14 @@ class Base_Util_Secure {
         $sid += ($intEncode & 0x000000ff) << 16;
         $sid += ($intEncode & 0x00ff0000) << 8; 
         return $sid;
+    }
+
+    /**
+     *  对密码字符串进行加密
+     *  @param string $strPasswd
+     */
+    public static  function encrypt($strPasswd){
+        $ret = md5(self::PASSWD_KEY.$strPasswd);
+        return $ret;
     }  
 }

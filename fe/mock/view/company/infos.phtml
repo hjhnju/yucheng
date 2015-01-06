@@ -1,0 +1,52 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/company/infos/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/infos/index'], function(main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="container company">
+    {%include file="common/menu.phtml" current="4"%}
+    <div class="company-box">
+        <div class="company-part-title">
+            <h2 class="company-part-titlectx">官方公告</h2>
+        </div>
+        <div id="infos-list">
+            <ul class="infos-list">
+                <li class="infos-item">
+                    <span class="infos-dot">•</span>
+                    <div class="infos-box">
+                        <div class="infos-title">
+                            <a href="###">关于建设银行代扣支付服务限额调整的通知</a>
+                        </div>
+                        <div class="infos-ctx">
+                            现接到通知，因中国建设银行处于风险考虑，建行即日起对代扣支付额度进行限制。现接到通知，因中国建设银行处于风险考虑，建行即日起对代扣支付额度进行限制。现接到通知，因中国建设银行处于风险考虑，建行即日起对代扣支付额度进行限制。
+                        </div>
+                    </div>
+                </li>
+                <li class="infos-item">
+                    <span class="infos-dot">•</span>
+                    <div class="infos-box">
+                        <div class="infos-title">
+                            <a href="###">关于建设银行代扣支付服务限额调整的通知</a>
+                        </div>
+                        <div class="infos-ctx">
+                            现接到通知，因中国建设银行处于风险考虑，建行即日起对代扣支付额度进行限制。现接到通知，因中国建设银行处于风险考虑，建行即日起对代扣支付额度进行限制。现接到通知，因中国建设银行处于风险考虑，建行即日起对代扣支付额度进行限制。
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="pager"></div>
+    </div>
+</div>
+
+{%/block%}

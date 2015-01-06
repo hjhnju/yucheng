@@ -1,4 +1,4 @@
-define('common/config', function () {
+define('common/config', [], function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             IMG_GET: rootUrl + '/user/imagecode/getimage?type=',
@@ -17,9 +17,11 @@ define('common/config', function () {
             EDIT_EMAILCONFIRM: rootUrl + '/account/editapi/newemail',
             EDIT_CHPWD_SUBMITE: rootUrl + '/account/editapi/modifypwd',
             ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl + '/account/award/receiveawards',
-            ACCOUNT_CASH_LIST: rootUrl + '/account/cash/list',
+            ACCOUNT_CASH_LIST: rootUrl + '/account/cashapi/list',
             LINE_GET: rootUrl + '/account/overview/profitCurve',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
+            ACCOUNT_CASH_RECHARGE_ADD: rootUrl + '/account/cashapi/recharge',
+            ACCOUNT_CASH_WITHDRAW_ADD: rootUrl + '/account/cashapi/withdraw',
             INVEST_LIST: rootUrl + '/invest/api',
             INVEST_DETAIL_START: rootUrl + '/invest/list',
             INVEST_DETAIL_CONFIRM_ADD: rootUrl + '/invest/tender',
@@ -29,7 +31,9 @@ define('common/config', function () {
             MY_INVEST_TENDERING: rootUrl + '/account/invest/tendering',
             MY_INVEST_TENDERFAIL: rootUrl + '/account/invest/tenderfail',
             MY_MSG_LIST: rootUrl + '/msg/list',
-            MY_MSG_SETREAD_ADD: rootUrl + '/msg/read'
+            MY_MSG_SETREAD_ADD: rootUrl + '/msg/read',
+            COMPANY_INFOS_LIST: rootUrl + '/infos/post/list',
+            USER_REGISTAPI_MODIFYPWD: rootUrl + '/user/registapi/modifypwd'
         };
     return { URL: URL };
 });
