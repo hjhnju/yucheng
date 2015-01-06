@@ -127,6 +127,7 @@ p{margin:0;padding:0}
 .xjd-loading{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../../common/css/img/loading.gif) no-repeat center center}
 .xjd-error{position:absolute;top:0;left:0;right:0;bottom:0;vertical-align:middle;text-align:center}
 .xjd-error .xjd-error-msg{color:#999;height:100px;position:absolute;left:0;right:0;top:50%;margin-top:-50px;line-height:100px;font-size:14px}
+.school-link{text-decoration:none;color:#333}
 .kaitong{padding:50px;background-color:#f8f8f8}
 .kaitong-box{width:700px;margin:0 auto}
 .kaitong-box-top{padding:50px 220px;width:280px;margin:0 auto;text-align:center;background-color:#fff}
