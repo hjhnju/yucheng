@@ -399,4 +399,89 @@ class Invest_Logic_Invest {
         $incomes = $income['interest'] + $income['late_charge'];
         return $incomes;
     }
+    
+    /**
+     * 获取投资列表，通过filter过滤列表数据
+     * @param integer $page
+     * @param integer $pagesize
+     * @param array $filter 过滤参数 目前支持type cat period
+     * array('type' => 1, 'cat' => 1, period => 1);
+     * @return array
+     * array(
+     *      'page' => 1,
+     *      'pagesize' => 10,
+     *      'pageall' => 100,
+     *      'list' => array(),
+     * )
+     */    
+    public function getInvestList($page, $pagesize, $filter) {
+        $filter = $this->getInvestFilters($filter);
+        $list = Loan_Api::getLoans($page, $pagesize, $filter);
+        return $list;
+    }
+	
+	/**
+	 * 获取投资列表的过滤器
+	 * @param array $data
+	 * @return array
+	 */
+	private function getInvestFilters($data) {
+	    $keys = array('type' => 'type_id', 'cat' => 'cat_id');
+	    $filters = array();
+	    foreach ($keys as $key => $val) {
+	        if (!empty($data[$key])) {
+	            $filters[$val] = $data[$key];
+	        }
+	    }
+	    $period = $this->getInvestPeriod($data);
+	    if (!empty($period)) {
+	        $filters['period'][] = $period;
+	    }
+	    return $filters;
+	}
+	
+	/**
+	 * 根据时间参数获取时间周期的过滤器
+	 * @param array $data
+	 * @return boolean|string|NULL
+	 */
+	private function getInvestPeriod($data) {
+	    $from = $to = 0;
+	    if (empty($data['period'])) {
+	        return false;
+	    }
+	    switch ($data['period']) {
+	        case 1:
+	            $from = 1;
+	            $to = 90;
+	            break;
+	        case 2:
+	            $from = 120;
+	            $to = 180;
+	            break;
+	        case 3:
+	            $from = 210;
+	            $to = 360;
+	            break;
+	        case 4:
+	            $from = 361;
+	            $to = 720;
+	            break;
+	        case 5:
+	            $from = 721;
+	            break;
+	    }
+	    $ary = array();
+	    if ($from > 0) {
+	        $ary[] = "duration >= $from";
+	    }
+	    if ($to > $from) {
+	        $ary[] = "duration <= $to";
+	    }
+	    if (!empty($ary)) {
+	       $filter = implode(' and ', $ary);
+	       return $filter;
+	    }
+	    return null;
+	}
 }
