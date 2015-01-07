@@ -3,6 +3,7 @@
  * 投资项目详情
  */
 class DetailController extends Base_Controller_Response {
+    protected $needLogin = false;
 	
 	public function indexAction() {
 	    $id = intval($_GET['id']);
