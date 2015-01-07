@@ -10,10 +10,13 @@ define(function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var line = require('./line');
+    var header = require('common/header');
     var Remoter = require('common/Remoter');
     var getLine = new Remoter('LINE_GET');
 
     function init(status) {
+        header.init();
+
         var container = $('#all-account-line');
         if (+status === 1) {
             getLine.remote();

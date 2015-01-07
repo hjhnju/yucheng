@@ -11,11 +11,14 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var config = require('common/config');
     var header = require('common/header');
+    var etpl = require('etpl');
+    var tpl = require('./success.tpl');
 
     function init (){
         changeEmail();
         header.init();
-
+        etpl.compile(tpl);
+        $('#success-id').html(etpl.render('Loan'));
     }
 
     function changeEmail() {
@@ -24,12 +27,13 @@ define(function (require) {
         var timer;
         var value = 6;
 
+
         timer = setInterval(function () {
 
             $('#time-span').text(--value + '秒后自动跳转');
             if(value === 0) {
                 clearInterval(timer);
-                window.location.href = '/account/overview/index';
+                window.location.href = '/index/index';
             }
 
         },1000);

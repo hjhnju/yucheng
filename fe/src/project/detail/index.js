@@ -16,6 +16,7 @@ define(function (require) {
     var tpl = require('./detail.tpl');
     var moment = require('moment');
     var Pager = require('common/ui/Pager/Pager');
+    var header = require('common/header');
 
     var investTender = new Remoter('INVEST_DETAIL_CONFIRM_ADD');
     var pager;
@@ -27,6 +28,7 @@ define(function (require) {
      * @param {string} id
      */
     function init(initData) {
+        header.init();
         $.extend(model, initData);
 
         model.amountRest = +initData.amountRest.replace(',', '');

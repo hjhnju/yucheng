@@ -13,6 +13,7 @@ define(function (require) {
     var sendsmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var error = $('.error');
     var submit = new Remoter('USER_REGISTAPI_MODIFYPWD');
+    var header = require('common/header');
 
     var statusAll = {
         'reset': 0,
@@ -22,6 +23,9 @@ define(function (require) {
     };
 
     function init (){
+
+        header.init();
+
         $('.login-input').on({
 
             focus: function(){

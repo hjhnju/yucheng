@@ -9,11 +9,12 @@ define(function (require) {
 
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
+    var header = require('common/header');
 
 
 
     function init (){
-
+        header.init();
 
     }
 

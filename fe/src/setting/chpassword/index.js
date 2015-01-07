@@ -13,11 +13,12 @@ define(function (require) {
     var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
     var etpl = require('etpl');
     var tpl = require('./chpassword.tpl');
+    var header = require('common/header');
 
     function init (){
         bingEvent();
         etpl.compile(tpl);
-
+        header.init();
     }
 
     function bingEvent() {

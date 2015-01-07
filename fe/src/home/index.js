@@ -25,65 +25,92 @@ define(function (require) {
         var oUl = item;
         var timer;
         var now = 0;
-        var now1 = 0;
+        //var now1 = 0;
         var aLi = list;
         var aLiWidth = aLi.eq(0).width();
         var small = btn;
+        var status = 0;
 
         function lunbo() {
-
-            timer && clearInterval(timer);
-            if(now === aLi.size()-1) {
+            var left;
+            //timer && clearTimeout(timer);
+            if (now === aLi.length - 1) {
                 list.eq(0).css({
                     "position": "relative",
                     "left": oUl.width()
                 });
+                status = 1;
                 now = 0;
+
+                left = -aLiWidth * aLi.length;
             }
             else {
                 now++;
+                left = -aLiWidth * now;
             }
-            now1++;
+            //now1++;
             small.removeClass('current');
             small.eq(now).addClass('current');
 
-            oUl.stop(true,false).animate({'left': -aLiWidth*now1},400,function() {
-                if(now === 0) {
+            oUl.stop(true).animate({
+                'left': left + 'px'
+            }, 400, function () {
+                if (now === 0) {
                     list.eq(0).css({
                         "position": ""
                     });
-                    oUl.css('left',0);
-                    now1 = 0;
+                    oUl.css('left', 0);
+                    //now1 = 0;
+                    status = 0;
                 }
+
+                timer = setTimeout(lunbo, 5000);
             });
+
         }
 
 
-        timer = setInterval(lunbo,3000);
+        timer = setTimeout(lunbo, 5000);
 
-        small.mouseenter(function() {
-            clearInterval(timer);
-            var index = small.index(this);
+
+        small.mouseenter(function () {
+            timer && clearTimeout(timer);
+            var index = $(this).index();
             now = index;
-            now1 = index;
+            //now1 = index;
+            if(status && !index) {
+                list.eq(0).css({
+                    "position": ""
+                });
+                //now1 = 0;
+                status = 0;
+            }
 
             small.removeClass('current');
             $(this).addClass('current');
-            oUl.stop(true,false).animate({'left': -aLiWidth*index});
+            oUl.stop(true).animate({
+                'left': -aLiWidth * index
+            }, function () {
+
+            });
 
         });
+        small.mouseleave(function () {
 
-        oDiv.mouseenter(function () {
-            clearInterval(timer);
+            timer = setTimeout(lunbo, 1000);
         });
-        oDiv.mouseleave(function () {
-            timer = setInterval(lunbo,3000);
-        });
+
+        //oDiv.mouseenter(function () {
+        //    timer && clearTimeout(timer);
+        //});
+        //oDiv.mouseleave(function () {
+        //    timer = setTimeout(lunbo, 1000);
+        //});
 
 
     }
 
     return {
-        init:init
+        init: init
     };
 });

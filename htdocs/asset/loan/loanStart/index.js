@@ -1,9 +1,14 @@
 define('loan/loanstart/index', [
     'require',
-    'jquery'
+    'jquery',
+    'common/header'
 ], function (require) {
     var $ = require('jquery');
-    $('.nav-item-link').removeClass('current');
-    $('.nav-item-link:eq(1)').addClass('current');
+    var header = require('common/header');
+    function init() {
+        header.init();
+        $('.nav-item-link').removeClass('current');
+        $('.nav-item-link:eq(1)').addClass('current');
+    }
     return { init: init };
 });
