@@ -4,7 +4,9 @@
  * @author jiangsongfang
  *
  */
-class RequestController extends Base_Controller_Admin {
+class RequestController extends Base_Controller_Page {
+    protected $needLogin = false;
+    
     /**
      * 需要验证的参数值
      * @var array
@@ -29,6 +31,21 @@ class RequestController extends Base_Controller_Admin {
 	            $this->outputError();
 	        }
 	    }
+	    
+	    $list = new Area_List_Area();
+	    $filters = array(
+	        'pid' => 0,
+	    );
+	    $list->setFilter($filters);
+	    $list->setFields(array('id', 'name'));
+	    $list->setPagesize(PHP_INT_MAX);
+	    $list->setOrder('id');
+	    $province = $list->getData();
+	    
+	    $this->_view->assign('school', Loan_Type_SchoolType::$names);
+	    $this->_view->assign('usage', Loan_Type_Usage::$names);
+	    $this->_view->assign('refund_type', Loan_Type_RefundType::$names);
+	    $this->_view->assign('province', $province);
 	}
 	
 	/**

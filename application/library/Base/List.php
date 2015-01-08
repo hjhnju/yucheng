@@ -240,8 +240,10 @@ class Base_List {
     private function dealIntField() {
         $cnt = count($this->data);
         for ($i = 0; $i < $cnt; $i++) {
-            foreach ($this->intProps as $k => $val) {
-                $this->data[$i][$k] = intval($this->data[$i][$k]);
+            foreach ($this->fields as $key) {
+                if (isset($this->intProps[$key])) {
+                    $this->data[$i][$key] = intval($this->data[$i][$key]);
+                }
             }
         }
     }
