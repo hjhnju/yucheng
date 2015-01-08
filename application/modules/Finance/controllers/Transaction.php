@@ -24,7 +24,7 @@ class TransactionController extends Base_Controller_Api{
      */ 
     public function netsaveAction(){
         $userid = $this->userid;
-        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';  	
+        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';    
         $transAmt = round($_REQUEST['transAmt'],2);
         $openBankId = $_REQUEST['openBankId'];
         $gateBusiId = $_REQUEST['gateBusiId'];
@@ -32,9 +32,21 @@ class TransactionController extends Base_Controller_Api{
         //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
         //TODO:remove
         //FOR TEST
-        Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
-       
-     
+        // Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
+        
+        $huifuid    = '6000060000696947';
+        $transAmt   = '20.00';
+        $gateBusiId = 'FPAY';
+        $openBankId = 'ICBC';
+        $dcFlag     = 'D';
+        $transLogic = new Finance_Logic_Transaction();
+        Base_Log::notice(array(
+            'transAmt'   => $transAmt,
+            'gateBusiId' => $gateBusiId,
+            'openBankId' => $openBankId,
+            'dcFlag' => $dcFlag,
+        ));
+        $transLogic->netsave($userid, $huifuid, $transAmt, $gateBusiId, $openBankId, $dcFlag);         
    }
 
    /**

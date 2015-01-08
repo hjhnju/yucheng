@@ -16,16 +16,15 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	 * 
 	 */
 	public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
-		$webroot = Base_Config::getConfig('web')->root;
-		$chinapnr = Finance_Chinapnr_Logic::getInstance();
-		$orderInfo = $this->genOrderInfo();
-		$orderDate = strval($orderInfo['date']);
-		$orderId = strval($orderInfo['orderId']);
-		$merCustId = strval(self::MERCUSTID);
-		$huifuid = '6000060000696947';
-		$strTransAmt = strval($transAmt);
-		$bgRetUrl  = $webroot.'/finance/bgcall/userregist';
-		$retUrl    = '';
+        $webroot     = Base_Config::getConfig('web')->root;
+        $chinapnr    = Finance_Chinapnr_Logic::getInstance();
+        $orderInfo   = $this->genOrderInfo();
+        $orderDate   = strval($orderInfo['date']);
+        $orderId     = strval($orderInfo['orderId']);
+        $merCustId   = strval(self::MERCUSTID);
+        $strTransAmt = strval($transAmt);
+        $bgRetUrl    = $webroot.'/finance/bgcall/userregist';
+        $retUrl      = '';
 		$merPriv = strval($userid);
 		//充值订单入库
 		$timeNow = time();
@@ -39,9 +38,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 			'update_time'  => $timeNow,
 			'comment'      => '充值订单入库',	
 		);
-		$ret = $this->payOrderEnterDB($param);
-		if($ret == false) {
-			BaseLog::error("fail to create finance order");
+		//$ret = $this->payOrderEnterDB($param);
+        Base_Log::debug($param);
+        $ret = true;
+		if($ret === false) {
+			Base_Log::error("fail to create finance order");
 		}
 		//调用汇付API进行充值处理
 		$chinapnr->netSave($merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, $dcFlag, $strTransAmt, $retUrl, $bgRetUrl, $merPriv);
