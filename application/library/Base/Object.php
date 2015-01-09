@@ -206,7 +206,6 @@ class Base_Object {
     public function save() {
         $data = $this->prepareData();  
         $this->initDB();
-        var_dump($this->get($this->prikey));die;
         if ($this->get($this->prikey)) {  
         	return $this->update($data);
         } else {
