@@ -7,11 +7,16 @@
  */
 class TransactionController extends Base_Controller_Api{
    
+	private $transLogic;
+	private $huifuid;
     public function init(){
         //for test
         //TODO remove
         $this->setNeedLogin(false);
         parent::init();
+        $this->transLogic = new Finance_Logic_Transaction();
+        $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
+        
     }
    
     /**
@@ -24,17 +29,12 @@ class TransactionController extends Base_Controller_Api{
      */ 
     public function netsaveAction(){
         $userid = $this->userid;
-        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';  	
+        $huifuid = $this->huifuid;	
         $transAmt = round($_REQUEST['transAmt'],2);
         $openBankId = $_REQUEST['openBankId'];
         $gateBusiId = $_REQUEST['gateBusiId'];
         $dcFlag = $_REQUEST['dcFlag'];
-        //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
-        //TODO:remove
-        //FOR TEST
-        Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
-       
-     
+        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);     
    }
 
    /**
@@ -44,7 +44,7 @@ class TransactionController extends Base_Controller_Api{
     * @param String $openAcctId 开户银行帐号(optional)
     *
     */
-   public function cash(){
+   public function cashAction(){
        $transAmt = $_REQUEST['transAmt'];
        $captcha = $_REQUEST['captcha'];
        $openAcctId = $__REQUEST['openAcctId'];

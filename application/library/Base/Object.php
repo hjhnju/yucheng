@@ -145,8 +145,10 @@ class Base_Object {
         $val = $this->db->escape($this->$key);
         $cols = implode("`, `", $this->fields);
         $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where `{$key}` = '$val' limit 1";
-
+        
+        
         $data = $this->db->fetchRow($sql);
+
         $this->setData($data);
     }
     
@@ -202,10 +204,11 @@ class Base_Object {
      * @return boolean
      */
     public function save() {
-        $data = $this->prepareData();
+        $data = $this->prepareData();  
         $this->initDB();
-        if ($this->get($this->prikey)) {
-            return $this->update($data);
+        var_dump($this->get($this->prikey));die;
+        if ($this->get($this->prikey)) {  
+        	return $this->update($data);
         } else {
             return $this->insert($data);
         }
@@ -225,6 +228,7 @@ class Base_Object {
                 $data[$field] = $this->get($prop);
             }
         }
+    
         if ($this->properties['create_time'] && empty($data['create_time'])) {
             $data['create_time'] = time();
         }
@@ -252,17 +256,16 @@ class Base_Object {
         $sets = implode(', ', $sets);
         
         $sql = "insert into `{$this->table}`(`$keys`) values('$vals') on duplicate key update $sets";
-        try {
-            $res = $this->db->query($sql);
+        try {                  	
+            $res = $this->db->query($sql);           
         } catch (Exception $ex) {
-            Base_Log::error($ex->getMessage());
+            Base_Log::error($ex->getMessage());          
             return false;
         }
-        
-        if ($res == true) {
+        if ($res == true) {     
             $this->fetchFromPrimary(true);
             return true;
-        }
+        }        
         return false;
     }
     

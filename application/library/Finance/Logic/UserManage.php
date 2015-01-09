@@ -3,6 +3,7 @@
  * 用户管理逻辑类
  * 用户开户
  * 用户绑卡
+ * 用户删除银行卡
  * 企业开户
  * @author lilu
  */
@@ -67,7 +68,7 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 	 */
 	public function userLogin($usrCustId) {
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
-		$chinapnr->userLogin(self::MERCUSTID,"6000060000696947");
+		$chinapnr->userLogin(self::MERCUSTID,$usrCustId);
 	}
 	
 	/**
@@ -76,6 +77,6 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 	 */
 	public function  acctModify($usrCustId) {
 		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-        $chinapnr->accModify(self::MERCUSTID,"6000060000696947");
+        $chinapnr->accModify(self::MERCUSTID,$usrCustId);
 	}
 }

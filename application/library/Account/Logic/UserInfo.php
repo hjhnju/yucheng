@@ -112,4 +112,79 @@ class Account_Logic_UserInfo {
         }
         return $ret;
     }
+    
+    /**
+     * 获取用户的账户余额值
+     * @param string huifuid
+     * @return array 
+     */
+    public function getUserBg($huifuid) {
+    	$userBg = Finance_Api::queryBalanceBg($huifuid);
+    	if($userBg['status'] === Finance_RetCode::REQUEST_API_ERROR) {
+    		Base_Log::error(array(
+    		    'msg'    => $userBg['statusInfo'],
+    		    'huifuid' => $huifuid,
+    		));
+    		$ret = $userBg['data'];
+    		return $ret;
+    	}
+    	if($userBg['status'] !== '000') {
+    		Base_Log::error(array(
+    		    'msg'    => $userBg['statusInfo'],
+    		    'huifuid' => $huifuid,
+    		));
+    		$ret = $userBg['data'];
+    		return $ret;
+    	}
+    	$ret = $userBg['data'];
+    	return $ret;
+    }
+    
+    /**
+     * 获取用户银卡信息
+     * @param string huifuid
+     * @return array
+     */
+    public function getuserCardInfo($huifuid) {
+    	$bankCardInfo = Finance_Api::queryCardInfo($huifuid);
+    	if($bankCardInfo['status'] === Finance_RetCode::REQUEST_API_ERROR) {
+    		Base_Log::error(array(
+    			'msg' => $bankCardInfo["statusInfo"],
+    		));
+    		$ret = array(    				
+    		    'bindbank' => 0,
+    		    'banknum'  => '',
+    		    'bankID'   => ''
+    		);
+    		return $ret;
+    	}
+    	if($bankCardInfo['status'] !== '000') {
+    		Base_Log::error(array(
+    		    'msg' => $bankCardInfo["statusInfo"],
+    		));
+    		$ret = array(
+    			'bindbank' => 0,
+    			'banknum'  => '',
+    			'bankID'   => ''
+    		);
+    		return $ret;
+    	}
+    	if($bankCardInfo['status'] === Finance_RetCode::NOTBINDANYCARD) {
+    		Base_Log::error(array(
+    		    'msg' => $bankCardInfo["statusInfo"],
+    		));
+    		$ret = array(
+    			'bindbank' => 0,
+    			'banknum'  => '',
+    			'bankID'   => ''
+    		);
+    		return $ret;
+    	}
+    	$ret = array(
+			'bindbank' => 1,
+			'banknum'  => $bankCardInfo["data"]['UsrCardInfolist'][0]["CardId"],
+			'bankID'   => $bankCardInfo["data"]['UsrCardInfolist'][0]["BankId"],
+    	);
+    	return $ret;
+    }
 } 

@@ -11,16 +11,26 @@ class Finance_Logic_Base {
 	//本平台mercustid
 	CONST MERCUSTID  = "6000060000677575";
 	
+	private function getMillisecond() {
+		list($s1, $s2) = explode(' ', microtime());
+		return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
+	}
+	
     /**
 	 * 生成订单号Order_id YmdHis+随机数
 	 * @return string
 	 */
     protected function genOrderInfo(){
-		$date = date("Ymd",mktime());
-		$now = date("Ymdhis",mktime());
+    	$timeStr = $this->getMillisecond();
+    	$time = substr($timeStr,0,10);
+    	$ms = substr($timeStr,10,3);
+    	
+		$date = date("Ymd",$time);
+		$now = date("YmdHis",$time) . $ms ;
+		
 		$numbers = range(0,9);
 		shuffle($numbers);
-		$no = 6;
+		$no = 3;
 		$ranNum = array_slice($numbers,0,$no);
 		foreach($ranNum as $key=>$value){
 			$now .= $value;
@@ -59,40 +69,46 @@ class Finance_Logic_Base {
 	}
 	
 	/**
-	 * 订单表的入库统一入口
+	 * 通过用户userid获取用户汇付id
+	 */
+	protected function getHuifuid($userid){
+		$objUser = User_Api::getUserObject($userid);
+		$huifuid = !empty($objUser) ? $objUser->huifuid : '';
+		return $huifuid;
+	}
+	
+	/**
+	 * 财务类pay_order表入库统一入口
 	 * @param array $param 参数数组
 	 * @return array || boolean
 	 */
 	public function payOrderEnterDB($param) {
-		$regOrder = new Fiance_Object_Order();
+		$regOrder = new Finance_Object_Order();
 		$logParam = array();
+		
 		if(is_null($param)) {
 			//未给出参数，无法插入或者更新
-			Base_Log::error("请求参数错误",array(
-			    'msg'=>'no params'
+			Base_Log::error(array(
+			    'msg'=>'no params',
 			));
 			return false;
-		}
+		}		
 		foreach ($param as $key => $value) {
 			$regOrder->$key =  $value;
 			$logParam[$key] = $value;
 		}
 		$ret = $regOrder->save();
-		if(!$ret){
-			$logParam['msg'] = 'Fail to create fiance order';
+	
+ 		if(!$ret) {			
+			$logParam['msg'] = '创建财务类订单表失败';
 			Base_Log::error($logParam);
 			return false;
-		} else {
-			$logParam = array();
-			$logParam['msg'] = 'Success to create finance order';
-			Base_Log::notice($logParam);
-			return true;
-		}
-		return false;		 
+		}  			
+		return true;
 	}
 	
 	/**
-	 * 订单资金记录表入库统一入口
+	 * 财务类pay_record表入库统一入口
 	 * @param array $param 参数数组
 	 * @return array || boolean
 	 */
@@ -101,22 +117,112 @@ class Finance_Logic_Base {
 		$logParam = array();
 		if(is_null($param)) {
 			//未给出参数，无法插入或者更新
-			Base_Log::fatal(array('msg'=>'no params'));
+			Base_Log::error(array(
+			    'msg'=>'参数错误'
+			));
 			return false;
 		}
 		foreach ($param as $key => $value) {
-			$regOrder->$key = $value;
+			$regRecord->$key = $value;
 			$logParam[$key] = $value;
 		}
-		$ret = $regOrder->save();
+		$ret = $regRecord->save();
 		if(!$ret){
-			$logParam['msg'] = 'Fail to create fiance order';
-			Base_Log::fatal($logParam);
-		} else {
-			$logParam['msg'] = 'Success to create finance order';
-			Base_Log::notice($logParam);
-			return true;
+			$logParam['msg'] = '创建财务类记录表失败';
+			Base_Log::error($logParam);
+			return false;
 		}
-		return false;
+		return true;
+		
 	}  	
+	
+	/**
+	 * 财务类pay_order表更新状态
+	 * @param string $orderId
+	 * @param integer $status
+	 * @return boolean
+	 */
+	public function payOrderUpdate($orderId,$status) {
+		$regOrder = new Finance_Object_Order();
+		$regOrder->orderId = $orderId;
+		$regOrder->status = intval($status);
+		$ret = $regOrder->save();
+		
+		
+		if(!$ret){
+			$logParam['msg'] = '更新财务类订单表失败';
+			Base_Log::error(array(
+				'msg'     => '更新财务类订单表失败',
+				'orderId' => $orderId,
+				'status'  => $status,
+			));
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 获取用户的余额+系统余额
+	 * @param string userid 
+	 * @return array || false
+	 * 
+	 */
+	public function balance($userid){
+		if($userid <= 0) {
+			Base_Log::error(array(
+				'msg'    => '请求参数错误',
+				'userid' => $userid,
+			));
+			return false;
+		}
+		$mercustId = self::MERCUSTID;
+		$ret = array();
+		$huifuid = $this->getHuifuid($userid);
+		$userBg = Finance_Api::queryBalanceBg($huifuid);
+		if($userBg['status'] === Finance_RetCode::REQUEST_API_ERROR) {
+			Base_Log::error(array(
+			    'msg'    => Finance_RetCode::getMsg($userBg['status']),
+			    'userid' => $userid,
+			));
+			$ret['userBg'] = $userBg['data'];			
+		} else if ($userBg['status'] !== '000') {
+			Base_Log::error(array(
+			    'msg'    => $userBg['statusInfo'],
+			    'userid' => $userid,
+			));
+			$ret['userBg'] = $userBg['data'];
+		} else {
+			$ret['userBg'] = $userBg['data'];
+		}
+		
+		$sysBg = Finance_Api::queryAccts();
+		if($sysBg['status'] === Finance_RetCode::REQUEST_API_ERROR) {
+			Base_Log::error(array(
+			    'msg'    => Finance_RetCode::getMsg($userBg['status']),
+			    'userid' => $userid,
+			));
+			$ret['sysBg']['avlBal']  = '0.00';
+			$ret['sysBg']['acctBal'] = '0.00';
+			$ret['sysBg']['frzBal']  = '0.00';
+		} else if($sysBg !== '000') {
+			Base_Log::error(array(
+			    'msg'    => $sysBg['statusInfo'],
+			    'userid' => $userid,
+			));
+			$ret['sysBg']['avlBal']  = '0.00';
+			$ret['sysBg']['acctBal'] = '0.00';
+			$ret['sysBg']['frzBal']  = '0.00';
+		} else {
+			$details = $sysBg['data']['AcctDetails'];
+			foreach ($details as $key => $value) {
+				if($value['AcctType'] === 'BASEDT') {
+					$ret['sysBg']['avlBal']  = $value['AvlBal'];
+			        $ret['sysBg']['acctBal'] = $value['AcctBal'];
+			        $ret['sysBg']['frzBal']  = $value['FrzBal'];
+				}
+			}
+			 
+		}
+		return $ret;		
+	}
 }

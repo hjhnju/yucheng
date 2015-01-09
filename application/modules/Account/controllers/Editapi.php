@@ -9,8 +9,8 @@ class EditapiController extends Base_Controller_Api {
 	const REG_PHONE = 'phone';
 	
 	protected static $_arrRegMap = array(
-			self::REG_EMAIL          => '/^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,3}$/',
-			self::REG_PHONE          => '/^(13[0-9]|15[0|3|6|7|8|9]|18[0|8|9])\d{8}$/',		
+			self::REG_EMAIL => '/^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,3}$/',
+			self::REG_PHONE => '/^(13[0-9]|15[0|3|6|7|8|9]|18[0|8|9])\d{8}$/',		
 	);
 	
     public function init(){

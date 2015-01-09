@@ -824,8 +824,9 @@ HTML;
 				"MerPriv"	=>	$merPriv,
 				"ChkValue"	=>	$checkValue,
 		);
-		//var_dump($reqData);die;
+		
 		$this->autoRedirect($reqData);
+		
 	}
 	/**
 	 * @desc initiativeTender 主动投标
@@ -871,8 +872,6 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
-
-
 		$this->autoRedirect($reqData);
 	}
 	/**
@@ -894,25 +893,25 @@ HTML;
 	 *
 	 * @return 无返回，使用autoRedirect方式重定向用户浏览器页面
 	 */
-	public function tenderCancle($merCustId,$usrCustId,$ordId,$ordDate,$transAmt,$usrCustId,$isUnFreeze,$unFreezeOrdId = '',$freezeTrxId = '',$retUrl = '',$bgRetUrl,$merPriv,$reqExt)
+	public function tenderCancle($merCustId,$usrCustId,$ordId,$ordDate,$transAmt,$usrCustId,$isUnFreeze,$unFreezeOrdId = '',$freezeTrxId = '',$retUrl = '',$bgRetUrl,$merPriv='',$reqExt='')
 	{
 		$checkValue= $this->sign($this::VERSION_20.$this::CMDID_TENDER_CANCLE.$merCustId.$ordId.$ordDate.$transAmt.$usrCustId.$isUnFreeze.$unFreezeOrdId.$freezeTrxId.$retUrl.$bgRetUrl.$merPriv.$reqExt);
 		$reqData=array(
-				"Version"	=>	$this::VERSION_20,
-				"CmdId"		=>	$this::CMDID_TENDER_CANCLE,
-				"MerCustId"	=>	$merCustId,
-				"OrdId"	=>	$ordId,
-				"OrdDate"	=>	$ordDate,
-				"TransAmt"	=>	$transAmt,
-				"UsrCustId"	=>	$usrCustId,
-				"IsUnFreeze"	=>	$isUnFreeze,
-				"UnFreezeOrdId"	=>	$unFreezeOrdId,
-				"FreezeTrxId"	=>	$freezeTrxId,
-				"RetUrl"	=>	$retUrl,
-				"BgRetUrl"	=>	$bgRetUrl,
-				"MerPriv"	=>	$merPriv,
-				"ReqExt"	=>	$reqExt,
-				"ChkValue"	=>	$checkValue,
+			"Version"	=>	$this::VERSION_20,
+			"CmdId"		=>	$this::CMDID_TENDER_CANCLE,
+			"MerCustId"	=>	$merCustId,
+			"OrdId"	=>	$ordId,
+			"OrdDate"	=>	$ordDate,
+			"TransAmt"	=>	$transAmt,
+			"UsrCustId"	=>	$usrCustId,
+			"IsUnFreeze"	=>	$isUnFreeze,
+			"UnFreezeOrdId"	=>	$unFreezeOrdId,
+			"reezeTrxId"	=>	$freezeTrxId,
+			"RetUrl"	=>	$retUrl,
+			"BgRetUrl"	=>	$bgRetUrl,
+			"MerPriv"	=>	$merPriv,
+			"ReqExt"	=>	$reqExt,
+			"ChkValue"	=>	$checkValue,
 		);
 
 		$this->autoRedirect($reqData);
@@ -930,13 +929,13 @@ HTML;
 	{
 		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_USER_BIND_CARD.$merCustId.$usrCustId.$bgRetUrl.$merPriv);
 		$reqData=array(
-				"Version"	=>	$this::VERSION_10,
-				"CmdId"		=>	$this::CMDID_USER_BIND_CARD,
-				"MerCustId"	=>	$merCustId,
-				"UsrCustId"	=>	$usrCustId,
-				"BgRetUrl"	=>	$bgRetUrl,
-				"MerPriv"	=>	$merPriv,
-				"ChkValue"	=>	$checkValue,
+			"Version"	=>	$this::VERSION_10,
+			"CmdId"		=>	$this::CMDID_USER_BIND_CARD,
+			"MerCustId"	=>	$merCustId,
+			"UsrCustId"	=>	$usrCustId,
+			"BgRetUrl"	=>	$bgRetUrl,
+			"MerPriv"	=>	$merPriv,
+			"ChkValue"	=>	$checkValue,
 		);
 
 		$this->autoRedirect($reqData);

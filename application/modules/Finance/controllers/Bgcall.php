@@ -26,15 +26,27 @@ class BgcallController extends Base_Controller_Page{
 	 * 打印RECV_ORD_ID_TrxId
 	 */
 	public function userregistAction() {
-		$trxId = $_REQUEST['TrxId'];
-		$userid = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
-		$usrCustId = intval($_REQUEST['UsrCustId']);
-		$respCode = intval($_REQUEST['RespCode']) ;
-		$respDesc = $_REQUEST['RespDesc'] ;	
-		if($respCode != '000') {
-			Base_Log::error('汇付处理失败',array(
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
+           !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['UsrId']) || !isset($_REQUEST['UsrCustId']) ||
+           !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
+            Base_Log(array(
+                'msg' => '汇付返回参数错误',           
+            ));
+        }
+		$trxId    = $_REQUEST['TrxId'];
+		$userid   = $_REQUEST['MerPriv'];//取客户私用域中的userid
+		$huifuid  = $_REQUEST['UsrCustId'];//用户汇付id入库
+		$realName = $_REQUEST['UsrName'];//用户真实姓名入库
+		$phone    = $_REQUEST['UsrMp'];//用户手机号码入库
+		$email    = $_REQUEST['UsrEmail'];//用户email入库
+		$idType   = $_REQUEST['IdType'];//证件类型入库
+		$idNo     = $_REQUEST['IdNo'];//用户身份证号码入库
+		$respCode = $_REQUEST['RespCode']; 
+		$respDesc = $_REQUEST['RespDesc'];	
+		if($respCode !== '000') {
+			Base_Log::error(array(
+			    'msg'      => $respDesc,
 				'respCode' => $respCode,
-				'respDesc' => $respDesc,
 			));
 			return ;
 		}			
@@ -43,32 +55,46 @@ class BgcallController extends Base_Controller_Page{
 		.$_REQUEST['BgRetUrl'].$_REQUEST['RetUrl'].$_REQUEST['UsrId'].$_REQUEST['UsrName']
 		.$_REQUEST['IdType'].$_REQUEST['IdNo'].$_REQUEST['UsrMp'].$_REQUEST['UsrEmail'].$_REQUEST['MerPriv']);
 		
-		$veriret = $this->huifuLogic->verify($checkValue,$_REQUEST['ChkValue']);
-		if($veriret) {
-			//验签通过
-			if(User_Api::setHuifuId($userid,$usrCustId)) {
-				
-			} else {
-				$strMonitor = 'userid:'.$userid.' '.'$usrCustId'.$usrCustId;
-				Base_Log::error("设置用户汇付id失败",array(
-				    'userid:'    => $userid,
-				    '$usrCustId' => $usrCustId,
-				));
-				return ;				
-			}
-		} else {
-			//验签不通过
-			Base_Log::error("返回验签失败",$checkValue);
+		$bolVeri = $this->huifuLogic->verify($checkValue,$_REQUEST['ChkValue']);
+		if(!$bolVeri) {
+			Base_Log::error(array(
+				'msg' => '返回验签失败',
+			));
 			return ;
-		} 					
-		Base_Log::notice(array(
-			'userid'       =>$userid,
-		    'usrCustId'    =>$usrCustId,
-		    'huifuRetCode' =>$respCode,
-		    'huifuRetDes'  =>$respDesc,
-		    'trxId'        =>$trxId,
-		));
-		//页面打印值
+		}
+		$userid = intval($userid);
+		if(!User_Api::setHuifuId($userid,$huifuid)) {		
+		    Base_Log::error( array(
+			    'msg'       => '汇付id入库失败',
+			    'userid:'   => $userid,
+			    'usrCustId' => $huifuid,
+			));
+			return ;
+		}
+		if(!User_Api::setRealName($userid,$realName)) {
+			Base_Log::error(array(
+				'msg'    => '用户真实姓名入库失败',
+				'userid' => $userid,
+			));
+			return ;
+		}
+		if(!User_Api::setEmail($userid,$email)) {
+			Base_Log::error(array(
+				'msg'    => '用户email入库失败',
+				'userid' => $userid,
+			));
+			return ;
+		}
+		//证件信息入库，默认为身份证
+		if(!User_Api::setCertificate($userid,$idNo)) {
+			Base_Log::error(array(
+				'msg'    => '用户证件信息入库失败',
+				'userid' => $userid,
+			));
+			return ;
+		}
+		Base_Log::notice($_REQUEST);
+		//页面打印值,汇付检验
 		print('RECV_ORD_ID_'.$trxId);
 	}
 	
@@ -78,29 +104,28 @@ class BgcallController extends Base_Controller_Page{
 	 * 打印RECV_ORD_ID_TrxId
 	 */
 	public function userbindcardAction() {
-		//Base_Log::notice('hhhhhhh');
-		$trxId = $_REQUEST['TrxId'];
-		$userid = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
-		$usrCustId = intval($_REQUEST['UsrCustId']);
-		$respCode = intval($_REQUEST['RespCode']) ;
-		$respDesc = $_REQUEST['RespDesc'] ;
-		if($respCode != '000') {
-			Base_Log::error('汇付处理失败',array(
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['UsrCustId']) ||
+		   !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) || !isset($_REQUEST['Version'])) {
+		    Base_Log(array(
+		    	'msg' => '汇付返回参数错误',
+		    ));   	
+		}
+		$trxId     = $_REQUEST['TrxId'];
+		$userid    = $_REQUEST['MerPriv'];//取客户私用域中的userid
+		$usrCustId = $_REQUEST['UsrCustId'];
+		$respCode  = $_REQUEST['RespCode'];
+		$respDesc  = $_REQUEST['RespDesc'];
+		if($respCode !== '000') {
+			Base_Log::error(array(
+			    'msg'      => $respDesc,
 			    'respCode' => $respCode,
-			    'respDesc' => $respDesc,
 			));
 			return ;
 		}
 		//验签！！
 		
 		
-		Base_Log::notice(array(
-		    'userid'       =>$userid,
-		    'usrCustId'    =>$usrCustId,
-		    'huifuRetCode' =>$respCode,
-		    'huifuRetDes'  =>$respDesc,
-		    'trxId'        =>$trxId,
-		));
+		Base_Log::notice($_REQUEST);
 		print('RECV_ORD_ID_'.$trxId);
 	}
 	
@@ -110,77 +135,202 @@ class BgcallController extends Base_Controller_Page{
 	 * 打印RECV_ORD_ID_OrderId
 	 */
 	public function netsaveAction() {
-		$ordId    = intval($_REQUEST['OrdId']);
-        $userid   = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
-        $huifuid  = intval($_REQUEST['UsrCustId']);//用户的huifuid
-        $amount   = floatval($_REQUEST['TransAmt']);
-        $bgret    = Finance_Api::queryBalanceBg($huifuid);
-        $lastip   = Base_Util_Ip::getClientIp();
-        $respCode = intval($_REQUEST['RespCode']) ;
-        $respDesc = $_REQUEST['RespDesc'] ;
-        $timeNow  = time();
-        if($bgret['status'] != 0) {
-        	$balance = 0.00;
-        	$tatal   = 0.00;
-        } else {
-        	$balance = $bgret['data']['avlBal'];
-        	$tatal   = $balance['data']['acctBal'];
-        }
-        if($respCode != '000') {
-        	Base_Log::error('汇付处理失败',array(
+        if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
+           !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['UsrCustId']) || !isset($_REQUEST['OrdId']) || 
+		   !isset($_REQUEST['OrdDate']) || !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['BgRetUrl']) ||
+		   !isset($_REQUEST['ChkValue']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) ||
+		   !isset($_REQUEST['FeeAcctId'])) {
+		    Base_Log(array(
+		    	'msg' => '汇付返回参数错误'
+		    ));	    
+		    return;	
+	    }
+	    $orderId  = strval($_REQUEST['OrdId']);
+	    $userid   = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
+	    $huifuid  = strval($_REQUEST['UsrCustId']); //用户的huifuid
+	    $amount   = floatval($_REQUEST['TransAmt']);
+	   
+	    //余额是系统余额！改！
+	    $bgret    = $this->financeLogic->balance($userid);
+	    $balance  = floatval($bgret['userBg']['acctBal']);//用户余额
+	    $total    = floatval($bgret['sysBg']['acctBal']);//系统余额
+	    
+	    $lastip   = Base_Util_Ip::getClientIp();
+	    $respCode = $_REQUEST['RespCode'];
+	    $respDesc = $_REQUEST['RespDesc'] ;
+
+        if($respCode !== '000') {
+        	Base_Log::error(array(
+        	    'msg'      => $respDesc,
         	    'respCode' => $respCode,
-        	    'respDesc' => $respDesc,
         	));        	
         	//充值财务订单状态更新为处理失败         	
         	$param = array(
-        	    'order_id'     => $ordId,
-        		'status'       => Finance_TypeStatus::ENDWITHFAIL,
-        		'update_time'  => $timeNow,
-        		'comment'      => '充值订单处理失败',
+        	    'orderId' => $orderId,
+        		'status'  => Finance_TypeStatus::ENDWITHFAIL,
+        		'comment' => '财务类充值订单汇付处理失败',
         	);
         	$ret = $this->financeLogic->payOrderEnterDB($param);
         	//充值订单更新失败
-        	if($ret == false) {
-        		BaseLog::error("fail to update finance order", $param);
+        	if(!$ret) {
+        		BaseLog::error(array(
+        			'msg'     => '充值订单更新失败',
+        			'orderId' => $orderId,
+        			'status'  => Finance_TypeStatus::ENDWITHFAIL,
+        		));
         	} 
         	return ;
         }
         //验签！！
         //充值财务订单状态更新为处理成功
         $param = array(
-        		'order_id'     => $ordId,
-        		'status'       => Finance_TypeStatus::ENDWITHSUCCESS,
-        		'update_time'  => $timeNow,
-        		'comment'      => '充值订单处理成功',
+        	'orderId' => $orderId,
+        	'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
+        	'comment' => '充值订单处理成功',
         );
-        
+        $ret = $this->financeLogic->payOrderEnterDB($param);
+        //充值订单更新失败
+        if(!$ret) {
+        	BaseLog::error(array(
+        	    'msg'     => '充值订单更新失败',
+        	    'orderId' => $orderId,
+        	    'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
+        	));
+        }
         //充值财务记录入库
         $param = array(
-            'orderid'    => $ordId,
-        	'userId'     => $userid,
+            'orderId'    => intval($orderId),
+        	'userId'     => intval($userid),
         	'type'       => Finance_TypeStatus::NETSAVE,
         	'amount'     => $amount,
         	'balance'    => $balance,
-        	'total'      => $tatal,
-        	'comment'    => '充值记录入库',
-        	'createTime' => $timeNow,
-        	'updateTime' => $timeNow,
-        	'ip'         => $lastip,
-        	
+        	'total'      => $total,
+        	'comment'    => '充值记录',
+        	'ip'         => $lastip,        	
         );
         $ret = $this->financeLogic->payRecordEnterDB($param);
         //充值记录入库失败
-        if($ret == false) {
-        	BaseLog::error("fail to create finance record", $param);
+        if(!$ret) {
+        	BaseLog::error(array(
+        		'msg'     => '充值记录入库失败',
+        		'orderid' => $orderId,
+        		'userid'  => $userid,
+        	));
         }
-		Base::notice(array(
-		    'userid'       =>$userid,
-		    'usrCustId'    =>$usrCustId,
-		    'huifuRetCode' =>$respCode,
-		    'huifuRetDes'  =>$respDesc,
-		    'trxId'        =>$ordId,
-		));
-		print('RECV_ORD_ID_'.$ordId);
+		Base::notice($_REQUEST);
+		//页面打印
+		print('RECV_ORD_ID_'.$orderId);
 	}
+	
+	/**
+	 * 汇付回调Action
+	 * 主动投标回调URL
+	 * 打印RECV_ORD_ID_OrderId
+	 */
+	public function initiativeTenderAction() {
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
+           !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['OrdDate']) || 
+           !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['UsrCustId']) || !isset($_REQUEST['IsFreeze']) || 
+           !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue'])) {
+           	Base_Log::error(array(
+           		'msg' => '汇付返回参数错误',
+           	));
+        }
+		$userid      = intval($_REQUEST['MerPriv']);
+		$huifuid     = intval($_REQUEST['UsrCustId']);
+		$orderId     = strval($_REQUEST['OrdId']);
+		$amount      = floatval($_REQUEST['TransAmt']);
+		$freezeOrdId = strval($_REQUEST['FreezeOrdId']);
+		$freezeTrxId = strval($_REQUEST['FreezeTrxId']);
+		//余额是系统余额！改！
+		$bgret    = $this->financeLogic->balance($userid);
+		$balance  = floatval($bgret['userBg']['acctBal']);//用户余额
+		$total    = floatval($bgret['sysBg']['acctBal']);//系统余额
+		$lastip      = Base_Util_Ip::getClientIp();
+		$respCode    = $_REQUEST['RespCode'];
+		$respDesc    = $_REQUEST['RespDesc'];
+		if($respCode !== '000') {
+			Base_Log::error(array(
+				'msg'     => $respDesc,
+				'userid'  => $userid,
+				'orderid' => $orderId,
+			));
+			//财务类主动投标订单状态更改为处理失败
+			$param = array(
+				'orderId' => $orderId,
+				'status'  => Finance_TypeStatus::ENDWITHFAIL,
+				'comment' => '财务类主动投标汇付处理失败',
+			);
+			$ret = $this->financeLogic->payOrderEnterDB($param);
+			if(!$ret) {
+				Base_Log::error(array(
+					'msg'     => '财务类主动投标订单更新失败',
+					'orderId' => $orderId,
+					'status'  => Finance_TypeStatus::ENDWITHFAIL,
+				));
+			}			
+			return ;
+		}
+		//验签！！
+		//将主动投标订单状态更改为成功
+		$param = array(
+			'orderId' => $orderId,
+			'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
+			'comment' => '财务类主动投标汇付处理成功',
+		);
+		$ret = $this->financeLogic->payOrderEnterDB($param);
+		if(!$ret) {
+			Base_Log::error(array(
+				'msg'     => '财务类主动投标订单更新失败',
+				'orderId' => $orderId,
+				'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
+			));
+		}
+		//主动投标记录如表pay_record
+		$param = array(
+	        'orderId'     => $orderId,
+			'userId'      => $userid,
+		    'freezeOrdId' => $freezeOrdId,
+			'freezeTrxId' => $freezeTrxId,
+			'type'        => Finance_TypeStatus::INITIATIVETENDER,
+			'amount'      => $amount,
+			'balance'     => $balance,
+			'total'       => $total,
+			'comment'     => '主动投标记录',
+		);
+		$ret = $this->financeLogic->payRecordEnterDB($param);
+		//主动投标记录入库失败
+		if(!$ret) {
+			Base_log::error(array(
+				'msg'         => '主动投标记录入库失败',
+				'userId'      => $userid,
+				'orderId'     => $orderId,
+				'freezeOrdId' => $freezeOrdId,
+			));
+		}		
+		Base::notice($_REQUEST);
+		print('RECV_ORD_ID_'.$orderId);		
+    }
+	
+	/**
+	 * 汇付回调Action
+	 * 投标撤销回调URL
+	 * 打印RECV_ORD_ID_OrderId
+	 */
+	public function tenderCancleAction() {
+		
+	}
+	
+	/**
+	 * 汇付回调Action
+	 * 满标打款回调URL
+	 * 打印RECV_ORD_ID_OrderId
+	 */
+	public function loansAction() {
+		
+		
+	}
+	
+	
 		
 }
