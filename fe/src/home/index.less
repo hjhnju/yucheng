@@ -3,7 +3,7 @@
 
 .banner {
     height: 370px;
-    background-color: @color-green;
+//    background-color: @color-green;
 }
 
 
@@ -11,7 +11,10 @@
     .clearfix;
 
     width: 100px;
-    margin: 330px auto 0;
+    position: absolute;
+    z-index: 5;
+    top: 330px;
+    left: 50%;
 
     .banner-select-link {
         display: block;
@@ -21,8 +24,9 @@
         color: @color-red;
         text-decoration: none;
 
+
         &:hover,&.current {
-            color: #FFFFFF;
+            color: #000000;
         }
     }
 }
@@ -151,17 +155,183 @@
 }
 .bottom-content {
     .clearfix;
+    padding-left: 20px;
+    margin-right: -40px;
 }
 
 .bottom-bank {
-    width: 146px;
+    width: 150px;
     height: 40px;
     display: block;
     text-decoration: none;
-    margin-right: 40px;
+    margin-right: 15px;
     float: left;
+    background: url(../common/img/bank_icon.png) 0 0 no-repeat;
+    margin-bottom: 20px;
 
-    &.first {
-        padding-left: 20px;
+    &.zhaoshang {
+        background-position: 0 0;
+    }
+
+    &.gongshang {
+        background-position: 0 -100px;
+    }
+
+    &.youzheng {
+        background-position: 0 -198px;
+    }
+
+    &.minsheng {
+        background-position: 0 -300px;
+    }
+
+    &.jianshe {
+        background-position: 0 -402px;
+    }
+
+    &.zhongguo {
+        background-position: 0 -500px;
+    }
+
+    &.pufa {
+        background-position: 0 -600px;
+    }
+
+    &.xingye {
+        background-position: 0 -702px;
+    }
+
+    &.nongye {
+        background-position: 0 -800px;
+    }
+
+    &.jiaotong {
+        background-position: 0 -902px;
+    }
+
+    &.guangda {
+        background-position: 0 -1002px;
+    }
+
+    &.shanghai {
+        background-position: 0 -1100px;
     }
 }
+
+//首页轮播css
+
+.banner-floation {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    height: 370px;
+}
+.banner-item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300%;
+    z-index: 2;
+    
+    .clearfix;
+}
+.banner-item-list {
+    width: 33.333%;
+    float: left;
+    height: 370px;
+}
+.banner-item-list-link {
+    width: 100%;
+    display: block;
+    background-color: @color-green;
+    height: 370px;
+
+    &.color-green {
+        background-color: yellow;
+    }
+
+    &.color-red {
+        background-color: blue;
+    }
+
+    &.color-blank {
+        background-color: orange;
+    }
+}
+
+// home页面的banner的fix-box
+
+
+.banner-container {
+    padding: 40px 0;
+    background-color: transparent;
+    width: 280px;
+    position: absolute;
+    left: 900px;
+    top: 0;
+}
+.fix-box {
+    width: 280px;
+    float: right;
+    .border-radius(5px);
+    background-color: #ffffff;
+}
+.fix-box-title {
+    height: 108px;
+    background: url(../common/img/fix_title.png) 0 0 no-repeat;
+    padding-top: 40px;
+
+}
+.fix-title-number {
+    color: #ffffff;
+    font-size: 42px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+
+    .fix-title-number-bai {
+        font-size: 14px;
+    }
+}
+.fix-title-text {
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+.fix-box-main {
+    padding: 40px 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+.fix-box-main-regist {
+    width: 166px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background-color: @color-green;
+    color: #ffffff;
+    font-size: 16px;
+    display: block;
+    text-decoration: none;
+    margin: 0 auto 10px;
+
+    .border-radius(5px);
+}
+.fix-box-main-box {
+    height: 20px;
+    line-height: 20px;
+    color: #333333;
+
+
+    .fix-box-main-box-login {
+        color: @color-green;
+        text-decoration: none;
+
+        &:hover {
+
+            text-decoration: underline;
+        }
+    }
+}
+
+

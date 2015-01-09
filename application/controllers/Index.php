@@ -12,7 +12,7 @@ class IndexController extends Base_Controller_Page {
     public function indexAction() {
 
         //投资列表
-        $list = Loan_Api::getLoans(1, 5);
+        $list = Invest_Api::getInvestList(1, 5);
         $list = $list['list'];
 
         //最新公告

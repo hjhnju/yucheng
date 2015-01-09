@@ -4,6 +4,7 @@
  */
 class ListController extends Base_Controller_Response {
     protected $ajax = true;
+    protected $needLogin = false;
 	
 	public function indexAction() {
 	    $id = intval($_GET['id']);

@@ -15,6 +15,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	 * @param integer dcFlag
 	 * 
 	 */
+<<<<<<< HEAD
     public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
 		$webroot   = Base_Config::getConfig('web')->root;
 		$chinapnr  = Finance_Chinapnr_Logic::getInstance();
@@ -22,6 +23,21 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$orderDate = $orderInfo['date'];
 		$orderId   = $orderInfo['orderId'];
         
+=======
+	public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
+        $webroot     = Base_Config::getConfig('web')->root;
+        $chinapnr    = Finance_Chinapnr_Logic::getInstance();
+        $orderInfo   = $this->genOrderInfo();
+        $orderDate   = strval($orderInfo['date']);
+        $orderId     = strval($orderInfo['orderId']);
+        $merCustId   = strval(self::MERCUSTID);
+        $strTransAmt = strval($transAmt);
+        $bgRetUrl    = $webroot.'/finance/bgcall/userregist';
+        $retUrl      = '';
+		$merPriv = strval($userid);
+		//充值订单入库
+		$timeNow = time();
+>>>>>>> d7476e906649085ec344f4f15a66dfe88a59ab88
 		$param = array(
 		    'orderId'    => intval($orderId),
 			'userId'     => intval($userid),
@@ -30,12 +46,20 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 			'status'     => Finance_TypeStatus::PROCESSING,
 			'comment'    => '财务类充值订单处理中',
 		);
+<<<<<<< HEAD
 		//充值订单入库
 		$ret = $this->payOrderEnterDB($param);
 		if(!$ret) {
 			Base_Log::error(array(
 				'msg' => '财务类充值订单入库失败',
 			));
+=======
+		//$ret = $this->payOrderEnterDB($param);
+        Base_Log::debug($param);
+        $ret = true;
+		if($ret === false) {
+			Base_Log::error("fail to create finance order");
+>>>>>>> d7476e906649085ec344f4f15a66dfe88a59ab88
 		}
 		
 		$merCustId  = strval(self::MERCUSTID);

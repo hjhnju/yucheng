@@ -7,10 +7,12 @@
  */
 
 define(function (require) {
+    var $ = require('jquery');
     var header = require('common/header');
 
     function init() {
         header.init();
+        $('.nav-item-link:eq(4)').addClass('current');
     }
 
     return {

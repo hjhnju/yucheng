@@ -33,7 +33,8 @@ define('common/config', [], function () {
             MY_MSG_LIST: rootUrl + '/msg/list',
             MY_MSG_SETREAD_ADD: rootUrl + '/msg/read',
             COMPANY_INFOS_LIST: rootUrl + '/infos/post/list',
-            USER_REGISTAPI_MODIFYPWD: rootUrl + '/user/registapi/modifypwd'
+            USER_REGISTAPI_MODIFYPWD: rootUrl + '/user/registapi/modifypwd',
+            LOAN_REQUEST: rootUrl + '/test/loan/request.json'
         };
     return { URL: URL };
 });

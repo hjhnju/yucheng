@@ -86,7 +86,7 @@ define(function () {
         //+ '/test/invest/api.json',
         INVEST_DETAIL_START: rootUrl
             + '/invest/list',
-//        + '/test/invest/list.json',
+        //+ '/test/invest/list.json',
         INVEST_DETAIL_CONFIRM_ADD: rootUrl
             + '/invest/tender',
         MY_INVEST_GET: rootUrl
@@ -113,8 +113,11 @@ define(function () {
         COMPANY_INFOS_LIST: rootUrl
             + '/infos/post/list',
         USER_REGISTAPI_MODIFYPWD: rootUrl
-            + '/user/registapi/modifypwd'
+            + '/user/registapi/modifypwd',
             //+ '/test/user/registapi/modifypwd.json'
+        LOAN_REQUEST: rootUrl
+            //+ '/loan/request'
+            + '/test/loan/request.json'
         };
 
     return {

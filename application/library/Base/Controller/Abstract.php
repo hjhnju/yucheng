@@ -56,6 +56,24 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
             $this->getView()->assign('user', $user);
         }
     }
+    
+    /**
+     * 获取整数参数 可以设置一个默认值
+     * @param string $key
+     * @param number $default
+     * @return integer
+     */
+    public function getInt($key, $default = 0) {
+        $num = @$_REQUEST[$key];
+        if (empty($num)) {
+            $num = $this->_request->getParam($key);
+        }
+        $num = intval($num);
+        if (empty($num)) {
+            $num = $default;
+        }
+        return $num;
+    }
 
     private function baselog(){
         $userid    = is_object($this->objUser) ? $this->objUser->userid : 0;

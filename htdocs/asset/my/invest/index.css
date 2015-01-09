@@ -40,7 +40,7 @@ body{margin:0;font-size:12px;font-family:"Microsoft YaHei"}
 ul{margin:0;padding:0}
 ul li{list-style:none}
 p{margin:0;padding:0}
-.container{width:1000px;margin:0 auto;position:relative;*zoom:1}
+.container{width:1000px;margin:0 auto;position:relative;left:0;top:0;*zoom:1}
 .container:before,.container:after{display:table;content:""}
 .container:after{clear:both}
 .header{height:34px;border-bottom:1px solid #e3e3e3}
@@ -51,10 +51,13 @@ p{margin:0;padding:0}
 .header-left-attention .attention-me{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
 .header-left-attention .attention-me.xinlang{background-position:0 -50px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
-.header-left-attention .xinlang-erweima{width:200px;height:200px;position:absolute;left:-88px;top:27px;background-color:#fff;z-index:5;border:1px solid #ccc;display:none}
-.header-left-attention .xinlang-erweima.current{display:block}
-.header-left-attention .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:90px;top:-8px}
-.header-left-attention .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:90px;top:-6px}
+.xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:5;border:1px solid #ccc;display:none;background:url(../../common/img/weixin.jpg) 0 0 no-repeat}
+.xinlang-erweima.footer-erweima{top:-270px}
+.xinlang-erweima.current{display:block}
+.triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:119px;top:-8px}
+.triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
+.triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
+.triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
@@ -79,20 +82,22 @@ p{margin:0;padding:0}
 .footer-vertical{margin:0 5px;color:#b1b1b3}
 .footer-site-left{color:#b1b1b3;margin-right:20px}
 .footer-site-me{color:#b1b1b3}
-.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px}
+.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative;left:0;top:0}
 .footer-site-me-xinlang.xinlang{background-position:0 -150px}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../../common/img/footer_phone.png) 0 0 no-repeat}
 .investlist{padding-bottom:30px;border-bottom:1px solid #dfdfdf}
 .investlist-title{height:56px;line-height:56px;font-size:20px;color:#333}
-.investlist-box-title{border-bottom:1px dashed #d8d8d8;padding-left:12px;height:64px;line-height:64px}
+.investlist-box-title{border-bottom:1px dashed #d8d8d8;padding-left:12px;min-height:64px;line-height:64px}
 .investlist-box-title.border-bottom{border-bottom:none}
 .investlist-box-title-name{float:left;color:#999;font-size:14px}
 .investlist-box-title-name.name{width:240px;text-align:center;*zoom:1}
 .investlist-box-title-name.name:before,.investlist-box-title-name.name:after{display:table;content:""}
 .investlist-box-title-name.name:after{clear:both}
-.investlist-box-title-name.grade{width:100px;text-align:center}
-.investlist-box-title-name.grade .grade-star{display:inline-block;width:16px;height:16px;margin-right:4px;background:url(../../common/img/star_icon.png) 0 0 no-repeat}
+.investlist-box-title-name.grade{width:100px;text-align:left;height:64px;*zoom:1}
+.investlist-box-title-name.grade:before,.investlist-box-title-name.grade:after{display:table;content:""}
+.investlist-box-title-name.grade:after{clear:both}
+.investlist-box-title-name.grade .grade-star{display:inline-block;width:16px;height:16px;margin-right:4px;background:url(../../common/img/star_icon.png) 0 0 no-repeat;line-height:64px;float:left;margin-top:20px}
 .investlist-box-title-name.grade .grade-star.all{background-position:0 0}
 .investlist-box-title-name.grade .grade-star.none{background-position:0 -50px}
 .investlist-box-title-name.grade .grade-star.half{background-position:0 -100px}
@@ -104,7 +109,7 @@ p{margin:0;padding:0}
 .investlist-box-title-name.jindu:after{clear:both}
 .investlist-box-title-name.status{width:120px;text-align:center}
 .jindu-box{width:70px;height:8px;background-color:#ccc;float:left;margin:28px 10px 0 0;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
-.jindu-box .jindu-box-inline{min-width:10%;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
+.jindu-box .jindu-box-inline{min-width:10px;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-number{float:left}
 .name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#fff;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .school{text-align:left;float:left;width:154px;overflow:hidden;color:#323232;font-size:14px}
@@ -124,6 +129,7 @@ p{margin:0;padding:0}
 .xjd-loading{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../../common/css/img/loading.gif) no-repeat center center}
 .xjd-error{position:absolute;top:0;left:0;right:0;bottom:0;vertical-align:middle;text-align:center}
 .xjd-error .xjd-error-msg{color:#999;height:100px;position:absolute;left:0;right:0;top:50%;margin-top:-50px;line-height:100px;font-size:14px}
+.school-link{text-decoration:none;color:#333}
 .finish{background-color:#f8f8f8;padding:30px 0 50px}
 .finish-bg-color{background-color:#fff}
 .finish-nav{width:180px;float:left}

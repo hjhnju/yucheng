@@ -14,7 +14,8 @@
             interest: +'{%$data.interest%}',
             days: +'{%$data.days%}',
             sTime: +'{%$data.create_time%}',
-            eTime: +'{%$data.deadline%}'
+            eTime: +'{%$data.deadline%}',
+            fullTime: +'{%$full_time%}'
         });
     });
 </script>
@@ -308,6 +309,17 @@
             </div>
         </div>
         <div class="detail-right">
+            {%if $status == 6%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                <div class="right-box-top">
+                    <div class="right-top2nd-title">已满标</div>
+                    <div class="right-top2nd-box">满标时间:{%$full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时:<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">投标人数:{%$invest_cnt%}人</div>
+                </div>
+            </div>
+            {%else%}
             <div class="right-top">
                 <div class="right-top-title">我来投资</div>
                 <div class="right-top-allmoney">
@@ -326,6 +338,8 @@
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
             </div>
+            {%/if%}
+
             <div class="right-bottom">
                 <div class="right-bottom-title">
                     <div class="bottom-title-name">还款计划</div>
