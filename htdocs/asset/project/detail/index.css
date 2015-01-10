@@ -61,6 +61,7 @@ p{margin:0;padding:0}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.default-login:hover{background-color:#e33f33}
 .header-right-login{margin-top:10px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:200px;height:60px;display:block;margin-right:16px}
@@ -83,7 +84,7 @@ p{margin:0;padding:0}
 .footer-vertical{margin:0 5px;color:#b1b1b3}
 .footer-site-left{color:#b1b1b3;margin-right:20px}
 .footer-site-me{color:#b1b1b3}
-.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative;left:0;top:0}
+.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative;left:0;top:0;cursor:pointer}
 .footer-site-me-xinlang.xinlang{background-position:0 -150px}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../../common/img/footer_phone.png) 0 0 no-repeat}
@@ -244,7 +245,8 @@ p{margin:0;padding:0}
 .detail-pass{width:490px;line-height:22px;font-size:14px;color:#333;padding-left:30px}
 .detail-symbol{width:140px;height:80px;background:url(img/yin_icon.png) 0 0 no-repeat;position:absolute;right:8px;top:30px}
 .detail-right{width:260px;border-left:1px solid #efefef;padding-left:20px;float:right;margin-top:50px}
-.right-top{border-bottom:1px dashed #efefef;padding-bottom:30px;margin-bottom:30px}
+.right-top{border-bottom:1px dashed #efefef;padding-bottom:30px;margin-bottom:30px;position:relative}
+.right-top-new{position:absolute;width:66px;height:66px;top:0;right:-24px;background:url(img/new.png) 0 0 no-repeat}
 .right-top-title{height:30px;line-height:30px;margin-bottom:10px;font-size:19px;color:#333}
 .right-top-allmoney{padding:15px 25px;background-color:#f8f8f8;border:1px solid #efefef;margin-bottom:10px}
 .right-top-allmoney-money{font-size:14px;color:#333;height:20px;line-height:20px}
@@ -256,6 +258,8 @@ p{margin:0;padding:0}
 .right-top-chongzhi:before,.right-top-chongzhi:after{display:table;content:""}
 .right-top-chongzhi:after{clear:both}
 .chongzhi-left{float:left;color:#333;line-height:34px}
+.chongzhi-left .account-a-link{text-decoration:none;color:#76cf65}
+.chongzhi-left .account-a-link:hover{text-decoration:underline}
 .chongzhi-left .chongzhi-link{text-decoration:none;color:#76cf65}
 .chongzhi-right{line-height:34px;float:right}
 .chongzhi-right .chongzhi-span{color:#f2736a}
@@ -264,6 +268,7 @@ p{margin:0;padding:0}
 .right-top-btn:after{clear:both}
 .right-top-btn .right-top-btn-confirm{float:left;width:170px;line-height:34px;background-color:#76cf65;color:#FFF;text-decoration:none;font-size:14px;text-align:center;cursor:pointer;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .right-top-btn .right-top-btn-confirm.confirm-all{width:80px;background-color:#f2736a;float:right;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.right-bottom{margin-bottom:20px}
 .right-bottom-title{height:30px;*zoom:1}
 .right-bottom-title:before,.right-bottom-title:after{display:table;content:""}
 .right-bottom-title:after{clear:both}

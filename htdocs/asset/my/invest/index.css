@@ -61,6 +61,7 @@ p{margin:0;padding:0}
 .header-right{float:right}
 .header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.default-login:hover{background-color:#e33f33}
 .header-right-login{margin-top:10px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:200px;height:60px;display:block;margin-right:16px}
@@ -83,7 +84,7 @@ p{margin:0;padding:0}
 .footer-vertical{margin:0 5px;color:#b1b1b3}
 .footer-site-left{color:#b1b1b3;margin-right:20px}
 .footer-site-me{color:#b1b1b3}
-.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative;left:0;top:0}
+.footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative;left:0;top:0;cursor:pointer}
 .footer-site-me-xinlang.xinlang{background-position:0 -150px}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../../common/img/footer_phone.png) 0 0 no-repeat}
@@ -220,10 +221,12 @@ p{margin:0;padding:0}
 .all-box-pay-top span{margin-left:10px;font-size:14px;color:#333;vertical-align:middle;display:inline-block}
 .all-box-pay-top span .all-pay-help{width:20px;height:20px;background:url(../common/img/help.png) 0 0 no-repeat;display:inline-block;vertical-align:middle}
 .all-box-pay-link{position:absolute;right:10px;top:30px;display:block;width:70px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#FFF;font-size:14px;background-color:#f2736a;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.all-box-pay-link:hover{background-color:#e33f33}
 .all-account-box-dredge{padding:40px 0;border:1px solid #eaeaea}
 .all-account-box-dredge.quxian{margin-top:20px;width:740px;height:202px;padding:0;position:relative}
 .all-box-dredge-name{text-align:center;font-size:18px;margin-bottom:30px}
 .all-box-dredge-link{width:170px;height:38px;font-size:16px;text-align:center;text-decoration:none;display:block;line-height:38px;margin:0 auto;background-color:#f2736a;color:#FFF;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.all-box-dredge-link:hover{background-color:#e33f33}
 .return{display:block;position:absolute;right:-30px;top:10px;color:#333;font-size:14px;width:60px;height:24px;line-height:24px;padding-left:30px;text-decoration:none;background:url(../common/img/return_icon.png) 0 center no-repeat}
 .return:hover{color:#76cf65}
 .fen{font-size:20px;color:#76cf65}
