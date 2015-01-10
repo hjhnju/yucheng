@@ -28,6 +28,9 @@ define(function (require) {
 
     function init(opt) {
 
+        $('.nav-item-link:eq(0)').addClass('current');
+
+
         header.init();
 
         option.pagesize = +opt.pagesize;

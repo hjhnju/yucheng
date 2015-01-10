@@ -57,7 +57,7 @@
                         <div class="reward-type-box-text">让好友注册时填入您的手机号：{%$userphone%}</div>
                         <div class="reward-type-box-text">或使用您的专属注册链接:
                             <a class="reward-type-link-http" href="{%$userurl%}">{%$userurl%}</a>
-                            <span class="reward-type-link-span">复制给好友</span>
+                            <a class="reward-type-link-span">复制给好友</a>
                         </div>
                     </div>
                     <div class="reward-type-box">
@@ -86,7 +86,7 @@
                             <td><div class="jindu"><div class="within" style="width: {%$item.tenderAmount%}%;"></div></div></td>
                             <td>
                                 {%if $item.canBeAwarded%}
-                                <span class="table-tr-span" data-id="{%$item.id%}">点击领取{%$item.award%}元</span>
+                                <a class="table-tr-span" data-id="{%$item.id%}">点击领取{%$item.award%}元</a>
                                 {%else%}
                                 <span class="table-tr-span current">点击领取{%$item.award%}元</span>
                                 {%/if%}
