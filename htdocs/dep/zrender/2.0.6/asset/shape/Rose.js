@@ -1,9 +1,4 @@
-define('zrender/shape/Rose', [
-    'require',
-    './Base',
-    '../tool/math',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Rose', function (require) {
     var Base = require('./Base');
     var Rose = function (options) {
         this.brushTypeOnly = 'stroke';

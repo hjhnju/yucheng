@@ -1,4 +1,4 @@
-define('echarts/component', [], function () {
+define('echarts/component', function () {
     var self = {};
     var _componentLibrary = {};
     self.define = function (name, clazz) {
