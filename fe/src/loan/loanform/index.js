@@ -102,7 +102,7 @@ define(function (require) {
             }
 
             else {
-                window.location.href = '{%$webroot%}/loan/success';
+                window.location.href = '/loan/success';
             }
         });
 
