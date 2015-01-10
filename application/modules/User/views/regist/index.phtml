@@ -6,9 +6,8 @@
 
 {%block name="script"%}
 <script>
-    require(['setting/regist/index', 'setting/login/index'], function (regist, login) {
+    require(['setting/regist/index'], function (regist) {
         regist.init('{%$type%}');
-        // login.init();
     });
 </script>
 {%/block%}
@@ -60,7 +59,7 @@
                 <div class="login-tiaoyue">
                     <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />
                     <label class="tiaoyue-lable" for="tiaoyue-itp">同意<a href="###">用户条约</a></label>
-                    <span class="login-tiaoyue-have">已有账号？<a href="{%$webroot%}/user/login/index">请登录</a></span>
+                    <span class="login-tiaoyue-have">已有账号？<a href="{%$webroot%}/user/login">请登录</a></span>
                 </div>
                 <div class="login-thirdlogin">
                     <span class="login-third-tx">您也可以使用第三方账号登录</span>

@@ -298,7 +298,7 @@ p{margin:0;padding:0}
 .time-data-calendar-box .ipt-lable{position:absolute;right:10px;top:5px;width:16px;height:16px;cursor:pointer;background:url(../common/img/calendar.png) 0 0 no-repeat}
 .time-data-symbol{height:24px;line-height:24px;margin:0 10px;float:left}
 .time-data-search{float:left;margin:2px 15px 2px 0;padding:4px 10px;color:#000;background-color:#f8f8f8;border:1px solid #e3e3e3;cursor:pointer;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.time-data-search:hover{background-color:#d4d4d4}
+.time-data-search:hover{border-color:#a6a6a6;background-color:#d4d4d4}
 .time-data-type{float:left;margin-top:7px}
 .time-data-type .time-data-type-link{padding:5px 10px;color:#333;cursor:pointer}
 .time-data-type .time-data-type-link:hover,.time-data-type .time-data-type-link.current{background-color:#f2736a;color:#FFF;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
