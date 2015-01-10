@@ -42,11 +42,15 @@ class RequestController extends Base_Controller_Page {
 	    $list->setOrder('id');
 	    $province = $list->getData();
 	    
-	    $this->_view->assign('school', Loan_Type_SchoolType::$names);
-	    $this->_view->assign('usage', Loan_Type_Usage::$names);
-	    $this->_view->assign('refund_type', Loan_Type_RefundType::$names);
-	    $this->_view->assign('province', $province);
-	    $this->_view->assign('period', Loan_Type_Duration::$enabled);
+	    $data = array(
+	        'school' => Loan_Type_SchoolType::$names,
+	        'usage' => Loan_Type_Usage::$names,
+	        'refund_type' => Loan_Type_RefundType::$names,
+	        'province' => $province,
+	        'period' => Loan_Type_Duration::$enabled,
+	    );
+	    
+	    $this->_view->assign('data', $data);
 	}
 	
 	/**
