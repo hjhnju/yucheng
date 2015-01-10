@@ -46,32 +46,31 @@ define(function (require) {
             }
         });
 
-        // 验证码
-        $('#login-testing').blur(function () {
-            var value = $.trim($(this).val());
-
-            if (!value) {
-                $(this).parent().addClass('current');
-                $('#login-testing-error').html('验证码不能为空');
-                return;
-            }
-
-            imgcodeCheck.remote({
-                imgcode: value,
-                type: 2
-            });
+        $('#login-testing').focus(function () {
+            loginError.html('');
         });
+        // 验证码
+        //$('#login-testing').blur(function () {
+        //    var value = $.trim($(this).val());
+        //
+        //    if (!value) {
+        //        $(this).parent().addClass('current');
+        //        $('#login-testing-error').html('验证码不能为空');
+        //        return;
+        //    }
+        //
+        //    imgcodeCheck.remote({
+        //        imgcode: value,
+        //        type: 2
+        //    });
+        //});
 
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
             $(this).attr('src', IMGURL);
         });
-        if(!$('.login-username').hasClass('login-display-none')) {
 
-            status = 1;
-
-        }
 
 
 
@@ -82,36 +81,53 @@ define(function (require) {
 
             var user = $.trim($('#login-user').val());
             var pwd = $.trim($('#login-pwd').val());
-
-            if(status ===1) {
-                $('#login-testing').trigger('blur');
-            }
-
-
-
+            var volid = $.trim($('#login-testing').val());
 
 
             if(!user || !pwd) {
                 loginError.html('用户名或密码不能为空');
+                return;
             }
 
+            if (!$('.login-username').hasClass('login-display-none')) {
+                if (!volid) {
+                    loginError.html('验证码不能为空');
+                    return;
+                }
+
+                loginCheck.remote({
+                    name: user,
+                    passwd: pwd,
+                    imagecode: volid,
+                    type: 'login'
+                });
+            }
             else {
                 loginCheck.remote({
                     name: user,
                     passwd: pwd
-                })
+                });
+            }
+
+        });
+
+        //登录回车控制
+        $('#login-pwd').keyup(function(e) {
+            if(e.keyCode === 13) {
+                $('.login-fastlogin').trigger('click');
+                $(this).trigger('blur');
+                console.log(111);
             }
         });
 
-        // 登录回车控制
-        //$('#login-pwd').keyup(function(e) {
-        //    if(e.keyCode === 13) {
-        //        $('.login-fastlogin').trigger('click');
-        //        $(this).trigger('blur');
-        //        console.log(111);
-        //
-        //    }
-        //})
+            $('#login-testing').keyup(function(e) {
+                if(e.keyCode === 13) {
+                    $('.login-fastlogin').trigger('click');
+                    $(this).trigger('blur');
+                    console.log(111);
+                }
+            })
+
     }
 
     function bindCallback() {
