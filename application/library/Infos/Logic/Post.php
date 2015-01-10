@@ -30,8 +30,13 @@ class Infos_Logic_Post {
         $filters = array();
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
-        return $list->toArray();
-        
+        $arrRet = $list->toArray();
+        foreach ($arrRet['list'] as $key => $val){
+            $content    = unserialize($val['content']);
+            unset($val['content']);
+            $arrRet['list'][$key]['content'] = $content['ctx'];         
+        }        
+        return $arrRet;
     }
 
     /**
@@ -42,7 +47,9 @@ class Infos_Logic_Post {
     public function getPost($postid){
         $object     = new Infos_Object_Infos($postid);
         $ret        = $object->toArray();
-        $ret['ctx'] = $ret['content'];
+        $content    = unserialize($ret['content']);
+        unset($ret['content']);
+        $ret['ctx'] = $content['ctx'];
         return $ret;
     }
 
