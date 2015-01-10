@@ -16,6 +16,9 @@ class LoginController extends Base_Controller_Page{
      * 状态返回0表示登录成功
      */    
     public function indexAction(){
+        if(!empty($_SERVER['HTTP_REFERER'])){
+            Yaf_Session::getInstance()->set(User_Keys::LOGIN_REFER,$_SERVER['HTTP_REFERER']);
+        }
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
         if($intFails >= 3) {
             $this->getView()->assign('url',$this->webroot . '/user/imagecode/getimage?type=login');
