@@ -349,7 +349,7 @@
             <div class="right-bottom">
                 <div class="right-bottom-title">
                     <div class="bottom-title-name">还款计划</div>
-                    <div class="bottom-title-number">共<span class="btm-title-number-sp">12</span>期</div>
+                    <div class="bottom-title-number">共<span class="btm-title-number-sp">{%count($data.refunds)%}</span>期</div>
                 </div>
                 <div class="right-bottom-main">
                     <div class="bottom-main-title">
@@ -358,7 +358,11 @@
                         <div class="btm-main-title-box status">还款状态</div>
                     </div>
                     {%foreach $data.refunds as $key => $item%}
+                    {%if $key % 2 == 1%}
+                    <div class="btm-main-box btm-bg-color">
+                    {%else%}
                     <div class="btm-main-box">
+                    {%/if%}
                         <div class="btm-main-title-box time">{%$item.promise_time|date_format:'%Y-%m-%d'%}</div>
                         <div class="btm-main-title-box yinghuan">￥{%$item.interest%}</div>
 
