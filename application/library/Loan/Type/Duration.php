@@ -96,4 +96,21 @@ class Loan_Type_Duration extends Base_Type {
         self::MONTH_24 => '24个月',
         self::MONTH_36 => '36个月',
     );
+    
+    /**
+     * 开放的借款期限
+     * @var array
+     */
+    public static $enabled = array(
+        self::MONTH_HALF => '半个月',
+        self::MONTH => '1个月',
+        self::MONTH_2 => '2个月',
+        self::MONTH_3 => '3个月',
+        self::MONTH_6 => '6个月',
+        self::MONTH_9 => '9个月',
+        self::MONTH_12 => '12个月',
+        self::MONTH_18 => '18个月',
+        self::MONTH_24 => '24个月',
+        self::MONTH_36 => '36个月',
+    );
 }

@@ -46,6 +46,7 @@ class RequestController extends Base_Controller_Page {
 	    $this->_view->assign('usage', Loan_Type_Usage::$names);
 	    $this->_view->assign('refund_type', Loan_Type_RefundType::$names);
 	    $this->_view->assign('province', $province);
+	    $this->_view->assign('period', Loan_Type_Duration::$enabled);
 	}
 	
 	/**
