@@ -13,6 +13,8 @@ class Finance_RetCode extends Base_RetCode {
 	CONST NOTBINDANYCARD             = 1103;//用户没用绑定任何一张卡
 	
 	CONST CANNOT_DEL_DEFALTCARD      = 1104;//默认取现卡不可以删除
+	
+	CONST HUIFU_RETURN_ERROR         = 1105;//汇付返回参数错误
 
 	
 	
@@ -22,10 +24,11 @@ class Finance_RetCode extends Base_RetCode {
 	 * @var array
 	*/
 	protected static $_arrErrMap = array(
-		self::REQUEST_API_ERROR  => '请求API出错',
-		self::NOTUSERCARD        => '该用户无此卡',
-		self::NOTBINDANYCARD     => '用户没用绑定任何一张卡',
+		self::REQUEST_API_ERROR     => '请求API出错',
+		self::NOTUSERCARD           => '该用户无此卡',
+		self::NOTBINDANYCARD        => '用户没用绑定任何一张卡',
 		self::CANNOT_DEL_DEFALTCARD => '默认取现卡不可以删除',
+		self::HUIFU_RETURN_ERROR    => '汇付返回参数错误',
 	);
 	
 	/**

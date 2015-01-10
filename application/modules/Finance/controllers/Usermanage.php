@@ -7,10 +7,18 @@
  */
 class UsermanageController extends Base_Controller_Page{
 
+	private $userManageLogic ;
+	private $huifuid;
+	private $userName;
+	private $phone;
     public function init(){
     	Yaf_Dispatcher::getInstance()->disableView();    	 
     	$this->setNeedLogin(false);
         parent::init();
+        $this->userManageLogic = new Finance_Logic_UserManage();        
+        $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
+        $this->userName = !empty($objUser) ? $objUser->name : "";
+        $this->phone = $phone = !empty($objUser) ? $objUser->phone : "";
     }
 
     /**
@@ -19,14 +27,15 @@ class UsermanageController extends Base_Controller_Page{
      *
      */
     public function userregistAction(){
-        $objUser = $this->objUser;
-        $userid = $this->userid;
-        $userName = !empty($objUser) ? $objUser->name : "";
-        $phone = !empty($objUser) ? $objUser->phone : "";
-        //Finance_Api::userRegist($userName,$phone,$userid);//调用财务模块Api实现用户开户功能       
+        $objUser  = $this->objUser;
+        $userid   = $this->userid;
+        $userName = $this->userName;
+        $phone    = $this->phone;
+        //$this->userManageLogic->userRegist($userName,'',$userid);
         //TODO: remove
         //FOR TEST
-        Finance_Api::userRegist('lyx661228','');//调用财务模块Api实现用户开户功能       
+        $this->userManageLogic->userRegist('lyx661228','',$userid);
+       
         
     }
 
@@ -35,10 +44,6 @@ class UsermanageController extends Base_Controller_Page{
      *
      */
     public function corpregistAction(){
-        //需要从huwei模块中取出调用API所需要的参数
-        //  
-        //  
-        //  
 
     }
     
@@ -49,9 +54,9 @@ class UsermanageController extends Base_Controller_Page{
     public function userbindcardAction(){
     	//若还没有绑定汇付，此时应该提示用户去绑定汇付
         //$objUser = $this->objUser;
-        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';
-        $userid = $this->userid;      
-        Finance_Api::userBindCard($huifuid,$userid);
+        $huifuid = $this->huifuid;
+        $userid  = $this->userid;  
+        $this->userManageLogic->userBindCard($huifuid,$userid);
     }
     
     /**
@@ -59,8 +64,9 @@ class UsermanageController extends Base_Controller_Page{
      * FOR TEST
      */
     public function loginAction() {
-    	$huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';
-    	Finance_Api::userLogin($huifuid);
+    	$huifuid = $this->huifuid;
+    	
+    	$this->userManageLogic->userLogin($huifuid);
     }
     
     /**
@@ -69,24 +75,19 @@ class UsermanageController extends Base_Controller_Page{
      * 
      */
     public function acctmodifyAction() {
-    	$huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';
-    	Finance_Api::acctModify($huifuid);
+    	$huifuid = $this->huifuid;
+    	$this->userManageLogic->acctModify($huifuid);
     }
-    
-    /**
-     * 删除银行卡Action层
-     * FOR TEST
-     */
-    public function delbankcardAction() {
-    	
-    }
-    
+        
     /**
      * 银行卡查询Action层
      * FOR TEST
      */
     public function querybankinfoAction() {
-    	$bankinfo = Finance_Api::queryCardInfo("6000060000696947");
+    	$huifuid = $this->huifuid;
+    	$queryLogic = new Finance_Logic_Query();
+    	//$bankinfo = $queryLogic->queryCardInfo($huifuid);
+    	$bankinfo = $queryLogic->queryCardInfo("6000060000696947");
     }
     
     /**
@@ -94,16 +95,38 @@ class UsermanageController extends Base_Controller_Page{
      * FOR TEST
      */
     public function queryAcctsAction() {
-    	$merAcct = Finance_Api::queryAccts();
+    	$queryLogic = new Finance_Logic_Query();
+    	$merAcct = $queryLogic->queryAccts();
     }
     
+    /**
+     * 交易状态查询
+     * FOR TEST
+     */
+    public function queryTransStatAction() {
+    	
+    	$queryLogic = new Finance_Logic_Query();
+    	$transStat = $queryLogic->queryTransStat('LOANS');
+    	var_dump($transStat);
+    }
     /**
      * 删除银行卡接口
      * FOR TEST
      */
     public function delCardAction() {
+    	$huifuid = $this->huifuid;
     	$huifuid = "6000060000696947";
     	$cardId = "4367423378320018938";
-    	$delret = Finance_Api::delCard($huifuid,$cardId);
+    	$this->userManageLogic->delCard($huifuid,$cardId);
+    }
+    
+    public function testAction() {
+    	$logic = new Finance_Logic_Base();
+    	$ret = $logic->payOrderUpdate('18446744073709551615',1);
+    	if(!$ret) {
+    		echo "fail";
+    		 
+    	}
+    	echo "success";
     }
 }

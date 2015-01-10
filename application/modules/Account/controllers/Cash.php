@@ -7,6 +7,7 @@ class CashController extends Base_Controller_Response {
 	
 	private $huifuid;
 	private $phone;
+	
 	public function init() {
 		$this->setNeedLogin(false);
 		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : 0;
@@ -30,27 +31,11 @@ class CashController extends Base_Controller_Response {
 	 */
 	public function indexAction() {
 		
-		$huifuid = $this->huifuid;
+		$huifuid  = $this->huifuid;
 		$userinfo = $this->userInfoLogic->getUserInfo();
-		$blanceInfo = Finance_Api::queryBalanceBg($huifuid);
-		$avlBal = $blanceInfo["data"]["avlBal"];
-		$acctBal = strval($blanceInfo["data"]["acctBal"]);
-		
-		if($blanceInfo["status"] == Finance_RetCode::REQUEST_API_ERROR) {//请求汇付API失败
-			Base_Log::error(Finance_RetCode::getMsg($bankCardInfo["status"]));
-		} elseif ($blanceInfo["status"] != Base_RetCode::SUCCESS) {
-			Base_Log::error(array(
-			    'huifuid'  => $huifuid,
-				'RespCode' => $blanceInfo['status'],
-				'RespDes'  => $blanceInfo['respDesc'],				
-			));
-		} else {
-            Base_Log::notice(array(
-            	'huifuid' => $huifuid,
-            	'avlBal'  => $avlBal,
-            	'acctBal' => $acctBal,
-            ));
-		}
+		$userBg   = $this->userInfoLogic->getUserBg($huifuid);
+		$avlBal   = strval($userBg['avlBal']);
+		$acctBal  = strval($userBg['acctBal']);
 		//assign至前端
 		$this->getView()->assign('avlBal', $avlBal);
 		$this->getView()->assign('acctBal',$acctBal);
@@ -69,53 +54,25 @@ class CashController extends Base_Controller_Response {
 	 * 提现入口
 	 */
 	public function withdrawAction() {
-		$userid = $this->userid;
-		$huifuid = $this->huifuid;
+		$userid   = $this->userid;
+		$huifuid  = $this->huifuid;
+		$phone    = $this->phone;
 		$userinfo = $this->userInfoLogic->getUserInfo();
+		//FOR　TEST
 		$huifuid = "6000060000696947";
-		$bankCardInfo = Finance_Api::queryCardInfo($huifuid);
-		if($bankCardInfo["status"] == Finance_RetCode::REQUEST_API_ERROR) { //查询汇付接口失败
-			$bindbank = 0;
-			$banknum  = '';
-			$bankID   = '';
-			Base_Log::error(Finance_RetCode::getMsg($bankCardInfo["status"]));
-		} elseif ($bankCardInfo["status"] == Finance_RetCode::NOTBINDANYCARD) {//用户未绑卡
-			$bindbank = 0;
-			$banknum  = '';
-			$bankID   = '';
-			Base_Log::notice(Finance_RetCode::getMsg($bankCardInfo["status"]),array(
-			'userid' => $userid,
-			'huiid'  => $huifuid,
-			));
-		} elseif ($bankCardInfo["status"] != 0) {
-			$bindbank = 0;
-			$banknum  = '';
-			$bankID   = '';
-			Base_Log::error(array(
-				'userid'  => $userid,
-				'huifuid' =>$huifuid,
-				'RespCode' => $bankCardInfo['RespCode'],
-				'RespDes'  => $bankCardInfo['RespDesc'],				
-			));			
-		} else {
-			$bindbank = 1;
-			$banknum = $bankCardInfo["data"]['UsrCardInfolist'][0]["CardId"];
-			$bankID = $bankCardInfo["data"]['UsrCardInfolist'][0]["BankId"];
-		}
-		$this->getView()->assign('bindbank', $bindbank);
-		$this->getView()->assign('banknum', $banknum);
+        $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
+        $bindBank = $bankInfo['bindbank'];
+        $bankNum  = $bankInfo['banknum'];
+        $bankID   = $bankInfo['bankID'];
+		$this->getView()->assign('bindbank', $bindBank);
+		$this->getView()->assign('banknum', $bankNum);
 		$this->getView()->assign('bankID', $bankID);
 		
-		$blanceInfo = Finance_Api::queryBalanceBg($huifuid);
-		
-		if($bankCardInfo["status"] == Finance_RetCode::REQUEST_API_ERROR) {//请求汇付API失败
-			$avlBal = '0.00';
-		} else {
-			$avlBal = strval($blanceInfo["data"]["avlBal"]);
-		}
+        $userBg = $this->userInfoLogic->getUserBg($huifuid);
+        $avlBal = strval($userBg['avlBal']);
 		$this->getView()->assign('avlBal', $avlBal);
 		$this->getView()->assign('userInfo',$userinfo);
-		$this->getView()->assign('withdrawfee','1');
+		$this->getView()->assign('withdrawfee','2');
 		$this->getView()->assign('phone',$this->phone);
 	}
 	

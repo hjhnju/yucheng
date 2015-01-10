@@ -15,20 +15,24 @@ class Finance_Api {
 	 * )
 	 */
 	public static function queryAccts() {
+		$ret = new Base_Result();
 		$queryLogic = new Finance_Logic_Query();
 		$return = $queryLogic->queryAccts();
-		if($return == false) {
-			$ret = array(
-		        'status' => Base_RetCode::REQUEST_API_ERROR,
-				'data'   => array(),
-			);
-		} else {
-			$ret = array(
-				'status' => Base_RetCode::SUCCESS,
-				'data'   => $return,
-			);
+		if($return == false) {			
+			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
+			$ret->data = array();
+			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
+			return $ret->format();
+		} 
+		if($return['RespCode'] != '000') {
+			$ret->status = $return['RespCode'];
+			$ret->data = array();
+			$ret->statusInfo = $return['RespDesc'];
+			return $ret->format();
 		}
-		return $ret;
+		$ret->status = Finance_RetCode::SUCCESS;
+		$ret->data = $return;
+		return $ret->format();
 	}
 	/**
 	 * 余额查询接口 Finance_Api::queryBalanceBg
@@ -45,38 +49,36 @@ class Finance_Api {
 	 * )
 	 */	
 	public static function queryBalanceBg($userCustId) {
+		$ret = new Base_Result();
 		$queryLogic = new Finance_Logic_Query();
 		$return = $queryLogic->queryBalanceBg($userCustId);
 		if($return == false) {
-			$ret = array(
-			    'status' => Finance_RetCode::REQUEST_API_ERROR,
-				'data'   => array(
-				    'avlBal'  => '0.00',
-					'acctBal' => '0.00',
-					'frzBal'  => '0.00',
-			    ),
+			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
+			$ret->data = array(
+			    'avlBal'  => '0.00',
+				'acctBal' => '0.00',
+				'frzBal'  => '0.00',
 			);
-		} elseif($return['RespCode'] != '000') {
-			$ret = array(
-				'status' => $return['RespCode'],
-				'data'   => array(
-					'respDesc' => $return['RespDesc'],
-					'avlBal'  => '0.00',
-					'acctBal' => '0.00',
-					'frzBal'  => '0.00',
-			    ),
-			);
-		} else {
-			$ret = array(
-				'status' => Base_RetCode::SUCCESS,
-				'data'   => array(
-					'avlBal'  => $return['AvlBal'],
-					'acctBal' => $return['AcctBal'],
-					'frzBal'  => $return['FrzBal'],
-			    ),
-			);
+			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
+			return $ret->format();
 		}
-		return $ret;
+		if($return['RespCode'] != '000') {
+			$ret->status = $return['RespCode'];
+			$ret->data = array(
+				'avlBal'  => '0.00',
+				'acctBal' => '0.00',
+				'frzBal'  => '0.00',
+			);
+			$ret->statusInfo = $return['RespDesc'];
+			return $ret->format();
+		} 
+		$ret->status = Finance_RetCode::SUCCESS;
+		$ret->data = array(
+			'avlBal'  => $return['AvlBal'],
+			'acctBal' => $return['AcctBal'],
+			'frzBal'  => $return['FrzBal'],
+		);
+		return $ret->format();		
 	}
 	
 	/**
@@ -141,31 +143,30 @@ class Finance_Api {
 	public static function queryCardInfo($userCustId,$cardId='') {
 		//TODO
 		//升级判断填进去的卡号是不是该用户的卡。。目前平台还不需要根据用户卡号来查询银行卡信息，待升级
+		$ret = new Base_Result();		
 		$queryLogic = new Finance_Logic_Query();
 		$return = $queryLogic->queryBankCard($userCustId,$cardId);
 		if($return == false) {
-	        $ret = array(
-	        	'status' => Finance_RetCode::REQUEST_API_ERROR,
-	            'data'   => array(),
-	        );
-		} elseif($return['RespCode'] != '000') {
-			$ret = array(
-				'status' => $return['RespCode'],
-				'data'   => $return,
-			);
-		} elseif (empty($return['UsrCardInfolist'])) {
-			$ret = array(
-				'status' => Finance_RetCode::NOTBINDANYCARD,
-				'data'   => array(),
-			);
-		} else {
-			$ret = array(
-				'status' => Finance_RetCode::SUCCESS,
-				'data'   => $return,
-			);			
-		}
-		//var_dump($ret);die;
-		return $ret;
+			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
+			$ret->data = array();
+			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
+			return $ret->format();
+		} 
+		if($return['RespCode'] != '000') {
+			$ret->status = $return['RespCode'];
+			$ret->data = $return;
+			$ret->statusInfo = $return['RespDesc'];
+			return $ret->format();
+		} 
+		if (empty($return['UsrCardInfolist'])) {
+			$ret->status = Finance_RetCode::NOTBINDANYCARD;
+			$ret->data = array();
+			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
+			return $ret->format();
+		} 
+		$ret->status = Finance_RetCode::SUCCESS;
+		$ret->data = $return;
+		return $ret->format();
 	}
 	
 	/**
@@ -182,38 +183,40 @@ class Finance_Api {
 	 * )
 	 */
 	public function delCard($huifuid,$card) {
+		$ret = new Base_Result();
 		$userManageLogic = new Finance_Logic_UserManage();
 		$return = $userManageLogic->delCard($huifuid,$card);
 		if($return == false) {
-			$ret = array(
-				'status' => Finance_RetCode::REQUEST_API_ERROR,
-				'data'   => array(),
-			);
-		} elseif ($return['RespCode'] != "000") { //汇付返回值为非正常处理结构
-			$ret = array(
-				'status' => $return['RespCode'],
-				'data'   => $return,
-			);					
-		} else {
-			$ret = array(
-				'status' => Finance_RetCode::SUCCESS,
-				'data'   => $return,
-			);
-		}
-		return  $ret;
+			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
+			$ret->data = array();
+			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
+			return $ret->format();
+		} 
+		if ($return['RespCode'] != "000") { //汇付返回值为非正常处理结构
+			$ret->status = $return['RespCode'];
+			$ret->data = $return;
+			$ret->statusInfo = $return['RespDesc'];
+			return $ret->format();			
+		} 		
+		$ret = array(
+			'status' => Finance_RetCode::SUCCESS,
+			'data'   => $return,
+		);
+		return $ret->format();	
 	}
 	
 	/**
 	 * 主动投标接口 Finance_Api::initiativeTender
 	 * @param String transAmt 交易金额(required)   
-	 * @param String usrCustId 汇付平台的用户ID(required)    
-	 * //@param String maxTenderRate 最大投资手续费率(required)
+	 * @param String usrid 用户ID(required)    
+	 * @param String maxTenderRate 最大投资手续费率(required)
 	 * @param array BorrowerDetails 借款人信息(required)     
 	 *        array(
      *            0 => array(
-     *                "BorrowerCustId":"6000010000000014"，借款人客户号     
+     *                "BorrowerUserId":借款人userid    
      *                "BorrowerAmt": "20.01"， 借款金额
-     *                "BorrowerRate":"0.18" 借款手续费率(必须)    
+     *                "BorrowerRate":"0.18" 借款手续费率(必须) 
+     *                "ProId"  项目ID
      *            )
      *            1 =>array(
      *                ...
@@ -223,26 +226,27 @@ class Finance_Api {
      *            ...
      *        )
      * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
-     * @param String $FreezeOrdId 冻结订单号(optional)    
+     * @param string $FreezeOrdId 冻结订单号(optional)    
+     * @param string retUrl 汇付回调返回url
      * @return string requestURL 请求汇付的URL  
      * )   
      * 
 	 */
-	public static function initiativeTender($transAmt, $usrCustId ,$borrowDetail=null, $isFreeze=true, $freezeOrdId='') {
-	//	$financeLogic = new Finance_Logic_Base();
-	//	$orderId = $financeLogic->generateOrderId();
-		return " ";
+	public static function initiativeTender($transAmt, $userid ,$uidborrowDetail,$retUrl) {
+		$isFreeze = true;
+		$transLogic = new Finance_Logic_Transaction();
+		$transLogic->initiativeTender($transAmt, $userid, $uidborrowDetail, $isFreeze, $retUrl);		
 	}
 	
 	/**
 	 * 投标撤销接口Finance_Api::tenderCancel
 	 * @param String transAmt 交易金额    (required)
-	 * @param String usrCustId 用户商户号   (required)
+	 * @param String usrid 用户id   (required)
 	 * @param boolean isUnFreeze 是否解冻(require)  true--解冻  false--不解冻
 	 * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
 	 * @return bool true--撤销成功  false--撤销失败
 	 */
-	public static function tenderCancel($transAmt,$usrCustId,$isUnFreeze,$UnFreezeOrdId='') {
+	public static function tenderCancle($transAmt,$usrid,$orderId,$orderDate,$retUrl) {
 		return true;
 	}
 	
@@ -494,6 +498,7 @@ class Finance_Api {
      				'statusInfo' =>'The query result is empty',
      				'data' => $data,
      			);
+     			
      		}
      		$ret = array(
      		    'status'=>0,
