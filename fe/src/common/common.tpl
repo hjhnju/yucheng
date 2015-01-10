@@ -12,7 +12,7 @@
 
 <!-- target: Error -->
 <div class="xjd-error">
-    <div class="xjd-error-msg">${errorMsg}</div>
+    <div class="xjd-error-msg">${msg}</div>
 </div>
 <!-- /target -->
 

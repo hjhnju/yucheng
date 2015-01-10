@@ -22,11 +22,6 @@ define(function (require) {
 
     var status = 0;
 
-    var mapType = {
-        1: '充值',
-        2: '提现'
-    };
-
     function init() {
         header.init();
         var container = $('#my-msg-list');
@@ -72,11 +67,7 @@ define(function (require) {
                 for (var i = 0, l = data.list.length; i < l; i++) {
                     var tmp = data.list[i];
                     tmp.timeInfo = moment.unix(+tmp.time).format('YYYY-MM-DD hh:mm');
-                    tmp.typeInfo = mapType[tmp.type];
                 }
-
-
-
 
                 container.html(etpl.render('msgList', {
                     list: data.list

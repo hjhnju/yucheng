@@ -20,14 +20,14 @@
     <li class="my-invest-item unread">
     <!-- /if -->
         <div class="my-invest-content">
-            <span class="my-invest-project msg-type">充值</span>
+            <span class="my-invest-project msg-type">${item.type}</span>
             <span class="my-invest-project msg-content"><span class="msg-content-text" data-id="${item.mid}">${item.content}</span></span>
             <span class="my-invest-project msg-time">${item.timeInfo}</span>
         </div>
         <div class="my-invest-detail my-msg-detail">
             <span class="close-detail">收起</span>
             <p>${item.content}</p>
-            <div>查看 <a href="/account/cash/index">充值提现</a></div>
+            <div>查看 <a href="${item.link}">${item.linkname}</a></div>
         </div>
     </li>
     <!-- /for -->
