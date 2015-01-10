@@ -163,4 +163,4 @@ p{margin:0;padding:0}
 .infos-title{font-size:16px;line-height:32px}
 .infos-title a{color:#000;text-decoration:none}
 .infos-title a:hover{text-decoration:underline}
-.infos-ctx{color:#707070}
+.infos-ctx{color:#707070;height:40px;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap}

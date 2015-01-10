@@ -19,6 +19,7 @@ define(function (require) {
 
     var loginError = $('#login-error');
     var imgUrl = $('#login-img-url');
+    var status = 0;
 
     function init () {
         header.init();
@@ -45,14 +46,32 @@ define(function (require) {
             }
         });
 
+        // 验证码
+        $('#login-testing').blur(function () {
+            var value = $.trim($(this).val());
 
+            if (!value) {
+                $(this).parent().addClass('current');
+                $('#login-testing-error').html('验证码不能为空');
+                return;
+            }
+
+            imgcodeCheck.remote({
+                imgcode: value,
+                type: 2
+            });
+        });
 
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
             $(this).attr('src', IMGURL);
         });
+        if(!$('.login-username').hasClass('login-display-none')) {
 
+            status = 1;
+
+        }
 
 
 
@@ -64,27 +83,8 @@ define(function (require) {
             var user = $.trim($('#login-user').val());
             var pwd = $.trim($('#login-pwd').val());
 
-            if(!$('.login-username').hasClass('login-display-none')) {
-
+            if(status ===1) {
                 $('#login-testing').trigger('blur');
-                // 验证码
-                $('#login-testing').blur(function () {
-                    var value = $.trim($(this).val());
-
-                    if (!value) {
-                        $(this).parent().addClass('current');
-                        $('#login-testing-error').html('验证码不能为空');
-                        return;
-                    }
-
-                    imgcodeCheck.remote({
-                        imgcode: value,
-                        type: 2
-                    });
-                });
-
-
-                return;
             }
 
 
