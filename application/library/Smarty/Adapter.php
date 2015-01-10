@@ -21,7 +21,11 @@ class Smarty_Adapter implements Yaf_View_Interface {
             $this->_smarty->template_dir = $tmplPath;
         }
         foreach ($extraParams as $key => $value) {
-            $this->_smarty->$key = $value;
+            if ($key == 'plugins_dir') {
+                $this->_smarty->addPluginsDir($value);
+            } else {
+                $this->_smarty->$key = $value;
+            }
         }
     }
     
