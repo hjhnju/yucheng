@@ -85,6 +85,21 @@ class User_Api{
     }
     
     /**
+     * 设置用户证件
+     * @param int $uid
+     * @param string $strType,$strContent
+     * @return boolean
+     */
+    public static function setCertificate($uid,$strContent,$strType='00'){
+        $objInfo = new User_Object_Info();
+        $objInfo->fetch(array('userid'=>$uid));
+        $objInfo->certificateType      = $strType;
+        $objInfo->certificateContent   = $strContent;
+        $ret                           = $objInfo->save();
+        return $ret;
+    }
+    
+    /**
      * 设置用户密码
      * @param int $uid
      * @param string $strPasswd
