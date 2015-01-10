@@ -16,6 +16,8 @@ class User_Keys {
     const SMS_CODE_KEY         = 'smscode_%s_%s';
     
     const OPEN_INFO_KEY        = 'openinfo_%s_%s';
+    
+    const LOGIN_REFER          = 'user_login_refer_url';
 
     public static function getOpenidKey(){
         return self::SESSION_OPENID_KEY;
