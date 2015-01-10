@@ -45,12 +45,17 @@ class IndexAction extends Base_Controller_Action {
             // 获取用户信息
             $user = User_Api::checkLogin();
             
+            $admin = new Admin_Object_Admin($user->userid);
+            if ($admin->status !== 0) {
+                return $this->outputError(Admin_RetCode::NOT_ADMIN, Admin_RetCode::getMsg(Admin_RetCode::NOT_ADMIN));
+            }
+            
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
             // $this->ajaxJump($redirectUri);
             Base_Log::notice(array(
                 'msg'   => 'login success',
                 'name'  => $strName,
-                'useid' => $user->uid,
+                'useid' => $user->userid,
             ));
             return $this->redirect('/admin');
         }

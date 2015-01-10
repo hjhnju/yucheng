@@ -1,0 +1,22 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/us/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/common/common'], function(main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="container company">
+    {%include file="common/menu.phtml" current="1"%}
+    <div class="company-box">
+    </div>
+</div>
+
+{%/block%}

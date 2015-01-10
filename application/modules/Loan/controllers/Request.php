@@ -14,7 +14,6 @@ class RequestController extends Base_Controller_Page {
     private $param = array(
         'title' => '标题不能为空！',
         'amount' => '借款金额不能为空！',
-        'interest' => '利率不能为空！',
         'name' => '借款人不能为空！',
         'contact' => '联系方式不能为空！',
     );
