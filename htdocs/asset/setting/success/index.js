@@ -2,13 +2,16 @@ define('setting/success/index', [
     'require',
     'jquery',
     'common/Remoter',
-    'common/config'
+    'common/config',
+    'common/header'
 ], function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var config = require('common/config');
+    var header = require('common/header');
     function init() {
         changeEmail();
+        header.init();
     }
     function changeEmail() {
         var timer;

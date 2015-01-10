@@ -1,0 +1,33 @@
+
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/loan/success/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['loan/success/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="success">
+    <div class="container">
+        <div class="kaitong-box" id="success-id">
+            <div class="changephone-box">
+                <div class="success-pic"></div>
+                <div class="success-text email-box">借款信息提交成功,初步审核通过后,我们将与您联系。</div>
+                <div class="success-box-time">
+                    <span class="timer-span" id="time-span">6秒后自动跳转至</span>&nbsp;
+                    <a class="success-link" href="/index/index">首页</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%/block%}
+

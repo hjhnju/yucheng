@@ -1,0 +1,132 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/loan/loanform/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['loan/loanform/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="loan">
+    <div class="container">
+        <div class="loan-start">
+            <div class="loan-start-title">
+                <a class="loan-start-title-link" href="###">我要借款</a>
+                <span class="loan-start-title-symbol">></span>
+                <span class="loan-start-title-span">贷款填单</span>
+            </div>
+            <div class="loan-form">
+                <div class="loan-form-title">您好，请留下您的需求及联系方式，我们将尽快与您联系</div>
+                <div class="loan-form-content">
+                    <div class="form-error"></div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款标题:</div>
+                        <div class="loan-form-content-right">
+                            <input type="text" class="loan-form-right-ipt title" id="title" data-type="title" />
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>学校类型:</div>
+                        <div class="loan-form-content-right">
+                            <div class="select-box">
+                                <select class="select-mar-right" id="select-school">
+                                    {%foreach $school as $key => $item%}
+                                    <option>{%$item%}</option>
+                                    {%/foreach%}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款用途:</div>
+                        <div class="loan-form-content-right">
+                            <div class="select-box">
+                                <select class="select-mar-right" id="select-use">
+                                    {%foreach $usage as $key => $item%}
+                                    <option>{%$item%}</option>
+                                    {%/foreach%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款金额:</div>
+                        <div class="loan-form-content-right">
+                            <input type="text" class="loan-form-right-ipt" id="money" data-type="money" />元
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款期限:</div>
+                        <div class="loan-form-content-right">
+                            <div class="select-box">
+                                <select class="select-mar-right" id="select-time">
+                                    <option>一个月</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款人:</div>
+                        <div class="loan-form-content-right">
+                            <input type="text" class="loan-form-right-ipt" id="user" data-type="user" />
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>所在地:</div>
+                        <div class="loan-form-content-right">
+                            <div class="select-box">
+                                <select class="select-mar-right" id="select-city">
+                                    {%foreach $province as $key => $item%}
+                                    <option id="{%$item.id%}">{%$item.name%}</option>
+                                    {%/foreach%}
+                                </select>
+                            </div>
+                            <div class="select-box-last">省/市</div>
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>联系方式:</div>
+                        <div class="loan-form-content-right">
+                            <input type="text" class="loan-form-right-ipt" id="phone" data-type="phone" />
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>还款方式:</div>
+                        <div class="loan-form-content-right">
+                            <div class="loan-form-content-right">
+                                <div class="select-box">
+                                    <select class="select-mar-right" id="select-type">
+                                        {%foreach $refund_type as $key => $item%}
+                                        <option>{%$item%}</option>
+                                        {%/foreach%}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol">*</span>借款描述:</div>
+                        <div class="loan-form-content-right">
+                            <textarea class="loan-form-right-ipt right-textarea" id="textarea" data-type="textArea"></textarea>
+                        </div>
+                    </div>
+                    <div class="loan-form-con-box">
+                        <div class="loan-form-content-name"><span class="loan-form-symbol"></span></div>
+                        <div class="loan-form-content-right">
+                            <span class="form-con-right-link">提交</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}

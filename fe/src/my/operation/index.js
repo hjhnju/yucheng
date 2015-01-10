@@ -15,6 +15,7 @@ define(function (require) {
     var moment = require('moment');
     var Pager = require('common/ui/Pager/Pager');
     var pager;
+    var header = require('common/header');
 
     var option = {
         'type': 0,
@@ -33,6 +34,7 @@ define(function (require) {
     };
 
     function init(opt) {
+        header.init();
 
         option.pagesize = +opt.pagesize;
         etpl.compile(tpl);

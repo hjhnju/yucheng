@@ -13,6 +13,7 @@ define(function (require) {
     var etpl = require('etpl');
     var tpl = require('./list.tpl');
     var Pager = require('common/ui/Pager/Pager');
+    var header = require('common/header');
     var pager;
     var type;
 
@@ -26,6 +27,9 @@ define(function (require) {
     };
 
     function init(opt) {
+
+        header.init();
+
         option.pagesize = +opt.pagesize;
 
         etpl.compile(tpl);

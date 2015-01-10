@@ -10,6 +10,7 @@ define(function (require) {
 
     var $ = require('jquery');
     var etpl = require('etpl');
+    var header = require('common/header');
     var moment = require('moment');
     var commonData = require('common/data');
     var Pager = require('common/ui/Pager/Pager');
@@ -27,6 +28,7 @@ define(function (require) {
     };
 
     function init() {
+        header.init();
         var container = $('#my-msg-list');
         var pager;
 
