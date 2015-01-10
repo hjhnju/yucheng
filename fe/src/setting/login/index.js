@@ -140,6 +140,7 @@ define(function (require) {
             }
             else if(data.bizError) {
                 $('#login-error').html(data.statusInfo);
+                imgUrl.trigger('click');
             }
             else {
                 window.location.href = '/account/overview/index';
