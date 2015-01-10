@@ -29,11 +29,15 @@
                     <label class="user-lable" for="login-pwd">密码</label>
                     <!--<div class="username-error">密码错误</div>-->
                 </div>
+                {%if isset($url)%}
+                <div class="login-username">
+                {%else%}
                 <div class="login-username login-display-none">
+                {%/if%}
                     <input autocomplete="off" class="login-input testing" id="login-testing" type="text" />
                     <label class="user-lable" for="login-testing">验证码</label>
                     <a href="###" class="login-username-testing">
-                        <img id="login-img-url" src="#" width="162" height="35" />
+                        <img id="login-img-url" src="{%$url%}" width="162" height="35" />
                     </a>
                     <!--<div class="login-username-testing-box" id="testing-wait">10</div>-->
                     <div class="username-error yanzma" id="login-testing-error">
