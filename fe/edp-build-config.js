@@ -34,7 +34,7 @@ exports.getProcessors = function () {
             'src/company/team/index.less',
             'src/company/us/index.less',
             'src/loan/loanform/index.less',
-            'src/loan/loanstart/index.less',
+            'src/loan/loan/index.less',
             'src/loan/success/index.less'
 
         ]
@@ -66,7 +66,7 @@ exports.getProcessors = function () {
             'src/company/team/index.less',
             'src/company/us/index.less',
             'src/loan/loanform/index.less',
-            'src/loan/loanstart/index.less',
+            'src/loan/loan/index.less',
             'src/loan/success/index.less'
         ]
     });
@@ -96,7 +96,7 @@ exports.getProcessors = function () {
             'src/company/detail/index.js',
             'src/company/infos/index.js',
             'src/loan/loanform/index.js',
-            'src/loan/loanstart/index.js',
+            'src/loan/loan/index.js',
             'src/loan/success/index.js'
         ]
     });

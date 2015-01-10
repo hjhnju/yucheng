@@ -1,1 +1,0 @@
-define("loan/loanstart/index",["require","jquery","common/header"],function(require){function e(){n.init(),t(".nav-item-link").removeClass("current"),t(".nav-item-link:eq(1)").addClass("current")}var t=require("jquery"),n=require("common/header");return{init:e}});

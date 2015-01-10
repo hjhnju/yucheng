@@ -1,12 +1,12 @@
 {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="{%$feroot%}/loan/loanstart/index.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/loan/loan/index.css" />
 {%/block%}
 
 {%block name="script"%}
 <script>
-    require(['loan/loanstart/index'], function (main) {
+    require(['loan/loan/index'], function (main) {
         main.init();
     });
 </script>
@@ -17,7 +17,7 @@
     <div class="container">
         <div class="loan-start">
             <div class="loan-start-title">
-                <a class="loan-start-title-link" href="/mock/entry/loan/index.php">我要借款</a>
+                <a class="loan-start-title-link" href="{%$webroot%}/loan/index">我要借款</a>
                 <span class="loan-start-title-symbol">></span>
                 <span class="loan-start-title-span">贷款种类</span>
             </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="link-box">
                             <p class="link-box-text"></p>
-                            <a class="loan-start-main-box-link" href="###">我要申请</a>
+                            <a class="loan-start-main-box-link" href="{%$webroot%}/loan/request/index">我要申请</a>
                         </div>
                     </div>
                 </div>
