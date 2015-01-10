@@ -1,7 +1,4 @@
-define('company/us/index', [
-    'require',
-    'jquery'
-], function (require) {
+define('company/us/index', function (require) {
     var $ = require('jquery');
     function init() {
     }

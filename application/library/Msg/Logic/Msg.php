@@ -82,12 +82,16 @@ class Msg_Logic_Msg {
      * @param unknown $uid
      * @param unknown $intType
      */
-    public function getList($uid,$intType){
+    public function getList($uid,$intType,$intPage,$intPageSize){
         $objsMsg = new Msg_List_Msg();
         if(Msg_RetCode::MSG_ALL == $intType){
             $objsMsg->setFilter(array('receiver' => $uid));
+            $objsMsg->setPage($intPage);
+            $objsMsg->setPagesize($intPageSize);
         }else{
             $objsMsg->setFilter(array('receiver' => $uid,'status'=>$intType));
+            $objsMsg->setPage($intPage);
+            $objsMsg->setPagesize($intPageSize);
         }
         $arrObjs = $objsMsg->getObjects();
         return $arrObjs;

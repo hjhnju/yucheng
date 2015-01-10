@@ -30,8 +30,13 @@ class Infos_Logic_Post {
         $filters = array();
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
-        return $list->toArray();
-        
+        $arrRet = $list->toArray();
+        foreach ($arrRet['list'] as $key => $val){
+            $content    = unserialize($val['content']);
+            unset($val['content']);
+            $arrRet['list'][$key]['content'] = $content['ctx'];         
+        }        
+        return $arrRet;
     }
 
     /**

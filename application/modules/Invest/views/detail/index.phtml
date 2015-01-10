@@ -31,7 +31,7 @@
             <div class="detail-left-title">
                 <a href="###" class="left-title-link">我来投资</a>
                 <span class="left-title-greater">></span>
-                <a href="/invest/index" class="left-title-link">项目列表</a>
+                <a href="/invest" class="left-title-link">项目列表</a>
                 <span class="left-title-greater">></span>
                 <span class="left-title-link">项目详情</span>
             </div>
@@ -309,28 +309,34 @@
             </div>
         </div>
         <div class="detail-right">
-            {%if $status == 6%}
+            {%if $data.status == 6%}
             <div class="right-top right-bg-color">
                 <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
                 <div class="right-box-top">
                     <div class="right-top2nd-title">已满标</div>
-                    <div class="right-top2nd-box">满标时间:{%$full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标时间:{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
                     <div class="right-top2nd-box">满标耗时:<span id="full-time"></span></div>
-                    <div class="right-top2nd-box">投标人数:{%$invest_cnt%}人</div>
+                    <div class="right-top2nd-box">投标人数:{%$data.invest_cnt%}人</div>
                 </div>
             </div>
             {%else%}
             <div class="right-top">
                 <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
                 <div class="right-top-allmoney">
-                    <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$data.amount_rest%}</span>元</div>
+                    <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$data.amount_rest%}元</span></div>
                     <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
                     <input type="text" class="right-top-ipt-input" />
                 </div>
                 <div class="right-top-chongzhi">
-                    <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount%}</span>元{%else%}<a href="/user/login/index">立即登录</a>{%/if%}<a href="###" class="chongzhi-link">[充值]</a></div>
+                    <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a href="{%$webroot%}/account/cash/recharge" class="chongzhi-link">[充值]</a></div>
                     <div class="chongzhi-right">预期收益<span class="chongzhi-span">0.00</span></div>
                 </div>
                 <div class="right-top-btn">
@@ -343,7 +349,7 @@
             <div class="right-bottom">
                 <div class="right-bottom-title">
                     <div class="bottom-title-name">还款计划</div>
-                    <div class="bottom-title-number">共<span class="btm-title-number-sp">12</span>期</div>
+                    <div class="bottom-title-number">共<span class="btm-title-number-sp">{%count($data.refunds)%}</span>期</div>
                 </div>
                 <div class="right-bottom-main">
                     <div class="bottom-main-title">
@@ -352,7 +358,11 @@
                         <div class="btm-main-title-box status">还款状态</div>
                     </div>
                     {%foreach $data.refunds as $key => $item%}
+                    {%if $key % 2 == 1%}
+                    <div class="btm-main-box btm-bg-color">
+                    {%else%}
                     <div class="btm-main-box">
+                    {%/if%}
                         <div class="btm-main-title-box time">{%$item.promise_time|date_format:'%Y-%m-%d'%}</div>
                         <div class="btm-main-title-box yinghuan">￥{%$item.interest%}</div>
 

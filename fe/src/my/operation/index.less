@@ -82,10 +82,18 @@
 
         &.red {
             background-color: @color-red;
+
+            &:hover {
+                background-color: @color-red-hover;
+            }
         }
 
         &.green {
             background-color: @color-green;
+
+            &:hover {
+                background-color: @color-green-hover;
+            }
         }
     }
 }
@@ -153,6 +161,11 @@
     border: 1px solid @color-gray-border;
     cursor: pointer;
     .border-radius(3px);
+
+    &:hover {
+        border-color: #a6a6a6;
+        background-color: @color-gray-bg-hover;
+    }
 }
 .time-data-type {
     float: left;

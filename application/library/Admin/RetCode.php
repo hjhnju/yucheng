@@ -25,6 +25,11 @@ class Admin_RetCode extends Base_RetCode {
      * @var integer
      */
     const CAPTCHA_WRONG = 1029;
+    /**
+     * 不是管理员
+     * @var integer
+     */
+    const NOT_ADMIN = 1030;
     
     protected static $_arrErrMap = array(
         self::USERNAME_EMPTY => '用户名不能为空',
@@ -32,5 +37,6 @@ class Admin_RetCode extends Base_RetCode {
         self::USER_NOTEXISTS => '用户不存在',
         self::PASSWORD_WRONG => '密码错误',
         self::CAPTCHA_WRONG => '验证码错误',
+        self::NOT_ADMIN => '不是管理员',
     );
 }

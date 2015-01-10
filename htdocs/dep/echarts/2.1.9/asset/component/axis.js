@@ -1,15 +1,4 @@
-define('echarts/component/axis', [
-    'require',
-    './base',
-    'zrender/shape/Line',
-    '../config',
-    '../util/ecData',
-    'zrender/tool/util',
-    'zrender/tool/color',
-    './categoryAxis',
-    './valueAxis',
-    '../component'
-], function (require) {
+define('echarts/component/axis', function (require) {
     var Base = require('./base');
     var LineShape = require('zrender/shape/Line');
     var ecConfig = require('../config');

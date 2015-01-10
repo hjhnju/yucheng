@@ -16,11 +16,12 @@ define(function (require) {
     var tpl = require('./email.tpl');
     var emailVal;
     var IMGURL = config.URL.IMG_GET + 'email';
+    var header = require('common/header');
 
     function init (){
         changeEmail();
         etpl.compile(tpl);
-
+        header.init();
     }
 
     function changeEmail() {
@@ -47,15 +48,15 @@ define(function (require) {
         });
 
         // getSmscodeCb
-        getSmscode.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-            else {
-                $('#email-img').attr('src', data.url);
-
-            }
-        });
+        //getSmscode.on('success', function (data) {
+        //    if(data && data.bizError) {
+        //        alert(data.statusInfo);
+        //    }
+        //    else {
+        //        $('#email-img').attr('src', data.url);
+        //
+        //    }
+        //});
 
 
         //确定点击

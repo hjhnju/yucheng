@@ -14,6 +14,7 @@ define(function (require) {
     var getSmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
+    var header = require('common/header');
 
     var testPhone = /\d{11}/g;
 
@@ -21,7 +22,7 @@ define(function (require) {
     function init (){
         changePhone();
         etpl.compile(tpl);
-
+        header.init();
     }
 
     function changePhone() {

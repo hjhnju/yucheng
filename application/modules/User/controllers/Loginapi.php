@@ -55,16 +55,18 @@ class LoginapiController extends Base_Controller_Api{
 
             return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
         }
-
         Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
-        // $this->ajaxJump($redirectUri);
         Base_Log::notice(array(
             'msg'   => 'login success',
             'name'  => $strName,
             'useid' => $logic->checkLogin()->userid,
         ));
+        $redirectUri = Yaf_Session::getInstance()->get(User_Keys::LOGIN_REFER);
+        if(!empty($redirectUri)){
+            Yaf_Session::getInstance()->del(User_Keys::LOGIN_REFER);
+            return $this->ajaxJump($redirectUri);
+        }
         $this->ajax();
- 
     }
     
     /**
@@ -79,6 +81,5 @@ class LoginapiController extends Base_Controller_Api{
     		$this->redirect($redirectUri);
     	}
     	$this->ajaxError();
-    }
-    
+    }    
 }

@@ -10,6 +10,7 @@ define(function (require) {
 
     var $ = require('jquery');
     var etpl = require('etpl');
+    var header = require('common/header');
     var moment = require('moment');
     var commonData = require('common/data');
     var Pager = require('common/ui/Pager/Pager');
@@ -21,12 +22,8 @@ define(function (require) {
 
     var status = 0;
 
-    var mapType = {
-        1: '充值',
-        2: '提现'
-    };
-
     function init() {
+        header.init();
         var container = $('#my-msg-list');
         var pager;
 
@@ -70,11 +67,7 @@ define(function (require) {
                 for (var i = 0, l = data.list.length; i < l; i++) {
                     var tmp = data.list[i];
                     tmp.timeInfo = moment.unix(+tmp.time).format('YYYY-MM-DD hh:mm');
-                    tmp.typeInfo = mapType[tmp.type];
                 }
-
-
-
 
                 container.html(etpl.render('msgList', {
                     list: data.list

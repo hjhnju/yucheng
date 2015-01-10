@@ -32,7 +32,11 @@ exports.getProcessors = function () {
             'src/company/detail/index.less',
             'src/company/infos/index.less',
             'src/company/team/index.less',
-            'src/company/us/index.less'
+            'src/company/us/index.less',
+            'src/loan/loanform/index.less',
+            'src/loan/loan/index.less',
+            'src/loan/success/index.less'
+
         ]
     });
     var cssProcessor = new CssCompressor({
@@ -60,7 +64,10 @@ exports.getProcessors = function () {
             'src/company/detail/index.less',
             'src/company/infos/index.less',
             'src/company/team/index.less',
-            'src/company/us/index.less'
+            'src/company/us/index.less',
+            'src/loan/loanform/index.less',
+            'src/loan/loan/index.less',
+            'src/loan/success/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -87,7 +94,10 @@ exports.getProcessors = function () {
             'src/home/index.js',
             'src/company/common/common.js',
             'src/company/detail/index.js',
-            'src/company/infos/index.js'
+            'src/company/infos/index.js',
+            'src/loan/loanform/index.js',
+            'src/loan/loan/index.js',
+            'src/loan/success/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

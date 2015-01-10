@@ -86,7 +86,7 @@ class Msg_Object_Msg extends Base_Object {
     public $receiver;
 
     /**
-     * 标题
+     * 消息标题
      * @var string
      */
     public $title;

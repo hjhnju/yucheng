@@ -8,9 +8,16 @@
 define(function (require) {
 
     var $ = require('jquery');
-    $('.nav-item-link').removeClass('current');
+    var header = require('common/header');
 
-    $('.nav-item-link:eq(1)').addClass('current');
+
+    function init() {
+
+        header.init();
+
+        $('.nav-item-link:eq(1)').addClass('current');
+    }
+
 
     return {
         init: init
