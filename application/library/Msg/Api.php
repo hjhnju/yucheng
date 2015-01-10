@@ -12,51 +12,74 @@ class Msg_Api {
      */
     public static $_arrMsgMap = array(
     	1 => array(
-    	    'type'   => '系统消息',
-    	    'content' => '欢迎您加入兴教贷！兴教贷专注教育领域投融资，为您提供最特色的全方位安全投资保障。我们相信，教育是您最好的投资。',
-    	    'link'    => '/account/award/index',
+    	    'type'     => '系统消息',
+    	    'content'  => '欢迎您加入兴教贷！兴教贷专注教育领域投融资，为您提供最特色的全方位安全投资保障。我们相信，教育是您最好的投资。',
+    	    'linkname' => '新手指南',
+    	    'link'     => '/guide',
     	),
         2 => array(
-            'type'   => '奖励发放',
-            'content' => '恭喜您获得 %s元现金券，累计投资满额即可领取。邀请好友加入可再获奖励，详见“账户中心”－“邀请奖励”。',
-            'link'    => '/account/award/index',
+            'type'     => '奖励发放',
+            'content'  => '恭喜您获得 %s元现金券，累计投资满额即可领取。邀请好友加入可再获奖励，详见“账户中心”－“邀请奖励”。',
+            'linkname' => '账户中心－邀请奖励',
+            'link'     => '/account/award/',
     	),
         3 => array(
-            'type'   => '充值',
-            'content' => '您于 %s成功充值 %s元，可在“我的账户”－“充值提现”中查看明细。',
-            'link'    => '/account/invest/index',
+            'type'     => '充值',
+            'content'  => '您于 %s成功充值 %s元，可在“我的账户”－“充值提现”中查看明细。',
+            'linkname' => '我的账户－充值提现',
+            'link'     => '/account/cash/',
         ),
         4 => array(
-            'type'   => '投标放款',
-            'content' => '您投资的项目%s已成交，投资额 %s元已拨划至借款人账户中。可在“我的账户”－“我的投资”中查看明细。',
-            'link'    => '/account/invest/index',
+            'type'     => '投标放款',
+            'content'  => '您投资的项目%s已成交，投资额 %s元已拨划至借款人账户中。可在“我的账户”－“我的投资”中查看明细。',
+            'linkname' => '我的账户－我的投资',
+            'link'     => '/account/invest/',
         ),
         5 => array(
-            'type'   => '项目回款',
-            'content' => '回款通知：您今日收到投资还款 %s元。助力教育、投资未来，邀请朋友一起分享收益吧！',
-            'link'    => '/account/invest/index',
+            'type'     => '项目回款',
+            'content'  => '回款通知：您今日收到投资还款 %s元。助力教育、投资未来，邀请朋友一起分享收益吧！',
+            'linkname' => '我的账户－我的投资',
+            'link'     => '/account/invest/',
         ),
         6 => array(
-            'type'   => '提现',
-            'content' => '您的 %s元提现申请已通过审核，预计将于1-2个工作日到达您的账户。',
-            'link'    => '/account/invest/index',
+            'type'     => '提现',
+            'content'  => '您的 %s元提现申请已通过审核，预计将于1-2个工作日到达您的账户。',
+            'linkname' => '我的账户－充值提现',
+            'link'     => '/account/cash/',
         ),
     );
+    
+    /**
+     * 根据消息类型返回消息link
+     * @param string $strType
+     * @return array
+     */
+    public static function getLink($strType){
+        foreach (self::$_arrMsgMap as $val){
+            if($val['type'] === $strType){
+                return array(
+                    'link'     =>$val['link'],
+                    'linkname' => $val['linkname'],
+                );
+            }
+        }
+    }
     
     /**
      * 发送系统消息
      * @param integer $fromid
      * @param integer $toid
-     * @param array   $arrContent
      * @param int  $intType：消息类型，定义见上面
+     * @param array   $arrContent
+     * @param string strTitle 消息标题
      * @return true|false 成功true, 失败 false
      */
-    public static function sendmsg($fromid, $toid, $intType,$arrParam) {
+    public static function sendmsg($fromid, $toid, $intType,$strTitle,$arrParam) {
         $objMsg = new Msg_Object_Msg();
         $objMsg->sender    = $fromid;
         $objMsg->receiver  = $toid;
         $objMsg->type      = self::$_arrMsgMap[$intType]['type'];
-        $objMsg->link      = self::$_arrMsgMap[$intType]['link'];
+        $objMsg->title     = $strTitle;
         if(!empty($arrParam)){
             $strContent = vsprintf(self::$_arrMsgMap[$intType]['content'],$arrParam);            
         }else{

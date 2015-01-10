@@ -1,16 +1,4 @@
-define('echarts/component/dataRange', [
-    'require',
-    './base',
-    'zrender/shape/Text',
-    'zrender/shape/Rectangle',
-    '../util/shape/HandlePolygon',
-    '../config',
-    'zrender/tool/util',
-    'zrender/tool/event',
-    'zrender/tool/area',
-    'zrender/tool/color',
-    '../component'
-], function (require) {
+define('echarts/component/dataRange', function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var RectangleShape = require('zrender/shape/Rectangle');

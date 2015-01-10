@@ -1,7 +1,7 @@
 <?php
 /**
  * 消息
- * @author 
+ * @author jiangsongfang
  */
 class Msg_Object_Msg extends Base_Object {
     /**
@@ -26,7 +26,7 @@ class Msg_Object_Msg extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('mid', 'sender', 'receiver', 'link', 'type', 'content', 'status', 'create_time', 'update_time', 'read_time');
+    protected $fields = array('mid', 'sender', 'receiver', 'title', 'type', 'content', 'status', 'create_time', 'update_time', 'read_time');
 
     /**
      * 字段与属性隐射关系
@@ -36,7 +36,7 @@ class Msg_Object_Msg extends Base_Object {
         'mid'         => 'mid',
         'sender'      => 'sender',
         'receiver'    => 'receiver',
-        'link'        => 'link',
+        'title'       => 'title',
         'type'        => 'type',
         'content'     => 'content',
         'status'      => 'status',
@@ -86,10 +86,10 @@ class Msg_Object_Msg extends Base_Object {
     public $receiver;
 
     /**
-     * 链接
+     * 消息标题
      * @var string
      */
-    public $link;
+    public $title;
 
     /**
      * 消息类型
