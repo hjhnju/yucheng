@@ -12,9 +12,9 @@ class ListController extends Base_Controller_Response {
 	
     /**
      * 获取消息列表
-     * @param int type  0:所有，1已读，2未读
+     * @param int status  0:所有，1已读，2未读
      * @param int page  页码，从1开始
-     * @return array(array('type' =>,'status'=>xxx,'title'=>xxx,'time'=>xxx));
+     * @return array(array('type' =>,'status'=>xxx,'content'=>xxx,'link'=>'xxx','time'=>xxx));
      * 
      */
 	public function indexAction() {
@@ -32,10 +32,11 @@ class ListController extends Base_Controller_Response {
             ));
         }
         foreach($arrData as $index => $val){
-            $arrReturn[$index]['type'] = $val->type;
-            $arrReturn[$index]['status'] = $val->status;
-            $arrReturn[$index]['title'] = $val->title;
-            $arrReturn[$index]['time'] = $val->create_time;
+            $arrReturn[$index]['type'] = $val['type'];
+            $arrReturn[$index]['status'] = $val['status'];
+            $arrReturn[$index]['content'] = $val['content'];
+            $arrReturn[$index]['link'] = $val['link'];
+            $arrReturn[$index]['time'] = $val['create_time'];
         }
         $data['page']    = $intPage + 1;
         $data['pageall'] = intval((count($arrData)-1)/self::PAGE_TOTAL_LIST)+1;
