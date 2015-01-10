@@ -26,7 +26,7 @@ class Loan_Object_Request extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'title', 'school_type', 'use_type', 'amount', 'interest', 'period', 'name', 'prov_id', 'city_id', 'contact', 'pay_type', 'content', 'status', 'create_time', 'update_time', 'update_uid');
+    protected $fields = array('id', 'title', 'school_type', 'use_type', 'amount', 'interest', 'duration', 'name', 'prov_id', 'city_id', 'contact', 'refund_type', 'content', 'status', 'create_time', 'update_time', 'update_uid');
 
     /**
      * 字段与属性隐射关系
@@ -39,12 +39,12 @@ class Loan_Object_Request extends Base_Object {
         'use_type'    => 'useType',
         'amount'      => 'amount',
         'interest'    => 'interest',
-        'period'      => 'period',
+        'duration'    => 'duration',
         'name'        => 'name',
         'prov_id'     => 'provId',
         'city_id'     => 'cityId',
         'contact'     => 'contact',
-        'pay_type'    => 'payType',
+        'refund_type' => 'refundType',
         'content'     => 'content',
         'status'      => 'status',
         'create_time' => 'createTime',
@@ -60,10 +60,10 @@ class Loan_Object_Request extends Base_Object {
         'id'          => 1,
         'school_type' => 1,
         'use_type'    => 1,
-        'period'      => 1,
+        'duration'    => 1,
         'prov_id'     => 1,
         'city_id'     => 1,
-        'pay_type'    => 1,
+        'refund_type' => 1,
         'status'      => 1,
         'create_time' => 1,
         'update_time' => 1,
@@ -118,7 +118,7 @@ class Loan_Object_Request extends Base_Object {
      * 借款期限
      * @var integer
      */
-    public $period;
+    public $duration;
 
     /**
      * 借款人
@@ -148,7 +148,7 @@ class Loan_Object_Request extends Base_Object {
      * 还款方式
      * @var integer
      */
-    public $payType;
+    public $refundType;
 
     /**
      * 借款详情

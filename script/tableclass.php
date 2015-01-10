@@ -3,9 +3,9 @@ $host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
 $user      = 'xingjiaodai';
 $pass      = 'xingjiaodai';
 $dbname    = 'xjd';
-$tb_pre    = 'pay';
-$save_path = '/home/work/user/lilu/yucheng/application/library/Finance';
-$author    = 'lilu';
+$tb_pre    = 'admin';
+$save_path = '/Users/jiangsongfang/Documents/website/yucheng/application/library/Admin';
+$author    = 'jiangsongfang';
 
 if(!file_exists($save_path)){
     mkdir($save_path, 0775); 
@@ -58,7 +58,7 @@ foreach($tables as $table) {
 }
 
 function dumpClass($table, $tb, $columns) {
-    global $save_path, $tb_pre, $tb_class, $types;
+    global $save_path, $tb_pre, $tb_class, $types, $author;
     $tbname = $table['TABLE_NAME'];
     $tbclass = ucfirst($tb_pre) . '_Object_' . ucfirst($tb);
     $content = '<?php';
@@ -182,7 +182,7 @@ function dumpClass($table, $tb, $columns) {
 }
 
 function dumpList($table, $tb, $columns) {
-    global $save_path, $tb_pre, $tb_class, $types;
+    global $save_path, $tb_pre, $tb_class, $types, $author;
     $tbname = $table['TABLE_NAME'];
     $tbclass = ucfirst($tb_pre) . '_List_' . ucfirst($tb);
     $content = '<?php';
