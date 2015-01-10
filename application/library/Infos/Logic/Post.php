@@ -42,9 +42,7 @@ class Infos_Logic_Post {
     public function getPost($postid){
         $object     = new Infos_Object_Infos($postid);
         $ret        = $object->toArray();
-        $content    = unserialize($ret['content']);
-        unset($ret['content']);
-        $ret['ctx'] = $content['ctx'];
+        $ret['ctx'] = $ret['content'];
         return $ret;
     }
 
