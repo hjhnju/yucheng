@@ -116,7 +116,8 @@ exports.getLocations = function () {
                     '/account/cashapi/withdraw',
                     '/account/cashapi/list',
                     '/infos/post/list',
-                    '/user/registapi/modifypwd'
+                    '/user/registapi/modifypwd',
+                    '/loan/request'
 
                 ];
 
@@ -124,10 +125,10 @@ exports.getLocations = function () {
 
             },
             handler: [
-                // proxy('123.57.46.229', 8082)  //李璐
+                //proxy('123.57.46.229', 8082)  //李璐
                 //proxy('123.57.46.229', 8301)  //胡伟
-                //proxy('123.57.46.229', 8600)  //松芳
-                proxy('123.57.46.229', 8081)  //俊华
+                proxy('123.57.46.229', 8600)  //松芳
+                //proxy('123.57.46.229', 8081)  //俊华
 
             ]
         },

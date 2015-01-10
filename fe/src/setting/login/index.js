@@ -45,27 +45,17 @@ define(function (require) {
             }
         });
 
-        // 验证码
-        $('#login-testing').blur(function () {
-            var value = $.trim($(this).val());
 
-            if (!value) {
-                $(this).parent().addClass('current');
-                $('#login-testing-error').html('验证码不能为空');
-                return;
-            }
-
-            imgcodeCheck.remote({
-                imgcode: value,
-                type: 2
-            });
-        });
 
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
             $(this).attr('src', IMGURL);
         });
+
+
+
+
 
         // 登录按钮
         $('.login .login-fastlogin').click(function (e) {
@@ -74,9 +64,37 @@ define(function (require) {
             var user = $.trim($('#login-user').val());
             var pwd = $.trim($('#login-pwd').val());
 
+            if(!$('.login-username').hasClass('login-display-none')) {
+
+                $('#login-testing').trigger('blur');
+                // 验证码
+                $('#login-testing').blur(function () {
+                    var value = $.trim($(this).val());
+
+                    if (!value) {
+                        $(this).parent().addClass('current');
+                        $('#login-testing-error').html('验证码不能为空');
+                        return;
+                    }
+
+                    imgcodeCheck.remote({
+                        imgcode: value,
+                        type: 2
+                    });
+                });
+
+
+                return;
+            }
+
+
+
+
+
             if(!user || !pwd) {
                 loginError.html('用户名或密码不能为空');
             }
+
             else {
                 loginCheck.remote({
                     name: user,
@@ -84,6 +102,16 @@ define(function (require) {
                 })
             }
         });
+
+        // 登录回车控制
+        //$('#login-pwd').keyup(function(e) {
+        //    if(e.keyCode === 13) {
+        //        $('.login-fastlogin').trigger('click');
+        //        $(this).trigger('blur');
+        //        console.log(111);
+        //
+        //    }
+        //})
     }
 
     function bindCallback() {

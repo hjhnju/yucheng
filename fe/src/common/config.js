@@ -116,8 +116,8 @@ define(function () {
             + '/user/registapi/modifypwd',
             //+ '/test/user/registapi/modifypwd.json'
         LOAN_REQUEST: rootUrl
-            //+ '/loan/request'
-            + '/test/loan/request.json'
+            + '/loan/request'
+            //+ '/test/loan/request.json'
         };
 
     return {

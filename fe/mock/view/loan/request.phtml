@@ -36,9 +36,9 @@
                         <div class="loan-form-content-right">
                             <div class="select-box">
                                 <select class="select-mar-right" id="select-school">
-                                    <option id="option">改建扩建</option>
-                                    <option>师资加强</option>
-                                    <option>基础教育</option>
+                                    {%foreach $school as $key => $item%}
+                                    <option>{%$item%}</option>
+                                    {%/foreach%}
                                 </select>
                             </div>
 
@@ -49,9 +49,9 @@
                         <div class="loan-form-content-right">
                             <div class="select-box">
                                 <select class="select-mar-right" id="select-use">
-                                    <option>教师开支</option>
-                                    <option>师资加强</option>
-                                    <option>基础教育</option>
+                                    {%foreach $usage as $key => $item%}
+                                    <option>{%$item%}</option>
+                                    {%/foreach%}
                                 </select>
                             </div>
                         </div>
@@ -68,8 +68,6 @@
                             <div class="select-box">
                                 <select class="select-mar-right" id="select-time">
                                     <option>一个月</option>
-                                    <option>6个月</option>
-                                    <option>一年</option>
                                 </select>
                             </div>
                         </div>
@@ -85,9 +83,9 @@
                         <div class="loan-form-content-right">
                             <div class="select-box">
                                 <select class="select-mar-right" id="select-city">
-                                    <option>北京</option>
-                                    <option>天津</option>
-                                    <option>上海</option>
+                                    {%foreach $province as $key => $item%}
+                                    <option id="{%$item.id%}">{%$item.name%}</option>
+                                    {%/foreach%}
                                 </select>
                             </div>
                             <div class="select-box-last">省/市</div>
@@ -105,9 +103,9 @@
                             <div class="loan-form-content-right">
                                 <div class="select-box">
                                     <select class="select-mar-right" id="select-type">
-                                        <option>每月还息，到期归还本金</option>
-                                        <option>天津</option>
-                                        <option>上海</option>
+                                        {%foreach $refund_type as $key => $item%}
+                                        <option>{%$item%}</option>
+                                        {%/foreach%}
                                     </select>
                                 </div>
                             </div>
