@@ -84,15 +84,15 @@ define(function (require) {
 
             loanSubmit.remote({
                 title: iptId.title.val(),
-                money: iptId.money.val(),
-                user: iptId.user.val(),
-                phone: iptId.phone.val(),
-                textarea: iptId.textArea.val(),
-                schoolType: selId.selectSchool.val(),
-                using: selId.selectUse.val(),
-                time: selId.selectTime.val(),
-                city: selId.selectCity.val(),
-                returnType: selId.selectType.val()
+                amount: iptId.money.val(),
+                name: iptId.user.val(),
+                contact: iptId.phone.val(),
+                content: iptId.textArea.val(),
+                school_type: selId.selectSchool.val(),
+                use_type: selId.selectUse.val(),
+                duration: selId.selectTime.val(),
+                prov_id: selId.selectCity.val(),
+                refund_type: selId.selectType.val()
             });
         });
         // loanSubmitCb
