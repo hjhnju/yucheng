@@ -1,7 +1,7 @@
 <?php
 /**
  * 消息 列表类
- * @author 
+ * @author jiangsongfang
  */
 class Msg_List_Msg extends Base_List {
     /**
@@ -20,7 +20,7 @@ class Msg_List_Msg extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('mid', 'sender', 'receiver', 'link', 'type', 'content', 'status', 'create_time', 'update_time', 'read_time');
+    protected $fields = array('mid', 'sender', 'receiver', 'title', 'type', 'content', 'status', 'create_time', 'update_time', 'read_time');
 
     /**
      * 整数类型的字段

@@ -32,10 +32,12 @@ class ListController extends Base_Controller_Response {
             ));
         }
         foreach($arrData as $index => $val){
+            $arrLink = Msg_Api::getLink($val['type']);
             $arrReturn[$index]['type'] = $val['type'];
             $arrReturn[$index]['status'] = $val['status'];
             $arrReturn[$index]['content'] = $val['content'];
-            $arrReturn[$index]['link'] = $val['link'];
+            $arrReturn[$index]['link'] = $arrLink['link'];
+            $arrReturn[$index]['linkname'] = $arrLink['linkname'];
             $arrReturn[$index]['mid'] = $val['mid'];
             $arrReturn[$index]['time'] = $val['create_time'];
         }
