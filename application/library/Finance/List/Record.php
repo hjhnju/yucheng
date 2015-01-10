@@ -3,12 +3,12 @@
  * 资金记录 列表类
  * @author 
  */
-class Pay_List_Record extends Base_List {
+class Finance_List_Record extends Base_List {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'pay_record';
+    protected $table = 'finance_record';
 
     /**
      * 主键

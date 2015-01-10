@@ -3,7 +3,7 @@
  * 我的投资页
  * @author lilu
  */
-class InvestController extends Base_Controller_Response {
+class InvestController extends Base_Controller_Page {
 	
     CONST PAGEALL    = 10; //10页
     CONST PAGESIZE   = 10; //每次出来10条数据
@@ -23,8 +23,7 @@ class InvestController extends Base_Controller_Response {
 	 * 渲染入口界面
 	 */
 	public function indexAction() {
-		$userid = $this->getUserId();
-		$userInfo = $this->userInfoLogic->getUserInfo($userid);		
+		$userInfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$this->getView()->assign('userinfo',$userInfo);
 		
 	}

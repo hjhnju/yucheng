@@ -32,6 +32,7 @@ class BgcallController extends Base_Controller_Page{
             Base_Log(array(
                 'msg' => '汇付返回参数错误',           
             ));
+            return;
         }
 		$trxId    = $_REQUEST['TrxId'];
 		$userid   = $_REQUEST['MerPriv'];//取客户私用域中的userid
@@ -100,6 +101,14 @@ class BgcallController extends Base_Controller_Page{
 	
 	/**
 	 * 汇付天下回调Action
+	 * 企业开户回调URL
+	 * 打印RECV_ORD_ID_TrxId
+	 */
+	public function corpRegistAction() {
+		
+	}
+	/**
+	 * 汇付天下回调Action
 	 * 用户绑卡回调URL
 	 * 打印RECV_ORD_ID_TrxId
 	 */
@@ -109,6 +118,7 @@ class BgcallController extends Base_Controller_Page{
 		    Base_Log(array(
 		    	'msg' => '汇付返回参数错误',
 		    ));   	
+		    return ;
 		}
 		$trxId     = $_REQUEST['TrxId'];
 		$userid    = $_REQUEST['MerPriv'];//取客户私用域中的userid
@@ -145,7 +155,7 @@ class BgcallController extends Base_Controller_Page{
 		    ));	    
 		    return;	
 	    }
-	    $orderId  = strval($_REQUEST['OrdId']);
+	    $orderId  = intval($_REQUEST['OrdId']);
 	    $userid   = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
 	    $huifuid  = strval($_REQUEST['UsrCustId']); //用户的huifuid
 	    $amount   = floatval($_REQUEST['TransAmt']);
@@ -199,8 +209,8 @@ class BgcallController extends Base_Controller_Page{
         }
         //充值财务记录入库
         $param = array(
-            'orderId'    => intval($orderId),
-        	'userId'     => intval($userid),
+            'orderId'    => $orderId,
+        	'userId'     => $userid,
         	'type'       => Finance_TypeStatus::NETSAVE,
         	'amount'     => $amount,
         	'balance'    => $balance,
@@ -219,7 +229,7 @@ class BgcallController extends Base_Controller_Page{
         }
 		Base::notice($_REQUEST);
 		//页面打印
-		print('RECV_ORD_ID_'.$orderId);
+		print('RECV_ORD_ID_'.strval($orderId));
 	}
 	
 	/**
@@ -235,13 +245,14 @@ class BgcallController extends Base_Controller_Page{
            	Base_Log::error(array(
            		'msg' => '汇付返回参数错误',
            	));
+           	return;
         }
 		$userid      = intval($_REQUEST['MerPriv']);
-		$huifuid     = intval($_REQUEST['UsrCustId']);
-		$orderId     = strval($_REQUEST['OrdId']);
+		$huifuid     = $_REQUEST['UsrCustId'];
+		$orderId     = intval($_REQUEST['OrdId']);
 		$amount      = floatval($_REQUEST['TransAmt']);
-		$freezeOrdId = strval($_REQUEST['FreezeOrdId']);
-		$freezeTrxId = strval($_REQUEST['FreezeTrxId']);
+		$freezeOrdId = $_REQUEST['FreezeOrdId'];
+		$freezeTrxId = $_REQUEST['FreezeTrxId'];
 		//余额是系统余额！改！
 		$bgret    = $this->financeLogic->balance($userid);
 		$balance  = floatval($bgret['userBg']['acctBal']);//用户余额
@@ -309,7 +320,7 @@ class BgcallController extends Base_Controller_Page{
 			));
 		}		
 		Base::notice($_REQUEST);
-		print('RECV_ORD_ID_'.$orderId);		
+		print('RECV_ORD_ID_'.strval($orderId));		
     }
 	
 	/**
@@ -329,6 +340,92 @@ class BgcallController extends Base_Controller_Page{
 	public function loansAction() {
 		
 		
+	}
+	
+	/**
+	 * 汇付回调Action
+	 * 提现回调Action
+	 * 打印RECV_ORD_ID_OrderId
+	 */
+	public function cashAction() {
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
+		   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['UsrCustId']) || 
+		   !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) ||
+		   !isset($_REQUEST['FeeAcctId']) || !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
+			Base_Log::error(array(
+			    'msg' => '汇付返回参数错误',
+			));		
+			return;		
+		}
+		$userId   = intval($_REQUEST['MerPriv']);
+		$huifuid  = $_REQUEST['UsrCustId'];
+		$orderId  = intval($_REQUEST['OrdId']);
+		$transAmt = floatval($_REQUEST['TransAmt']);
+		$bgret    = $this->financeLogic->balance($userid);
+		$balance  = floatval($bgret['userBg']['acctBal']);//用户余额
+		$total    = floatval($bgret['sysBg']['acctBal']);//系统余额
+		$lastip   = Base_Util_Ip::getClientIp();
+		$respCode = $_REQUEST['RespCode'];
+		$respDesc = $_REQUEST['RespDesc'];
+		if($respCode !== '000') {
+			Base_Log::error(array(
+				'msg'     => $respDesc,
+				'userId'  => $userId,
+				'orderId' => $orderId,
+			));
+			//将finance_order表状态改为更改为失败
+			$param = array(
+				'orderId' => $orderId,
+				'status'  => Finance_TypeStatus::ENDWITHFAIL,
+				'comment' => '财务类充值订单汇付处理失败',
+			);
+			$ret = $this->financeLogic->payOrderEnterDB($param);
+			if(!$ret) {
+				Base_Log::error(array(
+				    'msg'     => '财务类充值订单更新失败',
+				    'orderId' => $orderId,
+				    'status'  => Finance_TypeStatus::ENDWITHFAIL,
+				));
+			}
+			return ;
+		}
+		//验签！！
+		
+		//将finance_order表状态改为更改为成功
+		$param = array(
+			'orderId' => $orderId,
+			'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
+			'comment' => '财务类充值汇付处理成功',
+		);
+		$ret = $this->financeLogic->payOrderEnterDB($param);
+		if(!$ret) {
+			Base_Log::error(array(
+				'msg'     => '财务类充值订单更新失败',
+				'orderId' => $orderId,
+				'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
+			));
+		}
+		//将充值记录入表finance_record 
+		$param = array(
+			'orderId' => $orderId,
+			'userId'  => $userId,
+			'type'    => Finance_TypeStatus::CASH,
+			'amount'  => $transAmt,
+			'balance' => $balance,
+			'total'   => $total,
+			'comment' => '财务类充值记录',
+			'ip'      => $lastip,
+		);
+		$ret = $this->financeLogic->payRecordEnterDB($param);
+		if(!ret) {
+			Base_Log::error(array(
+				'msg'     => '财务类充值记录入库失败',
+				'userid'  => $userId,
+				'orderId' => $orderId,
+			));
+		}
+		Base_Log::notice($_REQUEST);
+		print('RECV_ORD_ID_'.strval($orderId));
 	}
 	
 	

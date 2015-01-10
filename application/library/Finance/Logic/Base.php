@@ -10,6 +10,8 @@ class Finance_Logic_Base {
 	CONST VERSION_20 = "20";
 	//本平台mercustid
 	CONST MERCUSTID  = "6000060000677575";
+	//BusiCode 营业执照编号
+	CONST BUSICODE = "";
 	
 	private function getMillisecond() {
 		list($s1, $s2) = explode(' ', microtime());
@@ -30,7 +32,7 @@ class Finance_Logic_Base {
 		
 		$numbers = range(0,9);
 		shuffle($numbers);
-		$no = 3;
+		$no = 1;
 		$ranNum = array_slice($numbers,0,$no);
 		foreach($ranNum as $key=>$value){
 			$now .= $value;
@@ -84,8 +86,7 @@ class Finance_Logic_Base {
 	 */
 	public function payOrderEnterDB($param) {
 		$regOrder = new Finance_Object_Order();
-		$logParam = array();
-		
+		$logParam = array();		
 		if(is_null($param)) {
 			//未给出参数，无法插入或者更新
 			Base_Log::error(array(
@@ -94,6 +95,7 @@ class Finance_Logic_Base {
 			return false;
 		}		
 		foreach ($param as $key => $value) {
+			
 			$regOrder->$key =  $value;
 			$logParam[$key] = $value;
 		}
@@ -224,5 +226,21 @@ class Finance_Logic_Base {
 			 
 		}
 		return $ret;		
+	}
+	
+	/**
+	 * 手续费计算Logic层
+	 * @param string riskLevel
+	 * @param float transAmt 
+	 * @param months
+	 * @return float fee
+	 */
+	public function getFee($riskLevl,$transAmt,$months) {
+	    $serviceFee = floatval($transAmt * floatval(Finance_Fee::$finance_service_fee[$riskLevl]));
+	    $monthlyRate = floatval(Finance_Fee::$risk_reserve[$riskLevl]) / 12;
+	    $prepareFee = floatval($transAmt * $monthlyRate * $months );
+	    $manageFee = floatval($transAmt * floatval(Finance_Fee::$acc_manage_fee[$riskLevl]) * $months);  
+	    $retFee = $serviceFee + $prepareFee + $manageFee;
+	    		
 	}
 }

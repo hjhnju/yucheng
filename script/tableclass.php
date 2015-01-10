@@ -3,7 +3,7 @@ $host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
 $user      = 'xingjiaodai';
 $pass      = 'xingjiaodai';
 $dbname    = 'xjd';
-$tb_pre    = 'pay';
+$tb_pre    = 'finance';
 $save_path = '/home/work/user/lilu/yucheng/application/library/Finance';
 $author    = 'lilu';
 

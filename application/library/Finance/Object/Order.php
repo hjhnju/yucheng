@@ -3,12 +3,12 @@
  * 支付订单
  * @author 
  */
-class Pay_Object_Order extends Base_Object {
+class Finance_Object_Order extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'pay_order';
+    protected $table = 'finance_order';
 
     /**
      * 主键
@@ -20,7 +20,7 @@ class Pay_Object_Order extends Base_Object {
      * 类名
      * @var string
      */
-    const CLASSNAME = 'Pay_Object_Order';
+    const CLASSNAME = 'Finance_Object_Order';
 
     /**
      * 对象包含的所有字段
@@ -62,7 +62,7 @@ class Pay_Object_Order extends Base_Object {
 
     /**
      * @param array $data
-     * @return Pay_Object_Order
+     * @return Finance_Object_Order
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);
