@@ -3,7 +3,7 @@
  * 消息列表
  */
 class ListController extends Base_Controller_Response {
-    const PAGE_TOTAL_LIST = 8;
+    const PAGE_SIZE = 8;
     
     public function init(){
         $this->setNeedLogin(true);
@@ -23,7 +23,7 @@ class ListController extends Base_Controller_Response {
         $this->msgLogic = new Msg_Logic_Msg();
         $uid = $this->getUserId();
         $arrReturn = array();
-        $arrData = $this->msgLogic->getList($uid, $intType);
+        $arrData = $this->msgLogic->getList($uid, $intType,$intPage,self::PAGE_SIZE);
         if(empty($arrData)){
             $this->ajax(array(
                 'page'=>0,
@@ -40,8 +40,8 @@ class ListController extends Base_Controller_Response {
             $arrReturn[$index]['time'] = $val['create_time'];
         }
         $data['page']    = $intPage + 1;
-        $data['pageall'] = intval((count($arrData)-1)/self::PAGE_TOTAL_LIST)+1;
-        $data['list'] = array_slice($arrReturn, $intPage*self::PAGE_TOTAL_LIST,self::PAGE_TOTAL_LIST);
+        $data['pageall'] = intval((count($arrData)-1)/self::PAGE_SIZE)+1;
+        $data['list'] = $arrReturn;
         $this->ajax($data);
 	}
 }
