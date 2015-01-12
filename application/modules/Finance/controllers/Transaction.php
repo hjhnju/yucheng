@@ -29,18 +29,13 @@ class TransactionController extends Base_Controller_Api{
      */ 
     public function netsaveAction(){
         $userid = $this->userid;
-<<<<<<< HEAD
         $huifuid = $this->huifuid;	
-=======
         $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';    
->>>>>>> d7476e906649085ec344f4f15a66dfe88a59ab88
         $transAmt = round($_REQUEST['transAmt'],2);
         $openBankId = $_REQUEST['openBankId'];
         $gateBusiId = $_REQUEST['gateBusiId'];
         $dcFlag = $_REQUEST['dcFlag'];
-<<<<<<< HEAD
         $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);     
-=======
         //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
         //TODO:remove
         //FOR TEST
@@ -59,7 +54,6 @@ class TransactionController extends Base_Controller_Api{
             'dcFlag' => $dcFlag,
         ));
         $transLogic->netsave($userid, $huifuid, $transAmt, $gateBusiId, $openBankId, $dcFlag);         
->>>>>>> d7476e906649085ec344f4f15a66dfe88a59ab88
    }
 
    /**
@@ -70,10 +64,13 @@ class TransactionController extends Base_Controller_Api{
     *
     */
    public function cashAction(){
+   	   $userid = $this->userid;
        $transAmt = $_REQUEST['transAmt'];
        $captcha = $_REQUEST['captcha'];
        $openAcctId = $__REQUEST['openAcctId'];
-       
+       $transLogic = new Finance_Logic_Transaction();
+       $transLogic->cash($userid,'100.00','4367423378320018938');
+    
        
        //1.验证验证码操作
        //2.调用其他模块lib库得到所需参数

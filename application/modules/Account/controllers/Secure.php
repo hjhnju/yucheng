@@ -2,7 +2,7 @@
 /**
  * 安全中心页面
  */
-class SecureController extends Base_Controller_Api{
+class SecureController extends Base_Controller_Page{
 	
 	private $retData;
 	public function init() {
@@ -41,12 +41,10 @@ class SecureController extends Base_Controller_Api{
 	 */
 	public function indexAction() {	
 		$webroot = Base_Config::getConfig('web')->root;
-		$userid = $this->getUserId();
-		$userid = intval($userid);
+		$userid = $this->userid;
 		//$userObj = User_Api::getUserObject($userid);
 		//$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
-		$userinfo = $this->userInfoLogic->getUserInfo($userid);
-				
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);			
 		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
 		$phonenum = $userinfo['phone']['value'];//用户手机号码
 		if($phone == 2) {
@@ -74,7 +72,7 @@ class SecureController extends Base_Controller_Api{
 		$email = $userinfo['email']['isopen'];//用户是否开通了email
 		$emailnum = $userinfo['email']['value'];
 		if($email == 2) {
-			$emailurl = $webroot.'/account/secure/bindemail';
+			$emailurl = $webroot.'/account/edit/bindemail';
 		} else {
 			$emailurl = $webroot.'/account/edit/chemail';				
 		}

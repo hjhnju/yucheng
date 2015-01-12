@@ -3,7 +3,7 @@
  * 充值提现页
  * 充值与提现的controller入口位于Fiance模块
  */
-class CashController extends Base_Controller_Response {
+class CashController extends Base_Controller_Page {
 	
 	private $huifuid;
 	private $phone;
@@ -32,14 +32,15 @@ class CashController extends Base_Controller_Response {
 	public function indexAction() {
 		
 		$huifuid  = $this->huifuid;
-		$userinfo = $this->userInfoLogic->getUserInfo();
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+		//var_dump($userinfo);die;
 		$userBg   = $this->userInfoLogic->getUserBg($huifuid);
 		$avlBal   = strval($userBg['avlBal']);
 		$acctBal  = strval($userBg['acctBal']);
 		//assign至前端
 		$this->getView()->assign('avlBal', $avlBal);
 		$this->getView()->assign('acctBal',$acctBal);
-		$this->getView()->assign('userInfo',$userinfo);
+		$this->getView()->assign('userinfo',$userinfo);
 	}
 	
 	/**
@@ -57,7 +58,8 @@ class CashController extends Base_Controller_Response {
 		$userid   = $this->userid;
 		$huifuid  = $this->huifuid;
 		$phone    = $this->phone;
-		$userinfo = $this->userInfoLogic->getUserInfo();
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+		
 		//FOR　TEST
 		$huifuid = "6000060000696947";
         $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
@@ -71,7 +73,7 @@ class CashController extends Base_Controller_Response {
         $userBg = $this->userInfoLogic->getUserBg($huifuid);
         $avlBal = strval($userBg['avlBal']);
 		$this->getView()->assign('avlBal', $avlBal);
-		$this->getView()->assign('userInfo',$userinfo);
+		$this->getView()->assign('userinfo',$userinfo);
 		$this->getView()->assign('withdrawfee','2');
 		$this->getView()->assign('phone',$this->phone);
 	}

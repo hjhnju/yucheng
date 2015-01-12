@@ -1,0 +1,35 @@
+{%sidebar%} 
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar-wrapper">
+	<div class="page-sidebar navbar-collapse collapse">
+		<!-- BEGIN SIDEBAR MENU -->
+		<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+			
+			<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+			<li class="sidebar-search-wrapper">
+			    <span>&nbsp;</span>
+			</li>
+			{%foreach $sidebar as $key => $section%}
+			<li{%if $section.current == 1%} class="start active open"{%/if%}>
+				<a href="javascript:;">
+    				<i class="{%$section.icon%}"></i>
+    				<span class="title">{%$section.name%}</span>
+    				<span class="selected"></span>
+    				<span class="arrow open"></span>
+				</a>
+				<ul class="sub-menu">
+				{%foreach $section.items as $id => $item%}
+					<li{%if $item.current == 1%} class="active"{%/if%}>
+						<a href="{%$item.url%}">
+						<i class="{%$item.icon%}"></i>
+						{%$item.name%}</a>
+					</li>
+				{%/foreach%}
+				</ul>
+			</li>
+			{%/foreach%}
+		</ul>
+		<!-- END SIDEBAR MENU -->
+	</div>
+</div>
+<!-- END SIDEBAR -->

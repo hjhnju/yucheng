@@ -30,10 +30,11 @@ class Finance_Api {
 			$ret->statusInfo = $return['RespDesc'];
 			return $ret->format();
 		}
-		$ret->status = Finance_RetCode::SUCCESS;
+		$ret->status = $return['RespCode'];
 		$ret->data = $return;
 		return $ret->format();
 	}
+	
 	/**
 	 * 余额查询接口 Finance_Api::queryBalanceBg
 	 * @param String $UserCustId 用户客户号(require)
@@ -72,7 +73,7 @@ class Finance_Api {
 			$ret->statusInfo = $return['RespDesc'];
 			return $ret->format();
 		} 
-		$ret->status = Finance_RetCode::SUCCESS;
+		$ret->status = $return['RespCode'];
 		$ret->data = array(
 			'avlBal'  => $return['AvlBal'],
 			'acctBal' => $return['AcctBal'],
@@ -164,7 +165,7 @@ class Finance_Api {
 			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
 			return $ret->format();
 		} 
-		$ret->status = Finance_RetCode::SUCCESS;
+		$ret->status = $return['RespCode'];
 		$ret->data = $return;
 		return $ret->format();
 	}
@@ -199,7 +200,7 @@ class Finance_Api {
 			return $ret->format();			
 		} 		
 		$ret = array(
-			'status' => Finance_RetCode::SUCCESS,
+			'status' => $return['RespCode'],
 			'data'   => $return,
 		);
 		return $ret->format();	
@@ -348,8 +349,8 @@ class Finance_Api {
       * )
       *
       */
-     public static function cash($transAmt,$openAcctId=''){
-     
+     public static function cash($userid,$transAmt,$openAcctId){
+         
      	 
      }
      
@@ -451,8 +452,9 @@ class Finance_Api {
       *     )
       *     
       */
-     public static function corpRegister($busiCode,$userId='',$usrName='',$instuCode='',$taxCode='',$guarType=''){
-     	 
+     public static function corpRegist($userId='',$usrName='',$instuCode='',$taxCode='',$guarType=''){
+     	 $userManageLogic = new Finance_Logic_UserManage();
+     	 $userManageLogic->corpRegist();
      }
      
      /**

@@ -20,13 +20,26 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 		$chinapnr = Finance_Chinapnr_Logic::getInstance();
 		$merCustId   = strval(self::MERCUSTID);
 		$bgRetUrl    = $webroot.'/finance/bgcall/userregist';
-		$retUrl      = $webroot;
+		$retUrl      = '';
 		$usrId       = strval($userName);
 		$usrMp       = strval($userMp);
 		$merPriv     = base64_encode(strval($userid));
 		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, "", "", "", "", $merPriv, "");		
 	}
 	
+	/**
+	 * 企业开户
+	 * 
+	 * 
+	 */
+	public function corpRegist() {
+		$webroot = Base_Config::getConfig('web')->root;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		$merCustId   = strval(self::MERCUSTID);
+		$busiCode = strval(self::BUSICODE);
+		$bgRetUrl = $webroot.'/finance/bgcall/corpRegist';
+		$chinapnr->corpRegister($merCustId,'', '', '',$busiCode,'','', '', '',$bgRetUrl, '');
+	}
 	/**
 	 * 用户绑卡
 	 * @param string userCusId 

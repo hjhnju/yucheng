@@ -15,15 +15,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	 * @param integer dcFlag
 	 * 
 	 */
-<<<<<<< HEAD
-    public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
-		$webroot   = Base_Config::getConfig('web')->root;
-		$chinapnr  = Finance_Chinapnr_Logic::getInstance();
-		$orderInfo = $this->genOrderInfo();
-		$orderDate = $orderInfo['date'];
-		$orderId   = $orderInfo['orderId'];
-        
-=======
+
 	public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
         $webroot     = Base_Config::getConfig('web')->root;
         $chinapnr    = Finance_Chinapnr_Logic::getInstance();
@@ -37,7 +29,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$merPriv = strval($userid);
 		//充值订单入库
 		$timeNow = time();
->>>>>>> d7476e906649085ec344f4f15a66dfe88a59ab88
 		$param = array(
 		    'orderId'    => intval($orderId),
 			'userId'     => intval($userid),
@@ -46,20 +37,19 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 			'status'     => Finance_TypeStatus::PROCESSING,
 			'comment'    => '财务类充值订单处理中',
 		);
-<<<<<<< HEAD
+
 		//充值订单入库
 		$ret = $this->payOrderEnterDB($param);
 		if(!$ret) {
 			Base_Log::error(array(
 				'msg' => '财务类充值订单入库失败',
 			));
-=======
+		}
 		//$ret = $this->payOrderEnterDB($param);
         Base_Log::debug($param);
         $ret = true;
 		if($ret === false) {
 			Base_Log::error("fail to create finance order");
->>>>>>> d7476e906649085ec344f4f15a66dfe88a59ab88
 		}
 		
 		$merCustId  = strval(self::MERCUSTID);
@@ -72,7 +62,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$transAmt   = strval($transAmt);
 		$bgRetUrl   = $webroot.'/finance/bgcall/userregist';
 		$retUrl     = '';
-		$merPriv    = base64_encode(strval($userid));		
+		$merPriv    = strval($userid);		
 		//调用汇付API进行充值处理
 		$chinapnr->netSave($merCustId, $huifuid, $orderId, $orderDate, 'B2C', 'CIB', 'D', $transAmt, $retUrl, $bgRetUrl, $merPriv);
 	}
@@ -121,23 +111,17 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $transAmt  = strval($transAmt);
 	    $usrCustId = strval($this->getHuifuid($userid));
 	    $maxTenderRate = '0.00';
-	    $huifuborrowerDetails = array();
-	    foreach ($uidborrowDetail as $key => $value) {
-			foreach ($value as $k => $v) {
-				$borrower = array(
-				    'BorrowerCustId' => $this->getHuifuid($v['BorrowerUserId']),
-					'BorrowerAmt'    => strval($v['BorrowerAmt']),
-					'BorrowerRate'   => strval($v['BorrowerRate']),
-					'ProId'          => strval($v['ProId']),
-				);
-			}
-			$huifuborrowerDetails[] = $borrower;
-	    }	    
+	    $huifuborrowerDetails = array(
+		    $this->getHuifuid($uidborrowDetail['BorrowerUserId']),
+			strval($uidborrowDetail['BorrowerAmt']),
+			strval($uidborrowDetail['BorrowerRate']),
+			strval($uidborrowDetail['ProId']),
+		);				    
 	    $isFreeze    = strval($isFreeze);
 	    $freezeOrdId = strval($freezeOrdId);
 	    $retUrl      = strval($retUrl);   
 	    $bgRetUrl    = $webroot.'/finance/bgcall/initiativeTender';
-	    $merPriv     = base64_encode(strval($userid));
+	    $merPriv     = strval($userid);
 	    
 	    $chinapnr->initiativeTender($merCustId,$orderId,$orderDate,$transAmt,$usrCustId,
 	        $maxTenderRate,$huifuborrowerDetails,$isFreeze,$freezeOrdId,$retUrl,$bgRetUrl,$merPriv
@@ -164,6 +148,48 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$merPriv = base64_encode(strval($userid));		
 		$chinapnr->tenderCancle($merCustId, $usrCustId, $orderId, $orderDate, $transAmt, $usrCustId,
 		    $isUnFreeze, $unFreezeOrderId, $freezeTrxId, $retUrl, $bgRetUrl, $merPriv);		
+	}
+	
+	/**
+	 * 取现Logic层
+	 * 
+	 */
+	public function cash($userid,$transAmt,$openAcctId) {
+		$webroot   = Base_Config::getConfig('web')->root;
+		$chinapnr  = Finance_Chinapnr_Logic::getInstance();
+		$merCustId = strval(self::MERCUSTID);
+		$orderInfo = $this->genOrderInfo();
+		$orderDate = $orderInfo['date'];
+		$orderId   = $orderInfo['orderId'];
+		
+		//取现订单订单记录入表finance_order
+		$param = array(
+			'orderId'     => intval($orderId),
+			'userId'      => intval($userid),
+			'type'        => Finance_TypeStatus::CASH,
+			'amount'      => floatval($transAmt),
+			'status'      => Finance_TypeStatus::PROCESSING,
+			'comment'     => '财务类充值订单处理中',
+		);
+
+        $ret = $this->payOrderEnterDB($param);
+		if(!$ret) {
+		    Base_Log::error(array(
+			    'msg' => '财务类充值订单入库失败',
+			));
+		}
+		$orderId = strval($orderId);
+		$huifuid = $this->getHuifuid($userid);
+		$huifuid = '6000060000696947';
+		$transAmt = strval($transAmt);
+		$servFee = '';
+		$openAcctId = '';
+		$retUrl = '';
+		$bgRetUrl = $webroot.'/finance/bgcall/cash';
+		$merPriv = strval($userid);
+		$reqExt = '[{"FeeObjFlag":"U","FeeAcctId":"","CashChl":"GENERAL"}]';
+		$chinapnr->cash($merCustId, $orderId, $huifuid, $transAmt, $servFee, '', 
+		    $openAcctId, $retUrl, $bgRetUrl, '', '', '', '');
 	}
 }
 

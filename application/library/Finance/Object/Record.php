@@ -3,12 +3,12 @@
  * 资金记录
  * @author 
  */
-class Pay_Object_Record extends Base_Object {
+class Finance_Object_Record extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'pay_record';
+    protected $table = 'finance_record';
 
     /**
      * 主键
@@ -20,7 +20,7 @@ class Pay_Object_Record extends Base_Object {
      * 类名
      * @var string
      */
-    const CLASSNAME = 'Pay_Object_Record';
+    const CLASSNAME = 'Finance_Object_Record';
 
     /**
      * 对象包含的所有字段
@@ -65,7 +65,7 @@ class Pay_Object_Record extends Base_Object {
 
     /**
      * @param array $data
-     * @return Pay_Object_Record
+     * @return Finance_Object_Record
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);

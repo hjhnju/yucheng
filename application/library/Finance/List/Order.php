@@ -3,12 +3,12 @@
  * 支付订单 列表类
  * @author 
  */
-class Pay_List_Order extends Base_List {
+class Finance_List_Order extends Base_List {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'pay_order';
+    protected $table = 'finance_order';
 
     /**
      * 主键
