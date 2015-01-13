@@ -1,4 +1,4 @@
-define('echarts/util/kwargs', function () {
+define('echarts/util/kwargs', [], function () {
     function kwargs(func, defaults) {
         var removeComments = new RegExp('(\\/\\*[\\w\\\'\\,\\(\\)\\s\\r\\n\\*]*\\*\\/)|(\\/\\/[\\w\\s\\\'][^\\n\\r]*$)|(<![\\-\\-\\s\\w\\>\\/]*>)', 'gim');
         var removeWhitespc = new RegExp('\\s+', 'gim');
