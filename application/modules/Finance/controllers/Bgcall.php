@@ -61,7 +61,6 @@ class BgcallController extends Base_Controller_Page{
 			Base_Log::error(array(
 				'msg' => '返回验签失败',
 			));
-			return ;
 		}
 		$userid = intval($userid);
 		if(!User_Api::setHuifuId($userid,$huifuid)) {		
@@ -70,30 +69,26 @@ class BgcallController extends Base_Controller_Page{
 			    'userid:'   => $userid,
 			    'usrCustId' => $huifuid,
 			));
-			return ;
-		}
+ 		}
 		if(!User_Api::setRealName($userid,$realName)) {
 			Base_Log::error(array(
 				'msg'    => '用户真实姓名入库失败',
 				'userid' => $userid,
 			));
-			return ;
-		}
+ 		}
 		if(!User_Api::setEmail($userid,$email)) {
 			Base_Log::error(array(
 				'msg'    => '用户email入库失败',
 				'userid' => $userid,
 			));
-			return ;
-		}
+ 		}
 		//证件信息入库，默认为身份证
 		if(!User_Api::setCertificate($userid,$idNo)) {
 			Base_Log::error(array(
 				'msg'    => '用户证件信息入库失败',
 				'userid' => $userid,
 			));
-			return ;
-		}
+ 		}
 		Base_Log::notice($_REQUEST);
 		//页面打印值,汇付检验
 		print('RECV_ORD_ID_'.$trxId);
@@ -150,17 +145,17 @@ class BgcallController extends Base_Controller_Page{
 		   !isset($_REQUEST['OrdDate']) || !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['BgRetUrl']) ||
 		   !isset($_REQUEST['ChkValue']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) ||
 		   !isset($_REQUEST['FeeAcctId'])) {
-		    Base_Log(array(
+		    Base_Log::error(array(
 		    	'msg' => '汇付返回参数错误'
 		    ));	    
 		    return;	
 	    }
-	    $orderId  = intval($_REQUEST['OrdId']);
-	    $userid   = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
-	    $huifuid  = strval($_REQUEST['UsrCustId']); //用户的huifuid
-	    $amount   = floatval($_REQUEST['TransAmt']);
-	   
-	    //余额是系统余额！改！
+	    $orderId   = intval($_REQUEST['OrdId']);
+	    $orderDate = intval($_REQUEST['OrdDate']);
+	    $userid    = intval($_REQUEST['MerPriv']);//取客户私用域中的userid
+	    $huifuid   = strval($_REQUEST['UsrCustId']); //用户的huifuid
+	    $amount    = floatval($_REQUEST['TransAmt']);
+	  
 	    $bgret    = $this->financeLogic->balance($userid);
 	    $balance  = floatval($bgret['userBg']['acctBal']);//用户余额
 	    $total    = floatval($bgret['sysBg']['acctBal']);//系统余额
@@ -175,58 +170,25 @@ class BgcallController extends Base_Controller_Page{
         	    'respCode' => $respCode,
         	));        	
         	//充值财务订单状态更新为处理失败         	
-        	$param = array(
-        	    'orderId' => $orderId,
-        		'status'  => Finance_TypeStatus::ENDWITHFAIL,
-        		'comment' => '财务类充值订单汇付处理失败',
-        	);
-        	$ret = $this->financeLogic->payOrderEnterDB($param);
-        	//充值订单更新失败
-        	if(!$ret) {
-        		BaseLog::error(array(
-        			'msg'     => '充值订单更新失败',
-        			'orderId' => $orderId,
-        			'status'  => Finance_TypeStatus::ENDWITHFAIL,
-        		));
-        	} 
+        	$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::NETSAVE);
         	return ;
         }
         //验签！！
         //充值财务订单状态更新为处理成功
-        $param = array(
-        	'orderId' => $orderId,
-        	'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
-        	'comment' => '充值订单处理成功',
-        );
-        $ret = $this->financeLogic->payOrderEnterDB($param);
-        //充值订单更新失败
-        if(!$ret) {
-        	BaseLog::error(array(
-        	    'msg'     => '充值订单更新失败',
-        	    'orderId' => $orderId,
-        	    'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
-        	));
-        }
+        $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::NETSAVE);
         //充值财务记录入库
         $param = array(
-            'orderId'    => $orderId,
-        	'userId'     => $userid,
-        	'type'       => Finance_TypeStatus::NETSAVE,
-        	'amount'     => $amount,
-        	'balance'    => $balance,
-        	'total'      => $total,
-        	'comment'    => '充值记录',
-        	'ip'         => $lastip,        	
+            'orderId'   => $orderId,
+        	'orderDate' => $orderDate,
+        	'userId'    => $userid,
+        	'type'      => Finance_TypeStatus::NETSAVE,
+        	'amount'    => $amount,
+        	'balance'   => $balance,
+        	'total'     => $total,
+        	'comment'   => '充值记录',
+        	'ip'        => $lastip,        	
         );
-        $ret = $this->financeLogic->payRecordEnterDB($param);
-        //充值记录入库失败
-        if(!$ret) {
-        	BaseLog::error(array(
-        		'msg'     => '充值记录入库失败',
-        		'orderid' => $orderId,
-        		'userid'  => $userid,
-        	));
-        }
+        $this->financeLogic->payRecordEnterDB($param);
 		Base::notice($_REQUEST);
 		//页面打印
 		print('RECV_ORD_ID_'.strval($orderId));
@@ -247,9 +209,12 @@ class BgcallController extends Base_Controller_Page{
            	));
            	return;
         }
-		$userid      = intval($_REQUEST['MerPriv']);
+        $merPriv     = explode('_',$_REQUEST['MerPriv']);
+        $userid      = intval($merPriv[0]);
+		$proId       = intval($merPriv[1]);
 		$huifuid     = $_REQUEST['UsrCustId'];
 		$orderId     = intval($_REQUEST['OrdId']);
+		$orderDate   = intval($_REQUEST['OrdDate']);
 		$amount      = floatval($_REQUEST['TransAmt']);
 		$freezeOrdId = $_REQUEST['FreezeOrdId'];
 		$freezeTrxId = $_REQUEST['FreezeTrxId'];
@@ -266,40 +231,17 @@ class BgcallController extends Base_Controller_Page{
 				'userid'  => $userid,
 				'orderid' => $orderId,
 			));
-			//财务类主动投标订单状态更改为处理失败
-			$param = array(
-				'orderId' => $orderId,
-				'status'  => Finance_TypeStatus::ENDWITHFAIL,
-				'comment' => '财务类主动投标汇付处理失败',
-			);
-			$ret = $this->financeLogic->payOrderEnterDB($param);
-			if(!$ret) {
-				Base_Log::error(array(
-					'msg'     => '财务类主动投标订单更新失败',
-					'orderId' => $orderId,
-					'status'  => Finance_TypeStatus::ENDWITHFAIL,
-				));
-			}			
+			//财务类主动投标订单状态更新为处理失败
+			$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::INITIATIVETENDER);			
 			return ;
 		}
 		//验签！！
 		//将主动投标订单状态更改为成功
-		$param = array(
-			'orderId' => $orderId,
-			'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
-			'comment' => '财务类主动投标汇付处理成功',
-		);
-		$ret = $this->financeLogic->payOrderEnterDB($param);
-		if(!$ret) {
-			Base_Log::error(array(
-				'msg'     => '财务类主动投标订单更新失败',
-				'orderId' => $orderId,
-				'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
-			));
-		}
+		$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::INITIATIVETENDER);
 		//主动投标记录如表pay_record
 		$param = array(
 	        'orderId'     => $orderId,
+			'orderDate'   => $orderDate,
 			'userId'      => $userid,
 		    'freezeOrdId' => $freezeOrdId,
 			'freezeTrxId' => $freezeTrxId,
@@ -309,16 +251,18 @@ class BgcallController extends Base_Controller_Page{
 			'total'       => $total,
 			'comment'     => '主动投标记录',
 		);
-		$ret = $this->financeLogic->payRecordEnterDB($param);
-		//主动投标记录入库失败
-		if(!$ret) {
-			Base_log::error(array(
-				'msg'         => '主动投标记录入库失败',
-				'userId'      => $userid,
-				'orderId'     => $orderId,
-				'freezeOrdId' => $freezeOrdId,
-			));
-		}		
+		$this->financeLogic->payRecordEnterDB($param);
+		//将投标记录插入至finance_tender中，状态为冻结中
+		$paramTender = array(
+			'orderId'     => $orderId, 
+			'orderDate'   => $orderDate,
+			'proId'       => $proId,
+			'freezeTrxId' => $freezeTrxId,	
+			'amount'      => $amount,
+			'status'      => Finance_TypeStatus::FREEZING,
+			'comment'     => "投标记录"
+		);
+		$this->financeLogic->payTenderEnterDB($paramTender);
 		Base::notice($_REQUEST);
 		print('RECV_ORD_ID_'.strval($orderId));		
     }
@@ -331,20 +275,11 @@ class BgcallController extends Base_Controller_Page{
 	public function tenderCancleAction() {
 		
 	}
-	
-	/**
-	 * 汇付回调Action
-	 * 满标打款回调URL
-	 * 打印RECV_ORD_ID_OrderId
-	 */
-	public function loansAction() {
-		
-		
-	}
-	
+
 	/**
 	 * 汇付回调Action
 	 * 提现回调Action
+	 * notice:异步对账
 	 * 打印RECV_ORD_ID_OrderId
 	 */
 	public function cashAction() {
@@ -357,77 +292,149 @@ class BgcallController extends Base_Controller_Page{
 			));		
 			return;		
 		}
-		$userId   = intval($_REQUEST['MerPriv']);
-		$huifuid  = $_REQUEST['UsrCustId'];
-		$orderId  = intval($_REQUEST['OrdId']);
-		$transAmt = floatval($_REQUEST['TransAmt']);
-		$bgret    = $this->financeLogic->balance($userid);
-		$balance  = floatval($bgret['userBg']['acctBal']);//用户余额
-		$total    = floatval($bgret['sysBg']['acctBal']);//系统余额
-		$lastip   = Base_Util_Ip::getClientIp();
-		$respCode = $_REQUEST['RespCode'];
-		$respDesc = $_REQUEST['RespDesc'];
-		if($respCode !== '000') {
-			Base_Log::error(array(
-				'msg'     => $respDesc,
-				'userId'  => $userId,
-				'orderId' => $orderId,
-			));
-			//将finance_order表状态改为更改为失败
-			$param = array(
-				'orderId' => $orderId,
-				'status'  => Finance_TypeStatus::ENDWITHFAIL,
-				'comment' => '财务类充值订单汇付处理失败',
-			);
-			$ret = $this->financeLogic->payOrderEnterDB($param);
-			if(!$ret) {
-				Base_Log::error(array(
-				    'msg'     => '财务类充值订单更新失败',
-				    'orderId' => $orderId,
-				    'status'  => Finance_TypeStatus::ENDWITHFAIL,
-				));
+		$userId    = intval($_REQUEST['MerPriv']);
+		$huifuid   = $_REQUEST['UsrCustId'];
+		$orderId   = intval($_REQUEST['OrdId']);
+		$orderDate = intval($_REQUEST['OrdDate']);
+		$transAmt  = floatval($_REQUEST['TransAmt']);
+		$bgret     = $this->financeLogic->balance($userid);
+		$balance   = floatval($bgret['userBg']['acctBal']);//用户余额
+		$total     = floatval($bgret['sysBg']['acctBal']);//系统余额
+		$lastip    = Base_Util_Ip::getClientIp();
+		$respCode  = $_REQUEST['RespCode'];
+		$respDesc  = $_REQUEST['RespDesc'];
+		$respType  = $_REQUEST['RespType'];
+		//同步异步返回
+		if(!isset($_REQUEST['RespType'])) { 
+			//同步异步返回处理中
+			if($respCode === '999') {
+                //finance_order状态更改为处理中
+                $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::PROCESSING,Finance_TypeStatus::CASH);
+			}  
+			if($respCode === '000') {
+				//对finance_order表进行状态更新，更新为处理成功
+				$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::CASH);
+				//插入记录至finance_record表
+				$paramRecord = array(
+					'orderId'   => $orderId,
+					'orderDate' => $orderDate,
+					'userId'    => $userId,
+					'type'      => Finance_TypeStatus::CASH,
+					'amount'    => $transAmt,
+					'balance'   => $balance,
+					'total'     => $total,
+					'comment'   => '财务类充值记录',
+					'ip'        => $lastip,
+				);
+				$this->financeLogic->payRecordEnterDB($paramRecord);
+			}				
+		}					
+		//存在异步对账
+		if(isset($_REQUEST['RespType'])) {
+			$refunds = new Finance_List_Order();
+			$filters = array('orderId' => $orderId);
+			$refunds->setFilter($filters);
+			$list = $refunds->toArray();
+			$status = $list['list'][0]['status'];//finance_order表中状态
+			//异步对账显示取现成功
+			if($respType === '000') {
+				if($status === '999') {
+					//更新finance_order表状态为处理成功
+					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::CASH);
+					//插入提现记录到finance_record表
+					$paramRecord = array(
+						'orderId'   => $orderId,
+						'orderDate' => $orderDate,
+						'userId'    => $userId,
+						'type'      => Finance_TypeStatus::CASH,
+						'amount'    => $transAmt,
+						'balance'   => $balance,
+						'total'     => $total,
+						'comment'   => '财务类充值记录',
+						'ip'        => $lastip,
+					);
+					$this->financeLogic->payRecordEnterDB($paramRecord);
+				}
 			}
-			return ;
-		}
-		//验签！！
-		
-		//将finance_order表状态改为更改为成功
-		$param = array(
-			'orderId' => $orderId,
-			'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
-			'comment' => '财务类充值汇付处理成功',
-		);
-		$ret = $this->financeLogic->payOrderEnterDB($param);
-		if(!$ret) {
-			Base_Log::error(array(
-				'msg'     => '财务类充值订单更新失败',
-				'orderId' => $orderId,
-				'status'  => Finance_TypeStatus::ENDWITHSUCCESS,
-			));
-		}
-		//将充值记录入表finance_record 
-		$param = array(
-			'orderId' => $orderId,
-			'userId'  => $userId,
-			'type'    => Finance_TypeStatus::CASH,
-			'amount'  => $transAmt,
-			'balance' => $balance,
-			'total'   => $total,
-			'comment' => '财务类充值记录',
-			'ip'      => $lastip,
-		);
-		$ret = $this->financeLogic->payRecordEnterDB($param);
-		if(!ret) {
-			Base_Log::error(array(
-				'msg'     => '财务类充值记录入库失败',
-				'userid'  => $userId,
-				'orderId' => $orderId,
-			));
-		}
+			if($respType === '400') {
+				if($status === '999') {
+					//更改finance_order表状态为处理失败
+					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::CASH);
+				}
+				if($status === '000') {
+					//首先将finance_order表状态更改为处理失败
+					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::CASH);
+					//再将finance_record中对应的成功记录进行删除
+					$this->financeLogic->payRecordDelete($orderId);									
+				}
+			}	
+		} 
+
 		Base_Log::notice($_REQUEST);
 		print('RECV_ORD_ID_'.strval($orderId));
 	}
 	
-	
-		
+	/**
+	 * 汇付天下回调
+	 * 满标打款
+	 */
+	public function loansAction() {
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
+	       !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['OrdDate']) ||
+		   !isset($_REQUEST['OutCustId']) || !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['Fee']) || 
+		   !isset($_REQUEST['InCustId']) || !isset($_REQUEST['SubOrdId']) || !isset($_REQUEST['SubOrdDate']) ||
+		   !isset($_REQUEST['FeeObjFlag']) || !isset($_REQUEST['IsDefault']) || !isset($_REQUEST['IsUnFreeze']) ||
+		   !isset($_REQUEST['UnFreezeOrdId']) || !isset($_REQUEST['FreezeTrxId']) || !isset($_REQUEST['BgRetUrl']) ||
+		   !isset($_REQUEST['ChkValue'])) {
+		    Base_Log::error(array(
+		    	'msg' => '汇付返回参数错误',
+		    ));   	
+		    return;
+		}
+		$userid    = intval($_REQUEST['OutCustId']);
+		$orderId   = intval($_REQUEST['OrdId']);
+	    $orderDate = intval($_REQUEST['OrdDate']);
+	    $subOrdId  = intval($_REQUEST['SubOrdId']);
+	    $amount    = floatval($_REQUEST['TransAmt']);
+	    $bgret     = $this->financeLogic->balance($userid);
+	    $balance   = floatval($bgret['userBg']['acctBal']);//用户余额
+	    $total     = floatval($bgret['sysBg']['acctBal']);//系统余额
+	    $lastip    = Base_Util_Ip::getClientIp();
+	    $respCode  = $_REQUEST['RespCode'];
+	    $respDesc  = $_REQUEST['RespDesc'];
+	    //汇付返回错误
+	    if($respCode !== '000') {
+	    	Base_Log::error(array(
+	    		'msg'       => $respDesc,
+	    		'respCode' => $respCode,
+	    		'userid'    => $userid,
+	    		'orderId'   => $orderId,
+	    	));
+	    	//将finance_order表状态更改为“处理失败”
+	    	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::LOANS);
+	    	//将finance_tender表状态更改为“打款失败”
+	    	$this->financeLogic->payTenderUpdate($subOrdId, Finance_TypeStatus::PAYFAIDED);
+            return ;
+	    }
+	    //验签！
+	    //将finance_order表状态更新为“处理成功”
+	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::LOANS);
+	    //将finance_tender表状态更新为“已打款”
+	    $this->financeLogic->payTenderUpdate($subOrdId, Finance_TypeStatus::HAVEPAYED);
+	    //将打款记录插入至表finance_record中
+	    $paramRecord = array(
+	    	'orderId'   => $orderId,
+	    	'orderDate' => $orderDate,
+	    	'userId'    => $userid,
+	    	'type'      => Finance_TypeStatus::CASH,
+	    	'amount'    => $amount,
+	    	'balance'   => $balance,
+	    	'total'     => $total,
+	    	'comment'   => '财务类满标打款记录',
+	    	'ip'        => $lastip,
+	    );
+	    $retRecord = $this->financeLogic->payRecordEnterDB($paramRecord);
+	    Base_Log::notice($_REQUEST);
+	    print('RECV_ORD_ID_'.$orderId);
+	}
 }

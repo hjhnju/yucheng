@@ -253,32 +253,30 @@ class Finance_Api {
 	
 	/**
 	 * 满标打款接口 Finance_Api::loans
-	 * @param String outCustId 出账客户号(require)--出账客户号， 由汇付生成， 用户的唯一性标识  
-	 * @param String transAmt 交易金额 (require)
-	 * //@param String fee 扣款手续费(require) 
-	 * @param String inCustId 入账客户号(require)--入账客户号， 由汇付生成， 用户的唯一性标识  
-	 * @param String feeObjFlag 续费收取对象标志(require) I--向入款客户号 InCustId 收取 O--向出款客户号 OutCustId 收取 
-	 * @param String isDefault Y--默认添加资金池(require) N--不默认添加资金池  
-	 * @param String isUnFreeze 是否解冻(require) Y--解冻 N--不解冻
-	 * @param String unFreezeOrdId 解冻订单号(optional)  
-	 * @param array DivDetails 分账账户串(optional)   
-	 * 
-	 *    (  
-     *        0=>array(  
-     *               'DivCustId'(分账商户号)=>  
-     *               'DivAcctId'（分账账户号）=>  
-     *               'DivAmt'（分账金额）=>  
-     *           )  
-     *        ...           
-     *     ) 
-     * @param array reqExt 扩展请求参数(optional) {'VocherAmt'=>'50.00',}  VocherAmt为代金券金额  
-     * 
-     * @return bool true--成功  false--失败
+     * @param $subOrdId 对应投标的orderId
+     * @param $inUserId 入账的userid
+     * @param $outUserId 出账的userid
+     * @param $transAmt 该笔打款金额
+     * @return bool true--打款成功  false--打款失败
      * 
 	 */
-     public static function loans($outCustId, $transAmt, $inCustId, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId='', $DivDetails=null, $reqExt='') {
-     	
-     	
+     public static function loans($subOrdId,$inUserId,$outUserId,$transAmt) {
+      	 $transLogic = new Finance_Logic_Transaction();
+      	 $return = $transLogic->loans($subOrdId,$inCustId,$outCustId,$transAmt);
+      	 if(is_null($return)) {
+      	 	return false;
+      	 }
+      	 $respCode = $return['RespCode'];
+      	 $respDesc = $return['RespDesc'];
+      	 if($respCode !== '000') {
+      	 	Base_Log::error(array(
+      	 		'msg' => '由于某个原因打款失败',
+      	 		'respCode' => $respCode,
+      	 		'respDesc' => $respDesc,
+      	 	));
+      	 	return false;
+      	 }
+      	 return true;     	
      }
      
      /**

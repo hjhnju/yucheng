@@ -74,15 +74,16 @@ class Finance_Logic_Base {
 	 * 通过用户userid获取用户汇付id
 	 */
 	protected function getHuifuid($userid){
+		$userid = intval($userid);
 		$objUser = User_Api::getUserObject($userid);
 		$huifuid = !empty($objUser) ? $objUser->huifuid : '';
 		return $huifuid;
 	}
 	
 	/**
-	 * 财务类pay_order表入库统一入口
+	 * 财务类finance_order表入库统一入口
 	 * @param array $param 参数数组
-	 * @return array || boolean
+	 * @return boolean
 	 */
 	public function payOrderEnterDB($param) {
 		$regOrder = new Finance_Object_Order();
@@ -102,17 +103,17 @@ class Finance_Logic_Base {
 		$ret = $regOrder->save();
 	
  		if(!$ret) {			
-			$logParam['msg'] = '创建财务类订单表失败';
-			Base_Log::error($logParam);
+ 			$logParam['msg'] = '财务类交易类型订单入库失败';
+ 			Base_Log::error($logParam);
 			return false;
 		}  			
 		return true;
 	}
 	
 	/**
-	 * 财务类pay_record表入库统一入口
+	 * 财务类finance_record表入库统一入口
 	 * @param array $param 参数数组
-	 * @return array || boolean
+	 * @return boolean
 	 */
 	public function payRecordEnterDB($param) {
 		$regRecord = new Finance_Object_Record();
@@ -130,7 +131,7 @@ class Finance_Logic_Base {
 		}
 		$ret = $regRecord->save();
 		if(!$ret){
-			$logParam['msg'] = '创建财务类记录表失败';
+			$logParam['msg'] = '财务类交易类型记录入库失败';
 			Base_Log::error($logParam);
 			return false;
 		}
@@ -139,22 +140,101 @@ class Finance_Logic_Base {
 	}  	
 	
 	/**
+	 * 财务类finance_tender表插入入口
+	 * @param array $param 参数数组
+	 * @return boolean
+	 */
+	public function payTenderEnterDB($param) {
+		$tender = new Finance_Object_Tender();
+		$logParam = array();
+		if(is_null($param)) {
+			//未给出参数，无法插入或者更新
+			Base_Log::error(array(
+			    'msg'=>'参数错误'
+			));
+			return false;
+		}
+		foreach ($param as $key => $value) {
+			$regRecord->$key = $value;
+			$logParam[$key] = $value;
+		}
+		$ret = $regRecord->save();
+		if(!$ret){
+			$logParam['msg'] = '投标记录入库失败';
+			Base_Log::error($logParam);
+			return false;
+		}
+		return true;
+		
+	}
+	
+	/**
+	 * 财务类pay_record表删除记录
+	 * @param string $orderId
+	 * $return boolean
+	 */
+	public function payRecordDelete($orderId) {
+		$orderId = intval($orderId);
+		$regRecord = new Finance_Object_Record($orderId);
+		$ret = $regRecord->remove();
+		if(!ret) {
+			Base_Log::error(array(
+				'msg'     => '财务类交易类型记录删除失败',
+				'orderId' => $orderId,
+			));
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * 财务类pay_order表更新状态
 	 * @param string $orderId
 	 * @param integer $status
 	 * @return boolean
 	 */
-	public function payOrderUpdate($orderId,$status) {
+	public function payOrderUpdate($orderId,$status,$type) {
 		$regOrder = new Finance_Object_Order();
+		$orderId = intval($orderId);
+		$status = intval($status);
+		$type = intval($type);
 		$regOrder->orderId = $orderId;
-		$regOrder->status = intval($status);
-		$ret = $regOrder->save();
+		$regOrder->status = $status;
 		
-		
+		$statusDesc = Finance_TypeStatus::getStatusDesc(intval($status));
+		$type = Finance_TypeStatus::getType(intval($type));
+		$regOrder->comment = "$type".'订单'."$statusDesc";
+		$ret = $regOrder->save();		
 		if(!$ret){
-			$logParam['msg'] = '更新财务类订单表失败';
 			Base_Log::error(array(
-				'msg'     => '更新财务类订单表失败',
+				'msg'     => "$type".'订单状态更新失败',
+				'orderId' => $orderId,
+				'status'  => $status,
+				'type'    => $type,
+			));
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 财务类finance_tender表更新状态
+	 * @param int orderId 
+	 * @param int status
+	 * @return boolean
+	 */
+	public function payTenderUpdate($orderId,$status) {
+		$orderId = intval($orderId);
+		$status = intval($status);
+		$regTender = new Finance_Object_Tender();
+		$regTender->orderId = $orderId;
+		$regTender->status = $status;
+		$statusDesc = Finance_TypeStatus::getStatusDesc($status);
+		$regTender->comment = '订单'."$statusDesc";
+		$ret = $regTender->save();
+		if(!ret) {
+			Base_Log::error(array(
+				'msg'     => 'tender表状态更新失败',
 				'orderId' => $orderId,
 				'status'  => $status,
 			));
@@ -235,12 +315,41 @@ class Finance_Logic_Base {
 	 * @param months
 	 * @return float fee
 	 */
-	public function getFee($riskLevl,$transAmt,$months) {
-	    $serviceFee = floatval($transAmt * floatval(Finance_Fee::$finance_service_fee[$riskLevl]));
-	    $monthlyRate = floatval(Finance_Fee::$risk_reserve[$riskLevl]) / 12;
-	    $prepareFee = floatval($transAmt * $monthlyRate * $months );
-	    $manageFee = floatval($transAmt * floatval(Finance_Fee::$acc_manage_fee[$riskLevl]) * $months);  
-	    $retFee = $serviceFee + $prepareFee + $manageFee;
-	    		
+	public function getFee($riskLevl,$transAmt,$days) {
+		$riskLevl = intval($riskLevl);
+		$transAmt = floatval($transAmt);
+		$days = intval($days);
+	    $serviceFee = floatval($transAmt * (Finance_Fee::$finance_service_fee[$riskLevl]));
+	    $dailyRate = floatval(Finance_Fee::$risk_reserve[$riskLevl]) / 365;
+	    $prepareFee = floatval($transAmt * $dailyRate * $days );
+	    $retFee = array(
+	    	'serviceFee' => $serviceFee,
+	    	'prepareFee' => $prepareFee,
+	    	'all'        => $serviceFee+$prepareFee,
+	    );
+	    return $retFee;	    		
+	}
+	
+	/**
+	 * 根据orderId获取投标的相关信息
+	 * @param int orderId
+	 * @return array || boolean
+	 */
+	public function getTenderInfo($orderId) {
+		$orderId = intval($orderId);
+		$tender = new Finance_List_Tender();
+		$filters = array('orderId' => $orderId);
+		$refunds->setFilter($filters);
+		$list = $tender->toArray();
+		$tenderInfo = $list['list'][0];
+		$ret = array(
+		    'orderId'    => $tenderInfo['orderId'],
+			'orderDate'  => $tenderInfo['orderDate'],
+			'proId'      => $tenderInfo['proId'],
+			'freezeTrxId'=> $tenderInfo['freezeTrxId'],
+			'amount'     => $tenderInfo['amount'],
+			'status'     => $tenderInfo['status'],
+		);
+		return $ret;
 	}
 }

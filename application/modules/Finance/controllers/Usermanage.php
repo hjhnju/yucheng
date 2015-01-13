@@ -34,7 +34,7 @@ class UsermanageController extends Base_Controller_Page{
         //$this->userManageLogic->userRegist($userName,'',$userid);
         //TODO: remove
         //FOR TEST
-        $this->userManageLogic->userRegist('lyx661228','',$userid);
+        $this->userManageLogic->userRegist('382906882','',$userid);
        
         
     }
@@ -121,12 +121,24 @@ class UsermanageController extends Base_Controller_Page{
     }
     
     public function testAction() {
-    	$logic = new Finance_Logic_Base();
-    	$ret = $logic->payOrderUpdate('18446744073709551615',1);
-    	if(!$ret) {
-    		echo "fail";
-    		 
-    	}
-    	echo "success";
+        $logic = new Finance_Logic_Transaction();
+        $transAmt = 20.00;
+        $userid=1;
+        $uidborrowDetail = array(
+            "BorrowerUserId" => 1,
+        	"BorrowerAmt"    =>  "20000.00",
+        	"BorrowerRate"   => "0.12" , 
+        	"ProId"          => 1,
+        );
+        $isFreeze=true;
+        $retUrl='';
+        $logic->initiativeTender($transAmt,$userid,$uidborrowDetail,$isFreeze,$retUrl);
+    }
+    
+    public function liluAction() {
+    	$logic = Finance_Chinapnr_Logic::getInstance();
+    //350823198601102016
+    	$ret = $logic->queryUsrInfo("6000060000677575","350823198601102016","");
+    	var_dump($ret);
     }
 }
