@@ -20,96 +20,51 @@ define(function (require) {
 
     function lunbox(overbox, item, list, btn) {
 
-
-        var oDiv = overbox;
         var oUl = item;
         var timer;
         var now = 0;
-        //var now1 = 0;
         var aLi = list;
         var aLiWidth = aLi.eq(0).width();
         var small = btn;
-        var status = 0;
+        var length = aLi.length;
+
+       lunbo();
 
         function lunbo() {
-            var left;
-            //timer && clearTimeout(timer);
-            if (now === aLi.length - 1) {
-                list.eq(0).css({
-                    "position": "relative",
-                    "left": oUl.width()
-                });
-                status = 1;
-                now = 0;
-
-                left = -aLiWidth * aLi.length;
-            }
-            else {
-                now++;
-                left = -aLiWidth * now;
-            }
-            //now1++;
             small.removeClass('current');
             small.eq(now).addClass('current');
-
             oUl.stop(true).animate({
-                'left': left + 'px'
-            }, 400, function () {
-                if (now === 0) {
-                    list.eq(0).css({
-                        "position": ""
-                    });
-                    oUl.css('left', 0);
-                    //now1 = 0;
-                    status = 0;
-                }
+                'left': -now * aLiWidth + 'px'
 
+            }, 300, function () {
+                timer && clearTimeout(timer);
+                now = ++now % length;
                 timer = setTimeout(lunbo, 5000);
             });
-
         }
-
-
-        timer = setTimeout(lunbo, 5000);
-
 
         small.mouseenter(function () {
             timer && clearTimeout(timer);
             var index = $(this).index();
             now = index;
-            //now1 = index;
-            if(status && !index) {
-                list.eq(0).css({
-                    "position": ""
-                });
-                //now1 = 0;
-                status = 0;
-            }
 
             small.removeClass('current');
             $(this).addClass('current');
-            oUl.stop(true).animate({
-                'left': -aLiWidth * index
-            }, function () {
+            timer && clearTimeout(timer);
 
+            oUl.stop(true).animate({
+                'left': -now * aLiWidth + 'px'
+
+            }, 300, function () {
+                now = ++now % length;
+                timer = setTimeout(lunbo, 5000);
             });
 
         });
         small.mouseleave(function () {
-
-            timer = setTimeout(lunbo, 1000);
+            timer = setTimeout(lunbo, 5000);
         });
-
-        //oDiv.mouseenter(function () {
-        //    timer && clearTimeout(timer);
-        //});
-        //oDiv.mouseleave(function () {
-        //    timer = setTimeout(lunbo, 1000);
-        //});
-
-
     }
-
     return {
         init: init
     };

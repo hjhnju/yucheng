@@ -17,5 +17,8 @@ class Base_Controller_Admin extends Base_Controller_Response {
             $action => $filename,
         );
         $this->actions = $actions;
+        
+        $uri = $this->_request->getRequestUri();
+        $this->_view->assign('uri', $uri);
     }
 }

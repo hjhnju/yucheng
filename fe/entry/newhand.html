@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>新手指导</title>
+    <link rel="stylesheet" type="text/css" href="/src/newhand/index.less" />
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script>
+        require.config({
+            'baseUrl': '/src',
+            'paths': {
+            },
+            'packages': [
+                {
+                    'name': 'echarts',
+                    'location': '../dep/echarts/2.1.9/src',
+                    'main': 'echarts'
+                },
+                {
+                    'name': 'est',
+                    'location': '../dep/est/1.3.0/src'
+                },
+                {
+                    'name': 'etpl',
+                    'location': '../dep/etpl/3.0.0/src',
+                    'main': 'main'
+                },
+                {
+                    'name': 'jquery',
+                    'location': '../dep/jquery/1.9.1/src',
+                    'main': 'jquery.min'
+                },
+                {
+                    'name': 'moment',
+                    'location': '../dep/moment/2.7.0/src',
+                    'main': 'moment'
+                },
+                {
+                    'name': 'saber-emitter',
+                    'location': '../dep/saber-emitter/1.0.0/src',
+                    'main': 'emitter'
+                },
+                {
+                    'name': 'zrender',
+                    'location': '../dep/zrender/2.0.6/src',
+                    'main': 'zrender'
+                }
+            ]
+        });
+    </script>
+    <script>
+        require(['newhand/index'],function (main) {
+            main.init();
+        })
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-left">
+                <span class="header-left-phone">客服：400-888-6666</span>
+                <span class="header-left-time">(工作时间：9：00 - 21：00)</span>
+                <span class="header-left-attention">
+                    <span class="attention-span">关注我们：</span>
+                    <a class="attention-me xinlang" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                    <a class="attention-me weixin" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                </span>
+            </div>
+            <div class="header-right">
+                <div class="header-right-default">
+                    <a href="###" class="default-fastlogin">快速注册</a>
+                    <a class="default-login" href="###">登录</a>
+                </div>
+                <div class="header-right-login">
+                    <span class="default-fastlogin">您好，XXX</span>
+                    <a class="default-login" href="###">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="container">
+            <a href="###" class="logo"><img width="100%" height="100%" src="/src/common/img/logo.png" /></a>
+            <ul class="nav-item">
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">我来投资</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">我要借款</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">安全保障</a>
+                </li>
+                <li class="nav-item-list">
+                    <a href="###" class="nav-item-link">新手指引</a>
+                </li>
+                <li class="nav-item-list last">
+                    <a href="###" class="nav-item-link">关于我们</a>
+                </li>
+            </ul>
+            <a href="###" class="nav-myaccount">我的账户</a>
+        </div>
+    </div>
+    <div class="newhand">
+        <div class="newhand-one">
+            <div class="container">
+                <div class="newhand-one-symbol number-one"></div>
+                <div class="newhand-one-title">什么是兴教贷?</div>
+                <div class="newhand-one-text">兴教贷是国内首家专注教育领域投融资的平台，通过兴教贷平台，您可以将手中的富余资金出借给由我们认证的教育机构或个人，并获得利息回报。我们希望成为教育事业新推力，让更多人投资教育，分享收益。</div>
+                <div class="newhand-one-main"></div>
+            </div>
+        </div>
+        <div class="newhand-one two">
+            <div class="container">
+                <div class="newhand-one-symbol number-two"></div>
+                <div class="newhand-one-title">为什么选择兴教贷?</div>
+                <div class="newhand-two-main">
+                    <div class="newhand-two-main-box">
+                        <div class="two-box-pic di"></div>
+                        <div class="two-box-title">低门槛高收益</div>
+                        <div class="two-box-text">互联网理财100元起投,超过银行存款利率30倍</div>
+                        <a class="two-box-link" href="###">了解更多&gt;&gt;</a>
+                    </div>
+                    <div class="newhand-two-main-box">
+                        <div class="two-box-pic quan"></div>
+                        <div class="two-box-title">全方位投资保障</div>
+                        <div class="two-box-text">360度实地尽调、本金保障、第三方资金托管</div>
+                        <a class="two-box-link" href="###">了解更多&gt;&gt;</a>
+                    </div>
+                    <div class="newhand-two-main-box">
+                        <div class="two-box-pic zhuan"></div>
+                        <div class="two-box-title">专注教育行业</div>
+                        <div class="two-box-text">深挖教育行业特性最权威教育行业风险评估体系</div>
+                        <a class="two-box-link" href="###">了解更多&gt;&gt;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="newhand-one">
+            <div class="container">
+                <div class="newhand-one-symbol number-three"></div>
+                <div class="newhand-one-title">如何投资?</div>
+                <div class="newhand-three-main">
+                    <div class="three-main-step-box">
+                        <div class="three-step-box-number step-one"></div>
+                        <div class="three-step-box-number step-two"></div>
+                        <div class="three-step-box-number step-three"></div>
+                        <div class="three-step-box-number step-four"></div>
+                    </div>
+                    <div class="three-main-step-content">
+                        <div class="three-main-step-left"></div>
+                        <div class="three-step-con-box">
+                            <ul class="three-step-item">
+                                <li class="three-step-item-list step-pic-one"></li>
+                                <li class="three-step-item-list step-pic-two"></li>
+                                <li class="three-step-item-list step-pic-three"></li>
+                                <li class="three-step-item-list step-pic-four"></li>
+                            </ul>
+                        </div>
+                        <div class="three-main-step-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="container">
+            <div class="footer-left">
+                <ul class="footer-item">
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">关于我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">联系我们</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">新手指引</a>
+                        <span class="footer-vertical">|</span>
+                    </li>
+                    <li class="footer-item-list">
+                        <a href="###" class="footer-item-link">安全保障</a>
+                    </li>
+                </ul>
+                <div class="footer-site">
+                    <span class="footer-site-left"><span>@2014</span>北京百年兴教网络技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;京ICP备14061443号</span>
+                <span class="footer-site-me">
+                    关于我们:
+                    <a href="###" class="footer-site-me-xinlang xinlang"></a>
+                    <a href="###" class="footer-site-me-xinlang weixin"></a>
+                </span>
+                </div>
+            </div>
+            <div class="footer-right">
+                客服电话：400-888-6666
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

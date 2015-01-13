@@ -12,6 +12,11 @@ require('../../libs/Smarty.class.php');
 
 $smarty = new Smarty();
 
+$smarty->assign('user',
+    array(
+        'username' => 'wuqi'
+    )
+);
 
 $smarty->caching = false;
 $smarty->compile_check = true;

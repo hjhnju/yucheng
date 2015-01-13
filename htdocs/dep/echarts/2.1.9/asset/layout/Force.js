@@ -1,4 +1,8 @@
-define('echarts/layout/Force', function (require) {
+define('echarts/layout/Force', [
+    'require',
+    './forceLayoutWorker',
+    'zrender/tool/vector'
+], function (require) {
     var ForceLayoutWorker = require('./forceLayoutWorker');
     var vec2 = require('zrender/tool/vector');
     var requestAnimationFrame = window.requestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function (func) {
