@@ -218,7 +218,6 @@ class BgcallController extends Base_Controller_Page{
 		$amount      = floatval($_REQUEST['TransAmt']);
 		$freezeOrdId = $_REQUEST['FreezeOrdId'];
 		$freezeTrxId = $_REQUEST['FreezeTrxId'];
-		//余额是系统余额！改！
 		$bgret    = $this->financeLogic->balance($userid);
 		$balance  = floatval($bgret['userBg']['acctBal']);//用户余额
 		$total    = floatval($bgret['sysBg']['acctBal']);//系统余额
@@ -243,8 +242,6 @@ class BgcallController extends Base_Controller_Page{
 	        'orderId'     => $orderId,
 			'orderDate'   => $orderDate,
 			'userId'      => $userid,
-		    'freezeOrdId' => $freezeOrdId,
-			'freezeTrxId' => $freezeTrxId,
 			'type'        => Finance_TypeStatus::INITIATIVETENDER,
 			'amount'      => $amount,
 			'balance'     => $balance,
@@ -369,7 +366,6 @@ class BgcallController extends Base_Controller_Page{
 				}
 			}	
 		} 
-
 		Base_Log::notice($_REQUEST);
 		print('RECV_ORD_ID_'.strval($orderId));
 	}
@@ -391,7 +387,7 @@ class BgcallController extends Base_Controller_Page{
 		    ));   	
 		    return;
 		}
-		$userid    = intval($_REQUEST['OutCustId']);
+		$userid    = intval($_REQUEST['MerPriv']);//投标人的uid
 		$orderId   = intval($_REQUEST['OrdId']);
 	    $orderDate = intval($_REQUEST['OrdDate']);
 	    $subOrdId  = intval($_REQUEST['SubOrdId']);
@@ -406,9 +402,10 @@ class BgcallController extends Base_Controller_Page{
 	    if($respCode !== '000') {
 	    	Base_Log::error(array(
 	    		'msg'       => $respDesc,
-	    		'respCode' => $respCode,
+	    		'respCode'  => $respCode,
 	    		'userid'    => $userid,
 	    		'orderId'   => $orderId,
+	    		'orderDate' => $orderDate,
 	    	));
 	    	//将finance_order表状态更改为“处理失败”
 	    	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::LOANS);
@@ -433,8 +430,67 @@ class BgcallController extends Base_Controller_Page{
 	    	'comment'   => '财务类满标打款记录',
 	    	'ip'        => $lastip,
 	    );
-	    $retRecord = $this->financeLogic->payRecordEnterDB($paramRecord);
+	    $this->financeLogic->payRecordEnterDB($paramRecord);
 	    Base_Log::notice($_REQUEST);
 	    print('RECV_ORD_ID_'.$orderId);
+	}
+	
+	/**
+	 * 汇付回调接口
+	 * 还款回调
+	 */
+	public function repaymentAction() {
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
+	       !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['OrdDate']) || 
+	       !isset($_REQUEST['OutCustId']) || !isset($_REQUEST['SubOrdId']) || !isset($_REQUEST['SubOrdDate']) ||
+	       !isset($_REQUEST['OutAcctId']) || !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['Fee']) ||
+		   !isset($_REQUEST['InCustId']) || !isset($_REQUEST['InAcctId']) || !isset($_REQUEST['BgRetUrl']) ||
+	       !isset($_REQUEST['MerPriv']) || !isset($_REQUEST['ChkValue'])) {
+            Base_Log::error(array(
+            	'msg' => '汇付返回参数错误',
+            ));
+	        return ;
+	    }
+	    $userid    = intval($_REQUEST['MerPriv']);//借款人的uid
+	    $orderId   = intval($_REQUEST['OrdId']);
+	    $orderDate = intval($_REQUEST['OrdDate']);
+	    $subOrdId  = intval($_REQUEST['SubOrdId']);
+	    $amount    = floatval($_REQUEST['TransAmt']);
+	    $bgret     = $this->financeLogic->balance($userid);
+	    $balance   = floatval($bgret['userBg']['acctBal']);//用户余额
+	    $total     = floatval($bgret['sysBg']['acctBal']);//系统余额
+	    $lastip    = Base_Util_Ip::getClientIp();
+	    $respCode  = $_REQUEST['RespCode'];
+	    $respDesc  = $_REQUEST['RespDesc'];
+	    if($respCode !=='000') {
+	    	Base_Log::error(array(
+	    		'msg'       => $respDesc,
+	    		'userid'    => $userid,
+	    		'orderId'   => $orderId,
+	    		'orderDate' => $orderDate,
+	    		'respCode'  => $respCode,	    		
+	    	));
+	    	//将finance_order表状态更改为“处理失败”
+	    	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::REPAYMENT);
+	    	return ;
+	    }
+	    
+	    //将finance_order表状态更改为“处理成功”
+	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::REPAYMENT);
+	    //插入还款记录至表finance_record
+	    $paramRecord = array(
+	    	'orderId'   => $orderId,
+	    	'orderDate' => $orderDate,
+	    	'userId'    => $userid,
+	    	'type'      => Finance_TypeStatus::REPAYMENT,
+	    	'amount'    => $amount,
+	    	'balance'   => $balance,
+	    	'total'     => $total,
+	    	'comment'   => '财务类还款记录',
+	    	'ip'        => $lastip,
+	    );
+	    $this->financeLogic->payRecordEnterDB($paramRecord);
+	    Base_Log::notice($_REQUEST);
+	    print('RECV_ORD_ID_'.$orderId);		
 	}
 }
