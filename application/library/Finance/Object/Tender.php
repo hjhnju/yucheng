@@ -1,14 +1,14 @@
 <?php
 /**
- * 支付订单
+ * 投标订单
  * @author lilu
  */
-class Finance_Object_Order extends Base_Object {
+class Finance_Object_Tender extends Base_Object {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'finance_order';
+    protected $table = 'finance_tender';
 
     /**
      * 主键
@@ -20,13 +20,13 @@ class Finance_Object_Order extends Base_Object {
      * 类名
      * @var string
      */
-    const CLASSNAME = 'Finance_Object_Order';
+    const CLASSNAME = 'Finance_Object_Tender';
 
     /**
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('orderId', 'orderDate', 'userId', 'type', 'amount', 'status', 'create_time', 'update_time', 'comment');
+    protected $fields = array('orderId', 'orderDate', 'proId', 'freezeTrxId', 'amount', 'status', 'create_time', 'update_time', 'comment');
 
     /**
      * 字段与属性隐射关系
@@ -35,8 +35,8 @@ class Finance_Object_Order extends Base_Object {
     public $properties = array(
         'orderId'     => 'orderId',
         'orderDate'   => 'orderDate',
-        'userId'      => 'userId',
-        'type'        => 'type',
+        'proId'       => 'proId',
+        'freezeTrxId' => 'freezeTrxId',
         'amount'      => 'amount',
         'status'      => 'status',
         'create_time' => 'createTime',
@@ -51,8 +51,8 @@ class Finance_Object_Order extends Base_Object {
     protected $intProps = array(
         'orderId'     => 1,
         'orderDate'   => 1,
-        'userId'      => 1,
-        'type'        => 1,
+        'proId'       => 1,
+        'freezeTrxId' => 1,
         'status'      => 1,
         'create_time' => 1,
         'update_time' => 1,
@@ -60,7 +60,7 @@ class Finance_Object_Order extends Base_Object {
 
     /**
      * @param array $data
-     * @return Finance_Object_Order
+     * @return Finance_Object_Tender
      */
     public static function init($data) {
         return parent::initObject(self::CLASSNAME, $data);
@@ -79,16 +79,16 @@ class Finance_Object_Order extends Base_Object {
     public $orderDate;
 
     /**
-     * 
+     * 借款ID
      * @var integer
      */
-    public $userId;
+    public $proId;
 
     /**
-     * 支付类型
+     * 冻结序列号
      * @var integer
      */
-    public $type;
+    public $freezeTrxId;
 
     /**
      * 金额

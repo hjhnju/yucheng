@@ -7,7 +7,7 @@
  */
 class TransactionController extends Base_Controller_Api{
    
-	private $transLogic;
+   	private $transLogic;
 	private $huifuid;
     public function init(){
         //for test
@@ -35,14 +35,13 @@ class TransactionController extends Base_Controller_Api{
         $openBankId = $_REQUEST['openBankId'];
         $gateBusiId = $_REQUEST['gateBusiId'];
         $dcFlag = $_REQUEST['dcFlag'];
-        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);     
         //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
         //TODO:remove
         //FOR TEST
         // Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
         
         $huifuid    = '6000060000696947';
-        $transAmt   = '20.00';
+        $transAmt   = '200.00';
         $gateBusiId = 'FPAY';
         $openBankId = 'ICBC';
         $dcFlag     = 'D';
@@ -51,7 +50,7 @@ class TransactionController extends Base_Controller_Api{
             'transAmt'   => $transAmt,
             'gateBusiId' => $gateBusiId,
             'openBankId' => $openBankId,
-            'dcFlag' => $dcFlag,
+            'dcFlag'     => $dcFlag,
         ));
         $transLogic->netsave($userid, $huifuid, $transAmt, $gateBusiId, $openBankId, $dcFlag);         
    }
@@ -63,18 +62,17 @@ class TransactionController extends Base_Controller_Api{
     * @param String $openAcctId 开户银行帐号(optional)
     *
     */
-   public function cashAction(){
-   	   $userid = $this->userid;
-       $transAmt = $_REQUEST['transAmt'];
-       $captcha = $_REQUEST['captcha'];
-       $openAcctId = $__REQUEST['openAcctId'];
-       $transLogic = new Finance_Logic_Transaction();
-       $transLogic->cash($userid,'100.00','4367423378320018938');
-    
+    public function cashAction(){
+   	    $userid = $this->userid;
+        $transAmt = $_REQUEST['transAmt'];
+        $captcha = $_REQUEST['captcha'];
+        $openAcctId = $__REQUEST['openAcctId'];
+        $transLogic = new Finance_Logic_Transaction();
+        $transLogic->cash($userid,'10.00','4367423378320018938');       
        
-       //1.验证验证码操作
-       //2.调用其他模块lib库得到所需参数
-       //3.调用Logic层方法
-   }
+        //1.验证验证码操作
+        //2.调用其他模块lib库得到所需参数
+        //3.调用Logic层方法
+    }
 
 }

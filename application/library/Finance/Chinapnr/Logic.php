@@ -64,6 +64,7 @@ class Finance_Chinapnr_Logic {
 	const CMDID_QUERY_FSS= "QueryFss"; //生利宝产品信息查询,后台数据流方式
 	const CMDID_QUERY_FSS_ACCTS= "QueryFssAccts"; //生利宝账户信息查询,后台数据流方式
 	const CMDID_QUERY_CARD_INFO= "QueryCardInfo"; //银行卡查询接口,后台数据流方式
+    const CMDID_QUERY_USR_INFO= "QueryUsrInfo" ;//用户信息查询接口，后台数据流方式
 
 	/**
 	 * @desc depends npc sign server.
@@ -175,7 +176,7 @@ class Finance_Chinapnr_Logic {
 <form id="autoRedirectForm" method="POST" action="$this->platformUrl">
 HTML;
 		foreach($reqData as $key => $value){
-			$html.='<input type="hidden" value="'.$value.'" name="'.$key.'" />';
+			$html.='<input type="hidden" value=\''.$value.'\' name="'.$key.'" />';
 		}
 		$html.="</form>";
 		$html.="</body></html>";
@@ -249,6 +250,21 @@ HTML;
 		);
 
 		return $this->reactResponse($this->request($reqData));
+	}
+	/**
+	 * 
+	 */
+	public function queryUsrInfo($merCustId,$certId,$reqExt="") {
+		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_QUERY_USR_INFO.$merCustId.$certId.$reqExt);
+		$reqData= array(
+				"Version"	=>	$this::VERSION_10,
+				"CmdId"		=>	$this::CMDID_QUERY_USR_INFO,
+				"MerCustId"	=>	$merCustId,
+				"CertId"    =>	$certId,
+				"ReqExt"    =>  $reqExt,
+				"ChkValue"	=>	$checkValue,
+		);
+		return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","UsrId","CertId","UsrStat","RespExt"));
 	}
 
 	/**
@@ -824,7 +840,6 @@ HTML;
 				"MerPriv"	=>	$merPriv,
 				"ChkValue"	=>	$checkValue,
 		);
-		
 		$this->autoRedirect($reqData);
 		
 	}
@@ -980,7 +995,7 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
-// 		/var_dump($reqData);die;
+        //var_dump($reqData);die;
 		$this->autoRedirect($reqData);
 	}
 	/**
