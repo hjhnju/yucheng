@@ -33,14 +33,14 @@ define(function (require) {
         function lunbo() {
             small.removeClass('current');
             small.eq(now).addClass('current');
-            oUl.stop(true).animate({
-                'left': -now * aLiWidth + 'px'
-
-            }, 300, function () {
-                timer && clearTimeout(timer);
-                now = ++now % length;
-                timer = setTimeout(lunbo, 5000);
-            });
+            //oUl.stop(true).animate({
+            //    'left': -now * aLiWidth + 'px'
+            //
+            //}, 300, function () {
+            //    timer && clearTimeout(timer);
+            //    now = ++now % length;
+            //    timer = setTimeout(lunbo, 5000);
+            //});
         }
 
         small.mouseenter(function () {

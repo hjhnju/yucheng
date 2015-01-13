@@ -19,38 +19,44 @@
         <ul class="banner-item">
             {%foreach $bannerList as $key => $item%}
             <li class="banner-item-list">
-                <a class="banner-item-list-link {%$item%}"></a>
-                <div class="banner-container">
-                    <div class="fix-box">
-                        {%if isset($user)%}
-                        <div class="fix-box-title">
-                            <p class="fix-title-number logining">欢迎您
-                            </p>
-                            <p class="fix-title-text">{%$user.username%}</p>
-                        </div>
-                        <div class="fix-box-main mar-top">
-                            <a href="###" class="fix-box-main-regist ">管理我的账户</a>
-                            <div class="fix-box-main-box">
+                <a class="banner-item-list-link {%$item%}">
+                    <div class="container">
+                        <div class="banner-container">
+                            <div class="fix-box">
+                                {%if isset($user)%}
+                                <div class="fix-box-title">
+                                    <p class="fix-title-number logining">欢迎您
+                                    </p>
+                                    <p class="fix-title-text">{%$user.username%}</p>
+                                </div>
+                                <div class="fix-box-main mar-top">
+                                    <a href="###" class="fix-box-main-regist ">管理我的账户</a>
+                                    <div class="fix-box-main-box">
+
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="fix-box-title">
+                                    <p class="fix-title-number">15.8
+                                        <span class="fix-title-number-bai">%</span>
+                                    </p>
+                                    <p class="fix-title-text">最高年化收利率</p>
+                                </div>
+                                <div class="fix-box-main">
+                                    <a href="###" class="fix-box-main-regist">快速注册</a>
+                                    <div class="fix-box-main-box">
+                                        已有账号？<a href="###" class="fix-box-main-box-login">立即登录</a>
+                                    </div>
+                                </div>
+                                {%/if%}
 
                             </div>
                         </div>
-                        {%else%}
-                        <div class="fix-box-title">
-                            <p class="fix-title-number">15.8
-                                <span class="fix-title-number-bai">%</span>
-                            </p>
-                            <p class="fix-title-text">最高年化收利率</p>
-                        </div>
-                        <div class="fix-box-main">
-                            <a href="###" class="fix-box-main-regist">快速注册</a>
-                            <div class="fix-box-main-box">
-                                已有账号？<a href="###" class="fix-box-main-box-login">立即登录</a>
-                            </div>
-                        </div>
-                        {%/if%}
-
                     </div>
-                </div>
+                </a>
+
+
+
             </li>
             {%/foreach%}
         </ul>
