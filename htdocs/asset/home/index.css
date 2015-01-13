@@ -41,7 +41,7 @@ ul{margin:0;padding:0}
 ul li{list-style:none}
 p{margin:0;padding:0}
 .container{width:1000px;margin:0 auto;position:relative;left:0;top:0;z-index:1;*zoom:1}
-.container.z-index{*z-index:100}
+.container.z-index{z-index:15}
 .container:before,.container:after{display:table;content:""}
 .container:after{clear:both}
 .header{height:34px;border-bottom:1px solid #e3e3e3}
@@ -53,7 +53,7 @@ p{margin:0;padding:0}
 .header-left-attention .attention-me.xinlang{background-position:0 -50px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
 .header-left-attention .attention-me.weixin:hover{background-position:0 -251px}
-.xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:5;*z-index:12;border:1px solid #ccc;display:none;background:url(../common/img/weixin.jpg) 0 0 no-repeat}
+.xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:5;z-index:12;border:1px solid #ccc;display:none;background:url(../common/img/weixin.jpg) 0 0 no-repeat}
 .xinlang-erweima.footer-erweima{top:-270px}
 .xinlang-erweima.current{display:block}
 .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:119px;top:-8px}
