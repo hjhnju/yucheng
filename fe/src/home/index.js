@@ -28,7 +28,7 @@ define(function (require) {
         var small = btn;
         var length = aLi.length;
 
-        timer = setTimeout(lunbo, 2000);
+       lunbo();
 
         function lunbo() {
             small.removeClass('current');
@@ -36,10 +36,10 @@ define(function (require) {
             oUl.stop(true).animate({
                 'left': -now * aLiWidth + 'px'
 
-            }, 400, function () {
+            }, 300, function () {
                 timer && clearTimeout(timer);
                 now = ++now % length;
-                timer = setTimeout(lunbo, 2000);
+                timer = setTimeout(lunbo, 5000);
             });
         }
 
@@ -55,14 +55,14 @@ define(function (require) {
             oUl.stop(true).animate({
                 'left': -now * aLiWidth + 'px'
 
-            }, 400, function () {
+            }, 300, function () {
                 now = ++now % length;
-                timer = setTimeout(lunbo, 2000);
+                timer = setTimeout(lunbo, 5000);
             });
 
         });
         small.mouseleave(function () {
-            timer = setTimeout(lunbo, 1000);
+            timer = setTimeout(lunbo, 5000);
         });
     }
     return {
