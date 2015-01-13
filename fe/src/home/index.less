@@ -10,23 +10,25 @@
 .banner-select {
     .clearfix;
 
-    width: 100px;
+    width: 120px;
     position: absolute;
-    z-index: 5;
-    top: 330px;
+    z-index: 11115;
+    top: 380px;
     left: 50%;
 
     .banner-select-link {
         display: block;
         float: left;
         margin-right: 10px;
-        font-size: 14px;
-        color: @color-red;
+        width: 20px;
+        height: 20px;
         text-decoration: none;
+        background: url(./img/banner_select.png) 0 4px no-repeat;
+        cursor: pointer;
 
 
         &:hover,&.current {
-            color: #ffffff;
+            background-position: 0 -48px;
         }
     }
 }
@@ -73,6 +75,9 @@
     text-align: center;
     width: 140px;
     overflow: hidden;
+    color: #343434;
+    text-decoration: none;
+    cursor: pointer;
 
     &.last {
         margin-right: 0;
@@ -225,6 +230,7 @@
     overflow: hidden;
     position: relative;
     height: 370px;
+    padding-bottom: 40px;
 }
 .banner-item {
     position: absolute;
@@ -240,7 +246,6 @@
     float: left;
     height: 370px;
     position: relative;
-    text-align: center;
 }
 .banner-item-list-link {
     width: 100%;
@@ -269,11 +274,17 @@
 
 .banner-container {
     width: 1000px;
-    padding: 40px 0;
-    background-color: transparent;
-    position: absolute;
-    left: 940px;
-    top: 0;
+    margin: 0 auto;
+//    padding: 40px 0;
+//    background-color: transparent;
+//    width: 280px;
+//    position: absolute;
+//    left: 930px;
+//    top: 0;
+    .clearfix;
+    height: 330px;
+    padding-top: 40px;
+    position: relative;
 
 }
 .fix-box {
@@ -317,7 +328,7 @@
     .border-radius(0 0 5px 5px);
 
     &.mar-top {
-        padding-bottom: 30px;
+        padding-bottom: 20px;
     }
 }
 .fix-box-main-regist {
@@ -353,7 +364,70 @@
         }
     }
 }
-.banner-box-container {
 
+
+
+//箭头
+.jiantou-left {
+    width: 50px;
+    height: 100px;
+    background: url(./img/banner_jiantou.png) 0 0 no-repeat;
+    position: absolute;
+    left: -90px;
+    top: 140px;
+    cursor: pointer;
 }
+.jiantou-right {
+    width: 50px;
+    height: 100px;
+    background: url(./img/banner_jiantou.png) 0 -100px no-repeat;
+    position: absolute;
+    right: -110px;
+    top: 140px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

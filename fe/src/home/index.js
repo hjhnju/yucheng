@@ -27,43 +27,53 @@ define(function (require) {
         var aLiWidth = aLi.eq(0).width();
         var small = btn;
         var length = aLi.length;
+        var left = $('.jiantou-left');
+        var right = $('.jiantou-right');
 
-       lunbo();
+        left.click(function () {
 
-        function lunbo() {
+            timer && clearTimeout(timer);
+            now = (now - 1 + length)%length;
+            console.log(now);
+
+            lunbo(now);
+
+        });
+
+        right.click(function () {
+
+            timer && clearTimeout(timer);
+            now = (now+1) % length;
+            console.log(now);
+            lunbo(now);
+
+        });
+
+        function lunbo(index) {
+            now = index;
             small.removeClass('current');
             small.eq(now).addClass('current');
-            //oUl.stop(true).animate({
-            //    'left': -now * aLiWidth + 'px'
-            //
-            //}, 300, function () {
-            //    timer && clearTimeout(timer);
-            //    now = ++now % length;
-            //    timer = setTimeout(lunbo, 5000);
-            //});
+            oUl.stop(true).animate({
+                'left': -now * aLiWidth + 'px'
+            }, 300, function () {
+                timer = setTimeout(function () {
+                    now = ++now % length;
+                    lunbo(now);
+                }, 5000);
+            });
         }
 
         small.mouseenter(function () {
             timer && clearTimeout(timer);
             var index = $(this).index();
-            now = index;
-
-            small.removeClass('current');
-            $(this).addClass('current');
-            timer && clearTimeout(timer);
-
-            oUl.stop(true).animate({
-                'left': -now * aLiWidth + 'px'
-
-            }, 300, function () {
-                now = ++now % length;
-                timer = setTimeout(lunbo, 5000);
-            });
-
+            lunbo(index);
         });
-        small.mouseleave(function () {
-            timer = setTimeout(lunbo, 5000);
-        });
+
+
+        timer = setTimeout(function(){
+            lunbo(0);
+        }, 5000);
+
     }
     return {
         init: init

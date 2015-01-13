@@ -147,11 +147,11 @@ p{margin:0;padding:0}
 .changephone-box{background-color:#fff;padding:30px 70px 100px}
 .color-red{color:#f2736a}
 .banner{height:370px}
-.banner-select{*zoom:1;width:100px;position:absolute;z-index:5;top:330px;left:50%}
+.banner-select{*zoom:1;width:120px;position:absolute;z-index:11115;top:380px;left:50%}
 .banner-select:before,.banner-select:after{display:table;content:""}
 .banner-select:after{clear:both}
-.banner-select .banner-select-link{display:block;float:left;margin-right:10px;font-size:14px;color:#f2736a;text-decoration:none}
-.banner-select .banner-select-link:hover,.banner-select .banner-select-link.current{color:#fff}
+.banner-select .banner-select-link{display:block;float:left;margin-right:10px;width:20px;height:20px;text-decoration:none;background:url(img/banner_select.png) 0 4px no-repeat;cursor:pointer}
+.banner-select .banner-select-link:hover,.banner-select .banner-select-link.current{background-position:0 -48px}
 .introduce{height:220px;background-color:#f8f8f8;padding-top:60px}
 .introduce-left{float:left;width:360px;overflow:hidden}
 .introduce-left .introduce-left-title{height:56px;line-height:56px;font-size:26px;font-weight:700}
@@ -161,7 +161,7 @@ p{margin:0;padding:0}
 .introduce-right{float:right;*zoom:1}
 .introduce-right:before,.introduce-right:after{display:table;content:""}
 .introduce-right:after{clear:both}
-.introduce-right-list{float:left;margin-right:70px;text-align:center;width:140px;overflow:hidden}
+.introduce-right-list{float:left;margin-right:70px;text-align:center;width:140px;overflow:hidden;color:#343434;text-decoration:none;cursor:pointer}
 .introduce-right-list.last{margin-right:0}
 .introduce-right-list .introduce-list-logo{width:80px;height:80px;margin:0 auto 10px;background:url(img/round_pic_icon.png) 0 0 no-repeat}
 .introduce-right-list .introduce-list-logo.income{background-position:0 0}
@@ -196,7 +196,7 @@ p{margin:0;padding:0}
 .bottom-bank.jiaotong{background-position:0 -902px}
 .bottom-bank.guangda{background-position:0 -1002px}
 .bottom-bank.shanghai{background-position:0 -1100px}
-.banner-floation{width:100%;overflow:hidden;position:relative;height:370px}
+.banner-floation{width:100%;overflow:hidden;position:relative;height:370px;padding-bottom:40px}
 .banner-item{position:absolute;left:0;top:0;width:400%;z-index:2;*zoom:1}
 .banner-item:before,.banner-item:after{display:table;content:""}
 .banner-item:after{clear:both}
@@ -206,7 +206,9 @@ p{margin:0;padding:0}
 .banner-item-list-link.banner-two{background:url(img/banner_two.jpg) center center no-repeat}
 .banner-item-list-link.banner-three{background:url(img/banner_three.jpg) center center no-repeat}
 .banner-item-list-link.banner-four{background:url(img/banner_four.jpg) center center no-repeat}
-.banner-container{padding:40px 0;background-color:transparent;width:280px;position:absolute;left:940px;top:0}
+.banner-container{width:1000px;margin:0 auto;*zoom:1;height:330px;padding-top:40px;position:relative}
+.banner-container:before,.banner-container:after{display:table;content:""}
+.banner-container:after{clear:both}
 .fix-box{background-color:transparent;width:280px;float:right;height:294px}
 .fix-box-title{height:108px;background:url(../common/img/fix_title.png) 0 0 no-repeat;padding-top:40px;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0}
 .fix-title-number{color:#fff;font-size:42px;height:50px;line-height:50px;text-align:center}
@@ -214,8 +216,10 @@ p{margin:0;padding:0}
 .fix-title-number .fix-title-number-bai{font-size:14px}
 .fix-title-text{font-size:20px;color:#fff;text-align:center}
 .fix-box-main{padding:40px 0;background-color:#fff;text-align:center;-webkit-border-radius:0 0 5px 5px;-moz-border-radius:0 0 5px 5px;border-radius:0 0 5px 5px}
-.fix-box-main.mar-top{padding-bottom:30px}
+.fix-box-main.mar-top{padding-bottom:20px}
 .fix-box-main-regist{width:166px;height:36px;line-height:36px;text-align:center;background-color:#76cf65;color:#fff;font-size:16px;display:block;text-decoration:none;margin:0 auto 10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .fix-box-main-box{height:20px;line-height:20px;color:#333}
 .fix-box-main-box .fix-box-main-box-login{color:#76cf65;text-decoration:none}
 .fix-box-main-box .fix-box-main-box-login:hover{text-decoration:underline}
+.jiantou-left{width:50px;height:100px;background:url(img/banner_jiantou.png) 0 0 no-repeat;position:absolute;left:-90px;top:140px;cursor:pointer}
+.jiantou-right{width:50px;height:100px;background:url(img/banner_jiantou.png) 0 -100px no-repeat;position:absolute;right:-110px;top:140px;cursor:pointer}
