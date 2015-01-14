@@ -24,7 +24,9 @@ define(function (require) {
 
         getLine.on('success', function (data) {
             if (data.bizError) {
-                container.html(etpl.render('Error', data.statusInfo));
+                container.html(etpl.render('Error', {
+                    msg: data.statusInfo
+                }));
             }
             else {
                 line.render('all-account-line', data);
