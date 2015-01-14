@@ -218,7 +218,6 @@ class Finance_Api {
      *                "BorrowerUserId":借款人userid    
      *                "BorrowerAmt": "20.01"， 借款金额
      *                "BorrowerRate":"0.18" 借款手续费率(必须) 
-     *                "ProId"  项目ID
      *            )
      *            1 =>array(
      *                ...
@@ -234,10 +233,10 @@ class Finance_Api {
      * )   
      * 
 	 */
-	public static function initiativeTender($proId,$transAmt, $userid ,$uidborrowDetail,$retUrl) {
-		$isFreeze = true;
+	public static function initiativeTender($loanId, $transAmt, $userid ,$uidborrowDetail,$retUrl) {
+		$isFreeze = 'Y';//冻结订单
 		$transLogic = new Finance_Logic_Transaction();
-		$transLogic->initiativeTender($transAmt, $userid, $uidborrowDetail, $isFreeze, $retUrl);		
+		$transLogic->initiativeTender($loanId,$transAmt, $userid, $uidborrowDetail, $isFreeze, $retUrl);		
 	}
 	
 	/**
@@ -254,6 +253,7 @@ class Finance_Api {
 	
 	/**
 	 * 满标打款接口 Finance_Api::loans
+	 * @param $loanId 借款项目ID
      * @param $subOrdId 对应投标的orderId
      * @param $inUserId 入账的userid
      * @param $outUserId 出账的userid
@@ -261,9 +261,9 @@ class Finance_Api {
      * @return bool true--打款成功  false--打款失败
      * 
 	 */
-     public static function loans($subOrdId,$inUserId,$outUserId,$transAmt) {
+     public static function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt) {
       	 $transLogic = new Finance_Logic_Transaction();
-      	 $return = $transLogic->loans($subOrdId,$inCustId,$outCustId,$transAmt);
+      	 $return = $transLogic->loans($loanId, $subOrdId, $inCustId, $outCustId, $transAmt);
       	 if(is_null($return)) {
       	 	$errCode = Finance_RetCode::REQUEST_API_ERROR;    	 	
       	 	Base_Log::error(array(
@@ -289,11 +289,12 @@ class Finance_Api {
 	  * @param string inUserId 入账账户号：投资人的uid
 	  * @param string subOrdId 关联的投标订单号
 	  * @param float transAmt 交易金额
+	  * @param int loanId 借款项目ID
       * @return boolean 还款成功/失败
       */
-     public static function Repayment($outUserId,$inUserId,$subOrdId,$transAmt,$proId) {
+     public static function Repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
      	$transLogic = new Finance_Logic_Transaction();
-     	$return = $transLogic->Repayment($outUserId,$inUserId,$subOrdId,$transAmt,$proId);     	
+     	$return = $transLogic->Repayment($outUserId, $inUserId, $subOrdId, $transAmt, $loanId);     	
      	if($return === false) {
      		return false;
      	}

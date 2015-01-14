@@ -377,16 +377,15 @@ class Finance_Logic_Base {
 		$bidEndDate = $return['deadline'];//标的截止时间
 		$proArea = $return['proArea'];//投标地区
 		$ret = array(
-			'borrUserId' => $borrUserId,
-			'borrTotAmt' => $borrTotAmt,
-		    'yearRate'   => $yearRate,
-			'retType'    => $retType,
+			'borrUserId'   => $borrUserId,
+			'borrTotAmt'   => $borrTotAmt,
+		    'yearRate'     => $yearRate,
+			'retType'      => $retType,
 			'bidStartDate' => $bidStartDate,
 			'bidEndDate'   => $bidEndDate,
 			'proArea'      => $proArea,
 		);
-		return $ret;
-		
+		return $ret;		
 	}
 	
 }

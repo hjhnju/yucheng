@@ -209,9 +209,7 @@ class BgcallController extends Base_Controller_Page{
            	));
            	return;
         }
-        $merPriv     = explode('_',$_REQUEST['MerPriv']);
-        $userid      = intval($merPriv[0]);
-		$proId       = intval($merPriv[1]);
+        $userid      = intval($_REQUEST['MerPriv']);
 		$huifuid     = $_REQUEST['UsrCustId'];
 		$orderId     = intval($_REQUEST['OrdId']);
 		$orderDate   = intval($_REQUEST['OrdDate']);
@@ -253,7 +251,7 @@ class BgcallController extends Base_Controller_Page{
 		$paramTender = array(
 			'orderId'     => $orderId, 
 			'orderDate'   => $orderDate,
-			'proId'       => $proId,
+			'proId'       => $proId,/////////////////////////////////注意：此处的proId是什么含义比较合适
 			'freezeTrxId' => $freezeTrxId,	
 			'amount'      => $amount,
 			'status'      => Finance_TypeStatus::FREEZING,
@@ -519,5 +517,15 @@ class BgcallController extends Base_Controller_Page{
 	    $this->financeLogic->payRecordEnterDB($paramRecord);
 	    Base_Log::notice($_REQUEST);
 	    print('RECV_ORD_ID_'.$orderId);		
+	}
+	
+	/**
+	 * 汇付回调Action
+	 * 自动扣款转账(商户用)回调
+	 */
+	public function transferAction() {
+		
+		
+		
 	}
 }
