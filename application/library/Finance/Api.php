@@ -208,9 +208,10 @@ class Finance_Api {
 	
 	/**
 	 * 主动投标接口 Finance_Api::initiativeTender
-	 * @param String transAmt 交易金额(required)   
-	 * @param String usrid 用户ID(required)    
-	 * @param String maxTenderRate 最大投资手续费率(required)
+	 * @param int proId 借款ID
+	 * @param float transAmt 交易金额(required)   
+	 * @param int usrid 用户ID(required)    
+	 * @param float maxTenderRate 最大投资手续费率(required)
 	 * @param array BorrowerDetails 借款人信息(required)     
 	 *        array(
      *            0 => array(
@@ -233,7 +234,7 @@ class Finance_Api {
      * )   
      * 
 	 */
-	public static function initiativeTender($transAmt, $userid ,$uidborrowDetail,$retUrl) {
+	public static function initiativeTender($proId,$transAmt, $userid ,$uidborrowDetail,$retUrl) {
 		$isFreeze = true;
 		$transLogic = new Finance_Logic_Transaction();
 		$transLogic->initiativeTender($transAmt, $userid, $uidborrowDetail, $isFreeze, $retUrl);		

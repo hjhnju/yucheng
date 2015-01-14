@@ -270,9 +270,36 @@ class BgcallController extends Base_Controller_Page{
 	 * 打印RECV_ORD_ID_OrderId
 	 */
 	public function tenderCancleAction() {
-		
-	}
 
+	}
+	/**
+	 * 汇付回调Action
+	 * 标信息录入回调Action
+	 * 打印RECV_ORD_ID_ProId
+	 */
+	public function addBidInfoAction() {
+		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
+			!isset($_REQUEST['MerCustId']) || !isset($_REQUEST['ProId']) || !isset($_REQUEST['BorrCustId']) ||
+			!isset($_REQUEST['BorrTotAmt']) || !isset($_REQUEST['ProArea']) || !isset($_REQUEST['BgRetUrl']) ||
+			!isset($_REQUEST['ChkValue'])) {
+				Base_Log::error(array(
+				'msg' => '汇付返回参数错误',
+				));
+				return ;
+			}
+			$respCode = $_REQUEST['RespCode'];
+			$respDesc = $_REQUEST['RespDesc'];
+			$proId    = $_REQUEST['ProId'];
+			if($respCode !== '000') {
+				Base_Log::error(array(
+				'msg'   => $respDesc,
+				'proId' => $proId,
+				));
+				return ;
+			}
+			print('RECV_ORD_ID_'.strval($proId));
+	}
+	
 	/**
 	 * 汇付回调Action
 	 * 提现回调Action

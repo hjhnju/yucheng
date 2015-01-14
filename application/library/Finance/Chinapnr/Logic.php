@@ -65,6 +65,7 @@ class Finance_Chinapnr_Logic {
 	const CMDID_QUERY_FSS_ACCTS= "QueryFssAccts"; //生利宝账户信息查询,后台数据流方式
 	const CMDID_QUERY_CARD_INFO= "QueryCardInfo"; //银行卡查询接口,后台数据流方式
     const CMDID_QUERY_USR_INFO= "QueryUsrInfo" ;//用户信息查询接口，后台数据流方式
+    const CMDID_ADD_BID_INFO="AddBidInfo";//表信息录入
 
 	/**
 	 * @desc depends npc sign server.
@@ -251,8 +252,37 @@ HTML;
 
 		return $this->reactResponse($this->request($reqData));
 	}
+	
 	/**
-	 * 
+	 * 标信息录入
+	 */
+	public function addBidInfo($merCustId,$proId,$borrCustId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$guarCompId='',$guarAmt='',$proArea,$bgRetUrl,$merPriv='',$reqExt='') {
+		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_ADD_BID_INFO.$merCustId.$proId.$borrCustId.$borrTotAmt.$yearRate.$retType.$bidStartDate.$bidEndDate.$retAmt.$retDate.$guarComp.$guarAmt.$proArea.$bgRetUrl.$merPriv.$reqExt);
+		$reqData = array(
+			"Version"	   => $this::VERSION_10,
+			"CmdId"		   => $this::CMDID_ADD_BID_INFO,
+			"MerCustId"	   => $merCustId,
+			"ProId"        => $proId,
+			"BorrCustId"   => $borrCustId,
+		    "BorrTotAmt"   => $borrTotAmt,
+			"YearRate"     => $yearRate,
+			"RetType"      => $retType,
+			"BidStartDate" => $bidStartDate,
+			"BidEndDate"   => $bidEndDate,	
+			"RetAmt"       => $retAmt,
+			"RetDate"      => $retDate,
+			"GuarCompId"   => $guarCompId,
+			"GuarAmt"      => $guarAmt,
+			"ProArea"      => $proArea,
+			"BgRetUrl"     => $bgRetUrl,
+			"MerPriv"      => $merPriv,
+			"ReqExt"       => $reqExt,
+			"ChkValue"     => $checkValue,				
+		);
+		return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","ProId","BorrCustId","BorrTotAmt","GuarCompId","GuarAmt","ProArea","BgRetUrl","MerPriv","RespExt"));
+	}
+	/**
+	 * 通过用户身份证号查询用户信息
 	 */
 	public function queryUsrInfo($merCustId,$certId,$reqExt="") {
 		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_QUERY_USR_INFO.$merCustId.$certId.$reqExt);
