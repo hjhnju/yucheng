@@ -38,7 +38,8 @@ exports.getProcessors = function () {
             'src/loan/success/index.less',
             'src/security/index/index.less',
             'src/security/profit/index.less',
-            'src/security/focus/index.less'
+            'src/security/focus/index.less',
+            'src/guide/index.less'
 
         ]
     });
@@ -73,7 +74,8 @@ exports.getProcessors = function () {
             'src/loan/success/index.less',
             'src/security/index/index.less',
             'src/security/profit/index.less',
-            'src/security/focus/index.less'
+            'src/security/focus/index.less',
+            'src/guide/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -106,7 +108,8 @@ exports.getProcessors = function () {
             'src/loan/success/index.js',
             'src/security/index/index.js',
             'src/security/profit/index.js',
-            'src/security/focus/index.js'
+            'src/security/focus/index.js',
+            'src/guide/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

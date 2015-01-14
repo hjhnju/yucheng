@@ -312,3 +312,4 @@ p{margin:0;padding:0}
 .operation-time-type:before,.operation-time-type:after{display:table;content:""}
 .operation-time-type:after{clear:both}
 .operation-table{text-align:center}
+.operation-list{position:relative;min-height:100px}

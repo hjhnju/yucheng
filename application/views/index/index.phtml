@@ -123,13 +123,18 @@
                 <div class="investlist-box-title">
                     {%foreach $data.list as $key => $item%}
                     <div class="investlist-box-title-name name">
-                        <span class="name-shi">实</span>
+                        <span class="name-shi">
+                            {%if $item.type_id == 1%}实
+                            {%else if $item.type_id == 2%}信
+                            {%else%}机
+                            {%/if%}
+                        </span>
                         <div class="school">
                             <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
                         </div>
                     </div>
                     <div class="investlist-box-title-name grade">
-                        <span class="grade-star level-aaa"></span>
+                        <span class="grade-star level-{%$item.level_name%}"></span>
                     </div>
                     <div class="investlist-box-title-name lilv">
                         <span class="lilv-number">{%$item.interest%}</span>
