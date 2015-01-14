@@ -23,6 +23,8 @@ define(function (require) {
     var status = 0;
 
     function init() {
+
+
         header.init();
         var container = $('#my-msg-list');
         var pager;

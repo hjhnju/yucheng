@@ -57,7 +57,10 @@
                     <div class="investlist-box-title-name jindu">进度</div>
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
-                <div id="invest-main">
+                <div id="invest-main" class="invest-main">
+
+
+
                     <div class="investlist-box-title">
                         {%foreach $list as $key => $item%}
                         <div class="investlist-box-title-name name">
@@ -68,19 +71,8 @@
 
                         </div>
                         <div class="investlist-box-title-name grade">
-                            {%if $level == 0.5%}
-                            <span class="grade-star half">
-                            {%else if $level == 1%}
-                            <span class="grade-star all"></span>
-                            {%else if $level == 1.5%}
-                            <span class="grade-star all"></span>
-                            {%else if $level == 2%}
-                            <span class="grade-star all"></span>
-                            {%else if $level == 2.5%}
-                            <span class="grade-star all"></span>
-                            {%else $level == 3%}
-                            <span class="grade-star all"></span>
-                            {%/if%}
+                            <span class="grade-star level-{%$item.level_name%}">
+
                         </div>
                         <div class="investlist-box-title-name lilv">
                             <span class="lilv-number">{%$item.interest%}</span>
@@ -118,55 +110,8 @@
                     </div>
                 </div>
 
-<!--                <div class="investlist-box-title">-->
-<!--                    <div class="investlist-box-title-name name">-->
-<!--                        <span class="name-shi">实</span>-->
-<!--                        <span class="school">福建三明高中扩建一期</span>-->
-<!--                    </div>-->
-<!--                    <div class="investlist-box-title-name grade">-->
-<!--                        <span class="grade-star all"></span>-->
-<!--                        <span class="grade-star hale"></span>-->
-<!--                        <span class="grade-star none"></span>-->
-<!--                    </div>-->
-<!--                    <div class="investlist-box-title-name lilv">-->
-<!--                        <span class="lilv-number">12</span>-->
-<!--                        <span class="lilv-bai">%</span>-->
-<!--                    </div>-->
-<!--                    <div class="investlist-box-title-name price">-->
-<!--                        <span class="lilv-number color-blank">1,000,000</span>-->
-<!--                        <span class="lilv-bai">元</span>-->
-<!--                    </div>-->
-<!--                    <div class="investlist-box-title-name time">-->
-<!--                        <span class="lilv-number color-blank">6</span>-->
-<!--                        <span class="lilv-bai">个月</span>-->
-<!--                    </div>-->
-<!--                    <div class="investlist-box-title-name jindu">-->
-<!--                        <div class="jindu-box">-->
-<!--                            <div class="jindu-box-inline"></div>-->
-<!--                        </div>-->
-<!--                        <div class="jindu-number">-->
-<!--                            <span class="lilv-number">100</span>-->
-<!--                            <span class="lilv-bai">%</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="investlist-box-title-name status">-->
-<!--                        <a class="status-biding current" href="###">投标结束</a>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
-<!--            <div class="pager">-->
-<!--                <a href="###" class="pager-link left">上一页</a>-->
-<!--                <a href="###" class="pager-link current">1</a>-->
-<!--                <a href="###" class="pager-link">2</a>-->
-<!--                <a href="###" class="pager-link">3</a>-->
-<!--                <a href="###" class="pager-link">4</a>-->
-<!--                <a href="###" class="pager-link">5</a>-->
-<!--                <a href="###" class="pager-link">6</a>-->
-<!--                <span class="pager-span">...</span>-->
-<!--                <a href="###" class="pager-link">22</a>-->
-<!--                <a href="###" class="pager-link left">下一页</a>-->
-<!---->
-<!--            </div>-->
+
             <div class="test">
 
                 <div id="test2"></div>

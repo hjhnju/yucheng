@@ -14,19 +14,8 @@
         </div>
     </div>
     <div class="investlist-box-title-name grade">
-        <!--if: ${item.level} == 0.5 -->
-        <span class="grade-star half"></span><span class="grade-star none"></span><span class="grade-star none"></span>
-        <!--elif: ${item.level} == 1 -->
-        <span class="grade-star all"></span><span class="grade-star none"></span><span class="grade-star none"></span>
-        <!--elif: ${item.level} == 1.5 -->
-        <span class="grade-star all"></span><span class="grade-star half"></span><span class="grade-star none"></span>
-        <!--elif: ${item.level} == 2 -->
-        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star none"></span>
-        <!--elif: ${item.level} == 2.5 -->
-        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star half"></span>
-        <!--else-->
-        <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star all"></span>
-        <!--/if-->
+
+        <span class="grade-star level-${item.level_name}"></span>
     </div>
     <div class="investlist-box-title-name lilv">
         <span class="lilv-number">${item.interest}</span>

@@ -11,6 +11,9 @@ define(function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
+    var dialog = require('common/ui/Dialog/Dialog');
+    var etpl = require('etpl');
+    var tpl = require('./regist.tpl');
 
     var Remoter = require('common/Remoter');
     var checkName = new Remoter('REGIST_CHECKNAME_CHECK');
@@ -69,6 +72,7 @@ define(function (require) {
         isthird = third ? 1 : 0;
         header.init();
         picScroll.init();
+        dialog.init();
         bindEvents();
         callBack();
     }
@@ -324,6 +328,18 @@ define(function (require) {
             else {
                 window.location.href = '/user/open/index';
             }
+        });
+
+
+
+        // 点击快速绑定 出浮层
+        $('.fix-box-register').click(function () {
+
+            dialog.show({
+                width: 500,
+                defaultTitle: false,
+                content: etpl.render('fixBox')
+            });
         });
     }
     return {

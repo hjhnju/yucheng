@@ -17,6 +17,8 @@ define(function (require) {
     var pager;
     var header = require('common/header');
 
+    var htmlContainer = ('#operation-list');
+
     var option = {
         'type': 0,
         'data': 0,

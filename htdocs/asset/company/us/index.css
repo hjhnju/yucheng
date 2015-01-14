@@ -160,6 +160,6 @@ p{margin:0;padding:0}
 .company-part-title:after{clear:both}
 .company-part-titlectx{float:left;font-size:22px;height:44px;line-height:44px;margin:0;padding:0;border-bottom:2px solid #76cf65}
 .company-part-back{font-size:12px;line-height:44px;float:right;color:#000;text-decoration:none;cursor:pointer}
-.company-logo{height:180px;background:url(img/logo.png) center center no-repeat}
+.company-logo{height:30px}
 .company-intro{font-size:14px;line-height:24px;margin-bottom:20px;text-indent:2em}
-.company-kouhao{font-size:20px;line-height:44px}
+.company-kouhao{font-size:18px;line-height:32px;color:#76cf65;height:140px;padding-top:80px;padding-left:170px;font-weight:700;background:url(img/logo.png) 50px center no-repeat;background-color:#e8f3e6}

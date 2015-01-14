@@ -283,3 +283,4 @@ p{margin:0;padding:0}
 .my-invest-item p{margin:0;padding:0}
 .my-invest-item a{color:#76cf65;text-decoration:none;cursor:pointer}
 .my-invest-item .close-detail{color:#76cf65;cursor:pointer;position:absolute;top:10px;right:20px}
+.min-height{min-height:100px;position:relative}

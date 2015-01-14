@@ -17,6 +17,8 @@ define(function (require) {
     var pager;
     var type;
 
+    var htmlContainer;
+
 
     var option = {
         'type_id': 0,
@@ -27,6 +29,8 @@ define(function (require) {
     };
 
     function init(opt) {
+
+        htmlContainer = $('#invest-main');
 
         $('.nav-item-link:eq(0)').addClass('current');
 
@@ -62,19 +66,24 @@ define(function (require) {
             option.type_id = +$(this).attr('data-value');
             option.page = 1;
 
+            htmlContainer.html(etpl.render('Loading'));
+
             getList.remote('post',option);
         });
 
         //getListCb
         getList.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+                htmlContainer.html(etpl.render('Error'), {
+                    msg: data.statusInfo
+                });
             }
             else {
                 pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 
-                $('#invest-main').html(etpl.render('list',{
+
+                htmlContainer.html(etpl.render('list',{
                     list: data.list
                 }));
 
@@ -88,6 +97,7 @@ define(function (require) {
             option.cat_id = +$(this).attr('data-value');
             option.page = 1;
 
+            htmlContainer.html(etpl.render('Loading'));
             getList.remote('post',option);
         });
 
@@ -97,6 +107,7 @@ define(function (require) {
             $(this).addClass('current');
             option.duration = +$(this).attr('data-value');
 
+            htmlContainer.html(etpl.render('Loading'));
             getList.remote('post',option);
         });
 

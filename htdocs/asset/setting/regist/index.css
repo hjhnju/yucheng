@@ -229,3 +229,10 @@ p{margin:0;padding:0}
 .bound-text{line-height:24px;font-size:14px;color:#000}
 .bound-text a{color:#76cf65;text-decoration:none}
 .bound-text a:hover{text-decoration:underline}
+.fix-box-register{text-decoration:none;color:#76cf65;cursor:pointer}
+.fix-box-register:hover{text-decoration:underline}
+.regist-fix{width:390px;padding:30px 60px 60px;background-color:#fff;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.regist-fix-title{height:38px;line-height:38px;font-size:20px;color:#000;margin-bottom:10px}
+.regist-fix-con{width:378px;height:44px;line-height:44px;border:1px solid #cfcfcf;margin-bottom:20px;position:relative}
+.regist-fix-con-ipt{border:0;outline:0;width:360px;padding-left:10px;font-size:14px}
+.regist-fix-con-name{position:absolute;left:10px;top:10px;color:#adadad;font-size:14px}
