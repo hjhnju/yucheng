@@ -156,8 +156,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		
 		$arrayFee = $this->getFee($riskLevel,$transAmt,$duration);
 		$fee = strval($arrayFee['all']);
-		$prepareFee = $fee['prepareFee'];//风险准备金
-		$serviceFee = $fee['serviceFee'];//融资服务费
+		$prepareFee = strval($fee['prepareFee']);//风险准备金
+		$serviceFee = strval($fee['serviceFee']);//融资服务费
 		
 		$loanInfo = Loan_Api::getLoanInfo($subOrdId);
 		$duration = $loanInfo['days'];
@@ -189,7 +189,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$unFreezeOrdId = $unFreezeOrdInfo['orderId'];
 		$freezeTrxId = $tenderInfo['freezeTrxId'];
 		$bgRetUrl = $webroot.'/finance/bgcall/loans';
-		$merPriv = '';
+		$merPriv = strval($outUserId);//投标人的uid
 		$reqExt = '';
 		$ret = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, $fee, $subOrdId, $subOrdDate,
 		    $inCustId, $jsonDivDetails,$feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, $freezeTrxId, $bgRetUrl,
@@ -247,14 +247,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 			'status'      => Finance_TypeStatus::ORDER_INITIALIZE,
 			'comment'     => '财务类提现订单初始化',
 		);
+        $this->payOrderEnterDB($param);
 
-        $ret = $this->payOrderEnterDB($param);
-		if(!$ret) {
-		    Base_Log::error(array(
-			    'msg' => '财务类充值订单入库失败',
-			));
-		}
-		$orderId = strval($orderId);
+        $orderId = strval($orderId);
 		$huifuid = $this->getHuifuid($userid);
 		$huifuid = '6000060000696947';
 		$transAmt = strval($transAmt);
@@ -272,6 +267,81 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		//echo ($reqExt);die;
 		$chinapnr->cash($merCustId, $orderId, $huifuid, $transAmt, $servFee, '', 
 		    $openAcctId, $retUrl, $bgRetUrl, '', '', $merPriv, $reqExt);
+	}
+	
+	/**
+	 * 还款Logic层
+	 * @param string outUserId 出账账户号：还款人的uid
+	 * @param string inUserId 入账账户号：投资人的uid
+	 * @param string subOrdId 关联的投标订单号
+	 * @param float transAmt 交易金额
+	 * @return array || boolean
+	 * 
+	 */
+	public function Repayment($outUserId,$inUserId,$subOrdId,$transAmt) {
+		if(!isset($outUserId) || !isset($inUserId) || !isset($subOrdId) ||
+		   !isset($transAmt) || !isset($proId)) {
+		    Base_Log::error(array(
+		    	'msg' => '请求参数错误',
+		    ));   	
+		    return false;
+		}
+		$webroot   = Base_Config::getConfig('web')->root;
+		$chinapnr  = Finance_Chinapnr_Logic::getInstance();
+		
+		$orderInfo = $this->genOrderInfo();
+		$orderId   = $orderInfo['orderId'];
+		$orderDate = $orderInfo['date'];
+		//还款订单订单记录入表finance_order
+		$param = array(
+			'orderId'   => intval($orderId),
+			'orderDate' => intval($orderDate),
+			'userId'    => intval($outUserId),//还款人的uid
+			'type'      => Finance_TypeStatus::REPAYMENT,
+			'amount'    => floatval($transAmt),
+			'status'    => Finance_TypeStatus::PROCESSING,
+			'comment'   => '财务类还款订单初始化',
+		);
+		$this->payOrderEnterDB($param);
+		$merCustId = strval(self::MERCUSTID);
+		$ordId = strval($orderId);
+		$ordDate = strval($orderDate);
+		$outCustId = strval($this->getHuifuid(intval($outUserId)));
+		$tenderInfo = $this->getTenderInfo(intval($subOrdId));
+		$subOrdId = strval($subOrdId);
+		$subOrdDate = strval($tenderInfo['orderDate']);
+		$outAcctId = '';
+		$transAmt = strval($transAmt);
+		$loanInfo = Loan_Api::getLoanInfo($subOrdId);
+		$duration = $loanInfo['days'];
+		$riskLevel = $loanInfo['level'];
+		$fee = strval($this->getFee($riskLevel,$transAmt,$duration));
+		$serviceFee = $fee['serviceFee'];
+		$prepareFee = $fee['prepareFee'];
+		$inCustId = strval($this->getHuifuid(intval($inUserId)));
+		$inAcctId = '';
+		$arrDivDetails = array(
+			//风险金账户
+			array(
+				'DivCustId'=>'6000060000677575',
+				'DivAcctId'=>'SDT000002',
+				'DivAmt'   => floatval($prepareFee),
+			),
+			//专属账户
+			array(
+				'DivCustId'=>'6000060000677575',
+				'DivAcctId'=>'MDT000001',
+				'DivAmt'   => floatval($serviceFee),
+			),
+		);
+		$divDetails = json_encode($arrDivDetails);
+		$feeObjFlag = 'O';//像还款人收取手续费
+		$bgRetUrl = $webroot.'/finance/bgcall/repayment';
+		$merPriv = strval($outUserId);//借款人的uid
+		$reqExt = '';
+		$ret = $chinapnr->repayment($merCustId, $ordId, $ordDate, $outCustId, $subOrdId, $subOrdDate, $outAcctId, 
+				$transAmt, $fee, $inCustId, $inAcctId, $divDetails, $feeObjFlag, $bgRetUrl, $merPriv, $reqExt);
+		
 	}
 }
 

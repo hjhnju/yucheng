@@ -10,7 +10,8 @@ class Finance_TypeStatus {
 	CONST INITIATIVETENDER = 2;  //主动投标
 	CONST TENDERCANCLE     = 3;  //投标撤销
 	CONST LOANS            = 4;  //满标打款
-	CONST UNKNOWN_TYPE     = 5;  //未知类型
+	CONST REPAYMENT        = 5;  //还款
+	CONST UNKNOWN_TYPE     = 6;  //未知类型
 	//订单状态
 	CONST ORDER_INITIALIZE = 0;  //订单初始化
 	CONST PROCESSING       = 1;  //订单处理中
@@ -27,7 +28,8 @@ class Finance_TypeStatus {
 		self::CASH             => '提现',
 		self::INITIATIVETENDER => '主动投标',
 		self::TENDERCANCLE     => '投标撤销',
-		self::LOANS            => '满标打款',	
+		self::LOANS            => '满标打款',
+		self::REPAYMENT        => '还款',	
 		self::UNKNOWN_TYPE     => '未知类型',	
 	);
 	

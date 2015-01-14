@@ -264,19 +264,55 @@ class Finance_Api {
       	 $transLogic = new Finance_Logic_Transaction();
       	 $return = $transLogic->loans($subOrdId,$inCustId,$outCustId,$transAmt);
       	 if(is_null($return)) {
+      	 	$errCode = Finance_RetCode::REQUEST_API_ERROR;    	 	
+      	 	Base_Log::error(array(
+      	 		'msg' => Finance_RetCode::getMsg($errCode),
+      	 	));
       	 	return false;
       	 }
       	 $respCode = $return['RespCode'];
       	 $respDesc = $return['RespDesc'];
       	 if($respCode !== '000') {
       	 	Base_Log::error(array(
-      	 		'msg' => '由于某个原因打款失败',
+      	 		'msg' => $respDesc,
       	 		'respCode' => $respCode,
-      	 		'respDesc' => $respDesc,
       	 	));
       	 	return false;
       	 }
       	 return true;     	
+     }
+     
+     /**
+      * 还款接口Finance_Api::Repayment
+      *@param string outUserId 出账账户号：还款人的uid
+	  * @param string inUserId 入账账户号：投资人的uid
+	  * @param string subOrdId 关联的投标订单号
+	  * @param float transAmt 交易金额
+      * @return boolean 还款成功/失败
+      */
+     public static function Repayment($outUserId,$inUserId,$subOrdId,$transAmt,$proId) {
+     	$transLogic = new Finance_Logic_Transaction();
+     	$return = $transLogic->Repayment($outUserId,$inUserId,$subOrdId,$transAmt,$proId);     	
+     	if($return === false) {
+     		return false;
+     	}
+     	if(is_null($return)) {
+     	    $errCode = Finance_RetCode::REQUEST_API_ERROR;
+     	    Base_Log::error(array(
+     	        'msg' => Finance_RetCode::getMsg($errCode),
+     	    ));
+     	    return false;
+     	}
+     	$respCode = $return['RespCode'];
+     	$respDesc = $return['RespDesc'];
+     	if($respCode !== '000') {
+     		Base_Log::error(array(
+     		'msg' => $respDesc,
+     		'respCode' => $respCode,
+     		));
+     		return false;
+     	}
+     	return true;
      }
      
      /**
