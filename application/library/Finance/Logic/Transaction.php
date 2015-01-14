@@ -51,6 +51,49 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	}
 	
 	/**
+	 * 标信息录入Logic层
+	 * @param investID 标的唯一标示
+	 * @param borrUserId 借款人uid
+	 * @param borrTotAmt 借款总金额
+	 * @param yearRate 年利率
+	 * @param retType 还款方式   01等额本息  02等额本金  03按期付息，到期还本  04一次性还款   99其他
+	 * @param bidStartDate 时间戳投标开始时间
+	 * @param bidEndDate 时间戳投标截止时间
+	 * @param proArea 项目所在地
+	 * @return array || boolean
+	 * 
+	 */
+	public function addBidInfo($orderId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea) {
+	    $webroot  = Base_Config::getConfig('web')->root;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		if(!isset($orderId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
+		   !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
+		    Base_Log::error(array(
+		    	'msg' => '请求参数出错',
+		    ));   	
+		    return false;
+		}
+		
+		$merCustId = strval(self::MERCUSTID);
+		$proId = strval($orderId);
+		$borrCustId = strval($this->getHuifuid(intval($borrUserId)));
+		$borrTotAmt = strval($borrTotAmt);
+		$yearRate = strval($yearRate);
+		$retType = strval($retType);
+		$bidStartDate = strval($bidStartDate);
+		$bidEndDate = strval($bidEndDate);
+		//$retAmt 总还款金额 怎么算？？？
+		//$retDate 应还款日期怎么算？？
+		$guarCompId = '';
+		$guarAmt = '';
+		$proArea = strval($proArea);
+		$bgRetUrl = $webroot.'/finance/bgcall/addBidInfo';
+		$merPriv = '';
+		$reqExt = '';		
+		$ret = $chinapnr->addBidInfo($merCustId,$proId,$borrCustId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);
+		return $ret;
+	}
+	/**
 	 * 主动投标Logic层
 	 * @param float   tranAmt
 	 * @param integer userid
@@ -70,6 +113,23 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    	    
 	    $freezeOrdInfo = $this->genOrderInfo();
 	    $freezeOrdId   = $freezeOrdInfo['orderId'];
+	    
+	    $loanId = intval($uidborrowDetail['ProId']);
+        $loanInfo     = $this->getLoanInfo($loanId);
+	    $borrUserId   = intval($loanInfo['borrUserId']);
+	    $borrTotAmt   = floatval($loanInfo['borrTotAmt']);
+	    $yearRate     = floatval($loanInfo['yearRate']);
+	    $retType      = strval($loanInfo['retType']);
+	    $bidStartDate = date("YmdHis",intval($loanInfo['bidStartDate']));
+	    $bidEndDate   = date("YmdHis",intval($loanInfo['bidEndDate']));
+	    $proArea      = strval($loanInfo['proArea']);
+	    //将标的信息录入至汇付系统
+	    $retAddBid = $this->addBidInfo($orderId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea);
+	    if(!$retAddBid || is_null($retAddBid)) {
+	      	Base_Log::error(array(
+	    		'msg' => '标的信息录入失败',	    		
+	    	));
+	    }	    	    
 	    //主动投标订单记录入表pay_order
 	    $param = array(
 	    	'orderId'     => intval($orderId),
@@ -89,7 +149,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $transAmt  = strval($transAmt);
 	    $usrCustId = strval($this->getHuifuid($userid));
 	    $usrCustId = "6000060000696947";
-	    $maxTenderRate = '0.00';
+	    $maxTenderRate = '0.10';
 	    $huifuborrowerDetails = array(
 	    	array(
 	    		strval($this->getHuifuid(intval($uidborrowDetail['BorrowerUserId']))),
@@ -101,8 +161,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $huifuborrowerDetails = array(
 	    	array(
 	    	    "BorrowerCustId" => "6000060000700460",
-	    	    "BorrowerAmt"    => "20000.00",
-	    	    "BorrowerRate"   => "0.18" ,
+	    	    "BorrowerAmt"    => "2000.00",
+	    	    "BorrowerRate"   => "1.00" ,
 	    	    "ProId"          => "0000000000000003",
 	    ));
 	    $isFreeze    = strval($isFreeze);
@@ -110,8 +170,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $retUrl      = "";   
 	    $bgRetUrl    = $webroot.'/finance/bgcall/initiativeTender';
 	    $proId       = strval($huifuborrowerDetails[0][ProId]);
-	    $merPriv     = $userid.'_'.$proId;//用户私有域为$userid_proId
-	    
+	    //$merPriv     = $userid.'_'.$proId;//用户私有域为$userid_proId
+	    $merPriv = '';
 	    $chinapnr->initiativeTender($merCustId,$orderId,$orderDate,$transAmt,$usrCustId,
 	        $maxTenderRate,$huifuborrowerDetails,$isFreeze,$freezeOrdId,$retUrl,$bgRetUrl,$merPriv
 		);	    

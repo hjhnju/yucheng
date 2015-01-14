@@ -24,9 +24,9 @@ class Finance_Logic_Base {
 	 */
     protected function genOrderInfo(){
     	$timeStr = $this->getMillisecond();
+    	
     	$time = substr($timeStr,0,10);
     	$ms = substr($timeStr,10,3);
-    	
 		$date = date("Ymd",$time);
 		$now = date("YmdHis",$time) . $ms ;
 		
@@ -250,16 +250,18 @@ class Finance_Logic_Base {
 	 * 
 	 */
 	public function balance($userid){
-		if($userid <= 0) {
+		//注释for test
+        /* if($userid <= 0) {
 			Base_Log::error(array(
 				'msg'    => '请求参数错误',
 				'userid' => $userid,
 			));
 			return false;
-		}
+		} */
 		$mercustId = self::MERCUSTID;
 		$ret = array();
 		$huifuid = $this->getHuifuid($userid);
+		$huifuid = "6000060000696947";
 		$userBg = Finance_Api::queryBalanceBg($huifuid);
 		if($userBg['status'] === Finance_RetCode::REQUEST_API_ERROR) {
 			Base_Log::error(array(
@@ -352,4 +354,39 @@ class Finance_Logic_Base {
 		);
 		return $ret;
 	}
+	
+	/**
+	 * 获取借款详情
+	 * @param int loanId
+	 * @return array || boolean
+	 */
+	public function getLoanInfo($loanId) {
+		if($loanId <= 0) {
+			Base_Log::error(array(
+				'msg' => '请求参数错误',
+			));
+			return;
+		}
+		$return = Loan_Api::getLoanInfo($loanId);
+		$borrUserId = intval($return['user_id']);//借款人uid
+		$borrTotAmt = floatval($return['amount']);//借款总金额
+		$yearRate = floatval($return['interest']);//年利率
+		$retType = $return['refund_type'];//还款方式
+		$now = time();
+		$bidStartDate = $now;//投标创建时间
+		$bidEndDate = $return['deadline'];//标的截止时间
+		$proArea = $return['proArea'];//投标地区
+		$ret = array(
+			'borrUserId' => $borrUserId,
+			'borrTotAmt' => $borrTotAmt,
+		    'yearRate'   => $yearRate,
+			'retType'    => $retType,
+			'bidStartDate' => $bidStartDate,
+			'bidEndDate'   => $bidEndDate,
+			'proArea'      => $proArea,
+		);
+		return $ret;
+		
+	}
+	
 }

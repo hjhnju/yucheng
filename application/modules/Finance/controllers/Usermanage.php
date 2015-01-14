@@ -34,9 +34,7 @@ class UsermanageController extends Base_Controller_Page{
         //$this->userManageLogic->userRegist($userName,'',$userid);
         //TODO: remove
         //FOR TEST
-        $this->userManageLogic->userRegist('382906882','',$userid);
-       
-        
+        $this->userManageLogic->userRegist('382906882','',$userid);       
     }
 
     /**
@@ -65,7 +63,7 @@ class UsermanageController extends Base_Controller_Page{
      */
     public function loginAction() {
     	$huifuid = $this->huifuid;
-    	
+    	$huifuid = "6000060000696947";	
     	$this->userManageLogic->userLogin($huifuid);
     }
     
@@ -122,7 +120,7 @@ class UsermanageController extends Base_Controller_Page{
     
     public function testAction() {
         $logic = new Finance_Logic_Transaction();
-        $transAmt = 20.00;
+        $transAmt = "20.00";
         $userid=1;
         $uidborrowDetail = array(
             "BorrowerUserId" => 1,
@@ -130,7 +128,7 @@ class UsermanageController extends Base_Controller_Page{
         	"BorrowerRate"   => "0.12" , 
         	"ProId"          => 1,
         );
-        $isFreeze=true;
+        $isFreeze='Y';
         $retUrl='';
         $logic->initiativeTender($transAmt,$userid,$uidborrowDetail,$isFreeze,$retUrl);
     }
