@@ -58,7 +58,8 @@ p{margin:0;padding:0}
 .header-left-time{display:inline-block;line-height:34px;color:#666;margin-right:20px}
 .header-left-attention{display:inline-block;line-height:34px;color:#666}
 .header-left-attention .attention-me{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
-.header-left-attention .attention-me.xinlang{background-position:0 -50px}
+.header-left-attention .attention-me.weibo{background-position:0 -50px}
+.header-left-attention .attention-me.weibo:hover{background-position:0 -299px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
 .header-left-attention .attention-me.weixin:hover{background-position:0 -251px}
 .xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:5;z-index:12;border:1px solid #ccc;display:none;background:url(../../common/img/weixin.jpg) 0 0 no-repeat}
@@ -95,7 +96,8 @@ p{margin:0;padding:0}
 .footer-site-left{color:#b1b1b3;margin-right:20px}
 .footer-site-me{color:#b1b1b3}
 .footer-site-me-xinlang{display:inline-block;width:20px;height:20px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;vertical-align:middle;margin-left:5px;position:relative;left:0;top:0;cursor:pointer}
-.footer-site-me-xinlang.xinlang{background-position:0 -150px}
+.footer-site-me-xinlang.weibo{background-position:0 -150px}
+.footer-site-me-xinlang.weibo:hover{background-position:0 -300px}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-site-me-xinlang.weixin:hover{background-position:0 -250px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../../common/img/footer_phone.png) 0 0 no-repeat}
