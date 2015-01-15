@@ -12,6 +12,7 @@ define(function (require) {
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
     var dialog = require('common/ui/Dialog/Dialog');
+    var login = require('setting/login/index');
     var etpl = require('etpl');
     var tpl = require('./regist.tpl');
 
@@ -70,7 +71,8 @@ define(function (require) {
 
     function init(third) {
         isthird = third ? 1 : 0;
-        header.init();
+        //header.init();
+        etpl.compile(tpl);
         picScroll.init();
         dialog.init();
         bindEvents();
@@ -340,6 +342,8 @@ define(function (require) {
                 defaultTitle: false,
                 content: etpl.render('fixBox')
             });
+
+            login.init('registBind');
         });
     }
     return {

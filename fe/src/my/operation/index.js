@@ -17,7 +17,7 @@ define(function (require) {
     var pager;
     var header = require('common/header');
 
-    var htmlContainer = ('#operation-list');
+    var htmlContainer = ('.operation-list');
 
     var option = {
         'type': 0,
@@ -52,6 +52,7 @@ define(function (require) {
 
         pager.on('change', function (data) {
             option.page = data.value;
+            htmlContainer.html(etpl.render('Loading'));
             getList.remote(option);
         });
 
@@ -70,6 +71,7 @@ define(function (require) {
 
             option.data = +$(this).attr('data-value');
             option.page = 1;
+            htmlContainer.html(etpl.render('Loading'));
             getList.remote('post', option);
         });
 
@@ -80,6 +82,7 @@ define(function (require) {
 
             option.type = +$(this).attr('data-value');
             option.page = 1;
+            htmlContainer.html(etpl.render('Loading'));
             getList.remote('post', option);
         });
 
@@ -113,6 +116,7 @@ define(function (require) {
             if (selectDate.stime && selectDate.etime) {
                 $('#operation-data .time-data-type-link').removeClass('current');
                 option.page = 1;
+                htmlContainer.html(etpl.render('Loading'));
                 getList.remote($.extend({}, option, {
                     startTime: selectDate.stime / 1000,
                     endTime: selectDate.etime / 1000
@@ -126,16 +130,28 @@ define(function (require) {
         // startCb
         getList.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+
+                htmlContainer.html(etpl.render('Error', {
+                    msg: data.statusInfo
+                }));
             }
             else {
                 pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 
-                $('.operation-list').html(etpl.render('typeList', {
+                htmlContainer.html(etpl.render('typeList', {
                     list: data.list
                 }));
             }
+        });
+
+        // startCb
+        getList.on('fail', function (msg) {
+
+            htmlContainer.html(etpl.render('Error', {
+                msg: msg
+            }));
+
         });
     }
 

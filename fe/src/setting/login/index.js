@@ -20,8 +20,10 @@ define(function (require) {
     var loginError = $('#login-error');
     var imgUrl = $('#login-img-url');
     var status = 0;
+    var loginType;
 
-    function init () {
+    function init (type) {
+        loginType = type || 'login';
         header.init();
         picScroll.init();
         bindEvents();
@@ -99,7 +101,7 @@ define(function (require) {
                     name: user,
                     passwd: pwd,
                     imagecode: volid,
-                    type: 'login'
+                    type: loginType
                 });
             }
             else {
@@ -116,7 +118,6 @@ define(function (require) {
             if(e.keyCode === 13) {
                 $('.login-fastlogin').trigger('click');
                 $(this).trigger('blur');
-                console.log(111);
             }
         });
 
@@ -124,7 +125,6 @@ define(function (require) {
                 if(e.keyCode === 13) {
                     $('.login-fastlogin').trigger('click');
                     $(this).trigger('blur');
-                    console.log(111);
                 }
             })
 

@@ -2,6 +2,7 @@
 @import "./color.less";
 @import "../ui/Pager/pager.less";
 @import "./datepicker.less";
+@import "../ui/Dialog/dialog.less";
 
 body {
     margin: 0;
@@ -640,4 +641,18 @@ p {
 }
 .color-red {
     color: @color-red;
+}
+
+#mk-dialog .close {
+    background: url(./img/fix_cha.png) 0 0 no-repeat;
+    width: 30px;
+    height: 30px;
+    top: -15px;
+    right: -15px;
+    font-size: 0;
+    border: 0;
+
+    &:hover {
+        border: 0;
+    }
 }

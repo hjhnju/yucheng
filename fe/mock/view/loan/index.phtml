@@ -1,12 +1,12 @@
 {%extends file="common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="/src/loan/loanstart/index.less" />
+<link rel="stylesheet" type="text/css" href="/src/loan/loan/index.less" />
 {%/block%}
 
 {%block name="script"%}
 <script>
-    require(['loan/loanstart/index'], function (main) {
+    require(['loan/loan/index'], function (main) {
         main.init();
     });
 </script>
@@ -18,7 +18,7 @@
         <div class="loan-start">
             <div class="loan-start-title">
                 <a class="loan-start-title-link" href="/mock/entry/loan/index.php">我要借款</a>
-                <span class="loan-start-title-symbol">></span>
+                <span class="loan-start-title-symbol">&gt;</span>
                 <span class="loan-start-title-span">贷款种类</span>
             </div>
             <div class="loan-start-main">
