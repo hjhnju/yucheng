@@ -11,7 +11,8 @@ class Finance_TypeStatus {
 	CONST TENDERCANCLE     = 3;  //投标撤销
 	CONST LOANS            = 4;  //满标打款
 	CONST REPAYMENT        = 5;  //还款
-	CONST UNKNOWN_TYPE     = 6;  //未知类型
+	CONST TRANSFER         = 6;  //商户用自动扣款转账
+	CONST UNKNOWN_TYPE     = 7;  //未知类型
 	//订单状态
 	CONST ORDER_INITIALIZE = 0;  //订单初始化
 	CONST PROCESSING       = 1;  //订单处理中
@@ -30,6 +31,7 @@ class Finance_TypeStatus {
 		self::TENDERCANCLE     => '投标撤销',
 		self::LOANS            => '满标打款',
 		self::REPAYMENT        => '还款',	
+		self::TRANSFER         => '商户用自动扣款转账',
 		self::UNKNOWN_TYPE     => '未知类型',	
 	);
 	

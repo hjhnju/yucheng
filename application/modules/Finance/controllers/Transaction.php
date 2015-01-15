@@ -28,25 +28,22 @@ class TransactionController extends Base_Controller_Api{
      *
      */ 
     public function netsaveAction(){
-        $userid = $this->userid;
+        $userid  = $this->userid;
         $huifuid = $this->huifuid;	
-        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';    
-        $transAmt = round($_REQUEST['transAmt'],2);
-        $openBankId = $_REQUEST['openBankId'];
-        $gateBusiId = $_REQUEST['gateBusiId'];
-        $dcFlag = $_REQUEST['dcFlag'];
-        //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
-        //TODO:remove
-        //FOR TEST
-        // Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
-        
+        $transAmt   = round($_REQUEST['transAmt'],2);
+        $openBankId = strval($_REQUEST['openBankId']);
+        $gateBusiId = strval($_REQUEST['gateBusiId']);
+        $dcFlag     = strval($_REQUEST['dcFlag']);
+        //for test
         $huifuid    = '6000060000696947';
         $transAmt   = '200.00';
-        $gateBusiId = 'FPAY';
-        $openBankId = 'ICBC';
+        $gateBusiId = 'B2C';
+        $openBankId = 'CIB';
         $dcFlag     = 'D';
         $transLogic = new Finance_Logic_Transaction();
         Base_Log::notice(array(
+            'userid'     => $userid,
+            'huifuid'    => $huifuid,
             'transAmt'   => $transAmt,
             'gateBusiId' => $gateBusiId,
             'openBankId' => $openBankId,
