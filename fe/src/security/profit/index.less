@@ -2,90 +2,51 @@
 
 @import "../common/css/common";
 
-
-.allposition-main {
+.low-main {
+    padding-bottom: 100px;
+}
+.low-main-title {
+    height: 30px;
+    line-height: 30px;
+    font-size: 28px;
+    color: @color-red;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.low-main-box {
     .clearfix;
-
-    &.bg-color {
-        background-color: #f8f8f8;
-        padding-bottom: 50px;
-    }
+    padding: 0 40px 0 20px;
 }
-.allposition-main-left {
+.low-main-box-left {
     float: left;
-    width: 400px;
+    width: 452px;
 }
-.allposition-main-left-pic {
-    height: 280px;
-    width: 390px;
-    background: url(./img/text_first.png) center center no-repeat;
-    margin-top: 100px;
-
-    &.second {
-        background: url(./img/text_second.png) center center no-repeat;
-    }
-
-    &.third {
-        background: url(./img/text_third.png) center center no-repeat;
-    }
-}
-.allposition-main-right {
-    float: left;
-    width: 600px;
-    margin-top: 60px;
-}
-.allposition-main-right-box {
-    .clearfix;
-    margin-bottom: 50px;
-}
-.main-box-icon {
-    float: left;
-    width: 100px;
-    height: 90px;
-    background: url(./img/allposition_icon.png) 0 0 no-repeat;
+.low-main-box-left-con {
+    padding-left: 100px;
+    height: 62px;
+    padding-top: 10px;
+    background: url(../common/css/img/low_icon.png) 0 0 no-repeat;
+    line-height: 26px;
+    font-size: 14px;
+    overflow: hidden;
+    margin-bottom: 30px;
 
     &.shouyi {
         background-position: 0 0;
     }
 
-    &.liyi {
+    &.chengben {
         background-position: 0 -100px;
     }
 
-    &.benjin {
+    &.qixian {
         background-position: 0 -200px;
     }
 
-    &.fangwei {
-        background-position: 0 -300px;
-    }
-
-    &.jianli {
-        background-position: 0 -400px;
-    }
-
-    &.zijin {
-        background-position: 0 -500px;
-    }
-
-    &.zhanghu {
-        background-position: 0 -600px;
-    }
 }
-.main-box-con {
-    float: left;
-    width: 500px;
-}
-.main-right-box-title {
-    height: 22px;
-    line-height: 22px;
-    font-size: 20px;
-    color: #070707;
-    margin-bottom: 10px;
-}
-.main-right-box-text {
-    line-height: 22px;
-    color: #333333;
-    text-indent: 2em;
-    font-size: 14px;
+.low-main-box-right {
+    float: right;
+    width: 376px;
+    height: 306px;
+    background: url(../common/css/img/low_yuanzhu.jpg) 0 0 no-repeat;
 }

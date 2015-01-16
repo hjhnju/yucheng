@@ -208,7 +208,7 @@ p{margin:0;padding:0}
 .bottom-bank.jiaotong{background-position:0 -902px}
 .bottom-bank.guangda{background-position:0 -1002px}
 .bottom-bank.shanghai{background-position:0 -1100px}
-.banner-floation{width:100%;overflow:hidden;position:relative;height:370px;padding-bottom:40px}
+.banner-floation{width:100%;overflow:hidden;position:relative;height:370px;padding-bottom:40px;background-color:#f8f8f8}
 .banner-item{position:absolute;left:0;top:0;width:400%;z-index:2;*zoom:1}
 .banner-item:before,.banner-item:after{display:table;content:""}
 .banner-item:after{clear:both}

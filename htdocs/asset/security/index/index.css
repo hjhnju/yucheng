@@ -172,14 +172,26 @@ p{margin:0;padding:0}
 .insurance-banner.low-banner{height:430px;background:url(../common/css/img/low.jpg) center center no-repeat;margin-bottom:100px}
 .insurance-banner.allposition{background:url(../common/css/img/allposition-banner.jpg) center center no-repeat}
 .insurance-banner.teach{background:url(../common/css/img/teach-banner.jpg) center center no-repeat}
-.low-main{padding-bottom:100px}
-.low-main-title{height:30px;line-height:30px;font-size:28px;color:#f2736a;margin-bottom:30px;font-weight:700}
-.low-main-box{*zoom:1;padding:0 40px 0 20px}
-.low-main-box:before,.low-main-box:after{display:table;content:""}
-.low-main-box:after{clear:both}
-.low-main-box-left{float:left;width:452px}
-.low-main-box-left-con{padding-left:100px;height:62px;padding-top:10px;background:url(../common/css/img/low_icon.png) 0 0 no-repeat;line-height:26px;font-size:14px;overflow:hidden;margin-bottom:30px}
-.low-main-box-left-con.shouyi{background-position:0 0}
-.low-main-box-left-con.chengben{background-position:0 -100px}
-.low-main-box-left-con.qixian{background-position:0 -200px}
-.low-main-box-right{float:right;width:376px;height:306px;background:url(../common/css/img/low_yuanzhu.jpg) 0 0 no-repeat}
+.allposition-main{*zoom:1}
+.allposition-main:before,.allposition-main:after{display:table;content:""}
+.allposition-main:after{clear:both}
+.allposition-main.bg-color{background-color:#f8f8f8;padding-bottom:50px}
+.allposition-main-left{float:left;width:400px}
+.allposition-main-left-pic{height:280px;width:390px;background:url(img/text_first.png) center center no-repeat;margin-top:100px}
+.allposition-main-left-pic.second{background:url(img/text_second.png) center center no-repeat}
+.allposition-main-left-pic.third{background:url(img/text_third.png) center center no-repeat}
+.allposition-main-right{float:left;width:600px;margin-top:60px}
+.allposition-main-right-box{*zoom:1;margin-bottom:50px}
+.allposition-main-right-box:before,.allposition-main-right-box:after{display:table;content:""}
+.allposition-main-right-box:after{clear:both}
+.main-box-icon{float:left;width:100px;height:90px;background:url(img/allposition_icon.png) 0 0 no-repeat}
+.main-box-icon.shouyi{background-position:0 0}
+.main-box-icon.liyi{background-position:0 -100px}
+.main-box-icon.benjin{background-position:0 -200px}
+.main-box-icon.fangwei{background-position:0 -300px}
+.main-box-icon.jianli{background-position:0 -400px}
+.main-box-icon.zijin{background-position:0 -500px}
+.main-box-icon.zhanghu{background-position:0 -600px}
+.main-box-con{float:left;width:500px}
+.main-right-box-title{height:22px;line-height:22px;font-size:20px;color:#070707;margin-bottom:10px}
+.main-right-box-text{line-height:22px;color:#333;text-indent:2em;font-size:14px}
