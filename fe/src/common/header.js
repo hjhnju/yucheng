@@ -33,7 +33,7 @@ define(function (require) {
         }).mouseleave(function () {
             timer = setTimeout(function () {
                 $('.attention-me').children('.xinlang-erweima').removeClass('current');
-            }, 100);
+            }, 0);
         });
 
     }
@@ -52,7 +52,7 @@ define(function (require) {
         }).mouseleave(function () {
             timer = setTimeout(function () {
                 $('.footer-site-me-xinlang').children('.xinlang-erweima').removeClass('current');
-            }, 100);
+            }, 0);
         });
     }
 

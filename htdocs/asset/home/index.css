@@ -57,19 +57,27 @@ p{margin:0;padding:0}
 .header-left-phone{display:inline-block;line-height:34px;color:#666;margin-right:10px;background:url(../common/img/header_icon.png) 0 11px no-repeat;padding-left:20px}
 .header-left-time{display:inline-block;line-height:34px;color:#666;margin-right:20px}
 .header-left-attention{display:inline-block;line-height:34px;color:#666}
-.header-left-attention .attention-me{display:inline-block;width:20px;height:20px;background:url(../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
+.header-left-attention .attention-me{display:inline-block;width:20px;height:16px;background:url(../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
 .header-left-attention .attention-me.weibo{background-position:0 -50px}
 .header-left-attention .attention-me.weibo:hover{background-position:0 -299px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
 .header-left-attention .attention-me.weixin:hover{background-position:0 -251px}
-.xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:5;z-index:12;border:1px solid #ccc;display:none;background:url(../common/img/weixin.jpg) 0 0 no-repeat}
+.xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:12;border:1px solid #ccc;display:none;background:url(../common/img/weixin.jpg) 0 0 no-repeat;text-decoration:none;color:#333}
 .xinlang-erweima.footer-erweima{top:-270px}
+.xinlang-erweima.footer-tip{top:-64px;left:-62px;display:none}
 .xinlang-erweima.current{display:block}
+.weibo-tip{background:0 0;background-color:#fff;width:150px;height:40px;line-height:20px;padding:5px 0;text-align:center;left:-70px;color:#a7a7a7;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.weibo-tip .weibo-tip-span{color:#00f}
+.weibo-tip .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:70px;top:-8px}
+.weibo-tip .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
+.weibo-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:70px;top:-6px}
+.weibo-tip .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:119px;top:-8px}
 .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right}
+.header-right-default{margin-top:10px}
 .default-fastlogin{color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .default-login:hover{background-color:#e33f33}
@@ -101,6 +109,12 @@ p{margin:0;padding:0}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-site-me-xinlang.weixin:hover{background-position:0 -250px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../common/img/footer_phone.png) 0 0 no-repeat}
+.footer-tip{background:0 0;background-color:#fff;width:150px;height:40px;line-height:20px;text-align:center;padding:5px 0;display:block;left:0;top:10px;color:#a7a7a7;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.footer-tip .weibo-tip-span{color:#00f}
+.footer-tip .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:70px;top:-8px}
+.footer-tip .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:50px;left:62px}
+.footer-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:70px;top:-6px}
+.footer-tip .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:50px;border-bottom:none;left:62px}
 .investlist{padding-bottom:30px;border-bottom:1px solid #dfdfdf}
 .investlist-title{height:56px;line-height:56px;font-size:20px;color:#333}
 .investlist-box-title{border-bottom:1px dashed #d8d8d8;padding-left:12px;min-height:64px;line-height:64px}
