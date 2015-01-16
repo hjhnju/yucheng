@@ -23,6 +23,8 @@ define(function (require) {
 
     var htmlContainer;
 
+    var Error = $('#detail-error-span');
+
     var model = {};
 
     /**
@@ -50,7 +52,8 @@ define(function (require) {
 
         start.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+                Error.parent().addClass('show');
+                Error.html(data.statusInfo);
             }
             else {
                 if(!pager) {
@@ -101,6 +104,11 @@ define(function (require) {
         // 全部投资
         $('.confirm-all').click(function () {
             $('.right-top-ipt-input').val(Math.min(model.userAmount, model.amountRest));
+        });
+
+        // 点差消失error
+        $('.detail-error-cha').click(function () {
+            $(this).parent().remove();
         });
 
         // 确定投资

@@ -70,7 +70,7 @@ p{margin:0;padding:0}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right}
-.header-right-default .default-fastlogin{line-height:34px;color:#666;margin-right:20px;text-decoration:none}
+.default-fastlogin{color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .default-login:hover{background-color:#e33f33}
 .header-right-login{margin-top:10px}
@@ -159,7 +159,7 @@ p{margin:0;padding:0}
 #mk-dialog .close{background:url(../../common/css/img/fix_cha.png) 0 0 no-repeat;width:30px;height:30px;top:-15px;right:-15px;font-size:0;border:0}
 #mk-dialog .close:hover{border:0}
 .detail-left{float:left;width:670px}
-.detail-left-title{height:50px;line-height:50px}
+.detail-left-title{height:40px;line-height:40px}
 .detail-left-title .left-title-link{font-size:14px;color:#414141;text-decoration:none}
 .detail-left-title .left-title-link:hover{text-decoration:underline}
 .detail-left-title .left-title-link-span{font-size:14px;color:#414141}
@@ -169,7 +169,7 @@ p{margin:0;padding:0}
 .project-title:after{clear:both}
 .project-title-name{float:left;font-size:26px;color:#333;line-height:70px}
 .project-title-number{float:right;font-size:16px;color:#333;line-height:70px}
-.project-gaishu{padding:20px}
+.project-gaishu{padding:30px}
 .project-gaishu-top{padding-bottom:20px;margin-bottom:20px;border-bottom:1px dashed #dfdfdf;*zoom:1}
 .project-gaishu-top:before,.project-gaishu-top:after{display:table;content:""}
 .project-gaishu-top:after{clear:both}
@@ -203,7 +203,7 @@ p{margin:0;padding:0}
 .jindu-top .jindu-top-bai{font-size:12px}
 .jindu-top .jindu-top-bai .jindu-top-bai-number{color:#f2736a;font-size:14px}
 .jindu-btm{padding-left:20px;font-size:14px;color:#333}
-.project-time{height:70px;padding:0 20px;border-top:1px solid #dfdfdf;background-color:#f8f8f8}
+.project-time{height:70px;padding:0 30px;border-top:1px solid #dfdfdf;background-color:#f8f8f8}
 .project-time-start{line-height:70px;font-size:14px;color:#333;margin-right:90px}
 .project-main .showproject-main,.project-main .showfile-main,.project-main .showrecord-main{display:block}
 .project-main.project .showproject{border-top:2px solid #76cf65;border-left:1px solid #dfdfdf;border-right:1px solid #dfdfdf;border-bottom:1px solid #fff;margin-bottom:-1px;color:#76cf65;line-height:40px}
@@ -323,3 +323,7 @@ table tr td{padding-left:20px}
 .right-top2nd-title{width:90px;margin:0 auto 20px;height:30px;line-height:30px;background:url(img/detail-gou.png) 0 center no-repeat;font-size:24px;color:#f2736a;padding-left:30px}
 .right-top2nd-box{height:30px;line-height:30px;color:#333;font-size:14px}
 .project-box{border:1px solid #dfdfdf;margin-bottom:20px}
+.title-icon{background:url(img/title_icon.png) 0 12px no-repeat;padding-left:20px}
+.detail-error{height:36px;line-height:36px;background-color:#ffeceb;padding-left:10px;font-size:12px;color:#f2736a;border:1px solid #f2736a;margin-bottom:10px;position:relative;display:none}
+.detail-error.show{display:block}
+.detail-error .detail-error-cha{display:block;position:absolute;right:1px;top:9px;background:url(img/error_cha.png) 0 0 no-repeat;width:20px;height:20px;cursor:pointer}

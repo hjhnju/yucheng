@@ -8,8 +8,8 @@
     width: 670px;
 }
 .detail-left-title {
-    height: 50px;
-    line-height: 50px;
+    height: 40px;
+    line-height: 40px;
 
     .left-title-link {
         font-size: 14px;
@@ -52,7 +52,7 @@
     line-height: 70px;
 }
 .project-gaishu {
-    padding: 20px;
+    padding: 30px;
 }
 .project-gaishu-top {
     padding-bottom: 20px;
@@ -191,7 +191,7 @@
 }
 .project-time {
     height: 70px;
-    padding: 0 20px;
+    padding: 0 30px;
     border-top: 1px solid #dfdfdf;
     background-color: #f8f8f8;
 }
@@ -732,4 +732,35 @@ table {
 .project-box {
     border: 1px solid #dfdfdf;
     margin-bottom: 20px;
+}
+.title-icon {
+    background: url(./img/title_icon.png) 0 12px no-repeat;
+    padding-left: 20px;
+}
+.detail-error {
+    height: 36px;
+    line-height: 36px;
+    background-color: #ffeceb;
+    padding-left: 10px;
+    font-size: 12px;
+    color: @color-red;
+    border: 1px solid @color-red;
+    margin-bottom: 10px;
+    position: relative;
+    display: none;
+
+    &.show {
+        display: block;
+    }
+
+    .detail-error-cha {
+        display: block;
+        position: absolute;
+        right: 1px;
+        top: 9px;
+        background: url(./img/error_cha.png) 0 0 no-repeat;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
 }

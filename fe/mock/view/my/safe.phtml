@@ -157,7 +157,7 @@
                     <div class="infor-data-box-phone">账号绑定</div>
                     <div class="infor-data-box-text">选择使用第三方账户登陆可与平台账号
                         绑定，方便登陆</div>
-                    {%if $bindthirdlogin == 2%}
+                    {%if $bindthirdlogin == 1%}
                     <div class="infor-data-box-status cha">未设置</div>
                     <div class="infor-data-box-testing">
                         <!--<div class="testing-content qq-pic">曹操</div>-->
@@ -166,8 +166,8 @@
                     {%else%}
                     <div class="infor-data-box-status gou">已设置</div>
                     <div class="infor-data-box-testing">
-                        <div class="testing-content qq-pic">李璐</div>
-                        <a href="###" class="testing-link" id="bindthird">解绑</a>
+                        <div class="testing-content {%if $thirdPlatform == 1%}qq-pic {%else if $thirdPlatform == 2%}weixin-pic {%else%}weibo-pic {%/if%}">李璐</div>
+                        <a class="testing-link" id="bindthird">解绑</a>
                     </div>
                     {%/if%}
                 </div>
