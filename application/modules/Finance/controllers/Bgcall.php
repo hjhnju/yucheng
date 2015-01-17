@@ -218,7 +218,7 @@ class BgcallController extends Base_Controller_Page{
            	Base_Log::error(array(
            		'msg' => '汇付返回参数错误',
            	));
-           	return;
+            return;
         }
         $merPriv     = explode('_',$_REQUEST['MerPriv']);
         $userid      = intval($merPriv[0]);

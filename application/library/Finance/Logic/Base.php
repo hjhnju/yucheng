@@ -32,7 +32,7 @@ class Finance_Logic_Base {
 		
 		$numbers = range(0,9);
 		shuffle($numbers);
-		$no = 1;
+		$no = 2;
 		$ranNum = array_slice($numbers,0,$no);
 		foreach($ranNum as $key=>$value){
 			$now .= $value;

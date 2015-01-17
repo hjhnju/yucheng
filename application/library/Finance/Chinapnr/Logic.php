@@ -918,6 +918,7 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
+		//var_dump($repData);
 		$this->autoRedirect($reqData);
 	}
 	/**

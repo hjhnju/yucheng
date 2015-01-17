@@ -115,9 +115,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $orderInfo = $this->genOrderInfo();
 	    $orderDate = $orderInfo['date'];
 	    $orderId   = $orderInfo['orderId'];
-	    //订单号唯一性
-	    $freezeOrdInfo = $this->genOrderInfo();
-	    $freezeOrdId   = $freezeOrdInfo['orderId'];
+	    
 	        	    
 	    //主动投标订单记录入表finance_order
 	    $param = array(
@@ -137,25 +135,29 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $orderDate = strval($orderDate);
 	    $transAmt  = strval($transAmt);
 	    $usrCustId = strval($this->getHuifuid($userid));
-	    //$usrCustId = "6000060000696947";
 	    $maxTenderRate = '0.10';
 	    
 	    //BorrowerRate=1 谁来给？？
 	    $huifuborrowerDetails = array(
 	    	array(
-	    		strval($this->getHuifuid(intval($uidborrowDetail['BorrowerUserId']))),//借款人汇付id
-	    		strval($uidborrowDetail['BorrowerAmt']),//借款金额
-	    		strval($uidborrowDetail['BorrowerRate']),//借款手续费率
-	    		strval($loanId),//标的唯一标识
+	    		'BorrowerCustId' => strval($this->getHuifuid(intval($uidborrowDetail[0]['BorrowerUserId']))),//借款人汇付id
+	    		'BorrowerAmt'  => $transAmt,
+	    		'BorrowerRate' => strval($uidborrowDetail[0]['BorrowerRate']),//借款手续费率
+	    		'ProId' => strval($loanId),//标的唯一标识
 	    	)
-	    );				   
+	    );			
+	    $huifuborrowerDetails = json_encode($huifuborrowerDetails);
 	    $isFreeze    = strval($isFreeze);
+	    //订单号唯一性
+	    $freezeOrdInfo = $this->genOrderInfo();
+	    $freezeOrdId   = $freezeOrdInfo['orderId'];
 	    $freezeOrdId = strval($freezeOrdId);
 	    $retUrl      = "";   
 	    $bgRetUrl    = $webroot.'/finance/bgcall/initiativeTender';
 	    $userid      = strval($userid);
 	    $proId       = strval($loanId);
-	    $merPriv     = $userid.'_'.$proId;
+	    //$merPriv     = $userid.'_'.$proId;
+	    $merPriv = '';
 	    $chinapnr->initiativeTender($merCustId,$orderId,$orderDate,$transAmt,$usrCustId,
 	        $maxTenderRate,$huifuborrowerDetails,$isFreeze,$freezeOrdId,$retUrl,$bgRetUrl,$merPriv
 		);	    
