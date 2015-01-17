@@ -107,7 +107,8 @@ define(function (require) {
             else {
                 loginCheck.remote({
                     name: user,
-                    passwd: pwd
+                    passwd: pwd,
+                    type: loginType
                 });
             }
 

@@ -67,8 +67,8 @@ define(function (require) {
 
             emailConfirm.remote({
                 email: emailVal,
-                smscode: smscodeVal,
-                type:4
+                vericode: smscodeVal,
+                type: checkEmailType
             });
 
         });
