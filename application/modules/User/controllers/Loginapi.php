@@ -63,7 +63,6 @@ class LoginapiController extends Base_Controller_Api{
         ));
         $redirectUri = Yaf_Session::getInstance()->get(User_Keys::LOGIN_REFER);
         if(!empty($redirectUri)){
-            Yaf_Session::getInstance()->del(User_Keys::LOGIN_REFER);
             return $this->ajaxJump($redirectUri);
         }
         $this->ajax();

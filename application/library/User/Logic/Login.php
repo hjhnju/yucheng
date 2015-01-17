@@ -8,6 +8,8 @@ class User_Logic_Login {
     const STATUS_LOGIN_SUCC = 0;  
     //登录失败
     const STATUS_LOGIN_FAIL = 1;  
+    
+    const DEFAULT_LOGIN_REDIRECT = '/account/overview';
 
     public function __construct(){
     }
@@ -29,7 +31,7 @@ class User_Logic_Login {
      * 设置用户的登陆状态
      * @return boolean
      */ 
-    protected function setLogin($objUser){
+    public function setLogin($objUser){
         if(is_object($objUser)){
             Yaf_Session::getInstance()->set(User_Keys::getLoginUserKey(), $objUser->userid);
             return true;
@@ -88,5 +90,18 @@ class User_Logic_Login {
         $this->setLogin(new User_Object($objLogin->userid));
 
         return User_RetCode::SUCCESS;
+    }
+    
+    /**
+     * 设置用户登录后的跳转页面
+     * @param string $strRefer
+     * @return string
+     */
+    public function loginRedirect($strRefer){
+        if(empty($strRefer)||(false === strstr($strRefer,'www.xingjiaodai.com')||
+        (false !== strstr($strRefer,'/user/regist'))||(false !== strstr($strRefer,'/user/login')))){
+            return self::DEFAULT_LOGIN_REDIRECT;
+        }
+        return $strRefer;  
     }
 }
