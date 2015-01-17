@@ -79,7 +79,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$borrTotAmt = strval($borrTotAmt);
 		$yearRate = strval($yearRate);
 		$retType = '0'.strval($retType);
+		$bidStartDate = date("YmdHis",$bidStartDate);
 		$bidStartDate = strval($bidStartDate);
+		$bidEndDate = date("YmdHis",$bidEndDate);		
 		$bidEndDate = strval($bidEndDate);
 		//$retAmt 总还款金额 怎么算？？？
 		//$retDate 应还款日期怎么算？？
