@@ -17,6 +17,7 @@ class LoginapiController extends Base_Controller_Api{
         $strName   = trim($_POST['name']);
         $strPasswd = trim($_POST['passwd']);
         $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
+        $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
         //检查错误次数
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
         if(empty($strCode) && $intFails >= 3) {
@@ -56,6 +57,19 @@ class LoginapiController extends Base_Controller_Api{
             return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
         }
         Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
+        
+        if($isThird>0){
+            $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
+            $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
+            $logic = new User_Logic_Third();
+            $logic->binding($objLogin->userid, $openid, $authtype);
+            Base_Log::notice(array(
+            'msg'     => 'bind success',
+            'openid'  => $openid,
+            'name'    => $strName,
+            ));
+        }
+        
         Base_Log::notice(array(
             'msg'   => 'login success',
             'name'  => $strName,
