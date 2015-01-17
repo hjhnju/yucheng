@@ -33,7 +33,9 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
         $this->webroot = Base_Config::getConfig('web')->root;
         $this->baselog();
         $this->objUser = User_Api::checkLogin();
-        $this->userid = $this->objUser->userid;
+        if(!empty($this->objUser)){
+            $this->userid = $this->objUser->userid;
+        }
         //未登录自动跳转
         if($this->needLogin && empty($this->userid)){
             $u        = isset($_REQUEST['HTTP_REFERER']) ? $_REQUEST['HTTP_REFERER'] : null;

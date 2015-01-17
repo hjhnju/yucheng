@@ -91,7 +91,6 @@ class RegistApiController extends Base_Controller_Api{
     */
     public function checkInviterAction(){
         $strInviter = trim($_REQUEST['inviter']);
-
         $logic   = new User_Logic_Regist();
         $objRet = $logic->checkInviter($strInviter);
         if(User_RetCode::SUCCESS !== $objRet->status){
@@ -189,36 +188,6 @@ class RegistApiController extends Base_Controller_Api{
         return $this->ajaxJump('/user/open');
     }
     
-    /**
-    * 接口6: /user/registapi/bind
-    * 用户第三方账户绑定接口
-    * @param string $name
-    * @param string $passwd
-    * @return 标准Json格式
-    * status 0:成功
-    * status 1036:用户名或密码错误
-    * status 1045:绑定三方账号出错
-     */
-    public function bindAction(){
-        $strName = trim($_REQUEST['name']);
-        $strPasswd = trim($_REQUEST['passwd']);
-        $strPasswd = Base_Util_Secure::encrypt($strPasswd);
-        $objLogin = new User_Object_Login();
-        $ret = $objLogin->fetch(array('name'=>$strName));
-        if(!$ret || $objLogin->passwd !== $strPasswd){
-            $this->ajaxError(User_RetCode::USER_NAME_OR_PASSWD_ERROR,User_RetCode::getMsg(User_RetCode::USER_NAME_OR_PASSWD_ERROR));
-        }
-        $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
-        $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
-        $logic = new User_Logic_Third();
-        $ret = $logic->binding($objLogin->userid, $openid, $authtype);
-        if($ret){
-            $this->ajax();
-        }else{
-            $this->ajaxError(User_RetCode::BINDING_FAIL,User_RetCode::getMsg(User_RetCode::BINDING_FAIL));
-        }
-    }
-    
     /** 
      * 忘记密码重置密码接口
      * @param $user, 用户名
@@ -241,7 +210,7 @@ class RegistApiController extends Base_Controller_Api{
         $logic   = new User_Logic_Regist();
         $ret = $logic->modifyPwd($strName,$strPhone,$strPasswd);
         if(User_RetCode::SUCCESS === $ret){
-            $this->redirect('/account/overview');
+            $this->redirect('/user/login');
         }
         $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
