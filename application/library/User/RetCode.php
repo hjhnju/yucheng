@@ -38,7 +38,7 @@ class User_RetCode extends Base_RetCode{
     const ORIGIN_PASSWD_WRONG       = 1043; //原密码错误
     const MODIFY_PWD_FAIL           = 1044; //保存密码错误
 
-    const BINDING_FAIL              = 1045; //保存密码错误
+    const BINDING_FAIL              = 1045; //绑定三方账号出错
 
     const GET_OPENID_FAIL           = 1055; //获取openid失败
 

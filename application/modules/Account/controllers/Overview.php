@@ -64,9 +64,9 @@ class OverviewController extends Base_Controller_Page {
         $totalInvest    = '0.00';
         $reposPrifit    = '0.00';
         $reposPrincipal = number_format("10000000.01231", 2);
-
-        $openthirdpay   = isset($this->objUser->huifuid) ? 1 : 2;
-
+        $huifuid = $this->objUser->huifuid;
+        $openthirdpay = isset($huifuid) ? 1 : 2;
+        
         //$totalProfit = Invest_Api:: 累计收益
         //$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
         //$reposPrifit = Invest_Api:: 待收收益
@@ -79,8 +79,7 @@ class OverviewController extends Base_Controller_Page {
         $this->getView()->assign("reposPrifit",$reposPrifit);
         $this->getView()->assign("reposPrincipal",$reposPrincipal); 
         $this->getView()->assign("openthirdpay",$openthirdpay);         
-        $this->getView()->assign('userinfo',$userInfo);
-        
+        $this->getView()->assign('userinfo',$userInfo);        
     }
     
     /**

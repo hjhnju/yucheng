@@ -75,14 +75,15 @@ class Account_Logic_UserInfo {
         $ret['realname']['realnameValue'] = isset($realname) ? $realname : '';
         $ret['realname']['certType']      = isset($certType) ? $certType : '';
         $ret['realname']['certValue']     = isset($certValue) ? $certValue : '';
-        $ret['realname']['isopen']        = (isset($realname) && isset($certValue)) ? 2 : 2;
+        $ret['realname']['isopen']        = (isset($realname) && isset($certValue)) ? 1 : 2;
         $ret['realname']['url'] = '';
         
-        $param = array('phone'           =>$ret['phone']['isopen'],
-                       'certificateInfo' =>$ret['realname']['isopen'],
-                       'thirdpay'        =>$ret['huifu']['isopen'],
-                       'email'           =>$ret['email']['isopen'],
-                 );
+        $param = array(
+            'phone'           =>$ret['phone']['isopen'],
+            'certificateInfo' =>$ret['realname']['isopen'],
+            'thirdpay'        =>$ret['huifu']['isopen'],
+            'email'           =>$ret['email']['isopen'],
+        );
         $ret['securedegree'] = $this->scoreDegree($param);
         $ret['securedegree']['up'] = $webroot.'/account/secure';     
         return $ret;   

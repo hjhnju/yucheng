@@ -108,8 +108,8 @@ class User_Logic_Regist{
      */
     public function modifyPwd($strName,$strPhone,$strPasswd){
         $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('name'=>$strName,'phone'=>$strPhone));
-        if(!empty($objLogin)){
+        $ret = $objLogin->fetch(array('name'=>$strName,'phone'=>$strPhone));
+        if($ret){
             $objLogin->passwd = Base_Util_Secure::encrypt($strPasswd);
             $ret = $objLogin->save();
             if($ret){

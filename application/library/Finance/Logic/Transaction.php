@@ -62,7 +62,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	 * @return array || boolean
 	 * 
 	 */
-	public function addBidInfo($orderId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea) {
+	public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea) {
 	    $webroot  = Base_Config::getConfig('web')->root;
 		$chinapnr = Finance_Chinapnr_Logic::getInstance();
 		if(!isset($orderId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
@@ -74,11 +74,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		}
 		
 		$merCustId = strval(self::MERCUSTID);
-		$proId = strval($orderId);
+		$proId = strval($proId);
 		$borrCustId = strval($this->getHuifuid(intval($borrUserId)));
 		$borrTotAmt = strval($borrTotAmt);
 		$yearRate = strval($yearRate);
-		$retType = strval($retType);
+		$retType = '0'.strval($retType);
 		$bidStartDate = strval($bidStartDate);
 		$bidEndDate = strval($bidEndDate);
 		//$retAmt 总还款金额 怎么算？？？
@@ -90,6 +90,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$merPriv = '';
 		$reqExt = '';		
 		$ret = $chinapnr->addBidInfo($merCustId,$proId,$borrCustId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);
+		
 		return $ret;
 	}
 	/**
@@ -108,26 +109,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		
 	    $orderInfo = $this->genOrderInfo();
 	    $orderDate = $orderInfo['date'];
-	    $orderId   = $orderInfo['orderId'];//orderID即为此标的唯一标识
-	    	    
+	    $orderId   = $orderInfo['orderId'];
+	    //订单号唯一性
 	    $freezeOrdInfo = $this->genOrderInfo();
 	    $freezeOrdId   = $freezeOrdInfo['orderId'];
-	    
-        $loanInfo     = $this->getLoanInfo($loanId);//获取借款项目信息
-	    $borrUserId   = intval($loanInfo['borrUserId']);//借款人uid
-	    $borrTotAmt   = floatval($loanInfo['borrTotAmt']);
-	    $yearRate     = floatval($loanInfo['yearRate']);
-	    $retType      = strval($loanInfo['retType']);//还款类型
-	    $bidStartDate = date("YmdHis",intval($loanInfo['bidStartDate']));
-	    $bidEndDate   = date("YmdHis",intval($loanInfo['bidEndDate']));
-	    $proArea      = strval($loanInfo['proArea']);
-	    //将标的信息录入至汇付系统
-	    $retAddBid = $this->addBidInfo($orderId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea);
-	    if(!$retAddBid || is_null($retAddBid)) {
-	      	Base_Log::error(array(
-	    		'msg' => '标的信息录入失败',	    		
-	    	));
-	    }	    	    
+	        	    
 	    //主动投标订单记录入表finance_order
 	    $param = array(
 	    	'orderId'     => intval($orderId),
@@ -148,12 +134,14 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $usrCustId = strval($this->getHuifuid($userid));
 	    $usrCustId = "6000060000696947";
 	    $maxTenderRate = '0.10';
+	    
+	    //BorrowerRate=1 谁来给？？
 	    $huifuborrowerDetails = array(
 	    	array(
 	    		strval($this->getHuifuid(intval($uidborrowDetail['BorrowerUserId']))),//借款人汇付id
 	    		strval($uidborrowDetail['BorrowerAmt']),//借款金额
 	    		strval($uidborrowDetail['BorrowerRate']),//借款手续费率
-	    		$orderId,//标的唯一标识
+	    		strval($loanId),//标的唯一标识
 	    	)
 	    );				   
 	    $huifuborrowerDetails = array(
@@ -168,7 +156,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $retUrl      = "";   
 	    $bgRetUrl    = $webroot.'/finance/bgcall/initiativeTender';
 	    $userid      = strval($userid);
-	    $merPriv     = $userid;//用户私有域为$userid_proId
+	    $proId       = strval($loanId);
+	    $merPriv     = $userid.'_'.$proId;
 	    $chinapnr->initiativeTender($merCustId,$orderId,$orderDate,$transAmt,$usrCustId,
 	        $maxTenderRate,$huifuborrowerDetails,$isFreeze,$freezeOrdId,$retUrl,$bgRetUrl,$merPriv
 		);	    
@@ -336,7 +325,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	 * @return array || boolean
 	 * 
 	 */
-	public function Repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
+	public function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
 		if(!isset($outUserId) || !isset($inUserId) || !isset($subOrdId) ||
 		   !isset($transAmt) || !isset($proId)) {
 		    Base_Log::error(array(
@@ -381,6 +370,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$inAcctId = '';
 		/////////////////////////////////////////////////////////////////////////
 		//管理费到底应该怎么收取
+		//打到专属户中！！
 		$arrDivDetails = array(
 			//风险金账户
 			array(
@@ -445,7 +435,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$inAcctId = '';
 		$retUrl = '';
 		$bgRetUrl = $webroot.'/finance/bgcall/transfer';
-		$merPriv = '';		
+		$merPriv = strval($orderDate);		
 		$ret = $chinapnr->transfer($ordId,$outCustId,$outAcctId,$transAmt,$inCustId,$inAcctId = '',$retUrl = '',$bgRetUrl,$merPriv = '');		
 		return $ret;
 	}

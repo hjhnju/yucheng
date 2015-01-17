@@ -63,10 +63,10 @@ class User_Api{
      * @return boolean
      */
     public static function setEmail($uid,$strEmail){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->email = $strEmail;
-        $ret            = $objInfo->save();
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('userid'=>$uid));
+        $objLogin->email = $strEmail;
+        $ret            = $objLogin->save();
         return $ret;
     }
     
@@ -140,7 +140,7 @@ class User_Api{
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
         $arrArgs  = array($srandNum, self::LAST_TIME);
         $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-        $bResult  = Base_Sms::getInstance()->send($strPhone, $tplid, $arrArgs);
+        $bResult  = Base_Sms::getInstance()->send($strPhone, $tplid[1], $arrArgs);
         if(!empty($bResult)){
             Base_Redis::getInstance()->setex(User_Keys::getSmsCodeKey($strPhone, $strType),
                 60*(self::LAST_TIME), $srandNum);
@@ -174,5 +174,30 @@ class User_Api{
             'type' => $strType
         ));
         return $bolRet;
+    }
+    
+    /**
+     * 返回用户绑定第三方账号状态,0表示未绑定，1，2，3分别表示绑定QQ、微博、微信
+     * @param  $userid
+     * @return array('type'=>1,'nickname'=>'xxx');
+     */
+    public static function checkBind($userid){
+        $third = new User_Object_Third();
+        $ret = $third->fetch(array('userid'=>intval($userid)));
+        if($ret){
+            return array('type'=>$third->authtype,'nickname'=>$third->nickname);
+        }
+        return array('type'=>0,'nickname'=>'');
+    }
+    
+    /**
+     * 后台添加用户
+     * @param string $strName
+     * @param string $strPasswd
+     * @param string $strPhone
+     * @param string $strInviter
+     */
+    public static function regist($strName,$strPasswd,$strPhone,$strInviter){
+        
     }
 }

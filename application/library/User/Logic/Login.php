@@ -8,6 +8,15 @@ class User_Logic_Login {
     const STATUS_LOGIN_SUCC = 0;  
     //登录失败
     const STATUS_LOGIN_FAIL = 1;  
+    
+    const DEFAULT_LOGIN_REDIRECT = '/account/overview';
+    
+    //需要使用默认登录后路转地址的URL
+    protected static $arrUrl = array(
+        '/user/regist',
+        '/user/login',
+        '/user/modifypwd', 
+    );
 
     public function __construct(){
     }
@@ -29,7 +38,7 @@ class User_Logic_Login {
      * 设置用户的登陆状态
      * @return boolean
      */ 
-    protected function setLogin($objUser){
+    public function setLogin($objUser){
         if(is_object($objUser)){
             Yaf_Session::getInstance()->set(User_Keys::getLoginUserKey(), $objUser->userid);
             return true;
@@ -69,11 +78,11 @@ class User_Logic_Login {
             return User_RetCode::USER_NAME_NOTEXIT;
         }
 
-        //用户名密码
+        //用户名或密码错误
         if($objLogin->passwd !== $strPasswd){
             $objRecord->status = self::STATUS_LOGIN_FAIL;
             $objRecord->save();
-            return User_RetCode::USER_PASSWD_ERROR;
+            return User_RetCode::USER_NAME_OR_PASSWD_ERROR;
         }
 
         //正确保存
@@ -88,5 +97,24 @@ class User_Logic_Login {
         $this->setLogin(new User_Object($objLogin->userid));
 
         return User_RetCode::SUCCESS;
+    }
+    
+    /**
+     * 设置用户登录后的跳转页面
+     * @param string $strRefer
+     * @return string
+     */
+    public function loginRedirect($strRefer){
+        $bUrlIn = false;
+        foreach (self::$arrUrl as $val){
+            if(false !== strstr($strRefer,$val)){
+                $bUrlIn = true;
+                break;
+            }
+        }
+        if(empty($strRefer)||(false === strstr($strRefer,'www.xingjiaodai.com'))||$bUrlIn){
+            return self::DEFAULT_LOGIN_REDIRECT;
+        }
+        return $strRefer;  
     }
 }

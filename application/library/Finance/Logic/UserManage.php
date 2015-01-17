@@ -23,7 +23,7 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 		$retUrl      = '';
 		$usrId       = strval($userName);
 		$usrMp       = strval($userMp);
-		$merPriv     = base64_encode(strval($userid));
+		$merPriv     = strval($userid);
 		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, "", "", "", "", $merPriv, "");		
 	}
 	
@@ -49,9 +49,9 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 		$webroot = Base_Config::getConfig('web')->root;
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
 		$merCustId = self::MERCUSTID;
-		$usrCustId = "6000060000696947";
+		$usrCustId = strval($usrCustId);
 		$bgRetUrl = $webroot.'/finance/bgcall/userbindcard';
-		$merPriv = strval(base64_encode($userid));
+		$merPriv = strval($userid);
 		$chinapnr->userBindCard($merCustId,$usrCustId,$bgRetUrl,$merPriv);		
 	}
 	
