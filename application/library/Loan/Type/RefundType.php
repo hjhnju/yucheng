@@ -74,6 +74,6 @@ class Loan_Type_RefundType extends Base_Type {
             $month = ($a * $b * pow(1 + $b, $duration)) / (pow(1 + $b, $duration) - 1);
             $interest = $month * $duration - $amount;
         }
-        return $interest;
+        return round($interest, 2);
     }
 }
