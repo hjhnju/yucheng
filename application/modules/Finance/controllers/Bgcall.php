@@ -306,9 +306,7 @@ class BgcallController extends Base_Controller_Page{
 			$borrCustId = urldecode($_REQUEST['BorrCustId']);
 			$borrTotAmt = urldecode($_REQUEST['BorrTotAmt']);
 			$proArea    = urldecode($_REQUEST['ProArea']);
-			$bgRetUrl   = urldecode($_REQUEST['BgRetUrl']);
-			
-			
+			$bgRetUrl   = urldecode($_REQUEST['BgRetUrl']);			
 			if($respCode !== '000') {
 				Base_Log::error(array(
 				    'msg'   => $respDesc,

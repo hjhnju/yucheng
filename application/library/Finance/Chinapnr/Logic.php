@@ -279,7 +279,7 @@ HTML;
 			"ReqExt"       => $reqExt,
 			"ChkValue"     => $checkValue,				
 		);
-		var_dump($reqData);die;
+		//var_dump($reqData);die;
 		return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","ProId","BorrCustId","BorrTotAmt","GuarCompId","GuarAmt","ProArea","BgRetUrl","MerPriv","RespExt"));
 	}
 	/**

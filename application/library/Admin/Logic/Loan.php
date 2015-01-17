@@ -41,7 +41,7 @@ class Admin_Logic_Loan {
         $area = new Area_Object_Area($loan->area);
         $retDate = $duration->getTimestamp($loan->duration, $loan->deadline);
         $retAmt = Loan_Api::getLoanRefundAmount($loanId);
-        var_dump($retAmt);exit;
+ //       var_dump($retAmt);exit;
         $res = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, $loan->interest/100, 
                 $loan->refundType, $loan->startTime, $loan->deadline, $retAmt, $retDate, $area->huifuCityid);
         if ($res === true) {

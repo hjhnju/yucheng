@@ -166,12 +166,12 @@ class EditapiController extends Base_Controller_Api {
     	$vericode = $_REQUEST['vericode'];////////////////////前端没约定好！
     	$type = $_REQUEST['type'];
     	  
-    	if(empty($email) || empty($vericode) || empty($type)) {
+/*     	if(!isset($_REQUEST['email']) || !isset($_REQUEST['vericode']) || !isset($_REQUEST['type'])) {
     		$errCode = Base_RetCode::PARAM_ERROR;
     		$errMsg = Base_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
     		return;
-    	}  
+    	}    */
     	$emailPattern = self::$_arrRegMap[self::REG_EMAIL];
     	if(!preg_match($emailPattern,$email)) {
     		$errCode = Account_RetCode::EMAIL_FOEMAT_ERROR;
@@ -179,7 +179,7 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     		return;
     	}
-    	$type = strval($type);    	
+    	$type = strval('email');    	
     	$bolCheckImg = User_Api::checkImageCode($vericode,$type);
     	if(!$bolCheckImg) {
     		$errCode = Account_RetCode::VERCODE_ERROR;
