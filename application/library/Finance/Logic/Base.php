@@ -73,7 +73,7 @@ class Finance_Logic_Base {
 	/**
 	 * 通过用户userid获取用户汇付id
 	 */
-	protected function getHuifuid($userid){
+	public function getHuifuid($userid){
 		$userid = intval($userid);
 		$objUser = User_Api::getUserObject($userid);
 		$huifuid = !empty($objUser) ? $objUser->huifuid : '';
