@@ -45,16 +45,27 @@ class Invest_Logic_Invest {
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        $retUrl = '/invest/confirm';
+        $web = Base_Config::getConfig('web');
+        $retUrl = $web->root . '/invest/confirm';
+        $max = $this->formatNumber($max);
         $detail = array(
             array(
                 "BorrowerUserId" => $loan['user_id'],
-                "BorrowerAmt" => $loan['amount'],
+                "BorrowerAmt" => $max,
                 "BorrowerRate" => $loan['interest'] / 100,
             ),
         );
         $url = Finance_Api::initiativeTender($loan_id, $max, $uid, $detail, $retUrl);
         return $url;
+    }
+    
+    /**
+     * 格式化数字为金额
+     * @param number $num
+     * @return string
+     */
+    private function formatNumber($num) {
+        return sprintf('%.2f', $num);
     }
     
     /**

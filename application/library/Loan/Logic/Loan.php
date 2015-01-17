@@ -105,11 +105,11 @@ class Loan_Logic_Loan {
         $duration = new Loan_Type_Duration();
         
         if ($loan->refundType == Loan_Type_RefundType::AVERAGE) {
-            $days = $duration->getDays($loan->duration, $start);
-            $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $days);
-        } elseif ($loan->refundType == Loan_Type_RefundType::MONTH_INTEREST) {
             $months = $duration->getMonths($loan->duration);
             $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $months);
+        } elseif ($loan->refundType == Loan_Type_RefundType::MONTH_INTEREST) {
+            $days = $duration->getDays($loan->duration, $start);
+            $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $days);
         }
         return $loan->amount + $interest;
     }

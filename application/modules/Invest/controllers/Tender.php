@@ -17,7 +17,7 @@ class TenderController extends Base_Controller_Api {
 	    //@TODO fortest
 	    $_POST = array(
 	        'id' => 1,
-	        'amount' => 100,
+	        'amount' => 199900,
 	    );
 	    if (!$this->checkParam($this->param, $_POST)) {
 	        return $this->outputError(Base_RetCode::PARAM_ERROR);

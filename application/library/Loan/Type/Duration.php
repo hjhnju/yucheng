@@ -128,7 +128,7 @@ class Loan_Type_Duration extends Base_Type {
         $months = self::getMonths($type);
         $date = new DateTime();
         $date->setTimestamp($startTime);
-        $date->format("+{$months}months");
+        $date->modify("+{$months}months");
         
         $days = ($date->getTimestamp() - $startTime) / 3600 / 24;
         return $days;
@@ -157,7 +157,7 @@ class Loan_Type_Duration extends Base_Type {
         $months = self::getMonths($type);
         $date = new DateTime();
         $date->setTimestamp($startTime);
-        $date->format("+{$months}months");
+        $date->modify("+{$months}months");
         return $date->getTimestamp();
     }
 }
