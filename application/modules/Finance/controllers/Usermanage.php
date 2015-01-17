@@ -17,8 +17,8 @@ class UsermanageController extends Base_Controller_Page{
         parent::init();
         $this->userManageLogic = new Finance_Logic_UserManage();        
         $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
-        $this->userName = !empty($objUser) ? $objUser->name : "";
-        $this->phone = $phone = !empty($objUser) ? $objUser->phone : "";
+        $this->userName = !empty($this->objUser) ? $this->objUser->name : "";
+        $this->phone = $phone = !empty($this->objUser) ? $this->objUser->phone : "";
     }
 
     /**
@@ -30,11 +30,8 @@ class UsermanageController extends Base_Controller_Page{
         $objUser  = $this->objUser;
         $userid   = $this->userid;
         $userName = $this->userName;
-        $phone    = $this->phone;
-        //$this->userManageLogic->userRegist($userName,'',$userid);
-        //TODO: remove
-        //FOR TEST
-        $this->userManageLogic->userRegist('382906882','',$userid);       
+        $phone = $this->phone;
+        $this->userManageLogic->userRegist($userName,'',$userid);       
     }
 
     /**
@@ -134,9 +131,6 @@ class UsermanageController extends Base_Controller_Page{
     }
     
     public function liluAction() {
-    	$logic = Finance_Chinapnr_Logic::getInstance();
-    //350823198601102016
-    	$ret = $logic->queryUsrInfo("6000060000677575","350823198601102016","");
-    	var_dump($ret);
+        Finance_Api::loans('111111111111','111111111111','111111111111','111111111111',20.00);
     }
 }

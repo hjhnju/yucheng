@@ -35,7 +35,7 @@ class SecureController extends Base_Controller_Page{
 	 * 'chpwdurl' 修改url的接口 
 	 * 
 	 * 'bindthirdlogin'是否绑定第三方登录  1--是  2--否
-	 * 'thirdPlatform' 第三方绑定平台  1--qq 2--weixin 3--wenbo
+	 * 'thirdPlatform' 第三方绑定平台  1--qq 2--weixin 3--weibo
 	 * 'thirdNickName' 第三方平台昵称 
 	 * 'thirdloginurl' 第三方平台登录url
 	 */
@@ -122,7 +122,7 @@ class SecureController extends Base_Controller_Page{
 		$this->getView()->assign('chpwdurl',$chpwdurl);
 		
 		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);				
-		$this->getView()->assign('thirdPlatform','qq');//mock
+		$this->getView()->assign('thirdPlatform',1);//mock
 		$this->getView()->assign('thirdNickName','海阔天空');
 		$this->getView()->assign('thirdloginurl',$thirdloginurl);
 	}
