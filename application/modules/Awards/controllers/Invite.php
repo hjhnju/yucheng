@@ -21,10 +21,19 @@ class InviteController extends Base_Controller_Response {
 
         //获取邀请人手机号
         //$objUser = User_Api::getUserObject($userid);
-        $objUser = json_decode(json_encode(array('name'=>'joshua', 'phone'=>'18611015043')));
-        $data = array('name' => $objUser->name, 'phone' => $objUser->phone, 
-            'code'=>$strCode, 'uid'=>$intUserid);
-
+        $objUser = $this->objUser;
+        $name = $objUser->name;
+        $name = isset($name) ? $name : '';
+        $phone = $objUser->phone;
+        $phone = isset($phone) ? $phone :'';
+        $code = $strCode;
+        $uid = $intUserid;
+        $data = array(
+        	'name'  => $name,
+        	'phone' => $phone,
+        	'code'  => $code,
+        	'uid'   => $uid,
+        );
         //判断ua是移动页面还是pc页面, 选择跳转
         $isMobile = Base_Util_Mobile::isMobile();
         if(!$isMobile){//TODO:add ! for test

@@ -17,7 +17,7 @@ class MessageController extends Base_Controller_Response {
 	 */
 	public function indexAction() {
 		$userid = $this->getUserId();
-		$userInfo = $this->userInfoLogic->getUserInfo($userid);
+		$userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
 		$this->getView()->assign('userinfo',$userInfo);
 	}
 	

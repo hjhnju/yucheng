@@ -17,10 +17,7 @@ class EditController extends Base_Controller_Page {
 	 * userinfo 左上角用户信息
 	 */
 	public function chphoneAction() {
-		$userid = $this->userid;
-		$userInfo = $this->userInfoLogic->getUserInfo($userid);
-		$this->getView()->assign('userinfo',$userInfo);
-		
+
 	}
 	
 	/**
@@ -29,9 +26,7 @@ class EditController extends Base_Controller_Page {
 	 * userinfo 左上角用户信息
 	 */
 	public function chpwdAction() {
-		$userid = $this->userid;
-		$userInfo = $this->userInfoLogic->getUserInfo($userid);
-		$this->getView()->assign('userinfo',$userInfo);		 
+	 
 	}
 	
 	/**

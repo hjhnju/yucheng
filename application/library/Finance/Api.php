@@ -142,31 +142,35 @@ class Finance_Api {
 	}
 	/**
 	 * 添加标的信息借口 Finance_Api::addBidInfo
-	 * @param proId 标的唯一标示
-	 * @param borrUserId 借款人uid
-	 * @param borrTotAmt 借款总金额
-	 * @param yearRate 年利率
-	 * @param retType 还款方式   1等额本息  2等额本金  3按期付息，到期还本   4一次性还款   99其他
-	 * @param bidStartDate 时间戳投标开始时间
-	 * @param bidEndDate 时间戳投标截止时间
-	 * @param proArea 项目所在地
+	 * @param int proId 标的唯一标示
+	 * @param int borrUserId 借款人uid
+	 * @param float borrTotAmt 借款总金额
+	 * @param float yearRate 年利率
+	 * @param int retType 还款方式   1等额本息  2等额本金  3按期付息，到期还本   4一次性还款   99其他
+	 * @param int bidStartDate 时间戳投标开始时间
+	 * @param int bidEndDate 时间戳投标截止时间
+	 * @param float retAmt 总还款金额
+	 * @param int retDate 应还款日期
+	 * @param int proArea 项目所在地
 	 * @return boolean
 	 * 
 	 */
-	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea) {
+	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea) {
         $transLogic = new Finance_Logic_Transaction();
-        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea);
-        if(is_null($return)) {
+        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea);
+        if(is_null($return) || !$return) {
         	Base_Log::error(array(
-        		'msg' => Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR),
-        		'proId' => $proId,
-        		'borrUserId' => $borrUserId,
-        		'borrTotAmt' => $borrTotAmt,
-        		'yearRate' => $yearRate,
-        	    'retType' => $retType,
+        		'msg'          => Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR),
+        		'proId'        => $proId,
+        		'borrUserId'   => $borrUserId,
+        		'borrTotAmt'   => $borrTotAmt,
+        		'yearRate'     => $yearRate,
+        	    'retType'      => $retType,
         	    'bidStartDate' => $bidStartDate,
-        	    'bidEndDate' => $bidEndDate,
-        	    'proArea' => $proId,
+        	    'bidEndDate'   => $bidEndDate,
+        	    'retAmt'       => $retAmt,
+        	    'retDate'      => $retDate,
+        	    'proArea'      => $proId,
         	));
         	return false;
         }
