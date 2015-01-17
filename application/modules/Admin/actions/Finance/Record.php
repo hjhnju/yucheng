@@ -1,6 +1,6 @@
 <?php
 /**
- * 后台首页
+ * 资金记录
  * @author jiangsongfang
  *
  */

@@ -76,12 +76,10 @@ p{margin:0;padding:0}
 .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
-.header-right{float:right}
-.header-right-default{margin-top:10px}
+.header-right{float:right;margin-top:6px}
 .default-fastlogin{color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .default-login:hover{background-color:#e33f33}
-.header-right-login{margin-top:10px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:280px;height:60px;display:block;margin-right:42px}
 .logo img{outline:0;border:0}
@@ -172,8 +170,8 @@ p{margin:0;padding:0}
 .color-red{color:#f2736a}
 #mk-dialog .close{background:url(../../common/css/img/fix_cha.png) 0 0 no-repeat;width:30px;height:30px;top:-15px;right:-15px;font-size:0;border:0}
 #mk-dialog .close:hover{border:0}
-.toulist{margin-top:10px;min-height:600px}
-.toulist-top-title{height:30px;line-height:30px;color:#414141;font-size:14px;border-bottom:1px solid #dfdfdf}
+.toulist{min-height:600px}
+.toulist-top-title{height:40px;line-height:40px;color:#414141;font-size:14px;border-bottom:1px solid #dfdfdf}
 .toulist-top-title span{margin:0 6px;font-size:12px}
 .toulist-top-box{padding:25px 20px;background-color:#f8f8f8;border-bottom:1px solid #dfdfdf;margin-bottom:18px}
 .toulist-box-class{height:26px;line-height:26px;font-size:16px;margin-bottom:15px}

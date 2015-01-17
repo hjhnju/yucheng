@@ -20,28 +20,20 @@ class Area_List_Area extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'name', 'pinyin', 'status', 'pid', 'province', 'city', 'sort');
+    protected $fields = array('id', 'name', 'pinyin', 'status', 'pid', 'province', 'city', 'huifu_cityid', 'sort');
 
     /**
      * 整数类型的字段
      * @var array
      */
     protected $intProps = array(
-        'id'      => 1,
-        'status'  => 1,
-        'pid'     => 1,
-        'province'=> 1,
-        'city'    => 1,
-        'sort'    => 1,
+        'id'          => 1,
+        'status'      => 1,
+        'pid'         => 1,
+        'province'    => 1,
+        'city'        => 1,
+        'huifu_cityid'=> 1,
+        'sort'        => 1,
     );
-
-    /**
-     * 获取数据的对象数组
-     * @return array|Area_Object_Area[]
-     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
-     */
-    public function getObjects() {
-        return parent::getObjects('Area_Object_Area');
-    }
 
 }

@@ -241,15 +241,22 @@
                                 <div class="renzheng-title">企业认证</div>
                                 <div class="renzheng-box-main">
                                     {%foreach $audit['1'] as $key => $item%}
-                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    <div class="renzheng-box-main-box">
+                                        <div class="renzheng-box-main-box-pic {%$mapType[$item.name]%}"></div>
+                                        <div class="renzheng-box-main-box-name">{%$item.name%}</div>
+                                    </div>
                                     {%/foreach%}
+
                                 </div>
                             </div>
                             <div class="renzheng-box">
                                 <div class="renzheng-title">个人认证</div>
                                 <div class="renzheng-box-main">
                                     {%foreach $audit['2'] as $key => $item%}
-                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    <div class="renzheng-box-main-box">
+                                        <div class="renzheng-box-main-box-pic {%$mapType[$item.name]%}"></div>
+                                        <div class="renzheng-box-main-box-name">{%$item.name%}</div>
+                                    </div>
                                     {%/foreach%}
 
                                 </div>

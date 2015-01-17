@@ -98,7 +98,7 @@ define(function (require) {
             if(value && !$(this).hasClass('disable')) {
                 sendsmscode.remote({
                     phone: value,
-                    type: 7
+                    type: resetpwd
                 })
             }
         });
@@ -186,7 +186,7 @@ define(function (require) {
                 phone: phone,
                 vericode: vericode,
                 passwd: passwd,
-                type: 7
+                type: resetpwd
 
             })
         });
