@@ -3,7 +3,7 @@
  * 修改页面类
  * @author lilu
  */
-class EditController extends Base_Controller_Response {
+class EditController extends Base_Controller_Page {
 	public function init(){
 		$this->setNeedLogin(false);
 		parent::init();
@@ -17,7 +17,7 @@ class EditController extends Base_Controller_Response {
 	 * userinfo 左上角用户信息
 	 */
 	public function chphoneAction() {
-		$userid = $this->getUserId();
+		$userid = $this->userid;
 		$userInfo = $this->userInfoLogic->getUserInfo($userid);
 		$this->getView()->assign('userinfo',$userInfo);
 		
@@ -29,7 +29,7 @@ class EditController extends Base_Controller_Response {
 	 * userinfo 左上角用户信息
 	 */
 	public function chpwdAction() {
-		$userid = $this->getUserId();
+		$userid = $this->userid;
 		$userInfo = $this->userInfoLogic->getUserInfo($userid);
 		$this->getView()->assign('userinfo',$userInfo);		 
 	}
@@ -40,7 +40,7 @@ class EditController extends Base_Controller_Response {
 	 * userinfo 左上角用户信息
 	 */
 	public function chemailAction() {
-		$userid = $this->getUserId();
+		$userid = $this->userid;
 		$userInfo = $this->userInfoLogic->getUserInfo($userid);
 		$this->getView()->assign('userinfo',$userInfo);
 	}
@@ -51,7 +51,7 @@ class EditController extends Base_Controller_Response {
 	 * userinfo 左上角用户信息
 	 */
 	public function emailsuccessAction() {
-		$userid = $this->getUserId();
+		$userid = $this->userid;
 		$userInfo = $this->userInfoLogic->getUserInfo($userid);
 		$this->getView()->assign('userinfo',$userInfo);		
 	}

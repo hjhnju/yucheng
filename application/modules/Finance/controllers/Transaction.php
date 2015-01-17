@@ -33,10 +33,11 @@ class TransactionController extends Base_Controller_Api{
         $transAmt   = round($_REQUEST['transAmt'],2);
         $openBankId = strval($_REQUEST['openBankId']);
         $gateBusiId = strval($_REQUEST['gateBusiId']);
-        $dcFlag     = strval($_REQUEST['dcFlag']);
+        ///notice
+        //$dcFlag     = strval($_REQUEST['dcFlag']);
         //for test
         $huifuid    = '6000060000696947';
-        $transAmt   = '200.00';
+        $transAmt   = 200.00;
         $gateBusiId = 'B2C';
         $openBankId = 'CIB';
         $dcFlag     = 'D';
@@ -54,22 +55,34 @@ class TransactionController extends Base_Controller_Api{
 
    /**
     * 提现controller层入口
-    * @param String $transAmt 交易金额(required)
-    * @param String $captcha 验证码(required)
-    * @param String $openAcctId 开户银行帐号(optional)
+    * @param tring $transAmt 交易金额(required)
+    * @param string phone 手机号码////前端还没传给我
+    * @param string $captcha 验证码(required)
+    * @param string $openAcctId 开户银行帐号(optional)
     *
     */
     public function cashAction(){
-   	    $userid = $this->userid;
-        $transAmt = $_REQUEST['transAmt'];
+   	    $userid = intval($this->userid);
+   	    $phone = $_REQUEST['phone'];
+        $transAmt = floatval($_REQUEST['transAmt']);
         $captcha = $_REQUEST['captcha'];
-        $openAcctId = $__REQUEST['openAcctId'];
+        //验证验证码
+        $openAcctId = strval($_REQUEST['openAcctId']);
+        $type = 1;////////////////////////////////////////
+        $smsRet = User_Api::checkSmscode($phone,$captcha,$type);
+        if(!$smsRet) {
+        	Base_LogL::errir(array(
+        		'msg'     => '验证码验证失败',
+        		'phone'   => $phone,
+        		'captcha' => $captcha,
+        		'type'    => $type,
+        	));
+        	return ;
+        }
         $transLogic = new Finance_Logic_Transaction();
-        $transLogic->cash($userid,'10.00','4367423378320018938');       
+        $transLogic->cash($userid,$transAmt,$openAcctId);       
        
-        //1.验证验证码操作
-        //2.调用其他模块lib库得到所需参数
-        //3.调用Logic层方法
+     
     }
 
 }

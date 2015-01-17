@@ -54,6 +54,48 @@ class Finance_Fee {
 	 	 10   => 0.0260,
 	 );
 	 
+	 /**
+	  * 计算融资服务费
+	  * @param int riskLevel AAA=10 AA=20 A=30 B=40 C=50
+	  * @param float transAmt
+	  * 
+	  */
+	 public static function serviceFee($riskLevel,$transAmt) {
+	 	$riskLevel = intval($riskLevel);
+	 	$transAmt = floatval($transAmt);	
+	 	$serviceFee = $transAmt * self::$finance_service_fee[$riskLevel];
+	 	$serviceFee = floatval($serviceFee);
+	 	return $serviceFee;
+	 }
 	 
+	 /**
+	  * 计算风险准备金
+	  * @param int riskLevel 风险等级
+	  * @param float transAmt 交易金额
+	  * @param int days 借款天数
+	  */
+	 public static function prepareFee($riskLevel,$transAmt,$days) {
+	 	$riskLevel = intval($riskLevel);
+	 	$transAmt = floatval($transAmt);
+	 	$days = intval($days);
+	 	$dailyRate = floatval(self::$risk_reserve[$riskLevel] / 365);
+	 	$prepareFee = $transAmt * $dailyRate * $days;
+	 	$prepareFee = floatval($prepareFee);
+	 	return $prepareFee;
+	 }
 	
+	 /**
+	  * 计算账户管理费
+	  * @param int riskLevel 风险等级
+	  * @param float transAmt 交易金额
+	  * @param int months 月数
+	  */
+	 public static function manageFee($riskLevel,$transAmt,$months) {
+	 	$riskLevel = intval($riskLevel);
+	 	$transAmt = floatval($transAmt);
+	 	$months = intval($months);	
+	 	$manageFee = $transAmt * self::$acc_manage_fee[$riskLevel] * $months;
+	 	$manageFee = floatval($manageFee);
+	 	return $manageFee;
+	 }
 }

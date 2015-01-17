@@ -4,8 +4,7 @@
  * @author lilu
  */
 class InvestController extends Base_Controller_Page {
-	
-    CONST PAGEALL    = 10; //10页
+
     CONST PAGESIZE   = 10; //每次出来10条数据
     CONST BACKING    = 5;
     CONST TENDERING  = 2;
@@ -55,54 +54,41 @@ class InvestController extends Base_Controller_Page {
 	 * 
 	 */
 	public function backingAction() {
-		$status = InvestController::BACKING;
-		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
-
+		$status = self::BACKING;
+        $userid = $this->userid;
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-		//$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
-	    
-		//for test
-		//TODO:remove
-		$mockdata = array(
-			'page'    => $page,
-			'pageall' => 10,
-            'all'     => 3,
-            'list'    => array(
-				0 => array(
-						'proId'          => 0,
-						'investPro'      => '测试用汇款中项目1',
-						'annlnterestRate'=> 10,
-						'tenderAmt'      => 120.00,
-						'deadline'       => 6,
-						'tenderTime'     => 1419419678,
-						'haveBack'       => 0.20,
-						'toBeBack'       => 104.08,
-			    ),
-				1 => array(
-						'proId'          => 1,
-						'investPro'      => '测试用汇款中项目2',
-						'annlnterestRate'=> 10,
-						'tenderAmt'      => 120.00,
-						'deadline'       => 6,
-						'tenderTime'     => 1419419678,
-						'haveBack'       => 0.20,
-						'toBeBack'       => 104.08,
-				),
-				2 => array(
-						'proId'          => 2,
-						'investPro'      => '测试用汇款中项目3',
-						'annlnterestRate'=> 10,
-						'tenderAmt'      => 120.00,
-						'deadline'       => 6,
-						'tenderTime'     => 1419419678,
-						'haveBack'       => 0.20,
-						'toBeBack'       => 104.08,
-				),					
-								    
-		    ),
-		
-		);
-		$this->output($mockdata);
+		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);
+		//var_dump($backingRet);die;
+		$listRet = array();
+        $list = $backingRet['list'];
+        if(empty($list)) {
+        	$ret = array(
+        		'page'    => $page,
+        		'pageall' => $backingRet['pageall'],
+        		'all'     => $backingRet['total'],
+        		'list'    => $list,
+        	);
+        	$this->output($ret);
+        	return ;
+        }
+ 	    foreach ($list as $key => $value) {
+	        $listRet[$key]['proId'] = $value[''];
+	    	$listRet[$key]['investPro'] = $value[''];
+	    	$listRet[$key]['annlnterestRate'] = $value[''];
+	    	$listRet[$key]['tenderAmt'] = $value[''];
+	    	$listRet[$key]['deadline'] = $value[''];
+	    	$listRet[$key]['tenderTime'] = $value[''];
+	    	$listRet[$key]['haveBack'] = $value[''];
+	    	$listRet[$key]['toBeBack'] = $value[''];	    		    	
+	    }
+	    $ret = array(
+	    	'page' => $page,
+	    	'pageall' => $backingRet['pageall'],
+	    	'all' => $backingRet['total'],
+	    	'list' => $listRet,
+	    );
+	    $this->output($ret);
+	    return ;
 	}
 	
 	/**
@@ -129,38 +115,39 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */	
 	public function  tenderingAction() {
-		$status = InvestController::TENDERING;
-		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
-	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-	    //$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
-	    //for test
-	    //TODO:remove
-	    $mockdata = array(
-	    	'page'    => $page,
-            'pageall' => 10,
-            'all' => 2,
-	    	'list'    => array(
-	    	    0 => array(
-	    	    	'proId'          => 1,
-	    	    	'investPro'      => '测试用投标中项目1',
-	    	    	'annlnterestRate'=> 12,
-	    	    	'tenderAmt'      => 3000.00,
-	    	    	'deadline'       => 6,
-	    	    	'tenderTime'     => 1419419678,
-	    	    	'tenderProgress' => 85,
-	    	    ),
-	    		1 => array(
-	    			'proId'          => 1,
-	    			'investPro'      => '测试用投标中项目2',
-	    			'annlnterestRate'=> 12,
-	    			'tenderAmt'      => 3000.00,
-	    			'deadline'       => 6,
-	    			'tenderTime'     => 1419419678,
-	    			'tenderProgress' => 85,
-	    		),    				
-	    	),	    
+		$status = self::TENDERING;
+        $userid = $this->userid;
+		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+	    $tenderingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);
+	    $listRet = array();
+	    $list = $tenderingRet['list'];
+	    if(empty($list)) {
+	    	$ret = array(
+	    		'page'    => $page,
+	    		'pageall' => $tenderingRet['pageall'],
+	    		'all'     => $tenderingRet['total'],
+	    		'list'    => $list,
+	    	);
+	    	$this->output($ret);
+	    	return ;
+	    }
+	    foreach ($list as $key => $value) {
+	    	$listRet[$key]['proId'] = $value[''];
+	    	$listRet[$key]['investPro'] = $value[''];
+	    	$listRet[$key]['annlnterestRate'] = $value[''];
+	    	$listRet[$key]['tenderAmt'] = $value[''];
+	    	$listRet[$key]['deadline'] = $value[''];
+	    	$listRet[$key]['tenderTime'] = $value[''];
+	    	$listRet[$key]['tenderProgress'] = $value[''];
+	    }
+	    $ret = array(
+	    		'page' => $page,
+	    		'pageall' => $backingRet['pageall'],
+	    		'all' => $backingRet['total'],
+	    		'list' => $listRet,
 	    );
-	    $this->output($mockdata);
+	    $this->output($ret);
+	    return ;
 	}
 	
 	/**
@@ -190,42 +177,34 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function  endedAction() {
 		$status = InvestController::ENDED;
-		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+		$userid = $this->userid;
 	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-	    //$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
-		//for test
-		//TODO:remove
-		$mockdata = array(
-			'page'    => $page,
-            'pageall' => 10,
-            'all'     => 2,
-			'list'    => array(
-			    0 => array(
-			    		'proId'          => 1,
-			    		'investPro'      => '测试用已结束项目1',
-			    		'annlnterestRate'=> 12,
-			    		'tenderAmt'      => 3000.00,
-			    		'deadline'       => 6,
-			    		'tenderTime'     => 1419419678,
-			    		'endTime'        => 1419420656,
-			    		'totalRetAmt'    => 104.48,
-			    		'totalProfit'    => 4.48,
-			    ),
-				1 => array(
-						'proId'          => 1,
-						'investPro'      => '测试用已结束项目2',
-						'annlnterestRate'=> 12,
-						'tenderAmt'      => 3000.00,
-						'deadline'       => 6,
-						'tenderTime'     => 1419419678,
-						'endTime'        => 1419420656,
-						'totalRetAmt'    => 104.48,
-						'totalProfit'    => 4.48,
-			    ),
-					
-			),
-		);
-		$this->output($mockdata);
+	    $endedRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);
+	    $listRet = array();
+	    $list = $endedRet['list'];
+	    if(empty($list)) {
+	    	$ret = array(
+	    		'page' => $page,
+	    		'pageall' => $endedRet['pageall'],
+	    		'all' => $endedRet['total'],
+	    		'list' => $list,
+	    	);
+	    	$this->output($ret);
+	    	return ;
+	    }
+	    foreach ($list as $key => $value) {
+	    	$listRet[$key]['proId'] = $value[''];
+	    	$listRet[$key]['investPro'] = $value[''];
+	    	$listRet[$key]['annlnterestRate'] = $value[''];
+	    	$listRet[$key]['tenderAmt'] = $value[''];
+	    	$listRet[$key]['deadline'] = $value[''];
+	    	$listRet[$key]['tenderTime'] = $value[''];
+	    	$listRet[$key]['endTime'] = $value[''];
+	    	$listRet[$key]['totalRetAmt'] = $value[''];
+	    	$listRet[$key]['totalProfit'] = $value[''];
+	    }
+	    $this->output($listRet);
+	    return ;
 	}
 	
 	/**
@@ -254,38 +233,38 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function tenderFailAction() {
 		$status = InvestController::TENDERFAIL;
-		//$userId = isset($this->getUserId()) ? $this->getUserId() : 0;
+		$userid = $this->userid;
 	    $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-	    //$retData = Invest_Api::getUserInvests($userId, $status, $page, InvestController::PAGESIZE);
-		//for test
-		//TODO:remove
-		$mockdata = array(
-			'page'    => $page,
-			'pageall' => $this->PAGEALL,
-            'all'     =>2,
-            'list'    => array(
-		        0 =>array(
-				    'proId'          => 1,
-					'investPro'      => '测试用投标失败项目',
-					'annlnterestRate'=> 12,
-					'tenderAmt'      => 3000.00,
-					'deadline'       => 6,
-					'tenderTime'     => 1419419678,
-					'failReason'     => '余额不足导致投标失败',
-				),     
-				1 =>array(
-					'proId'          => 1,
-					'investPro'      => '测试用投标失败项目',
-					'annlnterestRate'=> 12,
-					'tenderAmt'      => 3000.00,
-					'deadline'       => 6,
-					'tenderTime'     => 1419419678,
-					'failReason'     => '余额不足导致投标失败',
-			    ),
-		    ),
-				 			
-		);
-		$this->output($mockdata);
+	    $tenderFailRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);
+	    $listRet = array();
+	    $list = $tenderFailRet['list'];
+	    if(empty($list)) {
+	    	$ret = array(
+	    		'page' => $page,
+	    		'pageall' => $tenderFailRet['pageall'],
+	    		'all' => $tenderFailRet['total'],
+	    		'list' => $list,
+	    	);
+	    	$this->output($ret);
+	    	return ;
+	    }
+	    foreach ($list as $key => $value) {
+	    	$listRet[$key]['proId'] = $value[''];
+	    	$listRet[$key]['investPro'] = $value[''];
+	    	$listRet[$key]['annlnterestRate'] = $value[''];
+	    	$listRet[$key]['tenderAmt'] = $value[''];
+	    	$listRet[$key]['deadline'] = $value[''];
+	    	$listRet[$key]['tenderTime'] = $value[''];
+	    	$listRet[$key]['failReason'] = $value[''];
+	    }
+	    $ret = array(
+	    	'page' => $page,
+	    	'pageall' =>$tenderFailRet['pageall'],
+	    	'all' => $tenderFailRet['total'],
+	    	'list' => $listRet,
+	    );
+	    $this->output($ret);
+	    return ;
 	}
 	
 	/**
@@ -319,62 +298,53 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */
 	public function repayplanAction() {
-		//$invest_id = isset($_REQUEST('pro_id')) ? $_REQUEST('pro_id') : 0;
-		$retdata = Invest_Api::getRefunds($invest_id);
+		$invest_id = $_REQUEST('pro_id');
+		$retData = Invest_Api::getRefunds($invest_id);
 		$list = array();
-		foreach ($retdata as $key=>$value) {
-			$list[$key] = array('time'=>$value['create_time'],
-			                    'repossPrincipal'=>$value['capital'],
-			                    'recePrincipal');
+		$data = array();
+		if(empty($retData)) {
+			$ret = array(
+				'list' => array(),
+				'data' => array(),
+			);
+			$this->output($ret);
+			return ;
 		}
 		
-		//Invest_Api::getRefunds($invest_id)
-		$mockdata = array(
-				'page'    => $page,
-                'pageall' => 10,
-                'all' => 3,
-				'list'    => array(
-						0 =>    array(
-							 	    'time'           => 1419419678,
-								    'repossPrincipal' => 0.00,
-	                                'repossProfit'    => 0.02,
-	                                'recePrincipal'   => 0.00,
-	                                'receProfit'      => 0.02,
-	                                'paymentStatus'   => 1,
-	                                'punitive'        => 0.00,
-						        ),
-						1 =>    array(
-								'time '           => 1419419678,
-								'repossPrincipal' => 0.00,
-								'repossProfit'    => 0.51,
-								'recePrincipal'   => 0.00,
-								'receProfit'      => 0.0,
-								'paymentStatus'   => 2,
-								'punitive'        => 1.00,
-						),
-						2 =>    array(
-								'time '           => 1419419678,
-								'repossPrincipal' => 0.00,
-								'repossProfit'    => 0.76,
-								'recePrincipal'   => 0.00,
-								'receProfit'      => 0.00,
-								'paymentStatus'   => 3,
-								'punitive'        => 0.00,
-						),
-				    ),
-				'data' => array(
-				                'repossPrincipal' => 0.00,
-				                'repossProfit'    => 1.29,
-				                'recePrincipal'   => 0.00,
-			            	    'receProfit'      => 0.02,
-								'punitive'        => 1.00,
-						
-						),
-				        
-				);
-		$this->output($mockdata);
+		foreach ($retData as $key=>$value) {
+			$list[$key]['time'] = $value[''];
+			$list[$key]['repossPrincipal'] = $value[''];
+			$list[$key]['repossProfit'] = $value[''];
+			$list[$key]['recePrincipal'] = $value[''];
+			$list[$key]['receProfit'] = $value[''];
+			$list[$key]['paymentStatus'] = $value[''];
+			$list[$key]['punitive'] = $value[''];
+		}
 		
-	}
-	
-	
+		$repossPrincipal = 0.00;
+		$repossProfit = 0.00;
+		$recePrincipal = 0.00;
+		$receProfit = 0.00;
+		$punitive = 0.00;
+		foreach ($list as $key => $value) {
+			$repossPrincipal += $value['repossPrincipal'];
+			$repossProfit += $value['repossProfit'];
+			$recePrincipal += $value['recePrincipal'];
+			$receProfit += $value['receProfit'];
+			$punitive += $value['punitive'];
+		}
+		$data = array(
+			'repossPrincipal' => $repossPrincipal,
+			'repossProfit'    => $repossProfit,
+			'recePrincipal'   => $recePrincipal,
+			'receProfit'      => $receProfit,
+			'punitive'        => $punitive,
+		);
+		$ret = array(
+			'list' => $list,
+			'data' => $data,
+		);
+		$this->output($ret);
+		return ;		
+	}	
 }
