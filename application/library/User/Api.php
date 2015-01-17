@@ -166,9 +166,8 @@ class User_Api{
      * @param $strType:类型
      */
     public static function checkImageCode($strImageCode, $strType){
-        $logic = new User_Logic_ImageCode();
         $strId           = session_id() . $strType;
-        $bolRet= $logic->checkCode($strId, $strImageCode);
+        $bolRet= User_Logic_ImageCode::checkCode($strId, $strImageCode);
         Base_Log::notice(array(
             'bolRet' => $bolRet,
             'code'=>$strImageCode, 
@@ -189,6 +188,19 @@ class User_Api{
             return array('type'=>$third->authtype,'nickname'=>$third->nickname);
         }
         return array('type'=>0,'nickname'=>'');
+    }
+    
+    /**
+     * 删除用户的第三方绑定
+     * @param  $userid
+     * @param int $type
+     * @return boolean
+     */
+    public static function delBind($userid,$type){
+        $third = new User_Object_Third();
+        $third->fetch(array('userid'=>intval($userid),'authtype'=>$type));
+        $ret = $third->erase();
+        return $ret;
     }
     
     /**
