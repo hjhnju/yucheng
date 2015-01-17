@@ -210,7 +210,7 @@ class RegistApiController extends Base_Controller_Api{
         $logic   = new User_Logic_Regist();
         $ret = $logic->modifyPwd($strName,$strPhone,$strPasswd);
         if(User_RetCode::SUCCESS === $ret){
-            $this->redirect('/user/login');
+            return $this->ajaxJump('/user/login');
         }
         $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
