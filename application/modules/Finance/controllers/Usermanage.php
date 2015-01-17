@@ -60,7 +60,6 @@ class UsermanageController extends Base_Controller_Page{
      */
     public function loginAction() {
     	$huifuid = $this->huifuid;
-    	$huifuid = "6000060000696947";	
     	$this->userManageLogic->userLogin($huifuid);
     }
     

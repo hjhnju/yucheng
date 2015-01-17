@@ -58,21 +58,22 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	 * @param retType 还款方式   01等额本息  02等额本金  03按期付息，到期还本  04一次性还款   99其他
 	 * @param bidStartDate 时间戳投标开始时间
 	 * @param bidEndDate 时间戳投标截止时间
+	 * @param float retAmt 总还款金额
+	 * @param int retDate 应还款日期
 	 * @param proArea 项目所在地
 	 * @return array || boolean
 	 * 
 	 */
-	public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea) {
+	public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea) {
 	    $webroot  = Base_Config::getConfig('web')->root;
 		$chinapnr = Finance_Chinapnr_Logic::getInstance();
-		if(!isset($orderId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
+		if(!isset($proId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
 		   !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
 		    Base_Log::error(array(
 		    	'msg' => '请求参数出错',
 		    ));   	
 		    return false;
-		}
-		
+		}		
 		$merCustId = strval(self::MERCUSTID);
 		$proId = strval($proId);
 		$borrCustId = strval($this->getHuifuid(intval($borrUserId)));
@@ -83,15 +84,16 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$bidStartDate = strval($bidStartDate);
 		$bidEndDate = date("YmdHis",$bidEndDate);		
 		$bidEndDate = strval($bidEndDate);
-		//$retAmt 总还款金额 怎么算？？？
-		//$retDate 应还款日期怎么算？？
+		$retAmt = strval($retAmt);
+		$retDate = strval($retDate);
 		$guarCompId = '';
 		$guarAmt = '';
 		$proArea = strval($proArea);
 		$bgRetUrl = $webroot.'/finance/bgcall/addBidInfo';
 		$merPriv = '';
 		$reqExt = '';		
-		$ret = $chinapnr->addBidInfo($merCustId,$proId,$borrCustId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);
+		$ret = $chinapnr->addBidInfo($merCustId,$proId,$borrCustId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,
+				$retDate,$guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);
 		
 		return $ret;
 	}

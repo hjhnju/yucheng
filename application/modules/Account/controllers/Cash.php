@@ -50,6 +50,8 @@ class CashController extends Base_Controller_Page {
 	 * 充值入口
 	 */
 	public function rechargeAction() {
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+		$this->getView()->assign('userinfo',$userinfo);
 		
 	}
 	
