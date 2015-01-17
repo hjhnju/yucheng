@@ -69,11 +69,11 @@ class User_Logic_Login {
             return User_RetCode::USER_NAME_NOTEXIT;
         }
 
-        //用户名密码
+        //用户名或密码错误
         if($objLogin->passwd !== $strPasswd){
             $objRecord->status = self::STATUS_LOGIN_FAIL;
             $objRecord->save();
-            return User_RetCode::USER_PASSWD_ERROR;
+            return User_RetCode::USER_NAME_OR_PASSWD_ERROR;
         }
 
         //正确保存

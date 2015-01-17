@@ -16,8 +16,8 @@ class User_Logic_Third {
         'access_token_redirect_url' => '/user/login/third',
         'qq'               => array(
             'host'         => 'https://graph.qq.com',
-            'appid'        => '101177204',
-            'appkey'       => 'd3aed93ef6e8e009ca30dcd33eb12093',
+            'appid'        => '101180983',
+            'appkey'       => 'c8cbea93631b75d55d4e5423aeec89f1',
             'authcode_url' => '/oauth2.0/authorize?response_type=code&client_id=',
             'acctoken_url' => '/oauth2.0/token?grant_type=authorization_code&client_id=',
             'openid_url'   => '/oauth2.0/me?access_token=',
@@ -81,7 +81,6 @@ class User_Logic_Third {
         if(empty($authtype) || empty($strAuthCode)){
             return false;
         }
-        
         $accessToken = $this->getAccessToken($authtype, $strAuthCode);
         if(empty($accessToken)){
             Base_Log::warn(array(
@@ -146,7 +145,7 @@ class User_Logic_Third {
         $host    = $arrData['host'];
         $randnum = md5(uniqid(rand(), TRUE));
         Yaf_Session::getInstance()->set("state", $randnum);
-        $url     = $arrData['authcode_url'] . $arrData['appid'] . "&redirect_uri=" . $redirectUrl . "&scope=get_user_info&state=" . $randnum;
+        $url     = $arrData['authcode_url'] . $arrData['appid'] . "&redirect_uri=" .$redirectUrl . "&scope=get_user_info&state=" . $randnum;
         if(empty($host)||empty($url))  {
             return false;
         }
@@ -163,7 +162,7 @@ class User_Logic_Third {
     public function binding($userid, $openid, $authtype){
 
         $objThird           = new User_Object_Third();
-        $objLogin->userid   = intval($userid); 
+        $objThird->userid   = intval($userid); 
         $objThird->authtype = $this->getAuthType($authtype);
         $objThird->openid   = $openid;
 

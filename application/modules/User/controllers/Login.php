@@ -16,7 +16,7 @@ class LoginController extends Base_Controller_Page{
      * 状态返回0表示登录成功
      */    
     public function indexAction(){
-        if(!empty($_SERVER['HTTP_REFERER'])){
+        if(!empty($_SERVER['HTTP_REFERER'])&&(false === strstr($_SERVER['HTTP_REFERER'],'/user/regist'))){
             Yaf_Session::getInstance()->set(User_Keys::LOGIN_REFER,$_SERVER['HTTP_REFERER']);
         }
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
@@ -40,6 +40,7 @@ class LoginController extends Base_Controller_Page{
         $url   = $logic->getAuthCodeUrl($strType);
 
         Base_Log::debug(array('authtype' => $strType));
+        //var_dump($url);die;
         $this->redirect($url);
     }
 
