@@ -167,7 +167,8 @@ class User_Api{
      */
     public static function checkImageCode($strImageCode, $strType){
         $logic = new User_Logic_ImageCode();
-        $bolRet= $logic->checkCode($strType, $strImageCode);
+        $strId           = session_id() . $strType;
+        $bolRet= $logic->checkCode($strId, $strImageCode);
         Base_Log::notice(array(
             'bolRet' => $bolRet,
             'code'=>$strImageCode, 
