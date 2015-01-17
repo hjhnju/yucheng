@@ -218,4 +218,31 @@ class RegistApiController extends Base_Controller_Api{
             $this->ajaxError(User_RetCode::BINDING_FAIL,User_RetCode::getMsg(User_RetCode::BINDING_FAIL));
         }
     }
+    
+    /** 
+     * 忘记密码重置密码接口
+     * @param $user, 用户名
+     * @param $phone, 手机号
+     * @param $vericode,手机验证码
+     * @param $passwd,新密码
+     * @return json
+     */
+    public function modifypwdAction(){
+        $strName     = trim($_REQUEST['user']);
+        $strPasswd   = trim($_REQUEST['passwd']);
+        $strPhone    = trim($_REQUEST['phone']);
+        $strType     = trim($_REQUEST['type']);
+        $strVericode = trim($_REQUEST['vericode']);
+        $ret = User_Api::checkSmscode($strPhone, $strVericode, $strType);
+        if(!$ret){
+            $this->ajaxError(User_RetCode::VERICODE_WRONG,
+                    User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
+        }
+        $logic   = new User_Logic_Regist();
+        $ret = $logic->modifyPwd($strName,$strPhone,$strPasswd);
+        if(User_RetCode::SUCCESS === $ret){
+            $this->redirect('/account/overview');
+        }
+        $this->ajaxError($ret,User_RetCode::getMsg($ret));
+    }
 }

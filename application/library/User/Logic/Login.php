@@ -10,6 +10,13 @@ class User_Logic_Login {
     const STATUS_LOGIN_FAIL = 1;  
     
     const DEFAULT_LOGIN_REDIRECT = '/account/overview';
+    
+    //需要使用默认登录后路转地址的URL
+    protected static $arrUrl = array(
+        '/user/regist',
+        '/user/login',
+        '/user/modifypwd', 
+    );
 
     public function __construct(){
     }
@@ -98,8 +105,14 @@ class User_Logic_Login {
      * @return string
      */
     public function loginRedirect($strRefer){
-        if(empty($strRefer)||(false === strstr($strRefer,'www.xingjiaodai.com')||
-        (false !== strstr($strRefer,'/user/regist'))||(false !== strstr($strRefer,'/user/login')))){
+        $bUrlIn = false;
+        foreach (self::$arrUrl as $val){
+            if(false !== strstr($strRefer,$val)){
+                $bUrlIn = true;
+                break;
+            }
+        }
+        if(empty($strRefer)||(false === strstr($strRefer,'www.xingjiaodai.com'))||$bUrlIn){
             return self::DEFAULT_LOGIN_REDIRECT;
         }
         return $strRefer;  
