@@ -164,6 +164,16 @@ class Loan_Api {
     }
     
     /**
+     * 获取借款的应还款总额
+     * @param number $loanId
+     * @return number
+     */
+    public static function getLoanRefundAmount($loanId) {
+        $logic = new Loan_Logic_Loan();
+        return $logic->getLoanRefundAmount($loanId);
+    }
+    
+    /**
      * 格式化借款数据
      * @param array $data
      * @return array

@@ -117,9 +117,47 @@ class Loan_Type_Duration extends Base_Type {
     /**
      * 通过duration获取天数
      * @param integer $type duration类型
+     * @param integer $startTime 开始时间
      * @return number
      */
-    public function getDays($type) {
-        return 1;
+    public static function getDays($type, $startTime) {
+        if ($type < 30) {
+            return $type;
+        }
+        
+        $months = self::getMonths($type);
+        $date = new DateTime();
+        $date->setTimestamp($startTime);
+        $date->format("+{$months}months");
+        
+        $days = ($date->getTimestamp() - $startTime) / 3600 / 24;
+        return $days;
+    }
+    
+    /**
+     * 通过duration获取有多少个月
+     * @param number $type
+     * @return number
+     */
+    public static function getMonths($type) {
+        return floor($type / 30);
+    }
+    
+    /**
+     * 获取某个duration的截止日期
+     * @param number $type duration的typeid
+     * @param number $startTime 时间起始点
+     * @return number 截止时间
+     */
+    public static function getTimestamp($type, $startTime) {
+        if ($type < 30) {
+            return $type * 24 * 3600;
+        }
+        
+        $months = self::getMonths($type);
+        $date = new DateTime();
+        $date->setTimestamp($startTime);
+        $date->format("+{$months}months");
+        return $date->getTimestamp();
     }
 }

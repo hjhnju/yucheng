@@ -19,7 +19,7 @@ class Invest_Api {
     
     /**
      * 获取我的投资列表 借款维度
-     * @param unknown $uid
+     * @param number $uid
      * @param integer $status -1全部 1审核中 2投标中 3放款审核 4打款中 5回款中 6已完成 9失败
      * @param number $page
      * @param number $pagesize
