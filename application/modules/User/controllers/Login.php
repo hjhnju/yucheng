@@ -16,6 +16,11 @@ class LoginController extends Base_Controller_Page{
      * 状态返回0表示登录成功
      */    
     public function indexAction(){
+        $logic   = new User_Logic_Login();
+        $userid = $logic->checkLogin();
+        if($userid){
+            $this->redirect('/account/overview');
+        }
         $logic = new User_Logic_Login();
         $strRedirect = $logic->loginRedirect($_SERVER['HTTP_REFERER']);
         Yaf_Session::getInstance()->set(User_Keys::LOGIN_REFER,$strRedirect);
