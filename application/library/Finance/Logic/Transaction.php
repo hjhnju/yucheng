@@ -84,7 +84,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 		$bidStartDate = strval($bidStartDate);
 		$bidEndDate = date("YmdHis",$bidEndDate);		
 		$bidEndDate = strval($bidEndDate);
-		$retAmt = strval($retAmt);
+		$retAmt = ($retAmt);
+		$retDate = date("Ymd",$retDate);
 		$retDate = strval($retDate);
 		$guarCompId = '';
 		$guarAmt = '';
@@ -136,7 +137,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $orderDate = strval($orderDate);
 	    $transAmt  = strval($transAmt);
 	    $usrCustId = strval($this->getHuifuid($userid));
-	    $usrCustId = "6000060000696947";
+	    //$usrCustId = "6000060000696947";
 	    $maxTenderRate = '0.10';
 	    
 	    //BorrowerRate=1 谁来给？？
@@ -148,13 +149,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    		strval($loanId),//标的唯一标识
 	    	)
 	    );				   
-	    $huifuborrowerDetails = array(
-	    	array(
-	    	    "BorrowerCustId" => "6000060000700460",
-	    	    "BorrowerAmt"    => "2000.00",
-	    	    "BorrowerRate"   => "1.00" ,
-	    	    "ProId"          => $orderId,
-	    ));
 	    $isFreeze    = strval($isFreeze);
 	    $freezeOrdId = strval($freezeOrdId);
 	    $retUrl      = "";   
