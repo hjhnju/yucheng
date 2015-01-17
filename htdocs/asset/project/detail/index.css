@@ -76,12 +76,10 @@ p{margin:0;padding:0}
 .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
-.header-right{float:right}
-.header-right-default{margin-top:10px}
+.header-right{float:right;margin-top:6px}
 .default-fastlogin{color:#666;margin-right:20px;text-decoration:none}
 .default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .default-login:hover{background-color:#e33f33}
-.header-right-login{margin-top:10px}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:280px;height:60px;display:block;margin-right:42px}
 .logo img{outline:0;border:0}
@@ -172,7 +170,7 @@ p{margin:0;padding:0}
 .color-red{color:#f2736a}
 #mk-dialog .close{background:url(../../common/css/img/fix_cha.png) 0 0 no-repeat;width:30px;height:30px;top:-15px;right:-15px;font-size:0;border:0}
 #mk-dialog .close:hover{border:0}
-.detail-left{float:left;width:670px}
+.detail-left{float:left;width:670px;margin-right:30px}
 .detail-left-title{height:40px;line-height:40px}
 .detail-left-title .left-title-link{font-size:14px;color:#414141;text-decoration:none}
 .detail-left-title .left-title-link:hover{text-decoration:underline}
@@ -259,7 +257,7 @@ p{margin:0;padding:0}
 .file-enter .file-left-text{float:left;width:150px}
 .renzheng-box{padding-left:30px}
 .renzheng-title{height:40px;line-height:40px;font-size:14px;color:#333}
-.renzheng-box-main{*zoom:1;margin-left:-20px}
+.renzheng-box-main{*zoom:1;margin:0 -40px -20px 0}
 .renzheng-box-main:before,.renzheng-box-main:after{display:table;content:""}
 .renzheng-box-main:after{clear:both}
 .renzheng-pic{float:left;width:100px;height:120px;margin-right:30px;background:url(img/renzheng.png) 0 0 no-repeat}
@@ -341,3 +339,18 @@ table tr td{padding-left:20px}
 .detail-error{height:36px;line-height:36px;background-color:#ffeceb;padding-left:10px;font-size:12px;color:#f2736a;border:1px solid #f2736a;margin-bottom:10px;position:relative;display:none}
 .detail-error.show{display:block}
 .detail-error .detail-error-cha{display:block;position:absolute;right:1px;top:9px;background:url(img/error_cha.png) 0 0 no-repeat;width:20px;height:20px;cursor:pointer}
+.renzheng-box-main-box{float:left;width:100px;text-align:center;margin-right:36px;margin-bottom:36px}
+.renzheng-box-main-box-pic{width:100px;height:60px;margin-bottom:10px;background:url(img/renzheng_icon.png) 0 0 no-repeat}
+.renzheng-box-main-box-pic.shidi{background-position:17px 0}
+.renzheng-box-main-box-pic.yingye{background-position:17px -102px}
+.renzheng-box-main-box-pic.shuiwu{background-position:17px -202px}
+.renzheng-box-main-box-pic.bank{background-position:17px -302px}
+.renzheng-box-main-box-pic.zuzhi{background-position:17px -400px}
+.renzheng-box-main-box-pic.zhengxin{background-position:17px -502px}
+.renzheng-box-main-box-pic.diya{background-position:17px -600px}
+.renzheng-box-main-box-pic.shenfen{background-position:17px -702px}
+.renzheng-box-main-box-pic.hukou{background-position:17px -800px}
+.renzheng-box-main-box-pic.jiehun{background-position:17px -900px}
+.renzheng-box-main-box-pic.fangchan{background-position:17px -1000px}
+.renzheng-box-main-box-pic.xingshi{background-position:17px -1100px}
+.renzheng-box-main-box-name{height:16px;line-height:16px;font-size:14px;color:#333}

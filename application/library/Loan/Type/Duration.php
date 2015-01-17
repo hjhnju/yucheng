@@ -113,4 +113,13 @@ class Loan_Type_Duration extends Base_Type {
         self::MONTH_24 => '24个月',
         self::MONTH_36 => '36个月',
     );
+    
+    /**
+     * 通过duration获取天数
+     * @param integer $type duration类型
+     * @return number
+     */
+    public function getDays($type) {
+        return 1;
+    }
 }
