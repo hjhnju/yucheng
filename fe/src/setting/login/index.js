@@ -15,7 +15,7 @@ define(function (require) {
     var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
     var imgcodeCheck = new Remoter('LOGIN_IMGCODE_CHECK');
 
-    var IMGURL = config.URL.IMG_GET + 'login';
+    var IMGURL = config.URL.IMG_GET;
 
     var loginError = $('#login-error');
     var imgUrl = $('#login-img-url');
@@ -70,7 +70,7 @@ define(function (require) {
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
-            $(this).attr('src', IMGURL);
+            $(this).attr('src', IMGURL + loginType);
         });
 
 
@@ -97,18 +97,22 @@ define(function (require) {
                     return;
                 }
 
+
+
                 loginCheck.remote({
                     name: user,
                     passwd: pwd,
                     imagecode: volid,
-                    type: loginType
+                    type: loginType,
+                    isthird: loginType === 'login' ? 0 : 1
                 });
             }
             else {
                 loginCheck.remote({
                     name: user,
                     passwd: pwd,
-                    type: loginType
+                    type: loginType,
+                    isthird: loginType === 'login' ? 0 : 1
                 });
             }
 

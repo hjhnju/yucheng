@@ -174,7 +174,7 @@ define(function (require) {
                 checksmscode.remote({
                     vericode: value,
                     phone: phone,
-                    type: 1
+                    type: 'regist'
                 });
             }
             else {
@@ -191,7 +191,7 @@ define(function (require) {
             if (!$(this).hasClass('disabled') && value) {
                 sendsmscode.remote({
                     phone: value,
-                    type: 1
+                    type: 'regist'
                 });
             }
 
