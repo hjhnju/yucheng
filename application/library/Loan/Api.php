@@ -159,7 +159,6 @@ class Loan_Api {
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
-        $data = self::formatLoan($data);
         
         return $data;
     }
@@ -235,6 +234,7 @@ class Loan_Api {
      */
     public static function getLoanDetail($loan_id) {
         $data = self::getLoanInfo($loan_id);
+        $data = self::formatLoan($data);
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();

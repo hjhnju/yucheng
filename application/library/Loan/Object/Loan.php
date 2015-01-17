@@ -26,7 +26,7 @@ class Loan_Object_Loan extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'user_id', 'title', 'pic', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
+    protected $fields = array('id', 'user_id', 'title', 'pic', 'area', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'start_time', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
 
     /**
      * 字段与属性隐射关系
@@ -37,6 +37,7 @@ class Loan_Object_Loan extends Base_Object {
         'user_id'         => 'userId',
         'title'           => 'title',
         'pic'             => 'pic',
+        'area'            => 'area',
         'content'         => 'content',
         'type_id'         => 'typeId',
         'cat_id'          => 'catId',
@@ -50,6 +51,7 @@ class Loan_Object_Loan extends Base_Object {
         'safe_id'         => 'safeId',
         'refund_type'     => 'refundType',
         'audit_info'      => 'auditInfo',
+        'start_time'      => 'startTime',
         'deadline'        => 'deadline',
         'status'          => 'status',
         'create_time'     => 'createTime',
@@ -66,6 +68,7 @@ class Loan_Object_Loan extends Base_Object {
     protected $intProps = array(
         'id'              => 1,
         'user_id'         => 1,
+        'area'            => 1,
         'type_id'         => 1,
         'cat_id'          => 1,
         'fresh'           => 1,
@@ -73,6 +76,7 @@ class Loan_Object_Loan extends Base_Object {
         'level'           => 1,
         'invest_cnt'      => 1,
         'refund_type'     => 1,
+        'start_time'      => 1,
         'deadline'        => 1,
         'status'          => 1,
         'create_time'     => 1,
@@ -113,6 +117,12 @@ class Loan_Object_Loan extends Base_Object {
      * @var string
      */
     public $pic;
+
+    /**
+     * 所在地
+     * @var integer
+     */
+    public $area;
 
     /**
      * 借款详情
@@ -191,6 +201,12 @@ class Loan_Object_Loan extends Base_Object {
      * @var string
      */
     public $auditInfo;
+
+    /**
+     * 开始时间
+     * @var integer
+     */
+    public $startTime;
 
     /**
      * 截止时间

@@ -26,21 +26,22 @@ class Area_Object_Area extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'name', 'pinyin', 'status', 'pid', 'province', 'city', 'sort');
+    protected $fields = array('id', 'name', 'pinyin', 'status', 'pid', 'province', 'city', 'huifu_cityid', 'sort');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'id'      => 'id',
-        'name'    => 'name',
-        'pinyin'  => 'pinyin',
-        'status'  => 'status',
-        'pid'     => 'pid',
-        'province'=> 'province',
-        'city'    => 'city',
-        'sort'    => 'sort',
+        'id'          => 'id',
+        'name'        => 'name',
+        'pinyin'      => 'pinyin',
+        'status'      => 'status',
+        'pid'         => 'pid',
+        'province'    => 'province',
+        'city'        => 'city',
+        'huifu_cityid'=> 'huifuCityid',
+        'sort'        => 'sort',
     );
 
     /**
@@ -48,12 +49,13 @@ class Area_Object_Area extends Base_Object {
      * @var array
      */
     protected $intProps = array(
-        'id'      => 1,
-        'status'  => 1,
-        'pid'     => 1,
-        'province'=> 1,
-        'city'    => 1,
-        'sort'    => 1,
+        'id'          => 1,
+        'status'      => 1,
+        'pid'         => 1,
+        'province'    => 1,
+        'city'        => 1,
+        'huifu_cityid'=> 1,
+        'sort'        => 1,
     );
 
     /**
@@ -105,6 +107,12 @@ class Area_Object_Area extends Base_Object {
      * @var integer
      */
     public $city;
+
+    /**
+     * 汇付城市映射ID
+     * @var integer
+     */
+    public $huifuCityid;
 
     /**
      * 排序
