@@ -9,13 +9,27 @@
  */
 class Base_Controller_Action extends Yaf_Action_Abstract
 {
+    protected $webroot;
+
     protected $ajax        = false;
     
     protected $outputView  = 'output.phtml';
 
     //User_Object实例
     protected $objUser     = null;
+
+    protected $userid      = null;
     
+    public function init(){
+
+        $this->webroot = Base_Config::getConfig('web')->root;
+        
+        $this->objUser = User_Api::checkLogin();
+        if(!empty($this->objUser)){
+            $this->userid = $this->objUser->userid;
+        }
+    }
+
     public function execute() {
         
     }
