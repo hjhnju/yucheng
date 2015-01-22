@@ -3,7 +3,7 @@
  * 对账逻辑类
  * @author lilu
  */
-class Finance_Logic_Reconciliation {
+class Finance_Logic_Reconciliation extends Finance_Logic_Base {
 	
 	/**
 	 * 充值对账(获取用户的充值记录)
@@ -52,7 +52,8 @@ class Finance_Logic_Reconciliation {
 		$endDate = strval($endDate);
 		$pageNum = strval($pageNum);
 		$pageSize = strval($pageSize);
-		$return = $chinapnr->saveReconciliation($merCustId, $beginDate, $endDate, $pageNum, $pageSize);
+		$return = $chinapnr->saveReconciliation($merCustId, $beginDate, $endDate, $pageNum, $pageSize);	
+		var_dump($return);die();	
 		if(is_null($return)) {
 			Base_Log::error(array(
 			    'msg'       => '请求汇付接口失败',
@@ -123,6 +124,7 @@ class Finance_Logic_Reconciliation {
 		$pageNum = strval($pageNum);
 		$pageSize = strval($pageSize);
 		$return = $chinapnr->cashReconciliation($merCustId, $beginDate, $endDate, $pageNum, $pageSize);
+		
 		if(is_null($return)) {
 			Base_Log::error(array(
 		    	'msg'       => '请求汇付接口失败',

@@ -22,7 +22,9 @@ class Finance_TypeStatus {
 	CONST PAYING           = 5;  //打款中
 	CONST HAVEPAYED        = 6;  //已打款
 	CONST PAYFAIDED        = 7;  //打款失败
-	CONST UNKNOWN_STATUS   = 8;  //未知状态
+	CONST CANCLED          = 8;  //投标已撤销
+	CONST MERCASH          = 9;  //商户代取现
+	CONST UNKNOWN_STATUS   = 10;  //未知状态
 	
 	public static $typeMapping = array(
 		self::NETSAVE          => '充值',
@@ -32,6 +34,7 @@ class Finance_TypeStatus {
 		self::LOANS            => '满标打款',
 		self::REPAYMENT        => '还款',	
 		self::TRANSFER         => '商户用自动扣款转账',
+		self::MERCASH          => '商户代取现',
 		self::UNKNOWN_TYPE     => '未知类型',	
 	);
 	
@@ -43,7 +46,8 @@ class Finance_TypeStatus {
 		self::FREEZING         => '冻结中',
 		self::PAYING           => '打款中',
 		self::HAVEPAYED        => '已打款',
-		self::PAYFAIDED        => '打款失败',	
+		self::PAYFAIDED        => '打款失败',
+		self::CANCLED          => '投标已撤销',
 		self::UNKNOWN_STATUS   => '未知状态',		
 	);  
 	public static function getStatusDesc($statusCode) {

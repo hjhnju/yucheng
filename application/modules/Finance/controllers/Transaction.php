@@ -3,9 +3,9 @@
  * 交易类功能controller层
  * 网银充值
  * 提现
- *
+ * @author lilu
  */
-class TransactionController extends Base_Controller_Api{
+class TransactionController extends Base_Controller_Page{
    
    	private $transLogic;
 	private $huifuid;
@@ -30,18 +30,16 @@ class TransactionController extends Base_Controller_Api{
     public function netsaveAction(){
         $userid  = $this->userid;
         $huifuid = $this->huifuid;	
-        $transAmt   = round($_REQUEST['transAmt'],2);
+        $transAmt   = $_REQUEST['transAmt'];
+        $transAmt = sprintf('%.2f',$transAmt);
         $openBankId = strval($_REQUEST['openBankId']);
         $gateBusiId = strval($_REQUEST['gateBusiId']);
         ///notice
         //$dcFlag     = strval($_REQUEST['dcFlag']);
-        //for test
-        $huifuid    = '6000060000696947';
-        $transAmt   = 200.00;
+        $transAmt   = sprintf('%.2f',300000);
         $gateBusiId = 'B2C';
         $openBankId = 'CIB';
         $dcFlag     = 'D';
-        $transLogic = new Finance_Logic_Transaction();
         Base_Log::notice(array(
             'userid'     => $userid,
             'huifuid'    => $huifuid,
@@ -50,7 +48,7 @@ class TransactionController extends Base_Controller_Api{
             'openBankId' => $openBankId,
             'dcFlag'     => $dcFlag,
         ));
-        $transLogic->netsave($userid, $huifuid, $transAmt, $gateBusiId, $openBankId, $dcFlag);         
+        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);         
    }
 
    /**
@@ -69,20 +67,20 @@ class TransactionController extends Base_Controller_Api{
         //验证验证码
         $openAcctId = strval($_REQUEST['openAcctId']);
         $type = 1;////////////////////////////////////////
-        $smsRet = User_Api::checkSmscode($phone,$captcha,$type);
+/*         $smsRet = User_Api::checkSmscode($phone,$captcha,$type);
         if(!$smsRet) {
-        	Base_LogL::errir(array(
+        	Base_Log::error(array(
         		'msg'     => '验证码验证失败',
         		'phone'   => $phone,
         		'captcha' => $captcha,
         		'type'    => $type,
         	));
         	return ;
-        }
-        $transLogic = new Finance_Logic_Transaction();
-        $transLogic->cash($userid,$transAmt,$openAcctId);       
-       
-     
+        } */
+        $transAmt = sprintf('%.2f',$transAmt);
+        $transAmt = sprintf('%.2f',20);
+        $openAcctId = '';
+        $this->transLogic->cash($userid,$transAmt,$openAcctId);            
     }
 
 }

@@ -10,8 +10,6 @@ class Finance_Logic_Base {
 	CONST VERSION_20 = "20";
 	//本平台mercustid
 	CONST MERCUSTID  = "6000060000677575";
-	//BusiCode 营业执照编号
-	CONST BUSICODE = "";
 	
 	private function getMillisecond() {
 		list($s1, $s2) = explode(' ', microtime());
@@ -85,23 +83,21 @@ class Finance_Logic_Base {
 	 * @param array $param 参数数组
 	 * @return boolean
 	 */
-	public function payOrderEnterDB($param) {
-		$regOrder = new Finance_Object_Order();
-		$logParam = array();		
-		if(is_null($param)) {
+	public function payOrderEnterDB($param) {		
+		if(is_null($param) || !isset($param)) {
 			//未给出参数，无法插入或者更新
 			Base_Log::error(array(
-			    'msg'=>'no params',
+			    'msg'=>'请求参数错误',
 			));
 			return false;
 		}		
-		foreach ($param as $key => $value) {
-			
+		$regOrder = new Finance_Object_Order();
+		$logParam = array();
+		foreach ($param as $key => $value) {			
 			$regOrder->$key =  $value;
 			$logParam[$key] = $value;
 		}
-		$ret = $regOrder->save();
-	
+		$ret = $regOrder->save();	
  		if(!$ret) {			
  			$logParam['msg'] = '财务类交易类型订单入库失败';
  			Base_Log::error($logParam);
@@ -155,10 +151,10 @@ class Finance_Logic_Base {
 			return false;
 		}
 		foreach ($param as $key => $value) {
-			$regRecord->$key = $value;
+			$tender->$key = $value;
 			$logParam[$key] = $value;
 		}
-		$ret = $regRecord->save();
+		$ret = $tender->save();
 		if(!$ret){
 			$logParam['msg'] = '投标记录入库失败';
 			Base_Log::error($logParam);
@@ -249,19 +245,17 @@ class Finance_Logic_Base {
 	 * @return array || false
 	 * 
 	 */
-	public function balance($userid){
-		//注释for test
-        /* if($userid <= 0) {
+	public function balance($userid) {
+        if(!isset($userid) || $userid <= 0) {
 			Base_Log::error(array(
 				'msg'    => '请求参数错误',
 				'userid' => $userid,
 			));
 			return false;
-		} */
+		}
 		$mercustId = self::MERCUSTID;
 		$ret = array();
 		$huifuid = $this->getHuifuid($userid);
-		$huifuid = "6000060000696947";
 		$userBg = Finance_Api::queryBalanceBg($huifuid);
 		if($userBg['status'] === Finance_RetCode::REQUEST_API_ERROR) {
 			Base_Log::error(array(
@@ -288,7 +282,7 @@ class Finance_Logic_Base {
 			$ret['sysBg']['avlBal']  = '0.00';
 			$ret['sysBg']['acctBal'] = '0.00';
 			$ret['sysBg']['frzBal']  = '0.00';
-		} else if($sysBg !== '000') {
+		} else if($sysBg['status'] !== '000') {
 			Base_Log::error(array(
 			    'msg'    => $sysBg['statusInfo'],
 			    'userid' => $userid,
@@ -299,13 +293,12 @@ class Finance_Logic_Base {
 		} else {
 			$details = $sysBg['data']['AcctDetails'];
 			foreach ($details as $key => $value) {
-				if($value['AcctType'] === 'BASEDT') {
+				if($value['AcctType'] === 'MERDT') {
 					$ret['sysBg']['avlBal']  = $value['AvlBal'];
 			        $ret['sysBg']['acctBal'] = $value['AcctBal'];
 			        $ret['sysBg']['frzBal']  = $value['FrzBal'];
 				}
-			}
-			 
+			}			 
 		}
 		return $ret;		
 	}
@@ -322,13 +315,18 @@ class Finance_Logic_Base {
 		$riskLevl = intval($riskLevl);
 		$transAmt = floatval($transAmt);
 		$days = intval($days);
-	    $serviceFee = floatval($transAmt * (Finance_Fee::$finance_service_fee[$riskLevl]));
-	    $dailyRate = floatval(Finance_Fee::$risk_reserve[$riskLevl]) / 365;
-	    $prepareFee = floatval($transAmt * $dailyRate * $days );
+	    $serviceFee = $transAmt * (Finance_Fee::$finance_service_fee[$riskLevl]);
+	    $serviceFee = sprintf('%.2f', $serviceFee);
+	    
+	    $dailyRate = Finance_Fee::$risk_reserve[$riskLevl] / 365;
+	    $prepareFee = $transAmt * $dailyRate * $days;
+	   
+	    $prepareFee = sprintf('%.2f', $prepareFee);
+	    
 	    $retFee = array(
 	    	'serviceFee' => $serviceFee,
 	    	'prepareFee' => $prepareFee,
-	    	'all'        => $serviceFee+$prepareFee,
+	    	'all'        => floatval($serviceFee)+floatval($prepareFee),
 	    );
 	    return $retFee;	    		
 	}
@@ -491,4 +489,24 @@ class Finance_Logic_Base {
 			return $ret;
 		}		
 	}
+	
+	/**
+	 * 对$_REQUEST进行urldecode
+	 * @param array
+	 * @return array || flase
+	 */
+    public function arrUrlDec($array) {
+        if(!isset($array)) {
+            Base_Log::error(array(
+                'msg' => '请求参数为空',
+            ));
+            return flase;
+        }
+        foreach ($array as $key => &$value) {
+        	if(!is_array($value)) {
+        		$value = urldecode($value);
+        	}                     	 
+        }
+        return $array;
+    }	
 }

@@ -4,34 +4,40 @@
  * 用户开户
  * 企业开户
  * 用户绑卡
+ * @author lilu
  */
-class UsermanageController extends Base_Controller_Page{
+class UsermanageController extends Base_Controller_Page {
 
-	private $userManageLogic ;
+	private $userManageLogic;
 	private $huifuid;
 	private $userName;
 	private $phone;
     public function init(){
-    	Yaf_Dispatcher::getInstance()->disableView();    	 
+    	Yaf_Dispatcher::getInstance()->disableView();
+    	//for test
+    	//TODO remove    	 
     	$this->setNeedLogin(false);
         parent::init();
         $this->userManageLogic = new Finance_Logic_UserManage();        
         $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
-        $this->userName = !empty($this->objUser) ? $this->objUser->name : "";
-        $this->phone = $phone = !empty($this->objUser) ? $this->objUser->phone : "";
+        $this->userName = !empty($this->objUser) ? $this->objUser->name : '';
+        $this->phone = $phone = !empty($this->objUser) ? $this->objUser->phone : '';
     }
 
     /**
-     * @param 
      * 用户开户Action层
-     *
      */
     public function userregistAction(){
-        $objUser  = $this->objUser;
-        $userid   = $this->userid;
-        $userName = $this->userName;
+        $objUser =  $this->objUser;
+        $userid = $this->userid;
+        $userName = $this->userName;        
         $phone = $this->phone;
-        $this->userManageLogic->userRegist($userName,'',$userid);       
+        Base_Log::notice(array(
+        	'userid'   => $userid,
+        	'userName' => $userName,
+        	'phone'    => $phone,
+        ));
+        $this->userManageLogic->userRegist($userName,$userid);             
     }
 
     /**
@@ -39,7 +45,8 @@ class UsermanageController extends Base_Controller_Page{
      *
      */
     public function corpregistAction(){
-
+    	$busiCode = '686424237'; 
+        Finance_Api::corpRegist($busiCode);
     }
     
    /**
@@ -47,10 +54,12 @@ class UsermanageController extends Base_Controller_Page{
     *
     */   
     public function userbindcardAction(){
-    	//若还没有绑定汇付，此时应该提示用户去绑定汇付
-        //$objUser = $this->objUser;
         $huifuid = $this->huifuid;
-        $userid  = $this->userid;  
+        $userid = $this->userid;  
+        Base_Log::notice(array(
+             'userid'  => $userid,
+        	'huifuid' => $huifuid,      	
+        ));
         $this->userManageLogic->userBindCard($huifuid,$userid);
     }
     
@@ -109,27 +118,71 @@ class UsermanageController extends Base_Controller_Page{
      */
     public function delCardAction() {
     	$huifuid = $this->huifuid;
-    	$huifuid = "6000060000696947";
     	$cardId = "4367423378320018938";
     	$this->userManageLogic->delCard($huifuid,$cardId);
     }
     
     public function testAction() {
-        $logic = new Finance_Logic_Transaction();
-        $transAmt = "20.00";
-        $userid=1;
-        $uidborrowDetail = array(
-            "BorrowerUserId" => 1,
-        	"BorrowerAmt"    =>  "20000.00",
-        	"BorrowerRate"   => "0.12" , 
-        	"ProId"          => 1,
-        );
-        $isFreeze='Y';
-        $retUrl='';
-        $logic->initiativeTender($transAmt,$userid,$uidborrowDetail,$isFreeze,$retUrl);
+    	$loanId = 3;
+    	$loan = Loan_Api::getLoanInfo($loanId);
+        $subOrdId = '2015012113505488194';
+        $inUserId = $loan['user_id'];
+        $outUserId = 37;
+        $transAmt = '200.00';
+        Finance_Api::loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt);
     }
     
     public function liluAction() {
-        Finance_Api::loans('111111111111','111111111111','111111111111','111111111111',20.00);
+        $logic = Finance_Chinapnr_Logic::getInstance();
+        $ret  = $logic->queryUsrInfo('6000060000677575','350823198601102016');
+        var_dump($ret);
+        return;
+    }
+    
+    public function test1Action() {
+    	$outUserId = 1;
+    	$inUserId = 37;
+    	$subOrdId = '2015012113525121505';
+    	$transAmt = '200.00';
+    	$loanId = 3;
+    	Finance_Api::repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId);
+    }
+    public function test2Action() {
+    	
+    	$logic = new Finance_Logic_Transaction();
+    	$outUserId = '6000060000677575';
+    	$outAcctId = 'MDT000001';
+    	$transAmt = '200.05';
+    	$inUserId = '6000060000696947';
+    	$logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
+    	
+    }
+    
+    public function test3Action() {
+    	$logic = new Finance_Logic_Transaction();
+    	$transAmt = '200.00';
+    	$userid = '37';
+    	$orderId = '2015012114075243368';
+    	$orderDate = '20150121';
+    	$freezeTrxId = '201501210000703109';
+    	$logic->tenderCancle($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);
+    }
+    
+    public function test4Action() {
+    	Finance_Api::queryCardInfo($this->huifuid);    	 
+    }
+    public function test5Action() {
+    	$logic = new Finance_Logic_Transaction();
+    	$userid = $this->userid;
+    	$transAmt = '200.00';
+    	$logic->merCash($userid,$transAmt);
+    }
+    public function test6Action() {
+    	$logic = new Finance_Logic_Base();
+    	$userid = $this->userid;
+    	 
+    	$ret = $logic->balance($userid);
+    	var_dump($ret);
+    	return ;
     }
 }

@@ -14,44 +14,103 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
      * @param string userName
      * @param string userMp
      * @param string userid
+     * autoRedirect || return false
      */
-	public function userRegist($userName,$userMp,$userid) {
-	    $webroot = Base_Config::getConfig('web')->root;
-		$chinapnr = Finance_Chinapnr_Logic::getInstance();
-		$merCustId   = strval(self::MERCUSTID);
-		$bgRetUrl    = $webroot.'/finance/bgcall/userregist';
-		$retUrl      = '';
-		$usrId       = strval($userName);
-		$usrMp       = strval($userMp);
-		$merPriv     = strval($userid);
-		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, "", "", "", "", $merPriv, "");		
+	public function userRegist($userName,$userid,$userMp='') {
+		if(!isset($userName) || !isset($userid)) {
+			Base_Log::error(array(
+				'msg'      => '请求参数错误',
+				'userName' => $userName,
+				'userid'   => $userid,
+			));
+			return false;
+		}
+		$userName = strval($userName);
+		$userid = strval($userid);
+		$userMp = strval($userMp);
+		
+	    $webroot   = Base_Config::getConfig('web')->root;
+		$chinapnr  = Finance_Chinapnr_Logic::getInstance();
+		
+		$merCustId = strval(self::MERCUSTID);
+		$bgRetUrl  = $webroot.'/finance/bgcall/userregist';
+		$retUrl    = '';
+		$usrId     = $userName;
+		$usrMp     = $userMp;
+		$usrName   = '';
+		$idType    = '';
+		$idNo      = '';
+		$usrEmail  = '';
+		$charSet   = '';
+		$merPriv   = $userid;
+		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, 
+		    $usrName, $idType, $idNo, $usrEmail, $merPriv, $charSet);
 	}
 	
 	/**
 	 * 企业开户
-	 * 
+	 * @param int userid
+	 * @param string userName
+	 * @param string busiCode
+	 * @param string instuCode optional
+	 * @param string taxCode optional
+	 * autoRedirect || return false
 	 * 
 	 */
-	public function corpRegist() {
+	public function corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode='') {
+		if(!isset($userid) || !isset($userName) || !isset($busiCode)) {
+			Base_Log::error(array(
+				'msg'      => '请求参数错误',
+				'userid'   => $userid,
+				'userName' => $userName,
+				'busiCode' => $busiCode,
+			));
+			return false;
+		}
+		$userid = strval($userid);
+		$userName = strval($userName);
+		$busiCode = strval($busiCode);
+		$instuCode = strval($instuCode);
+		$taxCode = strval($taxCode);
+		
 		$webroot = Base_Config::getConfig('web')->root;
 		$chinapnr = Finance_Chinapnr_Logic::getInstance();
-		$merCustId   = strval(self::MERCUSTID);
-		$busiCode = strval(self::BUSICODE);
+		
+		$merCustId = strval(self::MERCUSTID);
+		$usrId = $userName;
+		$usrName = '';
+		$merPriv = $userid;
+		$charSet = '';
+		$guarType = '';
 		$bgRetUrl = $webroot.'/finance/bgcall/corpRegist';
-		$chinapnr->corpRegister($merCustId,'', '', '',$busiCode,'','', '', '',$bgRetUrl, '');
+		$reqExt = '';		
+		$chinapnr->corpRegister($merCustId, $usrId, $usrName, $instuCode, $busiCode, 
+		    $taxCode, $merPriv, $charSet, $guarType, $bgRetUrl, $reqExt);
 	}
 	/**
 	 * 用户绑卡
 	 * @param string userCusId 
 	 * @param string userid
+	 * autoRedirect || return false
 	 */
     public function userBindCard($usrCustId,$userid) {
+    	if(!isset($usrCustId) || !isset($userid)) {
+    		Base_Log::error(array(
+    			'msg'        => '请求参数错误',
+    			'userCustId' => $usrCustId,
+    			'userid'     => $userid,
+    		));
+    		return false;
+    	}
+    	$userid = strval($userid);
+    	$usrCustId = strval($usrCustId);
+    	
 		$webroot = Base_Config::getConfig('web')->root;
-		$chinapnr= Finance_Chinapnr_Logic::getInstance();
-		$merCustId = self::MERCUSTID;
-		$usrCustId = strval($usrCustId);
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
+		
+		$merCustId = strval(self::MERCUSTID);
 		$bgRetUrl = $webroot.'/finance/bgcall/userbindcard';
-		$merPriv = strval($userid);
+		$merPriv = $userid;
 		$chinapnr->userBindCard($merCustId,$usrCustId,$bgRetUrl,$merPriv);		
 	}
 	

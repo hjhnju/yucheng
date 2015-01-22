@@ -17,6 +17,7 @@ class Finance_Api {
 		$ret = new Base_Result();
 		$queryLogic = new Finance_Logic_Query();
 		$return = $queryLogic->queryAccts();
+		
 		if($return === false) {			
 			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
 			$ret->data = array();
@@ -86,7 +87,7 @@ class Finance_Api {
 			$logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
 			$logParam['userCustId'] = $userCustId;
 			Base_Log::error($logParam);
-			
+						
 			return $ret->format();
 		}
 		if($return['RespCode'] !== '000') {
@@ -424,7 +425,8 @@ class Finance_Api {
 		     ));   	
 		 }    	
       	 $transLogic = new Finance_Logic_Transaction();
-      	 $return = $transLogic->loans($loanId, $subOrdId, $inCustId, $outCustId, $transAmt);
+      	 $return = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+      	
       	 if(is_null($return)) {
       	     $logParam = array();
       	 	 $logParam['msg']       = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
@@ -440,7 +442,7 @@ class Finance_Api {
       	 $respDesc = $return['RespDesc'];
       	 if($respCode !== '000') {
       	     $logParam = array();
-      	 	 $logParam['msg']       = $respDesc;
+      	 	 $logParam['msg'] = $respDesc;
       	 	 $logParam = array_merge($logParam,$return);     	 	
       	 	 Base_Log::error($logParam);
       	 	 return false;
@@ -459,9 +461,8 @@ class Finance_Api {
       * @return boolean 还款成功/失败
       */
      public static function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
-     	if(!isset($outUserId) || empty($outUserId) || !isset($inUserId) || empty($inUserId) ||
-      	   !isset($subOrdId) || empty($subOrdId) || !isset($transAmt) || empty($transAmt) ||
-      	   !isset($loanId) || empty($loanId)) {
+     	if(!isset($outUserId) || !isset($inUserId) ||!isset($subOrdId) || !isset($transAmt) ||
+      	   !isset($loanId) ) {
       	   	Base_Log::error(array(
       	   		'msg'       => '请求参数错误',
       	   		'outUserId' => $outUserId,
@@ -579,9 +580,9 @@ class Finance_Api {
       *     )
       *     
       */
-     public static function corpRegist($userId='',$usrName='',$instuCode='',$taxCode='',$guarType=''){
+     public static function corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode=''){
      	 $userManageLogic = new Finance_Logic_UserManage();
-     	 $userManageLogic->corpRegist();
+     	 $userManageLogic->corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode='');
      }
      
      /**
