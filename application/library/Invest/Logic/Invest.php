@@ -221,7 +221,8 @@ class Invest_Logic_Invest {
         // $can = $user_amount = 150
         // $amount = 120 则只允许 $can = 100;
         //最后需要预留100元
-        if (($rest - $can) < self::MIN_INVEST) {
+        $loanRest = $rest - $can;
+        if (($loanRest > 0) && ($loanRest < self::MIN_INVEST)) {
             $can -= self::MIN_INVEST;
         }
         

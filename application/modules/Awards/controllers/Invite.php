@@ -19,24 +19,16 @@ class InviteController extends Base_Controller_Response {
         $logic     = new Awards_Logic_Invite();
         $intUserid = $logic->decode($strCode);
 
-        //获取邀请人手机号
-        //$objUser = User_Api::getUserObject($userid);
-        $objUser = $this->objUser;
-        $name = $objUser->name;
-        $name = isset($name) ? $name : '';
-        $phone = $objUser->phone;
-        $phone = isset($phone) ? $phone :'';
-        $code = $strCode;
-        $uid = $intUserid;
+        //邀请人用户名/手机号/邀请码
+        $objUser = User_Api::getUserObject($intUserid);
         $data = array(
-        	'name'  => $name,
-        	'phone' => $phone,
-        	'code'  => $code,
-        	'uid'   => $uid,
+        	'invname' => isset($objUser->name) ? $objUser->name : '',
+        	'inviter' => isset($objUser->phone) ? $objUser->phone : '',
+        	'invcode' => $strCode,
         );
         //判断ua是移动页面还是pc页面, 选择跳转
         $isMobile = Base_Util_Mobile::isMobile();
-        if(!$isMobile){//TODO:add ! for test
+        if($isMobile){
             //移动端宣传页
             $this->outputView = 'url/mobile.phtml';
             $this->output($data);
@@ -46,12 +38,5 @@ class InviteController extends Base_Controller_Response {
             $this->output($data);
         }
 	}
-
-    public function testAction(){
-        $userid = 123;
-        $inviterid = 124;
-        $ret = Awards_Api::registNotify($userid, $inviterid);
-        echo $ret;
-    }
 
 }

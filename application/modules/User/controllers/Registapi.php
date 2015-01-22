@@ -183,7 +183,9 @@ class RegistApiController extends Base_Controller_Api{
                 ));
             }
         }
-       
+        $objUser = new User_Object($userid);
+        $logic   = new User_Logic_Login();
+        $logic->setLogin($objUser);
         Base_Log::notice($_REQUEST);
         return $this->ajaxJump('/user/open');
     }
