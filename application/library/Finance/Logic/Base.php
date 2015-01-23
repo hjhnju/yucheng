@@ -59,16 +59,6 @@ class Finance_Logic_Base {
 	}
 	
 	/**
-	 * 获取登录用户的userid
-	 * @return integer
-	 */
-	protected function getUserId() {
-		$objUser = User_Api::checkLogin();
-		$userid = !empty($objUser) ? $objUser->userid : 0;
-		return $userid;
-	}
-	
-	/**
 	 * 通过用户userid获取用户汇付id
 	 */
 	public function getHuifuid($userid){
@@ -187,9 +177,12 @@ class Finance_Logic_Base {
 	 * 财务类pay_order表更新状态
 	 * @param string $orderId
 	 * @param integer $status
-	 * @return boolean
+	 * @param int $type 
+	 * @param string $failCode
+	 * @param string $failDesc
+ 	 * @return boolean
 	 */
-	public function payOrderUpdate($orderId,$status,$type) {
+	public function payOrderUpdate($orderId,$status,$type,$failCode='',$failDesc='') {
 		$regOrder = new Finance_Object_Order();
 		$orderId = intval($orderId);
 		$status = intval($status);
@@ -200,6 +193,10 @@ class Finance_Logic_Base {
 		$statusDesc = Finance_TypeStatus::getStatusDesc(intval($status));
 		$type = Finance_TypeStatus::getType(intval($type));
 		$regOrder->comment = "$type".'订单'."$statusDesc";
+		if(!empty($failCode) && !empty($failDesc)) {
+			$regOrder->failCode = strval($failCode);
+			$regOrder->failDesc = strval($failDesc);
+		}
 		$ret = $regOrder->save();		
 		if(!$ret){
 			Base_Log::error(array(
@@ -220,6 +217,13 @@ class Finance_Logic_Base {
 	 * @return boolean
 	 */
 	public function payTenderUpdate($orderId,$status) {
+		if(!isset($orderId) || !isset($status)) {
+			Base_Log::error(array(
+				'msg'     => '请求参数错误',
+				'orderId' => $orderId,
+				'status'  => $status,
+			));
+		}
 		$orderId = intval($orderId);
 		$status = intval($status);
 		$regTender = new Finance_Object_Tender();
@@ -302,41 +306,20 @@ class Finance_Logic_Base {
 		}
 		return $ret;		
 	}
-	
-	/**
-	 * 手续费计算Logic层
-	 * 单开文件算手续费
-	 * @param string riskLevel
-	 * @param float transAmt 
-	 * @param months
-	 * @return float fee
-	 */
-	public function getFee($riskLevl,$transAmt,$days) {
-		$riskLevl = intval($riskLevl);
-		$transAmt = floatval($transAmt);
-		$days = intval($days);
-	    $serviceFee = $transAmt * (Finance_Fee::$finance_service_fee[$riskLevl]);
-	    $serviceFee = sprintf('%.2f', $serviceFee);
-	    
-	    $dailyRate = Finance_Fee::$risk_reserve[$riskLevl] / 365;
-	    $prepareFee = $transAmt * $dailyRate * $days;
-	   
-	    $prepareFee = sprintf('%.2f', $prepareFee);
-	    
-	    $retFee = array(
-	    	'serviceFee' => $serviceFee,
-	    	'prepareFee' => $prepareFee,
-	    	'all'        => floatval($serviceFee)+floatval($prepareFee),
-	    );
-	    return $retFee;	    		
-	}
-	
+		
 	/**
 	 * 根据orderId获取投标的相关信息
 	 * @param int orderId
 	 * @return array || boolean
 	 */
 	public function getTenderInfo($orderId) {
+		if(!isset($orderId)) {
+			Base_Log::error(array(
+				'msg'     => '请求参数错误',
+				'orderId' => $orderId,
+			));
+			return false;
+		}
 		$orderId = intval($orderId);
 		$tender = new Finance_List_Tender();
 		$filters = array('orderId' => $orderId);
@@ -360,7 +343,7 @@ class Finance_Logic_Base {
 	 * @return array || boolean
 	 */
 	public function getLoanInfo($loanId) {
-		if($loanId <= 0) {
+		if(!isset($loanId) || $loanId <= 0) {
 			Base_Log::error(array(
 				'msg' => '请求参数错误',
 			));
@@ -494,19 +477,16 @@ class Finance_Logic_Base {
 	 * 对$_REQUEST进行urldecode
 	 * @param array
 	 * @return array || flase
-	 */
-    public function arrUrlDec($array) {
-        if(!isset($array)) {
-            Base_Log::error(array(
-                'msg' => '请求参数为空',
-            ));
-            return flase;
-        }
-        foreach ($array as $key => &$value) {
-        	if(!is_array($value)) {
-        		$value = urldecode($value);
-        	}                     	 
-        }
-        return $array;
-    }	
+	 */   
+    public function arrUrlDec($arrParam) {
+    	$ret = array();
+    	foreach ($arrParam as $key => $value) {
+    		if(!is_array($value)) {
+    			$ret[$key] = urldecode($value);
+    		} else {
+    			$ret[$key] = $this->arrUrlDec($value);//对数组值进行递归解码
+    		}
+    	}
+    	return $ret;
+    }
 }

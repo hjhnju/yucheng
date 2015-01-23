@@ -17,7 +17,7 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
      * autoRedirect || return false
      */
 	public function userRegist($userName,$userid,$userMp='') {
-		if(!isset($userName) || !isset($userid)) {
+		if(!isset($userName) || !isset($userid) || $userid <= 0) {
 			Base_Log::error(array(
 				'msg'      => '请求参数错误',
 				'userName' => $userName,
@@ -29,20 +29,20 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 		$userid = strval($userid);
 		$userMp = strval($userMp);
 		
-	    $webroot   = Base_Config::getConfig('web')->root;
-		$chinapnr  = Finance_Chinapnr_Logic::getInstance();
+	    $webroot = Base_Config::getConfig('web')->root;
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
 		
 		$merCustId = strval(self::MERCUSTID);
-		$bgRetUrl  = $webroot.'/finance/bgcall/userregist';
-		$retUrl    = '';
-		$usrId     = $userName;
-		$usrMp     = $userMp;
-		$usrName   = '';
-		$idType    = '';
-		$idNo      = '';
-		$usrEmail  = '';
-		$charSet   = '';
-		$merPriv   = $userid;
+		$bgRetUrl = $webroot.'/finance/bgcall/userregist';
+		$retUrl = '';
+		$usrId = $userName;
+		$usrMp = $userMp;
+		$usrName = '';
+		$idType = '';
+		$idNo = '';
+		$usrEmail = '';
+		$charSet = '';
+		$merPriv = $userid;
 		$chinapnr->userRegister($merCustId, $bgRetUrl, $retUrl, $usrId, $usrMp, 
 		    $usrName, $idType, $idNo, $usrEmail, $merPriv, $charSet);
 	}
@@ -87,6 +87,7 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 		$chinapnr->corpRegister($merCustId, $usrId, $usrName, $instuCode, $busiCode, 
 		    $taxCode, $merPriv, $charSet, $guarType, $bgRetUrl, $reqExt);
 	}
+	
 	/**
 	 * 用户绑卡
 	 * @param string userCusId 
@@ -94,7 +95,7 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 	 * autoRedirect || return false
 	 */
     public function userBindCard($usrCustId,$userid) {
-    	if(!isset($usrCustId) || !isset($userid)) {
+    	if(!isset($usrCustId) || !isset($userid) || $userid <= 0 ) {
     		Base_Log::error(array(
     			'msg'        => '请求参数错误',
     			'userCustId' => $usrCustId,
@@ -118,37 +119,68 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
      * 删除银行卡
      * @param string usrCusId
      * @param string cardId
-     * @return array || boolean
+     * @return array || false
      * 
      */
 	public function delCard($usrCustId,$cardId) {
+		if(!isset($usrCustId) || !isset($cardId)) {
+			Base_Log::error(array(
+				'msg'     => '请求参数错误',
+				'huifuid' => $usrCustId,
+				'cardId'  => $cardId,
+			));
+			return false;
+		}
 		$merCustId = strval(self::MERCUSTID);
 		$usrCustId = strval($usrCustId);
-		$cardId    = strval($cardId);
+		$cardId = strval($cardId);
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
-		$return = $chinapnr->delCard($merCustId,$usrCustId,$cardId);
-		if(is_null($return)) {
+		$ret = $chinapnr->delCard($merCustId,$usrCustId,$cardId);
+		if(is_null($ret)) {
+			Base_Log::error(array(
+				'msg' => '请求汇付API出错',
+				'huifuid' => $usrCustId,
+				'cardId'  => $cardId,
+			));
 			return false;
-		} else {
-			return $return;
-			//var_dump($return);
-		}
+		} 
+		return $ret;
 	}
 	/**
 	 * 汇付登录
-	 * @param string
+	 * @param string userCustId
+	 * autoRedirect || return false
 	 */
 	public function userLogin($usrCustId) {
+		if(!isset($usrCustId)) {
+			Base_Log::error(array(
+				'msg'     => '请求参数错误',
+				'huifuid' => $usrCustId,
+			));
+			return false;
+		}
+		$merCustId = strval(self::MERCUSTID);
+		$usrCustId = strval($usrCustId);		
 		$chinapnr= Finance_Chinapnr_Logic::getInstance();
-		$chinapnr->userLogin(self::MERCUSTID,$usrCustId);
+		$chinapnr->userLogin($merCustId,$usrCustId);
 	}
 	
 	/**
 	 * 汇付用户信息修改
-	 * @param string
+	 * @param string userCustId
+	 * autoRedirect || return false
 	 */
 	public function  acctModify($usrCustId) {
+		if(!isset($usrCustId)) {
+			Base_Log::error(array(
+			    'msg'     => '请求参数错误',
+			    'huifuid' => $usrCustId,
+			));
+			return false;
+		}
+		$merCustId = strval(self::MERCUSTID);
+		$usrCustId = strval($usrCustId);
 		$chinapnr= Finance_Chinapnr_ChinapnrLogic::getInstance();
-        $chinapnr->accModify(self::MERCUSTID,$usrCustId);
+        $chinapnr->accModify($merCustId,$usrCustId);
 	}
 }

@@ -28,7 +28,7 @@ class UsermanageController extends Base_Controller_Page {
      * 用户开户Action层
      */
     public function userregistAction(){
-        $objUser =  $this->objUser;
+        $objUser = $this->objUser;
         $userid = $this->userid;
         $userName = $this->userName;        
         $phone = $this->phone;
@@ -45,8 +45,15 @@ class UsermanageController extends Base_Controller_Page {
      *
      */
     public function corpregistAction(){
-    	$busiCode = '686424237'; 
-        Finance_Api::corpRegist($busiCode);
+    	$userid = $_REQUEST[''];
+    	$busiCode = $_REQUEST[''];
+    	$userName = $_REQUEST[''];
+        Base_Log::notice(array(
+        	'userid'   => $userid,
+        	'busiCode' => $busiCode,
+        	'userName' => $userName,
+        )); 
+        $this->userManageLogic->corpRegist($userid,$userName,$busiCode);
     }
     
    /**
@@ -57,7 +64,7 @@ class UsermanageController extends Base_Controller_Page {
         $huifuid = $this->huifuid;
         $userid = $this->userid;  
         Base_Log::notice(array(
-             'userid'  => $userid,
+            'userid'  => $userid,
         	'huifuid' => $huifuid,      	
         ));
         $this->userManageLogic->userBindCard($huifuid,$userid);
@@ -81,7 +88,17 @@ class UsermanageController extends Base_Controller_Page {
     	$huifuid = $this->huifuid;
     	$this->userManageLogic->acctModify($huifuid);
     }
-        
+    
+    /**
+     * 删除银行卡接口
+     * FOR TEST
+     */
+    public function delCardAction() {
+    	$huifuid = $this->huifuid;
+    	$cardId = "4367423378320018938";
+    	$this->userManageLogic->delCard($huifuid,$cardId);
+    }
+    
     /**
      * 银行卡查询Action层
      * FOR TEST
@@ -112,16 +129,10 @@ class UsermanageController extends Base_Controller_Page {
     	$transStat = $queryLogic->queryTransStat('LOANS');
     	var_dump($transStat);
     }
-    /**
-     * 删除银行卡接口
-     * FOR TEST
-     */
-    public function delCardAction() {
-    	$huifuid = $this->huifuid;
-    	$cardId = "4367423378320018938";
-    	$this->userManageLogic->delCard($huifuid,$cardId);
-    }
     
+    /**
+     * FOR TEST
+     */ 
     public function testAction() {
     	$loanId = 3;
     	$loan = Loan_Api::getLoanInfo($loanId);
@@ -132,6 +143,9 @@ class UsermanageController extends Base_Controller_Page {
         Finance_Api::loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt);
     }
     
+    /**
+     * FOR TEST
+     */
     public function liluAction() {
         $logic = Finance_Chinapnr_Logic::getInstance();
         $ret  = $logic->queryUsrInfo('6000060000677575','350823198601102016');
@@ -139,6 +153,9 @@ class UsermanageController extends Base_Controller_Page {
         return;
     }
     
+    /**
+     * FOR TEST
+     */
     public function test1Action() {
     	$outUserId = 1;
     	$inUserId = 37;
@@ -147,6 +164,10 @@ class UsermanageController extends Base_Controller_Page {
     	$loanId = 3;
     	Finance_Api::repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId);
     }
+    
+    /**
+     * FOR TEST
+     */
     public function test2Action() {
     	
     	$logic = new Finance_Logic_Transaction();
@@ -158,6 +179,9 @@ class UsermanageController extends Base_Controller_Page {
     	
     }
     
+    /**
+     * FOR TEST
+     */
     public function test3Action() {
     	$logic = new Finance_Logic_Transaction();
     	$transAmt = '200.00';
@@ -165,18 +189,29 @@ class UsermanageController extends Base_Controller_Page {
     	$orderId = '2015012114075243368';
     	$orderDate = '20150121';
     	$freezeTrxId = '201501210000703109';
-    	$logic->tenderCancle($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);
+    	$logic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);
     }
     
+    /**
+     * FOR TEST
+     */
     public function test4Action() {
     	Finance_Api::queryCardInfo($this->huifuid);    	 
     }
+    
+    /**
+     * FOR TEST
+     */
     public function test5Action() {
     	$logic = new Finance_Logic_Transaction();
     	$userid = $this->userid;
     	$transAmt = '200.00';
     	$logic->merCash($userid,$transAmt);
     }
+    
+    /**
+     * FOR TEST
+     */
     public function test6Action() {
     	$logic = new Finance_Logic_Base();
     	$userid = $this->userid;
@@ -185,4 +220,28 @@ class UsermanageController extends Base_Controller_Page {
     	var_dump($ret);
     	return ;
     }
+    
+    /**
+     * FOR TEST
+     * 测试递归解码
+     */
+    public function test7Action() {
+        $arr = array(
+    		'one' => '%E6%9D%8E%E7%92%90',
+    		'two' => array(
+    		    0 => '%E5%88%98%E8%89%B3%E9%9C%9E',
+    			1 => array(
+    			    0 => '%E5%88%98%E8%89%B3%E9%9C%9E',
+    				1 => array('%E5%88%98%E8%89%B3%E9%9C%9E'),
+    		    ),
+    	    ),
+    	);
+    	$logic = new Finance_Logic_Base();
+    	$arr1 = $logic->arrUrlDec($arr);
+    	var_dump($arr);
+    	echo "<br/>";
+    	var_dump($arr1); 
+    	return;   	 
+    }
+    
 }
