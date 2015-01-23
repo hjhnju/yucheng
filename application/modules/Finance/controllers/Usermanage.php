@@ -42,7 +42,7 @@ class UsermanageController extends Base_Controller_Page {
 
     /**
      * 企业开户Action层
-     *
+     * for test
      */
     public function corpregistAction(){
     	$userid = $_REQUEST[''];

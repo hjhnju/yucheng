@@ -6,9 +6,10 @@
  */
 class IndexAction extends Base_Controller_Action {
     public function execute() {
+        
         if (!empty($_POST)) {
             $strName   = trim($_POST['name']);
-            $strPasswd = md5(trim($_POST['passwd']));
+            $strPasswd = trim($_POST['passwd']);
             $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
             //检查错误次数
             $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
@@ -44,6 +45,8 @@ class IndexAction extends Base_Controller_Action {
             
             // 获取用户信息
             $user = User_Api::checkLogin();
+
+            Base_Log::notice($user);
             
             $admin = new Admin_Object_Admin($user->userid);
             if ($admin->status !== 0) {

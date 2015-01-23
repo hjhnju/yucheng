@@ -205,12 +205,16 @@ class User_Api{
     
     /**
      * 后台添加用户
-     * @param string $strName
+     * @param string $strUserType 'priv' || 'corp'
+     * @param string $strUserName
      * @param string $strPasswd
      * @param string $strPhone
      * @param string $strInviter
      */
-    public static function regist($strName,$strPasswd,$strPhone,$strInviter){
-        
+    public static function regist($strUserType, $strUserName, $strPasswd, $strPhone, $strInviter=''){
+        $logic  = new User_Logic_Regist();
+        $objRet = $logic->regist($strUserType, $strUserName, $strPasswd, $strPhone, $strInviter);
+        Base_Log::notice(array('status'=>$objRet->status));
+        return $objRet->format();
     }
 }
