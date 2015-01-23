@@ -7,10 +7,7 @@
  * @author lilu
  */
 class BgcallController extends Base_Controller_Page{
-	
-	CONST PRIVATEKEY = '35333034333000000000000000000000000000003030303031303234303031333937353132303138AC16BABD43DF71C18A10EF2284D4CECE8CDA746066A4273D489866D28D873CC02908C3AD55068F0FCABD4C2D07DBDA314968B81CFED57F7A3512F0659D62CB16C754A8B0BB8F8CC2FD4A78C8375536B68F88FC31069AA91E11117450BA68448CC258FB7A0B462730FBC49D4DBC87693466662FF7022D75834E4C0CD26B439BF370AD20057458000BA6FB1CEDFD1C6CDB1037A86CFD1CDE2D463A453756B1E34858D121C8F8562778D3861AAA997372052256C1D65B5D492B582F84FF047BABA2448EC3B52C45427C80E2C173ED735807DCFBF13349016D2DFFC7C814E15A9C5991D5E240D54A3BB8529631460D4D2E38A6E052BACD3F9DB14097B567C8798E7E00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100015B9E57F039CB9D5F60D568FAF139F0B1B9C0E2899C0A9B3C682EBB89676F74B708898BA4DB04B0F879710C7DFBE83C4FA51C14BC394729282948554D06680C9740C2DF9FEDD8C2A99C1280A5B79C8A80A7955C38941D0D3926F090B78CA95B6E1BEF8B8CF7F1CE097BBAF675C99664DFD75A195021026CE9E551E986B51CBF71DFE3778C4181688C8A543477ACFCD4527FA56DEFA8E08E9ABCA5FC0B96B29BD251234F2ABAC5BA4FA39E834FF2D47C2A2A845830ECEB006463B1A3BFC2077B363DE6DA81C2E5F440FB359FFAB62FD373905AE60D16CCBAA5F7375BD9B8B5DD0D68A12B33C9E54406D68DC316C33CE4036F2559A8449B23FBA54546BE15A756EFFD4D8F5ABDC3A4BBC2E8BB38D3BF95D947C3BA49763F83EA1EEB9BC9AC33E6CAC804BFB45F24DA38CA9BB79FBD7A65DE282B268EE80C4EF808B228CD201CC761E23B4D7734652642';
-	CONST PUBLICKEY = '393939393939000000000000000000000000000030303031F60CB7B659222AEB12654EBB05C43CC2408154D57EED62D8F46FB946815A631D4A708DBA667673F69A279E371CA16064296643CBB0785E18FFDA84DB065DCA42D48349D3839B6723B604AC0BF19994147E56C6EFFD7BF6CF37E766D58E6CC6EF023B2A03E00D85829C51550012B1ABBF5710D6D9BED03A69BEC144D73EE2154F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000133D851D515306218';
-	
+		
 	private $huifuLogic;
 	private $financeLogic;
 	private $scureTool;
@@ -40,6 +37,16 @@ class BgcallController extends Base_Controller_Page{
             return;
         }
         $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+        //验签处理
+        $signKeys = array("CmdId", "RespCode", "MerCustId", "UsrId", "UsrCustId", "BgRetUrl", "TrxId", "RetUrl", "MerPriv");
+        if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+            Base_Log::error(array(
+            	'msg' => '验签错误',
+            	'CmdId' => $retParam['CmdId'],
+            ));
+            return ;
+        }
+        
 		$trxId    = $retParam['TrxId'];
 		$userid   = $retParam['MerPriv'];//取客户私用域中的userid
 		$huifuid  = $retParam['UsrCustId'];//用户汇付id入库
@@ -50,6 +57,8 @@ class BgcallController extends Base_Controller_Page{
 		$idNo     = $retParam['IdNo'];//用户身份证号码入库
 		$respCode = $retParam['RespCode']; 
 		$respDesc = $retParam['RespDesc'];	
+		
+		
 		//汇付返回非成功时的处理
 		if($respCode !== '000') {
 			$logParam = $retParam;
@@ -57,7 +66,7 @@ class BgcallController extends Base_Controller_Page{
 			Base_Log::error($logParam);
 			return ;
 		}			
-		//验签处理
+		
 		$userid = intval($userid);
 		$huifuid = strval($huifuid);
 		$email = strval($email);
@@ -114,6 +123,16 @@ class BgcallController extends Base_Controller_Page{
 		}
 		//对$_REQUSET参数进行递归urldecode
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+		//验签处理
+		$signKeys = array("CmdId", "RespCode", "MerCustId", "OpenAcctId", "OpenBankId", "UsrCustId", "TrxId", "BgRetUrl", "MerPriv");
+		if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+			Base_Log::error(array(
+			'msg' => '验签错误',
+			'CmdId' => $retParam['CmdId'],
+			));
+			return ;
+		}
+		
 		$trxId     = $retParam['TrxId'];
 		$userid    = $retParam['MerPriv'];//取客户私用域中的userid
 		$usrCustId = $retParam['UsrCustId'];
@@ -148,6 +167,16 @@ class BgcallController extends Base_Controller_Page{
 		    return;	
 	    }
 	    $retParam  = $this->financeLogic->arrUrlDec($_REQUEST);
+	    //验签处理
+	    $signKeys = array("CmdId", "RespCode", "MerCustId", "UsrCustId", "OrdId", "OrdDate", "TransAmt", "TrxId", "RetUrl","BgRetUrl","MerPriv");
+	    if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+	    	Base_Log::error(array(
+	    	'msg' => '验签错误',
+	    	'CmdId' => $retParam['CmdId'],
+	    	));
+	    	return ;
+	    }
+	    
 	    $trxId     = $retParam['TrxId'];
 	    $orderId   = intval($retParam['OrdId']);
 	    $orderDate = intval($retParam['OrdDate']);
@@ -210,6 +239,17 @@ class BgcallController extends Base_Controller_Page{
             return;
         }
         $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+        //验签处理
+        $signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "OrdDate", "TransAmt", "UsrCustId", "TrxId", "IsFreeze",
+            "FreezeOrdId","FreezeTrxId","RetUrl","BgRetUrl","MerPriv","RespExt");
+        if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+        	Base_Log::error(array(
+        	'msg' => '验签错误',
+        	'CmdId' => $retParam['CmdId'],
+        	));
+        	return ;
+        }
+        
         $merPriv = explode('_',$retParam['MerPriv']);
         $userid = intval($merPriv[0]);
         $proId = intval($merPriv[1]);        
@@ -283,6 +323,17 @@ class BgcallController extends Base_Controller_Page{
 	        return;
 		}
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+		//验签处理
+		$signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "OrdDate", "TransAmt", "UsrCustId", "IsUnFreeze", "UnFreezeOrdId",
+				"FreezeTrxId","RetUrl","BgRetUrl","MerPriv","RespExt");
+		if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+			Base_Log::error(array(
+			'msg' => '验签错误',
+			'CmdId' => $retParam['CmdId'],
+			));
+			return ;
+		}
+		
 		$userid = intval($retParam['MerPriv']);
 		$orderId = intval($retParam['OrdId']);
 		$orderDate = intval($retParam['OrdDate']);
@@ -337,7 +388,7 @@ class BgcallController extends Base_Controller_Page{
 			return ;
 		}
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-		
+		//验签处理SDK中验过了
 		$cmdId      = $retParam['CmdId'];
 		$respCode   = $retParam['RespCode'];
 		$respDesc   = $retParam['RespDesc'];
@@ -373,8 +424,7 @@ class BgcallController extends Base_Controller_Page{
 			));		
 			return;		
 		}
-		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-		
+		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);		
 		$userId    = intval($retParam['MerPriv']);
 		$huifuid   = $retParam['UsrCustId'];
 		$orderId   = intval($retParam['OrdId']);
@@ -391,6 +441,16 @@ class BgcallController extends Base_Controller_Page{
 		$respType  = $retParam['RespType'];
 		//同步异步返回
 		if(!isset($_REQUEST['RespType'])) { 
+			//验签处理
+			$signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "FeeAmt",
+					"FeeCustId","FeeAcctId","ServFee","ServFeeAcctId","RetUrl","BgRetUrl","MerPriv","RespExt");
+			if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+				Base_Log::error(array(
+				    'msg' => '验签错误',
+				    'CmdId' => $retParam['CmdId'],
+				));
+				return ;
+			}	
 			//同步异步返回处理中
 			if($respCode === '999') {
                 //finance_order状态更改为“处理中”
@@ -417,6 +477,16 @@ class BgcallController extends Base_Controller_Page{
 		}					
 		//存在异步对账
 		if(isset($_REQUEST['RespType'])) {
+			//验签处理
+			$signKeys = array("RespType", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "RetUrl",
+			    "BgRetUrl","MerPriv","RespExt");
+			if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+				Base_Log::error(array(
+				    'msg' => '验签错误',
+				    'CmdId' => $retParam['CmdId'],
+				));
+				return ;
+			}
 			$refunds = new Finance_List_Order();
 			$filters = array('orderId' => $orderId);
 			$refunds->setFilter($filters);
@@ -480,7 +550,7 @@ class BgcallController extends Base_Controller_Page{
 		    return;
 		}		
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-		
+		//验签处理SDK中验过了
 		$userid    = intval($retParam['MerPriv']);//投标人的uid
 		$orderId   = intval($retParam['OrdId']);
 	    $orderDate = intval($retParam['OrdDate']);
@@ -549,7 +619,7 @@ class BgcallController extends Base_Controller_Page{
 	        return ;
 	    }
 	    $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-	     
+	    //验签处理SDK中验过了	    
 	    $userid    = intval($retParam['MerPriv']);//借款人的uid
 	    $orderId   = intval($retParam['OrdId']);
 	    $orderDate = intval($retParam['OrdDate']);
@@ -608,7 +678,8 @@ class BgcallController extends Base_Controller_Page{
             Base_Log::error($logParam); 
 	    }
 	    $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-	     
+	    //验签处理SDK中验过了
+	    
 	    $userid    = intval($retParam['OutCustId']);
 		$orderId   = intval($retParam['OrdId']);
 		$orderDate = intval($retParam['MerPriv']);
@@ -664,6 +735,8 @@ class BgcallController extends Base_Controller_Page{
 		    Base_Log::error($logParam);   	
 		}
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+		//验签处理SDK中验过了
+		
 		$orderId = $_REQUEST['OrdId'];
 		$_merPriv = $retParam['MerPriv'];
 		$merPriv = explode('_',$_merPriv);		
@@ -719,21 +792,30 @@ class BgcallController extends Base_Controller_Page{
 		   	Base_Log::error($logParam);
 		}
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-		
+		//验签处理
+		$signKeys = array("CmdId","RespCode","MerCustId","UsrId","UsrName","UsrCustId","AuditStat", "TrxId",
+			"OpenBankId","CardId", "RetUrl","BgRetUrl","RespExt");
+		if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+			Base_Log::error(array(
+			    'msg' => '验签错误',
+			    'CmdId' => $retParam['CmdId'],
+			));
+			return ;
+		}
 		$userid = $retParam['MerPriv'];
 		$huifuid = $retParam['UsrCustId'];
 		//将企业汇付Id入库
-		if(!User_Api::setHuifuId($userid,$huifuid)) {
-			Base_Log::error( array(
-		    'msg'       => '企业汇付id入库失败',
-			'userid:'   => $userid,
-			'usrCustId' => $huifuid,
-			));
-		}
+		if(!empty($huifuid)) {
+			if(!User_Api::setHuifuId($userid,$huifuid)) {
+				Base_Log::error( array(
+				'msg'       => '企业汇付id入库失败',
+				'userid:'   => $userid,
+				'usrCustId' => $huifuid,
+				));
+			}
+		}		
 		$trxId = strval($retParam['TrxId']);
 		Base_Log::notice($retParam);
 		print('RECV_ORD_ID_'.$trxId);
 	}
-	
-
 }

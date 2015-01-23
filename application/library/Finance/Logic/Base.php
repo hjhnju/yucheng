@@ -498,7 +498,21 @@ class Finance_Logic_Base {
      * 
      */
     public function verify($originStr, $sign) {
-    	
-    	return $this->scureTool->verify($originStr, $sign);
+    	$scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
+    	return $scureTool->verify($originStr, $sign);
+    }
+    
+	/**
+	 * @desc 指定验签报文的主键，自动拼接验签原文
+	 * @param  $params
+	 * @param  $keys
+	 * @return string
+	 */
+    public function getSignContent($params=array(), $keys=array()) {
+    	$ret="";
+    	foreach ($keys as $key){
+    		$ret.= isset($params[$key])?(trim($params[$key])):"";
+    	}
+    	return $ret;
     }
 }
