@@ -32,14 +32,30 @@ class User_Api{
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
      */
     public static function getUserObject($userid){
+        $userid  = intval($userid);
         $objUser = null;
-        if(!empty($userid)){
+        if($userid > 0){
             $objUser = new User_Object($userid);
         }
         Base_Log::notice(array(
             'userid' => $userid,
         ));
         return $objUser;
+    }
+
+    /**
+     * 获取企业用户列表
+     * @param   $usertype 用户类型
+     * @param   $list 用户列表
+     */
+    public static function getCorpUsers($page = 1, $pagesize = 10){
+        $logic   = new User_Logic_Query();
+        $list = $logic->queryCorpUsers($page, $pagesize);
+        Base_Log::notice(array(
+            'page'     => $list['page'],
+            'pagesize' => $list['pagesize'],
+        ));
+        return $list['list'];
     }
     
     /**

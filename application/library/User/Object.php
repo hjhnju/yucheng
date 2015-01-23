@@ -11,15 +11,17 @@ class User_Object {
      * @var array
      */
     protected $loginProps = array(
-        'userid'      => 'userid',
-        'status'      => 'status',
-        'name'        => 'name',
-        'passwd'      => 'passwd',
-        'phone'       => 'phone',
-        'email'       => 'email',
-        'lastIp'      => 'lastip',
-        'loginTime'   => 'logintime',
-        'createTime'  => 'createtime',
+        'userid',
+        'usertype',
+        'status',
+        'name',
+        'passwd',
+        'phone',
+        'email',
+        'huifuid',
+        'lastip',
+        'logintime',
+        'createtime',
     );
 
    /**
@@ -27,12 +29,10 @@ class User_Object {
      * @var array
      */
     protected $infoProps = array(
-        'usertype'            => 'usertype',
-        'realname'            => 'realname',
-        'certificateType'     => 'certificatetype',
-        'certificateContent'  => 'certificatecontent',
-        'headurl'             => 'headurl',
-        'huifuid'             => 'huifuid',
+        'realname',
+        'certificatetype',
+        'certificatecontent',
+        'headurl',    
     );
 
     //封装User_Object_Login
@@ -51,19 +51,18 @@ class User_Object {
     }
 
     public function __get($name){
-        $test = $name;
         $name = strtolower($name);
         if(in_array($name, $this->loginProps)){
             if(!$this->loginObj){
                 $this->loginObj = new User_Object_Login($this->userid);
             }
-            return $this->loginObj->$test;
+            return $this->loginObj->$name;
         }
         if(in_array($name, $this->infoProps)){
             if(!$this->infoObj){
                 $this->infoObj = new User_Object_Info($this->userid);
             }
-            return $this->infoObj->$test;
+            return $this->infoObj->$name;
         }
 
         return null;

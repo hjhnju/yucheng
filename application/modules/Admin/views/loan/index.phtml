@@ -26,7 +26,7 @@
 			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title">
-			Dashboard <small>reports & statistics</small>
+			借款列表 <small>所有借款</small>
 			</h3>
 			<div class="page-bar">
 				<ul class="page-breadcrumb">
@@ -36,87 +36,42 @@
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="#">Dashboard</a>
+						<a href="#">借款列表</a>
 					</li>
 				</ul>
 			</div>
 			<!-- END PAGE HEADER-->
-			<!-- BEGIN DASHBOARD STATS -->
-			<div class="row">
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<div class="dashboard-stat blue-madison">
-						<div class="visual">
-							<i class="fa fa-comments"></i>
-						</div>
-						<div class="details">
-							<div class="number">
-								 1349
-							</div>
-							<div class="desc">
-								 New Feedbacks
-							</div>
-						</div>
-						<a class="more" href="#">
-						View more <i class="m-icon-swapright m-icon-white"></i>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<div class="dashboard-stat red-intense">
-						<div class="visual">
-							<i class="fa fa-bar-chart-o"></i>
-						</div>
-						<div class="details">
-							<div class="number">
-								 12,5M$
-							</div>
-							<div class="desc">
-								 Total Profit
-							</div>
-						</div>
-						<a class="more" href="#">
-						View more <i class="m-icon-swapright m-icon-white"></i>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<div class="dashboard-stat green-haze">
-						<div class="visual">
-							<i class="fa fa-shopping-cart"></i>
-						</div>
-						<div class="details">
-							<div class="number">
-								 549
-							</div>
-							<div class="desc">
-								 New Orders
-							</div>
-						</div>
-						<a class="more" href="#">
-						View more <i class="m-icon-swapright m-icon-white"></i>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-					<div class="dashboard-stat purple-plum">
-						<div class="visual">
-							<i class="fa fa-globe"></i>
-						</div>
-						<div class="details">
-							<div class="number">
-								 +89%
-							</div>
-							<div class="desc">
-								 Brand Popularity
-							</div>
-						</div>
-						<a class="more" href="#">
-						View more <i class="m-icon-swapright m-icon-white"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-			<!-- END DASHBOARD STATS -->
+
+			<!-- BEGIN LIST -->
+			<div class="row-fluid">
+				<table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>借款编号</th>
+                            <th>借款用户</th>
+                            <th>借款标题</th>
+                            <th>金额 ¥</th>
+                            <th>利率 %</th>
+                            <th>期限/天</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%foreach from=$arrLoan key=i item=loan%}
+                        <tr>
+                            <td><a href="/admin/loan/detail?loanid={%$loan.id%}">{%$loan.id%}</a></td>
+                            <td><a href="/admin/corp/detail?userid={%$loan.user_id%}">{%$loan.user_id%}</a></td>
+                            <td>{%$loan.title%}</td>
+                            <td>{%$loan.amount%}</td>
+                            <td>{%$loan.interest%}</td>
+                            <td>{%$loan.duration%}</td>
+                            <td><a href="/admin/loan/edit?loanid={%$loan.id%}">编辑详情</a></td>
+                        </tr>
+                        {%/foreach%}
+                    </tbody>
+                </table>
+            </div>
+			<!-- END LIST -->
 		</div>
 	</div>
 {%/block%}
