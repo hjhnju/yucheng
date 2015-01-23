@@ -32,7 +32,7 @@ class Finance_Chinapnr_Logic {
 	const CMDID_USR_UN_FREEZE= "UsrUnFreeze"; //资金（货款）解冻,后台数据流方式
 	const CMDID_INITIATIVE_TENDER= "InitiativeTender"; //主动投标,页面浏览器方式
 	const CMDID_AUTO_TENDER= "AutoTender"; //自动投标,后台数据流方式
-	const CMDID_TENDER_CANCLE= "TenderCancle"; //投标撤销,页面浏览器方式
+	const CMDID_TENDER_CANCEL= "TenderCancel"; //投标撤销,页面浏览器方式
 	const CMDID_AUTO_TENDER_PLAN= "AutoTenderPlan"; //自动投标计划,页面浏览器方式
 	const CMDID_AUTO_TENDER_PLAN_CLOSE= "AutoTenderPlanClose"; //自动投标关闭,页面浏览器方式
 	const CMDID_LOANS= "Loans"; //自动扣款（放款）,后台数据流方式
@@ -135,16 +135,9 @@ class Finance_Chinapnr_Logic {
 	 */
 	private function reactResponse($res= "", $signKeys=array()){
 		
-  		$res = json_decode($res,true);
-  		
+  		$res = json_decode($res,true); 		
 		$ret = array();	
-        foreach ($res as $key => $value) {
-        	if(!is_array($value)){
-        		$ret[$key] = urldecode($value);
-        	} else {
-        		$ret[$key] = $value;
-        	}
-        }
+        $ret = $this->arrUrlDec($res);
    		// 指定的signKeys 拼接字符串进行验签
 		if($ret){
 			if($this->verify($this->getSignContent($ret, $signKeys), $ret['ChkValue']))
@@ -152,6 +145,23 @@ class Finance_Chinapnr_Logic {
 		}
 		return null;
 	}
+	
+	/**
+	 * @desc 对于数组进行递归解码
+	 * @param array
+	 * @return array
+	 */
+    private function arrUrlDec($arrParam) {
+    	$ret = array();
+    	foreach ($arrParam as $key => $value) {
+    		if(!is_array($value)) {
+    			$ret[$key] = urldecode($value);
+    		} else {
+    			$ret[$key] = $this->arrUrlDec($value);//对数组值进行递归解码
+    		}
+    	}
+    	return $ret;
+    }
 
 	/**
 	 * @desc 获取签名
@@ -932,7 +942,7 @@ HTML;
 		$this->autoRedirect($reqData);
 	}
 	/**
-	 * @desc TenderCancle 投标撤销
+	 * @desc TenderCancel 投标撤销
 	 * @link API:4.3.7
 	 *
 	 * @param  $merCustId
@@ -950,12 +960,12 @@ HTML;
 	 *
 	 * @return 无返回，使用autoRedirect方式重定向用户浏览器页面
 	 */
-	public function tenderCancle($merCustId,$usrCustId,$ordId,$ordDate,$transAmt,$usrCustId,$isUnFreeze,$unFreezeOrdId = '',$freezeTrxId = '',$retUrl = '',$bgRetUrl,$merPriv='',$reqExt='')
+	public function tenderCancel($merCustId,$usrCustId,$ordId,$ordDate,$transAmt,$usrCustId,$isUnFreeze,$unFreezeOrdId = '',$freezeTrxId = '',$retUrl = '',$bgRetUrl,$merPriv='',$reqExt='')
 	{
-		$checkValue= $this->sign($this::VERSION_20.$this::CMDID_TENDER_CANCLE.$merCustId.$ordId.$ordDate.$transAmt.$usrCustId.$isUnFreeze.$unFreezeOrdId.$freezeTrxId.$retUrl.$bgRetUrl.$merPriv.$reqExt);
+		$checkValue= $this->sign($this::VERSION_20.$this::CMDID_TENDER_CANCEL.$merCustId.$ordId.$ordDate.$transAmt.$usrCustId.$isUnFreeze.$unFreezeOrdId.$freezeTrxId.$retUrl.$bgRetUrl.$merPriv.$reqExt);
 		$reqData=array(
 			"Version"	=>	$this::VERSION_20,
-			"CmdId"		=>	$this::CMDID_TENDER_CANCLE,
+			"CmdId"		=>	$this::CMDID_TENDER_CANCEL,
 			"MerCustId"	=>	$merCustId,
 			"OrdId"	=>	$ordId,
 			"OrdDate"	=>	$ordDate,
@@ -1252,12 +1262,12 @@ HTML;
 	{
 		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_DEL_CARD.$merCustId.$usrCustId.$cardId);
 		$reqData=array(
-				"Version"	=>	$this::VERSION_10,
-				"CmdId"		=>	$this::CMDID_DEL_CARD,
-				"MerCustId"	=>	$merCustId,
-				"UsrCustId"	=>	$usrCustId,
-				"CardId"	=>	$cardId,
-				"ChkValue"	=>	$checkValue,
+				"Version"	=> $this::VERSION_10,
+				"CmdId"		=> $this::CMDID_DEL_CARD,
+				"MerCustId"	=> $merCustId,
+				"UsrCustId"	=> $usrCustId,
+				"CardId"	=> $cardId,
+				"ChkValue"	=> $checkValue,
 		);
 		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","CardId"));
 		return $response;

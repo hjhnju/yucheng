@@ -4,6 +4,7 @@
  * @author lilu
  */
 class Finance_Api {
+	
 	/**
 	 * 商户子账户信息查询 Finance_Api::queryAccts
 	 * @return 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
@@ -43,9 +44,7 @@ class Finance_Api {
 		}
 		$ret->status = $return['RespCode'];
 		$ret->data = $return;
-		
-		Base_Log::notice($return);
-		
+		Base_Log::notice($return);		
 		return $ret->format();
 	}
 	
@@ -101,7 +100,6 @@ class Finance_Api {
 			
 			$logParam = array();
 			$logParam['msg'] = $return['RespDesc']; 
-			$logParam['userCustId'] = $userCustId;
 			$logParam = array_merge($logParam,$return);
 			Base_Log::error($logParam);
 			
@@ -112,13 +110,8 @@ class Finance_Api {
 			'avlBal'  => $return['AvlBal'],
 			'acctBal' => $return['AcctBal'],
 			'frzBal'  => $return['FrzBal'],
-		);
-		
-		$logParam = array();
-		$logParam['userCustId'] = $userCustId;
-		$logParam = array_merge($logParam,$return);
-		Base_Log::notice($return);
-		
+		);		
+		Base_Log::notice($return);		
 		return $ret->format();		
 	}
 	
@@ -377,7 +370,7 @@ class Finance_Api {
 	 * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
 	 * @return bool true--撤销成功  false--撤销失败
 	 */
-	public static function tenderCancle($transAmt,$userid,$orderId,$orderDate,$retUrl) {
+	public static function tenderCancel($transAmt,$userid,$orderId,$orderDate,$retUrl) {
 		if(!isset($transAmt) || empty($transAmt) || !isset($userid) || empty($userid) ||
 		   !isset($orderId) || empty($orderId) || !isset($orderDate) || empty($orderDate) ||
 		   !isset($retUrl) || empty($retUrl)) {
@@ -398,7 +391,7 @@ class Finance_Api {
 		    'orderDate' => $orderDate,
 		    'retUrl'    => $retUrl,
 		));
-		$transLogic->tenderCancle($transAmt,$userid,$orderId,$orderDate,$retUrl);		
+		$transLogic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$retUrl);		
 	}
 	
 	/**
