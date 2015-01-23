@@ -122,18 +122,6 @@ class RegistApiController extends Base_Controller_Api{
         $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
         $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
 
-        //各字段再验证过一遍
-        $logic   = new User_Logic_Regist();
-        $retCode = $logic->checkName($strName);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
-        }
-
-        $retCode = $logic->checkPhone($strPhone);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));     
-        }
-
         $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
         $ret = true;//for test
         if(!$ret){
@@ -148,11 +136,11 @@ class RegistApiController extends Base_Controller_Api{
         $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : false;
         
         //进行注册
-        $userid  = $logic->regist($strName, $strPasswd, $strPhone);
-        if(empty($userid)){  
-            return $this->ajaxError(User_RetCode::REGIST_FAIL,
-                User_RetCode::getMsg(User_RetCode::REGIST_FAIL));   
+        $objRet  = $logic->regist('priv', $strName, $strPasswd, $strPhone);
+        if(User_RetCode::SUCCESS !== $objRet->status){
+            return $this->ajaxError($objRet->status, $objRet->statusInfo); 
         }
+        $userid = $objRet->data['userid'];
 
         //登记邀请人
         Base_Log::debug(array('userid'=>$userid, 'inviterid'=>$inviterid));
