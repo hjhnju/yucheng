@@ -1,4 +1,4 @@
-define('echarts/util/accMath', [], function () {
+define('echarts/util/accMath', function () {
     function accDiv(arg1, arg2) {
         var s1 = arg1.toString();
         var s2 = arg2.toString();
