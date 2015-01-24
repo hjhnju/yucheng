@@ -15,7 +15,7 @@ define(function (require) {
     var mapOne = $('#map-one');
     var mapDay = $('#map-day');
 
-    var mapBank = {};
+
 
     function init() {
         header.init();
