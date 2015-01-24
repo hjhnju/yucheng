@@ -60,16 +60,17 @@
                 <div id="invest-main" class="invest-main">
                     <div class="investlist-box-title">
                         {%foreach $data.list as $key => $item%}
-                        <div class="investlist-box-title-name name">
+                        <div class="investlist-box-title-name name text-align-name">
                             <span class="name-shi">
-                            {%if $item.type_id == 1%}实
-                            {%else if $item.type_id == 2%}信
-                            {%else%}机
-                            {%/if%}
-                        </span>
+                                {%if $item.type_id == 1%}实
+                                {%else if $item.type_id == 2%}信
+                                {%else%}机
+                                {%/if%}
+                            </span>
                             <div class="school">
                                 <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
                             </div>
+                            <span class="school-new">新手专享</span>
                         </div>
                         <div class="investlist-box-title-name grade">
                             <span class="grade-star level-{%$item.level_name%}"></span>
