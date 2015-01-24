@@ -1,4 +1,4 @@
-define('echarts/chart', function () {
+define('echarts/chart', [], function () {
     var self = {};
     var _chartLibrary = {};
     self.define = function (name, clazz) {

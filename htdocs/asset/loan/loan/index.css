@@ -3,7 +3,7 @@
 .ui-pager-box:before,.ui-pager-box:after{display:table;content:""}
 .ui-pager-box:after{clear:both}
 .ui-pager-box .ui-pager-item{float:left;padding:6px 10px;border:1px solid #ccc;margin:30px 10px 30px 0;color:#000;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.ui-pager-box .ui-pager-item:hover,.ui-pager-box .ui-pager-item.current{background-color:#76cf65;color:#FFF;border-color:#76cf65}
+.ui-pager-box .ui-pager-item:hover,.ui-pager-box .ui-pager-item.current{background-color:#76cf65;color:#fff;border-color:#76cf65}
 .ui-pager-box .ui-pager-select.current{cursor:default}
 /*!
 * Datepicker for Bootstrap
@@ -37,7 +37,7 @@
 .input-append.date .add-on i,.input-prepend.date .add-on i{display:block;cursor:pointer;width:16px;height:16px}
 .dropdown-menu.datepicker{max-width:220px}
 #mk-dialog{color:#333;position:absolute;top:-9999px;left:-9999px;z-index:101}
-#mk-dialog .bg{background-color:#FFF;border:1px solid #EEE}
+#mk-dialog .bg{background-color:#fff;border:1px solid #eee}
 #mk-dialog.mask .bg{border:none}
 #mk-dialog .title{color:#000;height:50px;line-height:50px;font-weight:700;padding:0 0 0 20px;font-size:14px;vertical-align:middle}
 #mk-dialog .close{position:absolute;z-index:2;right:13px;top:13px;color:#000;width:20px;height:20px;line-height:22px;text-align:center;font-size:20px;cursor:pointer;text-decoration:none;border:1px solid #fff}
@@ -70,15 +70,15 @@ p{margin:0;padding:0}
 .weibo-tip .weibo-tip-span{color:#00f}
 .weibo-tip .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:70px;top:-8px}
 .weibo-tip .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
-.weibo-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #FFF;left:70px;top:-6px}
+.weibo-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:70px;top:-6px}
 .weibo-tip .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:119px;top:-8px}
 .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:258px;left:116px}
-.triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #FFF;left:119px;top:-6px}
+.triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right;margin-top:6px}
 .default-fastlogin{color:#666;margin-right:20px;text-decoration:none}
-.default-login{display:inline-block;color:#FFF;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .default-login:hover{background-color:#e33f33}
 .nav{height:80px;padding-top:20px;border-bottom:2px solid #76cf65}
 .logo{float:left;width:280px;height:60px;display:block;margin-right:42px}
@@ -111,9 +111,9 @@ p{margin:0;padding:0}
 .footer-tip .weibo-tip-span{color:#00f}
 .footer-tip .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:70px;top:-8px}
 .footer-tip .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:50px;left:62px}
-.footer-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #FFF;left:70px;top:-6px}
+.footer-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:70px;top:-6px}
 .footer-tip .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:50px;border-bottom:none;left:62px}
-.investlist{padding-bottom:30px;border-bottom:1px solid #dfdfdf}
+.investlist{padding-bottom:30px}
 .investlist-title{height:56px;line-height:56px;font-size:20px;color:#333}
 .investlist-box-title{border-bottom:1px dashed #d8d8d8;padding-left:12px;min-height:64px;line-height:64px}
 .investlist-box-title.border-bottom{border-bottom:none}
@@ -142,21 +142,21 @@ p{margin:0;padding:0}
 .jindu-box{width:70px;height:8px;background-color:#ccc;float:left;margin:28px 10px 0 0;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-box .jindu-box-inline{min-width:10px;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-number{float:left}
-.name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#FFF;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#fff;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .school{text-align:left;float:left;width:130px;color:#323232;font-size:14px;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap;display:inline-block}
 .school-new{float:left;padding:4px;color:#d5f423;font-size:12px;background-color:#76cf65;display:inline-block;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;height:14px;line-height:14px;margin-top:20px}
 .lilv-number{font-size:16px;color:#f2736a;font-weight:700}
 .lilv-number.color-blank{color:#000}
 .lilv-bai{font-size:12px;color:#949494}
-.status-biding{display:inline-block;width:80px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#FFF;margin-top:18px;background-color:#76cf65;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.status-biding:hover{background-color:#2c9818;color:#FFF}
+.status-biding{display:inline-block;width:80px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#fff;margin-top:18px;background-color:#76cf65;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.status-biding:hover{background-color:#2c9818;color:#fff}
 .status-biding.current{color:#666;background-color:#e5e5e5}
 .investlist-more{display:block;text-decoration:none;height:30px;line-height:30px;margin-top:20px;text-align:center;color:#999;font-size:14px}
 .pager{*zoom:1;width:460px;margin:40px auto 0}
 .pager:before,.pager:after{display:table;content:""}
 .pager:after{clear:both}
 .pager-link{float:left;padding:6px 10px;border:1px solid #ccc;margin-right:10px;color:#000;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.pager-link:hover,.pager-link.current{background-color:#76cf65;color:#FFF;border-color:#76cf65}
+.pager-link:hover,.pager-link.current{background-color:#76cf65;color:#fff;border-color:#76cf65}
 .pager-span{float:left;padding:6px 10px;border:1px solid #ccc;margin-right:10px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .xjd-loading{position:absolute;top:0;left:0;right:0;bottom:0;background:url(../../common/css/img/loading.gif) no-repeat center center}
 .xjd-error{position:absolute;top:0;left:0;right:0;bottom:0;vertical-align:middle;text-align:center}
@@ -168,7 +168,7 @@ p{margin:0;padding:0}
 .success-box-time .success-link{text-decoration:none;color:#76cf65}
 .success{background-color:#efefef}
 .kaitong-box{padding:50px;min-height:450px}
-.changephone-box{background-color:#FFF;padding:30px 70px 100px}
+.changephone-box{background-color:#fff;padding:30px 70px 100px}
 .color-red{color:#f2736a}
 #mk-dialog .close{background:url(../../common/css/img/fix_cha.png) 0 0 no-repeat;width:30px;height:30px;top:-15px;right:-15px;font-size:0;border:0}
 #mk-dialog .close:hover{border:0}
@@ -182,7 +182,7 @@ p{margin:0;padding:0}
 .loan-start-main:before,.loan-start-main:after{display:table;content:""}
 .loan-start-main:after{clear:both}
 .loan-start-main-box{float:left;width:310px;margin-right:30px}
-.loan-start-box-title{height:56px;line-height:56px;color:#FFF;font-size:20px;background-color:#51cd91;text-align:center}
+.loan-start-box-title{height:56px;line-height:56px;color:#fff;font-size:20px;background-color:#51cd91;text-align:center}
 .loan-start-box-title.bg-color{background-color:#548cdf}
 .loan-start-content{padding:30px;border:1px solid #dedede}
 .loan-start-con-box{*zoom:1;color:#333}
@@ -192,7 +192,7 @@ p{margin:0;padding:0}
 .loan-con-box-right{float:left;line-height:24px;width:180px}
 .link-box{width:170px;margin:40px auto 0}
 .link-box-text{height:20px;line-height:20px;color:#f2736a;text-align:center;margin-bottom:10px}
-.loan-start-main-box-link{text-decoration:none;height:36px;line-height:36px;text-align:center;color:#FFF;font-size:14px;background-color:#76cf65;display:block;cursor:pointer;border:1px solid #76cf65;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.loan-start-main-box-link{text-decoration:none;height:36px;line-height:36px;text-align:center;color:#fff;font-size:14px;background-color:#76cf65;display:block;cursor:pointer;border:1px solid #76cf65;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .loan-start-main-box-link.current{cursor:default;border-color:#dedede;background-color:#ececec;color:#333}
 .loan-start-main-box-link.current:hover{background-color:#ececec}
 .loan-start-main-box-link:hover{background-color:#2b9817}

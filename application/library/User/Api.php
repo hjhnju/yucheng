@@ -123,16 +123,13 @@ class User_Api{
      */
     public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
         $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
+        $objLogin->fetch(array('userid'=>$uid,'passwd'=>Base_Util_Secure::encrypt($strPasswdOld)));
         if(empty($objLogin->userid)){
             return User_RetCode::ORIGIN_PASSWD_WRONG;
         }
-        $objLogin->passwd = md5($strPasswdNew);
+        $objLogin->passwd = Base_Util_Secure::encrypt($strPasswdNew);
         $ret = $objLogin->save();
-        if(!$ret) {
-            return User_RetCode::SAVE_PASSWD_WRONG;
-        }
-        return User_RetCode::SUCCESS;
+        return $ret;
     }
  
     /**

@@ -1,4 +1,8 @@
-define('zrender/shape/Ellipse', function (require) {
+define('zrender/shape/Ellipse', [
+    'require',
+    './Base',
+    '../tool/util'
+], function (require) {
     var Base = require('./Base');
     var Ellipse = function (options) {
         Base.call(this, options);

@@ -1,4 +1,20 @@
-define('echarts/chart/force', function (require) {
+define('echarts/chart/force', [
+    'require',
+    '../component/base',
+    './base',
+    '../data/Graph',
+    '../layout/Force',
+    'zrender/shape/Line',
+    'zrender/shape/BezierCurve',
+    'zrender/shape/Image',
+    '../util/shape/Icon',
+    '../config',
+    '../util/ecData',
+    'zrender/tool/util',
+    'zrender/config',
+    'zrender/tool/vector',
+    '../chart'
+], function (require) {
     'use strict';
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
