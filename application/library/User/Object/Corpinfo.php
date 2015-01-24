@@ -50,7 +50,6 @@ class User_Object_Corpinfo extends Base_Object {
      */
     protected $intProps = array(
         'userid'      => 1,
-        'busicode'    => 1,
         'area'        => 1,
         'years'       => 1,
         'create_time' => 1,
@@ -79,7 +78,7 @@ class User_Object_Corpinfo extends Base_Object {
 
     /**
      * 营业执照
-     * @var integer
+     * @var string
      */
     public $busicode;
 

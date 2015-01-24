@@ -22,7 +22,12 @@ class LoginController extends Base_Controller_Page{
             $this->redirect('/account/overview');
         }
         $logic = new User_Logic_Login();
-        $strRedirect = $logic->loginRedirect($_SERVER['HTTP_REFERER']);
+        $u = isset($_REQUEST['u'])?trim($_REQUEST['u']):null;
+        if(!empty($u)){
+            $strRedirect = $u;
+        }else{
+            $strRedirect = $logic->loginRedirect($_SERVER['HTTP_REFERER']);
+        }        
         Yaf_Session::getInstance()->set(User_Keys::LOGIN_REFER,$strRedirect);
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
         if($intFails >= 3) {

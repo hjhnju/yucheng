@@ -21,6 +21,13 @@ class RegAction extends Yaf_Action_Abstract {
                 return;
             }
             $userid = $arrRet['data']['userid'];
+            //保存企业基本信息
+            $arrInfo = array(
+                'corpname' => $corpname,
+                'busicode' => $busicode,
+            );
+
+            //TODO: User_Api::saveCorpInfo($userid, $arrInfo);
 
             Base_Log::notice(array('msg'=>'To corp reg.',
                 'userid'   => $userid,

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+    <title>兴教贷手机</title>
+    <link rel="stylesheet" type="text/css" href="/src/app/index.less" />
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script>
+        require.config({
+            'baseUrl': '/src',
+            'paths': {
+            },
+            'packages': [
+                {
+                    'name': 'echarts',
+                    'location': '../dep/echarts/2.1.9/src',
+                    'main': 'echarts'
+                },
+                {
+                    'name': 'est',
+                    'location': '../dep/est/1.3.0/src'
+                },
+                {
+                    'name': 'etpl',
+                    'location': '../dep/etpl/3.0.0/src',
+                    'main': 'main'
+                },
+                {
+                    'name': 'jquery',
+                    'location': '../dep/jquery/1.9.1/src',
+                    'main': 'jquery.min'
+                },
+                {
+                    'name': 'moment',
+                    'location': '../dep/moment/2.7.0/src',
+                    'main': 'moment'
+                },
+                {
+                    'name': 'saber-emitter',
+                    'location': '../dep/saber-emitter/1.0.0/src',
+                    'main': 'emitter'
+                },
+                {
+                    'name': 'zrender',
+                    'location': '../dep/zrender/2.0.6/src',
+                    'main': 'zrender'
+                }
+            ]
+        });
+    </script>
+    <script>
+        require([],function (main) {
+            main.init();
+        })
+    </script>
+</head>
+
+<body>
+    <main class="app-home">
+        <!--<div class="app-home-box one"></div>-->
+        <!--<div class="app-home-box two"></div>-->
+        <!--<div class="app-home-box three"></div>-->
+        <!--<div class="app-home-box four"></div>-->
+        <!--<div class="app-home-box five"></div>-->
+        <div class="app-logo-img"><img src="/src/app/img/app_logo_one.jpg" width="100%" /></div>
+        <div class="app-logo-img"><img src="/src/app/img/app_logo_two.jpg" width="100%" /></div>
+        <div class="app-logo-img"><img src="/src/app/img/app_logo_three.jpg" width="100%" /></div>
+        <div class="app-logo-img"><img src="/src/app/img/app_logo_four.jpg" width="100%" /></div>
+        <div class="app-logo-img"><img src="/src/app/img/app_logo_five.jpg" width="100%" /></div>
+
+        <div class="app-home-box six">
+            <h2 class="six-title">好友hjh***2邀请您注册,开启您最好的投资理财</h2>
+            <div class="six-net">
+                <span class="six-net-span">兴教贷官网</span>
+                <a class="six-net-link">www.xingjiaodai.com</a>
+            </div>
+            <div class="six-number">
+                <span class="six-number-left">填写邀请手机号</span>
+                <span class="six-number-right">18888888888</span>
+            </div>
+            <div class="six-bottom">
+                注册即送30元<br />
+                注册后即用自己的手机邀请好友噢
+            </div>
+        </div>
+    </main>
+
+
+
+
+</body>
+</html>

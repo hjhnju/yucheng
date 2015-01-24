@@ -118,9 +118,10 @@ p{margin:0;padding:0}
 .investlist-box-title{border-bottom:1px dashed #d8d8d8;padding-left:12px;min-height:64px;line-height:64px}
 .investlist-box-title.border-bottom{border-bottom:none}
 .investlist-box-title-name{float:left;color:#999;font-size:14px}
-.investlist-box-title-name.name{width:240px;text-align:center;*zoom:1}
+.investlist-box-title-name.name{width:240px;text-align:center;*zoom:1;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap}
 .investlist-box-title-name.name:before,.investlist-box-title-name.name:after{display:table;content:""}
 .investlist-box-title-name.name:after{clear:both}
+.investlist-box-title-name.text-align-name{text-align:left}
 .investlist-box-title-name.grade{width:100px;text-align:left;height:64px;*zoom:1}
 .investlist-box-title-name.grade:before,.investlist-box-title-name.grade:after{display:table;content:""}
 .investlist-box-title-name.grade:after{clear:both}
@@ -142,7 +143,8 @@ p{margin:0;padding:0}
 .jindu-box .jindu-box-inline{min-width:10px;background-color:#f2736a;height:8px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .jindu-number{float:left}
 .name-shi{float:left;height:24px;line-height:24px;width:26px;text-align:center;color:#fff;font-size:14px;font-weight:700;background-color:#76cf65;margin:20px 10px 0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
-.school{text-align:left;float:left;width:154px;overflow:hidden;color:#323232;font-size:14px}
+.school{text-align:left;width:130px;color:#323232;font-size:14px;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap;display:inline-block}
+.school-new{float:right;padding:4px;color:#d5f423;font-size:12px;background-color:#76cf65;display:inline-block;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;height:14px;line-height:14px;margin-top:20px}
 .lilv-number{font-size:16px;color:#f2736a;font-weight:700}
 .lilv-number.color-blank{color:#000}
 .lilv-bai{font-size:12px;color:#949494}
@@ -180,8 +182,8 @@ p{margin:0;padding:0}
 .insurance-banner-triangle.low-color{border-bottom:10px solid #e9e0ce}
 .insurance-banner-triangle.allposition-color{border-bottom:10px solid #76cf65}
 .insurance-banner-triangle.teach-color{border-bottom:10px solid #76cf65}
-.insurance-banner{height:300px}
-.insurance-banner.low-banner{height:430px;background:url(../common/css/img/low.jpg) center center no-repeat;margin-bottom:100px}
+.insurance-banner{height:240px}
+.insurance-banner.low-banner{height:321px;background:url(../common/css/img/low.jpg) center center no-repeat;margin-bottom:80px}
 .insurance-banner.allposition{background:url(../common/css/img/allposition-banner.jpg) center center no-repeat}
 .insurance-banner.teach{background:url(../common/css/img/teach-banner.jpg) center center no-repeat}
 .low-main{padding-bottom:100px}
