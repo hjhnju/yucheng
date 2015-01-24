@@ -37,8 +37,8 @@ class User_Object {
      */
     protected $infoProps = array(
         'realname',
-        'certificatetype',
-        'certificatecontent',
+        'certificateType',
+        'certificateContent',
         'headurl',    
     );
 
@@ -79,8 +79,11 @@ class User_Object {
         }
     }
 
+    /**
+     * 获取属性
+     * @param $name 属性名，区分大小写
+     */
     public function __get($name){
-        $name = strtolower($name);
         if($this->loginObj && in_array($name, $this->loginProps)){
             return $this->loginObj->$name;
         }
@@ -94,8 +97,13 @@ class User_Object {
         return null;
     }
 
+
+    /**
+     * 设置属性值
+     * @param $name 属性名，区分大小写
+     * @param $value
+     */
     public function __set($name, $value){
-        $name = strtolower($name);
         if($this->loginObj && in_array($name, $this->loginProps)){
             $this->loginObj->$name = $value;
             return true;

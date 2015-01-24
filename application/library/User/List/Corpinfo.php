@@ -28,7 +28,6 @@ class User_List_Corpinfo extends Base_List {
      */
     protected $intProps = array(
         'userid'      => 1,
-        'busicode'    => 1,
         'area'        => 1,
         'years'       => 1,
         'create_time' => 1,
