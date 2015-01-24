@@ -11,6 +11,7 @@ define(function (require) {
     var header = require('common/header');
     var Remoter = require('common/Remoter');
     var secureDergee = new Remoter('SECURE_DEGREE');
+    var delBind = new Remoter('SECURE_UNBIND_THIRD');
 
 
     function init() {
@@ -37,7 +38,23 @@ define(function (require) {
                 $('.finish-main-grade-box-internal').css('width',data.score + '%');
                 $('.fen').html(data.score + '分')
             }
-        })
+        });
+
+        delBind.on('success', function (data) {
+            if (data && data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                window.location.href = window.location.href;
+            }
+        });
+
+        // 解绑第三方账号
+        $('#bindthird').click(function () {
+            if (confirm('确定解绑第三方账号吗？')) {
+                delBind.remote();
+            }
+        });
 
     }
 
