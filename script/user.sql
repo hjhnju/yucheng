@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS user_login (
 `passwd` varchar(33) NOT NULL COMMENT '用户密码md5值',
 `phone` varchar(12) default NULL COMMENT '用户手机号, 企业用户手机前加0',
 `email` varchar(50) default NULL COMMENT '用户邮箱',
+`huifuid` varchar(50) default NULL COMMENT '汇付用户ID',
 `lastip` varchar(50) default NULL COMMENT '最近登陆ip',
 `login_time` int(11) NOT NULL COMMENT '最近一次登录时间',
 `create_time` int(11) NOT NULL COMMENT '注册时间',
@@ -18,7 +19,7 @@ PRIMARY KEY  (`userid`),
 UNIQUE (name),
 UNIQUE (phone),
 UNIQUE (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户登录表';
 
 
 DROP TABLE IF EXISTS user_info;
@@ -28,11 +29,25 @@ CREATE TABLE IF NOT EXISTS user_info (
 `certificate_type` tinyint(3) unsigned NOT NULL COMMENT '证件类型',
 `certificate_content` varchar(50) default NULL COMMENT '证件内容',
 `headurl` varchar(255) default NULL COMMENT '头像URL',
-`huifuid` varchar(50) default NULL COMMENT '汇付用户ID',
 `create_time` int(11) NOT NULL COMMENT '注册时间',
 `update_time` int(11) NOT NULL COMMENT '修改资料时间',
 PRIMARY KEY  (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '普通用户信息表';
+
+
+DROP TABLE IF EXISTS user_corpinfo;
+CREATE TABLE IF NOT EXISTS user_corpinfo (
+`userid` int(11) unsigned NOT NULL COMMENT '用户id',
+`corpname` varchar(100) default NULL COMMENT '企业名称',
+`busicode` tinyint(3) unsigned NOT NULL COMMENT '营业执照',
+`instucode` varchar(50) default NULL COMMENT '组织机构代码证',
+`taxcode` varchar(255) default NULL COMMENT '税务登记号',
+`area` int(11) NOT NULL COMMENT '所在地',
+`years` int(11) NOT NULL COMMENT '注册年限',
+`create_time` int(11) NOT NULL COMMENT '注册时间',
+`update_time` int(11) NOT NULL COMMENT '修改资料时间',
+PRIMARY KEY  (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '企业用户信息表';
 
 
 DROP TABLE IF EXISTS user_third;

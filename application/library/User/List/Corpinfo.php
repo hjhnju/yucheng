@@ -1,14 +1,14 @@
 <?php
 /**
- *  列表类
+ * 企业用户信息表 列表类
  * @author hejunhua
  */
-class User_List_Login extends Base_List {
+class User_List_Corpinfo extends Base_List {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'user_login';
+    protected $table = 'user_corpinfo';
 
     /**
      * 主键
@@ -20,7 +20,7 @@ class User_List_Login extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'usertype', 'status', 'name', 'passwd', 'phone', 'email', 'huifuid', 'lastip', 'login_time', 'create_time', 'update_time');
+    protected $fields = array('userid', 'corpname', 'busicode', 'instucode', 'taxcode', 'area', 'years', 'create_time', 'update_time');
 
     /**
      * 整数类型的字段
@@ -28,9 +28,9 @@ class User_List_Login extends Base_List {
      */
     protected $intProps = array(
         'userid'      => 1,
-        'usertype'    => 1,
-        'status'      => 1,
-        'login_time'  => 1,
+        'busicode'    => 1,
+        'area'        => 1,
+        'years'       => 1,
         'create_time' => 1,
         'update_time' => 1,
     );

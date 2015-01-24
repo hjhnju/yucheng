@@ -1,6 +1,6 @@
 <?php
 /**
- * 注册Logic层
+ * 登录Logic层
  */
 class User_Logic_Login {
 

@@ -26,7 +26,7 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title">
-            企业开户 <small>管理员代开通</small>
+            客户列表 <small>开户企业</small>
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
@@ -36,53 +36,35 @@
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="#">企业开户</a>
+                        <a href="#">客户列表</a>
                     </li>
                 </ul>
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
-                <!-- BEGIN FORM-->
-                <form class="form-horizontal" role="form" method="post" action="">
-                    {%if $error_msg%}
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Warning! </strong> {%$error_msg%}
-                    </div>
-                    {%/if%}
-                    <div class="form-group">
-                        <label for="username" class="col-sm-2 control-label">用户名</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="username" id="username" placeholder="设置平台用户名">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">登录密码</label>
-                        <div class="col-sm-4">
-                            <input type="password" class="form-control" name="password" id="password" placeholder="设置平台登录密码">
-                        </div>
-                    </div>
-                     <div class="form-group">
-                        <label for="phone" class="col-sm-2 control-label">联系人手机</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="设置联系人手机">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="busicode" class="col-sm-2 control-label">营业执照</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" name="busicode" id="busicode" placeholder="输入营业执照">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">提交</button>
-                            <!-- <input type="buttom" class="btn btn-default" value="提交" onclick="/admin/corp" /> --> 
-                        </div>
-                    </div>
-                </form>
-                <!-- END FORM-->  
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>用户名</th>
+                            <th>汇付号</th>
+                            <th>手机号</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%foreach from=$arrUser key=i item=user%}
+                        <tr>
+                            <td>{%$user.userid%}</td>
+                            <td>{%$user.name%}</td>
+                            <td>{%$user.huifuid%}</td>
+                            <td>{%$user.phone%}</td>
+                            <td><a href="/admin/loan/request?userid={%$user.userid%}">申请借款</a></td>
+                        </tr>
+                        {%/foreach%}
+                    </tbody>
+                </table>
             </div>
 
         </div>

@@ -52,12 +52,13 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 	 * @param int userid
 	 * @param string userName
 	 * @param string busiCode
+	 * @param string $corpName opt, 企业名称
 	 * @param string instuCode optional
 	 * @param string taxCode optional
 	 * autoRedirect || return false
 	 * 
 	 */
-	public function corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode='') {
+	public function corpRegist($userid, $userName, $busiCode, $corpName='', $instuCode='',$taxCode='') {
 		if(!isset($userid) || !isset($userName) || !isset($busiCode)) {
 			Base_Log::error(array(
 				'msg'      => '请求参数错误',
@@ -67,23 +68,23 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
 			));
 			return false;
 		}
-		$userid = strval($userid);
-		$userName = strval($userName);
-		$busiCode = strval($busiCode);
+		$userid    = strval($userid);
+		$userName  = strval($userName);
+		$busiCode  = strval($busiCode);
 		$instuCode = strval($instuCode);
-		$taxCode = strval($taxCode);
+		$taxCode   = strval($taxCode);
 		
-		$webroot = Base_Config::getConfig('web')->root;
+		$webroot  = Base_Config::getConfig('web')->root;
 		$chinapnr = Finance_Chinapnr_Logic::getInstance();
 		
 		$merCustId = strval(self::MERCUSTID);
-		$usrId = $userName;
-		$usrName = '';
-		$merPriv = $userid;
-		$charSet = '';
-		$guarType = '';
-		$bgRetUrl = $webroot.'/finance/bgcall/corpRegist';
-		$reqExt = '';		
+		$usrId     = $userName;
+		$usrName   = $corpName;
+		$merPriv   = $userid;
+		$charSet   = '';
+		$guarType  = '';
+		$bgRetUrl  = $webroot.'/finance/bgcall/corpRegist';
+		$reqExt    = '';		
 		$chinapnr->corpRegister($merCustId, $usrId, $usrName, $instuCode, $busiCode, 
 		    $taxCode, $merPriv, $charSet, $guarType, $bgRetUrl, $reqExt);
 	}
