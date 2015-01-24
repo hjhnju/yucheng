@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS user_corpinfo (
 `busicode` tinyint(3) unsigned NOT NULL COMMENT '营业执照',
 `instucode` varchar(50) default NULL COMMENT '组织机构代码证',
 `taxcode` varchar(255) default NULL COMMENT '税务登记号',
+`area` int(11) NOT NULL COMMENT '所在地',
+`years` int(11) NOT NULL COMMENT '注册年限',
 `create_time` int(11) NOT NULL COMMENT '注册时间',
 `update_time` int(11) NOT NULL COMMENT '修改资料时间',
 PRIMARY KEY  (`userid`)

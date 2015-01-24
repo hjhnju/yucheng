@@ -1,10 +1,17 @@
 <?php
 /**
- * 用户对象
+ * 用户对象，
+ * 组合user_login, user_info, user_corpinfo
+ * 可读可写
  * @author hejunhua
  * @since  2014-12-21
  */ 
 class User_Object {
+
+    //用户类型－个人用户
+    const TYPE_PRIV = 1;
+    //用户类型－企业用户
+    const TYPE_CORP = 2;
 
     /**
      * 字段与属性隐射关系
@@ -25,7 +32,7 @@ class User_Object {
     );
 
    /**
-     * 字段与属性隐射关系
+     * 普通用户信息字段与属性隐射关系
      * @var array
      */
     protected $infoProps = array(
@@ -35,37 +42,92 @@ class User_Object {
         'headurl',    
     );
 
+    /**
+     * 企业用户信息字段与属性隐射关系
+     * @var array
+     */
+    protected $corpInfoProps = array(
+        'corpname',
+        'busicode',
+        'instucode',
+        'taxcode',
+        'area',
+        'years',
+    );
+
     //封装User_Object_Login
     protected $loginObj;
 
     //封装User_Object_Info
     protected $infoObj;
 
-    //封装User_Logic_Third
+    //封装User_Object_Corpinfo
+    protected $corpInfoObj;
+
+    //封装User_Logic_Third, 只读
     protected $thirdLogic;
 
 
     public function __construct($userid){
         $this->userid   = $userid;
         $this->loginObj = new User_Object_Login($userid);
+        $usertype       = $this->loginObj->usertype;
+        if(self::TYPE_CORP === $usertype){
+            $this->corpInfoObj = new User_Object_Corpinfo($this->userid);
+        }else{
+            $this->infoObj = new User_Object_Info($this->userid);
+        }
     }
 
     public function __get($name){
         $name = strtolower($name);
-        if(in_array($name, $this->loginProps)){
-            if(!$this->loginObj){
-                $this->loginObj = new User_Object_Login($this->userid);
-            }
+        if($this->loginObj && in_array($name, $this->loginProps)){
             return $this->loginObj->$name;
         }
-        if(in_array($name, $this->infoProps)){
-            if(!$this->infoObj){
-                $this->infoObj = new User_Object_Info($this->userid);
-            }
+        if($this->infoObj && in_array($name, $this->infoProps)){
             return $this->infoObj->$name;
+        }
+        if($this->corpInfoObj && in_array($name, $this->corpInfoProps)){
+            return $this->corpInfoObj->$name;
         }
 
         return null;
+    }
+
+    public function __set($name, $value){
+        $name = strtolower($name);
+        if($this->loginObj && in_array($name, $this->loginProps)){
+            $this->loginObj->$name = $value;
+            return true;
+        }
+        if($this->infoObj && in_array($name, $this->infoProps)){
+            $this->infoObj->$name = $value;
+            return true;
+        }
+        if($this->corpInfoObj && in_array($name, $this->corpInfoProps)){
+            $this->corpInfoObj->$name = $value;
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * 保存对象到数据库中，会更新状态到对象中，使对象中的数据跟DB是完全对应的
+     * @return boolean
+     */
+    public function save() {
+        if(!$this->loginProps){
+            return false;
+        }
+        $this->loginObj->save();
+        if($this->infoObj){
+            $this->infoObj->save();
+        }
+        if($this->corpInfoObj){
+            $this->corpInfoObj->save();
+        }
     }
 
     /**
