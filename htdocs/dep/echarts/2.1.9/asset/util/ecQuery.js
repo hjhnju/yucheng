@@ -1,4 +1,7 @@
-define('echarts/util/ecQuery', function (require) {
+define('echarts/util/ecQuery', [
+    'require',
+    'zrender/tool/util'
+], function (require) {
     var zrUtil = require('zrender/tool/util');
     function query(optionTarget, optionLocation) {
         if (typeof optionTarget == 'undefined') {

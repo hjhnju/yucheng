@@ -117,7 +117,27 @@
             border-top: none;
             border-left: none;
             height: 40px;
-            line-height: 40px;
+            line-height: 30px;
+
+            &.dan {
+                width: 74px;
+            }
+
+            &.xian {
+                width: 74px;
+            }
+
+            &.manzu {
+                width: 95px;
+                text-align: left;
+                padding: 0 10px;
+            }
+
+            &.beizhu {
+                width: 416px;
+                text-align: left;
+                padding: 0 10px;
+            }
         }
     }
 }
@@ -205,4 +225,12 @@
     line-height: 24px;
     color: #333333;
     font-size: 12px;
+}
+
+.topup-prompt-box {
+    display: none;
+
+    &.current {
+        display: block;
+    }
 }

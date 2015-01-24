@@ -1,4 +1,7 @@
-define('zrender/tool/curve', function (require) {
+define('zrender/tool/curve', [
+    'require',
+    './vector'
+], function (require) {
     var vector = require('./vector');
     'use strict';
     var EPSILON = 0.0001;

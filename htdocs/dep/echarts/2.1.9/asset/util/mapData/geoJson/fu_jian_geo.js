@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoJson/fu_jian_geo', function () {
+define('echarts/util/mapData/geoJson/fu_jian_geo', [], function () {
     return {
         'type': 'FeatureCollection',
         'features': [

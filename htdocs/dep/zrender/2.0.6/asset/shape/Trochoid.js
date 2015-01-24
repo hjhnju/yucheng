@@ -1,4 +1,9 @@
-define('zrender/shape/Trochoid', function (require) {
+define('zrender/shape/Trochoid', [
+    'require',
+    './Base',
+    '../tool/math',
+    '../tool/util'
+], function (require) {
     var Base = require('./Base');
     var Trochoid = function (options) {
         this.brushTypeOnly = 'stroke';

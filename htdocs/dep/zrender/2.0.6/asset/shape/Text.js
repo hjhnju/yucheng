@@ -1,4 +1,9 @@
-define('zrender/shape/Text', function (require) {
+define('zrender/shape/Text', [
+    'require',
+    '../tool/area',
+    './Base',
+    '../tool/util'
+], function (require) {
     var area = require('../tool/area');
     var Base = require('./Base');
     var Text = function (options) {
