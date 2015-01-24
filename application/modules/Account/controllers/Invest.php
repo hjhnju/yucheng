@@ -55,10 +55,10 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function backingAction() {
 		$status = self::BACKING;
+		$status = 2;
         $userid = $this->userid;
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);
-		//var_dump($backingRet);die;
+		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);		
 		$listRet = array();
         $list = $backingRet['list'];
         if(empty($list)) {
@@ -67,19 +67,20 @@ class InvestController extends Base_Controller_Page {
         		'pageall' => $backingRet['pageall'],
         		'all'     => $backingRet['total'],
         		'list'    => $list,
-        	);
+        	);        	
         	$this->output($ret);
         	return ;
         }
  	    foreach ($list as $key => $value) {
-	        $listRet[$key]['proId'] = $value[''];
-	    	$listRet[$key]['investPro'] = $value[''];
-	    	$listRet[$key]['annlnterestRate'] = $value[''];
-	    	$listRet[$key]['tenderAmt'] = $value[''];
-	    	$listRet[$key]['deadline'] = $value[''];
-	    	$listRet[$key]['tenderTime'] = $value[''];
-	    	$listRet[$key]['haveBack'] = $value[''];
-	    	$listRet[$key]['toBeBack'] = $value[''];	    		    	
+	        $listRet[$key]['proId'] = $value['loan_id'];
+	    	$listRet[$key]['investPro'] = $value['title'];
+	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
+	    	$listRet[$key]['tenderAmt'] = $value['amount'];
+	    	$listRet[$key]['deadline'] = $value['deadline'];
+	    	$listRet[$key]['tenderTime'] = $value['duration'];
+	    	///////check!!
+	    	$listRet[$key]['haveBack'] = $value['amount'];
+	    	$listRet[$key]['toBeBack'] = $value['amount'];	    		    	
 	    }
 	    $ret = array(
 	    	'page' => $page,
@@ -298,7 +299,7 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */
 	public function repayplanAction() {
-		$invest_id = $_REQUEST('pro_id');
+		$invest_id = $_REQUEST['id'];
 		$retData = Invest_Api::getRefunds($invest_id);
 		$list = array();
 		$data = array();

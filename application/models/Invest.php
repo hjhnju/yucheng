@@ -27,13 +27,13 @@ class InvestModel extends BaseModel{
         if ($status != -1) {
             $where.= " and loan.status='$status'";
         }
-        $sql = "select invest.*, loan.title, loan.status as loan_status from `$this->table` as invest
+        $sql = "select invest.*, loan.title,loan.start_time,loan.deadline, loan.status as loan_status  from `$this->table` as invest
                 left join `$loan_table` as loan
                 on invest.loan_id = loan.id
                 where $where order by invest.$order
                 limit $offset, $pagesize";
         $data = $this->db->fetchAll($sql);
-
+   
         $sql = "select count(*) as total from `$this->table` as invest
                 left join `$loan_table` as loan
                 on invest.loan_id = loan.id

@@ -7,13 +7,13 @@ class CashController extends Base_Controller_Page {
 	
 	private $huifuid;
 	private $phone;
-	
+	private $transLogic;
 	public function init() {
-		$this->setNeedLogin(false);		
 		parent::init();
 		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
 		$this->phone = !empty($this->objUser) ? $this->objUser->phone : '';
 		$this->userInfoLogic = new Account_Logic_UserInfo();
+		$this->transLogic = new Finance_Logic_Transaction();
 		$this->ajax = true;
 	}
 	
@@ -50,25 +50,79 @@ class CashController extends Base_Controller_Page {
 	 * 充值入口
 	 */
 	public function rechargeAction() {
+		if(!empty($_POST)) {
+			$userid  = $this->userid;
+			$huifuid = $this->huifuid;
+			$transAmt = $_REQUEST['value'];
+			$transAmt = sprintf('%.2f',$transAmt);
+			$openBankId = strval($_REQUEST['id']);
+			
+			$gateBusiId = 'B2C';
+			$dcFlag     = 'D';
+			Base_Log::notice(array(
+			    'userid'     => $userid,
+			    'huifuid'    => $huifuid,
+			    'transAmt'   => $transAmt,
+			    'gateBusiId' => $gateBusiId,
+			    'openBankId' => $openBankId,
+			    'dcFlag'     => $dcFlag,
+			));
+			$this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);			
+		}		
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
-		$this->getView()->assign('userinfo',$userinfo);
-		
+		$this->getView()->assign('userinfo',$userinfo);		
 	}
 	
 	/**
 	 * 提现入口
 	 */
 	public function withdrawAction() {
-		$userid   = $this->userid;
-		$huifuid  = $this->huifuid;
+		$userid = intval($this->userid);
+		$huifuid = $this->huifuid;
 		$phone    = $this->phone;
-		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+		if(!empty($_POST)) {			
+			
+			$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+			$bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
+			$bindBank = $bankInfo['bindbank'];
+			$bankNum  = $bankInfo['banknum'];
+			$bankID   = $bankInfo['bankID'];
+			$this->getView()->assign('bindbank', $bindBank);
+			$this->getView()->assign('banknum', $bankNum);
+			$this->getView()->assign('bankID', $bankID);
+						
+			$userBg = $this->userInfoLogic->getUserBg($huifuid);
+			$avlBal = strval($userBg['avlBal']);
+			$this->getView()->assign('avlBal', $avlBal);
+			$this->getView()->assign('userinfo',$userinfo);
+			$this->getView()->assign('withdrawfee','2');
+			$this->getView()->assign('phone',$this->phone);
+			
+			$transAmt = floatval($_REQUEST['value']);
+			$captcha = $_REQUEST['invercode'];			
+			//验证验证码
+			$openAcctId = strval($_REQUEST['openAcctId']);
+			$type = 6;
+			$smsRet = User_Api::checkSmscode($phone,$captcha,$type);
+			if(!$smsRet) {
+			    Base_Log::error(array(
+				    'msg'     => '验证码验证失败',
+				    'phone'   => $phone,
+				    'captcha' => $captcha,
+				    'type'    => $type,
+			    ));
+			    return ;
+			} 
+			$transAmt = sprintf('%.2f',$transAmt);
+			$openAcctId = strval($bankNum);
+			$this->transLogic->cash($userid,$transAmt,$openAcctId);
+		}
 		
-		//FOR　TEST
-		//$huifuid = "6000060000696947";
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
         $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
         $bindBank = $bankInfo['bindbank'];
         $bankNum  = $bankInfo['banknum'];
+        $bankNum = substr_replace($bankNum,'*********',4,13);
         $bankID   = $bankInfo['bankID'];
 		$this->getView()->assign('bindbank', $bindBank);
 		$this->getView()->assign('banknum', $bankNum);

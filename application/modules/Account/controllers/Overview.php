@@ -4,8 +4,10 @@
  */
 class OverviewController extends Base_Controller_Page {
 
+	private $huifuid;	
     public function init(){
         parent::init();
+        $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
         $this->userInfoLogic = new Account_Logic_UserInfo();
         $this->ajax = true;
     }
@@ -50,23 +52,18 @@ class OverviewController extends Base_Controller_Page {
      */
     public function indexAction(){
         $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
-        $balance = array();
-
-        /*
-        $avlBal = isset($balance['avlBal']) ? $balance['avlBal'] : 0.00;//可用余额
-        $acctBal = isset($balance['acctBal']) ? $balance['acctBal'] : 0.00;//资产总计
-        $frzBal = isset($balance['frzBal']) ? $balance['frzBal'] : 0.00;//冻结金额 
-        */
-        $avlBal         = '0.00';
-        $acctBal        = '0.00';
-        $frzBal         = '0.00';
+        $userBg = $this->userInfoLogic->getUserBg($this->huifuid);
+        $avlBal = strval($userBg['avlBal']);
+        $acctBal = strval($userBg['acctBal']);
+        $frzBal = strval($userBg['frzBal']);
+       
         $totalProfit    = '1.00';
         $totalInvest    = '0.00';
         $reposPrifit    = '0.00';
         $reposPrincipal = number_format("10000000.01231", 2);
         $huifuid = $this->objUser->huifuid;
         $openthirdpay = isset($huifuid) ? 1 : 2;
-        
+        $rechargeurl = $this->webroot.'/account/cash/recharge';
         //$totalProfit = Invest_Api:: 累计收益
         //$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
         //$reposPrifit = Invest_Api:: 待收收益
@@ -79,7 +76,8 @@ class OverviewController extends Base_Controller_Page {
         $this->getView()->assign("reposPrifit",$reposPrifit);
         $this->getView()->assign("reposPrincipal",$reposPrincipal); 
         $this->getView()->assign("openthirdpay",$openthirdpay);         
-        $this->getView()->assign('userinfo',$userInfo);        
+        $this->getView()->assign('userinfo',$userInfo);  
+        $this->getView()->assign('rechargeurl',$rechargeurl);
     }
     
     /**

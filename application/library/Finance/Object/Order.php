@@ -26,7 +26,7 @@ class Finance_Object_Order extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('orderId', 'orderDate', 'userId', 'type', 'amount', 'status', 'create_time', 'update_time', 'comment');
+    protected $fields = array('orderId', 'orderDate', 'userId', 'type', 'amount', 'avlBal', 'status', 'failCode', 'failDesc', 'create_time', 'update_time', 'comment');
 
     /**
      * 字段与属性隐射关系
@@ -38,7 +38,10 @@ class Finance_Object_Order extends Base_Object {
         'userId'      => 'userId',
         'type'        => 'type',
         'amount'      => 'amount',
+        'avlBal'      => 'avlBal',
         'status'      => 'status',
+        'failCode'    => 'failCode',
+        'failDesc'    => 'failDesc',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
         'comment'     => 'comment',
@@ -97,10 +100,28 @@ class Finance_Object_Order extends Base_Object {
     public $amount;
 
     /**
+     * 可用余额
+     * @var number
+     */
+    public $avlBal;
+
+    /**
      * 状态
      * @var integer
      */
     public $status;
+
+    /**
+     * 失败返回码
+     * @var string
+     */
+    public $failCode;
+
+    /**
+     * 失败描述
+     * @var string
+     */
+    public $failDesc;
 
     /**
      * 创建时间
