@@ -76,7 +76,7 @@ define(function () {
             + '/account/secure/securedegree',
         //    + '/test/account/secure/secureDegree.json',
         SECURE_UNBIND_THIRD: rootUrl
-            + '/account/secure/unbindthird',
+            + '/account/editapi/unbindthird',
         ACCOUNT_CASH_RECHARGE_ADD: rootUrl
         + '/account/cashapi/recharge',
             //+ '/test/account/cash/recharge.json',
