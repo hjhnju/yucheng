@@ -14,7 +14,6 @@ class IndexController extends Base_Controller_Page {
         //投资列表
         $list = Invest_Api::getInvestList(1, 5);
         $list = $list['list'];
-
         //最新公告
         $newpost = Infos_Api::getNewPost();
 
