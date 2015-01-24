@@ -32,14 +32,30 @@ class User_Api{
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
      */
     public static function getUserObject($userid){
+        $userid  = intval($userid);
         $objUser = null;
-        if(!empty($userid)){
+        if($userid > 0){
             $objUser = new User_Object($userid);
         }
         Base_Log::notice(array(
             'userid' => $userid,
         ));
         return $objUser;
+    }
+
+    /**
+     * 获取企业用户列表
+     * @param   $usertype 用户类型
+     * @param   $list 用户列表
+     */
+    public static function getCorpUsers($page = 1, $pagesize = 10){
+        $logic = new User_Logic_Query();
+        $list  = $logic->queryCorpUsers($page, $pagesize);
+        Base_Log::notice(array(
+            'page'     => $list['page'],
+            'pagesize' => $list['pagesize'],
+        ));
+        return $list['list'];
     }
     
     /**
@@ -121,15 +137,14 @@ class User_Api{
  
     /**
      * 设置用户的汇付id
-     * @param unknown $uid
-     * @param unknown $strHuifuid
+     * @param int $uid
+     * @param string $strHuifuid
      * @return boolean
      */
-    public static function setHuifuId($uid,$strHuifuid){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->huifuid = $strHuifuid;
-        $ret = $objInfo->save();
+    public static function setHuifuId($userid, $strHuifuid){
+        $objUser = new User_Object($userid);
+        $objUser->huifuid = $strHuifuid;
+        $ret = $objUser->save();
         return $ret;
     }
     
@@ -166,9 +181,7 @@ class User_Api{
      * @param $strType:类型
      */
     public static function checkImageCode($strImageCode, $strType){
-        $logic = new User_Logic_ImageCode();
-        $strId           = session_id() . $strType;
-        $bolRet= $logic->checkCode($strId, $strImageCode);
+        $bolRet= User_Logic_ImageCode::checkCode($strType, $strImageCode);
         Base_Log::notice(array(
             'bolRet' => $bolRet,
             'code'=>$strImageCode, 
@@ -192,13 +205,30 @@ class User_Api{
     }
     
     /**
+     * 删除用户的第三方绑定
+     * @param  $userid
+     * @param int $type
+     * @return boolean
+     */
+    public static function delBind($userid,$type){
+        $third = new User_Object_Third();
+        $third->fetch(array('userid'=>intval($userid),'authtype'=>$type));
+        $ret = $third->erase();
+        return $ret;
+    }
+    
+    /**
      * 后台添加用户
-     * @param string $strName
+     * @param string $strUserType 'priv' || 'corp'
+     * @param string $strUserName
      * @param string $strPasswd
      * @param string $strPhone
      * @param string $strInviter
      */
-    public static function regist($strName,$strPasswd,$strPhone,$strInviter){
-        
+    public static function regist($strUserType, $strUserName, $strPasswd, $strPhone, $strInviter=''){
+        $logic  = new User_Logic_Regist();
+        $objRet = $logic->regist($strUserType, $strUserName, $strPasswd, $strPhone, $strInviter);
+        Base_Log::notice(array('status'=>$objRet->status));
+        return $objRet->format();
     }
 }

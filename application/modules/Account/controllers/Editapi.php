@@ -153,6 +153,7 @@ class EditapiController extends Base_Controller_Api {
      * 提供新邮箱接口
      * @param $email
      * @param $vericode
+     * @param $type
      * @param $$token, csrf token
      * @return 标准json
      * status 0:成功
@@ -161,6 +162,40 @@ class EditapiController extends Base_Controller_Api {
      * status 1118: 邮箱没有发生变化
      */
     public function newemailAction() {
+    	$email = $_REQUEST['email'];
+    	$vericode = $_REQUEST['vericode'];////////////////////前端没约定好！
+    	$type = $_REQUEST['type'];
+    	  
+/*     	if(!isset($_REQUEST['email']) || !isset($_REQUEST['vericode']) || !isset($_REQUEST['type'])) {
+    		$errCode = Base_RetCode::PARAM_ERROR;
+    		$errMsg = Base_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	}    */
+    	$emailPattern = self::$_arrRegMap[self::REG_EMAIL];
+    	if(!preg_match($emailPattern,$email)) {
+    		$errCode = Account_RetCode::EMAIL_FOEMAT_ERROR;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	}
+    	$type = strval('email');    	
+    	$bolCheckImg = User_Api::checkImageCode($vericode,$type);
+    	if(!$bolCheckImg) {
+    		$errCode = Account_RetCode::VERCODE_ERROR;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	}
+    	$objUser = $this->objUser;
+    	$oldEmail = !empty($objUser) ? ($objUser->email) : '';
+    	if($oldEmail === $email) {
+    		$errCode = Account_RetCode::EMAIL_NOT_CHANGE;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	}
+    	////发送一封邮件到email代表的邮箱中
     	$this->output();
     }
     
@@ -173,8 +208,10 @@ class EditapiController extends Base_Controller_Api {
     public function veriemailAction() {
     	$newEmail = $_REQUEST['newemail'];
     	$webroot = Base_Config::getConfig('web')->root;
+    	
+    	
     	$sendUrl = $webroot.'/account/edit/emailsuccess';//跳到修改邮件成功页面
-    	//向新邮件中发送邮件
+    	
     	
     	
     }

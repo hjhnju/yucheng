@@ -61,8 +61,8 @@ class LoginapiController extends Base_Controller_Api{
         if($isThird>0){
             $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
             $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
-            $logic = new User_Logic_Third();
-            $logic->binding($objLogin->userid, $openid, $authtype);
+            $logicThird = new User_Logic_Third();
+            $logicThird->binding($logic->checkLogin(), $openid, $authtype);
             Base_Log::notice(array(
             'msg'     => 'bind success',
             'openid'  => $openid,
@@ -73,7 +73,7 @@ class LoginapiController extends Base_Controller_Api{
         Base_Log::notice(array(
             'msg'   => 'login success',
             'name'  => $strName,
-            'useid' => $logic->checkLogin()->userid,
+            'useid' => $logic->checkLogin(),
         ));
         $redirectUri = Yaf_Session::getInstance()->get(User_Keys::LOGIN_REFER);
         if(!empty($redirectUri)){

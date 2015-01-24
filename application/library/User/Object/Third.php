@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户第三方登陆表
- * @author jiangsongfang
+ * @author hejunhua
  */
 class User_Object_Third extends Base_Object {
     /**

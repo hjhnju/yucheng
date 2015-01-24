@@ -23,13 +23,14 @@ class Finance_Logic_Query extends Finance_Logic_Base {
 		if(!isset($userCustId)) {
 			Base_Log::error(array(
 				'msg' => '请求参数错误',
+				'huifuid' => $userCustId,
 			));
+			return false;
 		}
 		$merCustId = strval(self::MERCUSTID);
-		$chinapnr= Finance_Chinapnr_Logic::getInstance();
+		$chinapnr = Finance_Chinapnr_Logic::getInstance();
         $userCustId = strval($userCustId);
         $result = $chinapnr->queryBalanceBg($userCustId, $merCustId);
-		$result = $chinapnr->queryBalanceBg($userCustId,self::MERCUSTID);
 		if(is_null($result)) {
 			Base_Log::error(array(
 				'msg'     => '请求汇付接口失败',
@@ -74,16 +75,16 @@ class Finance_Logic_Query extends Finance_Logic_Base {
 	 */
 	public function queryAccts() {
 		$merCustId = strval(self::MERCUSTID);
-		$chinapnr= Finance_Chinapnr_Logic::getInstance();
+        $chinapnr = Finance_Chinapnr_Logic::getInstance();
 		$result = $chinapnr->queryAccts($merCustId);
+		
 		if(is_null($result)) {
 			Base_Log::error(array(
 				'msg' => '请求汇付接口失败',
 			));
 			return false;
 		}
-		$merAcct = $result['AcctDetails'];
-		return $merAcct;
+		return $result;
 	}
 	
 	/**

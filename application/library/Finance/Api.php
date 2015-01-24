@@ -4,6 +4,7 @@
  * @author lilu
  */
 class Finance_Api {
+	
 	/**
 	 * 商户子账户信息查询 Finance_Api::queryAccts
 	 * @return 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
@@ -17,6 +18,7 @@ class Finance_Api {
 		$ret = new Base_Result();
 		$queryLogic = new Finance_Logic_Query();
 		$return = $queryLogic->queryAccts();
+		
 		if($return === false) {			
 			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
 			$ret->data = array();
@@ -42,9 +44,7 @@ class Finance_Api {
 		}
 		$ret->status = $return['RespCode'];
 		$ret->data = $return;
-		
-		Base_Log::notice($return);
-		
+		Base_Log::notice($return);		
 		return $ret->format();
 	}
 	
@@ -86,7 +86,7 @@ class Finance_Api {
 			$logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
 			$logParam['userCustId'] = $userCustId;
 			Base_Log::error($logParam);
-			
+						
 			return $ret->format();
 		}
 		if($return['RespCode'] !== '000') {
@@ -100,7 +100,6 @@ class Finance_Api {
 			
 			$logParam = array();
 			$logParam['msg'] = $return['RespDesc']; 
-			$logParam['userCustId'] = $userCustId;
 			$logParam = array_merge($logParam,$return);
 			Base_Log::error($logParam);
 			
@@ -111,13 +110,8 @@ class Finance_Api {
 			'avlBal'  => $return['AvlBal'],
 			'acctBal' => $return['AcctBal'],
 			'frzBal'  => $return['FrzBal'],
-		);
-		
-		$logParam = array();
-		$logParam['userCustId'] = $userCustId;
-		$logParam = array_merge($logParam,$return);
-		Base_Log::notice($return);
-		
+		);		
+		Base_Log::notice($return);		
 		return $ret->format();		
 	}
 	
@@ -142,31 +136,35 @@ class Finance_Api {
 	}
 	/**
 	 * 添加标的信息借口 Finance_Api::addBidInfo
-	 * @param proId 标的唯一标示
-	 * @param borrUserId 借款人uid
-	 * @param borrTotAmt 借款总金额
-	 * @param yearRate 年利率
-	 * @param retType 还款方式   1等额本息  2等额本金  3按期付息，到期还本   4一次性还款   99其他
-	 * @param bidStartDate 时间戳投标开始时间
-	 * @param bidEndDate 时间戳投标截止时间
-	 * @param proArea 项目所在地
+	 * @param int proId 标的唯一标示
+	 * @param int borrUserId 借款人uid
+	 * @param float borrTotAmt 借款总金额
+	 * @param float yearRate 年利率
+	 * @param int retType 还款方式   1等额本息  2等额本金  3按期付息，到期还本   4一次性还款   99其他
+	 * @param int bidStartDate 时间戳投标开始时间
+	 * @param int bidEndDate 时间戳投标截止时间
+	 * @param float retAmt 总还款金额
+	 * @param int retDate 应还款日期
+	 * @param int proArea 项目所在地
 	 * @return boolean
 	 * 
 	 */
-	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea) {
+	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea) {
         $transLogic = new Finance_Logic_Transaction();
-        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$proArea);
-        if(is_null($return)) {
+        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea);
+        if(is_null($return) || !$return) {
         	Base_Log::error(array(
-        		'msg' => Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR),
-        		'proId' => $proId,
-        		'borrUserId' => $borrUserId,
-        		'borrTotAmt' => $borrTotAmt,
-        		'yearRate' => $yearRate,
-        	    'retType' => $retType,
+        		'msg'          => Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR),
+        		'proId'        => $proId,
+        		'borrUserId'   => $borrUserId,
+        		'borrTotAmt'   => $borrTotAmt,
+        		'yearRate'     => $yearRate,
+        	    'retType'      => $retType,
         	    'bidStartDate' => $bidStartDate,
-        	    'bidEndDate' => $bidEndDate,
-        	    'proArea' => $proId,
+        	    'bidEndDate'   => $bidEndDate,
+        	    'retAmt'       => $retAmt,
+        	    'retDate'      => $retDate,
+        	    'proArea'      => $proId,
         	));
         	return false;
         }
@@ -372,7 +370,7 @@ class Finance_Api {
 	 * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
 	 * @return bool true--撤销成功  false--撤销失败
 	 */
-	public static function tenderCancle($transAmt,$userid,$orderId,$orderDate,$retUrl) {
+	public static function tenderCancel($transAmt,$userid,$orderId,$orderDate,$retUrl) {
 		if(!isset($transAmt) || empty($transAmt) || !isset($userid) || empty($userid) ||
 		   !isset($orderId) || empty($orderId) || !isset($orderDate) || empty($orderDate) ||
 		   !isset($retUrl) || empty($retUrl)) {
@@ -393,7 +391,7 @@ class Finance_Api {
 		    'orderDate' => $orderDate,
 		    'retUrl'    => $retUrl,
 		));
-		$transLogic->tenderCancle($transAmt,$userid,$orderId,$orderDate,$retUrl);		
+		$transLogic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$retUrl);		
 	}
 	
 	/**
@@ -420,7 +418,8 @@ class Finance_Api {
 		     ));   	
 		 }    	
       	 $transLogic = new Finance_Logic_Transaction();
-      	 $return = $transLogic->loans($loanId, $subOrdId, $inCustId, $outCustId, $transAmt);
+      	 $return = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+      	
       	 if(is_null($return)) {
       	     $logParam = array();
       	 	 $logParam['msg']       = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
@@ -436,7 +435,7 @@ class Finance_Api {
       	 $respDesc = $return['RespDesc'];
       	 if($respCode !== '000') {
       	     $logParam = array();
-      	 	 $logParam['msg']       = $respDesc;
+      	 	 $logParam['msg'] = $respDesc;
       	 	 $logParam = array_merge($logParam,$return);     	 	
       	 	 Base_Log::error($logParam);
       	 	 return false;
@@ -455,9 +454,8 @@ class Finance_Api {
       * @return boolean 还款成功/失败
       */
      public static function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
-     	if(!isset($outUserId) || empty($outUserId) || !isset($inUserId) || empty($inUserId) ||
-      	   !isset($subOrdId) || empty($subOrdId) || !isset($transAmt) || empty($transAmt) ||
-      	   !isset($loanId) || empty($loanId)) {
+     	if(!isset($outUserId) || !isset($inUserId) ||!isset($subOrdId) || !isset($transAmt) ||
+      	   !isset($loanId) ) {
       	   	Base_Log::error(array(
       	   		'msg'       => '请求参数错误',
       	   		'outUserId' => $outUserId,
@@ -575,9 +573,9 @@ class Finance_Api {
       *     )
       *     
       */
-     public static function corpRegist($userId='',$usrName='',$instuCode='',$taxCode='',$guarType=''){
+     public static function corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode=''){
      	 $userManageLogic = new Finance_Logic_UserManage();
-     	 $userManageLogic->corpRegist();
+     	 $userManageLogic->corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode='');
      }
      
      /**

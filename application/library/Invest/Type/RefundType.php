@@ -11,10 +11,15 @@ class Invest_Type_RefundType extends Base_Type {
      */
     const AVERAGE = 1;
     /**
+     * 等额本金
+     * @var integer
+     */
+    const CAPITAL = 2;
+    /**
      * 按月付息，到期还本
      * @var integer
      */
-    const MONTH_INTEREST = 2;
+    const MONTH_INTEREST = 3;
     
     /**
      * 默认key名
@@ -34,6 +39,7 @@ class Invest_Type_RefundType extends Base_Type {
      */
     public static $names = array(
         self::AVERAGE => '等额本息',
+        self::CAPITAL => '等额本金',
         self::MONTH_INTEREST => '按月付息，到期还本',
     );
 }

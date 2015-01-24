@@ -64,7 +64,7 @@ class Finance_Fee {
 	 	$riskLevel = intval($riskLevel);
 	 	$transAmt = floatval($transAmt);	
 	 	$serviceFee = $transAmt * self::$finance_service_fee[$riskLevel];
-	 	$serviceFee = floatval($serviceFee);
+	 	$serviceFee = sprintf('%.2f',$serviceFee);
 	 	return $serviceFee;
 	 }
 	 
@@ -80,7 +80,7 @@ class Finance_Fee {
 	 	$days = intval($days);
 	 	$dailyRate = floatval(self::$risk_reserve[$riskLevel] / 365);
 	 	$prepareFee = $transAmt * $dailyRate * $days;
-	 	$prepareFee = floatval($prepareFee);
+	 	$prepareFee = sprintf('%.2f',$prepareFee);
 	 	return $prepareFee;
 	 }
 	

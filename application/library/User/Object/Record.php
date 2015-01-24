@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户登录历史纪录表
- * @author jiangsongfang
+ * @author hejunhua
  */
 class User_Object_Record extends Base_Object {
     /**

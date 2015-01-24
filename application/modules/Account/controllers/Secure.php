@@ -47,6 +47,7 @@ class SecureController extends Base_Controller_Page{
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);			
 		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
 		$phonenum = $userinfo['phone']['value'];//用户手机号码
+		$phonenum = substr_replace($phonenum,'****',3,4);
 		if($phone == 2) {
 			$phoneurl = $webroot.'/account/secure/bindphone';
 		} else {
@@ -55,6 +56,7 @@ class SecureController extends Base_Controller_Page{
 		$certinfo = $userinfo['realname']['isopen'];//实名认证是否开通
 		$realname = $userinfo['realname']['realnameValue'];//用户实名
 		$certinfonum = $userinfo['realname']['certValue'];//用户的证件值
+		$certinfonum = substr_replace($certinfonum,'**************',2,14);
 		if($certinfo == 2) {
 			$certinfourl = $webroot.'/account/secure/bindcertinfo';
 		} else {
@@ -71,6 +73,7 @@ class SecureController extends Base_Controller_Page{
 		
 		$email = $userinfo['email']['isopen'];//用户是否开通了email
 		$emailnum = $userinfo['email']['value'];
+		$emailnum = substr_replace($emailnum,'*****',4,4);
 		if($email == 2) {
 			$emailurl = $webroot.'/account/edit/bindemail';
 		} else {
@@ -78,27 +81,29 @@ class SecureController extends Base_Controller_Page{
 		}
 		
 		$chpwdurl = $webroot.'/account/edit/chpwd';
-	   /* 	
-		$thirdLogin = array('qq','weibo','weixin');		
-		foreach ($thirdLogin as $k=>$v) {
-			if($userObj->getOpenid($v)!=false) {
-				$this->retData['thirdPlatform'] = $v;
-				$this->retData['thirdNickName'] = $userObj->getNickname($v);
-				break;
-			}
-		}
-		*/
-		//for test
-		$this->retData['thirdPlatform'] = 1;
-		if(!isset($this->retData['thirdPlatform'])) {
+		
+		$thirdBindRet = User_Api::checkBind($userid);
+		//没有绑定第三方登陆
+		if($thirdBindRet['type'] === 0) {
 			$this->retData['bindthirdlogin'] = 2;
 			$thirdloginurl = $webroot.'/account/secure/bindthirdlogin';
+		} else if($thirdBindRet['type'] === 1) {
+			$this->retData['bindthirdlogin'] = 1;
+			$this->retData['thirdPlatform'] = 1;
+			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
+			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';			
+		} else if ($thirdBindRet['type'] === 2) {			
+			$this->retData['bindthirdlogin'] = 1;
+			$this->retData['thirdPlatform'] = 3;
+			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
+			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
 		} else {
 			$this->retData['bindthirdlogin'] = 1;
+			$this->retData['thirdPlatform'] = 3;
+			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
 			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
 		}
-		//var_dump($this->retData);die;
-		//像前端传递左上角信息
+		
         $this->getView()->assign('userinfo',$userinfo);		
 		
 		$this->getView()->assign('phone', $phone);

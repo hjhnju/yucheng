@@ -9,11 +9,11 @@ class Loan_Logic_Loan {
     
     /**
      * 借款成功 创建还款与收款计划
-     * @param integer $loan_id
+     * @param integer $loanId
      * @return boolean
      */
-    public function lendSuccess($loan_id) {
-        $loan = new Loan_Object_Loan($loan_id);
+    public function lendSuccess($loanId) {
+        $loan = new Loan_Object_Loan($loanId);
         if (empty($loan->id)) {
             return false;
         }
@@ -24,14 +24,14 @@ class Loan_Logic_Loan {
         }
         
         //创建还款计划
-        $res = $this->buildRefunds($loan_id);
+        $res = $this->buildRefunds($loanId);
         if (empty($res)) {
             $this->objModel->rollback();
             return false;
         }
         
         //循环创建收款计划
-        $invests = Invest_Api::getLoanInvests($loan_id);
+        $invests = Invest_Api::getLoanInvests($loanId);
         $invests = $invests['list'];
         foreach ($invests as $invest) {
             $res = Invest_Api::buildRefunds($invest['id']);
@@ -50,11 +50,11 @@ class Loan_Logic_Loan {
     
     /**
      * 进行打款
-     * @param unknown $loan_id
+     * @param unknown $loanId
      * @return boolean
      */
-    public function sendMoney($loan_id) {
-        $invests = Invest_Api::getLoanInvests($loan_id);
+    public function sendMoney($loanId) {
+        $invests = Invest_Api::getLoanInvests($loanId);
         $invests = $invests['list'];
         //循环组合打款参数
         foreach ($invests as $invest) {
@@ -77,11 +77,41 @@ class Loan_Logic_Loan {
         return $refund->save();
     }
     
-    public function getLoanInfo($loan_id) {
-        $loan = new Loan_Object_Loan($loan_id);
+    /**
+     * 获取借款基本信息
+     * @param integer $loanId
+     * @return array
+     */
+    public function getLoanInfo($loanId) {
+        $loan = new Loan_Object_Loan($loanId);
         $data = $loan->toArray();
         
         return $data;
+    }
+    
+    /**
+     * 获取借款的还款总额
+     * @param number $loanId
+     * @return number
+     */
+    public function getLoanRefundAmount($loanId) {
+        $loan = new Loan_Object_Loan($loanId);
+        if ($loan->payTime > 0) {
+            $start = $loan->payTime;
+        } else {
+            $start = time();
+        }
+        
+        $duration = new Loan_Type_Duration();
+        
+        if ($loan->refundType == Loan_Type_RefundType::AVERAGE) {
+            $months = $duration->getMonths($loan->duration);
+            $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $months);
+        } elseif ($loan->refundType == Loan_Type_RefundType::MONTH_INTEREST) {
+            $days = $duration->getDays($loan->duration, $start);
+            $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $days);
+        }
+        return $loan->amount + $interest;
     }
     
     /**
@@ -100,11 +130,11 @@ class Loan_Logic_Loan {
     
     /**
      * 创建还款计划
-     * @param integer $loan_id
+     * @param integer $loanId
      * @return boolean
      */
-    public function buildRefunds($loan_id) {
-        $loan = $this->getLoanInfo($loan_id);
+    public function buildRefunds($loanId) {
+        $loan = $this->getLoanInfo($loanId);
         
         if ($loan['duration'] < 30) {
             $date = new DateTime('tomorrow');
@@ -201,12 +231,12 @@ class Loan_Logic_Loan {
     
     /**
      * 获取借款的还款计划
-     * @param integer $loan_id
+     * @param integer $loanId
      * @return array
      */
-    public function getRefunds($loan_id) {
-        $loan = $this->getLoanInfo($loan_id);
-        $refunds = $this->getRefundsInDb($loan_id);
+    public function getRefunds($loanId) {
+        $loan = $this->getLoanInfo($loanId);
+        $refunds = $this->getRefundsInDb($loanId);
         if (!empty($refunds)) {
             return $refunds;
         }
@@ -305,13 +335,13 @@ class Loan_Logic_Loan {
     
     /**
      * 从db中获取借款的还款计划
-     * @param integer $loan_id
+     * @param integer $loanId
      * @return array
      */
-    private function getRefundsInDb($loan_id) {
+    private function getRefundsInDb($loanId) {
         $list = new Loan_List_Refund();
         $filters = array(
-            'loan_id' => $loan_id,
+            'loan_id' => $loanId,
         );
         $list->setFilter($filters);
         $list->setPagesize(PHP_INT_MAX);

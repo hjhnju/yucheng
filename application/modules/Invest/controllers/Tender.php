@@ -16,8 +16,8 @@ class TenderController extends Base_Controller_Api {
 	public function indexAction() {
 	    //@TODO fortest
 	    $_POST = array(
-	        'id' => 1,
-	        'amount' => 100,
+	        'id' => 3,
+	        'amount' => 200,
 	    );
 	    if (!$this->checkParam($this->param, $_POST)) {
 	        return $this->outputError(Base_RetCode::PARAM_ERROR);
@@ -26,8 +26,7 @@ class TenderController extends Base_Controller_Api {
 	    $loan_id = intval($_POST['id']);
 	    $amount = intval($_POST['amount']);
 	    $uid = $this->userid;
-
-	    // 检查是否允许投标
+        // 检查是否允许投标
 	    $logic = new Invest_Logic_Invest();
 	    $allowed = $logic->allowInvest($uid, $loan_id);
 	    if (!$allowed) {

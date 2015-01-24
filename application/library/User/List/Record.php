@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户登录历史纪录表 列表类
- * @author jiangsongfang
+ * @author hejunhua
  */
 class User_List_Record extends Base_List {
     /**
@@ -32,14 +32,5 @@ class User_List_Record extends Base_List {
         'status'      => 1,
         'create_time' => 1,
     );
-
-    /**
-     * 获取数据的对象数组
-     * @return array|User_Object_Record[]
-     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
-     */
-    public function getObjects() {
-        return parent::getObjects('User_Object_Record');
-    }
 
 }
