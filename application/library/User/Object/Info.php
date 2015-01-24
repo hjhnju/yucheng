@@ -26,7 +26,7 @@ class User_Object_Info extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'realname', 'certificate_type', 'huifuid', 'certificate_content', 'headurl', 'create_time', 'update_time');
+    protected $fields = array('userid', 'realname', 'certificate_type', 'certificate_content', 'headurl', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -36,7 +36,6 @@ class User_Object_Info extends Base_Object {
         'userid'              => 'userid',
         'realname'            => 'realname',
         'certificate_type'    => 'certificateType',
-        'huifuid'             => 'huifuid',
         'certificate_content' => 'certificateContent',
         'headurl'             => 'headurl',
         'create_time'         => 'createTime',
@@ -79,12 +78,6 @@ class User_Object_Info extends Base_Object {
      * @var integer
      */
     public $certificateType;
-
-    /**
-     * 
-     * @var string
-     */
-    public $huifuid;
 
     /**
      * 证件内容

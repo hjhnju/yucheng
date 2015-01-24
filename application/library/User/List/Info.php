@@ -20,7 +20,7 @@ class User_List_Info extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'realname', 'certificate_type', 'huifuid', 'certificate_content', 'headurl', 'create_time', 'update_time');
+    protected $fields = array('userid', 'realname', 'certificate_type', 'certificate_content', 'headurl', 'create_time', 'update_time');
 
     /**
      * 整数类型的字段

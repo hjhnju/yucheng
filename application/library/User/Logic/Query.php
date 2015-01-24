@@ -13,7 +13,8 @@ class User_Logic_Query{
      * 查询用户
      */
     public function queryCorpUsers($page, $pagesize){
-        $list   = new User_List_Login();
+        //TODO:User_List
+        $list    = new User_List_Login();
         $filters = array('usertype' => self::TYPE_CORP);
         $list->setFilter($filters);
         $list->setOrder('create_time desc');

@@ -49,8 +49,8 @@ class User_Api{
      * @param   $list 用户列表
      */
     public static function getCorpUsers($page = 1, $pagesize = 10){
-        $logic   = new User_Logic_Query();
-        $list = $logic->queryCorpUsers($page, $pagesize);
+        $logic = new User_Logic_Query();
+        $list  = $logic->queryCorpUsers($page, $pagesize);
         Base_Log::notice(array(
             'page'     => $list['page'],
             'pagesize' => $list['pagesize'],
@@ -137,15 +137,14 @@ class User_Api{
  
     /**
      * 设置用户的汇付id
-     * @param unknown $uid
-     * @param unknown $strHuifuid
+     * @param int $uid
+     * @param string $strHuifuid
      * @return boolean
      */
-    public static function setHuifuId($uid,$strHuifuid){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->huifuid = $strHuifuid;
-        $ret = $objInfo->save();
+    public static function setHuifuId($userid, $strHuifuid){
+        $objUser = new User_Object($userid);
+        $objUser->huifuid = $strHuifuid;
+        $ret = $objUser->save();
         return $ret;
     }
     
