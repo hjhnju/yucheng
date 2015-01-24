@@ -38,13 +38,15 @@ class User_RetCode extends Base_RetCode{
     const ORIGIN_PASSWD_WRONG       = 1043; //原密码错误
     const MODIFY_PWD_FAIL           = 1044; //保存密码错误
 
-    const BINDING_FAIL              = 1045; //保存密码错误
+    const BINDING_FAIL              = 1045; //绑定三方账号出错
 
     const GET_OPENID_FAIL           = 1055; //获取openid失败
 
     const SIGN_OUT_FIAL             = 1056; //登出失败
     
     const USER_NAME_OR_PHONE_ERROR  = 1057; //用户名或手机号错误
+    
+    const SAVE_PASSWD_WRONG         = 1058; //保存用户密码错误
     
     /* 消息函数
      * @var array
@@ -71,6 +73,8 @@ class User_RetCode extends Base_RetCode{
         self::GET_OPENID_FAIL          => '获取openid失败',
         self::SIGN_OUT_FIAL            => '登出失败',
         self::USER_NAME_OR_PHONE_ERROR => '用户名或手机号错误',
+        self::SAVE_PASSWD_WRONG        => '保存用户密码错误',
+        self::ORIGIN_PASSWD_WRONG      => '原密码错误',
     );
 
 }

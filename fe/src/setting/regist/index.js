@@ -11,6 +11,10 @@ define(function (require) {
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
     var header = require('common/header');
+    var dialog = require('common/ui/Dialog/Dialog');
+    var login = require('setting/login/index');
+    var etpl = require('etpl');
+    var tpl = require('./regist.tpl');
 
     var Remoter = require('common/Remoter');
     var checkName = new Remoter('REGIST_CHECKNAME_CHECK');
@@ -67,8 +71,10 @@ define(function (require) {
 
     function init(third) {
         isthird = third ? 1 : 0;
-        header.init();
+        //header.init();
+        etpl.compile(tpl);
         picScroll.init();
+        dialog.init();
         bindEvents();
         callBack();
     }
@@ -168,7 +174,7 @@ define(function (require) {
                 checksmscode.remote({
                     vericode: value,
                     phone: phone,
-                    type: 1
+                    type: 'regist'
                 });
             }
             else {
@@ -185,7 +191,7 @@ define(function (require) {
             if (!$(this).hasClass('disabled') && value) {
                 sendsmscode.remote({
                     phone: value,
-                    type: 1
+                    type: 'regist'
                 });
             }
 
@@ -324,6 +330,20 @@ define(function (require) {
             else {
                 window.location.href = '/user/open/index';
             }
+        });
+
+
+
+        // 点击快速绑定 出浮层
+        $('.fix-box-register').click(function () {
+
+            dialog.show({
+                width: 500,
+                defaultTitle: false,
+                content: etpl.render('fixBox')
+            });
+
+            login.init('registBind');
         });
     }
     return {

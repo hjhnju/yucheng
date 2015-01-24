@@ -159,9 +159,18 @@ class Loan_Api {
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
-        $data = self::formatLoan($data);
         
         return $data;
+    }
+    
+    /**
+     * 获取借款的应还款总额
+     * @param number $loanId
+     * @return number
+     */
+    public static function getLoanRefundAmount($loanId) {
+        $logic = new Loan_Logic_Loan();
+        return $logic->getLoanRefundAmount($loanId);
     }
     
     /**
@@ -235,6 +244,7 @@ class Loan_Api {
      */
     public static function getLoanDetail($loan_id) {
         $data = self::getLoanInfo($loan_id);
+        $data = self::formatLoan($data);
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();

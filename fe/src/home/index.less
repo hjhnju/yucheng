@@ -10,23 +10,25 @@
 .banner-select {
     .clearfix;
 
-    width: 100px;
+    width: 120px;
     position: absolute;
-    z-index: 5;
-    top: 330px;
+    z-index: 11115;
+    top: 380px;
     left: 50%;
 
     .banner-select-link {
         display: block;
         float: left;
         margin-right: 10px;
-        font-size: 14px;
-        color: @color-red;
+        width: 20px;
+        height: 20px;
         text-decoration: none;
+        background: url(./img/banner_select.png) 0 4px no-repeat;
+        cursor: pointer;
 
 
         &:hover,&.current {
-            color: #000000;
+            background-position: 0 -48px;
         }
     }
 }
@@ -73,6 +75,9 @@
     text-align: center;
     width: 140px;
     overflow: hidden;
+    color: #343434;
+    text-decoration: none;
+    cursor: pointer;
 
     &.last {
         margin-right: 0;
@@ -225,37 +230,43 @@
     overflow: hidden;
     position: relative;
     height: 370px;
+    padding-bottom: 40px;
+    background-color: #f8f8f8;
 }
 .banner-item {
     position: absolute;
     left: 0;
     top: 0;
-    width: 300%;
+    width: 400%;
     z-index: 2;
     
     .clearfix;
 }
 .banner-item-list {
-    width: 33.333%;
+    width: 25%;
     float: left;
-    height: 370px;
+    height: 300px;
+    position: relative;
 }
 .banner-item-list-link {
     width: 100%;
     display: block;
-    background-color: @color-green;
-    height: 370px;
+    height: 300px;
 
-    &.color-green {
-        background-color: yellow;
+    &.banner-one {
+        background: url(./img/banner_one.jpg) center center no-repeat;
     }
 
-    &.color-red {
-        background-color: blue;
+    &.banner-two {
+        background: url(./img/banner_two.jpg) center center no-repeat;
     }
 
-    &.color-blank {
-        background-color: orange;
+    &.banner-three {
+        background: url(./img/banner_three.jpg) center center no-repeat;
+    }
+
+    &.banner-four {
+        background: url(./img/banner_four.jpg) center center no-repeat;
     }
 }
 
@@ -263,24 +274,32 @@
 
 
 .banner-container {
-    padding: 40px 0;
-    background-color: transparent;
-    width: 280px;
-    position: absolute;
-    left: 900px;
-    top: 0;
+    width: 1000px;
+    margin: 0 auto;
+//    padding: 40px 0;
+//    background-color: transparent;
+//    width: 280px;
+//    position: absolute;
+//    left: 930px;
+//    top: 0;
+    .clearfix;
+    height: 330px;
+    padding-top: 40px;
+    position: relative;
+
 }
 .fix-box {
+    background-color: transparent;
     width: 280px;
     float: right;
-    .border-radius(5px);
-    background-color: #ffffff;
+    height: 294px;
+
 }
 .fix-box-title {
     height: 108px;
     background: url(../common/img/fix_title.png) 0 0 no-repeat;
     padding-top: 40px;
-
+    .border-radius(5px 5px 0 0);
 }
 .fix-title-number {
     color: #ffffff;
@@ -288,6 +307,10 @@
     height: 50px;
     line-height: 50px;
     text-align: center;
+
+    &.logining {
+        font-size: 30px;
+    }
 
     .fix-title-number-bai {
         font-size: 14px;
@@ -302,6 +325,12 @@
     padding: 40px 0;
     background-color: #ffffff;
     text-align: center;
+
+    .border-radius(0 0 5px 5px);
+
+    &.mar-top {
+        padding-bottom: 20px;
+    }
 }
 .fix-box-main-regist {
     width: 166px;
@@ -316,6 +345,9 @@
     margin: 0 auto 10px;
 
     .border-radius(5px);
+
+
+
 }
 .fix-box-main-box {
     height: 20px;
@@ -333,5 +365,69 @@
         }
     }
 }
+
+
+
+//箭头
+.jiantou-left {
+    width: 50px;
+    height: 100px;
+    background: url(./img/banner_jiantou.png) 0 0 no-repeat;
+    position: absolute;
+    left: -90px;
+    top: 140px;
+    cursor: pointer;
+}
+.jiantou-right {
+    width: 50px;
+    height: 100px;
+    background: url(./img/banner_jiantou.png) 0 -100px no-repeat;
+    position: absolute;
+    right: -110px;
+    top: 140px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

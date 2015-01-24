@@ -15,13 +15,15 @@ define(function (require) {
     var loginCheck = new Remoter('LOGIN_INDEX_CHECK');
     var imgcodeCheck = new Remoter('LOGIN_IMGCODE_CHECK');
 
-    var IMGURL = config.URL.IMG_GET + 'login';
+    var IMGURL = config.URL.IMG_GET;
 
     var loginError = $('#login-error');
     var imgUrl = $('#login-img-url');
     var status = 0;
+    var loginType;
 
-    function init () {
+    function init (type) {
+        loginType = type || 'login';
         header.init();
         picScroll.init();
         bindEvents();
@@ -68,7 +70,7 @@ define(function (require) {
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
-            $(this).attr('src', IMGURL);
+            $(this).attr('src', IMGURL + loginType);
         });
 
 
@@ -95,17 +97,22 @@ define(function (require) {
                     return;
                 }
 
+
+
                 loginCheck.remote({
                     name: user,
                     passwd: pwd,
                     imagecode: volid,
-                    type: 'login'
+                    type: loginType,
+                    isthird: loginType === 'login' ? 0 : 1
                 });
             }
             else {
                 loginCheck.remote({
                     name: user,
-                    passwd: pwd
+                    passwd: pwd,
+                    type: loginType,
+                    isthird: loginType === 'login' ? 0 : 1
                 });
             }
 
@@ -116,7 +123,6 @@ define(function (require) {
             if(e.keyCode === 13) {
                 $('.login-fastlogin').trigger('click');
                 $(this).trigger('blur');
-                console.log(111);
             }
         });
 
@@ -124,7 +130,6 @@ define(function (require) {
                 if(e.keyCode === 13) {
                     $('.login-fastlogin').trigger('click');
                     $(this).trigger('blur');
-                    console.log(111);
                 }
             })
 

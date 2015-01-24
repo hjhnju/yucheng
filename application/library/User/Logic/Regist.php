@@ -3,6 +3,11 @@
  * 注册Logic层
  */
 class User_Logic_Regist{
+
+    //用户类型－个人用户
+    const TYPE_PRIV = 1;
+    //用户类型－企业用户
+    const TYPE_CORP = 2;
     
     public function __construct(){
     }
@@ -39,7 +44,7 @@ class User_Logic_Regist{
      */
     public function checkPhone($strPhone){
         if(empty($strPhone) || !User_Logic_Validate::checkPhone($strPhone)){
-            return User_RetCode::USERPHONE_SYNTEX_ERROR;
+            return User_RetCode::PHONE_FORMAT_ERROR;
         }
 
         $objLogin = new User_Object_Login();
@@ -76,27 +81,46 @@ class User_Logic_Regist{
     
     /**
      * 注册的同时要添加信息进`user_info`表
+     * @param  usertype $usertype 用户类型 'priv' | 'corp'
+     * @param  username $username 用户名
      * @return $userid | false
      */
-    public function regist($username, $passwd, $phone, $inviter = ''){
-        $passwd = Base_Util_Secure::encrypt($passwd);
-        $objLogin         = new User_Object_Login();
-        $objLogin->name   = $username;
-        $objLogin->passwd = $passwd;
-        $objLogin->phone  = $phone;
+    public function regist($usertype, $username, $passwd, $phone, $inviter = ''){
 
+        //各字段再验证过一遍
+        $retCode = $this->checkName($username);
+        if(User_RetCode::SUCCESS !== $retCode){
+            return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));
+        }
+
+        //企业用户手机前面加0
+        $usertype = $this->getUserType($usertype);
+        if($usertype === self::TYPE_CORP){
+            $phone = '0' . $phone;
+        }
+        $retCode = $this->checkPhone($phone);
+        if(User_RetCode::SUCCESS !== $retCode){
+            return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));     
+        }
+
+        $passwd = Base_Util_Secure::encrypt($passwd);
+        $objLogin           = new User_Object_Login();
+        $objLogin->name     = $username;
+        $objLogin->passwd   = $passwd;
+        $objLogin->usertype = $usertype;
+        $objLogin->phone    = $phone;
+        
         $ret = $objLogin->save();
         if(!$ret){
-            return false;
+            return new Base_Result(User_RetCode::REGIST_FAIL, null, User_RetCode::getMsg($retCode));
         }
 
         $objInfo         = new User_Object_Info();
         $objInfo->userid = $objLogin->userid;
-        //个人用户
-        $objInfo->usertype = 1;
         $objInfo->save();
 
-        return $objLogin->userid;
+        return new Base_Result(User_RetCode::SUCCESS,
+            array('userid' => $objLogin->userid));
     }
     
     /**
@@ -108,8 +132,8 @@ class User_Logic_Regist{
      */
     public function modifyPwd($strName,$strPhone,$strPasswd){
         $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('name'=>$strName,'phone'=>$strPhone));
-        if(!empty($objLogin)){
+        $ret = $objLogin->fetch(array('name'=>$strName,'phone'=>$strPhone));
+        if($ret){
             $objLogin->passwd = Base_Util_Secure::encrypt($strPasswd);
             $ret = $objLogin->save();
             if($ret){
@@ -121,5 +145,25 @@ class User_Logic_Regist{
             $ret = User_RetCode::USER_NAME_OR_PHONE_ERROR;
         }
         return $ret;
-    }   
+    }
+
+    /**
+     * 返回用户类型
+     */
+    private function getUserType($usertype){
+        $usertype = strtolower($usertype);
+        $type     = null;
+        switch ($usertype) {
+            case 'priv':
+                $type = self::TYPE_PRIV;
+                break;
+            case 'corp':
+                $type = self::TYPE_CORP;
+                break;
+            default:
+                $type = self::TYPE_CORP;
+                break;
+        }
+        return $type;
+    }
 }

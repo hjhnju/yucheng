@@ -6,19 +6,24 @@
 .detail-left {
     float: left;
     width: 670px;
+    margin-right: 30px;
 }
 .detail-left-title {
-    height: 50px;
-    line-height: 50px;
+    height: 40px;
+    line-height: 40px;
 
     .left-title-link {
         font-size: 14px;
-        color: #494949;
+        color: @color-mianbao;
         text-decoration: none;
 
         &:hover {
             text-decoration: underline;
         }
+    }
+    .left-title-link-span {
+        font-size: 14px;
+        color: @color-mianbao;
     }
     .left-title-greater {
         margin: 0 6px;
@@ -30,7 +35,7 @@
 .project-title {
     height: 70px;
     padding: 0 20px;
-    border: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
     background-color: #f8f8f8;
 
     .clearfix;
@@ -48,7 +53,7 @@
     line-height: 70px;
 }
 .project-gaishu {
-    padding: 20px;
+    padding: 30px;
 }
 .project-gaishu-top {
     padding-bottom: 20px;
@@ -187,10 +192,9 @@
 }
 .project-time {
     height: 70px;
-    padding: 0 20px;
-    border: 1px solid #dfdfdf;
+    padding: 0 30px;
+    border-top: 1px solid #dfdfdf;
     background-color: #f8f8f8;
-    margin-bottom: 20px;
 }
 .project-time-start {
     line-height: 70px;
@@ -290,6 +294,8 @@
 }
 .main-detail-content {
     .clearfix;
+    min-height: 100px;
+    position: relative;
 
 }
 .main-detail-content-left {
@@ -376,7 +382,8 @@
 }
 .renzheng-box-main {
     .clearfix;
-    margin-left: -20px;
+    margin: 0 -40px -20px 0;
+
 }
 .renzheng-pic {
     float: left;
@@ -724,3 +731,110 @@ table {
 }
 
 
+.project-box {
+    border: 1px solid #dfdfdf;
+    margin-bottom: 20px;
+}
+.title-icon {
+    background: url(./img/title_icon.png) 0 12px no-repeat;
+    padding-left: 20px;
+}
+.detail-error {
+    height: 36px;
+    line-height: 36px;
+    background-color: #ffeceb;
+    padding-left: 10px;
+    font-size: 12px;
+    color: @color-red;
+    border: 1px solid @color-red;
+    margin-bottom: 10px;
+    position: relative;
+    display: none;
+
+    &.show {
+        display: block;
+    }
+
+    .detail-error-cha {
+        display: block;
+        position: absolute;
+        right: 1px;
+        top: 9px;
+        background: url(./img/error_cha.png) 0 0 no-repeat;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+}
+
+
+// 实地认证状态
+
+.renzheng-box-main-box {
+    float: left;
+    width: 100px;
+    text-align: center;
+    margin-right: 36px;
+    margin-bottom: 36px;
+}
+.renzheng-box-main-box-pic {
+    width: 100px;
+    height: 60px;
+    margin-bottom: 10px;
+    background: url(./img/renzheng_icon.png) 0 0 no-repeat;
+
+
+    &.shidi {
+        background-position: 17px 0;
+    }
+
+    &.yingye {
+        background-position: 17px -102px;
+    }
+
+    &.shuiwu {
+        background-position: 17px -202px;
+    }
+
+    &.bank {
+        background-position: 17px -302px;
+    }
+
+    &.zuzhi {
+        background-position: 17px -400px;
+    }
+
+    &.zhengxin {
+        background-position: 17px -502px;
+    }
+
+    &.diya {
+        background-position: 17px -600px;
+    }
+
+    &.shenfen {
+        background-position: 17px -702px;
+    }
+
+    &.hukou {
+        background-position: 17px -800px;
+    }
+
+    &.jiehun {
+        background-position: 17px -900px;
+    }
+
+    &.fangchan {
+        background-position: 17px -1000px;
+    }
+
+    &.xingshi {
+        background-position: 17px -1100px;
+    }
+}
+.renzheng-box-main-box-name {
+    height: 16px;
+    line-height: 16px;
+    font-size: 14px;
+    color: #333333;
+}

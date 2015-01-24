@@ -9,10 +9,10 @@ class CashController extends Base_Controller_Page {
 	private $phone;
 	
 	public function init() {
-		$this->setNeedLogin(false);
-		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : 0;
-		$this->phone = !empty($this->objUser) ? $this->objUser->phone : '';
+		$this->setNeedLogin(false);		
 		parent::init();
+		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
+		$this->phone = !empty($this->objUser) ? $this->objUser->phone : '';
 		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax = true;
 	}
@@ -29,18 +29,20 @@ class CashController extends Base_Controller_Page {
      *
 	 * userInfo 左上角用户信息
 	 */
-	public function indexAction() {
-		
-		$huifuid  = $this->huifuid;
+	public function indexAction() {		
+		$huifuid  = $this->huifuid;	
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
-		//var_dump($userinfo);die;
 		$userBg   = $this->userInfoLogic->getUserBg($huifuid);
 		$avlBal   = strval($userBg['avlBal']);
 		$acctBal  = strval($userBg['acctBal']);
+		$rechargeurl = "$this->webroot".'/account/cash/recharge';
+		$withdrawurl = "$this->webroot".'/account/cash/withdraw';
 		//assign至前端
 		$this->getView()->assign('avlBal', $avlBal);
 		$this->getView()->assign('acctBal',$acctBal);
 		$this->getView()->assign('userinfo',$userinfo);
+		$this->getView()->assign('rechargeurl',$rechargeurl);
+		$this->getView()->assign('withdrawurl',$withdrawurl);
 	}
 	
 	/**
@@ -48,6 +50,8 @@ class CashController extends Base_Controller_Page {
 	 * 充值入口
 	 */
 	public function rechargeAction() {
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+		$this->getView()->assign('userinfo',$userinfo);
 		
 	}
 	
@@ -61,7 +65,7 @@ class CashController extends Base_Controller_Page {
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
 		
 		//FOR　TEST
-		$huifuid = "6000060000696947";
+		//$huifuid = "6000060000696947";
         $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
         $bindBank = $bankInfo['bindbank'];
         $bankNum  = $bankInfo['banknum'];

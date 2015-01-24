@@ -17,7 +17,7 @@ define(function (require) {
     function picScroll () {
         var oUl = $('.login-item');
         var aLi = $('.login-item-list');
-        var aLiWidth = aLi.eq(0).width()
+        var aLiWidth = aLi.eq(0).width();
         var left = $('.login-right-linkleft.left');
         var right = $('.login-right-linkleft.right');
         var oUlWith = aLi.eq(0).width()*aLi.size();

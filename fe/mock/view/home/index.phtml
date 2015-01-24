@@ -13,39 +13,60 @@
 {%/block%}
 
 {%block name="content"%}
+{%assign var="bannerList" value=[0 => "banner-one", 1 => "banner-two", 2 => "banner-three", 3 => "banner-four"]%}
 <div class="banner">
     <div class="banner-floation">
+
+
         <ul class="banner-item">
+            {%foreach $bannerList as $key => $item%}
             <li class="banner-item-list">
-                <a class="banner-item-list-link color-green"></a>
-                <div class="banner-container">
-                    <div class="fix-box">
-                        <div class="fix-box-title">
-                            <p class="fix-title-number">15.8
-                                <span class="fix-title-number-bai">%</span>
-                            </p>
-                            <p class="fix-title-text">最高年化收利率</p>
-                        </div>
-                        <div class="fix-box-main">
-                            <a href="###" class="fix-box-main-regist">快速注册</a>
-                            <div class="fix-box-main-box">
-                                已有账号？<a href="###" class="fix-box-main-box-login">立即登录</a>
+                <div class="banner-item-list-link {%$item%}">
+
+                    <div class="banner-container">
+                        <div class="jiantou-left"></div>
+                        <div class="jiantou-right"></div>
+                        <div class="fix-box">
+                            {%if isset($user)%}
+                            <div class="fix-box-title">
+                                <p class="fix-title-number logining">欢迎您
+                                </p>
+                                <p class="fix-title-text">{%$user.username%}</p>
                             </div>
+                            <div class="fix-box-main mar-top">
+                                <a href="###" class="fix-box-main-regist ">管理我的账户</a>
+                                <div class="fix-box-main-box">
+
+                                </div>
+                            </div>
+                            {%else%}
+                            <div class="fix-box-title">
+                                <p class="fix-title-number">15.8
+                                    <span class="fix-title-number-bai">%</span>
+                                </p>
+                                <p class="fix-title-text">最高年化收利率</p>
+                            </div>
+                            <div class="fix-box-main">
+                                <a href="###" class="fix-box-main-regist">快速注册</a>
+                                <div class="fix-box-main-box">
+                                    已有账号？<a href="###" class="fix-box-main-box-login">立即登录</a>
+                                </div>
+                            </div>
+                            {%/if%}
+
                         </div>
                     </div>
+
                 </div>
+
             </li>
-            <li class="banner-item-list">
-                <a class="banner-item-list-link color-red"></a>
-            </li>
-            <li class="banner-item-list">
-                <a class="banner-item-list-link color-blank"></a>
-            </li>
+            {%/foreach%}
         </ul>
         <div class="banner-select">
-            <a href="###" class="banner-select-link current">●</a>
-            <a href="###" class="banner-select-link">●</a>
-            <a href="###" class="banner-select-link">●</a>
+            <a class="banner-select-link current"></a>
+            <a class="banner-select-link"></a>
+            <a class="banner-select-link"></a>
+            <a class="banner-select-link"></a>
         </div>
     </div>
 
@@ -56,7 +77,7 @@
     <div class="container">
         <div class="introduce-left">
             <div class="introduce-left-title"><span>兴教贷</span>是什么?</div>
-            <div class="introduce-left-text">兴教贷是国内首家专注于教育平台的投融资公司兴教贷是国内首家专注于教育平台的投融资公司兴教贷是国内首家专注于教育平台的投融资公司。<a href="###">查看更多></a></div>
+            <div class="introduce-left-text">兴教贷是国内首家专注于教育平台的投融资公司兴教贷是国内首家专注于教育平台的投融资公司兴教贷是国内首家专注于教育平台的投融资公司。<a href="/mock/entry/guide/index.php">查看更多></a></div>
         </div>
         <div class="introduce-right">
             <div class="introduce-right-list">
@@ -105,76 +126,79 @@
                     <div class="investlist-box-title-name jindu">进度</div>
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
-                <div class="investlist-box-title">
-                    <div class="investlist-box-title-name name">
-                        <span class="name-shi">实</span>
-                        <span class="school">福建三明高中扩建一期</span>
-                    </div>
-                    <div class="investlist-box-title-name grade">
-                        <span class="grade-star all"></span>
-                        <span class="grade-star all"></span>
-                        <span class="grade-star none"></span>
-                    </div>
-                    <div class="investlist-box-title-name lilv">
-                        <span class="lilv-number">12</span>
-                        <span class="lilv-bai">%</span>
-                    </div>
-                    <div class="investlist-box-title-name price">
-                        <span class="lilv-number color-blank">1,000,000</span>
-                        <span class="lilv-bai">元</span>
-                    </div>
-                    <div class="investlist-box-title-name time">
-                        <span class="lilv-number color-blank">6</span>
-                        <span class="lilv-bai">个月</span>
-                    </div>
-                    <div class="investlist-box-title-name jindu">
-                        <div class="jindu-box">
-                            <div class="jindu-box-inline"></div>
+                <div class="investlist-list" id="investlist-list">
+                    <div class="investlist-box-title">
+                        <div class="investlist-box-title-name name text-align-name">
+                            <span class="name-shi">实</span>
+
+                            <span class="school">福建三明高中扩建一期我的的的的的的的的的</span>
+                            <span class="school-new">新手专享</span>
                         </div>
-                        <div class="jindu-number">
-                            <span class="lilv-number">85</span>
+                        <div class="investlist-box-title-name grade">
+                            <span class="grade-star level-aaa"></span>
+                        </div>
+                        <div class="investlist-box-title-name lilv">
+                            <span class="lilv-number">12</span>
                             <span class="lilv-bai">%</span>
                         </div>
-                    </div>
-                    <div class="investlist-box-title-name status">
-                        <a class="status-biding" href="###">投标结束</a>
-                    </div>
-                </div>
-                <div class="investlist-box-title">
-                    <div class="investlist-box-title-name name">
-                        <span class="name-shi">实</span>
-                        <span class="school">福建三明高中扩建一期</span>
-                    </div>
-                    <div class="investlist-box-title-name grade">
-                        <span class="grade-star all"></span>
-                        <span class="grade-star all"></span>
-                        <span class="grade-star none"></span>
-                    </div>
-                    <div class="investlist-box-title-name lilv">
-                        <span class="lilv-number">12</span>
-                        <span class="lilv-bai">%</span>
-                    </div>
-                    <div class="investlist-box-title-name price">
-                        <span class="lilv-number color-blank">1,000,000</span>
-                        <span class="lilv-bai">元</span>
-                    </div>
-                    <div class="investlist-box-title-name time">
-                        <span class="lilv-number color-blank">6</span>
-                        <span class="lilv-bai">个月</span>
-                    </div>
-                    <div class="investlist-box-title-name jindu">
-                        <div class="jindu-box">
-                            <div class="jindu-box-inline"></div>
+                        <div class="investlist-box-title-name price">
+                            <span class="lilv-number color-blank">1,000,000</span>
+                            <span class="lilv-bai">元</span>
                         </div>
-                        <div class="jindu-number">
-                            <span class="lilv-number">85</span>
+                        <div class="investlist-box-title-name time">
+                            <span class="lilv-number color-blank">6</span>
+                            <span class="lilv-bai">个月</span>
+                        </div>
+                        <div class="investlist-box-title-name jindu">
+                            <div class="jindu-box">
+                                <div class="jindu-box-inline"></div>
+                            </div>
+                            <div class="jindu-number">
+                                <span class="lilv-number">85</span>
+                                <span class="lilv-bai">%</span>
+                            </div>
+                        </div>
+                        <div class="investlist-box-title-name status">
+                            <a class="status-biding" href="###">投标结束</a>
+                        </div>
+                    </div>
+                    <div class="investlist-box-title">
+                        <div class="investlist-box-title-name name text-align-name">
+                            <span class="name-shi">实</span>
+
+                            <span class="school">福建三明高中扩建一期</span>
+                            <span class="school-new">新手专享</span>
+                        </div>
+                        <div class="investlist-box-title-name grade">
+                            <span class="grade-star level-b"></span>
+                        </div>
+                        <div class="investlist-box-title-name lilv">
+                            <span class="lilv-number">12</span>
                             <span class="lilv-bai">%</span>
                         </div>
-                    </div>
-                    <div class="investlist-box-title-name status">
-                        <a class="status-biding current" href="###">投标结束</a>
+                        <div class="investlist-box-title-name price">
+                            <span class="lilv-number color-blank">1,000,000</span>
+                            <span class="lilv-bai">元</span>
+                        </div>
+                        <div class="investlist-box-title-name time">
+                            <span class="lilv-number color-blank">6</span>
+                            <span class="lilv-bai">个月</span>
+                        </div>
+                        <div class="investlist-box-title-name jindu">
+                            <div class="jindu-box">
+                                <div class="jindu-box-inline"></div>
+                            </div>
+                            <div class="jindu-number">
+                                <span class="lilv-number">85</span>
+                                <span class="lilv-bai">%</span>
+                            </div>
+                        </div>
+                        <div class="investlist-box-title-name status">
+                            <a class="status-biding current" href="###">投标结束</a>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <a href="{%$webroot%}/invest/index" class="investlist-more">查看更多标的></a>
         </div>

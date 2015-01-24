@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- * @author jiangsongfang
+ * @author hejunhua
  */
 class User_Object_Login extends Base_Object {
     /**
@@ -26,7 +26,7 @@ class User_Object_Login extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'status', 'name', 'passwd', 'phone', 'email', 'lastip', 'login_time', 'create_time', 'update_time');
+    protected $fields = array('userid', 'usertype', 'status', 'name', 'passwd', 'phone', 'email', 'huifuid', 'lastip', 'login_time', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -34,11 +34,13 @@ class User_Object_Login extends Base_Object {
      */
     public $properties = array(
         'userid'      => 'userid',
+        'usertype'    => 'usertype',
         'status'      => 'status',
         'name'        => 'name',
         'passwd'      => 'passwd',
         'phone'       => 'phone',
         'email'       => 'email',
+        'huifuid'     => 'huifuid',
         'lastip'      => 'lastip',
         'login_time'  => 'loginTime',
         'create_time' => 'createTime',
@@ -51,6 +53,7 @@ class User_Object_Login extends Base_Object {
      */
     protected $intProps = array(
         'userid'      => 1,
+        'usertype'    => 1,
         'status'      => 1,
         'login_time'  => 1,
         'create_time' => 1,
@@ -70,6 +73,12 @@ class User_Object_Login extends Base_Object {
      * @var integer
      */
     public $userid;
+
+    /**
+     * 用户类型 1:个人用户 2:企业用户
+     * @var integer
+     */
+    public $usertype;
 
     /**
      * 是否允许登录
@@ -100,6 +109,12 @@ class User_Object_Login extends Base_Object {
      * @var string
      */
     public $email;
+
+    /**
+     * 汇付用户ID
+     * @var string
+     */
+    public $huifuid;
 
     /**
      * 最近登陆ip

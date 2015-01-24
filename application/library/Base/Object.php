@@ -42,6 +42,12 @@ class Base_Object {
     protected $intProps = array();
     
     /**
+     * 是否已经从DB中读取该对象
+     * @var integer
+     */
+    protected $fetched = 0;
+    
+    /**
      * @var Base_TopazDb
      */
     protected $db;
@@ -149,7 +155,10 @@ class Base_Object {
         
         $data = $this->db->fetchRow($sql);
 
-        $this->setData($data);
+        if (!empty($data)) {
+            $this->setData($data);
+            $this->fetched = 1;
+        }
     }
     
     /**
@@ -182,7 +191,13 @@ class Base_Object {
         $cols = implode("`, `", $this->fields);
         $sql = "select `$cols` from `{$this->dbname}`.`{$this->table}` where $where limit 1";
         $data = $this->db->fetchRow($sql);
-        $this->setData($data);
+        
+        if (!empty($data)) {
+            $this->setData($data);
+            $this->fetched = 1;
+            return true;
+        }
+        return false;
     }
     
     /**

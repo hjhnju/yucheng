@@ -20,7 +20,7 @@ define('common/header', function (require) {
         }).mouseleave(function () {
             timer = setTimeout(function () {
                 $('.attention-me').children('.xinlang-erweima').removeClass('current');
-            }, 100);
+            }, 0);
         });
     }
     function footer() {
@@ -36,7 +36,7 @@ define('common/header', function (require) {
         }).mouseleave(function () {
             timer = setTimeout(function () {
                 $('.footer-site-me-xinlang').children('.xinlang-erweima').removeClass('current');
-            }, 100);
+            }, 0);
         });
     }
     return { init: init };

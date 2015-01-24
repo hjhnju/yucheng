@@ -1,7 +1,7 @@
 <?php
 /**
  * 资金记录 列表类
- * @author 
+ * @author lilu
  */
 class Finance_List_Record extends Base_List {
     /**
@@ -20,7 +20,7 @@ class Finance_List_Record extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'orderId', 'userId', 'freezeOrdId', 'freezeTrxId', 'type', 'amount', 'balance', 'total', 'comment', 'create_time', 'update_time', 'ip');
+    protected $fields = array('id', 'orderId', 'orderDate', 'userId', 'type', 'amount', 'balance', 'total', 'comment', 'create_time', 'update_time', 'ip');
 
     /**
      * 整数类型的字段
@@ -29,9 +29,8 @@ class Finance_List_Record extends Base_List {
     protected $intProps = array(
         'id'          => 1,
         'orderId'     => 1,
+        'orderDate'   => 1,
         'userId'      => 1,
-        'freezeOrdId' => 1,
-        'freezeTrxId' => 1,
         'type'        => 1,
         'create_time' => 1,
         'update_time' => 1,

@@ -91,7 +91,6 @@ class RegistApiController extends Base_Controller_Api{
     */
     public function checkInviterAction(){
         $strInviter = trim($_REQUEST['inviter']);
-
         $logic   = new User_Logic_Regist();
         $objRet = $logic->checkInviter($strInviter);
         if(User_RetCode::SUCCESS !== $objRet->status){
@@ -123,25 +122,13 @@ class RegistApiController extends Base_Controller_Api{
         $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
         $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
 
-        //各字段再验证过一遍
-        $logic   = new User_Logic_Regist();
-        $retCode = $logic->checkName($strName);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
-        }
-
-        $retCode = $logic->checkPhone($strPhone);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));     
-        }
-
         $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
         $ret = true;//for test
         if(!$ret){
             return $this->ajaxError(User_RetCode::VERICODE_WRONG,
                 User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
         }
-        
+        $logic = new User_Logic_Regist();
         $objRet = $logic->checkInviter($strInviter);
         if(User_RetCode::SUCCESS !== $objRet->status){
             return $this->ajaxError($objRet->status, $objRet->statusInfo); 
@@ -149,11 +136,11 @@ class RegistApiController extends Base_Controller_Api{
         $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : false;
         
         //进行注册
-        $userid  = $logic->regist($strName, $strPasswd, $strPhone);
-        if(empty($userid)){  
-            return $this->ajaxError(User_RetCode::REGIST_FAIL,
-                User_RetCode::getMsg(User_RetCode::REGIST_FAIL));   
+        $objRet  = $logic->regist('priv', $strName, $strPasswd, $strPhone);
+        if(User_RetCode::SUCCESS !== $objRet->status){
+            return $this->ajaxError($objRet->status, $objRet->statusInfo); 
         }
+        $userid = $objRet->data['userid'];
 
         //登记邀请人
         Base_Log::debug(array('userid'=>$userid, 'inviterid'=>$inviterid));
@@ -184,31 +171,37 @@ class RegistApiController extends Base_Controller_Api{
                 ));
             }
         }
-       
+        $objUser = new User_Object($userid);
+        $logic   = new User_Logic_Login();
+        $logic->setLogin($objUser);
         Base_Log::notice($_REQUEST);
         return $this->ajaxJump('/user/open');
     }
     
-    /**
-     * 忘记密码后重置密码接口
+    /** 
+     * 忘记密码重置密码接口
+     * @param $user, 用户名
+     * @param $phone, 手机号
+     * @param $vericode,手机验证码
+     * @param $passwd,新密码
+     * @return json
      */
     public function modifypwdAction(){
-        $strName     = trim($_REQUEST['name']);
+        $strName     = trim($_REQUEST['user']);
         $strPasswd   = trim($_REQUEST['passwd']);
         $strPhone    = trim($_REQUEST['phone']);
-        //$strType     = trim($_REQUEST['type']);
+        $strType     = trim($_REQUEST['type']);
         $strVericode = trim($_REQUEST['vericode']);
-        $ret = User_Api::checkSmscode($strPhone, $strVericode, 'setpwd');
-        $ret = true;   //for test
+        $ret = User_Api::checkSmscode($strPhone, $strVericode, $strType);
         if(!$ret){
-            return $this->ajaxError(User_RetCode::VERICODE_WRONG,
+            $this->ajaxError(User_RetCode::VERICODE_WRONG,
                     User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
         }
         $logic   = new User_Logic_Regist();
         $ret = $logic->modifyPwd($strName,$strPhone,$strPasswd);
         if(User_RetCode::SUCCESS === $ret){
-            return $this->ajax();
+            return $this->ajaxJump('/user/login');
         }
-        return $this->ajaxError($ret,User_RetCode::getMsg($ret));
+        $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }
 }

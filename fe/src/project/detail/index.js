@@ -21,6 +21,10 @@ define(function (require) {
     var investTender = new Remoter('INVEST_DETAIL_CONFIRM_ADD');
     var pager;
 
+    var htmlContainer;
+
+    var Error = $('#detail-error-span');
+
     var model = {};
 
     /**
@@ -28,6 +32,8 @@ define(function (require) {
      * @param {string} id
      */
     function init(initData) {
+        htmlContainer = $('#toulist');
+
         header.init();
         $.extend(model, initData);
 
@@ -38,6 +44,7 @@ define(function (require) {
 
         etpl.compile(tpl);
         bindEvent();
+        htmlContainer.html(etpl.render('Loading'));
         start.remote({
             page: 1,
             id: model.id
@@ -45,14 +52,14 @@ define(function (require) {
 
         start.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+                Error.parent().addClass('show');
+                Error.html(data.statusInfo);
             }
             else {
-                var container = $('#toulist');
 
                 if (!data.list.length) {
                     $('#page').html('');
-                    container.html(etpl.render('Error', {
+                    htmlContainer.html(etpl.render('Error', {
                         msg: '当前没有数据哟'
                     }));
                     return;
@@ -80,7 +87,7 @@ define(function (require) {
                     tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD hh:mm:ss');
                 }
 
-                container.html(etpl.render('list', {
+                htmlContainer.html(etpl.render('list', {
                     list:data.list
                 }));
             }
@@ -108,6 +115,11 @@ define(function (require) {
         // 全部投资
         $('.confirm-all').click(function () {
             $('.right-top-ipt-input').val(Math.min(model.userAmount, model.amountRest));
+        });
+
+        // 点差消失error
+        $('.detail-error-cha').click(function () {
+            $(this).parent().remove();
         });
 
         // 确定投资

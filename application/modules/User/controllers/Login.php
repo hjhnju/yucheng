@@ -16,9 +16,19 @@ class LoginController extends Base_Controller_Page{
      * 状态返回0表示登录成功
      */    
     public function indexAction(){
-        if(!empty($_SERVER['HTTP_REFERER'])){
-            Yaf_Session::getInstance()->set(User_Keys::LOGIN_REFER,$_SERVER['HTTP_REFERER']);
+        $logic   = new User_Logic_Login();
+        $userid = $logic->checkLogin();
+        if($userid){
+            $this->redirect('/account/overview');
         }
+        $logic = new User_Logic_Login();
+        $u = isset($_REQUEST['u'])?trim($_REQUEST['u']):null;
+        if(!empty($u)){
+            $strRedirect = $u;
+        }else{
+            $strRedirect = $logic->loginRedirect($_SERVER['HTTP_REFERER']);
+        }        
+        Yaf_Session::getInstance()->set(User_Keys::LOGIN_REFER,$strRedirect);
         $intFails = Yaf_Session::getInstance()->get(User_Keys::getFailTimesKey());
         if($intFails >= 3) {
             $this->getView()->assign('url',$this->webroot . '/user/imagecode/getimage?type=login');

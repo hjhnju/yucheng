@@ -32,14 +32,30 @@ class User_Api{
      * User/Object.php封装了User_Object_Login, User_Object_Info, User_Object_Third实例
      */
     public static function getUserObject($userid){
+        $userid  = intval($userid);
         $objUser = null;
-        if(!empty($userid)){
+        if($userid > 0){
             $objUser = new User_Object($userid);
         }
         Base_Log::notice(array(
             'userid' => $userid,
         ));
         return $objUser;
+    }
+
+    /**
+     * 获取企业用户列表
+     * @param   $usertype 用户类型
+     * @param   $list 用户列表
+     */
+    public static function getCorpUsers($page = 1, $pagesize = 10){
+        $logic = new User_Logic_Query();
+        $list  = $logic->queryCorpUsers($page, $pagesize);
+        Base_Log::notice(array(
+            'page'     => $list['page'],
+            'pagesize' => $list['pagesize'],
+        ));
+        return $list['list'];
     }
     
     /**
@@ -63,10 +79,10 @@ class User_Api{
      * @return boolean
      */
     public static function setEmail($uid,$strEmail){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->email = $strEmail;
-        $ret            = $objInfo->save();
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('userid'=>$uid));
+        $objLogin->email = $strEmail;
+        $ret            = $objLogin->save();
         return $ret;
     }
     
@@ -77,10 +93,10 @@ class User_Api{
      * @return boolean
      */
     public static function setPhone($uid,$strPhone){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->phone = $strPhone;
-        $ret            = $objInfo->save();
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('userid'=>$uid));
+        $objLogin->phone = $strPhone;
+        $ret            = $objLogin->save();
         return $ret;
     }
     
@@ -106,13 +122,13 @@ class User_Api{
      * @return int
      */
     public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
-        if(empty($objInfo->userid)){
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
+        if(empty($objLogin->userid)){
             return User_RetCode::ORIGIN_PASSWD_WRONG;
         }
-        $objInfo->passwd = md5($strPasswdNew);
-        $ret = $objInfo->save();
+        $objLogin->passwd = md5($strPasswdNew);
+        $ret = $objLogin->save();
         if(!$ret) {
             return User_RetCode::SAVE_PASSWD_WRONG;
         }
@@ -121,15 +137,14 @@ class User_Api{
  
     /**
      * 设置用户的汇付id
-     * @param unknown $uid
-     * @param unknown $strHuifuid
+     * @param int $uid
+     * @param string $strHuifuid
      * @return boolean
      */
-    public static function setHuifuId($uid,$strHuifuid){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->huifuid = $strHuifuid;
-        $ret = $objInfo->save();
+    public static function setHuifuId($userid, $strHuifuid){
+        $objUser = new User_Object($userid);
+        $objUser->huifuid = $strHuifuid;
+        $ret = $objUser->save();
         return $ret;
     }
     
@@ -140,7 +155,7 @@ class User_Api{
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
         $arrArgs  = array($srandNum, self::LAST_TIME);
         $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-        $bResult  = Base_Sms::getInstance()->send($strPhone, $tplid, $arrArgs);
+        $bResult  = Base_Sms::getInstance()->send($strPhone, $tplid[1], $arrArgs);
         if(!empty($bResult)){
             Base_Redis::getInstance()->setex(User_Keys::getSmsCodeKey($strPhone, $strType),
                 60*(self::LAST_TIME), $srandNum);
@@ -166,13 +181,54 @@ class User_Api{
      * @param $strType:类型
      */
     public static function checkImageCode($strImageCode, $strType){
-        $logic = new User_Logic_ImageCode();
-        $bolRet= $logic->checkCode($strType, $strImageCode);
+        $bolRet= User_Logic_ImageCode::checkCode($strType, $strImageCode);
         Base_Log::notice(array(
             'bolRet' => $bolRet,
             'code'=>$strImageCode, 
             'type' => $strType
         ));
         return $bolRet;
+    }
+    
+    /**
+     * 返回用户绑定第三方账号状态,0表示未绑定，1，2，3分别表示绑定QQ、微博、微信
+     * @param  $userid
+     * @return array('type'=>1,'nickname'=>'xxx');
+     */
+    public static function checkBind($userid){
+        $third = new User_Object_Third();
+        $ret = $third->fetch(array('userid'=>intval($userid)));
+        if($ret){
+            return array('type'=>$third->authtype,'nickname'=>$third->nickname);
+        }
+        return array('type'=>0,'nickname'=>'');
+    }
+    
+    /**
+     * 删除用户的第三方绑定
+     * @param  $userid
+     * @param int $type
+     * @return boolean
+     */
+    public static function delBind($userid,$type){
+        $third = new User_Object_Third();
+        $third->fetch(array('userid'=>intval($userid),'authtype'=>$type));
+        $ret = $third->erase();
+        return $ret;
+    }
+    
+    /**
+     * 后台添加用户
+     * @param string $strUserType 'priv' || 'corp'
+     * @param string $strUserName
+     * @param string $strPasswd
+     * @param string $strPhone
+     * @param string $strInviter
+     */
+    public static function regist($strUserType, $strUserName, $strPasswd, $strPhone, $strInviter=''){
+        $logic  = new User_Logic_Regist();
+        $objRet = $logic->regist($strUserType, $strUserName, $strPasswd, $strPhone, $strInviter);
+        Base_Log::notice(array('status'=>$objRet->status));
+        return $objRet->format();
     }
 }

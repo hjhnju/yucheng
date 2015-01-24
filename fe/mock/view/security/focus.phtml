@@ -1,0 +1,69 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/security/focus/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['security/focus/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="insurance">
+    <div class="insurance-type">
+        <a class="insurance-type-box low" href="/mock/entry/security/profit.php">
+            低门槛高收益
+            <div class="insurance-banner-triangle low-color"></div>
+        </a>
+        <a class="insurance-type-box allposition" href="/mock/entry/security/index.php">
+            全方位投资保障
+            <div class="insurance-banner-triangle allposition-color"></div>
+        </a>
+        <a class="insurance-type-box teach  current" href="">
+            专注教育行业
+            <div class="insurance-banner-triangle teach-color"></div>
+        </a>
+    </div>
+    <div class="insurance-banner teach">
+
+    </div>
+    <div class="container">
+        <div class="teach-top">
+            <div class="teach-top-left"></div>
+            <div class="teach-top-right">
+                <div class="teach-top-right-icon fengxian"></div>
+                <div class="teach-top-right-title">教育行业风险评估模型</div>
+                <div class="teach-top-right-text">平台建立了严密的教育行业风险评估模型。针对每一个项目，我们均结合我们尽职调查得到的各项指标进行综合测算并对学校进行相应的级别评估，针对相应级别设立严格标准，低于我们最低评级的学校将不予核批借款。</div>
+            </div>
+        </div>
+    </div>
+    <div class="teach-colorgray-box">
+        <div class="container">
+            <div class="teach-bottom">
+                <div class="teach-bottom-title">【深挖教育行业特性】</div>
+                <div class="teach-bottom-main">
+                    <div class="teach-bottom-main-box box-first">
+                        <div class="teach-top-right-icon lianghao"></div>
+                        <div class="teach-top-right-title">教育行业风险评估模型</div>
+                        <div class="teach-top-right-text">平台建立了严密的教育行业风险评估模型。针对每一个项目，我们均结合我们尽职调查得到的各项指标进行综合测算并对学校进行相应的级别评估，针对相应级别设立严格标准，低于我们最低评级的学校将不予核批借款。</div>
+                    </div>
+                    <div class="teach-bottom-main-box box-first">
+                        <div class="teach-top-right-icon qiangda"></div>
+                        <div class="teach-top-right-title">强大的社会效应</div>
+                        <div class="teach-top-right-text">学校作为育人的场所，具有很强的地域辐射效应和社会公众效应。中国教育改革尚在进行，您的每一笔投资都将见证中国的教育改革历程。</div>
+                    </div>
+                    <div class="teach-bottom-main-box box-first">
+                        <div class="teach-top-right-icon chengshu"></div>
+                        <div class="teach-top-right-title">成熟的规模效应</div>
+                        <div class="teach-top-right-text">学校达到一定的人数规模后即进入稳定运行状态，其各项收入、支出均保持稳定，不易受市场风险、经济形势变化影响，具有长期持续的显著特点，是P2P借款投资的最佳对象。 您的每一笔投资都将分享学校稳定发展的收益。m</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%/block%}

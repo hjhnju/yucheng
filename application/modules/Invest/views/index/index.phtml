@@ -20,7 +20,7 @@
 <div class="toulist">
     <div class="container">
         <div class="toulist-top">
-            <div class="toulist-top-title">我来投资<span>&gt;</span>投资列表</div>
+            <div class="toulist-top-title"><a href="{%$webroot%}/invest" class="top-title-link">我来投资</a><span>&gt;</span>投资列表</div>
             <div class="toulist-top-box">
                 <div class="toulist-box-class" id="type_id">
                     <span class="toulist-box-class-name">标的类型：</span>
@@ -57,29 +57,25 @@
                     <div class="investlist-box-title-name jindu">进度</div>
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
-                <div id="invest-main">
+                <div id="invest-main" class="invest-main">
                     <div class="investlist-box-title">
                         {%foreach $data.list as $key => $item%}
-                        <div class="investlist-box-title-name name">
-                            <span class="name-shi">实</span>
+                        <div class="investlist-box-title-name name text-align-name">
+                            <span class="name-shi">
+                                {%if $item.type_id == 1%}实
+                                {%else if $item.type_id == 2%}信
+                                {%else%}机
+                                {%/if%}
+                            </span>
                             <div class="school">
                                 <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
                             </div>
+                            {%if $item.fresh == 1%}
+                            <span class="school-new">新手专享</span>
+                            {%/if%}
                         </div>
                         <div class="investlist-box-title-name grade">
-                            {%if $item.level == 0.5%}
-                            <span class="grade-star half"></span><span class="grade-star none"></span><span class="grade-star none"></span>
-                            {%else if $item.level == 1%}
-                            <span class="grade-star all"></span><span class="grade-star none"></span><span class="grade-star none"></span>
-                            {%else if $item.level == 1.5%}
-                            <span class="grade-star all"></span><span class="grade-star half"></span><span class="grade-star none"></span>
-                            {%else if $item.level == 2%}
-                            <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star none"></span>
-                            {%else if $item.level == 2.5%}
-                            <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star half"></span>
-                            {%else%}
-                            <span class="grade-star all"></span><span class="grade-star all"></span><span class="grade-star all"></span>
-                            {%/if%}
+                            <span class="grade-star level-{%$item.level_name%}"></span>
                         </div>
                         <div class="investlist-box-title-name lilv">
                             <span class="lilv-number">{%$item.interest%}</span>

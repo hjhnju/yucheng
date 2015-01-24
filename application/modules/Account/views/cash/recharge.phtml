@@ -18,48 +18,48 @@
         {%include file='../../../views/common/nav.phtml' current="3"%}
         <div class="finish-main">
             <div class="finish-main-title">充值
-                <a class="return" href="###">返回</a>
+                <a class="return" href="/account/cash">返回</a>
             </div>
             <div class="extract topup">
-                <div class="topup-main">
+                <form method="post" action="/account/cash/recharge" class="topup-main" id="topup-form">
                     <div class="topup-main-select">
                         <div class="topup-main-select-title">选择充值网银</div>
                         <div class="topup-select-content">
                             <div class="topup-select-con-box current zhaoshang">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" checked="true" data-value="1" />
+                                <input type="radio" name="id" class="topup-select-ipt" checked value="CMB" />
                             </div>
                             <div class="topup-select-con-box gongshang">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="2"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="ICBC"/>
                             </div>
                             <div class="topup-select-con-box youzheng">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="3"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="PSBC"/>
                             </div>
                             <div class="topup-select-con-box minsheng">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="4"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="CMBC"/>
                             </div>
                             <div class="topup-select-con-box jianshe">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="5"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="CCB"/>
                             </div>
                             <div class="topup-select-con-box zhongguo">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="6"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="BOC"/>
                             </div>
                             <div class="topup-select-con-box pufa">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="7"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="SPDB"/>
                             </div>
                             <div class="topup-select-con-box xingye">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="8"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="CIB"/>
                             </div>
                             <div class="topup-select-con-box nongye">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="9"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="ABC"/>
                             </div>
                             <div class="topup-select-con-box jiaotong">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="10"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="BOCOM"/>
                             </div>
                             <div class="topup-select-con-box guangda">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="11"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="CEB"/>
                             </div>
                             <div class="topup-select-con-box shanghai">
-                                <input type="radio" name="topup-ipt" class="topup-select-ipt" data-value="12"/>
+                                <input type="radio" name="id" class="topup-select-ipt" value="BOS"/>
                             </div>
                         </div>
                         <div class="topup-select-prompt">
@@ -73,8 +73,8 @@
                                         <td>备注</td>
                                     </tr>
                                     <tr>
-                                        <td>500</td>
-                                        <td>500</td>
+                                        <td id="map-one">500</td>
+                                        <td id="map-day">500</td>
                                         <td>开通大众版网上银行</td>
                                         <td rowspan="2">开通专业版网上银行</td>
                                     </tr>
@@ -91,7 +91,7 @@
                             <div class="topop-money-box">
                                 <div class="topop-money-box-text">输入充值金额</div>
                                 <div class="topop-money-box-right">
-                                    <input class="topup-money-box-ipt" type="text" id="box-ipt" />
+                                    <input name="value" class="topup-money-box-ipt" type="text" id="box-ipt" />
                                 </div>
                                 <div class="topup-money-box-error" id="topup-error"></div>
                             </div>
@@ -113,7 +113,7 @@
                         <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
                         <div class="extract-main-bottom-text">1.身份认证、账户托管开通、提现银行卡均设置成功后，才能进行提现操作</div>
                     </div>
-                </div>
+                </form>
 
             </div>
         </div>

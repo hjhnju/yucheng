@@ -2,7 +2,7 @@
 /**
  * 投标
  */
-class TenderController extends Base_Controller_Response {
+class TenderController extends Base_Controller_Api {
     
     /**
      * 需要验证的参数
@@ -16,8 +16,8 @@ class TenderController extends Base_Controller_Response {
 	public function indexAction() {
 	    //@TODO fortest
 	    $_POST = array(
-	        'id' => 1,
-	        'amount' => 100,
+	        'id' => 3,
+	        'amount' => 200,
 	    );
 	    if (!$this->checkParam($this->param, $_POST)) {
 	        return $this->outputError(Base_RetCode::PARAM_ERROR);
@@ -25,9 +25,8 @@ class TenderController extends Base_Controller_Response {
 	    
 	    $loan_id = intval($_POST['id']);
 	    $amount = intval($_POST['amount']);
-	    $uid = $this->getUserId();
-
-	    // 检查是否允许投标
+	    $uid = $this->userid;
+        // 检查是否允许投标
 	    $logic = new Invest_Logic_Invest();
 	    $allowed = $logic->allowInvest($uid, $loan_id);
 	    if (!$allowed) {
@@ -39,5 +38,6 @@ class TenderController extends Base_Controller_Response {
 	    if ($url !== false) {
 	        return $this->ajax(array('url'=> $url), '', Base_RetCode::NEED_REDIRECT);
 	    }
+        return $this->ajaxError();
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * 支付订单
- * @author 
+ * @author lilu
  */
 class Finance_Object_Order extends Base_Object {
     /**
@@ -26,7 +26,7 @@ class Finance_Object_Order extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('orderId', 'userId', 'freezeOrdId', 'freezeTrxId', 'type', 'amount', 'status', 'create_time', 'update_time', 'comment');
+    protected $fields = array('orderId', 'orderDate', 'userId', 'type', 'amount', 'status', 'create_time', 'update_time', 'comment');
 
     /**
      * 字段与属性隐射关系
@@ -34,9 +34,8 @@ class Finance_Object_Order extends Base_Object {
      */
     public $properties = array(
         'orderId'     => 'orderId',
+        'orderDate'   => 'orderDate',
         'userId'      => 'userId',
-        'freezeOrdId' => 'freezeOrdId',
-        'freezeTrxId' => 'freezeTrxId',
         'type'        => 'type',
         'amount'      => 'amount',
         'status'      => 'status',
@@ -51,9 +50,8 @@ class Finance_Object_Order extends Base_Object {
      */
     protected $intProps = array(
         'orderId'     => 1,
+        'orderDate'   => 1,
         'userId'      => 1,
-        'freezeOrdId' => 1,
-        'freezeTrxId' => 1,
         'type'        => 1,
         'status'      => 1,
         'create_time' => 1,
@@ -75,22 +73,16 @@ class Finance_Object_Order extends Base_Object {
     public $orderId;
 
     /**
+     * 订单日期
+     * @var integer
+     */
+    public $orderDate;
+
+    /**
      * 
      * @var integer
      */
     public $userId;
-
-    /**
-     * 
-     * @var integer
-     */
-    public $freezeOrdId;
-
-    /**
-     * 
-     * @var integer
-     */
-    public $freezeTrxId;
 
     /**
      * 支付类型

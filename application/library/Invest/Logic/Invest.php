@@ -34,18 +34,38 @@ class Invest_Logic_Invest {
         }
         $max = $this->getUserCanInvest($uid, $loan_id, $amount);
         if ($max < self::MIN_INVEST) {
+            Base_Log::notice('max smaller then min invest :' . $max);
             return false;
         }
         
         $loan = Loan_Api::getLoanInfo($loan_id);
         if ($loan['status'] != 2) {
+            Base_Log::notice('loan status is finished');
             return false; //投标已结束
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        //$url = Finance_Api::initiativeTender($transAmt, $usrCustId, $maxTenderRate);
-        $url = '/invest/confirm';
+        $web = Base_Config::getConfig('web');
+        $retUrl = $web->root . '/invest/confirm';
+        $max = $this->formatNumber($max);
+        $detail = array(
+            array(
+                "BorrowerUserId" => $loan['user_id'],
+                "BorrowerAmt" => $max,
+                "BorrowerRate" => $loan['interest'] / 100,
+            ),
+        );
+        $url = Finance_Api::initiativeTender($loan_id, $max, $uid, $detail, $retUrl);
         return $url;
+    }
+    
+    /**
+     * 格式化数字为金额
+     * @param number $num
+     * @return string
+     */
+    private function formatNumber($num) {
+        return sprintf('%.2f', $num);
     }
     
     /**
@@ -130,7 +150,7 @@ class Invest_Logic_Invest {
      * @return number
      */
     public function getUserAmount($uid) {
-        return 1000;
+        return Finance_Api::getUserBalance($uid);
     }
     
     /**
@@ -191,6 +211,7 @@ class Invest_Logic_Invest {
         $user_amount = $this->getUserAmount($uid);
         $amount = min($amount, $user_amount);
         if ($amount < self::MIN_INVEST) {
+            Base_Log::notice('amount smaller then min invest');
             return 0;
         }
         
@@ -200,12 +221,14 @@ class Invest_Logic_Invest {
         // $can = $user_amount = 150
         // $amount = 120 则只允许 $can = 100;
         //最后需要预留100元
-        if (($rest - $can) < self::MIN_INVEST) {
+        $loanRest = $rest - $can;
+        if (($loanRest > 0) && ($loanRest < self::MIN_INVEST)) {
             $can -= self::MIN_INVEST;
         }
         
         //如果本次投标小于100元，则不允许投资
         if ($can < self::MIN_INVEST) {
+            Base_Log::notice('can smaller then min invest');
             $can = 0;
         }
         

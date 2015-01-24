@@ -28,83 +28,90 @@
 <div class="details">
     <div class="container">
         <div class="detail-left">
-            <div class="detail-left-title">
+            <div class="detail-left-title title-icon">
                 <a href="###" class="left-title-link">我来投资</a>
-                <span class="left-title-greater">></span>
+                <span class="left-title-greater">&gt;</span>
                 <a href="###" class="left-title-link">项目列表</a>
-                <span class="left-title-greater">></span>
-                <span class="left-title-link">项目详情</span>
+                <span class="left-title-greater">&gt;</span>
+                <span class="left-title-link-span">项目详情</span>
+            </div>
+            <div class="detail-error">
+                <a class="detail-error-cha"></a>
+                <span id="detail-error-span"></span>
             </div>
             <div class="project">
-                <div class="project-title">
-                    <div class="project-title-name">{%$title%}</div>
-                    <div class="project-title-number">
-                        <span>借款编号：</span>
-                        <span>{%$id%}</span>
+                <div class="project-box">
+                    <div class="project-title">
+                        <div class="project-title-name">{%$title%}</div>
+                        <div class="project-title-number">
+                            <span>借款编号：</span>
+                            <span>{%$id%}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="project-gaishu">
-                    <div class="project-gaishu-top">
-                        <div class="gaisu-top-rental">
-                            <div class="gaishu-top-rental-icon rental">借款总额</div>
-                            <div class="gaishu-top-rental-number">
-                                <span>￥</span>
-                                <span class="rental-number-big">{%$amount%}</span>
+                    <div class="project-gaishu">
+                        <div class="project-gaishu-top">
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon rental">借款总额</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span>￥</span>
+                                    <span class="rental-number-big">{%$amount%}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="gaisu-top-rental">
-                            <div class="gaishu-top-rental-icon lilv">借款年利率</div>
-                            <div class="gaishu-top-rental-number">
-                                <span class="rental-number-big">{%$interest%}</span>
-                                <span>.00%</span>
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon lilv">借款年利率</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span class="rental-number-big">{%$interest%}</span>
+                                    <span>.00%</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="gaisu-top-rental">
-                            <div class="gaishu-top-rental-icon time">借款期限</div>
-                            <div class="gaishu-top-rental-number">
-                                <span class="rental-number-big">{%$duration%}</span>
-                                <span>个月</span>
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon time">借款期限</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span class="rental-number-big">{%$duration%}</span>
+                                    <span>个月</span>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
-                    <div class="project-gaishu-bottom">
-                        <div class="gaishu-bottom-guard">
-                            <div class="gaishu-guard-baozhang">
-                                <span class="span">保障方式：</span>
-                                <div class="baozhang-box">
-                                    {%foreach $safemode as $key => $item%}
-                                    <span class="baozhang-type benxi">{%$item%}</span>
-                                    {%/foreach%}
+                        </div>
+                        <div class="project-gaishu-bottom">
+                            <div class="gaishu-bottom-guard">
+                                <div class="gaishu-guard-baozhang">
+                                    <span class="span">保障方式：</span>
+                                    <div class="baozhang-box">
+                                        {%foreach $safemode as $key => $item%}
+                                        <span class="baozhang-type benxi">{%$item%}</span>
+                                        {%/foreach%}
+
+                                    </div>
 
                                 </div>
-
-                            </div>
-                            <div class="gaishu-guard-baozhang">
-                                <span>还款方式：</span>
-                                <span class="baozhang-return">{%$refund_typename%}</span>
-                            </div>
-                        </div>
-                        <div class="gaishu-bottom-jindu">
-                            <div class="jindu-top">
-                                <span class="jindu-top-text">筹款进度：</span>
-                                <div class="jindu-top-tiao">
-                                    <div class="jindu-tio-tiao-within" style="width: {%$percent%}%;"></div>
+                                <div class="gaishu-guard-baozhang">
+                                    <span>还款方式：</span>
+                                    <span class="baozhang-return">{%$refund_typename%}</span>
                                 </div>
+                            </div>
+                            <div class="gaishu-bottom-jindu">
+                                <div class="jindu-top">
+                                    <span class="jindu-top-text">筹款进度：</span>
+                                    <div class="jindu-top-tiao">
+                                        <div class="jindu-tio-tiao-within" style="width: {%$percent%}%;"></div>
+                                    </div>
                                     <span class="jindu-top-bai">
                                         <span class="jindu-top-bai-number">{%$percent%}</span>%
                                     </span>
-                            </div>
-                            <div class="jindu-btm">
-                                已投标：<span>{%$invest_cnt%}人</span>
+                                </div>
+                                <div class="jindu-btm">
+                                    已投标：<span>{%$invest_cnt%}人</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="project-time">
+                        <span class="project-time-start">开始时间：{%$create_time|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
+                        <span class="project-time-start">截止日期：{%$deadline|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
+                    </div>
                 </div>
-                <div class="project-time">
-                    <span class="project-time-start">开始时间：{%$create_time|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
-                    <span class="project-time-start">截止日期：{%$deadline|date_format:'%Y-%m-%d %H:%M:%S'%}</span>
-                </div>
+
                 <div class="project-main project">
                     <div class="project-main-title">
                         <div class="main-title-box showproject current">项目详情</div>
@@ -234,15 +241,22 @@
                                 <div class="renzheng-title">企业认证</div>
                                 <div class="renzheng-box-main">
                                     {%foreach $audit['1'] as $key => $item%}
-                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    <div class="renzheng-box-main-box">
+                                        <div class="renzheng-box-main-box-pic {%$mapType[$item.name]%}"></div>
+                                        <div class="renzheng-box-main-box-name">{%$item.name%}</div>
+                                    </div>
                                     {%/foreach%}
+
                                 </div>
                             </div>
                             <div class="renzheng-box">
                                 <div class="renzheng-title">个人认证</div>
                                 <div class="renzheng-box-main">
                                     {%foreach $audit['2'] as $key => $item%}
-                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    <div class="renzheng-box-main-box">
+                                        <div class="renzheng-box-main-box-pic {%$mapType[$item.name]%}"></div>
+                                        <div class="renzheng-box-main-box-name">{%$item.name%}</div>
+                                    </div>
                                     {%/foreach%}
 
                                 </div>

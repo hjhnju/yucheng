@@ -34,6 +34,7 @@ define(function (require) {
                 var parent = $(this).parent();
 
                 $(this).next().addClass('hidden');
+                $('.error').html('');
 
             },
             blur: function () {
@@ -67,8 +68,8 @@ define(function (require) {
 
             emailConfirm.remote({
                 email: emailVal,
-                smscode: smscodeVal,
-                type:4
+                vericode: smscodeVal,
+                type: 'checkEmailType'
             });
 
         });
@@ -77,6 +78,7 @@ define(function (require) {
         emailConfirm.on('success', function (data) {
             if(data && data.bizError) {
                 $('.error').html(data.statusInfo);
+                $('#email-img').trigger('click');
             }
             else {
                 var timer;

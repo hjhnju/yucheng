@@ -3,11 +3,11 @@
  * 交易类功能controller层
  * 网银充值
  * 提现
- *
+ * @author lilu
  */
-class TransactionController extends Base_Controller_Api{
+class TransactionController extends Base_Controller_Page{
    
-	private $transLogic;
+   	private $transLogic;
 	private $huifuid;
     public function init(){
         //for test
@@ -28,53 +28,59 @@ class TransactionController extends Base_Controller_Api{
      *
      */ 
     public function netsaveAction(){
-        $userid = $this->userid;
+        $userid  = $this->userid;
         $huifuid = $this->huifuid;	
-        $huifuid =!empty($this->objUser) ? $this->objUser->huifuid : '';    
-        $transAmt = round($_REQUEST['transAmt'],2);
-        $openBankId = $_REQUEST['openBankId'];
-        $gateBusiId = $_REQUEST['gateBusiId'];
-        $dcFlag = $_REQUEST['dcFlag'];
-        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);     
-        //Finance_Api::netSave($userid,$huifuid,$transAmt,$gateBusiId,$openBankId,$dcFlag);
-        //TODO:remove
-        //FOR TEST
-        // Finance_Api::netSave($huifuid,$userid,"20.00","B2C","ICBC","D");
-        
-        $huifuid    = '6000060000696947';
-        $transAmt   = '20.00';
-        $gateBusiId = 'FPAY';
-        $openBankId = 'ICBC';
+        $transAmt   = $_REQUEST['transAmt'];
+        $transAmt = sprintf('%.2f',$transAmt);
+        $openBankId = strval($_REQUEST['openBankId']);
+        $gateBusiId = strval($_REQUEST['gateBusiId']);
+        ///notice
+        //$dcFlag     = strval($_REQUEST['dcFlag']);
+        $transAmt   = sprintf('%.2f',300000);
+        $gateBusiId = 'B2C';
+        $openBankId = 'CIB';
         $dcFlag     = 'D';
-        $transLogic = new Finance_Logic_Transaction();
         Base_Log::notice(array(
+            'userid'     => $userid,
+            'huifuid'    => $huifuid,
             'transAmt'   => $transAmt,
             'gateBusiId' => $gateBusiId,
             'openBankId' => $openBankId,
-            'dcFlag' => $dcFlag,
+            'dcFlag'     => $dcFlag,
         ));
-        $transLogic->netsave($userid, $huifuid, $transAmt, $gateBusiId, $openBankId, $dcFlag);         
+        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);         
    }
 
    /**
     * 提现controller层入口
-    * @param String $transAmt 交易金额(required)
-    * @param String $captcha 验证码(required)
-    * @param String $openAcctId 开户银行帐号(optional)
+    * @param tring $transAmt 交易金额(required)
+    * @param string phone 手机号码////前端还没传给我
+    * @param string $captcha 验证码(required)
+    * @param string $openAcctId 开户银行帐号(optional)
     *
     */
-   public function cashAction(){
-   	   $userid = $this->userid;
-       $transAmt = $_REQUEST['transAmt'];
-       $captcha = $_REQUEST['captcha'];
-       $openAcctId = $__REQUEST['openAcctId'];
-       $transLogic = new Finance_Logic_Transaction();
-       $transLogic->cash($userid,'100.00','4367423378320018938');
-    
-       
-       //1.验证验证码操作
-       //2.调用其他模块lib库得到所需参数
-       //3.调用Logic层方法
-   }
+    public function cashAction(){
+   	    $userid = intval($this->userid);
+   	    $phone = $_REQUEST['phone'];
+        $transAmt = floatval($_REQUEST['transAmt']);
+        $captcha = $_REQUEST['captcha'];
+        //验证验证码
+        $openAcctId = strval($_REQUEST['openAcctId']);
+        $type = 1;////////////////////////////////////////
+/*         $smsRet = User_Api::checkSmscode($phone,$captcha,$type);
+        if(!$smsRet) {
+        	Base_Log::error(array(
+        		'msg'     => '验证码验证失败',
+        		'phone'   => $phone,
+        		'captcha' => $captcha,
+        		'type'    => $type,
+        	));
+        	return ;
+        } */
+        $transAmt = sprintf('%.2f',$transAmt);
+        $transAmt = sprintf('%.2f',20);
+        $openAcctId = '';
+        $this->transLogic->cash($userid,$transAmt,$openAcctId);            
+    }
 
 }

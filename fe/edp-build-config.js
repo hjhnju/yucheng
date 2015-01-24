@@ -35,7 +35,11 @@ exports.getProcessors = function () {
             'src/company/us/index.less',
             'src/loan/loanform/index.less',
             'src/loan/loan/index.less',
-            'src/loan/success/index.less'
+            'src/loan/success/index.less',
+            'src/security/index/index.less',
+            'src/security/profit/index.less',
+            'src/security/focus/index.less',
+            'src/guide/index.less'
 
         ]
     });
@@ -67,7 +71,11 @@ exports.getProcessors = function () {
             'src/company/us/index.less',
             'src/loan/loanform/index.less',
             'src/loan/loan/index.less',
-            'src/loan/success/index.less'
+            'src/loan/success/index.less',
+            'src/security/index/index.less',
+            'src/security/profit/index.less',
+            'src/security/focus/index.less',
+            'src/guide/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
@@ -97,7 +105,11 @@ exports.getProcessors = function () {
             'src/company/infos/index.js',
             'src/loan/loanform/index.js',
             'src/loan/loan/index.js',
-            'src/loan/success/index.js'
+            'src/loan/success/index.js',
+            'src/security/index/index.js',
+            'src/security/profit/index.js',
+            'src/security/focus/index.js',
+            'src/guide/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

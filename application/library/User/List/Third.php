@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户第三方登陆表 列表类
- * @author jiangsongfang
+ * @author hejunhua
  */
 class User_List_Third extends Base_List {
     /**
@@ -32,14 +32,5 @@ class User_List_Third extends Base_List {
         'authtype'    => 1,
         'create_time' => 1,
     );
-
-    /**
-     * 获取数据的对象数组
-     * @return array|User_Object_Third[]
-     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
-     */
-    public function getObjects() {
-        return parent::getObjects('User_Object_Third');
-    }
 
 }

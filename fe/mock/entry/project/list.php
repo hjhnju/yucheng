@@ -15,7 +15,7 @@ $smarty->assign('page', 1);
 $smarty->assign('pagesize', 10);
 $smarty->assign('pageall', 10);
 $smarty->assign('total', 10);
-$smarty->assign('level', 1);
+$smarty->assign('level', 32);
 $smarty->assign('list',
     array(
         0 => array(

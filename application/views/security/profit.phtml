@@ -1,0 +1,48 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/security/profit/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['security/profit/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="insurance">
+    <div class="insurance-type">
+        <a class="insurance-type-box low current" href="">
+            低门槛高收益
+            <div class="insurance-banner-triangle low-color"></div>
+        </a>
+        <a class="insurance-type-box allposition" href="{%$webroot%}/security">
+            全方位投资保障
+            <div class="insurance-banner-triangle allposition-color"></div>
+        </a>
+        <a class="insurance-type-box teach" href="{%$webroot%}/security/focus">
+            专注教育行业
+            <div class="insurance-banner-triangle teach-color"></div>
+        </a>
+    </div>
+    <div class="insurance-banner low-banner">
+
+    </div>
+    <div class="container">
+        <div class="low-main">
+            <div class="low-main-title">在兴教贷投资获得更高的稳定收益</div>
+            <div class="low-main-box">
+                <div class="low-main-box-left">
+                    <div class="low-main-box-left-con shouyi">在兴教贷投资人可以直接对接借款项目,缩短了投资路径,节约中间成本</div>
+                    <div class="low-main-box-left-con chengben">在兴教贷平台消除大型金融机构的高成本,更多收益留给投资者们</div>
+                    <div class="low-main-box-left-con qixian">短期、较小额度的优质借款项目可以承受较高的借款利率</div>
+                </div>
+                <div class="low-main-box-right"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{%/block%}

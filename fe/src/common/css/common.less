@@ -2,6 +2,7 @@
 @import "./color.less";
 @import "../ui/Pager/pager.less";
 @import "./datepicker.less";
+@import "../ui/Dialog/dialog.less";
 
 body {
     margin: 0;
@@ -28,6 +29,11 @@ p {
     position: relative;
     left: 0;
     top: 0;
+    z-index: 1;
+
+    &.z-index {
+        z-index: 15;
+    }
 
     .clearfix;
 }
@@ -45,6 +51,9 @@ p {
     line-height: 34px;
     color: #666666;
     margin-right: 10px;
+    background: url(../img/header_icon.png) 0 11px no-repeat;
+
+    padding-left: 20px;
 }
 .header-left-time {
     display: inline-block;
@@ -60,14 +69,18 @@ p {
     .attention-me {
         display: inline-block;
         width: 20px;
-        height: 20px;
+        height: 16px;
         background: url("../img/header_icon.png") 0 0 no-repeat;
         margin-right: 10px;
         vertical-align: middle;
         position: relative;
 
-        &.xinlang {
+        &.weibo {
             background-position: 0 -50px;
+
+            &:hover {
+                background-position: 0 -299px;
+            }
         }
 
         &.weixin {
@@ -87,20 +100,89 @@ p {
     position: absolute;
     left: -117px;
     top: 27px;
-    //        background-color: #FFFFFF;
-    z-index: 5;
+    z-index: 12;
     border: 1px solid #cccccc;
     display: none;
     background: url(../img/weixin.jpg) 0 0 no-repeat;
+    text-decoration: none;
+    color: #333333;
 
     &.footer-erweima {
         top: -270px;
+    }
+
+    &.footer-tip {
+        top: -64px;
+        left: -62px;
+        display: none;
     }
 
     &.current {
         display: block;
     }
 }
+
+.weibo-tip{
+    background: none;
+    background-color: #ffffff;
+    width: 150px;
+    height: 40px;
+    line-height: 20px;
+    padding: 5px 0;
+    text-align: center;
+    left: -70px;
+    color: #a7a7a7;
+
+    .border-radius(5px);
+
+    .weibo-tip-span {
+        color: blue;
+    }
+
+    .triangle-top {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #cccccc;
+        left: 70px;
+        top: -8px;
+
+        &.footer-erweima-top {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #cccccc;
+            border-bottom: none;
+            top: 258px;
+            left: 116px;
+        }
+    }
+    .triangle-bottom {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #FFFFFF;
+        left: 70px;
+        top: -6px;
+
+        &.footer-erweima-bottom {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #ffffff;
+            top: 258px;
+            border-bottom: none;
+            left: 116px;
+        }
+    }
+
+
+}
+
+
+
 .triangle-top {
     position: absolute;
     width: 0;
@@ -141,16 +223,17 @@ p {
 }
 .header-right {
     float: right;
+    margin-top: 6px;
 }
 .header-right-default {
+//    margin-top: 10px;
 
-    .default-fastlogin {
-        line-height: 34px;
-        color: #666666;
-        margin-right: 20px;
-        text-decoration: none;
-    }
 
+}
+.default-fastlogin {
+    color: #666666;
+    margin-right: 20px;
+    text-decoration: none;
 }
 
 .default-login {
@@ -168,7 +251,6 @@ p {
 }
 
 .header-right-login {
-    margin-top: 10px;
 }
 //header结束
 
@@ -181,10 +263,10 @@ p {
 }
 .logo {
     float: left;
-    width: 200px;
+    width: 280px;
     height: 60px;
     display: block;
-    margin-right: 16px;
+    margin-right: 42px;
 
     img {
         outline: none;
@@ -193,12 +275,12 @@ p {
 }
 .nav-item {
     float: left;
-    margin-top: 24px;
+    margin-top: 26px;
 
     .clearfix;
 }
 .nav-item-list {
-    margin-right: 34px;
+    margin-right: 24px;
     float: left;
 
     &.last {
@@ -282,8 +364,12 @@ p {
     top: 0;
     cursor: pointer;
 
-    &.xinlang {
+    &.weibo {
         background-position: 0 -150px;
+
+        &:hover {
+            background-position: 0 -300px;
+        }
     }
 
     &.weixin {
@@ -293,6 +379,8 @@ p {
             background-position: 0 -250px;
         }
     }
+
+
 }
 .footer-right {
     float: right;
@@ -302,6 +390,66 @@ p {
     color: #b1b1b3;
     padding-left: 40px;
     background: url("../img/footer_phone.png") 0 0 no-repeat;
+}
+
+.footer-tip {
+    background: none;
+    background-color: #ffffff;
+    width: 150px;
+    height: 40px;
+    line-height: 20px;
+    text-align: center;
+    padding: 5px 0;
+    display: block;
+    left: 0;
+    top: 10px;
+    color: #a7a7a7;
+
+
+    .weibo-tip-span {
+        color: blue;
+    }
+
+    .border-radius(5px);
+
+    .triangle-top {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #cccccc;
+        left: 70px;
+        top: -8px;
+
+        &.footer-erweima-top {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #cccccc;
+            border-bottom: none;
+            top: 50px;
+            left: 62px;
+        }
+    }
+    .triangle-bottom {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #FFFFFF;
+        left: 70px;
+        top: -6px;
+
+        &.footer-erweima-bottom {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #ffffff;
+            top: 50px;
+            border-bottom: none;
+            left: 62px;
+        }
+    }
 }
 
 
@@ -345,8 +493,11 @@ p {
     &.name {
         width: 240px;
         text-align: center;
-
         .clearfix;
+        .ellipsis();
+    }
+    &.text-align-name {
+        text-align: left;
     }
 
     &.grade {
@@ -357,22 +508,35 @@ p {
 
         .grade-star {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 100px;
+            height: 64px;
             margin-right: 4px;
-            background: url("../img/star_icon.png") 0 0 no-repeat;
-            line-height: 64px;
+            background: url("../img/grade_icon.png") 0 0 no-repeat;
             float: left;
-            margin-top: 20px;
+            margin-top: 10px;
 
-            &.all {
-                background-position: 0 0;
+            &.level-aaa {
+                background-position: 7px 0;
             }
-            &.none {
-                background-position: 0 -50px;
+
+            &.level-aa {
+                background-position: 7px -100px;
             }
-            &.half {
-                background-position: 0 -100px;
+
+            &.level-a {
+                background-position: 7px -200px;
+            }
+
+            &.level-b {
+                background-position: 7px -300px;
+            }
+
+            &.level-c {
+                background-position: 7px -400px;
+            }
+
+            &.level-d {
+                background-position: 7px -500px;
             }
         }
     }
@@ -440,10 +604,26 @@ p {
 .school {
     text-align: left;
     float: left;
-    width: 154px;
+    width: 130px;
     overflow: hidden;
     color: #323232;
     font-size: 14px;
+    .ellipsis();
+    display: inline-block;
+
+}
+.school-new {
+    float: left;
+    padding: 4px;
+    color: #d5f423;
+    font-size: 12px;
+    background-color: @color-green;
+    display: inline-block;
+
+    .border-radius(3px);
+    height: 14px;
+    line-height: 14px;
+    margin-top: 20px;
 }
 
 
@@ -618,4 +798,18 @@ p {
 }
 .color-red {
     color: @color-red;
+}
+
+#mk-dialog .close {
+    background: url(./img/fix_cha.png) 0 0 no-repeat;
+    width: 30px;
+    height: 30px;
+    top: -15px;
+    right: -15px;
+    font-size: 0;
+    border: 0;
+
+    &:hover {
+        border: 0;
+    }
 }
