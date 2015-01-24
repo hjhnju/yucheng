@@ -1,11 +1,4 @@
-define('zrender/shape/Polygon', [
-    'require',
-    './Base',
-    './util/smoothSpline',
-    './util/smoothBezier',
-    './util/dashedLineTo',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Polygon', function (require) {
     var Base = require('./Base');
     var smoothSpline = require('./util/smoothSpline');
     var smoothBezier = require('./util/smoothBezier');

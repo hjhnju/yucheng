@@ -1,12 +1,4 @@
-define('echarts/util/shape/Icon', [
-    'require',
-    'zrender/tool/util',
-    'zrender/shape/Star',
-    'zrender/shape/Heart',
-    'zrender/shape/Droplet',
-    'zrender/shape/Image',
-    'zrender/shape/Base'
-], function (require) {
+define('echarts/util/shape/Icon', function (require) {
     var zrUtil = require('zrender/tool/util');
     function _iconMark(ctx, style) {
         var x = style.x;

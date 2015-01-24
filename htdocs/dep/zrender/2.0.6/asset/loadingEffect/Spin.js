@@ -1,11 +1,4 @@
-define('zrender/loadingEffect/Spin', [
-    'require',
-    './Base',
-    '../tool/util',
-    '../tool/color',
-    '../tool/area',
-    '../shape/Sector'
-], function (require) {
+define('zrender/loadingEffect/Spin', function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
     var zrColor = require('../tool/color');

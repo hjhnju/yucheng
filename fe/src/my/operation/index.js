@@ -136,6 +136,14 @@ define(function (require) {
                 }));
             }
             else {
+                if (!data.list.length) {
+                    $('.operation-list').html(etpl.render('Error', {
+                        msg: '当前还没有数据哟'
+                    }));
+                    $('#page').html('');
+                    return;
+                }
+
                 pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 

@@ -79,11 +79,20 @@ define(function (require) {
                 });
             }
             else {
+
+                if (!data.list.length) {
+                    $('#test2').html('');
+                    htmlContainer.html(etpl.render('Error', {
+                        msg: '当前还没有数据哟'
+                    }));
+                    return;
+                }
+
                 pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 
-
                 htmlContainer.html(etpl.render('list',{
+
                     list: data.list
                 }));
 

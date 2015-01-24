@@ -10,7 +10,10 @@ define(function (require) {
     var $ = require('jquery');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
-    var recharge = new Remoter('ACCOUNT_CASH_RECHARGE_ADD');
+//    var recharge = new Remoter('ACCOUNT_CASH_RECHARGE_ADD');
+
+    var mapOne = $('#map-one');
+    var mapDay = $('#map-day');
 
     function init() {
         header.init();
@@ -24,7 +27,7 @@ define(function (require) {
             $('.topup-select-con-box').removeClass('current');
             $(this).addClass('current');
 
-            $(this).find('.topup-select-ipt').prop('checked', true);
+            $(this).find('.topup-select-ipt')[0].checked = true;
         });
 
 
@@ -33,7 +36,7 @@ define(function (require) {
         $('#pay').click(function () {
 
             var value = $('#box-ipt').val();
-            var id = $('.topup-select-con-box.current').find('.topup-select-ipt').attr('data-value');
+//            var id = $('.topup-select-con-box.current').find('.topup-select-ipt').attr('data-value');
             var iptvalue = $('.topup-money-box-ipt').val();
             var error = $('#topup-error');
 
@@ -48,18 +51,20 @@ define(function (require) {
             }
 
             error.html('');
-            recharge.remote({
-                id: id,
-                value: value
-            });
+//            recharge.remote({
+//                id: id,
+//                value: value
+//            });
+
+            $('#topup-form')[0].submit();
         });
 
         //rechargeCb
-        recharge.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-        })
+//        recharge.on('success', function (data) {
+//            if(data && data.bizError) {
+//                alert(data.statusInfo);
+//            }
+//        })
 
     }
 
