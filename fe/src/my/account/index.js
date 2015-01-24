@@ -32,7 +32,6 @@ define(function (require) {
                 line.render('all-account-line', data);
             }
         });
-
     }
 
     return {

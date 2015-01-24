@@ -42,7 +42,14 @@
                 <div class="all-box-pay">
                     <div class="all-box-pay-top">可用余额<span>￥{%$avlBal%}</span></div>
                     <div class="all-box-pay-top">冻结金额<span>￥{%$frzBal%}</span></div>
-                    <div class="all-box-pay-top">资产总计<span><a href="###" class="all-pay-help"></a>￥{%$acctBal%}</span></div>
+                    <div class="all-box-pay-top">资产总计<span>
+                        <a class="all-pay-help">
+                            <div class="all-pay-tip">
+                                <span class="all-pay-tip-trangle"></span>
+                                账户总资产 = 可用余额 + 冻结金额 + 待收本金 + 待收收益
+                            </div>
+                        </a>￥{%$acctBal%}</span>
+                    </div>
                     <a href="{%$rechargeurl%}" class="all-box-pay-link">充值</a>
                 </div>
             </div>
