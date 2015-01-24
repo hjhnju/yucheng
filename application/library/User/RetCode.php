@@ -46,6 +46,8 @@ class User_RetCode extends Base_RetCode{
     
     const USER_NAME_OR_PHONE_ERROR  = 1057; //用户名或手机号错误
     
+    const SAVE_PASSWD_WRONG         = 1058; //保存用户密码错误
+    
     /* 消息函数
      * @var array
      */
@@ -71,6 +73,8 @@ class User_RetCode extends Base_RetCode{
         self::GET_OPENID_FAIL          => '获取openid失败',
         self::SIGN_OUT_FIAL            => '登出失败',
         self::USER_NAME_OR_PHONE_ERROR => '用户名或手机号错误',
+        self::SAVE_PASSWD_WRONG        => '保存用户密码错误',
+        self::ORIGIN_PASSWD_WRONG      => '原密码错误',
     );
 
 }
