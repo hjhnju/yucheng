@@ -10,7 +10,7 @@ define(function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var phoneSubmite = new Remoter('EDIT_PHONE_SUBMITE');
-    var phoneSubmite2nd = new Remoter('EDIT_PHONE_SUBMITE');
+    var phoneSubmite2nd = new Remoter('EDIT_PHONE_SUBMITE2ND');
     var getSmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
     var etpl = require('etpl');
     var tpl = require('./phone.tpl');
@@ -146,7 +146,7 @@ define(function (require) {
 
         phoneSubmite2nd.on('success', function (data) {
             if(data && data.bizError) {
-                alert(data.statusInfo);
+                $('.error').html(data.statusInfo);
             }
             else {
                 var value = 8;

@@ -493,8 +493,11 @@ p {
     &.name {
         width: 240px;
         text-align: center;
-
         .clearfix;
+        .ellipsis();
+    }
+    &.text-align-name {
+        text-align: left;
     }
 
     &.grade {
@@ -600,11 +603,27 @@ p {
 }
 .school {
     text-align: left;
-    float: left;
-    width: 154px;
+//    float: left;
+    width: 130px;
     overflow: hidden;
     color: #323232;
     font-size: 14px;
+    .ellipsis();
+    display: inline-block;
+
+}
+.school-new {
+    float: right;
+    padding: 4px;
+    color: #d5f423;
+    font-size: 12px;
+    background-color: @color-green;
+    display: inline-block;
+
+    .border-radius(3px);
+    height: 14px;
+    line-height: 14px;
+    margin-top: 20px;
 }
 
 
