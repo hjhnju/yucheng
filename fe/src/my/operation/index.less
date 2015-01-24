@@ -58,6 +58,38 @@
     height: 20px;
     background: url(../common/img/help.png) center center no-repeat;
     vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+
+    .all-pay-tip {
+        position: absolute;
+        display: none;
+        bottom: 30px;
+        left: -10px;
+        width: 180px;
+        line-height: 24px;
+        font-size: 12px;
+        color: @color-white;
+        .border-radius(3px);
+        padding: 10px;
+        background-color: @color-green;
+    }
+
+    .all-pay-tip-trangle {
+        position: absolute;
+        width: 10px;
+        height: 0;
+        border-style: solid;
+        border-width: 8px;
+        border-color: transparent transparent transparent @color-green;
+        bottom: -8px;
+        left: 18px;
+    }
+
+    &:hover .all-pay-tip {
+        display: block;
+    }
 }
 .operation-right-box {
     float: right;

@@ -1,9 +1,4 @@
-define('zrender/shape/Path', [
-    'require',
-    './Base',
-    './util/PathProxy',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Path', function (require) {
     var Base = require('./Base');
     var PathProxy = require('./util/PathProxy');
     var PathSegment = PathProxy.PathSegment;

@@ -189,8 +189,10 @@ class Invest_Api {
         $list = $logic->getInvestList($page, $pagesize, $filter);
          
         $status = new Invest_Type_InvestStatus();
+        $level  = new Invest_Type_LevelName();
         foreach ($list['list'] as $key => $val) {
             $list['list'][$key]['status_name'] = $status->getTypeName($val['status']);
+            $list['list'][$key]['level_name'] = $level->getTypeName($val['level']);
         }
         return $list;
     }
