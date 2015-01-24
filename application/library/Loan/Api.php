@@ -5,6 +5,7 @@
  *
  */
 class Loan_Api {
+
     /**
      * 生成借款标的还款计划
      * @param integer $lid
