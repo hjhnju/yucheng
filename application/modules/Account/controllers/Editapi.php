@@ -43,7 +43,7 @@ class EditapiController extends Base_Controller_Api {
     	$userId = !empty($this->objUser) ? $this->objUser->userid : 0;
     	$_originPhone = $objUser->phone;
     	$originPhone = isset($_originPhone) ? $_originPhone : '';
-    	$phone = $_REQUEST['phone'];//前端会判空
+    	$phone = $_REQUEST['oldPhone'];//前端会判空
     	$checkRet = $this->checkReg(self::REG_PHONE,$phone);
     	if(!$checkRet) {
     		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
@@ -132,9 +132,8 @@ class EditapiController extends Base_Controller_Api {
     	
         $userid = !empty($this->objUser) ? $this->objUser->userid : 0;
         $oldpwd = isset($_oldpwd) ? $_oldpwd : '';
-    	$newpwd = isset($_newpwd) ? $_newpwd : '';
-    	   	    		
-    	$ret = User_Api::setPasswd($userId,$oldpwd,$newpwd);
+    	$newpwd = isset($_newpwd) ? $_newpwd : ''; 	    		
+    	$ret = User_Api::setPasswd($userid,$oldpwd,$newpwd);
         if($ret == User_RetCode::ORIGIN_PASSWD_WRONG) {
     		$errCode = Account_RetCode::OLDPWD_INPUT_ERROR;//原密码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
