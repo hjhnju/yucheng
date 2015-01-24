@@ -70,7 +70,9 @@
                             <div class="school">
                                 <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
                             </div>
+                            {%if $item.fresh == 1%}
                             <span class="school-new">新手专享</span>
+                            {%/if%}
                         </div>
                         <div class="investlist-box-title-name grade">
                             <span class="grade-star level-{%$item.level_name%}"></span>
