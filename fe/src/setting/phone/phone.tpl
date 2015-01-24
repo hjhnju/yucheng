@@ -40,7 +40,7 @@
         <div class="success-text">修改成功</div>
         <div class="success-box-time">
             <span class="timer-span" id="time-span">8秒后自动跳转至</span>&nbsp;
-            <a class="success-link" href="/account/views/overview/index">我的账户</a>
+            <a class="success-link" href="/account/overview/index">我的账户</a>
         </div>
 
     </div>
