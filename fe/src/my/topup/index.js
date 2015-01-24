@@ -15,6 +15,8 @@ define(function (require) {
     var mapOne = $('#map-one');
     var mapDay = $('#map-day');
 
+
+
     function init() {
         header.init();
         bindEvent();

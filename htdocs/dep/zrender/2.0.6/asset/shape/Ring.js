@@ -1,4 +1,8 @@
-define('zrender/shape/Ring', function (require) {
+define('zrender/shape/Ring', [
+    'require',
+    './Base',
+    '../tool/util'
+], function (require) {
     var Base = require('./Base');
     var Ring = function (options) {
         Base.call(this, options);

@@ -1,4 +1,11 @@
-define('zrender/shape/Sector', function (require) {
+define('zrender/shape/Sector', [
+    'require',
+    '../tool/math',
+    '../tool/computeBoundingBox',
+    '../tool/vector',
+    './Base',
+    '../tool/util'
+], function (require) {
     var math = require('../tool/math');
     var computeBoundingBox = require('../tool/computeBoundingBox');
     var vec2 = require('../tool/vector');

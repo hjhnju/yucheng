@@ -47,9 +47,9 @@
                             <p class="fix-title-text">最高年化收利率</p>
                         </div>
                         <div class="fix-box-main">
-                            <a href="{%$webroot%}/user/login" class="fix-box-main-regist">快速注册</a>
+                            <a href="{%$webroot%}/user/regist" class="fix-box-main-regist">快速注册</a>
                             <div class="fix-box-main-box">
-                                已有账号？<a href="{%$webroot%}/user/regist" class="fix-box-main-box-login">立即登录</a>
+                                已有账号？<a href="{%$webroot%}/user/login" class="fix-box-main-box-login">立即登录</a>
                             </div>
                         </div>
                         {%/if%}
@@ -120,8 +120,9 @@
                     <div class="investlist-box-title-name jindu">进度</div>
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
+                {%foreach $data.list as $key => $item%}
                 <div class="investlist-box-title">
-                    {%foreach $data.list as $key => $item%}
+
                     <div class="investlist-box-title-name name text-align-name">
                         <span class="name-shi">
                             {%if $item.type_id == 1%}实
@@ -167,30 +168,13 @@
                         <span class="status-biding current">{%$item.status_name%}</span>
                         {%/if%}
                     </div>
-                    {%/foreach%}
+
                 </div>
+                {%/foreach%}
             </div>
             <a href="{%$webroot%}/invest" class="investlist-more">查看更多标的></a>
         </div>
     </div>
 </div>
-<div class="bottom">
-    <div class="container">
-        <div class="investlist-title btm-bank-title">合作伙伴</div>
-        <div class="bottom-content">
-            <a href="{%$webroot%}/collaborate" class="bottom-bank zhaoshang"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank gongshang"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank youzheng"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank minsheng"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank jianshe"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank zhongguo"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank pufa"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank xingye"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank nongye"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank jiaotong"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank guangda"></a>
-            <a href="{%$webroot%}/collaborate" class="bottom-bank shanghai"></a>
-        </div>
-    </div>
-</div>
+
 {%/block%}

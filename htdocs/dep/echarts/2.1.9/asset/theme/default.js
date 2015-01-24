@@ -1,4 +1,4 @@
-define('echarts/theme/default', function () {
+define('echarts/theme/default', [], function () {
     var config = {};
     return config;
 });

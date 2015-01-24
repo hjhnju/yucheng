@@ -1,4 +1,10 @@
-define('zrender/animation/Animation', function (require) {
+define('zrender/animation/Animation', [
+    'require',
+    './Clip',
+    '../tool/color',
+    '../tool/util',
+    '../tool/event'
+], function (require) {
     'use strict';
     var Clip = require('./Clip');
     var color = require('../tool/color');
