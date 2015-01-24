@@ -270,7 +270,7 @@ p{margin:0;padding:0}
 .topup-select-content{*zoom:1;padding:20px 20px 0;margin:0 -30px 20px 0}
 .topup-select-content:before,.topup-select-content:after{display:table;content:""}
 .topup-select-content:after{clear:both}
-.topup-select-con-box{float:left;width:150px;height:40px;border:1px solid #ededed;background:url(../common/img/bank.png) 0 0 no-repeat;background-color:#fff;margin:0 20px 20px 0;cursor:pointer}
+.topup-select-con-box{float:left;width:150px;height:40px;border:1px solid #ededed;background:url(../common/img/bank.png) 0 0 no-repeat;background-color:#fff;margin:0 20px 20px 0;cursor:pointer;position:relative}
 .topup-select-con-box.zhaoshang{background-position:30px 6px}
 .topup-select-con-box.gongshang{background-position:30px -99px}
 .topup-select-con-box.youzheng{background-position:30px -196px}
