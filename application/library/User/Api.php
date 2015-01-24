@@ -93,10 +93,10 @@ class User_Api{
      * @return boolean
      */
     public static function setPhone($uid,$strPhone){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
-        $objInfo->phone = $strPhone;
-        $ret            = $objInfo->save();
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('userid'=>$uid));
+        $objLogin->phone = $strPhone;
+        $ret            = $objLogin->save();
         return $ret;
     }
     
@@ -122,13 +122,13 @@ class User_Api{
      * @return int
      */
     public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
-        if(empty($objInfo->userid)){
+        $objLogin = new User_Object_Login();
+        $objLogin->fetch(array('userid'=>$uid,'passwd'=>md5($strPasswdOld)));
+        if(empty($objLogin->userid)){
             return User_RetCode::ORIGIN_PASSWD_WRONG;
         }
-        $objInfo->passwd = md5($strPasswdNew);
-        $ret = $objInfo->save();
+        $objLogin->passwd = md5($strPasswdNew);
+        $ret = $objLogin->save();
         if(!$ret) {
             return User_RetCode::SAVE_PASSWD_WRONG;
         }
