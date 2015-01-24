@@ -1,4 +1,4 @@
-define(function (require) {
+define(['require'], function (require) {
     if (window['ActiveXObject'] && !window['CanvasRenderingContext2D']) {
         var NULL = null;
         var CANVAS = 'canvas';

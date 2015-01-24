@@ -1,4 +1,16 @@
-define('echarts/chart/radar', function (require) {
+define('echarts/chart/radar', [
+    'require',
+    '../component/base',
+    './base',
+    'zrender/shape/Polygon',
+    '../component/polar',
+    '../config',
+    '../util/ecData',
+    'zrender/tool/util',
+    'zrender/tool/color',
+    '../util/accMath',
+    '../chart'
+], function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var PolygonShape = require('zrender/shape/Polygon');

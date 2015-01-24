@@ -1,4 +1,8 @@
-define('common/countDown', function () {
+define('common/countDown', [
+    'jquery',
+    'moment',
+    'etpl'
+], function () {
     var $ = require('jquery');
     var moment = require('moment');
     var etpl = require('etpl');

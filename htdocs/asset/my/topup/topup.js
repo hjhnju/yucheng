@@ -1,9 +1,8 @@
-define('company/us/index', [
+define('my/topup/topup', [
     'require',
     'jquery'
 ], function (require) {
     var $ = require('jquery');
-    function init() {
-    }
+    var mapBank = { 'CMB': {} };
     return { init: init };
 });

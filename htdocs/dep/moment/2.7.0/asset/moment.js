@@ -1,4 +1,8 @@
-define('moment/moment', function (require, exports, module) {
+define('moment/moment', [
+    'require',
+    'exports',
+    'module'
+], function (require, exports, module) {
     (function (undefined) {
         var moment, VERSION = '2.7.0', globalScope = typeof global !== 'undefined' ? global : this, oldGlobalMoment, round = Math.round, i, YEAR = 0, MONTH = 1, DATE = 2, HOUR = 3, MINUTE = 4, SECOND = 5, MILLISECOND = 6, languages = {}, momentProperties = {
                 _isAMomentObject: null,

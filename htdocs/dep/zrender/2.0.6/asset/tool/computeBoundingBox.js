@@ -1,4 +1,8 @@
-define('zrender/tool/computeBoundingBox', function (require) {
+define('zrender/tool/computeBoundingBox', [
+    'require',
+    './vector',
+    './curve'
+], function (require) {
     var vec2 = require('./vector');
     var curve = require('./curve');
     function computeBoundingBox(points, min, max) {

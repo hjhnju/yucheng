@@ -1,4 +1,7 @@
-define('zrender/tool/util', function (require) {
+define('zrender/tool/util', [
+    'require',
+    '../dep/excanvas'
+], function (require) {
     var BUILTIN_OBJECT = {
             '[object Function]': 1,
             '[object RegExp]': 1,
