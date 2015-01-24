@@ -58,7 +58,6 @@ class CashController extends Base_Controller_Page {
 			$openBankId = strval($_REQUEST['id']);
 			
 			$gateBusiId = 'B2C';
-			$openBankId = 'CIB';
 			$dcFlag     = 'D';
 			Base_Log::notice(array(
 			    'userid'     => $userid,

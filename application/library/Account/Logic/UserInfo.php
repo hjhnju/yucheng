@@ -64,9 +64,9 @@ class Account_Logic_UserInfo {
         
         //用户托管账户
         $huifuid                = $objUser->huifuid;
-        $ret['huifu']['value']  = isset($huifuid) ? $huifuid : '';
+        $ret['huifu']['value']  = isset($huifuid) ? 'bnxj_'.$username : '';
         $ret['huifu']['isopen'] = isset($huifuid) ? 1 : 2;
-        $ret['huifu']['url']    = '';
+        $ret['huifu']['url']    = $webroot.'/account/secure';
         
         //用户实名
         $realname  = $objUser->realname;
@@ -76,7 +76,7 @@ class Account_Logic_UserInfo {
         $ret['realname']['certType']      = isset($certType) ? $certType : '';
         $ret['realname']['certValue']     = isset($certValue) ? $certValue : '';
         $ret['realname']['isopen']        = (isset($realname) && isset($certValue)) ? 1 : 2;
-        $ret['realname']['url'] = '';
+        $ret['realname']['url'] = $webroot.'/account/secure';
         
         $param = array(
             'phone'           =>$ret['phone']['isopen'],

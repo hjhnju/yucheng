@@ -43,11 +43,8 @@ class EditapiController extends Base_Controller_Api {
     	$_originPhone = $objUser->phone;
     	$originPhone = isset($_originPhone) ? $_originPhone : '';
     	$phone = $_REQUEST['oldPhone'];//前端会判空
-<<<<<<< HEAD
     	$checkRet = $this->checkReg(self::REG_PHONE,$phone);      	 	
-=======
     	$checkRet = $this->checkReg(self::REG_PHONE,$phone);
->>>>>>> 7e9e05e3007a3490a6d81f41b81863e89270749f
     	if(!$checkRet) {
     		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
     		$errMsg = Account_RetCode::getMsg($errCode);
@@ -145,28 +142,21 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     		return ;
     	}
-    	
-<<<<<<< HEAD
-        
+    	        
     	$userId = $this->userid;   	    		
     	$ret = User_Api::setPasswd($userId,$oldpwd,$newpwd);
-=======
         $userid = !empty($this->objUser) ? $this->objUser->userid : 0;
         $oldpwd = isset($_oldpwd) ? $_oldpwd : '';
     	$newpwd = isset($_newpwd) ? $_newpwd : ''; 	    		
     	$ret = User_Api::setPasswd($userid,$oldpwd,$newpwd);
->>>>>>> 7e9e05e3007a3490a6d81f41b81863e89270749f
         if($ret === User_RetCode::ORIGIN_PASSWD_WRONG) {
     		$errCode = Account_RetCode::OLDPWD_INPUT_ERROR;//原密码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
-<<<<<<< HEAD
     		return ;
     	}
     	if($ret === User_RetCode::SAVE_PASSWD_WRONG){
-=======
     	} else if($ret === false){
->>>>>>> 7e9e05e3007a3490a6d81f41b81863e89270749f
     		$errCode = Account_RetCode::MODIFY_PWD_FAIL;//密码修改错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
@@ -241,9 +231,9 @@ class EditapiController extends Base_Controller_Api {
     	$subject = '修改邮箱地址';
         $body = <<<EOF
                             尊敬的兴教贷用户：<br/>
-        &nbsp&nbsp&nbsp您好，请点击以下链接进行您的邮箱更改验证与激活，谢谢。<br/>
-        &nbsp&nbsp&nbsp若不能直接打开，请将地址复制至浏览器地址栏。<br/>
-        &nbsp&nbsp&nbsp激活链接：http://123.57.46.229:8082/account/edit/emailsuccess?param=$param&id=$id
+                            您好，请点击以下链接进行您的邮箱更改验证与激活，谢谢。<br/>
+                            若不能直接打开，请将地址复制至浏览器地址栏。<br/>
+                           激活链接：http://123.57.46.229:8082/account/edit/emailsuccess?param=$param&id=$id
 EOF;
         Base_Mailer::getInstance()->send($to, $subject, $body);    	
     	$this->output();

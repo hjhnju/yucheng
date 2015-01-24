@@ -145,10 +145,8 @@ class SecureController extends Base_Controller_Page{
 	 * }
 	 * 
 	 */
-	public function securedegreeAction() {
-		$userid = $this->getUserId();	    
-		$userinfo = $this->userInfoLogic->getUserInfo($userid);
-		
+	public function securedegreeAction() {	    
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$ret = array(
 		    'score'         => $userinfo['securedegree']['score'],
 		    'secureDegree'  => $userinfo['securedegree']['degree'],  
