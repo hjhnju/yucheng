@@ -1,0 +1,45 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/setting/email/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/email/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="login">
+    <div class="container">
+        <div class="change-box-title"><p class="change-title-text">修改邮箱</p></div>
+        <div class="changephone" id="checkemial">
+            <div class="changephone-top">
+                <div class="changephone-title stepthree mar-btm">
+                    <div class="number-text">
+                        <p class="number-p">提供最新邮箱</p>
+                        <p class="number-p">验证邮箱</p>
+                        <p class="number-p three last  current">修改成功</p>
+                    </div>
+                </div>
+                {%if $status == 1%}
+                <div class="changephone-box">
+                    <div class="success-pic"></div>
+                    <div class="success-text email-box success-font">修改成功</div>
+                </div>
+                {%else%}
+                <div class="changephone-box">
+                    <div class="success-pic"></div>
+                    <div class="success-text email-box success-font color-red">修改失败</div>
+                </div>
+                {%/if%}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{%/block%}
