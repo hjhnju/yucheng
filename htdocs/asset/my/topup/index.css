@@ -301,15 +301,9 @@ p{margin:0;padding:0}
 .topop-money-box-text{float:left;width:110px;font-size:16px;color:#333;height:34px;line-height:34px}
 .topop-money-box-right{float:left;height:34px;line-height:34px;border:1px solid #dedede;background-color:#fff;margin-right:10px}
 .topop-money-box-right.right-link{background-color:#f8f8f8;border:none}
-<<<<<<< HEAD
-.topop-money-box-right .topup-money-box-ipt{width:250px;padding-left:10px;border:none;outline:0;border-color:#fff}
-.topop-money-box-right .topop-money-box-link{width:68px;height:28px;line-height:28px;text-align:center;background-color:#ededed;border:1px solid #dedede;text-decoration:none;margin-right:20px;display:inline-block;font-size:14px;color:#333;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
-.topop-money-box-right .topop-money-box-link:hover,.topop-money-box-right .topop-money-box-link.current{color:#fff;background-color:#f2736a;border-color:#f2736a}
-=======
-.topop-money-box-right .topup-money-box-ipt{width:250px;padding-left:10px;border:none;outline:0;border-color:#FFF}
+.topop-money-box-right .topup-money-box-ipt{width:250px;padding-left:10px;outline:0;border:none}
 .topop-money-box-right .topop-money-box-link{width:68px;height:28px;line-height:28px;text-align:center;background-color:#ededed;border:1px solid #dedede;text-decoration:none;margin-right:20px;display:inline-block;font-size:14px;color:#333;cursor:pointer;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
-.topop-money-box-right .topop-money-box-link:hover,.topop-money-box-right .topop-money-box-link.current{color:#FFF;background-color:#f2736a;border-color:#f2736a}
->>>>>>> fe92bfee835343f3e3e22286650dc378d65c3918
+.topop-money-box-right .topop-money-box-link:hover,.topop-money-box-right .topop-money-box-link.current{color:#fff;background-color:#f2736a;border-color:#f2736a}
 .topup-money-box-error{float:left;height:34px;line-height:34px;color:#f2736a}
 .extract-main-bottom-title{height:30px;line-height:30px;font-size:18px;color:#333;margin-bottom:10px}
 .extract-main-bottom-text{padding-left:10px;height:24px;line-height:24px;color:#333;font-size:12px}
