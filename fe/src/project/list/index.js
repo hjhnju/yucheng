@@ -71,10 +71,20 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
+                var container = $('#invest-main');
+
+                if (!data.list.length) {
+                    $('#test2').html('');
+                    container.html(etpl.render('Error', {
+                        msg: '当前还没有数据哟'
+                    }));
+                    return;
+                }
+
                 pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 
-                $('#invest-main').html(etpl.render('list',{
+                container.html(etpl.render('list',{
                     list: data.list
                 }));
 

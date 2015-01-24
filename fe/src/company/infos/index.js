@@ -51,6 +51,14 @@ define(function (require) {
             }
             else {
 
+                if (!data.list.length) {
+                    container.html(etpl.render('Error', {
+                        msg: '当前没有公告'
+                    }));
+                    $('#pager').html('');
+                    return;
+                }
+
                 pager.render(+data.page);
 
                 container.html(etpl.render('infosList', {
