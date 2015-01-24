@@ -64,6 +64,7 @@ class TransactionController extends Base_Controller_Page{
    	    $phone = $_REQUEST['phone'];
         $transAmt = floatval($_REQUEST['transAmt']);
         $captcha = $_REQUEST['captcha'];
+        
         //验证验证码
         $openAcctId = strval($_REQUEST['openAcctId']);
         $type = 1;////////////////////////////////////////

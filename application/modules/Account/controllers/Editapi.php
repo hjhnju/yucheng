@@ -163,26 +163,18 @@ class EditapiController extends Base_Controller_Api {
      */
     public function newemailAction() {
     	$email = $_REQUEST['email'];
-    	$vericode = $_REQUEST['vericode'];////////////////////前端没约定好！
-    	$type = $_REQUEST['type'];
-    	  
-/*     	if(!isset($_REQUEST['email']) || !isset($_REQUEST['vericode']) || !isset($_REQUEST['type'])) {
-    		$errCode = Base_RetCode::PARAM_ERROR;
-    		$errMsg = Base_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
-    		return;
-    	}    */
-    	$emailPattern = self::$_arrRegMap[self::REG_EMAIL];
-    	if(!preg_match($emailPattern,$email)) {
-    		$errCode = Account_RetCode::EMAIL_FOEMAT_ERROR;
+    	$vericode = $_REQUEST['vericode'];////////////////////前端没约定好！    	
+    	$type = 'email';     
+    	if(empty($email) || empty($vericode)) {
+    		
+    		$errCode = Account_RetCode::INPUT_CONTENT;
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
     		return;
     	}
-    	$type = strval('email');    	
-    	$bolCheckImg = User_Api::checkImageCode($vericode,$type);
-    	if(!$bolCheckImg) {
-    		$errCode = Account_RetCode::VERCODE_ERROR;
+    	$emailPattern = self::$_arrRegMap[self::REG_EMAIL];
+    	if(!preg_match($emailPattern,$email)) {
+    		$errCode = Account_RetCode::EMAIL_FOEMAT_ERROR;
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
     		return;
@@ -195,7 +187,38 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     		return;
     	}
+    	$type = strval('email');    	
+    	/* $bolCheckImg = User_Api::checkImageCode($vericode,$type);   
+    	if(!$bolCheckImg) {
+    		$errCode = Account_RetCode::VERCODE_ERROR;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	} */
+    	
     	////发送一封邮件到email代表的邮箱中
+    	$email = strval($email);
+    	$userid = $this->userid;
+    	
+    	$emailSec = Base_Util_Secure::encodeSand(Base_Util_Secure::PASSWD_KEY,$email);
+    	$emailKey = $emailSec['key'];
+    	$emailAuth = $emailSec['auth'];
+    	$param = $emailKey.'_'.$emailAuth;
+    	
+    	$idSec = Base_Util_Secure::encodeSand(Base_Util_Secure::PASSWD_KEY,$userid);
+    	$idKey = $idSec['key'];
+    	$idAuth = $idSec['auth'];
+    	$id = $idKey.'_'.$idAuth;
+    	
+    	$to = strval($email);    	
+    	$subject = '修改邮箱地址';
+        $body = <<<EOF
+                            尊敬的兴教贷用户：<br/>
+        &nbsp&nbsp&nbsp您好，请点击以下链接进行您的邮箱更改验证与激活，谢谢。<br/>
+        &nbsp&nbsp&nbsp若不能直接打开，请将地址复制至浏览器地址栏。<br/>
+        &nbsp&nbsp&nbsp激活链接：http://123.57.46.229:8082/account/edit/emailsuccess?param=$param?id=$id
+EOF;
+        Base_Mailer::getInstance()->send($to, $subject, $body);    	
     	$this->output();
     }
     
@@ -207,13 +230,8 @@ class EditapiController extends Base_Controller_Api {
      */
     public function veriemailAction() {
     	$newEmail = $_REQUEST['newemail'];
-    	$webroot = Base_Config::getConfig('web')->root;
-    	
-    	
-    	$sendUrl = $webroot.'/account/edit/emailsuccess';//跳到修改邮件成功页面
-    	
-    	
-    	
+    	$webroot = Base_Config::getConfig('web')->root;    	
+    	$sendUrl = $webroot.'/account/edit/emailsuccess';//跳到修改邮件成功页面    	
     }
     /** 
      * 接口: /account/editapi/getsmscode

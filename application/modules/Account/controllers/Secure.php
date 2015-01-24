@@ -68,7 +68,7 @@ class SecureController extends Base_Controller_Page{
 		if($thirdpay == 2) {
 			$thirdpayurl = $webroot.'/account/secure/bindthirdpay';
 		} else {
-			$thirdpayurl = $webroot.'/account/secure/viewthirdPay';
+			$thirdpayurl = $webroot.'/finance/usermanage/login';
 		}
 		
 		$email = $userinfo['email']['isopen'];//用户是否开通了email

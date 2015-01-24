@@ -717,8 +717,6 @@ HTML;
 				"ChkValue"	=>	$checkValue,
 		);
 		
-		var_dump($this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","CardId")));
-		die;
 		return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","CardId"));
 	}
 	/**

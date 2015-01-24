@@ -10,10 +10,8 @@ class BgcallController extends Base_Controller_Page{
 		
 	private $huifuLogic;
 	private $financeLogic;
-	private $scureTool;
 	
 	public function init(){
-		$this->scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
 		$this->huifuLogic = Finance_Chinapnr_Logic::getInstance();
 		$this->financeLogic = new Finance_Logic_Base();
 		Yaf_Dispatcher::getInstance()->disableView();

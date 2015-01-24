@@ -28,6 +28,7 @@ class Account_RetCode extends Base_RetCode {
 	CONST EMAIL_NOT_CHANGE           = 1118;//邮箱没有发生变化
 	CONST PHONE_NOT_CHANGE           = 1119;//手机号未发生改变
 	CONST PHONE_INPUT_ERROR          = 1120;//手机号输入与原手机号不同
+	CONST INPUT_CONTENT              = 1121;
 	/* 消息函数
 	 * @var array
 	*/
@@ -51,6 +52,7 @@ class Account_RetCode extends Base_RetCode {
 		self::EMAIL_NOT_CHANGE           => '邮箱没有发生变化',
 		self::PHONE_NOT_CHANGE           => '手机号未发生改变',
 		self::PHONE_INPUT_ERROR          =>'手机号输入与原手机号不同',
+		self::INPUT_CONTENT              =>'请输入邮箱与验证码',
 	);
 	
 	/**
