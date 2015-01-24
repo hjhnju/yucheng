@@ -44,7 +44,7 @@ class SecureController extends Base_Controller_Page{
 		$userid = $this->userid;
 		//$userObj = User_Api::getUserObject($userid);
 		//$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
-		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);			
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
 		$phonenum = $userinfo['phone']['value'];//用户手机号码
 		$phonenum = substr_replace($phonenum,'****',3,4);
@@ -58,7 +58,7 @@ class SecureController extends Base_Controller_Page{
 		$certinfonum = $userinfo['realname']['certValue'];//用户的证件值
 		$certinfonum = substr_replace($certinfonum,'**************',2,14);
 		if($certinfo == 2) {
-			$certinfourl = $webroot.'/account/secure/bindcertinfo';
+			$certinfourl = $webroot.'/user/open';
 		} else {
 			$certinfourl = '';
 		}
@@ -68,7 +68,7 @@ class SecureController extends Base_Controller_Page{
 		if($thirdpay == 2) {
 			$thirdpayurl = $webroot.'/account/secure/bindthirdpay';
 		} else {
-			$thirdpayurl = $webroot.'/account/secure/viewthirdPay';
+			$thirdpayurl = $webroot.'/finance/usermanage/login';
 		}
 		
 		$email = $userinfo['email']['isopen'];//用户是否开通了email
@@ -84,24 +84,14 @@ class SecureController extends Base_Controller_Page{
 		
 		$thirdBindRet = User_Api::checkBind($userid);
 		//没有绑定第三方登陆
-		if($thirdBindRet['type'] === 0) {
+		if(empty($thirdBindRet)) {
 			$this->retData['bindthirdlogin'] = 2;
 			$thirdloginurl = $webroot.'/account/secure/bindthirdlogin';
-		} else if($thirdBindRet['type'] === 1) {
-			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdPlatform'] = 1;
-			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
-			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';			
-		} else if ($thirdBindRet['type'] === 2) {			
-			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdPlatform'] = 3;
-			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
-			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
 		} else {
 			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdPlatform'] = 3;
+			$this->retData['thirdPlatform'] = $thirdBindRet['type'];
 			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
-			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
+			$thirdloginurl = $webroot.'/account/secure/unbindthird';
 		}
 		
         $this->getView()->assign('userinfo',$userinfo);		
@@ -127,8 +117,8 @@ class SecureController extends Base_Controller_Page{
 		$this->getView()->assign('chpwdurl',$chpwdurl);
 		
 		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);				
-		$this->getView()->assign('thirdPlatform',1);//mock
-		$this->getView()->assign('thirdNickName','海阔天空');
+		$this->getView()->assign('thirdPlatform',$this->retData['thirdPlatform']);
+		$this->getView()->assign('thirdNickName',$this->retData['thirdNickName']);
 		$this->getView()->assign('thirdloginurl',$thirdloginurl);
 	}
 
@@ -145,10 +135,8 @@ class SecureController extends Base_Controller_Page{
 	 * }
 	 * 
 	 */
-	public function securedegreeAction() {
-		$userid = $this->getUserId();	    
-		$userinfo = $this->userInfoLogic->getUserInfo($userid);
-		
+	public function securedegreeAction() {	    
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$ret = array(
 		    'score'         => $userinfo['securedegree']['score'],
 		    'secureDegree'  => $userinfo['securedegree']['degree'],  
@@ -216,10 +204,19 @@ class SecureController extends Base_Controller_Page{
 	}
     
 	/**
-	 * 接口/account/secure/unbindthirdlogin
+	 * 接口/account/secure/unbindthird
 	 * 解绑入口 
 	 */
-	public function unbindthirdloginAction() {
-		
+	public function unbindthirdAction() {
+		$userid = $this->userid;
+		$thirdBindRet = User_Api::checkBind($userid);
+		$type = $thirdBindRet['type'];
+	    if(!User_Api::delBind($userid,$type)) {
+	    	Base_Log::error(array(
+	    		'msg'    => '解绑失败',
+	    		'userid' => $userid,
+	    		'type'   => $type,
+	    	));
+	    }
 	}
 }

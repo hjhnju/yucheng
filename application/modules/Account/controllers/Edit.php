@@ -43,11 +43,43 @@ class EditController extends Base_Controller_Page {
 	/**
 	 * 接口: /account/edit/emailsuccess
 	 * 修改邮箱成功页面
+	 * assign status 0--失败  1--成功
 	 * userinfo 左上角用户信息
 	 */
 	public function emailsuccessAction() {
-		$userid = $this->userid;
-		$userInfo = $this->userInfoLogic->getUserInfo($userid);
-		$this->getView()->assign('userinfo',$userInfo);		
+		$_emailParam = $_REQUEST['param'];
+		$emailParam = explode('_',$_emailParam);
+		$emailKey = strval($emailParam[0]);
+		$emailAuth = strval($emailParam[1]);
+		
+		$_id = $_REQUEST['id'];
+		$id = explode('_',$_id);
+		$idKey = strval($id[0]);
+		$idAuth = strval($id[1]);
+		
+		$newEmail = Base_Util_Secure::decodeSand(Base_Util_Secure::PASSWD_KEY,$emailAuth,$emailKey);	
+		$userid = Base_Util_Secure::decodeSand(Base_Util_Secure::PASSWD_KEY,$idAuth,$idKey);
+		if(!$newEmail || !$userid) {
+			//解密失败
+			$status = 0;
+			$this->getView()->assign('status',$status);
+			return;			
+		}
+		$userid = intval($userid);
+		$newEmail = strval($newEmail);
+		$ret = User_Api::setEmail($userid,$newEmail);
+		if(!$ret) {
+			//入库失败
+			Base_Log::error(array(
+				'msg'      => '新邮箱入库失败',
+				'userid'   => $userid,
+				'newEmail' => $newEmail,
+			));
+			$status = 0;
+			$this->getView()->assign('status',$status);
+			return;
+		}	
+		$status = 1;
+		$this->getView()->assign('status',$status);
 	}
 }

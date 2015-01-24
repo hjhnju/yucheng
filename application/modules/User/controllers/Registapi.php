@@ -179,7 +179,7 @@ class RegistApiController extends Base_Controller_Api{
     }
     
     /** 
-     * 忘记密码重置密码接口
+     * 忘记密码重置密码接口，重置后设置用户为登录状态
      * @param $user, 用户名
      * @param $phone, 手机号
      * @param $vericode,手机验证码
@@ -200,7 +200,13 @@ class RegistApiController extends Base_Controller_Api{
         $logic   = new User_Logic_Regist();
         $ret = $logic->modifyPwd($strName,$strPhone,$strPasswd);
         if(User_RetCode::SUCCESS === $ret){
-            return $this->ajaxJump('/user/login');
+            $objLogin = new User_Object_Login();
+            $objLogin->fetch(array('name'=>$strName,'phone'=>$strPhone));
+            $objUser = new User_Object($objLogin->userid);
+            $objLogic = new User_Logic_Login();
+            $objLogic->setLogin($objUser);
+            Base_Log::notice($_REQUEST);
+            return $this->ajaxJump('/user/open');
         }
         $this->ajaxError($ret,User_RetCode::getMsg($ret));
     }

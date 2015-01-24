@@ -4,10 +4,12 @@
  */
 class CashapiController extends Base_Controller_Api {
 	
+	private $transLogic;
+	private $huifuid;
 	public function init(){
-		$this->setNeedLogin(false);
 		parent::init();
-		$this->ajax = true;
+		$this->transLogic = new Finance_Logic_Transaction();
+		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
 	}
 	
 	/**
@@ -17,7 +19,27 @@ class CashapiController extends Base_Controller_Api {
 	 * @return 标准json
 	 */
 	public function rechargeAction() {
-		$this->output();
+		$userid  = $this->userid;
+        $huifuid = $this->huifuid;	
+        $transAmt = $_REQUEST['value'];
+        $transAmt = sprintf('%.2f',$transAmt);      
+        $openBankId = strval($_REQUEST['openBankId']);
+        $gateBusiId = strval($_REQUEST['gateBusiId']);
+        ///notice
+        //$dcFlag     = strval($_REQUEST['dcFlag']);
+        $transAmt   = sprintf('%.2f',300000);
+        $gateBusiId = 'B2C';
+        $openBankId = 'CIB';
+        $dcFlag     = 'D';
+        Base_Log::notice(array(
+            'userid'     => $userid,
+            'huifuid'    => $huifuid,
+            'transAmt'   => $transAmt,
+            'gateBusiId' => $gateBusiId,
+            'openBankId' => $openBankId,
+            'dcFlag'     => $dcFlag,
+        ));
+        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);         
 	}
 	
 	/**

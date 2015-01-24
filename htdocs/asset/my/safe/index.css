@@ -265,3 +265,4 @@ p{margin:0;padding:0}
 .return{display:block;position:absolute;right:-30px;top:10px;color:#333;font-size:14px;width:60px;height:24px;line-height:24px;padding-left:30px;text-decoration:none;background:url(../common/img/return_icon.png) 0 center no-repeat}
 .return:hover{color:#76cf65}
 .fen{font-size:20px;color:#76cf65}
+.testing-link{cursor:pointer}

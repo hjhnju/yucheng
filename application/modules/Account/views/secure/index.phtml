@@ -79,7 +79,7 @@
                     <div class="infor-data-box-status gou">已开通</div>
                     <div class="infor-data-box-testing">
                         <div class="testing-content">{%$huifuid%}</div>
-                        <a href={%$thirdpayurl%} class="testing-link" id="thirdpay2nd">查看</a>
+                        <a href={%$thirdpayurl%} target="_blank" class="testing-link" id="thirdpay2nd">查看</a>
                     </div>
                     {%/if%}
 
@@ -114,27 +114,23 @@
                     </div>
                 </div>
             </div>
+            {%if $bindthirdlogin != 2%}
             <div class="infor-data">
                 <div class="infor-data-title">第三方绑定</div>
                 <div class="infor-data-box border-btm twoheight">
                     <div class="infor-data-box-phone">账号绑定</div>
                     <div class="infor-data-box-text">选择使用第三方账户登陆可与平台账号
                         绑定，方便登陆</div>
-                    {%if $bindthirdlogin == 2%}
-                    <div class="infor-data-box-status cha">未设置</div>
-                    <div class="infor-data-box-testing">
-                        <!--<div class="testing-content qq-pic">曹操</div>-->
-                        <a href={%$thirdloginurl%} class="testing-link" id="bindthird">未绑定</a>
-                    </div>
-                    {%else%}
                     <div class="infor-data-box-status gou">已设置</div>
                     <div class="infor-data-box-testing">
-                        <div class="testing-content testing-content-icon {%if $thirdPlatform == 1%}qq-pic {%else if $thirdPlatform == 2%}weixin-pic {%else%}weibo-pic {%/if%}">{%$thirdNickName%}</div>
-                        <a href={%$thirdloginurl%} class="testing-link" id="bindthird">解绑</a>
+                        {%if $thirdPlatform%}
+                        <div class="testing-content testing-content-icon {%$thirdPlatform%}-pic">{%$thirdNickName%}</div>
+                        {%/if%}
+                        <a class="testing-link" id="bindthird">解绑</a>
                     </div>
-                    {%/if%}
                 </div>
             </div>
+            {%/if%}
         </div>
     </div>
 </div>
