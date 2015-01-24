@@ -29,7 +29,7 @@
                 <div class="extract-title">
                     <div class="extract-title-text">绑定的提现银行卡:</div>
                     <div class="extract-title-bank {%$mapBank[$bankID]%}">{%$banknum%}</div>
-                    <a href="###" class="extract-title-other">设置其他提现银行卡</a>
+                    <a target="_blank" href="{%$webroot%}/finance/usermanage/userbindcard" class="extract-title-other">设置其他提现银行卡</a>
                 </div>
                 <div class="extract-main">
                     <div class="extract-main-remind">温馨提醒：如果您需要资金周转请记得关闭自动投标系统</div>
@@ -59,8 +59,13 @@
                             </div>
                             <div class="extract-right-money success-sms" id="success-sms"></div>
                             <div class="extract-right-money">
+<<<<<<< HEAD
                                 <a href="{%$webroot%}/finance/transaction/cash" class="button-link current" id="submit">确定</a>
                                 <a href="{%$webroot%}/account/cash" class="button-link" id="return">返回</a>
+=======
+                                <a class="button-link current" id="submit">确定</a>
+                                <a href="/account/cash" class="button-link" id="return">返回</a>
+>>>>>>> 7e9e05e3007a3490a6d81f41b81863e89270749f
                             </div>
                         </div>
                     </div>
@@ -78,7 +83,7 @@
                 {%else%}
                 <div class="extract-title">
                     <div class="extract-title-text">未绑定提现银行卡:</div>
-                    <a href="{%$webroot%}/finance/usermanage/userbindcard" class="bindbank">立刻绑定银行卡</a>
+                    <a target="_blank" href="{%$webroot%}/finance/usermanage/userbindcard" class="bindbank">立刻绑定银行卡</a>
                 </div>
                 <div class="extract-main">
                     <div class="extract-main-remind">温馨提醒：如果您需要资金周转请记得关闭自动投标系统</div>

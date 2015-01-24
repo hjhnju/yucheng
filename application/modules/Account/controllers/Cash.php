@@ -78,13 +78,52 @@ class CashController extends Base_Controller_Page {
 	 * 提现入口
 	 */
 	public function withdrawAction() {
-		$userid   = $this->userid;
-		$huifuid  = $this->huifuid;
+		$userid = intval($this->userid);
+		$huifuid = $this->huifuid;
 		$phone    = $this->phone;
+		if(!empty($_POST)) {			
+			
+			$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+			$bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
+			$bindBank = $bankInfo['bindbank'];
+			$bankNum  = $bankInfo['banknum'];
+			$bankID   = $bankInfo['bankID'];
+			$this->getView()->assign('bindbank', $bindBank);
+			$this->getView()->assign('banknum', $bankNum);
+			$this->getView()->assign('bankID', $bankID);
+						
+			$userBg = $this->userInfoLogic->getUserBg($huifuid);
+			$avlBal = strval($userBg['avlBal']);
+			$this->getView()->assign('avlBal', $avlBal);
+			$this->getView()->assign('userinfo',$userinfo);
+			$this->getView()->assign('withdrawfee','2');
+			$this->getView()->assign('phone',$this->phone);
+			
+			$transAmt = floatval($_REQUEST['value']);
+			$captcha = $_REQUEST['invercode'];			
+			//验证验证码
+			$openAcctId = strval($_REQUEST['openAcctId']);
+			$type = 6;
+			$smsRet = User_Api::checkSmscode($phone,$captcha,$type);
+			if(!$smsRet) {
+			    Base_Log::error(array(
+				    'msg'     => '验证码验证失败',
+				    'phone'   => $phone,
+				    'captcha' => $captcha,
+				    'type'    => $type,
+			    ));
+			    return ;
+			} 
+			$transAmt = sprintf('%.2f',$transAmt);
+			$openAcctId = strval($bankNum);
+			$this->transLogic->cash($userid,$transAmt,$openAcctId);
+		}
+		
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
         $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
         $bindBank = $bankInfo['bindbank'];
         $bankNum  = $bankInfo['banknum'];
+        $bankNum = substr_replace($bankNum,'*********',4,13);
         $bankID   = $bankInfo['bankID'];
 		$this->getView()->assign('bindbank', $bindBank);
 		$this->getView()->assign('banknum', $bankNum);
