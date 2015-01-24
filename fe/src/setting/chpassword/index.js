@@ -23,21 +23,45 @@ define(function (require) {
 
     function bingEvent() {
 
+        var pwdIpt = $('#confirm-new-ipt');
+
+        pwdIpt.on({
+            focus: function () {
+                $('#error').html('');
+            },
+            blur: function () {
+                var newIpt = $('#new-ipt');
+
+                var newval = +newIpt.val();
+                var me = +$('#confirm-new-ipt').val();
+
+                if(newval !== me) {
+                    $('#error').html('两次密码不一致');
+
+                    return;
+                }
+
+            }
+        });
+
         // 点击发送请求
         $('.chpwd-link').click(function () {
+            var oldPwd = $('#old-ipt');
             var newIpt = $('#new-ipt');
+            var pwdIpt = $('#confirm-new-ipt');
 
-            var newval = +newIpt.val();
-            var me = +$('#confirm-new-ipt').val();
 
-            if(newval !== me) {
-                $('#error').html('两次密码不一致');
+
+            if(!oldPwd.val()) {
+                $('#error').html('原始密码不能为空');
 
                 return;
             }
+            $('#error').html('');
+            pwdIpt.trigger('blur');
 
             chpwdSubmite.remote({
-                oldpwd: $('#old-ipt').val(),
+                oldpwd: oldPwd.val(),
                 newpwd: newIpt.val()
             });
         });

@@ -10,8 +10,6 @@ class IndexController extends Base_Controller_Page {
     }
     
     public function indexAction() {
-        var_dump($this->objUser->certificateType);
-        var_dump($this->objUser->realname);
 
         //投资列表
         $list = Invest_Api::getInvestList(1, 5);
