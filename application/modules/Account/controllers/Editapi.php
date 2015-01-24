@@ -134,11 +134,11 @@ class EditapiController extends Base_Controller_Api {
         $oldpwd = isset($_oldpwd) ? $_oldpwd : '';
     	$newpwd = isset($_newpwd) ? $_newpwd : ''; 	    		
     	$ret = User_Api::setPasswd($userid,$oldpwd,$newpwd);
-        if($ret == User_RetCode::ORIGIN_PASSWD_WRONG) {
+        if($ret === User_RetCode::ORIGIN_PASSWD_WRONG) {
     		$errCode = Account_RetCode::OLDPWD_INPUT_ERROR;//原密码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
-    	} else if($ret == false){
+    	} else if($ret === false){
     		$errCode = Account_RetCode::MODIFY_PWD_FAIL;//密码修改错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
