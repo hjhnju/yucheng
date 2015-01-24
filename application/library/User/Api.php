@@ -181,8 +181,7 @@ class User_Api{
      * @param $strType:类型
      */
     public static function checkImageCode($strImageCode, $strType){
-        $strId           = session_id() . $strType;
-        $bolRet= User_Logic_ImageCode::checkCode($strId, $strImageCode);
+        $bolRet= User_Logic_ImageCode::checkCode($strType, $strImageCode);
         Base_Log::notice(array(
             'bolRet' => $bolRet,
             'code'=>$strImageCode, 

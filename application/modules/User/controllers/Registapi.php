@@ -128,7 +128,7 @@ class RegistApiController extends Base_Controller_Api{
             return $this->ajaxError(User_RetCode::VERICODE_WRONG,
                 User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
         }
-        
+        $logic = new User_Logic_Regist();
         $objRet = $logic->checkInviter($strInviter);
         if(User_RetCode::SUCCESS !== $objRet->status){
             return $this->ajaxError($objRet->status, $objRet->statusInfo); 
