@@ -44,7 +44,7 @@ class SecureController extends Base_Controller_Page{
 		$userid = $this->userid;
 		//$userObj = User_Api::getUserObject($userid);
 		//$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
-		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);			
+		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
 		$phonenum = $userinfo['phone']['value'];//用户手机号码
 		$phonenum = substr_replace($phonenum,'****',3,4);
@@ -58,7 +58,7 @@ class SecureController extends Base_Controller_Page{
 		$certinfonum = $userinfo['realname']['certValue'];//用户的证件值
 		$certinfonum = substr_replace($certinfonum,'**************',2,14);
 		if($certinfo == 2) {
-			$certinfourl = $webroot.'/account/secure/bindcertinfo';
+			$certinfourl = $webroot.'/user/open';
 		} else {
 			$certinfourl = '';
 		}

@@ -54,7 +54,7 @@ class InvestController extends Base_Controller_Page {
 	 * 
 	 */
 	public function backingAction() {
-		//$status = self::BACKING;
+		$status = self::BACKING;
 		$status = 2;
         $userid = $this->userid;
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
@@ -67,7 +67,7 @@ class InvestController extends Base_Controller_Page {
         		'pageall' => $backingRet['pageall'],
         		'all'     => $backingRet['total'],
         		'list'    => $list,
-        	);
+        	);        	
         	$this->output($ret);
         	return ;
         }
@@ -299,8 +299,7 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */
 	public function repayplanAction() {
-		$invest_id = $_REQUEST['proId'];
-		var_dump($invest_id);die;
+		$invest_id = $_REQUEST['id'];
 		$retData = Invest_Api::getRefunds($invest_id);
 		$list = array();
 		$data = array();

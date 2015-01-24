@@ -22,9 +22,9 @@
 
         <div class="finish-main">
             <div class="finish-main-title">提现
-                <a class="return" href="###">返回</a>
+                <a class="return" href="/account/cash">返回</a>
             </div>
-            <div class="extract">
+            <form method="post" action="/account/cash/withdraw" class="extract" id="extract">
                 {%if $bindbank == 1%}
                 <div class="extract-title">
                     <div class="extract-title-text">绑定的提现银行卡:</div>
@@ -45,13 +45,13 @@
                         <div class="extract-box-right">
                             <div class="extract-right-money"><span class="money-weight">{%$avlBal%}</span>元</div>
                             <div class="extract-right-money ext">
-                                <input type="text" class="ext-ipt" id="search-ipt" />元
+                                <input name="value" type="text" class="ext-ipt" id="search-ipt" />元
                                 <span class="money-error" id="money-error"></span>
                             </div>
                             <div class="extract-right-money"><span class="money-weight">{%$withdrawfee%}</span>元</div>
                             <div class="extract-right-money">T+1个工作日(T日21点之前申请)</div>
                             <div class="extract-right-money smscode">
-                                <input type="text"class="ext-ipt" id="sms-ipt" />
+                                <input name="invercode" type="text"class="ext-ipt" id="sms-ipt" />
                                 <span class="get-sms" data-value="{%$phone%}">获取验证码</span>
                                 <span class="smscode-error" id="smscode-error"></span>
                                 <div class="get-sms-box" id="testing-wait"></div>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 {%/if%}
-            </div>
+            </form>
         </div>
     </div>
 </div>

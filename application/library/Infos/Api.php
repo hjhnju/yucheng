@@ -12,10 +12,7 @@ class Infos_Api {
     public static function getNewPost(){
         $logic   = new Infos_Logic_Post();
         $list    = $logic->getList(1, 1);
-        //var_dump($list);die;
         unset($list['list'][0]['content']);
         return $list['list'][0];
-        return $list;
-    }
-    
+    }   
 }

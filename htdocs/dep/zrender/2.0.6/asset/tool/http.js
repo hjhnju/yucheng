@@ -1,4 +1,4 @@
-define('zrender/tool/http', ['require'], function (require) {
+define('zrender/tool/http', function (require) {
     function get(url, onsuccess, onerror, opts) {
         if (typeof url === 'object') {
             var obj = url;

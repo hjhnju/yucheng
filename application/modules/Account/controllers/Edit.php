@@ -43,6 +43,7 @@ class EditController extends Base_Controller_Page {
 	/**
 	 * 接口: /account/edit/emailsuccess
 	 * 修改邮箱成功页面
+	 * assign status 0--失败  1--成功
 	 * userinfo 左上角用户信息
 	 */
 	public function emailsuccessAction() {
@@ -58,17 +59,23 @@ class EditController extends Base_Controller_Page {
 		
 		$newEmail = Base_Util_Secure::decodeSand(Base_Util_Secure::PASSWD_KEY,$emailAuth,$emailKey);	
 		$userid = Base_Util_Secure::decodeSand(Base_Util_Secure::PASSWD_KEY,$idAuth,$idKey);
+		
 		if(!$newEmail || !$userid) {
 			//解密失败
+			$status = 0;
+			$this->getView()->assign('status',$status);
 			return;			
 		}
+		$userid = intval($userid);
+		$newEmail = strval($newEmail);
 		$ret = User_Api::setEmail($userid,$newEmail);
 		if(!$ret) {
 			//入库失败
+			$status = 0;
+			$this->getView()->assign('status',$status);
 			return;
-		}
-		
-		
-			
+		}	
+		$status = 1;
+		$this->getView()->assign('status',$status);
 	}
 }

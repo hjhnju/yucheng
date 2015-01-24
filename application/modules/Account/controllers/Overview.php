@@ -4,8 +4,10 @@
  */
 class OverviewController extends Base_Controller_Page {
 
+	private $huifuid;	
     public function init(){
         parent::init();
+        $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
         $this->userInfoLogic = new Account_Logic_UserInfo();
         $this->ajax = true;
     }
@@ -50,16 +52,11 @@ class OverviewController extends Base_Controller_Page {
      */
     public function indexAction(){
         $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
-        $balance = array();
-
-        /*
-        $avlBal = isset($balance['avlBal']) ? $balance['avlBal'] : 0.00;//可用余额
-        $acctBal = isset($balance['acctBal']) ? $balance['acctBal'] : 0.00;//资产总计
-        $frzBal = isset($balance['frzBal']) ? $balance['frzBal'] : 0.00;//冻结金额 
-        */
-        $avlBal         = '0.00';
-        $acctBal        = '0.00';
-        $frzBal         = '0.00';
+        $userBg = $this->userInfoLogic->getUserBg($this->huifuid);
+        $avlBal = strval($userBg['avlBal']);
+        $acctBal = strval($userBg['acctBal']);
+        $frzBal = strval($userBg['frzBal']);
+       
         $totalProfit    = '1.00';
         $totalInvest    = '0.00';
         $reposPrifit    = '0.00';

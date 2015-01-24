@@ -78,6 +78,7 @@ define(function (require) {
         emailConfirm.on('success', function (data) {
             if(data && data.bizError) {
                 $('.error').html(data.statusInfo);
+                $('#email-img').trigger('click');
             }
             else {
                 var timer;

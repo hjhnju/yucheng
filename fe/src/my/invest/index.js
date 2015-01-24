@@ -10,7 +10,7 @@ define(function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var moment = require('moment');
-    var commonDate = require('common/data');
+    var commonData = require('common/data');
     var header = require('common/header');
     var Pager = require('common/ui/Pager/Pager');
     var Remoter = require('common/Remoter');
@@ -115,18 +115,26 @@ define(function (require) {
                 renderError(data);
             }
             else {
+                if (!data.list.length) {
+                    pager = null;
+                    $('#my-invest-pager').html('');
+                    htmlContainer.html(etpl.render('Error', {
+                        msg: '您当前没有数据哟'
+                    }));
+                    return;
+                }
                 if (!pager) {
-                    pager = new Pager($.extend({}, commonDate.pagerOpt, {
+                    pager = new Pager($.extend({}, commonData.pagerOpt, {
                         main: $('#my-invest-pager'),
                         total: +data.pageall
                     }));
-                    
-                    pager.render(+data.page);
                     
                     pager.on('change', function(e) {
                         getRemoteList(e.value);
                     });
                 }
+
+                pager.render(+data.page);
 
                 renderHTML('returnMoneyList', data);
             }
@@ -170,6 +178,27 @@ define(function (require) {
                 renderError(data);
             }
             else {
+                if (!data.list.length) {
+                    pager = null;
+                    $('#my-invest-pager').html('');
+                    htmlContainer.html(etpl.render('Error', {
+                        msg: '您当前没有数据哟'
+                    }));
+                    return;
+                }
+                if (!pager) {
+                    pager = new Pager($.extend({}, commonData.pagerOpt, {
+                        main: $('#my-invest-pager'),
+                        total: +data.pageall
+                    }));
+
+                    pager.on('change', function(e) {
+                        getRemoteList(e.value);
+                    });
+                }
+
+                pager.render(+data.page);
+
                 renderHTML('tenderingList', data);
             }
         });
@@ -185,6 +214,27 @@ define(function (require) {
                 renderError(data);
             }
             else {
+                if (!data.list.length) {
+                    pager = null;
+                    $('#my-invest-pager').html('');
+                    htmlContainer.html(etpl.render('Error', {
+                        msg: '您当前没有数据哟'
+                    }));
+                    return;
+                }
+                if (!pager) {
+                    pager = new Pager($.extend({}, commonData.pagerOpt, {
+                        main: $('#my-invest-pager'),
+                        total: +data.pageall
+                    }));
+
+                    pager.on('change', function(e) {
+                        getRemoteList(e.value);
+                    });
+                }
+
+                pager.render(+data.page);
+
                 renderHTML('endedList', data);
             }
         });
@@ -200,6 +250,27 @@ define(function (require) {
                 renderError(data);
             }
             else {
+                if (!data.list.length) {
+                    pager = null;
+                    $('#my-invest-pager').html('');
+                    htmlContainer.html(etpl.render('Error', {
+                        msg: '您当前没有数据哟'
+                    }));
+                    return;
+                }
+                if (!pager) {
+                    pager = new Pager($.extend({}, commonData.pagerOpt, {
+                        main: $('#my-invest-pager'),
+                        total: +data.pageall
+                    }));
+
+                    pager.on('change', function(e) {
+                        getRemoteList(e.value);
+                    });
+                }
+
+                pager.render(+data.page);
+
                 renderHTML('tenderFailList', data);
             }
         });

@@ -56,6 +56,15 @@ define(function (require) {
                 Error.html(data.statusInfo);
             }
             else {
+
+                if (!data.list.length) {
+                    $('#page').html('');
+                    htmlContainer.html(etpl.render('Error', {
+                        msg: '当前没有数据哟'
+                    }));
+                    return;
+                }
+
                 if(!pager) {
                     pager = new Pager({
                         total: +data.pageall,
@@ -72,13 +81,15 @@ define(function (require) {
                 }
 
                 pager.render(+data.page);
+
                 for(var i = 0, l = data.list.length; i<l; i++) {
                     var tmp = data.list[i];
                     tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD hh:mm:ss');
                 }
+
                 htmlContainer.html(etpl.render('list', {
                     list:data.list
-                }))
+                }));
             }
         })
 

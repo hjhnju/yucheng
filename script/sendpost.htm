@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布公告</title>
+</head>
+<body>
+    <form method="get" target="csrf" action="http://www.xingjiaodai.com:8301/infos/post/save">
+	<br>标题: <input name="title" value=""><br>
+	<br>作者: <input name="author" value=""><br>
+	<br>内容：<br><br><textarea  name="ctx" rows=10 cols=80></textarea><br>
+	<br>发布时间：<input name="time" value="">&nbsp;例子：2015-01-24<br>
+    <br><input value="发布" type="submit" style="width:80px;height:40px"><br>   
+    </form>
+</body>
+</html>

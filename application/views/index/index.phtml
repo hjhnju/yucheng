@@ -101,11 +101,11 @@
     <div class="container">
         <div class="newgonggao">
             <span class="newgonggao-title">最新公告</span>
-            {%foreach $data.newpost as $key => $item%}
-            <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" class="newgonggao-txt">
-                <span class="symbol">•</span>{%$item.title%}<span class="newgonggao-time">{%$item.publish_time|date_format:'%Y-%m-%d'%}</span>
+
+            <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+                <span class="symbol">•</span>{%$data.newpost.title%}<span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
             </a>
-            {%/foreach%}
+
             <a class="newgonggao-more" href="{%$webroot%}/infos/post">更多 &gt; &gt;</a>
         </div>
         <div class="investlist">
@@ -132,7 +132,9 @@
                         <div class="school">
                             <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
                         </div>
+                        {%if $item.fresh == 1%}
                         <span class="school-new">新手专享</span>
+                        {%/if%}
                     </div>
                     <div class="investlist-box-title-name grade">
                         <span class="grade-star level-{%$item.level_name%}"></span>

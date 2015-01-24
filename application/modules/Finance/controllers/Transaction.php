@@ -10,9 +10,6 @@ class TransactionController extends Base_Controller_Page{
    	private $transLogic;
 	private $huifuid;
     public function init(){
-        //for test
-        //TODO remove
-        $this->setNeedLogin(false);
         parent::init();
         $this->transLogic = new Finance_Logic_Transaction();
         $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';

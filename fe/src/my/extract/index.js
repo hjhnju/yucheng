@@ -10,7 +10,7 @@ define(function (require) {
     var $ = require('jquery');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
-    var withdraw = new Remoter('ACCOUNT_CASH_WITHDRAW_ADD');
+//    var withdraw = new Remoter('ACCOUNT_CASH_WITHDRAW_ADD');
     var checksmscode = new Remoter('REGIST_CHECKSMSCODE_CHECK');
     var sendsmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
 
@@ -38,8 +38,6 @@ define(function (require) {
                 if(isNaN(value)) {
                     $('#money-error').html('输入金额只能为数字');
                     $(this).addClass('current');
-
-                    return;
                 }
             }
         });
@@ -94,7 +92,7 @@ define(function (require) {
                 wait.text('60秒后重新发送');
                 wait.addClass('show');
 
-                timer = setInterval(function () {
+                var timer = setInterval(function () {
 
                     wait.text(--value + '秒后重新发送');
                     if (value < 0) {
@@ -131,20 +129,21 @@ define(function (require) {
                 return;
             }
 
+            $('#extract')[0].submit();
 
-            withdraw.remote({
-                value: value,
-                invercode: invercode
-            });
+//            withdraw.remote({
+//                value: value,
+//                invercode: invercode
+//            });
         });
 
         // withdrawCb
-        withdraw.on('success', function (data) {
-            if(data && data.bizError) {
-                alert(data.statusInfo);
-            }
-
-        });
+//        withdraw.on('success', function (data) {
+//            if(data && data.bizError) {
+//                alert(data.statusInfo);
+//            }
+//
+//        });
 
     }
 

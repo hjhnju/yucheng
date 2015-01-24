@@ -7,13 +7,13 @@ class CashController extends Base_Controller_Page {
 	
 	private $huifuid;
 	private $phone;
-	
+	private $transLogic;
 	public function init() {
-		$this->setNeedLogin(false);		
 		parent::init();
 		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
 		$this->phone = !empty($this->objUser) ? $this->objUser->phone : '';
 		$this->userInfoLogic = new Account_Logic_UserInfo();
+		$this->transLogic = new Finance_Logic_Transaction();
 		$this->ajax = true;
 	}
 	
@@ -50,9 +50,28 @@ class CashController extends Base_Controller_Page {
 	 * 充值入口
 	 */
 	public function rechargeAction() {
+		if(!empty($_POST)) {
+			$userid  = $this->userid;
+			$huifuid = $this->huifuid;
+			$transAmt = $_REQUEST['value'];
+			$transAmt = sprintf('%.2f',$transAmt);
+			$openBankId = strval($_REQUEST['id']);
+			
+			$gateBusiId = 'B2C';
+			$openBankId = 'CIB';
+			$dcFlag     = 'D';
+			Base_Log::notice(array(
+			    'userid'     => $userid,
+			    'huifuid'    => $huifuid,
+			    'transAmt'   => $transAmt,
+			    'gateBusiId' => $gateBusiId,
+			    'openBankId' => $openBankId,
+			    'dcFlag'     => $dcFlag,
+			));
+			$this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);			
+		}		
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
-		$this->getView()->assign('userinfo',$userinfo);
-		
+		$this->getView()->assign('userinfo',$userinfo);		
 	}
 	
 	/**
@@ -63,9 +82,6 @@ class CashController extends Base_Controller_Page {
 		$huifuid  = $this->huifuid;
 		$phone    = $this->phone;
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
-		
-		//FOR　TEST
-		//$huifuid = "6000060000696947";
         $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
         $bindBank = $bankInfo['bindbank'];
         $bankNum  = $bankInfo['banknum'];
