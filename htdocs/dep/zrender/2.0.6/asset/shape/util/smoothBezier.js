@@ -1,7 +1,4 @@
-define('zrender/shape/util/smoothBezier', [
-    'require',
-    '../../tool/vector'
-], function (require) {
+define('zrender/shape/util/smoothBezier', function (require) {
     var vector = require('../../tool/vector');
     return function (points, smooth, isLoop, constraint) {
         var cps = [];
