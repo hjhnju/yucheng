@@ -14,7 +14,7 @@ class Loan_Object_Counter extends Base_Object {
      * 主键
      * @var string
      */
-    protected $prikey = 'user_id';
+    protected $prikey = 'userid';
 
     /**
      * 类名
@@ -26,14 +26,14 @@ class Loan_Object_Counter extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('user_id', 'success', 'limit', 'total', 'finished', 'refund', 'rest', 'status', 'create_time', 'update_time');
+    protected $fields = array('userid', 'success', 'limit', 'total', 'finished', 'refund', 'rest', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'user_id'     => 'userId',
+        'userid'      => 'userid',
         'success'     => 'success',
         'limit'       => 'limit',
         'total'       => 'total',
@@ -50,7 +50,7 @@ class Loan_Object_Counter extends Base_Object {
      * @var array
      */
     protected $intProps = array(
-        'user_id'     => 1,
+        'userid'      => 1,
         'success'     => 1,
         'finished'    => 1,
         'status'      => 1,
@@ -70,7 +70,7 @@ class Loan_Object_Counter extends Base_Object {
      * 用户ID
      * @var integer
      */
-    public $userId;
+    public $userid;
 
     /**
      * 成功借款次数
