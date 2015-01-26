@@ -26,23 +26,26 @@ class Invest_Object_Invest extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'duration', 'interest', 'name', 'amount', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'income', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'id'          => 'id',
-        'loan_id'     => 'loanId',
-        'user_id'     => 'userId',
-        'duration'    => 'duration',
-        'interest'    => 'interest',
-        'name'        => 'name',
-        'amount'      => 'amount',
-        'status'      => 'status',
-        'create_time' => 'createTime',
-        'update_time' => 'updateTime',
+        'id'              => 'id',
+        'loan_id'         => 'loanId',
+        'user_id'         => 'userId',
+        'name'            => 'name',
+        'duration'        => 'duration',
+        'interest'        => 'interest',
+        'amount'          => 'amount',
+        'capital_refund'  => 'capitalRefund',
+        'capital_rest'    => 'capitalRest',
+        'income'          => 'income',
+        'status'          => 'status',
+        'create_time'     => 'createTime',
+        'update_time'     => 'updateTime',
     );
 
     /**
@@ -50,13 +53,13 @@ class Invest_Object_Invest extends Base_Object {
      * @var array
      */
     protected $intProps = array(
-        'id'          => 1,
-        'loan_id'     => 1,
-        'user_id'     => 1,
-        'duration'    => 1,
-        'status'      => 1,
-        'create_time' => 1,
-        'update_time' => 1,
+        'id'              => 1,
+        'loan_id'         => 1,
+        'user_id'         => 1,
+        'duration'        => 1,
+        'status'          => 1,
+        'create_time'     => 1,
+        'update_time'     => 1,
     );
 
     /**
@@ -86,6 +89,12 @@ class Invest_Object_Invest extends Base_Object {
     public $userId;
 
     /**
+     * 姓名
+     * @var string
+     */
+    public $name;
+
+    /**
      * 投资周期
      * @var integer
      */
@@ -98,16 +107,28 @@ class Invest_Object_Invest extends Base_Object {
     public $interest;
 
     /**
-     * 姓名
-     * @var string
-     */
-    public $name;
-
-    /**
-     * 金额
+     * 投资金额
      * @var number
      */
     public $amount;
+
+    /**
+     * 已还本金
+     * @var number
+     */
+    public $capitalRefund;
+
+    /**
+     * 待还本金
+     * @var number
+     */
+    public $capitalRest;
+
+    /**
+     * 预期收益
+     * @var number
+     */
+    public $income;
 
     /**
      * 状态
