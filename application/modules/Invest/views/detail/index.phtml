@@ -329,7 +329,7 @@
                     <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
-                    <input name="amount" type="text" class="right-top-ipt-input" {%if !isset($user)% disabled{%/if%} />
+                    <input name="amount" type="text" class="right-top-ipt-input" {%if !isset($user)%} disabled{%/if%} />
                     <input name="id" type="hidden" value="{%$data.id%}" />
                 </div>
                 <div class="right-top-chongzhi">

@@ -212,12 +212,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $userid        = strval($userid);
         $proId         = $loanId;
         $merPriv       = $userid.'_'.$proId; //将userid与proid作为私有域传入
-        
         Base_Log::notice(array(
             'merCustId'       => $merCustId,
             'orderId'         => $orderId,
-            'ordDate'         => $ordDate,
-            'tranAmt'         => $tranAmt,
+            'orderDate'       => $orderDate,
+            'transAmt'         => $transAmt,
             'usrCustId'       => $usrCustId,
             'maxTenderRate'   => $maxTenderRate,
             'borrowerDetails' => $borrowerDetails,
