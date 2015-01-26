@@ -175,6 +175,10 @@ class RegistApiController extends Base_Controller_Api{
         $logic   = new User_Logic_Login();
         $logic->setLogin($objUser);
         Base_Log::notice($_REQUEST);
+        
+        //注册后的系统消息
+        Msg_Api::sendmsg(0, $userid, 1, '系统消息', array());
+        Msg_Api::sendmsg(0, $userid, 2, '奖励发放', array('data'=>30));
         return $this->ajaxJump('/user/open');
     }
     
