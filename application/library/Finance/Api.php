@@ -337,16 +337,16 @@ class Finance_Api {
      * )   
      * 
 	 */
-	public static function initiativeTender($loanId, $transAmt, $userid ,$uidborrowDetail,$retUrl) {
+	public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails, $retUrl) {
 		if(!isset($loanId) || empty($loanId) || !isset($transAmt) || empty($transAmt) || 
-		   !isset($userid) || empty($userid) || !isset($uidborrowDetail) || empty($uidborrowDetail) ||
+		   !isset($userid) || empty($userid) || !isset($borrowerDetails) || empty($borrowerDetails) ||
 		   !isset($retUrl) || empty($retUrl)) {
 		    Base_Log::error(array(
 		    	'msg'             => '请求参数错误',
 		    	'loanId'          => $loanId,
 		    	'transAmt'        => $transAmt,
 		    	'userid'          => $userid,
-		    	'uidborrowDetail' => $uidborrowDetail,
+		    	'borrowerDetails' => $borrowerDetails,
 		    	'retUrl'          => $retUrl,
 		    ));   	
 		}
@@ -356,10 +356,10 @@ class Finance_Api {
 			'loanId'          => $loanId,
 			'transAmt'        => $transAmt,
 			'userid'          => $userid,
-			'uidborrowDetail' => $uidborrowDetail,
+			'borrowerDetails' => $borrowerDetails,
 			'retUrl'          => $retUrl,			
 		));
-		$transLogic->initiativeTender($loanId, $transAmt, $userid, $uidborrowDetail, $isFreeze, $retUrl);		
+		$transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $isFreeze, $retUrl);		
 	}
 	
 	/**
