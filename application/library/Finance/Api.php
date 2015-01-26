@@ -333,7 +333,7 @@ class Finance_Api {
      * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
      * @param string $FreezeOrdId 冻结订单号(optional)    
      * @param string retUrl 汇付回调返回url
-     * @return string requestURL 请求汇付的URL  
+     * @return false || redirect  
      * )   
      * 
 	 */
@@ -348,7 +348,8 @@ class Finance_Api {
 		    	'userid'          => $userid,
 		    	'borrowerDetails' => $borrowerDetails,
 		    	'retUrl'          => $retUrl,
-		    ));   	
+		    ));
+		    return false;	
 		}
 		$transLogic = new Finance_Logic_Transaction();
 		Base_Log::notice(array(

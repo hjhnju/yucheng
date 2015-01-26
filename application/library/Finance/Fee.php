@@ -6,9 +6,10 @@
  */
 class Finance_Fee {
 
-	const MaxTenderRate = '0.5';
+	//必须两位小数点
+	const MaxTenderRate    = '0.10';
 
-	const MaxBorrowerRate  = '1.0';
+	const MaxBorrowerRate  = '1.00';
 	
 	/**
 	 * finance_service_fee
