@@ -114,7 +114,9 @@ define(function (require) {
 
         // 全部投资
         $('.confirm-all').click(function () {
-            $('.right-top-ipt-input').val(Math.min(model.userAmount, model.amountRest));
+            var ipt = $('.right-top-ipt-input');
+
+            !ipt[0].disabled && ipt.val(Math.min(model.userAmount, model.amountRest));
         });
 
         // 点差消失error
