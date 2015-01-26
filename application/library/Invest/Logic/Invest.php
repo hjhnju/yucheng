@@ -45,14 +45,13 @@ class Invest_Logic_Invest {
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        $web = Base_Config::getConfig('web');
-        $retUrl = $web->root . '/invest/confirm';
+        $retUrl = Base_Config::getConfig('web')->root . '/invest/confirm';
         $max = $this->formatNumber($max);
         //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
         $detail = array(
             array(
                 "BorrowerUserId" => $loan['user_id'],
-                "BorrowerAmt" => $max,
+                "BorrowerAmt"    => $max,
             ),
         );
         Finance_Api::initiativeTender($loan_id, $max, $userid, $detail, $retUrl);

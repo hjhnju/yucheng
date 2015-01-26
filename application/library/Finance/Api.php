@@ -350,7 +350,6 @@ class Finance_Api {
 		    	'retUrl'          => $retUrl,
 		    ));   	
 		}
-		$isFreeze = 'Y';//冻结订单
 		$transLogic = new Finance_Logic_Transaction();
 		Base_Log::notice(array(
 			'loanId'          => $loanId,
@@ -359,7 +358,7 @@ class Finance_Api {
 			'borrowerDetails' => $borrowerDetails,
 			'retUrl'          => $retUrl,			
 		));
-		$transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $isFreeze, $retUrl);		
+		$transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl);		
 	}
 	
 	/**

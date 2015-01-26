@@ -137,13 +137,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      *            )
      *            ...
      *        )
-     * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
-     * @param string $FreezeOrdId 冻结订单号(optional)    
-     * @param string retUrl 汇付回调返回url
      * redirect
      * 
      */
-    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $isFreeze='Y', $retUrl='') {
+    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $retUrl) {
         if(!isset($loanId) || !isset($transAmt) || !isset($userid) || !isset($arrDetails)) {
             Base_Log::error(array(
                 'msg'        => '请求参数错误',
@@ -177,7 +174,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'orderId'     => intval($orderId),
             'orderDate'   => intval($orderDate),
             'userId'      => intval($userid),           
-            'freezeOrdId' => intval($freezeOrdId),
             'type'        => Finance_TypeStatus::INITIATIVETENDER,
             'amount'      => floatval($transAmt),
             'avlBal'      => floatval($avlBal),
@@ -203,9 +199,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'ProId'          => $loanId,
             );
         }      
-  
         $borrowerDetails = json_encode($borrowerDetails);
-        $isFreeze        = strval($isFreeze);
+
+        //冻结
+        $isFreeze      = 'Y';
         //订单号唯一性
         $freezeOrdInfo = $this->genOrderInfo();
         $freezeOrdId   = $freezeOrdInfo['orderId'];
@@ -215,6 +212,21 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $userid        = strval($userid);
         $proId         = $loanId;
         $merPriv       = $userid.'_'.$proId; //将userid与proid作为私有域传入
+        
+        Base_Log::notice(array(
+            'merCustId'       => $merCustId,
+            'orderId'         => $orderId,
+            'ordDate'         => $ordDate,
+            'tranAmt'         => $tranAmt,
+            'usrCustId'       => $usrCustId,
+            'maxTenderRate'   => $maxTenderRate,
+            'borrowerDetails' => $borrowerDetails,
+            'isFreeze'        => $isFreeze,
+            'freezeOrdId'     => $freezeOrdId,
+            'retUrl'          => $retUrl,
+            'bgRetUrl'        => $bgRetUrl,
+            'merPriv'         => $merPriv,
+        ));
         $chinapnr->initiativeTender($merCustId, $orderId, $orderDate, $transAmt, $usrCustId,
             $maxTenderRate, $borrowerDetails, $isFreeze, $freezeOrdId, $retUrl, $bgRetUrl, $merPriv
         );      
