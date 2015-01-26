@@ -325,7 +325,7 @@
                 </div>
             </div>
             {%else%}
-            <div class="right-top">
+            <form id="invest-form" method="post" action="/invest/tender" class="right-top">
                 <div class="right-top-title">我来投资</div>
                 {%if $data.fresh%}
                 <div class="right-top-new"></div>
@@ -335,7 +335,8 @@
                     <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
-                    <input type="text" class="right-top-ipt-input" />
+                    <input name="amount" type="text" class="right-top-ipt-input" />
+                    <input name="id" type="hidden" value="{%$data.id%}" />
                 </div>
                 <div class="right-top-chongzhi">
                     <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a href="{%$webroot%}/account/cash/recharge" class="chongzhi-link">[充值]</a></div>
@@ -345,7 +346,7 @@
                     <a class="right-top-btn-confirm confirm-submit">确定投资</a>
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
-            </div>
+            </form>
             {%/if%}
 
             <div class="right-bottom">
