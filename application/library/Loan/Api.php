@@ -265,7 +265,7 @@ class Loan_Api {
         $audits = new Loan_List_Audit();
         $audits->setFilter($cond);
         $audits_data = $audits->toArray();
-        $data['audit'] = self::stepArray($audits_data['list'], 'type');
+        $data['audit'] = self::stepArray($audits_data['list'], 'type', Loan_Type_Audit::$names);
 
         $attachs = new Loan_List_Attach();
         $attachs->setFilter($cond);
@@ -313,10 +313,11 @@ class Loan_Api {
      * @param string $key
      * @return array
      */
-    private static function stepArray($data, $key) {
+    private static function stepArray($data, $key, $map = array()) {
         $ary = array();
         foreach ($data as $row) {
-            $ary[$row[$key]][] = $row;
+            $newKey = isset($map[$row[$key]]) ? $map[$row[$key]] : $row[$key];
+            $ary[$newKey][] = $row;
         }
         return $ary;
     }

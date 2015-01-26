@@ -5,6 +5,10 @@
  * @author lilu
  */
 class Finance_Fee {
+
+	const MaxTenderRate = '0.5';
+
+	const MaxBorrowerRate  = '1.0';
 	
 	/**
 	 * finance_service_fee

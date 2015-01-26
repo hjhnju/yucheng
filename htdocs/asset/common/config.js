@@ -20,7 +20,7 @@ define('common/config', [], function () {
             ACCOUNT_CASH_LIST: rootUrl + '/account/cashapi/list',
             LINE_GET: rootUrl + '/account/overview/profitCurve',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
-            SECURE_UNBIND_THIRD: rootUrl + '/account/secure/unbindthird',
+            SECURE_UNBIND_THIRD: rootUrl + '/account/editapi/unbindthird',
             ACCOUNT_CASH_RECHARGE_ADD: rootUrl + '/account/cashapi/recharge',
             ACCOUNT_CASH_WITHDRAW_ADD: rootUrl + '/account/cashapi/withdraw',
             INVEST_LIST: rootUrl + '/invest/api',

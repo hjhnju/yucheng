@@ -126,10 +126,11 @@ define(function (require) {
 
         // 确定投资
         $('.confirm-submit').click(function () {
-            investTender.remote({
-                id: model.id,
-                amount: +$('.right-top-ipt-input').val() || 0
-            });
+//            investTender.remote({
+//                id: model.id,
+//                amount: +$('.right-top-ipt-input').val() || 0
+//            });
+            !$('.right-top-ipt-input')[0].disabled && $('#invest-form').get(0).submit();
         });
 
         // 投资盈利计算

@@ -15,6 +15,6 @@ class Invest_RetCode extends Base_RetCode {
      * @var array
      */
     protected static $_arrErrMap = array(
-        self::NOT_ALLOWED => '不允许投标',
+        self::NOT_ALLOWED => '抱歉，您无法投此标。',
     );
 }

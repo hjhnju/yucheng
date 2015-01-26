@@ -26,7 +26,7 @@ class Invest_Object_Refund extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'capital_refund', 'capital_reset', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'transfer', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'capital_refund', 'capital_rest', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'transfer', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -40,7 +40,7 @@ class Invest_Object_Refund extends Base_Object {
         'period'          => 'period',
         'capital'         => 'capital',
         'capital_refund'  => 'capitalRefund',
-        'capital_reset'   => 'capitalReset',
+        'capital_rest'    => 'capitalRest',
         'interest'        => 'interest',
         'amount'          => 'amount',
         'late_charge'     => 'lateCharge',
@@ -124,7 +124,7 @@ class Invest_Object_Refund extends Base_Object {
      * 剩余本金
      * @var number
      */
-    public $capitalReset;
+    public $capitalRest;
 
     /**
      * 利息
