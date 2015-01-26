@@ -1,4 +1,12 @@
-define('echarts/util/ecEffect', function (require) {
+define('echarts/util/ecEffect', [
+    'require',
+    '../util/ecData',
+    'zrender/shape/Circle',
+    'zrender/shape/Image',
+    '../util/shape/Icon',
+    '../util/shape/Symbol',
+    'zrender/tool/env'
+], function (require) {
     var ecData = require('../util/ecData');
     var CircleShape = require('zrender/shape/Circle');
     var ImageShape = require('zrender/shape/Image');

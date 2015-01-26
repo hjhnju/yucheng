@@ -1,4 +1,11 @@
-define('zrender/loadingEffect/Ring', function (require) {
+define('zrender/loadingEffect/Ring', [
+    'require',
+    './Base',
+    '../tool/util',
+    '../tool/color',
+    '../shape/Ring',
+    '../shape/Sector'
+], function (require) {
     var Base = require('./Base');
     var util = require('../tool/util');
     var zrColor = require('../tool/color');

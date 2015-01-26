@@ -84,24 +84,14 @@ class SecureController extends Base_Controller_Page{
 		
 		$thirdBindRet = User_Api::checkBind($userid);
 		//没有绑定第三方登陆
-		if($thirdBindRet['type'] === 0) {
+		if(empty($thirdBindRet)) {
 			$this->retData['bindthirdlogin'] = 2;
 			$thirdloginurl = $webroot.'/account/secure/bindthirdlogin';
-		} else if($thirdBindRet['type'] === 1) {
-			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdPlatform'] = 1;
-			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
-			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';			
-		} else if ($thirdBindRet['type'] === 2) {			
-			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdPlatform'] = 3;
-			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
-			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
 		} else {
 			$this->retData['bindthirdlogin'] = 1;
-			$this->retData['thirdPlatform'] = 3;
+			$this->retData['thirdPlatform'] = $thirdBindRet['type'];
 			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
-			$thirdloginurl = $webroot.'/account/secure/unbindthirdlogin';
+			$thirdloginurl = $webroot.'/account/secure/unbindthird';
 		}
 		
         $this->getView()->assign('userinfo',$userinfo);		
@@ -127,8 +117,8 @@ class SecureController extends Base_Controller_Page{
 		$this->getView()->assign('chpwdurl',$chpwdurl);
 		
 		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);				
-		$this->getView()->assign('thirdPlatform',1);//mock
-		$this->getView()->assign('thirdNickName','海阔天空');
+		$this->getView()->assign('thirdPlatform',$this->retData['thirdPlatform']);
+		$this->getView()->assign('thirdNickName',$this->retData['thirdNickName']);
 		$this->getView()->assign('thirdloginurl',$thirdloginurl);
 	}
 
@@ -214,10 +204,19 @@ class SecureController extends Base_Controller_Page{
 	}
     
 	/**
-	 * 接口/account/secure/unbindthirdlogin
+	 * 接口/account/secure/unbindthird
 	 * 解绑入口 
 	 */
-	public function unbindthirdloginAction() {
-		
+	public function unbindthirdAction() {
+		$userid = $this->userid;
+		$thirdBindRet = User_Api::checkBind($userid);
+		$type = $thirdBindRet['type'];
+	    if(!User_Api::delBind($userid,$type)) {
+	    	Base_Log::error(array(
+	    		'msg'    => '解绑失败',
+	    		'userid' => $userid,
+	    		'type'   => $type,
+	    	));
+	    }
 	}
 }

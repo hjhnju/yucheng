@@ -1,4 +1,4 @@
-define('saber-emitter/emitter', function () {
+define('saber-emitter/emitter', [], function () {
     function Emitter() {
     }
     var proto = Emitter.prototype;

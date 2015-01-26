@@ -1,4 +1,4 @@
-define('echarts/util/date', function () {
+define('echarts/util/date', [], function () {
     var _timeGap = [
             {
                 formatter: 'hh : mm : ss',

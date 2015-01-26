@@ -14,6 +14,7 @@ define(function (require) {
 
     var mapOne = $('#map-one');
     var mapDay = $('#map-day');
+    var index = 0;
 
 
 
@@ -28,6 +29,10 @@ define(function (require) {
         $('.topup-select-con-box').click(function () {
             $('.topup-select-con-box').removeClass('current');
             $(this).addClass('current');
+            var index = $(this).index();
+
+            $('.topup-prompt-box').removeClass('current');
+            $('.topup-prompt-box:eq('+ index + ')').addClass('current');
 
             $(this).find('.topup-select-ipt')[0].checked = true;
         });

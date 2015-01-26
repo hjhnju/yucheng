@@ -10,6 +10,10 @@ class User_Logic_Third {
     const TYPE_WEIBO  = 2;
     const TYPE_WEIXIN = 3;
 
+    const STR_TYPE_QQ     = 'qq';
+    const STR_TYPE_WEIBO  = 'weibo';
+    const STR_TYPE_WEIXIN = 'weixin';
+    
     //第三方登录需要的配置信息
     protected static $arrConfig = array(
         'auth_code_redirect_url'    => '/user/login/third',
@@ -265,7 +269,7 @@ class User_Logic_Third {
      * @param  $authtype = 'weibo', 'qq', 'weixin'
      * @return intType
      */
-    private function getAuthType($authtype) {
+    public function getAuthType($authtype) {
         $authtype = strtolower($authtype);
         $type     = null;
         switch ($authtype) {
@@ -284,5 +288,27 @@ class User_Logic_Third {
         }
         return $type;
     }
-  
+    
+    /**
+     * @param  $authtype = 1,2,3
+     * @return strType
+     */
+    public function getStrAuthType($intType) {
+        $type     = '';
+        switch ($intType) {
+        	case self::TYPE_QQ:
+        	    $type = self::STR_TYPE_QQ;
+        	    break;
+        	case self::TYPE_WEIBO:
+        	    $type = self::STR_TYPE_WEIBO;
+        	    break;
+        	case self::TYPE_WEIXIN:
+        	    $type = self::STR_TYPE_WEIXIN;
+        	    break;
+        	default:
+        	    # code...
+        	    break;
+        }
+        return $type;
+    }
 }

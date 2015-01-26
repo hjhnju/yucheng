@@ -188,28 +188,32 @@ class User_Api{
     }
     
     /**
-     * 返回用户绑定第三方账号状态,0表示未绑定，1，2，3分别表示绑定QQ、微博、微信
+     * 返回用户绑定第三方账号状态,array()表示未绑定
      * @param  $userid
-     * @return array('type'=>1,'nickname'=>'xxx');
+     * @return array('type'=>'qq','nickname'=>'xxx');
      */
     public static function checkBind($userid){
         $third = new User_Object_Third();
         $ret = $third->fetch(array('userid'=>intval($userid)));
-        if($ret){
-            return array('type'=>$third->authtype,'nickname'=>$third->nickname);
+        if($ret){           
+            $logic = new User_Logic_Third();
+            $strType = $logic->getStrAuthType($third->authtype);
+            return array('type'=>$strType,'nickname'=>$third->nickname);
         }
-        return array('type'=>0,'nickname'=>'');
+        return array();
     }
     
     /**
      * 删除用户的第三方绑定
      * @param  $userid
-     * @param int $type
+     * @param string $strType
      * @return boolean
      */
-    public static function delBind($userid,$type){
+    public static function delBind($userid,$strType){
         $third = new User_Object_Third();
-        $third->fetch(array('userid'=>intval($userid),'authtype'=>$type));
+        $logic = new User_Logic_Third();
+        $intType = $logic->getAuthType($strType);
+        $third->fetch(array('userid'=>intval($userid),'authtype'=>$intType));
         $ret = $third->erase();
         return $ret;
     }

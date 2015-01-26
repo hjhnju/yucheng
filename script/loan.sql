@@ -73,7 +73,7 @@ CREATE TABLE `loan_company` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='借款企业信息';
 
 CREATE TABLE `loan_counter` (
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
+  `userid` int(11) NOT NULL COMMENT '用户ID',
   `success` int(11) NOT NULL DEFAULT '0' COMMENT '成功借款次数',
   `limit` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '授信额度',
   `total` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '累计借款',
