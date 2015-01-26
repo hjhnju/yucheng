@@ -26,7 +26,7 @@ class Invest_Object_Invest extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'income', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'amount_refund', 'amount_rest', 'income', 'fail_info', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -42,7 +42,10 @@ class Invest_Object_Invest extends Base_Object {
         'amount'          => 'amount',
         'capital_refund'  => 'capitalRefund',
         'capital_rest'    => 'capitalRest',
+        'amount_refund'   => 'amountRefund',
+        'amount_rest'     => 'amountRest',
         'income'          => 'income',
+        'fail_info'       => 'failInfo',
         'status'          => 'status',
         'create_time'     => 'createTime',
         'update_time'     => 'updateTime',
@@ -125,10 +128,28 @@ class Invest_Object_Invest extends Base_Object {
     public $capitalRest;
 
     /**
+     * 已回收收益
+     * @var number
+     */
+    public $amountRefund;
+
+    /**
+     * 待回收收益
+     * @var number
+     */
+    public $amountRest;
+
+    /**
      * 预期收益
      * @var number
      */
     public $income;
+
+    /**
+     * 失败原因
+     * @var string
+     */
+    public $failInfo;
 
     /**
      * 状态
