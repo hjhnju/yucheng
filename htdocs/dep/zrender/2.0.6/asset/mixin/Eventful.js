@@ -1,4 +1,4 @@
-define('zrender/mixin/Eventful', ['require'], function (require) {
+define('zrender/mixin/Eventful', function (require) {
     var Eventful = function () {
         this._handlers = {};
     };

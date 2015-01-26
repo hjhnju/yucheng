@@ -1,9 +1,4 @@
-define('common/ui/Dialog/Dialog', [
-    'require',
-    'jquery',
-    'etpl',
-    './dialog.tpl'
-], function (require) {
+define('common/ui/Dialog/Dialog', function (require) {
     var $ = require('jquery');
     var etpl = require('etpl');
     var POPUPTMPL = require('./dialog.tpl');
