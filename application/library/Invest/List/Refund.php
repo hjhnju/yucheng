@@ -20,7 +20,7 @@ class Invest_List_Refund extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'capital_refund', 'capital_reset', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'transfer', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'invest_id', 'loan_id', 'user_id', 'period', 'capital', 'capital_refund', 'capital_rest', 'interest', 'amount', 'late_charge', 'promise_time', 'refund_time', 'transfer', 'status', 'create_time', 'update_time');
 
     /**
      * 整数类型的字段
@@ -39,14 +39,5 @@ class Invest_List_Refund extends Base_List {
         'create_time'     => 1,
         'update_time'     => 1,
     );
-
-    /**
-     * 获取数据的对象数组
-     * @return array|Invest_Object_Refund[]
-     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
-     */
-    public function getObjects() {
-        return parent::getObjects('Invest_Object_Refund');
-    }
 
 }
