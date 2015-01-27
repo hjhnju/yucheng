@@ -147,8 +147,19 @@ class Invest_Logic_Invest {
      * @param integer $uid
      * @return number
      */
-    public function getUserAmount($uid) {
-        return Finance_Api::getUserBalance($uid);
+    public function getAccountAvlBal($uid) {
+        $arrAmt = Finance_Api::getUserBalance($uid);
+        $avlBal = 0.0;
+        if(!empty($arrAmt) && isset($arrAmt['data']['avlBal'])){
+            $avlBal = floatval($arrAmt['data']['avlBal']);
+        }else{
+            Base_Log::warn(array(
+                'msg' => '获取账户可用余额失败',
+                'uid' => $uid,
+                'avlBal' => $avlBal,
+            ));
+        }
+        return $avlBal;
     }
     
     /**

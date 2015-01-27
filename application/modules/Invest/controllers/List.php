@@ -3,7 +3,9 @@
  * 投标记录
  */
 class ListController extends Base_Controller_Api {
-	
+
+    protected $needLogin = false;
+    	
 	public function indexAction() {
 	    $id = intval($_REQUEST['id']);
 	    if (empty($id)) {

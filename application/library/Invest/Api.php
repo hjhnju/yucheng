@@ -141,12 +141,13 @@ class Invest_Api {
     }
     
     /**
-     * 获取用户的帐户余额
+     * 获取用户的帐户可用余额
      * @param integer $uid
      * @return number
      */
-    public static function getAccountAmout($uid) {
-        return 100;
+    public static function getAccountAvlBal($uid) {
+        $logic  = new Invest_Logic_Invest();
+        return $logic->getAccountAvlBal($uid);
     }
     
     /**
