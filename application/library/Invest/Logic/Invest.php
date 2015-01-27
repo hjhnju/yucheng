@@ -257,9 +257,6 @@ class Invest_Logic_Invest {
         $invest->setPage($page);
         $invest->setPagesize($pagesize);
 
-        $arrInvs = $invest->toArray();
-        var_dump($arrInvs['list']);
-        
         return $invest->toArray();
     }
     

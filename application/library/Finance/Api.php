@@ -9,8 +9,13 @@ class Finance_Api {
 	 * 验证签名
 	 */
 	public static function verifySign($arrFields, $arrValues, $sign){
-		$logic = new Finance_Logic_Base();
-		return $logic->verifySign($arrFields, $arrValues, $sign);
+		$logic  = new Finance_Logic_Base();
+		$bolRet = $logic->verifySign($arrFields, $arrValues, $sign);
+		Base_Log::notice(array(
+			'msg' => '验证签名',
+			'bolRet' => $bolRet,
+		));
+		return $bolRet;
 	}
 	
 	/**
