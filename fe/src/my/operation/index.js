@@ -41,7 +41,7 @@ define(function (require) {
         option.pagesize = +opt.pagesize;
         etpl.compile(tpl);
         bindEvent();
-        getList.remote();
+        getList.remote(option);
 
         pager = new Pager({
             total: +opt.pageall,
