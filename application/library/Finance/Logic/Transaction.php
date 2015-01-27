@@ -211,7 +211,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $freezeOrdId   = $freezeOrdInfo['orderId'];
         $freezeOrdId   = strval($freezeOrdId);
         $retUrl        = strval($retUrl);
-        $retUrl = '';
         $bgRetUrl      = $webroot.'/finance/bgcall/initiativeTender';
         $userid        = strval($userid);
         $proId         = $loanId;
