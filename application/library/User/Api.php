@@ -124,7 +124,7 @@ class User_Api{
     public static function setPasswd($uid,$strPasswdOld,$strPasswdNew){
         $objLogin = new User_Object_Login();
         $objLogin->fetch(array('userid'=>$uid,'passwd'=>Base_Util_Secure::encrypt($strPasswdOld)));
-        if(empty($objLogin->userid)){
+        if(empty($objLogin->userid)){        	
             return User_RetCode::ORIGIN_PASSWD_WRONG;
         }
         $objLogin->passwd = Base_Util_Secure::encrypt($strPasswdNew);

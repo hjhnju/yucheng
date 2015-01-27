@@ -145,7 +145,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    	'orderId'     => intval($orderId),
 	    	'orderDate'   => intval($orderDate),
 	    	'userId'      => intval($userid),	    	
-	    	'freezeOrdId' => intval($freezeOrdId),
 	    	'type'        => Finance_TypeStatus::INITIATIVETENDER,
 	    	'amount'      => floatval(sprintf('%.2f',$transAmt)),
 	    	'avlBal'      => floatval($avlBal),
@@ -178,6 +177,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 	    $freezeOrdId = $freezeOrdInfo['orderId'];
 	    $freezeOrdId = strval($freezeOrdId);
 	    $retUrl = strval($retUrl); 
+	    $retUrl = '';
 	    $bgRetUrl = $webroot.'/finance/bgcall/initiativeTender';
 	    $userid = strval($userid);
 	    $proId = $loanId;

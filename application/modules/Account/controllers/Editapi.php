@@ -141,8 +141,7 @@ class EditapiController extends Base_Controller_Api {
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
     		return ;
-    	}
-    	        
+    	}    	        
     	$userId = $this->userid;   	    		
     	$ret = User_Api::setPasswd($userId,$oldpwd,$newpwd);
         $userid = !empty($this->objUser) ? $this->objUser->userid : 0;
@@ -278,6 +277,27 @@ EOF;
         	$errMsg = Account_RetCode::getMsg($errCode);
         	$this->outputError($errCode,$errMsg);        	
         }
+    }
+    
+    /**
+     * 接口/account/editapi/unbindthird
+     * 解绑入口
+     */
+    public function unbindthirdAction() {
+    	$userid = $this->userid;
+    	$thirdBindRet = User_Api::checkBind($userid);
+    	$type = $thirdBindRet['type'];
+    	if(!User_Api::delBind($userid,$type)) {
+    		Base_Log::error(array(
+    		'msg'    => '解绑失败',
+    		'userid' => $userid,
+    		'type'   => $type,
+    		));
+    		$errCode = Account_RetCode::UNBIND_FAIL;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    	}
+    	$this->output();    	 
     }
 
 }

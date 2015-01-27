@@ -2,10 +2,9 @@
 /**
  * 奖励邀请页面
  */
-class AwardController extends Base_Controller_Response {
+class AwardController extends Base_Controller_Page {
 	
-	CONST PAGESIZE = 20;
-	
+	CONST PAGESIZE = 20;	
 	public function init() {
 		parent::init();
 		$this->userInfoLogic = new Account_Logic_UserInfo();
@@ -18,14 +17,19 @@ class AwardController extends Base_Controller_Response {
 	 * userinfo 左上角信息
 	 */
 	public function indexAction() {				
-        $userid = $this->getUserId();	
+        $userid = $this->userid;	
         $webroot = Base_Config::getConfig('web')->root;
         
         $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
         $inviteUrl = Awards_Api::getInviteUrl($userid);
 		$inviteUrl = ($inviteUrl != false) ? $inviteUrl : ""; //获取该用户的专属邀请链接
+		
+		$awardsInfo = Awards_Api::getAwards($userid);//获取邀请列表
 		$this->getView()->assign('inviteUrl',$inviteUrl);	
 		$this->getView()->assign('userinfo',$userInfo);
+		$this->getView()->assign('inviterinfo',$awardsInfo);
+		
+		
 	}
 	
 	/**
@@ -81,10 +85,10 @@ class AwardController extends Base_Controller_Response {
 	 * 注意：第一项为该用户"我"的信息
 	 * 
 	 */
-	public function  getAwards() {
-		$page =isset($_REQUEST['page']) ? $_REQUEST['page'] :1;
-		$userid = $this->getUserId();//from User Module
-		$awardsInfo = Awards_Api::getAwards($userid, $page, $this->PAGESIZE);//获取邀请列表
+	public function getawardsAction() {
+		$userid = $this->userid;
+		$awardsInfo = Awards_Api::getAwards($userid);//获取邀请列表
+		var_dump($awardsInfo);die;
 		if($awardsInfo === false) {
 			$errCode = Account_RetCode::GET_AWARDSLIST_FAIL;
 			$errMsg = Account_RetCode::getMsg(Account_RetCode::GET_AWARDSLIST_FAIL);

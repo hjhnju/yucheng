@@ -77,18 +77,18 @@
                         </tr>
                         {%foreach $inviterinfo as $key => $item%}
                         <tr>
-                            <td class="text-align">{%$item.name%}{%$item.phone%}</td>
+                            <td class="text-align">{%$item.name%}({%$item.phone%})</td>
                             <td>
-                                {%if $item.registprogress == 1%}已开通资金托管
+                                {%if $item.registProgress == 1%}已开通资金托管
                                 {%else%}未开通资金托管
                                 {%/if%}
                             </td>
                             <td><div class="jindu"><div class="within" style="width: {%$item.tenderAmount%}%;"></div></div></td>
                             <td>
                                 {%if $item.canBeAwarded%}
-                                <span class="table-tr-span" data-id="{%$item.id%}">点击领取{%$item.award%}元</span>
+                                <span class="table-tr-span" data-id="{%$item.id%}">点击领取{%$item.awardAmt%}元</span>
                                 {%else%}
-                                <span class="table-tr-span current">点击领取{%$item.award%}元</span>
+                                <span class="table-tr-span current">点击领取{%$item.awardAmt%}元</span>
                                 {%/if%}
                             </td>
                         </tr>

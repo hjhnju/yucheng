@@ -217,6 +217,8 @@ class SecureController extends Base_Controller_Page{
 	    		'userid' => $userid,
 	    		'type'   => $type,
 	    	));
+	    	
 	    }
+	    
 	}
 }

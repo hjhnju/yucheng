@@ -39,13 +39,9 @@ class Awards_Api {
      * @param integer $page
      * @return array || false
      */
-    public static function getAwards($inviterid,$page,$pageSize) {
-    	if(is_null($inviterid) || $inviterid<0 || $page<=0 || $pageSize<0) {
-    		Base_Log::error("invalid param",array('userid'=>$inviterid));
-    		return false;
-    	}
+    public static function getAwards($inviterid) {
         $logic = new Awards_Logic_Awards();
-        return $logic->getAwards($inviterid,$page,$pageSize);
+        return $logic->getAwards($inviterid);
     }
 
     /**

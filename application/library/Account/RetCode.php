@@ -30,6 +30,7 @@ class Account_RetCode extends Base_RetCode {
 	CONST PHONE_INPUT_ERROR          = 1120;//手机号输入与原手机号不同
 	CONST INPUT_CONTENT              = 1121;
 	CONST INPUT_PWD                  = 1122;
+	CONST UNBIND_FAIL                = 1123;
 	/* 消息函数
 	 * @var array
 	*/
@@ -52,9 +53,10 @@ class Account_RetCode extends Base_RetCode {
 		self::OLDPWD_INPUT_ERROR         => '原密码输入错误',
 		self::EMAIL_NOT_CHANGE           => '邮箱没有发生变化',
 		self::PHONE_NOT_CHANGE           => '手机号未发生改变',
-		self::PHONE_INPUT_ERROR          =>'手机号输入与原手机号不同',
-		self::INPUT_CONTENT              =>'请输入邮箱与验证码',
-		self::INPUT_PWD                  =>'请输入原始密码与新密码',
+		self::PHONE_INPUT_ERROR          => '手机号输入与原手机号不同',
+		self::INPUT_CONTENT              => '请输入邮箱与验证码',
+		self::INPUT_PWD                  => '请输入原始密码与新密码',
+		self::UNBIND_FAIL                => '解绑失败',
 	);
 	
 	/**

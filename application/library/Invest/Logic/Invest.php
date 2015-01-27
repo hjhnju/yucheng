@@ -161,7 +161,7 @@ class Invest_Logic_Invest {
     public function getUserInvestAmount($uid) {
         $list = new Invest_List_Invest();
         $filters = array(
-            'uid' => $uid,
+            'user_id' => $uid,
             'status' => array(
                 'status != ' . Invest_Type_InvestStatus::CANCEL,
                 'status != ' . Invest_Type_InvestStatus::FAILED,

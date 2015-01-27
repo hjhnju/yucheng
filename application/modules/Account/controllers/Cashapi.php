@@ -79,27 +79,176 @@ class CashapiController extends Base_Controller_Api {
 	 * }
 	 */
 	public function listAction() {
-		/* $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 0;
-			$startTime = isset($_REQUEST['startTime']) ? $_REQUEST['startTime'] : 0;
-		$endTime = isset($_REQUEST['startTime']) ? $_REQUEST['endTime'] : 0;
-		$date = isset($_REQUEST['date']) ? $_REQUEST['date'] : 0;
-		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;//约定接口page从第一页开始
-		$userId = $this->getUserId();
-		$ret = Finance_Api::getRechargeWithDrawRecord($userId, $type, $startTime, $endTime, $date);
-		//如果返回正常处理结果
-		if($ret['status'] == 0) {
-		$this->output($ret);
-		} else {
-		$errCode = Account_RetCode::GET_WITHDRAW_RECHARGE_FAIL; //1107错误码表示获取充值提现列表失败
-		$errMsg = Account_RetCode::getMsg($errCode);
-		$this->outputError($errCode,$errMsg);
-		}		 */
-		$ret = array('page'=>1,
-				'pageall'=>10,
-				'all'=>10,
-				'list'=>array()
-		);
-		$this->output($ret);
+        $queryType = isset($_REQUEST['type']) ? $_REQUEST['type'] : 1;//查询类型  1--全部  2--充值  3--提现
+        $time = $_REQUEST['data'];//时间范围
+        $time = intval($time);
+        $page = $_REQUEST['page'];//页码
+        $startTime = $_REQUEST['startTime'];
+		$endTime = $_REQUEST['endTime'];
+		$baseLogic = new Finance_Logic_Base();
+		$userid = $this->userid;
+		$pageSize = 15;
+		//只有在没有选择时间范围的情况下才可以进行开始时间与结束时间的数据拉取
+		if(isset($startTime) && isset($endTime) && !isset($time)) {
+	        $ret = $baseLogic->getReWiRecord($userid,$startTime,$endTime,$queryType,$page,$pageSize);
+	        if(!$ret) {
+	        	Base_Log::error(array(
+	        	    'msg'       => '请求充值提现数据',
+	        	    'userid'    => $userid,
+	        	    'beginTime' => $begin,
+	        	    'endTime'   => $endTime,
+	        	    'queryType' => $queryType,
+	        	));
+	        	$ret = array(
+	        			'page'     => 0,
+	        			'pagesize' => 0,
+	        			'pageall'  => 0,
+	        			'total'    => 0,
+	        			'list'     => array(),
+	        	);
+	        	$this->output($ret);
+	        	return;
+	        }
+	        $this->output($ret);
+			return;
+		}
+		if(isset($time)) {
+			//今天
+			if($time === 1) {
+				$begin = mktime(0,0,0,date('m'),date('d'),date('Y'));			
+				$end = time();
+				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);				
+				if(!$ret) {
+					Base_Log::error(array(
+						'msg'       => '请求充值提现数据',
+					    'userid'    => $userid,
+					    'beginTime' => $begin,
+					    'endTime'   => $endTime,
+					    'queryType' => $queryType,
+					));
+					$ret = array(
+						'page'     => 0,
+						'pagesize' => 0,
+						'pageall'  => 0,
+						'total'    => 0,
+						'list'     => array(),
+					);
+					$this->output($ret);
+					return;
+				}
+                $this->output($ret);
+                return;				
+			}
+			//最近一周
+			if($time === 2) {
+				//$beginLastweek=mktime(0,0,0,date('m'),date('d')-date('w')+1-7,date('Y'));				
+				//$endLastweek=mktime(23,59,59,date('m'),date('d')-date('w')+7-7,date('Y'));
+				$begin = strtotime('-1 week');
+				$end = time();
+				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				if(!$ret) {
+					Base_Log::error(array(
+					    'msg'       => '请求充值提现数据',
+					    'userid'    => $userid,
+					    'beginTime' => $begin,
+					    'endTime'   => $endTime,
+					    'queryType' => $queryType,
+					));
+					$ret = array(
+						'page'     => 0,
+						'pagesize' => 0,
+						'pageall'  => 0,
+						'total'    => 0,
+					    'list'     => array(),
+					);
+					$this->output($ret);
+					return;
+				}
+				$this->output($ret);
+				return;
+			}
+			//最近一个月
+			if($time === 3) {
+				//$beginThismonth=mktime(0,0,0,date('m'),1,date('Y'));				
+				//$endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+				$begin = strtotime('-1 month');
+				$end = time();
+				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				if(!$ret) {
+					Base_Log::error(array(
+					    'msg'       => '请求充值提现数据',
+					    'userid'    => $userid,
+					    'beginTime' => $begin,
+					    'endTime'   => $endTime,
+					    'queryType' => $queryType,
+					));
+					$ret = array(
+							'page'     => 0,
+							'pagesize' => 0,
+							'pageall'  => 0,
+							'total'    => 0,
+							'list'     => array(),
+					);
+					$this->output($ret);
+					return;
+				}
+				$this->output($ret);
+				return;
+			}
+			//最近三个月
+			if($time === 4) {
+				$begin = strtotime('-2 month');
+				$end = time();	
+				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				if(!$ret) {
+					Base_Log::error(array(
+					    'msg'       => '请求充值提现数据',
+					    'userid'    => $userid,
+					    'beginTime' => $begin,
+					    'endTime'   => $endTime,
+					    'queryType' => $queryType,
+					));
+					$ret = array(
+						'page'     => 0,
+						'pagesize' => 0,
+						'pageall'  => 0,
+						'total'    => 0,
+						'list'     => array(),
+					);
+					$this->output($ret);
+					return;
+				}
+				$this->output($ret);
+				return;
+			}
+			//最近半年
+			if($time === 5) {
+				$begin = strtotime('-6 month');
+				$end = time();
+				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				if(!$ret) {
+					Base_Log::error(array(
+					    'msg'       => '请求充值提现数据',
+					    'userid'    => $userid,
+					    'beginTime' => $begin,
+					    'endTime'   => $endTime,
+					    'queryType' => $queryType,
+					));
+					$ret = array(
+						'page'     => 0,
+					    'pagesize' => 0,
+						'pageall'  => 0,
+						'total'    => 0,
+						'list'     => array(),
+					);
+					$this->output($ret);
+					return;
+				}
+				$this->output($ret);
+				return;
+			}
+		}
+		
 	
 	}
 }
