@@ -217,7 +217,7 @@ class Invest_Logic_Invest {
         
         $loan = Loan_Api::getLoanInfo($loan_id);
         $rest = $loan['amount'] - $loan['invest_amount'];
-        $user_amount = $this->getUserAmount($uid);
+        $user_amount = $this->getAccountAvlBal($uid);
         $amount = min($amount, $user_amount);
         if ($amount < self::MIN_INVEST) {
             Base_Log::notice('amount smaller then min invest');

@@ -12,16 +12,16 @@ class DetailController extends Base_Controller_Response {
         }
         
         $loan = Loan_Api::getLoanDetail($id);
-        $userid = $this->getUserId();
         
         //检查是否允许投标
         $logic = new Invest_Logic_Invest();
-        $loan['allow_invest'] = $logic->allowInvest($userid, $loan['id']);
+        $loan['allow_invest'] = $logic->allowInvest($this->userid, $loan['id']);
         
-        if (!empty($userid)) {
-            $amount = Invest_Api::getAccountAvlBal($userid);
+        if (!empty($this->userid)) {
+            $amount = Invest_Api::getAccountAvlBal($this->userid);
             $user   = array(
-                'uid'         => $userid,
+                'uid'         => $this->userid,
+                'username'    => $this->objUser->name,
                 'amount'      => $amount,
                 'amount_text' => number_format($amount, 2),
             );
