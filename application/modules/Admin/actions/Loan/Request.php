@@ -27,7 +27,8 @@ class RequestAction extends Yaf_Action_Abstract {
         $this->getView()->assign('user', $arrUser);
 
         //申请借款信息
-        //TODO:若有loanid从数据库先获取信息
+        //TODO:
+        //若有loanid从数据库先获取信息
         $_POST = array(
             'id' => $loanId,
             //基本借款信息

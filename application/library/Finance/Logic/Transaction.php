@@ -70,10 +70,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param float retAmt 总还款金额
      * @param int retDate 应还款日期
      * @param proArea 项目所在地
+     * @param guarCompId 担保公司唯一标识
+     * @param guarAmt 担保金额
      * @return array || boolean
      * 
      */
-    public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea) {     
+    public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
         if(!isset($proId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
            !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
             Base_Log::error(array(
@@ -84,25 +86,25 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $webroot  = Base_Config::getConfig('web')->root;
         $chinapnr = Finance_Chinapnr_Logic::getInstance();
         
-        $merCustId = strval(self::MERCUSTID);
-        $proId = strval($proId); //借款的Loan_id
-        $borrCustId = strval($this->getHuifuid(intval($borrUserId)));
-        $borrTotAmt = sprintf('%.2f',$borrTotAmt);
-        $yearRate = sprintf('%.2f',$yearRate);
-        $retType = '0'.strval($retType);
+        $merCustId    = strval(self::MERCUSTID);
+        $proId        = strval($proId); //借款的Loan_id
+        $borrCustId   = strval($this->getHuifuid(intval($borrUserId)));
+        $borrTotAmt   = sprintf('%.2f',$borrTotAmt);
+        $yearRate     = sprintf('%.2f',$yearRate);
+        $retType      = '0'.strval($retType);
         $bidStartDate = date("YmdHis",$bidStartDate);
         $bidStartDate = strval($bidStartDate);
-        $bidEndDate = date("YmdHis",$bidEndDate);       
-        $bidEndDate = strval($bidEndDate);      
-        $retAmt = sprintf('%.2f',$retAmt);
-        $retDate = date("Ymd",$retDate);
-        $retDate = strval($retDate);
-        $guarCompId = '';
-        $guarAmt = '';
-        $proArea = strval($proArea);
-        $bgRetUrl = $webroot.'/finance/bgcall/addBidInfo';
-        $merPriv = '';
-        $reqExt = '';       
+        $bidEndDate   = date("YmdHis",$bidEndDate);       
+        $bidEndDate   = strval($bidEndDate);      
+        $retAmt       = sprintf('%.2f',$retAmt);
+        $retDate      = date("Ymd",$retDate);
+        $retDate      = strval($retDate);
+        $guarCompId   = strval($guarCompId);
+        $guarAmt      = strval($guarAmt);
+        $proArea      = strval($proArea);
+        $bgRetUrl     = $webroot.'/finance/bgcall/addBidInfo';
+        $merPriv      = '';
+        $reqExt       = '';       
         $ret = $chinapnr->addBidInfo($merCustId, $proId, $borrCustId, $borrTotAmt, $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
                 $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
         return $ret;

@@ -149,9 +149,12 @@ class Finance_Api {
 	 * @return boolean
 	 * 
 	 */
-	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea) {
+	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,
+		$bidEndDate,$retAmt,$retDate,$proArea) {
+		
         $transLogic = new Finance_Logic_Transaction();
-        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea);
+        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,
+        	$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea);
         if(is_null($return) || !$return) {
         	Base_Log::error(array(
         		'msg'          => Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR),

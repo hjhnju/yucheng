@@ -276,7 +276,7 @@ HTML;
 	 * 标信息录入
 	 */
 	public function addBidInfo($merCustId,$proId,$borrCustId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$guarCompId='',$guarAmt='',$proArea,$bgRetUrl,$merPriv='',$reqExt='') {
-		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_ADD_BID_INFO.$merCustId.$proId.$borrCustId.$borrTotAmt.$yearRate.$retType.$bidStartDate.$bidEndDate.$retAmt.$retDate.$guarComp.$guarAmt.$proArea.$bgRetUrl.$merPriv.$reqExt);
+		$checkValue= $this->sign($this::VERSION_10.$this::CMDID_ADD_BID_INFO.$merCustId.$proId.$borrCustId.$borrTotAmt.$yearRate.$retType.$bidStartDate.$bidEndDate.$retAmt.$retDate.$guarCompId.$guarAmt.$proArea.$bgRetUrl.$merPriv.$reqExt);
 		$reqData = array(
 			"Version"	   => $this::VERSION_10,
 			"CmdId"		   => $this::CMDID_ADD_BID_INFO,
@@ -298,6 +298,7 @@ HTML;
 			"ReqExt"       => $reqExt,
 			"ChkValue"     => $checkValue,				
 		);
+		Base_Log::notice($reqData);
 		return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","ProId","BorrCustId","BorrTotAmt","GuarCompId","GuarAmt","ProArea","BgRetUrl","MerPriv","RespExt"));
 	}
 	/**
