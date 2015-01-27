@@ -50,6 +50,10 @@ class CashController extends Base_Controller_Page {
 	 * 充值入口
 	 */
 	public function rechargeAction() {
+		if(empty($huifuid)) {
+			$redirectUrl = $this->webroot.'/user/open';
+			$this->redirect($redirectUrl);
+		}
 		if(!empty($_POST)) {
 			$userid  = $this->userid;
 			$huifuid = $this->huifuid;
@@ -77,9 +81,13 @@ class CashController extends Base_Controller_Page {
 	 * 提现入口
 	 */
 	public function withdrawAction() {
-		$userid = intval($this->userid);
 		$huifuid = $this->huifuid;
-		$phone    = $this->phone;
+		if(empty($huifuid)) {
+			$redirectUrl = $this->webroot.'/user/open';
+			$this->redirect($redirectUrl);
+		}
+		$userid = intval($this->userid);		
+		$phone   = $this->phone;
 		if(!empty($_POST)) {			
 			
 			$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);

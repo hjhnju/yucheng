@@ -586,9 +586,40 @@ class Finance_Api {
       * 商户代取现接口
       * @param int userid
       * @param float transAmount
-      * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
+      * @return bool
       * 
       */
+     public static function merCash($userid,$transAmt) {
+     	 $transLogic = new Finance_Logic_Transaction();
+         $ret = $transLogic->merCash($userid,$transAmt);    	
+         if($ret === false) {       	 
+             Base_Log::error(array(
+                 'msg'      => Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR),
+                 'userid'   => $userid,
+                 'transAmt' => $transAmt,
+             ));
+             return false;
+         }
+         if(is_null($ret)) {
+         	 Base_Log::error(array(
+         	     'msg'      => '请求汇付API错误',
+         	     'userid'   => $userid,
+         	     'transAmt' => $transAmt,
+         	 ));
+         	 return false;
+         }
+         $respCode = $ret['RespCode'];
+         $respDesc = $ret['RespDesc'];
+         if($respCode !== '000') {
+         	 $logParam = $ret;
+         	 $logParam['msg'] = $respDesc;
+         	 Base_Log::error($logParam);
+         	 return false;
+         }
+         Base_Log::notice($ret);
+         return true;
+     	
+     }
      /**
       * 用户登录汇付login接口
       * redirect 

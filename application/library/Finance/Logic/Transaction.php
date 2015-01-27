@@ -662,7 +662,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $charSet = '';
         $merPriv = strval($userid).'_'.strval($orderDate);
         $reqExt = '';
-        $chinapnr->merCash($merCustId,$orderId,$usrCustId,$transAmt,$servFee = '',$servFeeAcctId = '',$retUrl = '',
+        $ret = $chinapnr->merCash($merCustId,$orderId,$usrCustId,$transAmt,$servFee = '',$servFeeAcctId = '',$retUrl = '',
             $bgRetUrl,$remark = '',$charSet = '',$merPriv = '',$reqExt = '');       
+        return $ret;
     }
 }
