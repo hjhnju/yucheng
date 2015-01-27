@@ -581,6 +581,14 @@ class Finance_Api {
      	 $userManageLogic->corpRegist($userid,$userName,$busiCode,$instuCode='',$taxCode='');
      }
      
+     
+     /**
+      * 商户代取现接口
+      * @param int userid
+      * @param float transAmount
+      * @return API返回array格式 {'status'=>,'statusInfo'=>,'data'=>} 
+      * 
+      */
      /**
       * 用户登录汇付login接口
       * redirect 

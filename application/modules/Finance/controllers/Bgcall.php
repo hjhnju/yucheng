@@ -15,9 +15,10 @@ class BgcallController extends Base_Controller_Page {
 	public function init(){
 		$this->huifuLogic = Finance_Chinapnr_Logic::getInstance();
 		$this->financeLogic = new Finance_Logic_Base();
-		Yaf_Dispatcher::getInstance()->disableView();		
-		parent::init();
+		Yaf_Dispatcher::getInstance()->disableView();
 		$this->setNeedLogin(false);
+		parent::init();
+		
 	}
 	
 	/**
@@ -163,7 +164,7 @@ class BgcallController extends Base_Controller_Page {
 		    Base_Log::error($logParam);	    
 		    return;	
 	    }
-	    $retParam  = $this->financeLogic->arrUrlDec($_REQUEST);
+	    $retParam  = $this->financeLogic->arrUrlDec($_REQUEST);	     
 	    //验签处理
 	    $signKeys = array("CmdId", "RespCode", "MerCustId", "UsrCustId", "OrdId", "OrdDate", "TransAmt", "TrxId", "RetUrl","BgRetUrl","MerPriv"); 
 	    if(!$this->financeLogic->verify($this->financeLogic->getSignContent($_REQUEST, $signKeys), $_REQUEST['ChkValue'])) {
@@ -188,8 +189,7 @@ class BgcallController extends Base_Controller_Page {
 	    $lastip   = Base_Util_Ip::getClientIp();
 	    $respCode = $retParam['RespCode'];
 	    $respDesc = $retParam['RespDesc'];
-
-        if($respCode !== '000') {
+        if($respCode !== '000') {       	
         	$logParam = $retParam;
         	$logParam['msg'] = $respDesc;
         	Base_Log::error($logParam);        	
@@ -197,10 +197,10 @@ class BgcallController extends Base_Controller_Page {
         	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::NETSAVE, 
         		$respCode, $respDesc);
         	return ;
-        }
+        }        
         //充值财务订单状态更新为处理成功
-        $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::NETSAVE,
-	    	$respCode, $respDesc);
+        $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::NETSAVE,
+	    	$respCode, $respDesc);      
         //充值财务记录入库
         $param = array(
             'orderId'   => $orderId,
@@ -214,7 +214,7 @@ class BgcallController extends Base_Controller_Page {
         	'ip'        => $lastip,        	
         );
         $this->financeLogic->payRecordEnterDB($param);
-		Base_Log::notice($_REQUEST);
+		Base_Log::notice($retParam);
 		//页面打印
 		$trxId = strval($trxId);
 		print('RECV_ORD_ID_'.$trxId);

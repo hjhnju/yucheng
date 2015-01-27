@@ -186,13 +186,14 @@ class Finance_Logic_Base {
  	 * @return boolean
 	 */
 	public function payOrderUpdate($orderId,$status,$type,$failCode='',$failDesc='') {
+		
 		$regOrder = new Finance_Object_Order();
 		$orderId = intval($orderId);
 		$status = intval($status);
 		$type = intval($type);
 		$regOrder->orderId = $orderId;
 		$regOrder->status = $status;
-		
+
 		$statusDesc = Finance_TypeStatus::getStatusDesc(intval($status));
 		$type = Finance_TypeStatus::getType(intval($type));
 		$regOrder->comment = "$type".'订单'."$statusDesc";
@@ -200,6 +201,7 @@ class Finance_Logic_Base {
 			$regOrder->failCode = strval($failCode);
 			$regOrder->failDesc = strval($failDesc);
 		}
+		
 		$ret = $regOrder->save();		
 		if(!$ret){
 			Base_Log::error(array(

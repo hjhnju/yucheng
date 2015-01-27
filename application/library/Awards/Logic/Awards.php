@@ -102,9 +102,10 @@ class Awards_Logic_Awards {
         //首先拿到邀请人的信息
         $inviter = array();
         $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid);
-      //  var_dump($inviter['tenderAmount']>=10000.00);die;
+
         
-        $inviter['canBeAwarded'] = ($inviter['tenderAmount']>=10000.00) ? 1 : 0;//若投资金额满10000元，达到奖励标准1，否则为2
+        //TODO TEST<=
+        $inviter['canBeAwarded'] = ($inviter['tenderAmount']<=10000.00) ? 1 : 0;//若投资金额满10000元，达到奖励标准1，否则为2
         $objInvier = User_Api::getUserObject($inviterid);      
         $inviter['name']  = '我';
         $inviter['phone'] = $objInvier->phone;   
