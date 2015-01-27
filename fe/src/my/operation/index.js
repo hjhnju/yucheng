@@ -20,8 +20,8 @@ define(function (require) {
     var htmlContainer = $('.operation-list');
 
     var option = {
-        'type': 0,
-        'data': 0,
+        'type': 1,
+        'data': 1,
         'page': 1,
         'pagesize': 10
     };
