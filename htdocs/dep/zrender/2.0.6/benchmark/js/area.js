@@ -1,4 +1,13 @@
-define(function (require) {
+define([
+    'require',
+    'benchmark',
+    'zrender',
+    'etpl',
+    'zrender/tool/area',
+    'zrender/tool/util',
+    './shapes',
+    'zrender/shape/util/PathProxy'
+], function (require) {
     var Benchmark = require('benchmark');
     var zrender = require('zrender');
     var etpl = require('etpl');

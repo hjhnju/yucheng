@@ -1,4 +1,8 @@
-define('zrender/tool/area', function (require) {
+define('zrender/tool/area', [
+    'require',
+    './util',
+    './curve'
+], function (require) {
     'use strict';
     var util = require('./util');
     var curve = require('./curve');

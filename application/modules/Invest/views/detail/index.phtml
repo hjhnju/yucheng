@@ -232,23 +232,17 @@
                         </div>
                         <div class="details-main-box">
                             <div class="main-box-detail-title">审核信息</div>
+                            {%foreach $data.audit['1'] as $key => $item%}
                             <div class="renzheng-box">
-                                <div class="renzheng-title">企业认证</div>
+                                <div class="renzheng-title">{%$key%}</div>
                                 <div class="renzheng-box-main">
-                                    {%foreach $data.audit['1'] as $key => $item%}
-                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
+                                    {%foreach $item as $index => $temp%}
+                                    <div class="renzheng-pic {%$mapType[$temp.name]%}"></div>
                                     {%/foreach%}
                                 </div>
                             </div>
-                            <div class="renzheng-box">
-                                <div class="renzheng-title">个人认证</div>
-                                <div class="renzheng-box-main">
-                                    {%foreach $data.audit['2'] as $key => $item%}
-                                    <div class="renzheng-pic {%$mapType[$item.name]%}"></div>
-                                    {%/foreach%}
+                            {%/foreach%}
 
-                                </div>
-                            </div>
                         </div>
                         <div class="details-main-box bor-btm">
                             <div class="main-box-detail-title">审核通过</div>
@@ -258,7 +252,7 @@
                     </div>
                     <div class="main-box-details showfile-main">
                         <div class="details-main-box">
-                            <div class="main-box-detail-title">借款企业</div>
+                            <div class="main-box-detail-title">认证材料</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
                                     {%foreach $data.attach['1'] as $key => $item%}
@@ -335,7 +329,7 @@
                     <div class="right-top-allmoney-time">剩余时间：<span>计算中。。。</span></div>
                 </div>
                 <div class="right-top-ipt">
-                    <input name="amount" type="text" class="right-top-ipt-input" />
+                    <input name="amount" type="text" class="right-top-ipt-input" {%if !isset($user)%} disabled{%/if%} />
                     <input name="id" type="hidden" value="{%$data.id%}" />
                 </div>
                 <div class="right-top-chongzhi">

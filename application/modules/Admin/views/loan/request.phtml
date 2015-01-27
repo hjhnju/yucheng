@@ -105,6 +105,12 @@
                                     </ul>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="content">借款原因</label>
+                                <div class="text">
+                                    <input type="text" name="content">
+                                </div>
+                            </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="fresh"> 新手专项标
@@ -148,10 +154,19 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
-                                <input type="file" id="exampleInputFile">
-                                <p class="help-block">Example block-level help text here.</p>
+                                <label for="filename">附件描述</label>
+                                <input type="text" id="filename">
+                                <label for="select">附件类型</label>
+                                <select name="select">
+                                    <option value="1">认证材料</option>
+                                    <option value="2">合同协议</option>
+                                    <option value="3">实地照片</option>
+                                </select>
+                                <input type="file" id="inputfile">
+                                <p class="help-block">上传后保存</p>
                             </div>
+
+                            <button type="submit" class="btn btn-success">提交附件</button>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->

@@ -1,4 +1,4 @@
-define('echarts/util/mapData/geoCoord', function () {
+define('echarts/util/mapData/geoCoord', [], function () {
     return {
         'Russia': [
             100,

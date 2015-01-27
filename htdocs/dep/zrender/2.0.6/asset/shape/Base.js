@@ -1,4 +1,14 @@
-define('zrender/shape/Base', function (require) {
+define('zrender/shape/Base', [
+    'require',
+    '../tool/matrix',
+    '../tool/guid',
+    '../tool/util',
+    '../tool/log',
+    '../mixin/Transformable',
+    '../mixin/Eventful',
+    '../tool/area',
+    '../tool/color'
+], function (require) {
     var vmlCanvasManager = window['G_vmlCanvasManager'];
     var matrix = require('../tool/matrix');
     var guid = require('../tool/guid');

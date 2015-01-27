@@ -1,4 +1,10 @@
-define('common/Remoter', function (require) {
+define('common/Remoter', [
+    'require',
+    './config',
+    'jquery',
+    'common/global',
+    './XEmitter'
+], function (require) {
     var config = require('./config');
     var $ = require('jquery');
     var global = require('common/global');

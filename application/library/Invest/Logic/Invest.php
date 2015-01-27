@@ -22,17 +22,17 @@ class Invest_Logic_Invest {
     
     /**
      * 准备进行投标
-     * @param integer $uid
+     * @param integer $userid
      * @param integer $loan_id
      * @param number $amount
      * @param number $interest
      * @return boolean|string
      */
-    public function invest($uid, $loan_id, $amount, $interest = 0) {
+    public function invest($userid, $loan_id, $amount, $interest = 0) {
         if ($amount < self::MIN_INVEST) {
             return false;
         }
-        $max = $this->getUserCanInvest($uid, $loan_id, $amount);
+        $max = $this->getUserCanInvest($userid, $loan_id, $amount);
         if ($max < self::MIN_INVEST) {
             Base_Log::notice('max smaller then min invest :' . $max);
             return false;
@@ -45,18 +45,16 @@ class Invest_Logic_Invest {
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        $web = Base_Config::getConfig('web');
-        $retUrl = $web->root . '/invest/confirm';
+        $retUrl = Base_Config::getConfig('web')->root . '/invest/confirm';
         $max = $this->formatNumber($max);
+        //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
         $detail = array(
             array(
                 "BorrowerUserId" => $loan['user_id'],
-                "BorrowerAmt" => $max,
-                "BorrowerRate" => $loan['interest'] / 100,
+                "BorrowerAmt"    => $max,
             ),
         );
-        $url = Finance_Api::initiativeTender($loan_id, $max, $uid, $detail, $retUrl);
-        return $url;
+        Finance_Api::initiativeTender($loan_id, $max, $userid, $detail, $retUrl);
     }
     
     /**
