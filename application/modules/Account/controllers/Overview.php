@@ -53,9 +53,9 @@ class OverviewController extends Base_Controller_Page {
     public function indexAction(){
         $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
         $userBg = $this->userInfoLogic->getUserBg($this->huifuid);
-        $avlBal = strval($userBg['avlBal']);
-        $acctBal = strval($userBg['acctBal']);
-        $frzBal = strval($userBg['frzBal']);
+        $avlBal = sprintf('%.2f',$userBg['avlBal']);
+        $acctBal = sprintf('%.2f',$userBg['acctBal']);
+        $frzBal = sprintf('%.2f',$userBg['frzBal']);
        
         $huifuid = $this->objUser->huifuid;
         $openthirdpay = isset($huifuid) ? 1 : 2;

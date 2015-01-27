@@ -43,17 +43,37 @@ class AwardController extends Base_Controller_Page {
 		$userid = intval($userid);
 		$objUser = User_Api::getUserObject($userid);
 		$huifuid = $objUser->huifuid;
-		
-		
-	//	$ret = Awards_Api::receiveAwards($userid);
-	/*	if($ret === false) {
-			$errCode = Account_RetCode::RECEIVE_AWARDS_FAIL;
-			$errMsg = Account_RetCode::getMsg(Account_RetCode::RECEIVE_AWARDS_FAIL);
-			$this->outputError($errCode,$errMsg);
-		} else {
+		if($userid === $this->userid) {
+			$transAmt = 30.00;
+			$ret = Finance_Api::merCash($userid,$transAmt);
+			if(!$ret) {
+				Base_Log::error(array(
+			        'msg'      => '领取奖励失败',
+			        'userid'   => $userid,
+			        'transAmt' => $transAmt,
+				));
+				$errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
+				$errMsg = Finance_RetCode::getMsg($errCode);
+				$this->outputError($errCode,$errMsg);
+				return ;
+			}
 			$this->output();
-        }
-     */
-        $this->output();
+			return ;
+		}
+		$transAmt = 20.00;
+		$ret = Finance_Api::merCash($userid,$transAmt);
+		if(!$ret) {
+			Base_Log::error(array(
+			'msg'      => '领取奖励失败',
+			'userid'   => $userid,
+			'transAmt' => $transAmt,
+			));
+			$errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
+			$errMsg = Finance_RetCode::getMsg($errCode);
+			$this->outputError($errCode,$errMsg);
+			return ;
+		}
+		$this->output();
+		return ;
 	}
 }

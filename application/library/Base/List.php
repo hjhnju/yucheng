@@ -224,6 +224,7 @@ class Base_List {
             $pagesize = $this->pagesize;
             $sql .= " limit $offset, $pagesize";
         }
+        
         $this->initDB();
         $this->data = $this->db->fetchAll($sql);
         $this->dealIntField();
