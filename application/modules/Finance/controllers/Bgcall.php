@@ -236,7 +236,8 @@ class BgcallController extends Base_Controller_Page {
            	Base_Log::error($logParam);
             return;
         }
-        $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+       
+        $retParam = $this->financeLogic->arrUrlDec($_REQUEST);        
         //验签处理
         $signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "OrdDate", "TransAmt", "UsrCustId", "TrxId", "IsFreeze",
             "FreezeOrdId","FreezeTrxId","RetUrl","BgRetUrl","MerPriv","RespExt");
@@ -247,8 +248,8 @@ class BgcallController extends Base_Controller_Page {
         	));
         	//return ;
         }
-        
-        $merPriv = explode('_',$retParam['MerPriv']);
+        Base_Log::debug($_REQUEST);
+        $merPriv = explode('_',$_REQUEST['MerPriv']);
         $userid = intval($merPriv[0]);
         $proId = intval($merPriv[1]);        
 		$huifuid = $retParam['UsrCustId'];
@@ -680,24 +681,23 @@ class BgcallController extends Base_Controller_Page {
 	       	$logParam = $_REQUEST;
 	       	$logParam['msg'] = '汇付返回参数错误';
             Base_Log::error($logParam); 
-	    }
-	    $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-	    //验签处理SDK中验过了
-	    
-	    $userid    = intval($retParam['OutCustId']);
-		$orderId   = intval($retParam['OrdId']);
-		$orderDate = intval($retParam['MerPriv']);
-		$amount    = floatval($retParam['TransAmt']);
+	    }	   
+	    //验签处理SDK中验过了	    
+	    $merPriv = explode('_',$_REQUEST['MerPriv']);	    
+	    $userid    = $merPriv[1];
+		$orderId   = intval($_REQUEST['OrdId']);
+		$orderDate = $merPriv[0];
+		$amount    = floatval($_REQUEST['TransAmt']);
 		
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
 		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
 		
 		$lastip    = Base_Util_Ip::getClientIp();
-		$respCode  = $retParam['RespCode'];
-		$respDesc  = $retParam['RespDesc'];
+		$respCode  = $_REQUEST['RespCode'];
+		$respDesc  = $_REQUEST['RespDesc'];		
 		if($respCode !== '000') {
-			$logParam = $retParam;
+			$logParam = $_REQUEST;
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态更改为“处理失败”
@@ -721,7 +721,7 @@ class BgcallController extends Base_Controller_Page {
 			'ip'        => $lastip,
 		);
 		$this->financeLogic->payRecordEnterDB($paramRecord);
-		Base_Log::notice($retParam);
+		Base_Log::notice($_REQUEST);
 		print('RECV_ORD_ID_'.strval($orderId));		
 	}
 	

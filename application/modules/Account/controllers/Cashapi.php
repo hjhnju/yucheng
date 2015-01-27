@@ -87,7 +87,7 @@ class CashapiController extends Base_Controller_Api {
 		$endTime = $_REQUEST['endTime'];
 		$baseLogic = new Finance_Logic_Base();
 		$userid = $this->userid;
-		$pageSize = 15;
+		$pageSize = 6;
 		//只有在没有选择时间范围的情况下才可以进行开始时间与结束时间的数据拉取
 		if(isset($startTime) && isset($endTime) && !isset($time)) {
 	        $ret = $baseLogic->getReWiRecord($userid,$startTime,$endTime,$queryType,$page,$pageSize);

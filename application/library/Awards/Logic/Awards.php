@@ -102,7 +102,9 @@ class Awards_Logic_Awards {
         //首先拿到邀请人的信息
         $inviter = array();
         $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid);
-
+        if(empty($inviter['tenderAmount'])) {
+        	$inviter['tenderAmount'] = 0.00;
+        }
         
         //TODO TEST<=
         $inviter['canBeAwarded'] = ($inviter['tenderAmount']<=10000.00) ? 1 : 0;//若投资金额满10000元，达到奖励标准1，否则为2
@@ -134,6 +136,9 @@ class Awards_Logic_Awards {
         	$data = array();
         	$userId = $value['userid'];
         	$tenderAmount = Invest_Api::getUserAmount($userId); //拿到了被邀请人的投资总额
+        	if(empty($tenderAmount)) {
+        		$tenderAmount = 0.00;
+        	}
         	$data['tenderAmount'] = $tenderAmount;
         	$data['canBeAwarded'] = ($tenderAmount>=10000.00) ? 1 : 2; //若投资金额满10000元，达到奖励标准1，否则为2
         	//从用户模块拿到注册的进度  与用户的详细信息

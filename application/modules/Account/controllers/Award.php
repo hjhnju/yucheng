@@ -41,11 +41,15 @@ class AwardController extends Base_Controller_Page {
 	public function receiveawardsAction() {
 		$userid = $_REQUEST['id'];
 		$userid = intval($userid);
-		$objUser = User_Api::getUserObject($userid);
+		$objUser = $this->objUser;
 		$huifuid = $objUser->huifuid;
+		$logic = new Finance_Logic_Transaction();
+		$outUserId = Finance_Logic_Base::MERCUSTID;
+		$outAcctId = 'MDT000001';
 		if($userid === $this->userid) {
 			$transAmt = 30.00;
-			$ret = Finance_Api::merCash($userid,$transAmt);
+		    $inUserId = $userid;
+		    $ret = $logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
 			if(!$ret) {
 				Base_Log::error(array(
 			        'msg'      => '领取奖励失败',
@@ -59,14 +63,15 @@ class AwardController extends Base_Controller_Page {
 			}
 			$this->output();
 			return ;
-		}
-		$transAmt = 20.00;
-		$ret = Finance_Api::merCash($userid,$transAmt);
+		}				
+        $transAmt = 20.00;
+		$inUserId = $userid;
+		$ret = $logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
 		if(!$ret) {
 			Base_Log::error(array(
-			'msg'      => '领取奖励失败',
-			'userid'   => $userid,
-			'transAmt' => $transAmt,
+			    'msg'      => '领取奖励失败',
+			    'userid'   => $userid,
+			    'transAmt' => $transAmt,
 			));
 			$errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
 			$errMsg = Finance_RetCode::getMsg($errCode);

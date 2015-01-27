@@ -572,12 +572,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }
         $webroot   = Base_Config::getConfig('web')->root;
         $chinapnr  = Finance_Chinapnr_Logic::getInstance();
-        $transAmt = sprintf('%.2f',$transAmt);
+        $transAmt  = sprintf('%.2f',$transAmt);
         $orderInfo = $this->genOrderInfo();
         $orderId   = $orderInfo['orderId'];
         $orderDate = $orderInfo['date'];
         
         $queryLogic = new Finance_Logic_Query();
+        $huifuid = $this->getHuifuid(intval($inUserId));
         $balance = $queryLogic->queryBalanceBg($huifuid);
         $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
@@ -597,18 +598,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $this->payOrderEnterDB($param);
         
         $ordId = strval($orderId);
-        $outCustId = strval($this->getHuifuid(intval($outUserId)));
-        //test
-        $outCustId = $outUserId;
+        $outCustId = strval($outUserId);
         $outAcctId = strval($outAcctId);
-        $transAmt = $transAmt;
-        $inCustId = strval($this->getHuifuid(intval($inUserId)));
-        //for test
-        $inCustId = $inUserId;
+        $inCustId = strval($huifuid);
         $inAcctId = 'MDT000001';
         $retUrl = '';
         $bgRetUrl = $webroot.'/finance/bgcall/transfer';
-        $merPriv = strval($orderDate);      
+        $merPriv = strval($orderDate).'_'.strval($inUserId);      
         $ret = $chinapnr->transfer($ordId, $outCustId, $outAcctId, $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
         return $ret;
     }

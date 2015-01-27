@@ -1549,7 +1549,9 @@ HTML;
 				"MerPriv"	=>	$merPriv,
 				"ChkValue"	=>	$checkValue,
 		);
-		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","OrdId","OutCustId","OutAcctId","TransAmt","InCustId","InAcctId","RetUrl","BgRetUrl","MerPriv"));
+		//var_dump($reqData);die;
+		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","OrdId","OutCustId","OutAcctId","TransAmt","InCustId","InAcctId","RetUrl","BgRetUrl","MerPriv"));		
+		
 		return $response;
 	}
 	/**
