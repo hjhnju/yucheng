@@ -1,14 +1,4 @@
-define('echarts/component/categoryAxis', [
-    'require',
-    './base',
-    'zrender/shape/Text',
-    'zrender/shape/Line',
-    'zrender/shape/Rectangle',
-    '../config',
-    'zrender/tool/util',
-    'zrender/tool/area',
-    '../component'
-], function (require) {
+define('echarts/component/categoryAxis', function (require) {
     var Base = require('./base');
     var TextShape = require('zrender/shape/Text');
     var LineShape = require('zrender/shape/Line');

@@ -1,4 +1,4 @@
-define('zrender/tool/math', [], function () {
+define('zrender/tool/math', function () {
     var _radians = Math.PI / 180;
     function sin(angle, isDegrees) {
         return Math.sin(isDegrees ? angle * _radians : angle);
