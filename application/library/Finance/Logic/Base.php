@@ -578,6 +578,17 @@ class Finance_Logic_Base {
     	$scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
     	return $scureTool->verify($originStr, $sign);
     }
+
+	/**
+     * 验签
+     * @param  $arrFields 字段 array('field1', 'field2')
+     * @param  $arrParams array('field' => 'value')
+     */
+    public function verifySign($arrFields, $arrParams, $sign) {
+    	$originStr = $this->getSignContent($arrParams, $arrFields);
+    	$scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
+    	return $scureTool->verify($originStr, $sign);
+    }
     
 	/**
 	 * @desc 指定验签报文的主键，自动拼接验签原文
