@@ -95,7 +95,7 @@ class OverviewController extends Base_Controller_Page {
     public function profitcurveAction() {
         $userid = $this->userid;
         $huifuid = $this->huifuid;
-        $userName = $this->name;
+        $userName = $this->objUser->name;
         if(!isset($huifuid)) {
            // $this->ajax = false;
             $data = array(
