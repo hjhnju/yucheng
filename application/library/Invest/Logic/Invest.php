@@ -68,34 +68,42 @@ class Invest_Logic_Invest {
     
     /**
      * 准备进行投标
-     * @param integer $uid
+     * @param integer $useri
      * @param integer $loan_id
      * @param number $amount
      * @return boolean|string
      */
-    public function doInvest($uid, $loan_id, $amount) {
+    public function doInvest($userid, $loan_id, $amount) {
         if ($amount < self::MIN_INVEST) {
             return false;
         }
-        $max = $this->getUserCanInvest($uid, $loan_id, $amount);
+        $max = $this->getUserCanInvest($userid, $loan_id, $amount);
         if ($max < $amount) {
-            $this->cancelInvest($uid, $amount);
+            $this->cancelInvest($userid, $amount);
             return false;
         }
         //防并发进行投资
         $res = Loan_Api::updateLoanInvestAmount($loan_id, $amount);
         if ($res === true) {
-            $invest = new Invest_Object_Invest();
-            $invest->amount = $amount;
+            $invest         = new Invest_Object_Invest();
+            $invest->userId = $userid;
             $invest->loanId = $loan_id;
-            //@todo 获取用户名
-            $invest->name = '';
-            $invest->userId = $this->getUserId();
+            $invest->amount = $amount;
+            $objUser        = User_Api::getUserObject($userid);
+            $invest->name   = $objUser->name;
             if (!$invest->save()) {
-                Base_Log::error(json_encode($invest), '写入投标信息失败');
+                Base_Log::error(array(
+                    'msg'    => '写入投标信息失败',
+                    'invest' => json_encode($invest)
+                ));
+                return false;
             }
         } else {
-            $this->cancelInvest($uid, $amount);
+            $this->cancelInvest($userid, $amount);
+            Base_Log::notice(array(
+                'msg'    => '投标失败，取消投标',
+                'invest' => json_encode($invest)
+            ));
             return false;
         }
         return true;
@@ -121,15 +129,6 @@ class Invest_Logic_Invest {
             return true;
         }
         return false;
-    }
-    
-    /**
-     * 获取登录用户ID
-     * @return number
-     */
-    private function getUserId() {
-        //@todo 获取用户ID
-        return 1;
     }
     
     /**
@@ -246,6 +245,7 @@ class Invest_Logic_Invest {
     
     /**
      * 获取借款的投资列表
+     * 增加用户名(初用户本人外加*)
      * @param integer $loan_id
      * @param integer $page
      * @param integer $pagesize
@@ -256,6 +256,9 @@ class Invest_Logic_Invest {
         $invest->setFilter(array('loan_id' => $loan_id));
         $invest->setPage($page);
         $invest->setPagesize($pagesize);
+
+        $arrInvs = $invest->toArray();
+        var_dump($arrInvs['list']);
         
         return $invest->toArray();
     }

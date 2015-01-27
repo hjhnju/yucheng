@@ -5,14 +5,14 @@
 class ListController extends Base_Controller_Api {
 
     protected $needLogin = false;
-    	
-	public function indexAction() {
-	    $id = intval($_REQUEST['id']);
-	    if (empty($id)) {
-	        $this->ajaxError(Base_RetCode::PARAM_ERROR);
-	    }
-	    
-	    $list = Invest_Api::getLoanInvests($id);
-	    $this->ajax($list);
-	}
+        
+    public function indexAction() {
+        $loanId = intval($_REQUEST['id']);
+        if (empty($loanId)) {
+            $this->ajaxError(Base_RetCode::PARAM_ERROR);
+        }
+        
+        $list = Invest_Api::getLoanInvests($loanId);
+        $this->ajax($list);
+    }
 }

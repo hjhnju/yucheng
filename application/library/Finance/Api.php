@@ -4,6 +4,14 @@
  * @author lilu
  */
 class Finance_Api {
+
+	/**
+	 * 验证签名
+	 */
+	public static function verifySign($arrFields, $arrValues, $sign){
+		$logic = new Finance_Logic_Base();
+		return $logic->verifySign($arrFields, $arrValues, $sign);
+	}
 	
 	/**
 	 * 商户子账户信息查询 Finance_Api::queryAccts
