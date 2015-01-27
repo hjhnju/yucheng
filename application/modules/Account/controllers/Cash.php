@@ -33,8 +33,8 @@ class CashController extends Base_Controller_Page {
 		$huifuid  = $this->huifuid;	
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
 		$userBg   = $this->userInfoLogic->getUserBg($huifuid);
-		$avlBal   = strval($userBg['avlBal']);
-		$acctBal  = strval($userBg['acctBal']);
+		$avlBal   = sprintf('%.2f',$userBg['avlBal']);
+		$acctBal  = sprintf('%.2f',$userBg['acctBal']);
 		$rechargeurl = "$this->webroot".'/account/cash/recharge';
 		$withdrawurl = "$this->webroot".'/account/cash/withdraw';
 		//assign至前端

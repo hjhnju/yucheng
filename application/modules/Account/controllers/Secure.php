@@ -42,8 +42,6 @@ class SecureController extends Base_Controller_Page{
 	public function indexAction() {	
 		$webroot = Base_Config::getConfig('web')->root;
 		$userid = $this->userid;
-		//$userObj = User_Api::getUserObject($userid);
-		//$userObj = json_decode(json_encode(array('email'=>'lilu19891029@126.com','name'=>'lilu', 'phone'=>'18611015043','certificateContent'=>'320303198910290489','realname'=>'jiangbianliming','huifuid'=>1101)));//for test
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
 		$phonenum = $userinfo['phone']['value'];//用户手机号码
@@ -203,22 +201,5 @@ class SecureController extends Base_Controller_Page{
 
 	}
     
-	/**
-	 * 接口/account/secure/unbindthird
-	 * 解绑入口 
-	 */
-	public function unbindthirdAction() {
-		$userid = $this->userid;
-		$thirdBindRet = User_Api::checkBind($userid);
-		$type = $thirdBindRet['type'];
-	    if(!User_Api::delBind($userid,$type)) {
-	    	Base_Log::error(array(
-	    		'msg'    => '解绑失败',
-	    		'userid' => $userid,
-	    		'type'   => $type,
-	    	));
-	    	
-	    }
-	    
-	}
+	
 }

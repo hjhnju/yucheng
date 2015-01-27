@@ -420,7 +420,7 @@ class Finance_Logic_Base {
 			$startTime = strval($startTime);
 			$endTime = strval($endTime);
 			$filters = array(
-				'userId'      => $userid,
+				'userId'      => array("(`userId`='$userid')"),
 				'create_time' => array("(`create_time` between '$startTime' and '$endTime')"),
 				'type'        => array("(`type`= '$recharge' or `type`= '$withdraw') "),
 			);
@@ -429,7 +429,6 @@ class Finance_Logic_Base {
 			$record->setPage($page);
 			$record->setOrder("`create_time` desc");
 			$list = $record->toArray();			
-			
 			$data = $list['list'];
 			if(empty($data)) {
 				$ret = array();
@@ -464,7 +463,7 @@ class Finance_Logic_Base {
 		//获取充值数据
 		if($queryType === 2) {
 			$filters = array(
-				'userId'      => $userid,
+				'userId'      => array("(`userId`='$userid')"),
 				'create_time' => array("(create_time between '$startTime' and '$endTime')"),
 				'type'        => $recharge,
 			);
@@ -507,7 +506,7 @@ class Finance_Logic_Base {
 		//获取提现数据
 		if($queryType === 3) {
 			$filters = array(
-				'userId'      => $userid,
+				'userId'      => array("(`userId`='$userid')"),
 				'create_time' => array("(create_time between '$startTime' and '$endTime')"),
 				'type'        => $withdraw,
 			);

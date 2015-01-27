@@ -100,11 +100,11 @@ class CashapiController extends Base_Controller_Api {
 	        	    'queryType' => $queryType,
 	        	));
 	        	$ret = array(
-	        			'page'     => 0,
-	        			'pagesize' => 0,
-	        			'pageall'  => 0,
-	        			'total'    => 0,
-	        			'list'     => array(),
+	        		'page'     => 0,
+	        		'pagesize' => 0,
+	        		'pageall'  => 0,
+	        		'total'    => 0,
+	        		'list'     => array(),
 	        	);
 	        	$this->output($ret);
 	        	return;
