@@ -65,7 +65,10 @@
                             <td>{%$loan.amount%}</td>
                             <td>{%$loan.interest%}</td>
                             <td>{%$loan.duration%}</td>
-                            <td><a href="/admin/loan/edit?loanid={%$loan.id%}">编辑详情</a></td>
+                            <td>
+                            	<a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
+                            	<a href="/admin/loan/publish?loanid={%$loan.id%}">发布</a>
+                            </td>
                         </tr>
                         {%/foreach%}
                     </tbody>

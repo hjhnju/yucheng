@@ -16,6 +16,9 @@ class RequestAction extends Yaf_Action_Abstract {
             $this->getView()->assign('error_msg', $errMsg);
             return;
         }
+        //参数获取－借款id
+        $loanId  = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
+        $loanId  = 10; //test
 
         //获取申请借款人
         $objUser = User_Api::getUserObject($userid);
@@ -23,9 +26,10 @@ class RequestAction extends Yaf_Action_Abstract {
         $arrUser['name'] = $objUser->name;
         $this->getView()->assign('user', $arrUser);
 
-        //申请借款
+        //申请借款信息
+        //TODO:若有loanid从数据库先获取信息
         $_POST = array(
-            'id' => 10,
+            'id' => $loanId,
             //基本借款信息
             'user_id'   => $userid,
             'title'     => '北京中学资金流转',
@@ -46,13 +50,13 @@ class RequestAction extends Yaf_Action_Abstract {
             'deadline'    => strtotime('2015-02-08 00:00:00'),
             'status'      => Loan_Type_LoanStatus::LENDING,
             'create_uid'  => $createUid,
-            //借款企业信息
             //借款审核信息
             'audit'       => array(
                 array('id'=>16, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'实地认证'),
                 array('id'=>17, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'营业执照'),
                 array('id'=>18, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'户口本'),
             ),
+            //借款企业信息
             'company'     => array(
                 'id'        => 2,
                 'school'    => '北京市101中学',
@@ -63,6 +67,7 @@ class RequestAction extends Yaf_Action_Abstract {
                 'funds'     => '100万',
                 'students'  => 2018,
             ),
+            //借款担保人信息
             'guarantee' => array(
                 'id'          => 3,
                 'name'        => '王珞丹',

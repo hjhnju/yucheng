@@ -333,33 +333,33 @@ class Finance_Api {
      * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
      * @param string $FreezeOrdId 冻结订单号(optional)    
      * @param string retUrl 汇付回调返回url
-     * @return string requestURL 请求汇付的URL  
+     * @return false || redirect  
      * )   
      * 
 	 */
-	public static function initiativeTender($loanId, $transAmt, $userid ,$uidborrowDetail,$retUrl) {
+	public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails, $retUrl) {
 		if(!isset($loanId) || empty($loanId) || !isset($transAmt) || empty($transAmt) || 
-		   !isset($userid) || empty($userid) || !isset($uidborrowDetail) || empty($uidborrowDetail) ||
+		   !isset($userid) || empty($userid) || !isset($borrowerDetails) || empty($borrowerDetails) ||
 		   !isset($retUrl) || empty($retUrl)) {
 		    Base_Log::error(array(
 		    	'msg'             => '请求参数错误',
 		    	'loanId'          => $loanId,
 		    	'transAmt'        => $transAmt,
 		    	'userid'          => $userid,
-		    	'uidborrowDetail' => $uidborrowDetail,
+		    	'borrowerDetails' => $borrowerDetails,
 		    	'retUrl'          => $retUrl,
-		    ));   	
+		    ));
+		    return false;	
 		}
-		$isFreeze = 'Y';//冻结订单
 		$transLogic = new Finance_Logic_Transaction();
 		Base_Log::notice(array(
 			'loanId'          => $loanId,
 			'transAmt'        => $transAmt,
 			'userid'          => $userid,
-			'uidborrowDetail' => $uidborrowDetail,
+			'borrowerDetails' => $borrowerDetails,
 			'retUrl'          => $retUrl,			
 		));
-		$transLogic->initiativeTender($loanId, $transAmt, $userid, $uidborrowDetail, $isFreeze, $retUrl);		
+		$transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl);		
 	}
 	
 	/**

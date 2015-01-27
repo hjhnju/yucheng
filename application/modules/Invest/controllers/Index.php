@@ -17,7 +17,6 @@ class IndexController extends Base_Controller_Page {
 	    $filter['cat'] = $this->getInt('cat');
 	    $filter['period'] = $this->getInt('period');
 	    $list = Invest_Api::getInvestList($page, $pagesize, $filter);
-	    
 	    $this->_view->assign('data', $list);
 	}
 }
