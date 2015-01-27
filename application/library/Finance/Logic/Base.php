@@ -196,7 +196,7 @@ class Finance_Logic_Base {
 		$statusDesc = Finance_TypeStatus::getStatusDesc(intval($status));
 		$type = Finance_TypeStatus::getType(intval($type));
 		$regOrder->comment = "$type".'订单'."$statusDesc";
-		if(!empty($failCode) && !empty($failDesc)) {
+		if(!empty($failCode) || !empty($failDesc)) {
 			$regOrder->failCode = strval($failCode);
 			$regOrder->failDesc = strval($failDesc);
 		}
@@ -426,7 +426,8 @@ class Finance_Logic_Base {
 			$record->setPagesize($pageSize);
 			$record->setPage($page);
 			$record->setOrder("`create_time` desc");
-			$list = $record->toArray();				
+			$list = $record->toArray();			
+			
 			$data = $list['list'];
 			if(empty($data)) {
 				$ret = array();
