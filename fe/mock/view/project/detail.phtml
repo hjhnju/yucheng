@@ -274,8 +274,8 @@
                             <div class="main-detail-content">
                                 <ul class="detail-item">
                                     {%foreach $attach['1'] as $key => $item%}
-                                    <li class="detail-item-list">
-                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                    <li class="detail-item-list img-city">
+                                        <img class="detail-item-list-img img-width" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -301,7 +301,7 @@
                                 <ul class="detail-item">
                                     {%foreach $attach['3'] as $key => $item%}
                                     <li class="detail-item-list img-city">
-                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <img class="detail-item-list-img img-width" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
