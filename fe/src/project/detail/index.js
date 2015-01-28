@@ -115,6 +115,9 @@ define(function (require) {
         // 全部投资
         $('.confirm-all').click(function () {
             var ipt = $('.right-top-ipt-input');
+            var error = $('.chongzhi-error');
+
+            error.hasClass('show') && error.removeClass('show');
 
             !ipt[0].disabled && ipt.val(Math.min(model.userAmount, model.amountRest));
         });
