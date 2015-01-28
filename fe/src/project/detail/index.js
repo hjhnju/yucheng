@@ -155,7 +155,7 @@ define(function (require) {
                     error.removeClass('show');
                 }
 
-                $('.chongzhi-span').html(caculateIncome(value || 0));
+                $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
             },
 
             keyup: function () {
@@ -176,7 +176,7 @@ define(function (require) {
                     error.removeClass('show');
                 }
 
-                $('.chongzhi-span').html(caculateIncome(value || 0));
+                $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
             }
         });
 
