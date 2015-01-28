@@ -36,7 +36,7 @@ $smarty->assign('safe_id', 1);
 $smarty->assign('refund_type', 1);
 $smarty->assign('audit_info', '经过审核可以借');
 $smarty->assign('deadline', 1420291877);
-$smarty->assign('status', 6);
+$smarty->assign('status', 5);
 $smarty->assign('create_time', 1419312345);
 $smarty->assign('update_time', 1419344538);
 $smarty->assign('create_uid', 1);

@@ -30,7 +30,7 @@ class Finance_TypeStatus {
 		self::NETSAVE          => '充值',
 		self::CASH             => '提现',
 		self::INITIATIVETENDER => '主动投标',
-		self::TENDERCANEL     => '投标撤销',
+		self::TENDERCANCEL     => '投标撤销',
 		self::LOANS            => '满标打款',
 		self::REPAYMENT        => '还款',	
 		self::TRANSFER         => '商户用自动扣款转账',

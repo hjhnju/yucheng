@@ -224,7 +224,7 @@ class Base_List {
             $pagesize = $this->pagesize;
             $sql .= " limit $offset, $pagesize";
         }
-
+        
         $this->initDB();
         $this->data = $this->db->fetchAll($sql);
         $this->dealIntField();
@@ -327,7 +327,7 @@ class Base_List {
         if ($this->pagesize == PHP_INT_MAX) {
             $pagesize = 0;
         }
-        
+       
         $data = $this->getData();
         $list = array(
             'page' => $this->page,

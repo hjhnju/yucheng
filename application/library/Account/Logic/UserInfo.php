@@ -41,7 +41,6 @@ class Account_Logic_UserInfo {
      *  )
      */
     public function getUserInfo($objUser){
-        
         $webroot = Base_Config::getConfig('web')->root;
         $ret = array();
         

@@ -174,7 +174,7 @@ class UsermanageController extends Base_Controller_Page {
     	$outUserId = '6000060000677575';
     	$outAcctId = 'MDT000001';
     	$transAmt = '200.05';
-    	$inUserId = '6000060000696947';
+    	$inUserId = $this->userid;
     	$logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
     	
     }

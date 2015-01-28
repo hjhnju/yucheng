@@ -27,6 +27,7 @@ class TenderController extends Base_Controller_Page {
 	    $logic = new Invest_Logic_Invest();
 	    $allowed = $logic->allowInvest($uid, $loan_id);
 	    if (!$allowed) {
+	    	//TODO: 错误打至项目详情页面
 	        return $this->ajaxError(Invest_RetCode::NOT_ALLOWED, 
 		    	Invest_RetCode::getMsg(Invest_RetCode::NOT_ALLOWED));
 	    }

@@ -15,6 +15,7 @@ class Finance_RetCode extends Base_RetCode {
 	CONST CANNOT_DEL_DEFALTCARD      = 1104;//默认取现卡不可以删除
 	
 	CONST HUIFU_RETURN_ERROR         = 1105;//汇付返回参数错误
+	CONST RECEIVE_AWARDS_FAIL        = 1106;//领取奖励失败
 
 	
 	
@@ -29,6 +30,7 @@ class Finance_RetCode extends Base_RetCode {
 		self::NOTBINDANYCARD        => '用户没用绑定任何一张卡',
 		self::CANNOT_DEL_DEFALTCARD => '默认取现卡不可以删除',
 		self::HUIFU_RETURN_ERROR    => '汇付返回参数错误',
+		self::RECEIVE_AWARDS_FAIL   => '领取奖励失败',
 	);
 	
 	/**

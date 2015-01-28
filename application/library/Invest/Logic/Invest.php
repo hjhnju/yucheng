@@ -45,14 +45,13 @@ class Invest_Logic_Invest {
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        $web = Base_Config::getConfig('web');
-        $retUrl = $web->root . '/invest/confirm';
+        $retUrl = Base_Config::getConfig('web')->root . '/invest/confirm';
         $max = $this->formatNumber($max);
         //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
         $detail = array(
             array(
                 "BorrowerUserId" => $loan['user_id'],
-                "BorrowerAmt" => $max,
+                "BorrowerAmt"    => $max,
             ),
         );
         Finance_Api::initiativeTender($loan_id, $max, $userid, $detail, $retUrl);
@@ -69,34 +68,42 @@ class Invest_Logic_Invest {
     
     /**
      * 准备进行投标
-     * @param integer $uid
+     * @param integer $useri
      * @param integer $loan_id
      * @param number $amount
      * @return boolean|string
      */
-    public function doInvest($uid, $loan_id, $amount) {
+    public function doInvest($userid, $loan_id, $amount) {
         if ($amount < self::MIN_INVEST) {
             return false;
         }
-        $max = $this->getUserCanInvest($uid, $loan_id, $amount);
+        $max = $this->getUserCanInvest($userid, $loan_id, $amount);
         if ($max < $amount) {
-            $this->cancelInvest($uid, $amount);
+            $this->cancelInvest($userid, $amount);
             return false;
         }
         //防并发进行投资
         $res = Loan_Api::updateLoanInvestAmount($loan_id, $amount);
         if ($res === true) {
-            $invest = new Invest_Object_Invest();
-            $invest->amount = $amount;
+            $invest         = new Invest_Object_Invest();
+            $invest->userId = $userid;
             $invest->loanId = $loan_id;
-            //@todo 获取用户名
-            $invest->name = '';
-            $invest->userId = $this->getUserId();
+            $invest->amount = $amount;
+            $objUser        = User_Api::getUserObject($userid);
+            $invest->name   = $objUser->name;
             if (!$invest->save()) {
-                Base_Log::error(json_encode($invest), '写入投标信息失败');
+                Base_Log::error(array(
+                    'msg'    => '写入投标信息失败',
+                    'invest' => json_encode($invest)
+                ));
+                return false;
             }
         } else {
-            $this->cancelInvest($uid, $amount);
+            $this->cancelInvest($userid, $amount);
+            Base_Log::notice(array(
+                'msg'    => '投标失败，取消投标',
+                'invest' => json_encode($invest)
+            ));
             return false;
         }
         return true;
@@ -125,15 +132,6 @@ class Invest_Logic_Invest {
     }
     
     /**
-     * 获取登录用户ID
-     * @return number
-     */
-    private function getUserId() {
-        //@todo 获取用户ID
-        return 1;
-    }
-    
-    /**
      * 撤销投标
      * @param integer $uid
      * @param number $amount
@@ -148,8 +146,19 @@ class Invest_Logic_Invest {
      * @param integer $uid
      * @return number
      */
-    public function getUserAmount($uid) {
-        return Finance_Api::getUserBalance($uid);
+    public function getAccountAvlBal($uid) {
+        $arrAmt = Finance_Api::getUserBalance($uid);
+        $avlBal = 0.0;
+        if(!empty($arrAmt) && isset($arrAmt['data']['avlBal'])){
+            $avlBal = floatval($arrAmt['data']['avlBal']);
+        }else{
+            Base_Log::warn(array(
+                'msg' => '获取账户可用余额失败',
+                'uid' => $uid,
+                'avlBal' => $avlBal,
+            ));
+        }
+        return $avlBal;
     }
     
     /**
@@ -160,7 +169,7 @@ class Invest_Logic_Invest {
     public function getUserInvestAmount($uid) {
         $list = new Invest_List_Invest();
         $filters = array(
-            'uid' => $uid,
+            'user_id' => $uid,
             'status' => array(
                 'status != ' . Invest_Type_InvestStatus::CANCEL,
                 'status != ' . Invest_Type_InvestStatus::FAILED,
@@ -207,7 +216,7 @@ class Invest_Logic_Invest {
         
         $loan = Loan_Api::getLoanInfo($loan_id);
         $rest = $loan['amount'] - $loan['invest_amount'];
-        $user_amount = $this->getUserAmount($uid);
+        $user_amount = $this->getAccountAvlBal($uid);
         $amount = min($amount, $user_amount);
         if ($amount < self::MIN_INVEST) {
             Base_Log::notice('amount smaller then min invest');
@@ -236,6 +245,7 @@ class Invest_Logic_Invest {
     
     /**
      * 获取借款的投资列表
+     * 增加用户名(初用户本人外加*)
      * @param integer $loan_id
      * @param integer $page
      * @param integer $pagesize
@@ -246,7 +256,7 @@ class Invest_Logic_Invest {
         $invest->setFilter(array('loan_id' => $loan_id));
         $invest->setPage($page);
         $invest->setPagesize($pagesize);
-        
+
         return $invest->toArray();
     }
     

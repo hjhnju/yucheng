@@ -2,17 +2,17 @@
 /**
  * 投标记录
  */
-class ListController extends Base_Controller_Response {
-    protected $ajax = true;
+class ListController extends Base_Controller_Api {
+
     protected $needLogin = false;
-	
-	public function indexAction() {
-	    $id = intval($_GET['id']);
-	    if (empty($id)) {
-	        $this->outputError(Base_RetCode::PARAM_ERROR);
-	    }
-	    
-	    $list = Invest_Api::getLoanInvests($id);
-	    $this->output($list);
-	}
+        
+    public function indexAction() {
+        $loanId = intval($_REQUEST['id']);
+        if (empty($loanId)) {
+            $this->ajaxError(Base_RetCode::PARAM_ERROR);
+        }
+        
+        $list = Invest_Api::getLoanInvests($loanId);
+        $this->ajax($list);
+    }
 }

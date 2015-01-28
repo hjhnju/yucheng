@@ -93,7 +93,7 @@ class Awards_Logic_Awards {
      * @param integer $userid
      * @return array or false
      */
-    public function getAwards($inviterid,$page,$pageSize) {
+    public function getAwards($inviterid) {
     	if($inviterid<0){
     		return false;//参数错误，返回false
     	}
@@ -102,13 +102,19 @@ class Awards_Logic_Awards {
         //首先拿到邀请人的信息
         $inviter = array();
         $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid);
-        $inviter['canBeAwarded'] = ($tenderAmount>=10000.00) ? 1 : 2;//若投资金额满10000元，达到奖励标准1，否则为2
-        $objInvier = User_Api::getUserObject($inviterid);
-        $inviter['userInfo'] = array(
-        		'name'  =>$objInvier->name,
-        		'phone' =>$objInvier->phone,
-        );
-        if(isset($objUser->huifuid)) {
+        if(empty($inviter['tenderAmount'])) {
+        	$inviter['tenderAmount'] = 0.00;
+        }
+        
+        //TODO TEST<=
+        $inviter['canBeAwarded'] = ($inviter['tenderAmount']<=10000.00) ? 1 : 0;//若投资金额满10000元，达到奖励标准1，否则为2
+        $objInvier = User_Api::getUserObject($inviterid);      
+        $inviter['name']  = '我';
+        $inviter['phone'] = $objInvier->phone;   
+        $inviter['phone'] = substr_replace($inviter['phone'],'****',3,4);
+        $inviter['id'] = $inviterid;  
+        $huifuid = $objInvier->huifuid;
+        if(isset($huifuid)) {
         	$inviter['registProgress'] = 1; //huifuid存在表明已经开通资金托管
         } else {
         	$inviter['registProgress'] = 2; //不存在表明没有开通资金托管
@@ -117,15 +123,11 @@ class Awards_Logic_Awards {
         $ret[0] = $inviter; //返回值得第一项为该用户的信息
         //开始获取该用户邀请的用的信息       
         $refunds = new Awards_List_Invite();
-        $filters = array('$inviterid' => $inviterid); //caution:被邀请人的userid
+        $filters = array('inviterid' => $inviterid); //caution:被邀请人的userid
         $refunds->setFilter($filters);
         $refunds->setOrder('create_time desc');
-        $refunds->setPage($page);
-        $refunds->setPagesize($pageSize);
         $list = $refunds->toArray(); //拿到了该邀请人邀请到的所有人的信息
-        $users = $list['list'];
-        
-        
+        $users = $list['list'];        
         if(empty($users)) {	
         	return $ret; //若没有邀请者，返回false
         }
@@ -134,14 +136,16 @@ class Awards_Logic_Awards {
         	$data = array();
         	$userId = $value['userid'];
         	$tenderAmount = Invest_Api::getUserAmount($userId); //拿到了被邀请人的投资总额
+        	if(empty($tenderAmount)) {
+        		$tenderAmount = 0.00;
+        	}
         	$data['tenderAmount'] = $tenderAmount;
         	$data['canBeAwarded'] = ($tenderAmount>=10000.00) ? 1 : 2; //若投资金额满10000元，达到奖励标准1，否则为2
         	//从用户模块拿到注册的进度  与用户的详细信息
         	$objUser = User_Api::getUserObject($userId);
-        	$data['userInfo'] = array(
-        	    'name'  =>$objUser->name,
-        		'phone' =>$objUser->phone,
-        	);
+        	$data['name']  = $objUser->name;
+        	$data['phone'] = $objUser->phone;
+        	$data['id'] = $userId;
         	if(isset($objUser->huifuid)) {
         		$data['registProgress'] = 1;//huifuid存在表明已经开通资金托管
         	} else {

@@ -11,7 +11,6 @@ class InvestController extends Base_Controller_Page {
     CONST ENDED      = 6;
     CONST TENDERFAIL = 9;
 	public function init(){
-        $this->setNeedLogin(false);
         parent::init();
         $this->userInfoLogic = new Account_Logic_UserInfo();
         $this->ajax = true;
@@ -55,7 +54,6 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function backingAction() {
 		$status = self::BACKING;
-		$status = 2;
         $userid = $this->userid;
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);		
@@ -73,15 +71,16 @@ class InvestController extends Base_Controller_Page {
         }
  	    foreach ($list as $key => $value) {
 	        $listRet[$key]['proId'] = $value['loan_id'];
+	        $loanInfo = loan_api::getLoanDetail();
 	    	$listRet[$key]['investPro'] = $value['title'];
 	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
 	    	$listRet[$key]['tenderAmt'] = $value['amount'];
-	    	$listRet[$key]['deadline'] = $value['deadline'];
-	    	$listRet[$key]['tenderTime'] = $value['duration'];
-	    	///////check!!
-	    	$listRet[$key]['haveBack'] = $value['amount'];
-	    	$listRet[$key]['toBeBack'] = $value['amount'];	    		    	
+	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
+	    	$listRet[$key]['tenderTime'] = $value['create_time'];
+	    	$listRet[$key]['haveBack'] = $value['capital_refund'];
+	    	$listRet[$key]['toBeBack'] = $value['capital_rest'];	    		    	
 	    }
+	    
 	    $ret = array(
 	    	'page' => $page,
 	    	'pageall' => $backingRet['pageall'],
@@ -133,19 +132,20 @@ class InvestController extends Base_Controller_Page {
 	    	return ;
 	    }
 	    foreach ($list as $key => $value) {
-	    	$listRet[$key]['proId'] = $value[''];
-	    	$listRet[$key]['investPro'] = $value[''];
-	    	$listRet[$key]['annlnterestRate'] = $value[''];
-	    	$listRet[$key]['tenderAmt'] = $value[''];
-	    	$listRet[$key]['deadline'] = $value[''];
-	    	$listRet[$key]['tenderTime'] = $value[''];
-	    	$listRet[$key]['tenderProgress'] = $value[''];
+	    	$listRet[$key]['proId'] = $value['loan_id'];
+	    	$loanInfo = Loan_Api::getLoanDetail($listRet[$key]['proId']);
+	    	$listRet[$key]['investPro'] = $value['title'];
+	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
+	    	$listRet[$key]['tenderAmt'] = $value['amount'];
+	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
+	    	$listRet[$key]['tenderTime'] = $value['create_time'];
+	    	$listRet[$key]['tenderProgress'] = $loanInfo['percent'];
 	    }
 	    $ret = array(
-	    		'page' => $page,
-	    		'pageall' => $backingRet['pageall'],
-	    		'all' => $backingRet['total'],
-	    		'list' => $listRet,
+	    		'page'    => $page,
+	    		'pageall' => $tenderingRet['pageall'],
+	    		'all'     => $tenderingRet['total'],
+	    		'list'    => $listRet,
 	    );
 	    $this->output($ret);
 	    return ;
@@ -194,17 +194,25 @@ class InvestController extends Base_Controller_Page {
 	    	return ;
 	    }
 	    foreach ($list as $key => $value) {
-	    	$listRet[$key]['proId'] = $value[''];
-	    	$listRet[$key]['investPro'] = $value[''];
-	    	$listRet[$key]['annlnterestRate'] = $value[''];
-	    	$listRet[$key]['tenderAmt'] = $value[''];
-	    	$listRet[$key]['deadline'] = $value[''];
-	    	$listRet[$key]['tenderTime'] = $value[''];
-	    	$listRet[$key]['endTime'] = $value[''];
-	    	$listRet[$key]['totalRetAmt'] = $value[''];
-	    	$listRet[$key]['totalProfit'] = $value[''];
+	    	$listRet[$key]['proId'] = $value['loan_id'];
+	    	$loanInfo = Loan_Api::getLoanDetail($listRet[$key]['proId']);
+	    	
+	    	$listRet[$key]['investPro'] = $value['title'];
+	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
+	    	$listRet[$key]['tenderAmt'] = $value['amount'];
+	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
+	    	$listRet[$key]['tenderTime'] = $value['create_time'];
+	    	$listRet[$key]['endTime'] = $value['deadline'];
+	    	$listRet[$key]['totalRetAmt'] = $value['amount_refund'];
+	    	$listRet[$key]['totalProfit'] = $value['amount_refund'] - $value['amount'];
 	    }
-	    $this->output($listRet);
+	    $ret = array(
+	    	'page' => $page,
+	    	'pageall' =>$tenderFailRet['pageall'],
+	    	'all' => $tenderFailRet['total'],
+	    	'list' => $listRet,
+	    );
+	    $this->output($ret);
 	    return ;
 	}
 	
@@ -250,13 +258,14 @@ class InvestController extends Base_Controller_Page {
 	    	return ;
 	    }
 	    foreach ($list as $key => $value) {
-	    	$listRet[$key]['proId'] = $value[''];
-	    	$listRet[$key]['investPro'] = $value[''];
-	    	$listRet[$key]['annlnterestRate'] = $value[''];
-	    	$listRet[$key]['tenderAmt'] = $value[''];
-	    	$listRet[$key]['deadline'] = $value[''];
-	    	$listRet[$key]['tenderTime'] = $value[''];
-	    	$listRet[$key]['failReason'] = $value[''];
+	    	$listRet[$key]['proId'] = $value['loan_id'];
+	    	$loanInfo = Loan_Api::getLoanDetail($listRet[$key]['proId']);
+	    	$listRet[$key]['investPro'] = $value['title'];
+	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
+	    	$listRet[$key]['tenderAmt'] = $value['amount'];
+	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
+	    	$listRet[$key]['tenderTime'] = $value['create_time'];
+	    	$listRet[$key]['failReason'] = $value['fail_info'];
 	    }
 	    $ret = array(
 	    	'page' => $page,
@@ -314,12 +323,18 @@ class InvestController extends Base_Controller_Page {
 		
 		foreach ($retData as $key=>$value) {
 			$list[$key]['time'] = $value[''];
-			$list[$key]['repossPrincipal'] = $value[''];
-			$list[$key]['repossProfit'] = $value[''];
-			$list[$key]['recePrincipal'] = $value[''];
-			$list[$key]['receProfit'] = $value[''];
+			$list[$key]['repossPrincipal'] = $value['capital_rest'];
+			$list[$key]['recePrincipal'] = $value['capital_refund'];
+			if($value['transfer'] === 1) {
+				$list[$key]['repossProfit'] = 0.00;
+				$list[$key]['receProfit'] = $value['amount'];
+			}
+			if($value['transfer'] === 0) {
+				$list[$key]['repossProfit'] = $value['amount'];
+				$list[$key]['receProfit'] = 0.00;
+			}			
 			$list[$key]['paymentStatus'] = $value[''];
-			$list[$key]['punitive'] = $value[''];
+			$list[$key]['punitive'] = $value['late_charge'];
 		}
 		
 		$repossPrincipal = 0.00;

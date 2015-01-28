@@ -57,17 +57,18 @@ class OverviewController extends Base_Controller_Page {
         $acctBal = strval($userBg['acctBal']);
         $frzBal = strval($userBg['frzBal']);
        
-        $totalProfit    = '1.00';
-        $totalInvest    = '0.00';
-        $reposPrifit    = '0.00';
-        $reposPrincipal = number_format("10000000.01231", 2);
         $huifuid = $this->objUser->huifuid;
         $openthirdpay = isset($huifuid) ? 1 : 2;
         $rechargeurl = $this->webroot.'/account/cash/recharge';
-        //$totalProfit = Invest_Api:: 累计收益
-        //$totalInvest = Invest_Api::getUserAmount($userId); 累计投资
-        //$reposPrifit = Invest_Api:: 待收收益
-        //$reposPrincipal = Invest_Api:: 待收本金
+        
+        $money = Invest_Api::getUserEarnings($this->userid);
+        
+        
+        $totalProfit = sprintf('%.2f',$money['all_income']);// 累计收益
+        $totalInvest = sprintf('%.2f',$money['all_invest']);//累计投资
+        $reposPrifit = sprintf('%.2f',$money['wait_interest']);//待收收益
+        $reposPrincipal = sprintf('%.2f',$money['wait_capital']);//待收本金
+        
         $this->getView()->assign("avlBal",$avlBal);
         $this->getView()->assign("acctBal",$acctBal);
         $this->getView()->assign("frzBal",$frzBal);
@@ -92,27 +93,39 @@ class OverviewController extends Base_Controller_Page {
      *  }
      */
     public function profitcurveAction() {
-        //$userId = $this->getUserId();
-        //$objUser = User_Api::getUserObject($userId);
-        $objUser = json_decode(json_encode(array('name'=>'lilu', 'phone'=>'15901538467','realname'=>'jiangbianliming','huifuid'=>1001,)));//for test
-        $data = array('name' => $objUser->name, 'phone' => $objUser->phone,);
-        $huifuid = $objUser->huifuid;
-        if(!isset($huifuid)) {//TODO !isset
-            $this->ajax = false;
+        $userid = $this->userid;
+        $huifuid = $this->huifuid;
+        $userName = $this->objUser->name;
+        if(!isset($huifuid)) {
+           // $this->ajax = false;
+            $data = array(
+            	'name' => $userName,
+            );
             $this->outputView = 'test/noThirdPay.phtml';
             $this->output($data);
         } else {
-            //for test
-            //TODO:真正数据要从投资模块而来
+            $now = intval(date("m",time()));
+            $now = 7;
+            if($now > 6) {
+            	$arrRet = Invest_Api::getEarningsMonthly($userid,$now-5,$now);            	
+            }
+            
+            foreach ($arrRet as $key => $value) {
+                $x[] = $key;
+                $y[] = $value;
+            }
+          //  var_dump($arrRet);die;
+        	
             $ret = array(
                 x => array('2014-05','2014-06','2014-07','2014-08','2014-09','2014-10'),
                 y => array(10,20,500,60,49,1000),
             );          
             if($ret==false) {
                 $this->outputError(Account_RetCode::GET_PROFIT_CURVE_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_PROFIT_CURVE_FAIL));
-            } else {
-                $this->output($ret);
-            }           
+                return ;
+            }                        
+            $this->output($ret);
+      
         }       
     }
 }

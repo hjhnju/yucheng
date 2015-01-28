@@ -186,20 +186,27 @@ class Finance_Logic_Base {
  	 * @return boolean
 	 */
 	public function payOrderUpdate($orderId,$status,$type,$failCode='',$failDesc='') {
+		Base_Log::debug(array(
+			$orderId,
+			$status,
+			$type,
+			$failCode,
+			$failDesc,
+		));
 		$regOrder = new Finance_Object_Order();
 		$orderId = intval($orderId);
 		$status = intval($status);
 		$type = intval($type);
 		$regOrder->orderId = $orderId;
 		$regOrder->status = $status;
-		
+
 		$statusDesc = Finance_TypeStatus::getStatusDesc(intval($status));
 		$type = Finance_TypeStatus::getType(intval($type));
 		$regOrder->comment = "$type".'订单'."$statusDesc";
 		if(!empty($failCode) && !empty($failDesc)) {
 			$regOrder->failCode = strval($failCode);
 			$regOrder->failDesc = strval($failDesc);
-		}
+		}		
 		$ret = $regOrder->save();		
 		if(!$ret){
 			Base_Log::error(array(
@@ -379,99 +386,169 @@ class Finance_Logic_Base {
      * @param int userid
      * @param int startTime
      * @param int endTime
-     * @param int queryType 0--全部  1--充值  2--提现
+     * @param int queryType 1--全部  2--充值  3--提现
      * @return array || boolean
      */
-	public function getReWiRecord($userid,$startTime,$endTime,$queryType) {
-		if(!isset($userid) || !isset($startTime) || !isset($endTime) || !isset($queryType) ) {
-			Base_Log::error(array(
+	public function getReWiRecord($userid,$startTime,$endTime,$queryType,$page,$pageSize) {
+		if(!isset($userid) || !isset($startTime) || !isset($endTime) || !isset($queryType) || 
+		   !isset($page) || !isset($pageSize)) {
+		   	echo 0;die;
+			Base_Log::error(array(			
 				'msg' => '请求参数错误',
 			));
-			return;
+			return false;
 		}
+		$userid = intval($userid);
+		$queryType = intval($queryType);
+		$page = intval($page);
+		$pageSize = intval($pageSize);
+		$userid = intval($userid);
 		if($userid <= 0) {
+			echo 1;die;
 			Base_Log::error(array(
 		    	'msg' => '请求参数错误',
 			));
-			return;
+			return false;
 		}
 		if($startTime > $endTime) {
+			echo 2;die;
 			Base_Log::error(array(
 				'msg' => '请求参数错误',
 			));
-			return ;
+			return false;
 		}
-		if(($queryType !== 0) || ($queryType !== 1) || ($queryType !== 2)) {
-			Base_Log::error(array(
-				'msg' => '请求参数错误',
-			));
-			return ;
-		}
-		$userid = intval($userid);
 		$recharge = intval(Finance_TypeStatus::NETSAVE);
 		$withdraw = intval(Finance_TypeStatus::CASH);
 		$record = new Finance_List_Order();
 		//获取全部数据
-		if($queryType === 0) {
+		if($queryType === 1) {
+			$startTime = strval($startTime);
+			$endTime = strval($endTime);
 			$filters = array(
-				'userId'      => $userid,
-				'create_time' => array("create_time > $startTime and create_time < $endTime"),
-				'type'        => array("type=$recharge or type=$withdraw"),
+				'userId'      => array("(`userId`='$userid')"),
+				'create_time' => array("(`create_time` between '$startTime' and '$endTime')"),
+				'type'        => array("(`type`= '$recharge' or `type`= '$withdraw') "),
 			);
 			$record->setFilter($filters);
-			$record->setPagesize(PHP_INT_MAX);
+			$record->setPagesize($pageSize);
+			$record->setPage($page);
+			$record->setOrder("`create_time` desc");
 			$list = $record->toArray();			
 			$data = $list['list'];
-			$ret = array();
+			if(empty($data)) {
+				$ret = array();
+				$ret['page'] = 0;
+				$ret['pagesize'] = 0;
+				$ret['pageall'] = 0;
+				$ret['total'] = 0;
+				$ret['list'] = array();
+				return $ret;
+			}			
+			$_ret = array();
 			foreach ($data as $key => $value) {
-				$ret[$key]['time'] = $value['create_time'];//交易时间
-				$ret[$key]['transType'] = $value['type'];//交易类型
-				$ret[$key]['serialNo'] = $value['orderId'];//序列号
-				$ret[$key]['tranAmt'] = $value['amount'];//交易金额
-				$ret[$key]['avalBg'] = $value['avlBal'];//可用余额				
+				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
+				if($value['type'] === Finance_TypeStatus::NETSAVE) {
+					$_ret[$key]['transType'] = 1;
+				}
+				if($value['type'] === Finance_TypeStatus::CASH) {
+					$_ret[$key]['transType'] = 2;
+				}				
+				$_ret[$key]['serialNo'] = $value['orderId'];//序列号
+				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
+				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额				
 			}
+			$ret = array();
+			$ret['page'] = $list['page'];
+			$ret['pagesize'] = $list['pagesize'];
+			$ret['pageall'] = $list['pageall'];
+			$ret['total'] = $list['total'];
+			$ret['list'] = $_ret;
             return $ret;
 		}
 		//获取充值数据
-		if($queryType === 1) {
+		if($queryType === 2) {
 			$filters = array(
-				'userId'      => $userid,
-				'create_time' => array("create_time > $startTime and create_time < $endTime"),
+				'userId'      => array("(`userId`='$userid')"),
+				'create_time' => array("(create_time between '$startTime' and '$endTime')"),
 				'type'        => $recharge,
 			);
 			$record->setFilter($filters);
-			$record->setPagesize(PHP_INT_MAX);
+			$record->setPagesize($pageSize);
+			$record->setPage($page);
+			$record->setOrder("create_time desc");
 			$list = $record->toArray();
 			$data = $list['list'];
-			$ret = array();
-			foreach ($data as $key => $value) {
-				$ret[$key]['time'] = $value['create_time'];//交易时间
-				$ret[$key]['transType'] = $value['type'];//交易类型
-				$ret[$key]['serialNo'] = $value['orderId'];//序列号
-				$ret[$key]['tranAmt'] = $value['amount'];//交易金额
-				$ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+			if(empty($data)) {
+				$ret = array();
+				$ret['page'] = 0;
+				$ret['pagesize'] = 0;
+				$ret['pageall'] = 0;
+				$ret['total'] = 0;
+				$ret['list'] = array();
+				return $ret;
 			}
+			$_ret = array();
+			foreach ($data as $key => $value) {
+				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
+				if($value['type'] === Finance_TypeStatus::NETSAVE) {
+					$_ret[$key]['transType'] = 1;
+				}
+				if($value['type'] === Finance_TypeStatus::CASH) {
+					$_ret[$key]['transType'] = 2;
+				}
+				$_ret[$key]['serialNo'] = $value['orderId'];//序列号
+				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
+				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+			}
+			$ret = array();
+			$ret['page'] = $list['page'];
+			$ret['pagesize'] = $list['pagesize'];
+			$ret['pageall'] = $list['pageall'];
+			$ret['total'] = $list['total'];
+			$ret['list'] = $_ret;		
 			return $ret;			
 		}
 		//获取提现数据
-		if($queryType === 2) {
+		if($queryType === 3) {
 			$filters = array(
-				'userId'      => $userid,
-				'create_time' => array("create_time > $startTime and create_time < $endTime"),
+				'userId'      => array("(`userId`='$userid')"),
+				'create_time' => array("(create_time between '$startTime' and '$endTime')"),
 				'type'        => $withdraw,
 			);
 			$record->setFilter($filters);
-			$record->setPagesize(PHP_INT_MAX);
+			$record->setPagesize($pageSize);
+			$record->setPage($page);
+			$record->setOrder("`create_time` desc");
 			$list = $record->toArray();
 			$data = $list['list'];
-			$ret = array();
-			foreach ($data as $key => $value) {
-				$ret[$key]['time'] = $value['create_time'];//交易时间
-				$ret[$key]['transType'] = $value['type'];//交易类型
-				$ret[$key]['serialNo'] = $value['orderId'];//序列号
-				$ret[$key]['tranAmt'] = $value['amount'];//交易金额
-				$ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+			if(empty($data)) {
+				$ret = array();
+				$ret['page'] = 0;
+				$ret['pagesize'] = 0;
+				$ret['pageall'] = 0;
+				$ret['total'] = 0;
+				$ret['list'] = array();
+				return $ret;
 			}
+			$_ret = array();
+			foreach ($data as $key => $value) {
+				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
+				if($value['type'] === Finance_TypeStatus::NETSAVE) {
+					$_ret[$key]['transType'] = 1;
+				}
+				if($value['type'] === Finance_TypeStatus::CASH) {
+					$_ret[$key]['transType'] = 2;
+				}
+				$_ret[$key]['serialNo'] = $value['orderId'];//序列号
+				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
+				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+			}
+			$ret = array();
+			$ret['page'] = $list['page'];
+			$ret['pagesize'] = $list['pagesize'];
+			$ret['pageall'] = $list['pageall'];
+			$ret['total'] = $list['total'];
+			$ret['list'] = $_ret;
 			return $ret;
 		}		
 	}
@@ -498,6 +575,17 @@ class Finance_Logic_Base {
      * 
      */
     public function verify($originStr, $sign) {
+    	$scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
+    	return $scureTool->verify($originStr, $sign);
+    }
+
+	/**
+     * 验签
+     * @param  $arrFields 字段 array('field1', 'field2')
+     * @param  $arrParams array('field' => 'value')
+     */
+    public function verifySign($arrFields, $arrParams, $sign) {
+    	$originStr = $this->getSignContent($arrParams, $arrFields);
     	$scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
     	return $scureTool->verify($originStr, $sign);
     }

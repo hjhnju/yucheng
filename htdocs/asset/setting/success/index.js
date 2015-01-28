@@ -1,10 +1,4 @@
-define('setting/success/index', [
-    'require',
-    'jquery',
-    'common/Remoter',
-    'common/config',
-    'common/header'
-], function (require) {
+define('setting/success/index', function (require) {
     var $ = require('jquery');
     var Remoter = require('common/Remoter');
     var config = require('common/config');

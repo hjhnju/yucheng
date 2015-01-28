@@ -1,9 +1,4 @@
-define('zrender/shape/Line', [
-    'require',
-    './Base',
-    './util/dashedLineTo',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Line', function (require) {
     var Base = require('./Base');
     var dashedLineTo = require('./util/dashedLineTo');
     var Line = function (options) {

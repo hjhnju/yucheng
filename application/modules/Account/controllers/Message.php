@@ -2,7 +2,7 @@
 /**
  * 我的消息页面
  */
-class MessageController extends Base_Controller_Response {
+class MessageController extends Base_Controller_Page {
 	
 	public function init() {
 		parent::init();
@@ -16,7 +16,7 @@ class MessageController extends Base_Controller_Response {
 	 * userinfo 左上角用户信息
 	 */
 	public function indexAction() {
-		$userid = $this->getUserId();
+		$userid = $this->userid;
 		$userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
 		$this->getView()->assign('userinfo',$userInfo);
 	}

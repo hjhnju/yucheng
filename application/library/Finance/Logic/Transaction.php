@@ -28,35 +28,36 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
         $avlBal = str_replace(',', '', $avlBal);
-        //充值订单入库
-        $paramOrder = array(
-            'orderId'   => intval($orderId),
-            'orderDate' => intval($orderDate),
-            'userId'    => intval($userid),
-            'type'      => Finance_TypeStatus::NETSAVE,
-            'amount'    => floatval($transAmt),
-            'avlBal'    => floatval($avlBal),
-            'status'    => Finance_TypeStatus::PROCESSING,
-            'comment'   => '充值订单处理中',
-        );
-        $this->payOrderEnterDB($paramOrder);
-        
-        $merCustId  = strval(self::MERCUSTID);
-        $huifuid    = strval($huifuid);
-        $orderId    = strval($orderId);
-        $orderDate  = strval($orderDate);
-        $openBankId = strval($openBankId);
-        $gateBusiId = strval($gateBusiId);
-        $dcFlag     = strval($dcFlag);
-        $transAmt   = sprintf('%.2f',$transAmt);
-        $bgRetUrl   = $webroot.'/finance/bgcall/netsave';
-        $retUrl     = '';
-        $merPriv    = strval($userid);              
-        //调用汇付API进行充值处理
-        $chinapnr->netSave($merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, 
-            $dcFlag, $transAmt, $retUrl, $bgRetUrl, $merPriv);
-    }
-    
+    	//充值订单入库
+		$paramOrder = array(
+		    'orderId'   => intval($orderId),
+			'orderDate' => intval($orderDate),
+			'userId'    => intval($userid),
+			'type'      => Finance_TypeStatus::NETSAVE,
+			'amount'    => floatval($transAmt),
+			'avlBal'    => floatval($avlBal),
+			'status'    => Finance_TypeStatus::PROCESSING,
+			'comment'   => '充值订单处理中',
+		);
+		$this->payOrderEnterDB($paramOrder);
+		
+		$merCustId  = strval(self::MERCUSTID);
+		$huifuid    = strval($huifuid);
+		$orderId    = strval($orderId);
+		$orderDate  = strval($orderDate);
+		$openBankId = strval($openBankId);
+		$gateBusiId = strval($gateBusiId);
+		$dcFlag     = strval($dcFlag);
+		$transAmt   = sprintf('%.2f',$transAmt);
+		$bgRetUrl   = $webroot.'/finance/bgcall/netsave';
+		$retUrl     = '';
+		$merPriv    = strval($userid);				
+		//调用汇付API进行充值处理
+		$chinapnr->netSave($merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, 
+	        $dcFlag, $transAmt, $retUrl, $bgRetUrl, $merPriv);
+	}
+	
+	
     /**
      * 标信息录入Logic层
      * @param investID 标的唯一标示
@@ -69,10 +70,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param float retAmt 总还款金额
      * @param int retDate 应还款日期
      * @param proArea 项目所在地
+     * @param guarCompId 担保公司唯一标识
+     * @param guarAmt 担保金额
      * @return array || boolean
      * 
      */
-    public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea) {     
+    public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
         if(!isset($proId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
            !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
             Base_Log::error(array(
@@ -83,25 +86,25 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $webroot  = Base_Config::getConfig('web')->root;
         $chinapnr = Finance_Chinapnr_Logic::getInstance();
         
-        $merCustId = strval(self::MERCUSTID);
-        $proId = strval($proId); //借款的Loan_id
-        $borrCustId = strval($this->getHuifuid(intval($borrUserId)));
-        $borrTotAmt = sprintf('%.2f',$borrTotAmt);
-        $yearRate = sprintf('%.2f',$yearRate);
-        $retType = '0'.strval($retType);
+        $merCustId    = strval(self::MERCUSTID);
+        $proId        = strval($proId); //借款的Loan_id
+        $borrCustId   = strval($this->getHuifuid(intval($borrUserId)));
+        $borrTotAmt   = sprintf('%.2f',$borrTotAmt);
+        $yearRate     = sprintf('%.2f',$yearRate);
+        $retType      = '0'.strval($retType);
         $bidStartDate = date("YmdHis",$bidStartDate);
         $bidStartDate = strval($bidStartDate);
-        $bidEndDate = date("YmdHis",$bidEndDate);       
-        $bidEndDate = strval($bidEndDate);      
-        $retAmt = sprintf('%.2f',$retAmt);
-        $retDate = date("Ymd",$retDate);
-        $retDate = strval($retDate);
-        $guarCompId = '';
-        $guarAmt = '';
-        $proArea = strval($proArea);
-        $bgRetUrl = $webroot.'/finance/bgcall/addBidInfo';
-        $merPriv = '';
-        $reqExt = '';       
+        $bidEndDate   = date("YmdHis",$bidEndDate);       
+        $bidEndDate   = strval($bidEndDate);      
+        $retAmt       = sprintf('%.2f',$retAmt);
+        $retDate      = date("Ymd",$retDate);
+        $retDate      = strval($retDate);
+        $guarCompId   = strval($guarCompId);
+        $guarAmt      = strval($guarAmt);
+        $proArea      = strval($proArea);
+        $bgRetUrl     = $webroot.'/finance/bgcall/addBidInfo';
+        $merPriv      = '';
+        $reqExt       = '';       
         $ret = $chinapnr->addBidInfo($merCustId, $proId, $borrCustId, $borrTotAmt, $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
                 $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
         return $ret;
@@ -137,13 +140,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      *            )
      *            ...
      *        )
-     * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
-     * @param string $FreezeOrdId 冻结订单号(optional)    
-     * @param string retUrl 汇付回调返回url
      * redirect
      * 
      */
-    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $isFreeze='Y', $retUrl='') {
+    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $retUrl) {
         if(!isset($loanId) || !isset($transAmt) || !isset($userid) || !isset($arrDetails)) {
             Base_Log::error(array(
                 'msg'        => '请求参数错误',
@@ -177,7 +177,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'orderId'     => intval($orderId),
             'orderDate'   => intval($orderDate),
             'userId'      => intval($userid),           
-            'freezeOrdId' => intval($freezeOrdId),
             'type'        => Finance_TypeStatus::INITIATIVETENDER,
             'amount'      => floatval($transAmt),
             'avlBal'      => floatval($avlBal),
@@ -203,18 +202,33 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'ProId'          => $loanId,
             );
         }      
-  
         $borrowerDetails = json_encode($borrowerDetails);
-        $isFreeze        = strval($isFreeze);
+
+        //冻结
+        $isFreeze      = 'Y';
         //订单号唯一性
         $freezeOrdInfo = $this->genOrderInfo();
         $freezeOrdId   = $freezeOrdInfo['orderId'];
         $freezeOrdId   = strval($freezeOrdId);
-        $retUrl        = strval($retUrl); 
+        $retUrl        = strval($retUrl);
         $bgRetUrl      = $webroot.'/finance/bgcall/initiativeTender';
         $userid        = strval($userid);
         $proId         = $loanId;
         $merPriv       = $userid.'_'.$proId; //将userid与proid作为私有域传入
+        Base_Log::notice(array(
+            'merCustId'       => $merCustId,
+            'orderId'         => $orderId,
+            'orderDate'       => $orderDate,
+            'transAmt'         => $transAmt,
+            'usrCustId'       => $usrCustId,
+            'maxTenderRate'   => $maxTenderRate,
+            'borrowerDetails' => $borrowerDetails,
+            'isFreeze'        => $isFreeze,
+            'freezeOrdId'     => $freezeOrdId,
+            'retUrl'          => $retUrl,
+            'bgRetUrl'        => $bgRetUrl,
+            'merPriv'         => $merPriv,
+        ));
         $chinapnr->initiativeTender($merCustId, $orderId, $orderDate, $transAmt, $usrCustId,
             $maxTenderRate, $borrowerDetails, $isFreeze, $freezeOrdId, $retUrl, $bgRetUrl, $merPriv
         );      
@@ -558,12 +572,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }
         $webroot   = Base_Config::getConfig('web')->root;
         $chinapnr  = Finance_Chinapnr_Logic::getInstance();
-        $transAmt = sprintf('%.2f',$transAmt);
+        $transAmt  = sprintf('%.2f',$transAmt);
         $orderInfo = $this->genOrderInfo();
         $orderId   = $orderInfo['orderId'];
         $orderDate = $orderInfo['date'];
         
         $queryLogic = new Finance_Logic_Query();
+        $huifuid = $this->getHuifuid(intval($inUserId));
         $balance = $queryLogic->queryBalanceBg($huifuid);
         $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
@@ -583,18 +598,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $this->payOrderEnterDB($param);
         
         $ordId = strval($orderId);
-        $outCustId = strval($this->getHuifuid(intval($outUserId)));
-        //test
-        $outCustId = $outUserId;
+        $outCustId = strval($outUserId);
         $outAcctId = strval($outAcctId);
-        $transAmt = $transAmt;
-        $inCustId = strval($this->getHuifuid(intval($inUserId)));
-        //for test
-        $inCustId = $inUserId;
+        $inCustId = strval($huifuid);
         $inAcctId = 'MDT000001';
         $retUrl = '';
         $bgRetUrl = $webroot.'/finance/bgcall/transfer';
-        $merPriv = strval($orderDate);      
+        $merPriv = strval($orderDate).'_'.strval($inUserId);      
         $ret = $chinapnr->transfer($ordId, $outCustId, $outAcctId, $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
         return $ret;
     }
@@ -648,7 +658,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $charSet = '';
         $merPriv = strval($userid).'_'.strval($orderDate);
         $reqExt = '';
-        $chinapnr->merCash($merCustId,$orderId,$usrCustId,$transAmt,$servFee = '',$servFeeAcctId = '',$retUrl = '',
+        $ret = $chinapnr->merCash($merCustId,$orderId,$usrCustId,$transAmt,$servFee = '',$servFeeAcctId = '',$retUrl = '',
             $bgRetUrl,$remark = '',$charSet = '',$merPriv = '',$reqExt = '');       
+        return $ret;
     }
 }

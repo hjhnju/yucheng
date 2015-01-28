@@ -5,8 +5,9 @@
  * RECV_ORD_ID_TrxId
  * RECV_ORD_ID_OrderId
  * @author lilu
+ * 
  */
-class BgcallController extends Base_Controller_Page{
+class BgcallController extends Base_Controller_Page {
 		
 	private $huifuLogic;
 	private $financeLogic;
@@ -17,6 +18,7 @@ class BgcallController extends Base_Controller_Page{
 		Yaf_Dispatcher::getInstance()->disableView();
 		$this->setNeedLogin(false);
 		parent::init();
+		
 	}
 	
 	/**
@@ -42,8 +44,8 @@ class BgcallController extends Base_Controller_Page{
             	'msg' => '验签错误',
             	'CmdId' => $retParam['CmdId'],
             ));
-            return ;
-        }
+            //return ;
+        }       
         
 		$trxId    = $retParam['TrxId'];
 		$userid   = $retParam['MerPriv'];//取客户私用域中的userid
@@ -56,15 +58,13 @@ class BgcallController extends Base_Controller_Page{
 		$respCode = $retParam['RespCode']; 
 		$respDesc = $retParam['RespDesc'];	
 		
-		
 		//汇付返回非成功时的处理
 		if($respCode !== '000') {
 			$logParam = $retParam;
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			return ;
-		}			
-		
+		}					
 		$userid = intval($userid);
 		$huifuid = strval($huifuid);
 		$email = strval($email);
@@ -125,10 +125,10 @@ class BgcallController extends Base_Controller_Page{
 		$signKeys = array("CmdId", "RespCode", "MerCustId", "OpenAcctId", "OpenBankId", "UsrCustId", "TrxId", "BgRetUrl", "MerPriv");
 		if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
 			Base_Log::error(array(
-			'msg' => '验签错误',
-			'CmdId' => $retParam['CmdId'],
+			    'msg' => '验签错误',
+			    'CmdId' => $retParam['CmdId'],
 			));
-			return ;
+			//return ;
 		}
 		
 		$trxId     = $retParam['TrxId'];
@@ -164,15 +164,15 @@ class BgcallController extends Base_Controller_Page{
 		    Base_Log::error($logParam);	    
 		    return;	
 	    }
-	    $retParam  = $this->financeLogic->arrUrlDec($_REQUEST);
+	    $retParam  = $this->financeLogic->arrUrlDec($_REQUEST);	     
 	    //验签处理
-	    $signKeys = array("CmdId", "RespCode", "MerCustId", "UsrCustId", "OrdId", "OrdDate", "TransAmt", "TrxId", "RetUrl","BgRetUrl","MerPriv");
-	    if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
+	    $signKeys = array("CmdId", "RespCode", "MerCustId", "UsrCustId", "OrdId", "OrdDate", "TransAmt", "TrxId", "RetUrl","BgRetUrl","MerPriv"); 
+	    if(!$this->financeLogic->verify($this->financeLogic->getSignContent($_REQUEST, $signKeys), $_REQUEST['ChkValue'])) {
 	    	Base_Log::error(array(
-	    	'msg' => '验签错误',
-	    	'CmdId' => $retParam['CmdId'],
+	    	    'msg' => '验签错误',
+	         	'CmdId' => $retParam['CmdId'],
 	    	));
-	    	return ;
+	    	//return ;
 	    }
 	    
 	    $trxId     = $retParam['TrxId'];
@@ -189,8 +189,7 @@ class BgcallController extends Base_Controller_Page{
 	    $lastip   = Base_Util_Ip::getClientIp();
 	    $respCode = $retParam['RespCode'];
 	    $respDesc = $retParam['RespDesc'];
-
-        if($respCode !== '000') {
+        if($respCode !== '000') {       	
         	$logParam = $retParam;
         	$logParam['msg'] = $respDesc;
         	Base_Log::error($logParam);        	
@@ -198,9 +197,10 @@ class BgcallController extends Base_Controller_Page{
         	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::NETSAVE, 
         		$respCode, $respDesc);
         	return ;
-        }
+        }        
         //充值财务订单状态更新为处理成功
-        $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::NETSAVE);
+        $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::NETSAVE,
+	    	$respCode, $respDesc);      
         //充值财务记录入库
         $param = array(
             'orderId'   => $orderId,
@@ -214,7 +214,7 @@ class BgcallController extends Base_Controller_Page{
         	'ip'        => $lastip,        	
         );
         $this->financeLogic->payRecordEnterDB($param);
-		Base_Log::notice($_REQUEST);
+		Base_Log::notice($retParam);
 		//页面打印
 		$trxId = strval($trxId);
 		print('RECV_ORD_ID_'.$trxId);
@@ -236,19 +236,20 @@ class BgcallController extends Base_Controller_Page{
            	Base_Log::error($logParam);
             return;
         }
-        $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
+       
+        $retParam = $this->financeLogic->arrUrlDec($_REQUEST);        
         //验签处理
         $signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "OrdDate", "TransAmt", "UsrCustId", "TrxId", "IsFreeze",
             "FreezeOrdId","FreezeTrxId","RetUrl","BgRetUrl","MerPriv","RespExt");
         if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
         	Base_Log::error(array(
-        	'msg' => '验签错误',
-        	'CmdId' => $retParam['CmdId'],
+        	    'msg'   => '验签错误',
+        	    'CmdId' => $retParam['CmdId'],
         	));
-        	return ;
+        	//return ;
         }
-        
-        $merPriv = explode('_',$retParam['MerPriv']);
+        Base_Log::debug($_REQUEST);
+        $merPriv = explode('_',$_REQUEST['MerPriv']);
         $userid = intval($merPriv[0]);
         $proId = intval($merPriv[1]);        
 		$huifuid = $retParam['UsrCustId'];
@@ -277,7 +278,8 @@ class BgcallController extends Base_Controller_Page{
 			return ;
 		}
 		//将主动投标订单状态更改为成功
-		$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::INITIATIVETENDER);
+		$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::INITIATIVETENDER,
+        	$respCode, $respDesc);
 		//主动投标记录如表pay_record
 		$param = array(
 	        'orderId'   => $orderId,
@@ -323,13 +325,13 @@ class BgcallController extends Base_Controller_Page{
 		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);
 		//验签处理
 		$signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "OrdDate", "TransAmt", "UsrCustId", "IsUnFreeze", "UnFreezeOrdId",
-				"FreezeTrxId","RetUrl","BgRetUrl","MerPriv","RespExt");
+			"FreezeTrxId","RetUrl","BgRetUrl","MerPriv","RespExt");
 		if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
 			Base_Log::error(array(
-			'msg' => '验签错误',
-			'CmdId' => $retParam['CmdId'],
+			    'msg' => '验签错误',
+			    'CmdId' => $retParam['CmdId'],
 			));
-			return ;
+			//return ;
 		}
 		
 		$userid = intval($retParam['MerPriv']);
@@ -352,7 +354,8 @@ class BgcallController extends Base_Controller_Page{
 			return;
 		}
 		//将finance_order表状态更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::TENDERCANCEL);
+		$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::TENDERCANCEL,
+			$respCode,$respDesc);
 		//记录入表finance_record
 		$param = array(
 			'orderId'   => $orderId,
@@ -422,7 +425,7 @@ class BgcallController extends Base_Controller_Page{
 			));		
 			return;		
 		}
-		$retParam = $this->financeLogic->arrUrlDec($_REQUEST);		
+		$retParam  = $this->financeLogic->arrUrlDec($_REQUEST);		
 		$userId    = intval($retParam['MerPriv']);
 		$huifuid   = $retParam['UsrCustId'];
 		$orderId   = intval($retParam['OrdId']);
@@ -441,18 +444,19 @@ class BgcallController extends Base_Controller_Page{
 		if(!isset($_REQUEST['RespType'])) { 
 			//验签处理
 			$signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "FeeAmt",
-					"FeeCustId","FeeAcctId","ServFee","ServFeeAcctId","RetUrl","BgRetUrl","MerPriv","RespExt");
+				"FeeCustId","FeeAcctId","ServFee","ServFeeAcctId","RetUrl","BgRetUrl","MerPriv","RespExt");
 			if(!$this->financeLogic->verify($this->financeLogic->getSignContent($retParam, $signKeys), $retParam['ChkValue'])) {
 				Base_Log::error(array(
 				    'msg' => '验签错误',
 				    'CmdId' => $retParam['CmdId'],
 				));
-				return ;
+				//return ;
 			}	
 			//同步异步返回处理中
 			if($respCode === '999') {
                 //finance_order状态更改为“处理中”
-                $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::PROCESSING,Finance_TypeStatus::CASH);
+                $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::PROCESSING,Finance_TypeStatus::CASH,
+				    $respCode,$respDesc);
 			}  
 			if($respCode === '000') {
 				//对finance_order表进行状态更新，更新为“处理成功”
@@ -483,7 +487,7 @@ class BgcallController extends Base_Controller_Page{
 				    'msg' => '验签错误',
 				    'CmdId' => $retParam['CmdId'],
 				));
-				return ;
+				//return ;
 			}
 			$refunds = new Finance_List_Order();
 			$filters = array('orderId' => $orderId);
@@ -494,7 +498,8 @@ class BgcallController extends Base_Controller_Page{
 			if($respType === '000') {
 				if($status === '999') {
 					//更新finance_order表状态为“处理成功”
-					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::CASH);
+					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::CASH,
+			             $respCode,$respDesc);
 					//插入提现记录到finance_record表
 					$paramRecord = array(
 						'orderId'   => $orderId,
@@ -580,7 +585,8 @@ class BgcallController extends Base_Controller_Page{
             return ;
 	    }
 	    //将finance_order表状态更新为“处理成功”
-	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::LOANS);
+	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::LOANS,
+	    	 $respCode,$respDesc);
 	    //将finance_tender表状态更新为“已打款”
 	    $this->financeLogic->payTenderUpdate($subOrdId, Finance_TypeStatus::HAVEPAYED);
 	    //将打款记录插入至表finance_record中
@@ -645,7 +651,8 @@ class BgcallController extends Base_Controller_Page{
 	    	return ;
 	    }	    
 	    //将finance_order表状态更改为“处理成功”
-	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::REPAYMENT);
+	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::REPAYMENT,
+	    	$respCode,$respDesc);
 	    //插入还款记录至表finance_record
 	    $paramRecord = array(
 	    	'orderId'   => $orderId,
@@ -674,24 +681,23 @@ class BgcallController extends Base_Controller_Page{
 	       	$logParam = $_REQUEST;
 	       	$logParam['msg'] = '汇付返回参数错误';
             Base_Log::error($logParam); 
-	    }
-	    $retParam = $this->financeLogic->arrUrlDec($_REQUEST);
-	    //验签处理SDK中验过了
-	    
-	    $userid    = intval($retParam['OutCustId']);
-		$orderId   = intval($retParam['OrdId']);
-		$orderDate = intval($retParam['MerPriv']);
-		$amount    = floatval($retParam['TransAmt']);
+	    }	   
+	    //验签处理SDK中验过了	    
+	    $merPriv = explode('_',$_REQUEST['MerPriv']);	    
+	    $userid    = $merPriv[1];
+		$orderId   = intval($_REQUEST['OrdId']);
+		$orderDate = $merPriv[0];
+		$amount    = floatval($_REQUEST['TransAmt']);
 		
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
 		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
 		
 		$lastip    = Base_Util_Ip::getClientIp();
-		$respCode  = $retParam['RespCode'];
-		$respDesc  = $retParam['RespDesc'];
+		$respCode  = $_REQUEST['RespCode'];
+		$respDesc  = $_REQUEST['RespDesc'];		
 		if($respCode !== '000') {
-			$logParam = $retParam;
+			$logParam = $_REQUEST;
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态更改为“处理失败”
@@ -700,7 +706,8 @@ class BgcallController extends Base_Controller_Page{
 			return ;
 		}
 		//将finance_order表状态更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::TRANSFER);
+		$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::TRANSFER,
+	        $respCode,$respDesc);
 		//将该条记录插入至表finance_record中
 		$paramRecord = array(
 			'orderId'   => $orderId,
@@ -714,7 +721,7 @@ class BgcallController extends Base_Controller_Page{
 			'ip'        => $lastip,
 		);
 		$this->financeLogic->payRecordEnterDB($paramRecord);
-		Base_Log::notice($retParam);
+		Base_Log::notice($_REQUEST);
 		print('RECV_ORD_ID_'.strval($orderId));		
 	}
 	
@@ -758,6 +765,9 @@ class BgcallController extends Base_Controller_Page{
 			    $respCode, $respDesc);
 			return ;
 		}
+		//将finance_order表状态字段更改为“处理成功”
+		$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::MERCASH,
+			$respCode,$respDesc);
 		//将记录如表finance_record
 		$paramRecord = array(
 			'orderId'   => $orderId,
@@ -798,7 +808,7 @@ class BgcallController extends Base_Controller_Page{
 			    'msg' => '验签错误',
 			    'CmdId' => $retParam['CmdId'],
 			));
-			return ;
+			//return ;
 		}
 		$userid = $retParam['MerPriv'];
 		$huifuid = $retParam['UsrCustId'];
