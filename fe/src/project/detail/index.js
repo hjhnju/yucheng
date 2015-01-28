@@ -130,7 +130,10 @@ define(function (require) {
 //                id: model.id,
 //                amount: +$('.right-top-ipt-input').val() || 0
 //            });
-            !$('.right-top-ipt-input')[0].disabled && $('#invest-form').get(0).submit();
+            var ipt = $('.right-top-ipt-input');
+            var error = $('.chongzhi-error');
+
+            !ipt[0].disabled && !error.hasClass('show') && $('#invest-form').get(0).submit();
         });
 
         // 投资盈利计算
@@ -138,29 +141,42 @@ define(function (require) {
             keydown: function () {
                 var value = +$.trim($(this).val());
                 var min = Math.min(model.userAmount, model.amountRest);
+                var error = $('.chongzhi-error');
                 if (isNaN(value)) {
+                    error.addClass('show').html('输入内容不合法');
                     return;
                 }
 
                 if (value > min) {
-                    $(this).val(min);
-                    value = min;
+                    error.addClass('show').html('投资金额不得超过可用余额和可投金额');
+                    value > model.amountRest && $(this).val(model.amountRest);
+                }
+                else {
+                    error.removeClass('show');
                 }
 
-                $('.chongzhi-span').html(caculateIncome(value));
+                $('.chongzhi-span').html(caculateIncome(value || 0));
             },
 
             keyup: function () {
                 var value = +$.trim($(this).val());
                 var min = Math.min(model.userAmount, model.amountRest);
+                var error = $('.chongzhi-error');
+
                 if (isNaN(value)) {
+                    error.addClass('show').html('输入内容不合法');
                     return;
                 }
 
                 if (value > min) {
-                    $(this).val(min);
+                    error.addClass('show').html('投资金额不得超过可用余额和可投金额');
+                    value > model.amountRest && $(this).val(model.amountRest);
+                }
+                else {
+                    error.removeClass('show');
                 }
 
+                $('.chongzhi-span').html(caculateIncome(value || 0));
             }
         });
 

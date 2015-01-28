@@ -328,7 +328,8 @@
                     <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$data.amount_rest%}元</span></div>
                     <div class="right-top-allmoney-time">剩余时间：<span> </span></div>
                 </div>
-                <div class="right-top-ipt">
+                <div id="chongzhi-error" class="chongzhi-error"></div>
+                <div class="right-top-ipt {%if !isset($user)%}disabled{%/if%}">
                     <input name="amount" type="text" class="right-top-ipt-input" {%if !isset($user)%} disabled{%/if%} />
                     <input name="id" type="hidden" value="{%$data.id%}" />
                 </div>

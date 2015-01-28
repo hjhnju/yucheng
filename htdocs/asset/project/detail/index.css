@@ -287,15 +287,16 @@ p{margin:0;padding:0}
 .right-top-allmoney-money span{color:#f2736a}
 .right-top-allmoney-time{color:#333;height:20px;line-height:20px}
 .right-top-ipt{height:34px;border:1px solid #efefef;padding-left:5px;line-height:32px}
-.right-top-ipt .right-top-ipt-input{outline:0;border:none;width:90%}
-.right-top-chongzhi{height:34px;*zoom:1}
+.right-top-ipt.disabled{background-color:#f8f8f8}
+.right-top-ipt .right-top-ipt-input{outline:0;border:none;width:100%;height:12px;padding:11px 0;background:0 0}
+.right-top-chongzhi{position:relative;height:34px;*zoom:1}
 .right-top-chongzhi:before,.right-top-chongzhi:after{display:table;content:""}
 .right-top-chongzhi:after{clear:both}
 .chongzhi-left{float:left;color:#333;line-height:34px}
 .chongzhi-left .account-a-link{text-decoration:none;color:#76cf65}
 .chongzhi-left .account-a-link:hover{text-decoration:underline}
 .chongzhi-left .chongzhi-link{text-decoration:none;color:#76cf65}
-.chongzhi-right{line-height:34px;float:right}
+.chongzhi-right{line-height:34px;position:absolute;right:5px;top:-34px}
 .chongzhi-right .chongzhi-span{color:#f2736a}
 .right-top-btn{height:34px;*zoom:1}
 .right-top-btn:before,.right-top-btn:after{display:table;content:""}
@@ -356,3 +357,5 @@ table tr td{padding-left:20px}
 .renzheng-box-main-box-pic.fangchan{background-position:17px -1000px}
 .renzheng-box-main-box-pic.xingshi{background-position:17px -1100px}
 .renzheng-box-main-box-name{height:16px;line-height:16px;font-size:14px;color:#333}
+.chongzhi-error{height:36px;line-height:36px;color:#f2746a;padding-left:10px;border:1px solid #f0c3bf;background-color:#ffecea;margin-bottom:10px;display:none}
+.chongzhi-error.show{display:block}
