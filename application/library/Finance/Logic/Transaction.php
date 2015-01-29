@@ -362,12 +362,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         
         $transAmt = sprintf('%.2f',$transAmt);
         $queryLogic = new Finance_Logic_Query();
-<<<<<<< HEAD
-        $huifuid = $this->getHuifuid($userid);
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-=======
         $balance = $queryLogic->queryBalanceBg($usrCustId);
->>>>>>> 94d44c1d742f178d8372f5bf03a41dcd0b007f2a
         $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
         $avlBal = str_replace(',', '', $avlBal);
@@ -392,10 +387,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId = strval($orderId);
         $orderDate = strval($orderDate);
         $transAmt = $transAmt;
-<<<<<<< HEAD
-        $usrCustId = strval($huifuid);
-=======
->>>>>>> 94d44c1d742f178d8372f5bf03a41dcd0b007f2a
+        $usrCustId = strval($usrCustId);
         $isUnFreeze = strval('Y');
         $unFreezeOrdInfo = $this->genOrderInfo();
         $unFreezeOrdId = $unFreezeOrdInfo['orderId'];
