@@ -124,8 +124,7 @@ class Finance_Logic_Base {
 			Base_Log::error($logParam);
 			return false;
 		}
-		return true;
-		
+		return true;		
 	}  	
 	
 	/**

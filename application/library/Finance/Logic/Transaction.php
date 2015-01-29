@@ -358,10 +358,16 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return false;
         }       
+        $usrCustId = strval($this->getHuifuid($userid));
+        
         $transAmt = sprintf('%.2f',$transAmt);
         $queryLogic = new Finance_Logic_Query();
+<<<<<<< HEAD
         $huifuid = $this->getHuifuid($userid);
         $balance = $queryLogic->queryBalanceBg($huifuid);
+=======
+        $balance = $queryLogic->queryBalanceBg($usrCustId);
+>>>>>>> 94d44c1d742f178d8372f5bf03a41dcd0b007f2a
         $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
         $avlBal = str_replace(',', '', $avlBal);
@@ -386,7 +392,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId = strval($orderId);
         $orderDate = strval($orderDate);
         $transAmt = $transAmt;
+<<<<<<< HEAD
         $usrCustId = strval($huifuid);
+=======
+>>>>>>> 94d44c1d742f178d8372f5bf03a41dcd0b007f2a
         $isUnFreeze = strval('Y');
         $unFreezeOrdInfo = $this->genOrderInfo();
         $unFreezeOrdId = $unFreezeOrdInfo['orderId'];
@@ -395,6 +404,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $retUrl = strval($retUrl);
         $bgRetUrl = $webroot.'/finance/bgcall/tendercancel';
         $merPriv = strval($userid);     
+
         $chinapnr->tenderCancel($merCustId, $usrCustId, $orderId, $orderDate, $transAmt, $usrCustId,
             $isUnFreeze, $unFreezeOrderId, $freezeTrxId, $retUrl, $bgRetUrl, $merPriv);     
     }
@@ -424,6 +434,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderInfo = $this->genOrderInfo();
         $orderDate = $orderInfo['date'];
         $orderId   = $orderInfo['orderId'];
+        $huifuid   = $this->getHuifuid($userid);
         
         $queryLogic = new Finance_Logic_Query();
         $balance = $queryLogic->queryBalanceBg($huifuid);
@@ -445,7 +456,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $this->payOrderEnterDB($param);
         
         $orderId = strval($orderId);
-        $huifuid = $this->getHuifuid($userid);
         $transAmt = $transAmt;
         $servFee = '';
         $openAcctId = '';
@@ -486,6 +496,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderInfo = $this->genOrderInfo();
         $orderId = $orderInfo['orderId'];
         $orderDate = $orderInfo['date'];
+        $huifuid = $this->getHuifuid(intval($inUserId));
         
         $queryLogic = new Finance_Logic_Query();
         $balance = $queryLogic->queryBalanceBg($huifuid);

@@ -23,8 +23,9 @@ class DetailController extends Base_Controller_Response {
                 'uid'         => $this->userid,
                 'username'    => $this->objUser->name,
                 'amount'      => $amount,
-                'amount_text' => number_format($amount, 2),
+                'amount_text' => number_format(strval($amount),2,'.',','),
             );
+
             $this->_view->assign('user', $user);
         }
         $this->_view->assign('data', $loan);
