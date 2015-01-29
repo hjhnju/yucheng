@@ -33,12 +33,12 @@ class CashController extends Base_Controller_Page {
 		$huifuid  = $this->huifuid;	
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
 		if(empty($huifuid)) {
-			$avlBal = sprintf('%.2f',0);
-			$acctBal = sprintf('%.2f',0);
+			$avlBal = Base_Util_Number::tausendStyle(0.00);
+			$acctBal = Base_Util_Number::tausendStyle(0.00);
 		} else {
-			$userBg   = $this->userInfoLogic->getUserBg($huifuid);		
-			$avlBal   = strval($userBg['avlBal']);
-			$acctBal  = strval($userBg['acctBal']);
+			$userBg   = $this->userInfoLogic->getUserBg($huifuid);	
+			$avlBal   = Base_Util_Number::tausendStyle(strval($userBg['avlBal']));
+			$acctBal  = Base_Util_Number::tausendStyle(strval($userBg['acctBal']));
 		}
 		
 		$rechargeurl = "$this->webroot".'/account/cash/recharge';

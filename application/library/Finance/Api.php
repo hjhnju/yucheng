@@ -89,9 +89,9 @@ class Finance_Api {
 		if($return === false) {
 			$ret->status = Finance_RetCode::REQUEST_API_ERROR;
 			$ret->data = array(
-			    'avlBal'  => '0.00',
-				'acctBal' => '0.00',
-				'frzBal'  => '0.00',
+			    'avlBal'  => 0.00,
+				'acctBal' => 0.00,
+				'frzBal'  => 0.00,
 			);
 			$ret->statusInfo = Finance_RetCode::getMsg($ret->status);
 			
@@ -105,9 +105,9 @@ class Finance_Api {
 		if($return['RespCode'] !== '000') {
 			$ret->status = $return['RespCode'];
 			$ret->data = array(
-				'avlBal'  => '0.00',
-				'acctBal' => '0.00',
-				'frzBal'  => '0.00',
+				'avlBal'  => 0.00,
+				'acctBal' => 0.00,
+				'frzBal'  => 0.00,
 			);
 			$ret->statusInfo = $return['RespDesc'];
 			
@@ -120,9 +120,9 @@ class Finance_Api {
 		} 
 		$ret->status = $return['RespCode'];
 		$ret->data = array(
-			'avlBal'  => $return['AvlBal'],
-			'acctBal' => $return['AcctBal'],
-			'frzBal'  => $return['FrzBal'],
+			'avlBal'  => floatval(str_replace(',', '', $return['AvlBal'])),
+			'acctBal' => floatval(str_replace(',', '', $return['AcctBal'])),
+			'frzBal'  => floatval(str_replace(',', '', $return['FrzBal'])),
 		);		
 		Base_Log::notice($return);		
 		return $ret->format();		

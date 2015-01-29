@@ -183,8 +183,8 @@ class BgcallController extends Base_Controller_Page {
 	    $amount    = floatval($retParam['TransAmt']);
 	  
 	    $bgret    = $this->financeLogic->balance($userid);
-	    $balance  = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-	    $total    = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+	    $balance  = $bgret['userBg']['acctBal'];//用户余额
+	    $total    = $bgret['sysBg']['acctBal'];//系统余额
 	    
 	    $lastip   = Base_Util_Ip::getClientIp();
 	    $respCode = $retParam['RespCode'];
@@ -261,8 +261,8 @@ class BgcallController extends Base_Controller_Page {
 		$freezeTrxId = $retParam['FreezeTrxId'];
 		
 	    $bgret = $this->financeLogic->balance($userid);
-	    $balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-	    $total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+	    $balance = $bgret['userBg']['acctBal'];//用户余额
+	    $total = $bgret['sysBg']['acctBal'];//系统余额
 	    
 		$lastip = Base_Util_Ip::getClientIp();
 		$respCode = $retParam['RespCode'];
@@ -342,8 +342,8 @@ class BgcallController extends Base_Controller_Page {
 		$respCode = $retParam['RespCode'];
 		$respDesc = $retParam['RespDesc'];
 		$bgret = $this->financeLogic->balance($userid);
-		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$total = $bgret['sysBg']['acctBal'];//系统余额
 		if($respCode !== '000') {
 			$logParam = $retParam;
 			$logParam['msg'] = $respDesc;
@@ -433,8 +433,8 @@ class BgcallController extends Base_Controller_Page {
 		$transAmt  = floatval($retParam['TransAmt']);
 		
 		$bgret = $this->financeLogic->balance($userid);
-		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 		$lastip    = Base_Util_Ip::getClientIp();
 		$respCode  = $retParam['RespCode'];
@@ -561,8 +561,8 @@ class BgcallController extends Base_Controller_Page {
 	    $amount    = floatval($retParam['TransAmt']);
 	    
         $bgret = $this->financeLogic->balance($userid);
-		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 	    $lastip    = Base_Util_Ip::getClientIp();
 	    $respCode  = strval($retParam['RespCode']);
@@ -631,8 +631,8 @@ class BgcallController extends Base_Controller_Page {
 	    $amount    = floatval($retParam['TransAmt']);
 	    
 	    $bgret = $this->financeLogic->balance($userid);
-		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$total = $bgret['sysBg']['acctBal'];//系统余额
 	    
 	    $lastip    = Base_Util_Ip::getClientIp();
 	    $respCode  = $retParam['RespCode'];
@@ -690,8 +690,8 @@ class BgcallController extends Base_Controller_Page {
 		$amount    = floatval($_REQUEST['TransAmt']);
 		
 		$bgret = $this->financeLogic->balance($userid);
-		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 		$lastip    = Base_Util_Ip::getClientIp();
 		$respCode  = $_REQUEST['RespCode'];
@@ -753,8 +753,8 @@ class BgcallController extends Base_Controller_Page {
 		$lastip    = Base_Util_Ip::getClientIp();
 		
 		$bgret = $this->financeLogic->balance($userid);
-		$balance = floatval(str_replace(',', '', $bgret['userBg']['acctBal']));//用户余额
-		$total = floatval(str_replace(',', '', $bgret['sysBg']['acctBal']));//系统余额
+		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 		if($respCode !== '000') {
 			$logParam = $retParam;

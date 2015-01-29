@@ -292,24 +292,24 @@ class Finance_Logic_Base {
 			    'msg'    => Finance_RetCode::getMsg($userBg['status']),
 			    'userid' => $userid,
 			));
-			$ret['sysBg']['avlBal']  = '0.00';
-			$ret['sysBg']['acctBal'] = '0.00';
-			$ret['sysBg']['frzBal']  = '0.00';
+			$ret['sysBg']['avlBal']  = 0.00;
+			$ret['sysBg']['acctBal'] = 0.00;
+			$ret['sysBg']['frzBal']  = 0.00;
 		} else if($sysBg['status'] !== '000') {
 			Base_Log::error(array(
 			    'msg'    => $sysBg['statusInfo'],
 			    'userid' => $userid,
 			));
-			$ret['sysBg']['avlBal']  = '0.00';
-			$ret['sysBg']['acctBal'] = '0.00';
-			$ret['sysBg']['frzBal']  = '0.00';
+			$ret['sysBg']['avlBal']  = 0.00;
+			$ret['sysBg']['acctBal'] = 0.00;
+			$ret['sysBg']['frzBal']  = 0.00;
 		} else {
 			$details = $sysBg['data']['AcctDetails'];
 			foreach ($details as $key => $value) {
 				if($value['AcctType'] === 'MERDT') {
-					$ret['sysBg']['avlBal']  = $value['AvlBal'];
-			        $ret['sysBg']['acctBal'] = $value['AcctBal'];
-			        $ret['sysBg']['frzBal']  = $value['FrzBal'];
+					$ret['sysBg']['avlBal']  = floatval(str_replace(',', '', $value['AvlBal']));
+			        $ret['sysBg']['acctBal'] = floatval(str_replace(',', '', $value['AcctBal']));
+			        $ret['sysBg']['frzBal']  = floatval(str_replace(',', '', $value['FrzBal']));
 				}
 			}			 
 		}
