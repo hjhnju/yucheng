@@ -21,7 +21,7 @@ class Invest_Logic_Invest {
     }
     
     /**
-     * 准备进行投标
+     * 准备进行投标（主动投标）
      * @param integer $userid
      * @param integer $loan_id
      * @param number $amount
@@ -51,6 +51,7 @@ class Invest_Logic_Invest {
         $detail = array(
             array(
                 "BorrowerUserId" => $loan['user_id'],
+                //TODO:是否要采用千分位方式？
                 "BorrowerAmt"    => $max,
             ),
         );
@@ -67,30 +68,37 @@ class Invest_Logic_Invest {
     }
     
     /**
-     * 准备进行投标
+     * 确认进行投标
+     * @param $orderId 订单号
      * @param integer $useri
-     * @param integer $loan_id
+     * @param integer $loanId
      * @param number $amount
      * @return boolean|string
      */
-    public function doInvest($userid, $loan_id, $amount) {
+    public function doInvest($orderId, $userid, $loanId, $amount) {
         if ($amount < self::MIN_INVEST) {
             return false;
         }
-        $max = $this->getUserCanInvest($userid, $loan_id, $amount);
+        $max = $this->getUserCanInvest($userid, $loanId, $amount);
         if ($max < $amount) {
+            //TODO：有什么作用？
             $this->cancelInvest($userid, $amount);
             return false;
         }
         //防并发进行投资
-        $res = Loan_Api::updateLoanInvestAmount($loan_id, $amount);
+        $res = Loan_Api::updateLoanInvestAmount($loanId, $amount);
         if ($res === true) {
-            $invest         = new Invest_Object_Invest();
-            $invest->userId = $userid;
-            $invest->loanId = $loan_id;
-            $invest->amount = $amount;
-            $objUser        = User_Api::getUserObject($userid);
-            $invest->name   = $objUser->name;
+            $invest          = new Invest_Object_Invest();
+            $invest->userId  = intval($userid);
+            $invest->loanId  = intval($loanId);
+            $invest->amount  = floatval($amount);
+            $objUser         = User_Api::getUserObject($userid);
+            $invest->name    = $objUser->name;
+            $invest->orderId = intval($orderId);
+            //投资的该项目的利率和周期
+            $arrData = Loan_Api::getLoanInfo($loanId);
+            $invest->interest = isset($arrData['interest']) ? $arrData['interest'] : 0;
+            $invest->duration = isset($arrData['duration']) ? $arrData['duration'] : 0;
             if (!$invest->save()) {
                 Base_Log::error(array(
                     'msg'    => '写入投标信息失败',

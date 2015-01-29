@@ -41,6 +41,15 @@ class Loan_Logic_Loan {
                             'outUserId' => $outUserId,
                             'transAmt'  => $transAmt,
                         ));
+                    }else{
+                        Base_Log::debug(array(
+                            'msg'       => '满标打款单笔成功',
+                            'loanId'    => $loanId,
+                            'subOrdId'  => $subOrdId,
+                            'inUserId'  => $inUserId,
+                            'outUserId' => $outUserId,
+                            'transAmt'  => $transAmt,
+                        ));
                     }
                 }
             }

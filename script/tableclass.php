@@ -3,9 +3,9 @@ $host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
 $user      = 'xingjiaodai';
 $pass      = 'xingjiaodai';
 $dbname    = 'xjd';
-$tb_pre    = 'finance';
-$save_path = '/home/work/user/lilu/yucheng/application/library/Finance';
-$author    = 'lilu';
+$tb_pre    = 'invest';
+$save_path = '/Users/hejunhua/Dev/yucheng/application/library/Invest';
+$author    = 'jiangsongfang';
 
 if(!file_exists($save_path)){
     mkdir($save_path, 0775); 
