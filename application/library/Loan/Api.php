@@ -160,6 +160,8 @@ class Loan_Api {
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
+
+        Base_Log::debug(array('loan_id'=> $loan_id, 'data'=>$data));
         
         return $data;
     }

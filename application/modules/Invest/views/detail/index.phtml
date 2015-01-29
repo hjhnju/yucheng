@@ -334,7 +334,7 @@
                     <input name="id" type="hidden" value="{%$data.id%}" />
                 </div>
                 <div class="right-top-chongzhi">
-                    <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a href="{%$webroot%}/account/cash/recharge" class="chongzhi-link"> [充值]</a></div>
+                    <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount_text%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a href="{%$webroot%}/account/cash/recharge" class="chongzhi-link"> [充值]</a></div>
                     <div class="chongzhi-right">预期收益：<span class="chongzhi-span">0.00</span></div>
                 </div>
                 <div class="right-top-btn">

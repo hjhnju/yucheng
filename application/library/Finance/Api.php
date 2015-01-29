@@ -386,10 +386,9 @@ class Finance_Api {
 	 * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
 	 * @return bool true--撤销成功  false--撤销失败
 	 */
-	public static function tenderCancel($transAmt,$userid,$orderId,$orderDate,$retUrl) {
-		if(!isset($transAmt) || empty($transAmt) || !isset($userid) || empty($userid) ||
-		   !isset($orderId) || empty($orderId) || !isset($orderDate) || empty($orderDate) ||
-		   !isset($retUrl) || empty($retUrl)) {
+	public static function tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl) {
+		if(!isset($transAmt) || !isset($userid) || !isset($orderId) || !isset($orderDate) || !isset($retUrl) ||
+		   !isset($freezeTrxId)) {
 		    Base_Log::error(array(
 		    	'msg'       => '请求参数错误',
 		    	'transAmt'  => $transAmt,
@@ -407,7 +406,7 @@ class Finance_Api {
 		    'orderDate' => $orderDate,
 		    'retUrl'    => $retUrl,
 		));
-		$transLogic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$retUrl);		
+		$transLogic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);		
 	}
 	
 	/**
