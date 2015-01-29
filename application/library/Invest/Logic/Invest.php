@@ -245,7 +245,6 @@ class Invest_Logic_Invest {
     
     /**
      * 获取借款的投资列表
-     * 增加用户名(初用户本人外加*)
      * @param integer $loan_id
      * @param integer $page
      * @param integer $pagesize

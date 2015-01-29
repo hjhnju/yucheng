@@ -6,6 +6,55 @@ class Loan_Logic_Loan {
     public function __construct() {
         $this->objModel = new LoanModel();
     }
+
+    /**
+     * 满标打款
+     */
+    public function makeLoans($loanId){
+
+        $objRst = new Base_Result();
+        if (empty($loanId)) {
+            $objRst->status = Base_RetCode::PARAM_ERROR;
+            $objRst->statusInfo = Base_RetCode::getMsg($objRst->status);
+            return $objRst->format();
+        }
+
+        $logic       = new Loan_Logic_Loan();
+        $arrLoanInfo = $logic->getLoanInfo($loanId);
+        $bolRet      = true;
+        if ($arrLoanInfo['status'] === Loan_Type_LoanStatus::PAYING) {
+            $inUserId = intval($arrLoanInfo['user_id']);
+            //获取该项目所有投资
+            $arrRet = Invest_Api::getLoanInvests($loanId);
+            if ($arrRet['status'] === Base_RetCode::SUCCESS){
+                foreach($arrRet['data']['list'] as $arrInfo){
+                    $subOrdId  = $arrInfo['id'];
+                    $outUserId = $arrInfo['user_id'];
+                    $transAmt  = $arrInfo['amount'];
+                    $bolRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt)
+                    if(!$bolRet){
+                        Base_Log::error(array(
+                            'msg'       => '满标打款单笔失败',
+                            'loanId'    => $loanId,
+                            'subOrdId'  => $subOrdId,
+                            'inUserId'  => $inUserId,
+                            'outUserId' => $outUserId,
+                            'transAmt'  => $transAmt,
+                        ));
+                    }
+                }
+            }
+        }
+        
+        if ($bolRet) {
+            $content = "给客户打款成功";
+            self::addLog($loanId, $content);
+        } else {
+            $content = "给客户打款失败";
+            self::addLog($loanId, $content);
+        }
+        return $res;
+    }
     
     /**
      * 借款成功 创建还款与收款计划

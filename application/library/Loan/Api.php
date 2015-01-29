@@ -17,35 +17,15 @@ class Loan_Api {
         
     }
     
-    private static function sendMoney($from, $to) {
-        
-    }
-    
     /**
      * 对成功的借款进行打款
      * @param integer $loan_id
      * @return boolean
      */
-    public static function sendLendMoney($loan_id) {
-        if (empty($loan_id)) {
-            return false;
-        }
-
-        $logic = new Loan_Logic_Loan();
-        $loan = $logic->getLoanInfo($loan_id);
-        $res = false;
-        if ($loan['status'] == Loan_Type_LoanStatus::PAYING) {
-            $res = $logic->sendMoney($loan_id);
-        }
-        
-        if ($res) {
-            $content = "给客户打款成功";
-            self::AddLog($loan_id, $content);
-        } else {
-            $content = "给客户打款失败";
-            self::AddLog($loan_id, $content);
-        }
-        return $res;
+    public static function makeLoans($loan_id) {
+        $logic  = new Loan_Logic_Loan();
+        $objRst = $logic->makeLoans($loan_id);
+        return $objRst->format();
     }
     
     /**
@@ -67,10 +47,10 @@ class Loan_Api {
         
         if ($res) {
             $content = "生成还款计划成功";
-            self::AddLog($loan_id, $content);
+            self::addLog($loan_id, $content);
         } else {
             $content = "生成还款计划失败";
-            self::AddLog($loan_id, $content);
+            self::addLog($loan_id, $content);
         }
         
         return $res;
@@ -95,7 +75,7 @@ class Loan_Api {
      * @param string $content
      * @return boolean
      */
-    public static function AddLog($loan_id, $content) {
+    public static function addLog($loan_id, $content) {
         $log = new Loan_Object_Log();
         $log->loanId = $loan_id;
         $log->ip = Base_Util_Ip::getClientIp();
@@ -224,7 +204,7 @@ class Loan_Api {
         if ($res) {
             $type = new Loan_Type_LoanStatus();
             $content = "更新借款状态为" . $type->getTypeName($status);
-            self::AddLog($loan_id, $content);
+            self::addLog($loan_id, $content);
         }
         return $res;
     }

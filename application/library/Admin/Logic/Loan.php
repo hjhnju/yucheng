@@ -13,7 +13,7 @@ class Admin_Logic_Loan {
     public function __construct() {
         $this->db = Base_Db::getInstance('xjd');
     }
-    
+
     /**
      * 发布借款
      * @param integer $loanId 借款ID

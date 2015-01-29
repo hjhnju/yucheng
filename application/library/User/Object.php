@@ -69,8 +69,8 @@ class User_Object {
 
 
     public function __construct($userid){
-        $this->userid   = $userid;
-        $this->loginObj = new User_Object_Login($userid);
+        $this->userid   = intval($userid);
+        $this->loginObj = new User_Object_Login($this->userid);
         $usertype       = $this->loginObj->usertype;
         if(self::TYPE_CORP === $usertype){
             $this->corpInfoObj = new User_Object_Corpinfo($this->userid);
@@ -129,13 +129,15 @@ class User_Object {
         if(!$this->loginProps){
             return false;
         }
-        $this->loginObj->save();
+        $bolRet1 = $bolRet2 = $bolRet3 = false;
+        $bolRet1 = $this->loginObj->save();
         if($this->infoObj){
-            $this->infoObj->save();
+            $bolRet2 = $this->infoObj->save();
         }
         if($this->corpInfoObj){
-            $this->corpInfoObj->save();
+            $bolRet3 = $this->corpInfoObj->save();
         }
+        return $bolRet1 && $bolRet2 && $bolRet3;
     }
 
     /**
