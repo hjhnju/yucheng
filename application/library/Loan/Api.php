@@ -185,7 +185,7 @@ class Loan_Api {
         $data['amount_rest'] = $data['amount'] - $data['invest_amount'];
         $data['amount'] = number_format($data['amount'], 2);
         $data['invest_amount'] = number_format($data['invest_amount'], 2);
-        $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
+        $data['percent'] = number_format(100 * $data['invest_amount'] / $data['amount'], 2);
         $data['days'] = self::getDays($data['duration']);
 
         $safe = new Loan_Type_SafeMode();

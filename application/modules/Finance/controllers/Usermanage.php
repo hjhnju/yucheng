@@ -187,9 +187,9 @@ class UsermanageController extends Base_Controller_Page {
 
         $transAmt = '10000.00';
         $userid = '15';
-        $orderId = '2015012916141410941';
+        $orderId = '2015012917424112320';
         $orderDate = '20150129';
-        $freezeTrxId = '201501290000814906';
+        $freezeTrxId = '201501290000815893';
         $retUrl = '';
     	$logic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);
     }
