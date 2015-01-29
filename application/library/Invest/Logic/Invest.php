@@ -150,8 +150,7 @@ class Invest_Logic_Invest {
         $arrAmt = Finance_Api::getUserBalance($uid);
         $avlBal = 0.0;
         if(!empty($arrAmt) && isset($arrAmt['data']['avlBal'])){
-            //带千分位,
-            $avlBal = floatval(str_replace(',', '', $arrAmt['data']['avlBal']));
+            $avlBal = floatval($arrAmt['data']['avlBal']);
         }else{
             Base_Log::warn(array(
                 'msg' => '获取账户可用余额失败',
