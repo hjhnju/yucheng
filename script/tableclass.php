@@ -3,8 +3,8 @@ $host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
 $user      = 'xingjiaodai';
 $pass      = 'xingjiaodai';
 $dbname    = 'xjd';
-$tb_pre    = 'invest';
-$save_path = '/Users/hejunhua/Dev/yucheng/application/library/Invest';
+$tb_pre    = 'loan';
+$save_path = '/Users/hejunhua/Dev/yucheng/application/library/Loan';
 $author    = 'jiangsongfang';
 
 if(!file_exists($save_path)){

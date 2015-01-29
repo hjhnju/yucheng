@@ -72,22 +72,26 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param proArea 项目所在地
      * @param guarCompId 担保公司唯一标识
      * @param guarAmt 担保金额
-     * @return array || boolean
+     * @return Base_Result
+     * data=array('orderId'=>)
      * 
      */
-    public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
-        if(!isset($proId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
+    public function addBidInfo($loanId, $borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
+        $objRst = new Base_Result();
+        if(!isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
            !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
-            Base_Log::error(array(
-                'msg' => '请求参数出错',
-            ));     
-            return false;
-        }       
-        $webroot  = Base_Config::getConfig('web')->root;
-        $chinapnr = Finance_Chinapnr_Logic::getInstance();
-        
+            $objRst->status     = Base_RetCode::PARAM_ERROR;
+            $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);    
+            Base_Log::error($objRst->format());
+            return $objRst;
+        }
+        //为借款标的生成一个订单号，返回
+        $orderId      = Finance_Logic_Order::genOrderId();
+
+        $proId        = $loanId;
+        $webroot      = Base_Config::getConfig('web')->root;
+        $chinapnr     = Finance_Chinapnr_Logic::getInstance();
         $merCustId    = strval(self::MERCUSTID);
-        $proId        = strval($proId); //借款的Loan_id
         $borrCustId   = strval($this->getHuifuid(intval($borrUserId)));
         $borrTotAmt   = sprintf('%.2f',$borrTotAmt);
         $yearRate     = sprintf('%.2f',$yearRate);
@@ -102,12 +106,22 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $guarCompId   = strval($guarCompId);
         $guarAmt      = strval($guarAmt);
         $proArea      = strval($proArea);
-        $bgRetUrl     = $webroot.'/finance/bgcall/addBidInfo';
+        $bgRetUrl     = $webroot . '/finance/bgcall/addBidInfo';
         $merPriv      = '';
         $reqExt       = '';       
-        $ret = $chinapnr->addBidInfo($merCustId, $proId, $borrCustId, $borrTotAmt, $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
-                $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
-        return $ret;
+        $mixRet       = $chinapnr->addBidInfo($merCustId, $proId, $borrCustId, $borrTotAmt, 
+            $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
+            $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
+        
+        if(!is_null($mixRet)){
+            $objRst->status = Base_RetCode::SUCCESS;
+            $objRst->data   = array('orderId' => $orderId);
+        }else{
+            $objRst->status = Finance_RetCode::ADD_BIDINFO_FAIL;
+            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::ADD_BIDINFO_FAIL);
+        }
+
+        return $objRst;
     }
     
     /**

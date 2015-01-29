@@ -36,20 +36,22 @@ class Admin_Logic_Loan {
             return false;
         }
         
-        // 调用财务API进行借款录入
         $area    = new Area_Object_Area($loan->area);
         $retDate = $duration->getTimestamp($loan->duration, $loan->deadline);
         $retAmt  = Loan_Api::getLoanRefundAmount($loanId);
-        $res     = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, 
+        
+        // 调用财务API进行借款录入
+        $arrRst  = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, 
             $loan->interest/100, $loan->refundType, $loan->startTime, $loan->deadline, 
             $retAmt, $retDate, $area->huifuCityid);
-        if ($res === true) {
-            return $this->db->commit();
-        } else {
-            Base_Log::warn('add bid info failed ' . $res);
+        if ($arrRst['status'] !== Base_RetCode::SUCCESS) {
+            Base_Log::warn(array(
+                'msg' => 'add bid info failed ',
+                'rst' => $arrRst,
+            ));
+            return false;
         }
-        
-        return false;
+        return $this->db->commit();
     }
     
     public function disable($loanId) {

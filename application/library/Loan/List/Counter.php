@@ -27,7 +27,7 @@ class Loan_List_Counter extends Base_List {
      * @var array
      */
     protected $intProps = array(
-        'userid'     => 1,
+        'userid'      => 1,
         'success'     => 1,
         'finished'    => 1,
         'status'      => 1,
