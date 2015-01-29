@@ -360,6 +360,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }       
         $transAmt = sprintf('%.2f',$transAmt);
         $queryLogic = new Finance_Logic_Query();
+        $huifuid = $this->getHuifuid($userid);
         $balance = $queryLogic->queryBalanceBg($huifuid);
         $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
@@ -385,12 +386,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId = strval($orderId);
         $orderDate = strval($orderDate);
         $transAmt = $transAmt;
-        $usrCustId = strval($this->getHuifuid($userid));
+        $usrCustId = strval($huifuid);
         $isUnFreeze = strval('Y');
         $unFreezeOrdInfo = $this->genOrderInfo();
         $unFreezeOrdId = $unFreezeOrdInfo['orderId'];
         $unFreezeOrderId = strval($unFreezeOrdId);
-        //$freezeTrxId = '';
+        $freezeTrxId = strval($freezeTrxId);
         $retUrl = strval($retUrl);
         $bgRetUrl = $webroot.'/finance/bgcall/tendercancel';
         $merPriv = strval($userid);     

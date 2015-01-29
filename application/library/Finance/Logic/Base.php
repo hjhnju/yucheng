@@ -587,6 +587,9 @@ class Finance_Logic_Base {
     public function verifySign($arrFields, $arrParams, $sign) {
     	$originStr = $this->getSignContent($arrParams, $arrFields);
     	$scureTool = new Finance_Chinapnr_SecureTool(self::PRIVATEKEY,self::PUBLICKEY);
+    	Base_Log::debug(array(
+    		'originStr' => $originStr,
+    	));
     	return $scureTool->verify($originStr, $sign);
     }
     

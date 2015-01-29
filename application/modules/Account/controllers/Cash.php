@@ -32,9 +32,15 @@ class CashController extends Base_Controller_Page {
 	public function indexAction() {		
 		$huifuid  = $this->huifuid;	
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
-		$userBg   = $this->userInfoLogic->getUserBg($huifuid);
-		$avlBal   = strval($userBg['avlBal']);
-		$acctBal  = strval($userBg['acctBal']);
+		if(empty($huifuid)) {
+			$avlBal = sprintf('%.2f',0);
+			$acctBal = sprintf('%.2f',0);
+		} else {
+			$userBg   = $this->userInfoLogic->getUserBg($huifuid);		
+			$avlBal   = strval($userBg['avlBal']);
+			$acctBal  = strval($userBg['acctBal']);
+		}
+		
 		$rechargeurl = "$this->webroot".'/account/cash/recharge';
 		$withdrawurl = "$this->webroot".'/account/cash/withdraw';
 		//assign至前端
