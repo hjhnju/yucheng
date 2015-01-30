@@ -1112,7 +1112,6 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
-
 		$this->autoRedirect($reqData);
 	}
 	/**
