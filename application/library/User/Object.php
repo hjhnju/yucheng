@@ -69,8 +69,7 @@ class User_Object {
 
 
     public function __construct($userid){
-        $this->userid   = intval($userid);
-        $this->loginObj = new User_Object_Login($this->userid);
+        $this->loginObj = new User_Object_Login(intval($userid));
         $usertype       = $this->loginObj->usertype;
         if(self::TYPE_CORP === $usertype){
             $this->corpInfoObj = new User_Object_Corpinfo($this->userid);
