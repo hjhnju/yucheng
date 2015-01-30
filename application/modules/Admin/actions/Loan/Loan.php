@@ -1,22 +1,23 @@
 <?php
 /**
- * 借款发布
+ * 放款接口
  * @author hejunhua
  *
  */
-class PublishAction extends Yaf_Action_Abstract {
+class LoanAction extends Yaf_Action_Abstract {
     public function execute() {
 
         $loanId = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
 
-        $arrRet = Loan_Api::publish($loanId);
+        $arrRet = Loan_Api::makeLoans($loanId);
+        
         $bolRet = isset($arrRet['success']) ? $arrRet['success'] === Base_RetCode::SUCCESS : false;
         Base_Log::notice(array(
-        	'arrRet' => $arrRet,
-        	'bolRet' => $bolRet,
+            'arrRet' => $arrRet,
+            'bolRet' => $bolRet,
         ));
         
-    	$this->getView()->assign('success', $bolRet);
+        $this->getView()->assign('success', $bolRet);
 
     }
 }

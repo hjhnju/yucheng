@@ -16,9 +16,16 @@ class Loan_Api {
     public static function buildInvestRefunds($invest_id) {
         
     }
-    
-    private static function sendMoney($from, $to) {
-        
+
+    /**
+     * 发布借款
+     * @param integer $loanId 借款ID
+     * @return boolean
+     */
+    public function publish($loanId, $days = 7) {
+        $logic  = new Loan_Logic_Loan();
+        $objRst = $logic->publish($loan_id, $days);
+        return $objRst->format();
     }
     
     /**
@@ -26,26 +33,10 @@ class Loan_Api {
      * @param integer $loan_id
      * @return boolean
      */
-    public static function sendLendMoney($loan_id) {
-        if (empty($loan_id)) {
-            return false;
-        }
-
-        $logic = new Loan_Logic_Loan();
-        $loan = $logic->getLoanInfo($loan_id);
-        $res = false;
-        if ($loan['status'] == Loan_Type_LoanStatus::PAYING) {
-            $res = $logic->sendMoney($loan_id);
-        }
-        
-        if ($res) {
-            $content = "给客户打款成功";
-            self::AddLog($loan_id, $content);
-        } else {
-            $content = "给客户打款失败";
-            self::AddLog($loan_id, $content);
-        }
-        return $res;
+    public static function makeLoans($loan_id) {
+        $logic  = new Loan_Logic_Loan();
+        $objRst = $logic->makeLoans($loan_id);
+        return $objRst->format();
     }
     
     /**
@@ -67,10 +58,10 @@ class Loan_Api {
         
         if ($res) {
             $content = "生成还款计划成功";
-            self::AddLog($loan_id, $content);
+            self::addLog($loan_id, $content);
         } else {
             $content = "生成还款计划失败";
-            self::AddLog($loan_id, $content);
+            self::addLog($loan_id, $content);
         }
         
         return $res;
@@ -95,7 +86,7 @@ class Loan_Api {
      * @param string $content
      * @return boolean
      */
-    public static function AddLog($loan_id, $content) {
+    public static function addLog($loan_id, $content) {
         $log = new Loan_Object_Log();
         $log->loanId = $loan_id;
         $log->ip = Base_Util_Ip::getClientIp();
@@ -185,7 +176,7 @@ class Loan_Api {
         $data['amount_rest'] = $data['amount'] - $data['invest_amount'];
         $data['amount'] = number_format($data['amount'], 2);
         $data['invest_amount'] = number_format($data['invest_amount'], 2);
-        $data['percent'] = number_format($data['invest_amount'] / $data['amount'], 2);
+        $data['percent'] = number_format(100 * $data['invest_amount'] / $data['amount'], 2);
         $data['days'] = self::getDays($data['duration']);
 
         $safe = new Loan_Type_SafeMode();
@@ -224,7 +215,7 @@ class Loan_Api {
         if ($res) {
             $type = new Loan_Type_LoanStatus();
             $content = "更新借款状态为" . $type->getTypeName($status);
-            self::AddLog($loan_id, $content);
+            self::addLog($loan_id, $content);
         }
         return $res;
     }
