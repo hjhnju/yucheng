@@ -18,7 +18,7 @@ class RequestAction extends Yaf_Action_Abstract {
         }
         //参数获取－借款id
         $loanId  = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
-        $loanId  = 12; //test
+        $loanId  = 13; //test
         $userid  = 61; //test
 
         //获取申请借款人
@@ -34,16 +34,16 @@ class RequestAction extends Yaf_Action_Abstract {
             'id' => $loanId,
             //基本借款信息
             'user_id'   => $userid,
-            'title'     => '我是新标上线',
+            'title'     => '这次我想放款',
             'area'      => 2458,
-            'type_id'   => Loan_Type_LoanType::CERTIFICATION, //1
+            'type_id'   => Loan_Type_LoanType::ENTITY, //1
             'cat_id'    => Loan_Type_LoanCat::SCHOOL,
             'content'   => '改扩建，期末教职工工资发放需要资金周转。',
             'fresh'     => 0, //是否新手
-            'duration'  => 360,
+            'duration'  => 180,
             'level'     => 2, //评估等级
-            'amount'    => 1000000.00,
-            'interest'  => 10.2,
+            'amount'    => 100000.00,
+            'interest'  => 10.3,
             'safe_id'   => implode(',', array(Loan_Type_SafeMode::CAPITAL, 
                 Loan_Type_SafeMode::PLEDGE, Loan_Type_SafeMode::SHAREHOLDER)),
             'refund_type' => Loan_Type_RefundType::MONTH_INTEREST,
@@ -54,22 +54,22 @@ class RequestAction extends Yaf_Action_Abstract {
             'create_uid'  => $createUid,
             //借款审核信息
             'audit'       => array(
-                array('id'=>32, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'实地认证'),
-                array('id'=>33, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'营业执照'),
-                array('id'=>34, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'税务登记证'),
-                array('id'=>35, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'银行开户许可证'),
-                array('id'=>36, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'组织机构代码证'),
-                array('id'=>37, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'征信报告'),
-                array('id'=>38, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'抵押手续'),
-                array('id'=>39, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'身份证'),
-                array('id'=>40, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'户口本'),
-                array('id'=>41, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'结婚证'),
-                array('id'=>42, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'房产证'),
-                array('id'=>43, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'行驶证'),
+                array('id'=>44, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'实地认证'),
+                array('id'=>45, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'营业执照'),
+                array('id'=>46, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'税务登记证'),
+                array('id'=>47, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'银行开户许可证'),
+                array('id'=>48, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'组织机构代码证'),
+                array('id'=>49, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'征信报告'),
+                array('id'=>50, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'抵押手续'),
+                array('id'=>51, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'身份证'),
+                array('id'=>52, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'户口本'),
+                array('id'=>53, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'结婚证'),
+                array('id'=>54, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'房产证'),
+                array('id'=>55, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'行驶证'),
             ),
             //借款企业信息
             'company'     => array(
-                'id'        => 4,
+                'id'        => 5,
                 'school'    => '福建101中学',
                 'area'      => '福建东城区',
                 'assets'    => '5000万',
@@ -80,7 +80,7 @@ class RequestAction extends Yaf_Action_Abstract {
             ),
             //借款担保人信息
             'guarantee' => array(
-                'id'          => 5,
+                'id'          => 6,
                 'name'        => '李若彤',
                 'account'     => '浙江金华',
                 'age'         => 30,
@@ -92,35 +92,35 @@ class RequestAction extends Yaf_Action_Abstract {
             ),
             'attach' => array(
                 array(
-                    'id'     => 20,
+                    'id'     => 25,
                     'type'   => Loan_Type_Attach::CERTIFICATION,
                     'title'  => '身份证',
                     'url'    => 'http://sn.people.com.cn/NMediaFile/2012/0919/LOCAL201209191518214553001689727.jpg',
                     'status' => 0,
                 ),
                 array(
-                    'id'     => 21,
+                    'id'     => 26,
                     'type'   => Loan_Type_Attach::CERTIFICATION,
                     'title'  => '身份证',
                     'url'    => 'http://img4.cache.netease.com/photo/0031/2013-05-29/902N04R659P50031.jpg',
                     'status' => 0,
                 ),
                 array(
-                    'id'     => 22,
+                    'id'     => 27,
                     'type'   => Loan_Type_Attach::CONTRACT,
                     'title'  => '借款合同',
                     'url'    => 'http://new.gdcp.cn/images/20120827/201208271513521616.jpg',
                     'status' => 0,
                 ),
                 array(
-                    'id'     => 23,
+                    'id'     => 28,
                     'type'   => Loan_Type_Attach::ENTITY,
                     'title'  => '学校大门',
                     'url'    => 'http://house.china.com.cn/taiyuan/UserFiles/20110118/09002660.jpg',
                     'status' => 0,
                 ),
                 array(
-                    'id'     => 24,
+                    'id'     => 29,
                     'type'   => Loan_Type_Attach::ENTITY,
                     'title'  => '教学楼',
                     'url'    => 'http://www.zjc.com.cn/admin1/edit/UploadFile/2008922134658235.jpg',

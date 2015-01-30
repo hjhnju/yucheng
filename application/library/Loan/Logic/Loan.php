@@ -63,7 +63,6 @@ class Loan_Logic_Loan {
      * 满标打款
      */
     public function makeLoans($loanId){
-
         $objRst = new Base_Result();
         if (empty($loanId)) {
             $objRst->status = Base_RetCode::PARAM_ERROR;
@@ -74,47 +73,73 @@ class Loan_Logic_Loan {
         $logic       = new Loan_Logic_Loan();
         $arrLoanInfo = $logic->getLoanInfo($loanId);
         $bolRet      = true;
-        if ($arrLoanInfo['status'] === Loan_Type_LoanStatus::PAYING) {
+        if ($arrLoanInfo['status'] === Loan_Type_LoanStatus::FULL_CHECK) {
             $inUserId = intval($arrLoanInfo['user_id']);
             //获取该项目所有投资
-            $arrRet = Invest_Api::getLoanInvests($loanId);
-            if ($arrRet['status'] === Base_RetCode::SUCCESS){
-                foreach($arrRet['data']['list'] as $arrInfo){
-                    $subOrdId  = $arrInfo['id'];
-                    $outUserId = $arrInfo['user_id'];
-                    $transAmt  = $arrInfo['amount'];
-                    $bolRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
-                    if(!$bolRet){
-                        Base_Log::error(array(
-                            'msg'       => '满标打款单笔失败',
-                            'loanId'    => $loanId,
-                            'subOrdId'  => $subOrdId,
-                            'inUserId'  => $inUserId,
-                            'outUserId' => $outUserId,
-                            'transAmt'  => $transAmt,
-                        ));
-                    }else{
-                        Base_Log::debug(array(
-                            'msg'       => '满标打款单笔成功',
-                            'loanId'    => $loanId,
-                            'subOrdId'  => $subOrdId,
-                            'inUserId'  => $inUserId,
-                            'outUserId' => $outUserId,
-                            'transAmt'  => $transAmt,
-                        ));
-                    }
+            $arrRet   = Invest_Api::getLoanInvests($loanId);
+            foreach($arrRet['list'] as $arrInfo){
+                $subOrdId  = $arrInfo['order_id'];
+                $outUserId = $arrInfo['user_id'];
+                $transAmt  = $arrInfo['amount'];
+                $arrRet  = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+                if(Base_RetCode::SUCCESS !== $arrRet['status']){
+                    Base_Log::debug(array(
+                        'msg'       => '满标打款单笔成功',
+                        'loanId'    => $loanId,
+                        'subOrdId'  => $subOrdId,
+                        'inUserId'  => $inUserId,
+                        'outUserId' => $outUserId,
+                        'transAmt'  => $transAmt,
+                    ));
+                }else{
+                    $bolRet = false;
+                    Base_Log::error(array(
+                        'msg'       => '满标打款单笔失败',
+                        'loanId'    => $loanId,
+                        'subOrdId'  => $subOrdId,
+                        'inUserId'  => $inUserId,
+                        'outUserId' => $outUserId,
+                        'transAmt'  => $transAmt,
+                    ));
                 }
             }
         }
         
         if ($bolRet) {
-            $content = "给客户打款成功";
-            self::addLog($loanId, $content);
+            $objRst->status = Base_RetCode::SUCCESS;
+            $content        = "给客户打款成功";
+            Base_Log::notice(array(
+                'msg'    => '满标打款成功',
+                'loanId' => $loanId,
+            ));
+            $this->addLog($loanId, $content);
         } else {
-            $content = "给客户打款失败";
-            self::addLog($loanId, $content);
+            $objRst->status     = Loan_RetCode::MAKE_LOAN_FAIL;
+            $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::MAKE_LOAN_FAIL);
+            $content            = "给客户打款失败（多笔中有失败）";
+            Base_Log::notice(array(
+                'msg'    => '满标打款失败',
+                'loanId' => $loanId,
+            ));
+            $this->addLog($loanId, $content);
         }
-        return $res;
+        return $objRst;
+    }
+
+    /**
+     * 添加借款日志记录
+     * @param integer $loanId
+     * @param string $content
+     * @return boolean
+     */
+    public function addLog($loanId, $content) {
+        $log          = new Loan_Object_Log();
+        $log->loanId  = $loanId;
+        $log->ip      = Base_Util_Ip::getClientIp();
+        $log->content = $content;
+        //userId是谁
+        $log->userId  = 0;
+        return $log->save();
     }
     
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * 借款发布
+ * 借款发布(审核通过)
  * @author hejunhua
  *
  */
@@ -11,7 +11,7 @@ class PublishAction extends Yaf_Action_Abstract {
 
         $arrRet = Loan_Api::publish($loanId);
         $bolRet = false;
-        if(Base_RetCode::SUCCESS === $arrRet['success']) {
+        if(Base_RetCode::SUCCESS === $arrRet['status']) {
             $bolRet = true;
         }
 

@@ -259,7 +259,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param float transAmt 放款金额
      * 
      */
-    public function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt) {
+    public function loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt) {
+        $objRst = new Base_Result();
         if(!isset($loanId) || !isset($subOrdId) || !isset($inUserId) || !isset($outUserId) || !isset($transAmt)) {
             Base_Log::error(array(
                 'msg'       => '请求参数错误',
@@ -269,21 +270,23 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'outUserId' => $outUserId,
                 'transAmt'  => $transAmt,
             ));
-            return false;
+            $objRst->status     = Base_RetCode::PARAM_ERROR;
+            $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
+            return $objRst;  
         }
-        $webroot = Base_Config::getConfig('web')->root;
-        $chinapnr = Finance_Chinapnr_Logic::getInstance();
-        $orderInfo = $this->genOrderInfo();
-        $orderDate = $orderInfo['date'];
-        $orderId   = $orderInfo['orderId'];     
-        $inHuifuId = $this->getHuifuid(intval($inUserId));
+        $webroot    = Base_Config::getConfig('web')->root;
+        $chinapnr   = Finance_Chinapnr_Logic::getInstance();
+        $orderInfo  = $this->genOrderInfo();
+        $orderDate  = $orderInfo['date'];
+        $orderId    = $orderInfo['orderId'];     
+        $inHuifuId  = $this->getHuifuid(intval($inUserId));
         $outHuifuId = $this->getHuifuid(intval($outUserId));    
             
         $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
+        $balance    = $queryLogic->queryBalanceBg($outHuifuId);
+        $avlBal     = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
         //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $avlBal     = str_replace(',', '', $avlBal);
         
         //打款订单记录入表finance_order
         $paramOrder = array(
@@ -298,28 +301,27 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         );
         $this->payOrderEnterDB($paramOrder);
         //投标记录表状态更改为“打款中”
-        $this->payTenderUpdate(intval($subOrdId),Finance_TypeStatus::PAYING);       
+        $this->payTenderUpdate(intval($subOrdId), Finance_TypeStatus::PAYING);       
         
-        $merCustId = strval(self::MERCUSTID);
-        $orderId = strval($orderId);
-        $orderDate = strval($orderDate);
-        $outCustId = strval($outHuifuId);
-        $transAmt = sprintf('%.2f',$transAmt);
-            
-        $loanInfo = Loan_Api::getLoanInfo(intval($loanId));
+        $merCustId  = strval(self::MERCUSTID);
+        $orderId    = strval($orderId);
+        $orderDate  = strval($orderDate);
+        $outCustId  = strval($outHuifuId);
+        $transAmt   = sprintf('%.2f',$transAmt);
         
-        $duration = $loanInfo['days'];////////////////////////////
-        $duration = 10;
-        $riskLevel = $loanInfo['level'];////////////////////////
-        $riskLevel = 10;
-        $prepareFee = Fee::prepareFee($riskLevel,$transAmt,$duration);//风险准备金
-        $serviceFee = Fee::serviceFee($riskLevel,$transAmt);//融资服务费     
-        $fee = $prepareFee + $serviceFee;
+        $loanInfo   = Loan_Api::getLoanInfo(intval($loanId));
+        
+        $duration   = $loanInfo['duration'];
+        $riskLevel  = $loanInfo['level'];
+        $prepareFee = Finance_Fee::prepareFee($riskLevel,$transAmt,$duration);//风险准备金
+        $serviceFee = Finance_Fee::serviceFee($riskLevel,$transAmt);//融资服务费     
+        $fee        = $prepareFee + $serviceFee;
+        //收取管理费
             
-        $tenderInfo = $this->getTenderInfo($subOrdId);
-        $subOrdId = strval($subOrdId);
-        $subOrdDate = strval($tenderInfo['orderDate']);
-        $inCustId = strval($inHuifuId);
+        $tenderInfo    = $this->getTenderInfo($subOrdId);
+        $subOrdId      = strval($subOrdId);
+        $subOrdDate    = strval($tenderInfo['orderDate']);
+        $inCustId      = strval($inHuifuId);
         $arrDivDetails = array(
             //风险金账户
             array(
@@ -334,22 +336,61 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'DivAmt'   => $serviceFee,
             ),          
         );
-        $jsonDivDetails = json_encode($arrDivDetails);
-        $feeObjFlag = 'I';//手续费向入款人收取               
-        $isDefault = 'Y';
-        $isUnFreeze = 'Y';
+        $jsonDivDetails  = json_encode($arrDivDetails);
+        $feeObjFlag      = 'I';//手续费向入款人收取               
+        $isDefault       = 'Y';
+        $isUnFreeze      = 'Y';
         $unFreezeOrdInfo = $this->genOrderInfo();
-        $unFreezeOrdId = strval($unFreezeOrdInfo['orderId']);
-        $freezeTrxId = strval($tenderInfo['freezeTrxId']);
-        $bgRetUrl = $webroot.'/finance/bgcall/loans';
-        $merPriv = strval($outUserId);//投标人的uid
-        $reqExt = array(
-            'ProId' => strval($loanId),
+        $unFreezeOrdId   = strval($unFreezeOrdInfo['orderId']);
+        $freezeTrxId     = strval($tenderInfo['freezeTrxId']);
+        $bgRetUrl        = $webroot.'/finance/bgcall/loans';
+        $merPriv         = strval($outUserId);//投标人的uid
+        $reqExt          = array(
+            'ProId'   => strval($loanId),
         );
-        $reqExt = json_encode($reqExt);
-        $ret = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, $fee, $subOrdId, $subOrdDate,$inCustId, 
-            $jsonDivDetails, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, $freezeTrxId, $bgRetUrl, $merPriv, $reqExt); 
-        return $ret;    
+        $reqExt          = json_encode($reqExt);
+        
+        Base_Log::notice(array(
+            'merCustId'      => $merCustId,
+            'orderId'        => $orderId,
+            'orderDate'      => $orderDate,
+            'outCustId'      => $outCustId,
+            'transAmt'       => $transAmt, 
+            'fee'            => $fee,
+            'subOrdDate'     => $subOrdId,
+            'subOrdDate'     => $subOrdDate,
+            'inCustId'       => $inCustId,
+            'jsonDivDetails' => $jsonDivDetails,
+            'feeObjFlag'     => $feeObjFlag,
+            'isDefault'      => $isDefault,
+            'isUnFreeze'     => $isUnFreeze,
+            'unFreezeOrdId'  => $unFreezeOrdId,
+            'freezeTrxId'    => $freezeTrxId,
+            'bgRetUrl'       => $bgRetUrl,
+            'merPriv'        => $merPriv,
+            'reqExt'         => $reqExt,
+        ));
+
+        // $mixRet   = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, 
+        //     $fee, $subOrdId, $subOrdDate,$inCustId, $jsonDivDetails, $feeObjFlag, $isDefault,
+        //     $isUnFreeze, $unFreezeOrdId, $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
+
+        if(empty($mixRet)){
+            $objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
+            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
+            return $objRst;
+        }
+        $respCode = $mixRet['RespCode'];
+        $respDesc = $mixRet['RespDesc'];
+        if($respCode !== '000') {           
+            $objRst->status     = $respCode;
+            $objRst->statusInfo = $respDesc;
+            Base_Log::error($objRst->format());
+            return $objRst;
+        }
+
+        $objRst->status = Base_RetCode::SUCCESS;
+        return $objRst; 
     }
     
     /**
