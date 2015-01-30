@@ -246,4 +246,9 @@ class UsermanageController extends Base_Controller_Page {
     	return;   	 
     }
     
+    public function test8Action() {
+    	$time = date('Y-m-d H:i:s',time());
+    	echo $time;
+    }
+    
 }

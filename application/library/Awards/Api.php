@@ -14,14 +14,13 @@ class Awards_Api {
      * @param $inviterid, default null
      * @return array || false
      */
-    public static function registNotify($userid, $inviterid = null){
-    	
+    public static function registNotify($userid, $inviterid = null){    	
     	if(is_null($userid) || $userid<0 ) {
     		Base_Log::error("invalid param",array('userid'=>$userid));
     		return false;
     	}
         $logic = new Awards_Logic_Awards();
-        $ret   = $logic->awardWhenRegist($userid, $inviterid);
+        $ret = $logic->awardWhenRegist($userid, $inviterid);
         if(!$ret){
             Base_Log::warn(array('userid'=>$userid, 
                 'inviterid'=>$inviterid, 'ret'=>$ret));

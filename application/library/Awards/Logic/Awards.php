@@ -21,7 +21,7 @@ class Awards_Logic_Awards {
             return false;
         }
 
-        $time = date('Y-m-d H:i:s');
+        $time = date('Y-m-d H:i:s',time());
         //注册用户奖励
         $ret1 = false;
         $amount1 = 30;
@@ -33,14 +33,13 @@ class Awards_Logic_Awards {
         $ret1 = $regAwd->save();
         if(!$ret1){
             Base_Log::error(array(
-                'msg'      => 'Fail create reg award',
-                'userid'   => $userid,
-                'inviterid'=> $inviterid,
-                'amount'   => $amount1,
-                'time'     => $time)
-            );
+	            'msg'      => 'Fail create reg award',
+	            'userid'   => $userid,
+	            'inviterid'=> $inviterid,
+	            'amount'   => $amount1,
+	            'time'     => $time,
+            ));
         }
-
         //邀请人奖励
         $ret2 = true;
         $amount2 = 20;
@@ -91,7 +90,11 @@ class Awards_Logic_Awards {
      * @return array or false
      */
     public function getAwards($inviterid) {
-    	if($inviterid<0){
+    	if(!isset($inviterid) || $inviterid<0){
+    		Base_Log::error(array(
+    			'msg'       => '请求参数错误',
+    			'inviterid' => $inviterid,
+    		));
     		return false;//参数错误，返回false
     	}
     	$inviterid = intval($inviterid);
@@ -100,51 +103,60 @@ class Awards_Logic_Awards {
         $inviter = array();
         $objInvier = User_Api::getUserObject($inviterid);
         $huifuid = $objInvier->huifuid;
-        $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid);        
-        if(empty($inviter['tenderAmount'])) {
-        	$inviter['tenderAmount'] = 0.00;
-        }
         if(empty($huifuid)) {
         	$inviter['tenderAmount'] = 0.00;
         	$inviter['registProgress'] = 2;
         } else {
         	$inviter['registProgress'] = 1;
-        }           
+        }       
+        $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid);        
+        if(empty($inviter['tenderAmount'])) {
+        	$inviter['tenderAmount'] = 0.00;
+        }                   
         $regRegist = new Awards_List_Regist();
         $filters = array('userid' => $inviterid);
         $regRegist->setFilter($filters);
         $list = $regRegist->toArray();
-        $inviterData = $list['list'];
-        $inviterStatus = $inviterData['status'];               
+        $inviterData = $list['list'][0];
+        $inviterStatus = intval($inviterData['status']);     
+  
         //未达到
         if($inviterStatus === 1) {
-        	if($inviter['tenderAmount'] >= 10000.00) {
-        		$this->updateRegistStatus($inviterid,self::STATUS_READY);
-        		$inviter['canBeAwarded'] = 1;
+        	if($inviter['tenderAmount'] <= 10000.00) {
+        		$this->updateRegistStatus($inviterid,self::STATUS_READY);        		
         	}
+        	$inviter['awardAmt'] = "点击领取30元";
         }
         //已达到未领取
         if($inviterStatus === 2) {
-        	$inviter['canBeAwarded'] = 1;
+            if(empty($huifuid)) {
+        		$inviter['canBeAwarded'] = 0;
+        		$inviter['awardAmt'] = "点击领取30元";
+        	} else {
+        		$inviter['canBeAwarded'] = 1;
+        		$inviter['awardAmt'] = "点击领取30元";
+        	}       		
         }
         //已领取
         if($inviterStatus === 3) {
         	$inviter['canBeAwarded'] = 0;
+        	$inviter['awardAmt'] = "点击领取30元";
         }                   
         $inviter['name']  = '我';
         $inviter['phone'] = $objInvier->phone;   
         $inviter['phone'] = substr_replace($inviter['phone'],'****',3,4);
         $inviter['id'] = $inviterid;  
-        $inviter['tenderAmount'] = floatval(($inviter['tenderAmount'] / 10000.00) * 100);
-        $inviter['awardAmt'] = "点击领取30元"; //奖励金额
+        $percent = ($inviter['tenderAmount'] / 10000.00) * 100;      
+        $percent = ($percent <= 100) ? $percent : 100;
+        $inviter['tenderAmount'] = $percent;
         $ret[0] = $inviter; //返回值得第一项为该用户的信息
                 
         //开始获取该用户邀请的用的信息       
-        $refunds = new Awards_List_Invite();
+        $invite = new Awards_List_Invite();
         $filters = array('inviterid' => $inviterid); //caution:被邀请人的userid
-        $refunds->setFilter($filters);
-        $refunds->setOrder('create_time desc');
-        $list = $refunds->toArray(); //拿到了该邀请人邀请到的所有人的信息
+        $invite->setFilter($filters);
+        $invite->setOrder('create_time desc');
+        $list = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
         $users = $list['list'];        
         if(empty($users)) {	
         	return $ret; //若没有邀请者，返回false
@@ -156,39 +168,48 @@ class Awards_Logic_Awards {
         	$userId = $value['userid'];
         	$objUser = User_Api::getUserObject($userId);
         	$huifuid = $objUser->huifuid;
+        	if(empty($huifuid)){
+        		$tenderAmount = 0.00;
+        		$data['registProgress'] = 2;        	
+        	} else {
+        		$inviter['registProgress'] = 1;
+        	}        	
         	$tenderAmount = Invest_Api::getUserAmount($userId); //拿到了被邀请人的投资总额
         	if(empty($tenderAmount)) {
         		$tenderAmount = 0.00;       		
-        	} 
-        	if(empty($huifuid)){
-        		$tenderAmount = 0.00;
-        		$data['registProgress'] = 2;
-        		
-        	} else {
-        		$inviter['registProgress'] = 1;
-        	}
+        	}         	
         	$data['tenderAmount'] = $tenderAmount;
-        	$status = $value['status'];
+        	$status = intval($value['status']);
         	//未达到
         	if($status === 1) {
         		if($tenderAmount >= 10000.00) {
         			$this->updateAwardsStatus($id,self::STATUS_READY);
         		}
+        		$data['awardAmt'] = "点击领取20元";
         	}
         	if($status === 2) {
-        		$data['canBeAwarded'] = 1;
+        		if(!isset($objInvier->huifuid)) {
+        			$data['canBeAwarded'] = 0;
+        			$data['awardAmt'] = "点击领取20元";
+        		}
+        		else {
+        			$data['canBeAwarded'] = 1;
+        			$data['awardAmt'] = "点击领取20元";
+        		}
+        		
         	}
         	if($status === 3) {
         		$data['canBeAwarded'] = 0;
+        		$data['awardAmt'] = "点击领取20元";
         	}       	
         	$data['name']  = $objUser->name;
         	$data['phone'] = $objUser->phone;
         	$data['id'] = $userId;
         	$data['tenderAmount'] = floatval(($data['tenderAmount'] / 10000.00) * 100);       	 
-        	$data['awardAmt'] = "点击领取20元";//奖励金额
+        	
         	$ret[$count] = $data;
         	$count++;
-         }
+        }
         return $ret;
     }
     
@@ -252,7 +273,8 @@ class Awards_Logic_Awards {
     			'status' => $status,
     		));
     		return false;
-    	}   	
+    	}
+    	return true;  	
     }
     
 }
