@@ -54,7 +54,7 @@ class Loan_Logic_Loan {
         $retAmt  = Loan_Api::getLoanRefundAmount($loanId);
 
         $db->commit();
-        
+
         $objRst->status = Base_RetCode::SUCCESS;
         return $objRst;
     }
@@ -83,7 +83,7 @@ class Loan_Logic_Loan {
                     $subOrdId  = $arrInfo['id'];
                     $outUserId = $arrInfo['user_id'];
                     $transAmt  = $arrInfo['amount'];
-                    $bolRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt)
+                    $bolRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
                     if(!$bolRet){
                         Base_Log::error(array(
                             'msg'       => '满标打款单笔失败',

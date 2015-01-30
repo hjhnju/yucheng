@@ -185,9 +185,9 @@ class Finance_Api {
         	));
         	return $objRst->format();
         }
-        Base_Log::notice(
+        Base_Log::notice(array(
     		'msg'          => '添加标的信息成功',
-    		'loanId'	   => $loanId;
+    		'loanId'	   => $loanId,
     		'borrUserId'   => $borrUserId,
     		'borrTotAmt'   => $borrTotAmt,
     		'yearRate'     => $yearRate,
