@@ -16,6 +16,17 @@ class Loan_Api {
     public static function buildInvestRefunds($invest_id) {
         
     }
+
+    /**
+     * 发布借款
+     * @param integer $loanId 借款ID
+     * @return boolean
+     */
+    public function publish($loanId, $days = 7) {
+        $logic  = new Loan_Logic_Loan();
+        $objRst = $logic->publish($loan_id, $days);
+        return $objRst->format();
+    }
     
     /**
      * 对成功的借款进行打款

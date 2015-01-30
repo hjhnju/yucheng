@@ -26,7 +26,7 @@ class Invest_Object_Invest extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'amount_refund', 'amount_rest', 'income', 'fail_info', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'order_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'amount_refund', 'amount_rest', 'income', 'fail_info', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -36,6 +36,7 @@ class Invest_Object_Invest extends Base_Object {
         'id'              => 'id',
         'loan_id'         => 'loanId',
         'user_id'         => 'userId',
+        'order_id'        => 'orderId',
         'name'            => 'name',
         'duration'        => 'duration',
         'interest'        => 'interest',
@@ -59,6 +60,7 @@ class Invest_Object_Invest extends Base_Object {
         'id'              => 1,
         'loan_id'         => 1,
         'user_id'         => 1,
+        'order_id'        => 1,
         'duration'        => 1,
         'status'          => 1,
         'create_time'     => 1,
@@ -90,6 +92,12 @@ class Invest_Object_Invest extends Base_Object {
      * @var integer
      */
     public $userId;
+
+    /**
+     * 订单ID
+     * @var integer
+     */
+    public $orderId;
 
     /**
      * 姓名

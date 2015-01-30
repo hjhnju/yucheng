@@ -159,19 +159,20 @@ class Finance_Api {
 	 * @param float retAmt 总还款金额
 	 * @param int retDate 应还款日期
 	 * @param int proArea 项目所在地
-	 * @return boolean
+	 * @return 标准数组格式Base_Result::format
+	 * data => orderId 借款订单号
 	 * 
 	 */
-	public static function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,
+	public static function addBidInfo($loanId, $borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,
 		$bidEndDate,$retAmt,$retDate,$proArea) {
 		
         $transLogic = new Finance_Logic_Transaction();
-        $return = $transLogic->addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,
+        $objRst     = $transLogic->addBidInfo($loanId, $borrUserId,$borrTotAmt,$yearRate,$retType,
         	$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea);
-        if(is_null($return) || !$return) {
+        if(Base_RetCode::SUCCESS !== $objRst->status) {
         	Base_Log::error(array(
-        		'msg'          => Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR),
-        		'proId'        => $proId,
+        		'msg'          => $objRst->statusInfo,
+        		'loanId'       => $loanId,
         		'borrUserId'   => $borrUserId,
         		'borrTotAmt'   => $borrTotAmt,
         		'yearRate'     => $yearRate,
@@ -180,12 +181,24 @@ class Finance_Api {
         	    'bidEndDate'   => $bidEndDate,
         	    'retAmt'       => $retAmt,
         	    'retDate'      => $retDate,
-        	    'proArea'      => $proId,
+        	    'proArea'      => $proArea,
         	));
-        	return false;
+        	return $objRst->format();
         }
-        Base_Log::notice($return);
-        return true;
+        Base_Log::notice(
+    		'msg'          => '添加标的信息成功',
+    		'loanId'	   => $loanId;
+    		'borrUserId'   => $borrUserId,
+    		'borrTotAmt'   => $borrTotAmt,
+    		'yearRate'     => $yearRate,
+    	    'retType'      => $retType,
+    	    'bidStartDate' => $bidStartDate,
+    	    'bidEndDate'   => $bidEndDate,
+    	    'retAmt'       => $retAmt,
+    	    'retDate'      => $retDate,
+    	    'proArea'      => $proArea,
+    	));
+        return $objRst->format();
 	}
 	
 	/**

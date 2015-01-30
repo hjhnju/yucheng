@@ -8,6 +8,58 @@ class Loan_Logic_Loan {
     }
 
     /**
+     * 发布借款
+     * @param integer $loanId 借款ID
+     * @return Base_Result
+     */
+    public function publish($loanId, $days = 7) {
+
+        $objRst = new Base_Result();
+
+        $db = Base_Db::getInstance('xjd');
+        $db->beginTransaction();
+        $loan = new Loan_Object_Loan($loanId);
+        if (empty($loan->amount)) {
+            $objRst->status     = Loan_RetCode::LOAN_EMPTY;
+            $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::LOAN_EMPTY);
+            return $objRst;
+        }
+        
+        // 调用财务API进行借款录入
+        $arrRst  = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, 
+            $loan->interest/100, $loan->refundType, $loan->startTime, $loan->deadline, 
+            $retAmt, $retDate, $area->huifuCityid);
+        
+        if ($arrRst['status'] !== Base_RetCode::SUCCESS) {
+            $objRst->status     = $arrRst['status'];
+            $objRst->statusInfo = $arrRst['statusInfo'];
+            Base_Log::warn($arrRst);
+            return $objRst;
+        }
+        $orderId = intval($arrRst['data']['orderId']);
+
+        $loan->status    = Loan_Type_LoanStatus::LENDING;
+        $loan->startTime = time();
+        $loan->deadline  = time() + $days * 24 * 3600;
+        $loan->orderId   = $orderId;
+        $duration        = new Loan_Type_Duration();
+        if (!$loan->save()) {
+            $objRst->status     = Loan_RetCode::LOAN_SAVE_FAIL;
+            $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::LOAN_SAVE_FAIL);
+            return $objRst;
+        }
+        
+        $area    = new Area_Object_Area($loan->area);
+        $retDate = $duration->getTimestamp($loan->duration, $loan->deadline);
+        $retAmt  = Loan_Api::getLoanRefundAmount($loanId);
+
+        $db->commit();
+        
+        $objRst->status = Base_RetCode::SUCCESS;
+        return $objRst;
+    }
+
+    /**
      * 满标打款
      */
     public function makeLoans($loanId){
@@ -35,6 +87,15 @@ class Loan_Logic_Loan {
                     if(!$bolRet){
                         Base_Log::error(array(
                             'msg'       => '满标打款单笔失败',
+                            'loanId'    => $loanId,
+                            'subOrdId'  => $subOrdId,
+                            'inUserId'  => $inUserId,
+                            'outUserId' => $outUserId,
+                            'transAmt'  => $transAmt,
+                        ));
+                    }else{
+                        Base_Log::debug(array(
+                            'msg'       => '满标打款单笔成功',
                             'loanId'    => $loanId,
                             'subOrdId'  => $subOrdId,
                             'inUserId'  => $inUserId,

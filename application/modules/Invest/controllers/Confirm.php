@@ -21,17 +21,26 @@ class ConfirmController extends Base_Controller_Response {
                 'ret' => $bolRet,
             ));
             $this->_view->assign('success', 0);
+            return;
         }
         $merPriv = explode('_',$_REQUEST['MerPriv']);       
         $userid  = intval(urldecode($merPriv[0]));
-        $loan_id = intval(urldecode($merPriv[1]));      
+        $loanId  = intval(urldecode($merPriv[1]));      
         $amount  = floatval($_REQUEST['TransAmt']);
+        $orderId = strval(trim($_REQUEST['OrdId']));
                 
-        $logic  = new Invest_Logic_Invest();
-        $bolRet = $logic->doInvest($userid, $loan_id, $amount);
+        $logic  = new Invest_Logic_Invest();        
+        $bolRet = $logic->doInvest($orderId, $userid, $loanId, $amount);
         if ($bolRet) {
             $this->_view->assign('success', 1);
         } else {
+            Base_Log::error(array(
+                'msg'     => '投资confirm保存失败',
+                'orderId' => $orderId,
+                'userid'  => $userid,
+                'loanId'  => $loanId,
+                'amount'  => $amount,
+            ));
             $this->_view->assign('success', 0);
         }
     }

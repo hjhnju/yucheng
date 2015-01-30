@@ -9,9 +9,10 @@ class PublishAction extends Yaf_Action_Abstract {
 
         $loanId = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
 
-        $logic  = new Admin_Logic_Loan();
-        $bolRet = $logic->publish($loanId);
+        $arrRet = Loan_Api::publish($loanId);
+        $bolRet = isset($arrRet['success']) ? $arrRet['success'] === Base_RetCode::SUCCESS : false;
         Base_Log::notice(array(
+        	'arrRet' => $arrRet,
         	'bolRet' => $bolRet,
         ));
         
