@@ -5,7 +5,7 @@
  */
 class Finance_Logic_Order {
 
-    private function getMillisecond() {
+    private static function getMillisecond() {
         list($s1, $s2) = explode(' ', microtime());
         return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
     }
@@ -34,7 +34,7 @@ class Finance_Logic_Order {
      * @return array('orderId'=>, 'date'=>)
      */
     public static function genOrderInfo(){
-        $timeStr = $this->getMillisecond();
+        $timeStr = self::getMillisecond();
         
         $time    = substr($timeStr, 0, 10);
         $ms      = substr($timeStr, 10, 3);

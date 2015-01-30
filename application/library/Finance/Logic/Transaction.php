@@ -78,11 +78,14 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      */
     public function addBidInfo($loanId, $borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
         $objRst = new Base_Result();
-        if(!isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
+        if(!isset($loanId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
            !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
             $objRst->status     = Base_RetCode::PARAM_ERROR;
             $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);    
-            Base_Log::error($objRst->format());
+            Base_Log::warn(array(
+                'msg'  => $objRst->statusInfo,
+                'args' => func_get_args(),
+            ));
             return $objRst;
         }
         //为借款标的生成一个订单号，返回

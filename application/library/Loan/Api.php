@@ -24,7 +24,7 @@ class Loan_Api {
      */
     public function publish($loanId, $days = 7) {
         $logic  = new Loan_Logic_Loan();
-        $objRst = $logic->publish($loan_id, $days);
+        $objRst = $logic->publish($loanId, $days);
         return $objRst->format();
     }
     

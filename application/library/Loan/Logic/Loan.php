@@ -18,17 +18,26 @@ class Loan_Logic_Loan {
 
         $db = Base_Db::getInstance('xjd');
         $db->beginTransaction();
+
         $loan = new Loan_Object_Loan($loanId);
-        if (empty($loan->amount)) {
-            $objRst->status     = Loan_RetCode::LOAN_EMPTY;
-            $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::LOAN_EMPTY);
-            return $objRst;
-        }
+        $loan->status    = Loan_Type_LoanStatus::LENDING;
+        //时间戳投标开始时间
+        $loan->startTime = time();
+        //时间戳投标截止时间
+        $loan->deadline  = time() + $days * 24 * 3600;
         
-        // 调用财务API进行借款录入
+        //项目所在地
+        $area    = new Area_Object_Area($loan->area);
+        $proArea = $area->huifuCityid;
+        //应还款日期
+        $duration = new Loan_Type_Duration();
+        $retDate  = $duration->getTimestamp($loan->duration, $loan->deadline);
+        //总还款金额
+        $retAmt  = Loan_Api::getLoanRefundAmount($loanId);
+        //调用财务API进行借款录入
         $arrRst  = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, 
-            $loan->interest/100, $loan->refundType, $loan->startTime, $loan->deadline, 
-            $retAmt, $retDate, $area->huifuCityid);
+            $loan->interest/100, $loan->refundType, $loan->startTime, 
+            $loan->deadline, $retAmt, $retDate, $proArea);
         
         if ($arrRst['status'] !== Base_RetCode::SUCCESS) {
             $objRst->status     = $arrRst['status'];
@@ -36,22 +45,13 @@ class Loan_Logic_Loan {
             Base_Log::warn($arrRst);
             return $objRst;
         }
-        $orderId = intval($arrRst['data']['orderId']);
-
-        $loan->status    = Loan_Type_LoanStatus::LENDING;
-        $loan->startTime = time();
-        $loan->deadline  = time() + $days * 24 * 3600;
-        $loan->orderId   = $orderId;
-        $duration        = new Loan_Type_Duration();
+        //订单号
+        $loan->orderId = intval($arrRst['data']['orderId']);
         if (!$loan->save()) {
             $objRst->status     = Loan_RetCode::LOAN_SAVE_FAIL;
             $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::LOAN_SAVE_FAIL);
             return $objRst;
         }
-        
-        $area    = new Area_Object_Area($loan->area);
-        $retDate = $duration->getTimestamp($loan->duration, $loan->deadline);
-        $retAmt  = Loan_Api::getLoanRefundAmount($loanId);
 
         $db->commit();
 
@@ -214,10 +214,10 @@ class Loan_Logic_Loan {
         
         $duration = new Loan_Type_Duration();
         
-        if ($loan->refundType == Loan_Type_RefundType::AVERAGE) {
+        if ($loan->refundType === Loan_Type_RefundType::AVERAGE) {
             $months = $duration->getMonths($loan->duration);
             $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $months);
-        } elseif ($loan->refundType == Loan_Type_RefundType::MONTH_INTEREST) {
+        } elseif ($loan->refundType === Loan_Type_RefundType::MONTH_INTEREST) {
             $days = $duration->getDays($loan->duration, $start);
             $interest = Loan_Type_RefundType::getInterest($loan->refundType, $loan->amount, $loan->interest, $days);
         }
