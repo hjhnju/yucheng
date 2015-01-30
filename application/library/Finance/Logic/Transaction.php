@@ -303,37 +303,32 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         //投标记录表状态更改为“打款中”
         $this->payTenderUpdate(intval($subOrdId), Finance_TypeStatus::PAYING);       
         
-        $merCustId  = strval(self::MERCUSTID);
-        $orderId    = strval($orderId);
-        $orderDate  = strval($orderDate);
-        $outCustId  = strval($outHuifuId);
-        $transAmt   = sprintf('%.2f',$transAmt);
+        $merCustId = strval(self::MERCUSTID);
+        $orderId   = strval($orderId);
+        $orderDate = strval($orderDate);
+        $outCustId = strval($outHuifuId);
+        $transAmt  = sprintf('%.2f',$transAmt);
+
+        //收取费用
+        $arrFeeInfo    = Finance_Fee::totalFeeInfo($loanId, $transAmt);
         
-        $loanInfo   = Loan_Api::getLoanInfo(intval($loanId));
-        
-        $duration   = $loanInfo['duration'];
-        $riskLevel  = $loanInfo['level'];
-        $prepareFee = Finance_Fee::prepareFee($riskLevel,$transAmt,$duration);//风险准备金
-        $serviceFee = Finance_Fee::serviceFee($riskLevel,$transAmt);//融资服务费     
-        $fee        = $prepareFee + $serviceFee;
-        //收取管理费
-            
         $tenderInfo    = $this->getTenderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
         $subOrdDate    = strval($tenderInfo['orderDate']);
         $inCustId      = strval($inHuifuId);
         $arrDivDetails = array(
             //风险金账户
+            //TODO:配置化
             array(
-                'DivCustId'=>'6000060000677575',
-                'DivAcctId'=>'SDT000002',
-                'DivAmt'   => $prepareFee,
+                'DivCustId'=> '6000060000677575',
+                'DivAcctId'=> 'SDT000002',
+                'DivAmt'   => $arrFeeInfo['riskFee'],
             ),  
             //专属账户
             array(
-                'DivCustId'=>'6000060000677575',
-                'DivAcctId'=>'MDT000001',
-                'DivAmt'   => $serviceFee,
+                'DivCustId'=> '6000060000677575',
+                'DivAcctId'=> 'MDT000001',
+                'DivAmt'   => $arrFeeInfo['serviceFee'] + $arrFeeInfo['manageFee'],
             ),          
         );
         $jsonDivDetails  = json_encode($arrDivDetails);
@@ -351,12 +346,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $reqExt          = json_encode($reqExt);
         
         Base_Log::notice(array(
+            'msg'            => '准备单笔放款',
             'merCustId'      => $merCustId,
             'orderId'        => $orderId,
             'orderDate'      => $orderDate,
             'outCustId'      => $outCustId,
             'transAmt'       => $transAmt, 
-            'fee'            => $fee,
+            'fee'            => $arrFeeInfo['totalFee'],
             'subOrdDate'     => $subOrdId,
             'subOrdDate'     => $subOrdDate,
             'inCustId'       => $inCustId,
@@ -371,8 +367,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'reqExt'         => $reqExt,
         ));
 
-        // $mixRet   = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, 
-        //     $fee, $subOrdId, $subOrdDate,$inCustId, $jsonDivDetails, $feeObjFlag, $isDefault,
+        // $mixRet  = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, 
+        //     $arrFeeInfo['totalFee'], $subOrdId, $subOrdDate,$inCustId, $jsonDivDetails, $feeObjFlag, $isDefault,
         //     $isUnFreeze, $unFreezeOrdId, $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
 
         if(empty($mixRet)){

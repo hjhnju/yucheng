@@ -19,10 +19,6 @@ class Finance_RetCode extends Base_RetCode {
     
     CONST ADD_BIDINFO_FAIL      = 1107;//录入投标信息失败
 
-    
-    
-    
- 
     /* 消息函数
      * @var array
     */

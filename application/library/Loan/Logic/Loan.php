@@ -82,7 +82,7 @@ class Loan_Logic_Loan {
                 $outUserId = $arrInfo['user_id'];
                 $transAmt  = $arrInfo['amount'];
                 $arrRet  = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
-                if(Base_RetCode::SUCCESS !== $arrRet['status']){
+                if(Base_RetCode::SUCCESS === $arrRet['status']){
                     Base_Log::debug(array(
                         'msg'       => '满标打款单笔成功',
                         'loanId'    => $loanId,
