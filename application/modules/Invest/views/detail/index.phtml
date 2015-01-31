@@ -114,6 +114,7 @@
                         <div class="main-title-box showrecord">投资记录</div>
                     </div>
                     <div class="main-box-details showproject-main">
+                        {%if !empty($data.company)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">借款企业</div>
                             <div class="main-detail-content">
@@ -156,6 +157,8 @@
                                 </div>
                             </div>
                         </div>
+                        {%/if%}
+                        {%if !empty($data.counter)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">信用档案</div>
                             <div class="main-detail-content">
@@ -191,6 +194,8 @@
                                 </div>
                             </div>
                         </div>
+                        {%/if%}
+                        {%if !empty($data.guarantee)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">担保人信息</div>
                             <div class="main-detail-content">
@@ -230,9 +235,11 @@
                                 </div>
                             </div>
                         </div>
+                        {%/if%}
+                        {%if !empty($data.audit)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">审核信息</div>
-                            {%foreach $data.audit['1'] as $key => $item%}
+                            {%foreach $data.audit as $key => $item%}
                             <div class="renzheng-box">
                                 <div class="renzheng-title">{%$key%}</div>
                                 <div class="renzheng-box-main">
@@ -244,33 +251,38 @@
                             {%/foreach%}
 
                         </div>
+                        {%/if%}
+                        {%if isset($data.audit_info)%}
                         <div class="details-main-box bor-btm">
                             <div class="main-box-detail-title">审核通过</div>
                             <div class="detail-pass">{%$data.audit_info%}</div>
                             <div class="detail-symbol"></div>
                         </div>
+                        {%/if%}
                     </div>
                     <div class="main-box-details showfile-main">
+                        {%if !empty($data.attach)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">认证材料</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
                                     {%foreach $data.attach['1'] as $key => $item%}
                                     <li class="detail-item-list">
-                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
                                 </ul>
                             </div>
                         </div>
+                        {%/if%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">合同协议</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
                                     {%foreach $data.attach['2'] as $key => $item%}
                                     <li class="detail-item-list">
-                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -283,7 +295,7 @@
                                 <ul class="detail-item">
                                     {%foreach $data.attach['3'] as $key => $item%}
                                     <li class="detail-item-list img-city">
-                                        <img class="detail-item-list-img" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
