@@ -142,12 +142,8 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     		return ;
     	}    	        
-    	$userId = $this->userid;   	    		
+    	$userId = $this->userid;   	    				
     	$ret = User_Api::setPasswd($userId,$oldpwd,$newpwd);
-        $userid = !empty($this->objUser) ? $this->objUser->userid : 0;
-        $oldpwd = isset($_oldpwd) ? $_oldpwd : '';
-    	$newpwd = isset($_newpwd) ? $_newpwd : ''; 	    		
-    	$ret = User_Api::setPasswd($userid,$oldpwd,$newpwd);
         if($ret === User_RetCode::ORIGIN_PASSWD_WRONG) {
     		$errCode = Account_RetCode::OLDPWD_INPUT_ERROR;//原密码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
