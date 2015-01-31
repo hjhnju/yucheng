@@ -19,9 +19,10 @@ class InfoApiController extends Base_Controller_Api {
      */
     public function listAction() {
         $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
+        $strType     = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
         $pagesize = 10;
         $logic    = new Infos_Logic_Post();
-        $ret      = $logic->getList($page, $pagesize);
+        $ret      = $logic->getList($page, $pagesize,$strType);
         Base_Log::notice($ret);
         $this->ajax($ret);
     }
@@ -40,6 +41,7 @@ class InfoApiController extends Base_Controller_Api {
         $strAuthor = $_REQUEST['author'];
         $strCtx    = $_REQUEST['ctx'];
         $strTime   = $_REQUEST['time'];
+        $intType   = $_REQUEST['type'];
         $this->ajax              = true;
         $logic                   = new Infos_Logic_Post();
         $arrPost                 = array();
@@ -47,6 +49,7 @@ class InfoApiController extends Base_Controller_Api {
         $arrPost['author']       = $strAuthor;
         $arrPost['publishtime']  = strtotime($strTime);
         $arrPost['ctx']          = $strCtx;
+        $arrPost['type']         = $intType;
         $postid = $logic->save($arrPost);
         Base_Log::notice(array('postid' => $postid));
         $this->ajax($postid);
