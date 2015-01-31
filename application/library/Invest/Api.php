@@ -140,13 +140,15 @@ class Invest_Api {
         //@todo 自动投标使用
     }
     
+    
     /**
-     * 获取用户的帐户余额
+     * 获取用户的帐户可用余额
      * @param integer $uid
      * @return number
      */
-    public static function getAccountAmout($uid) {
-        return 100;
+    public static function getAccountAvlBal($uid) {
+        $logic  = new Invest_Logic_Invest();
+        return $logic->getAccountAvlBal($uid);
     }
     
     /**
