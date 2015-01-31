@@ -325,7 +325,7 @@ define(function (require) {
 
         // 格式化时间
         for (var i = 0, l = data.list.length; i < l; i++) {
-            data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format('YYYY-MM-DD hh:mm');
+            data.list[i].timeInfo = moment.unix(data.list[i].tenderTime).format('YYYY-MM-DD HH:mm');
             if (data.list[i].endTime) {
                 data.list[i].endTimeInfo = moment.unix(data.list[i].endTime).format(FORMATER);
             }
