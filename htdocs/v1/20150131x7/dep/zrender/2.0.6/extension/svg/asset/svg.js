@@ -1,4 +1,22 @@
-define(function (require) {
+define([
+    'require',
+    'zrender/tool/http',
+    'zrender/shape/Circle',
+    'zrender/shape/Ellipse',
+    'zrender/shape/Rectangle',
+    'zrender/shape/Line',
+    'zrender/shape/Path',
+    'zrender/shape/Polygon',
+    'zrender/shape/Text',
+    'zrender/shape/Image',
+    'zrender/shape/BrokenLine',
+    'zrender/tool/matrix',
+    'zrender/tool/vector',
+    'zrender/tool/log',
+    'zrender/tool/guid',
+    'zrender/Group',
+    'zrender/tool/util'
+], function (require) {
     'use strict';
     var http = require('zrender/tool/http');
     var Circle = require('zrender/shape/Circle');
