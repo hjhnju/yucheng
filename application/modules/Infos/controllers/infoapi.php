@@ -9,7 +9,7 @@ class InfoApiController extends Base_Controller_Api {
         parent::init();
     }
     
-  
+    
     /**
      * 公告列表每页数据
      *
@@ -17,7 +17,7 @@ class InfoApiController extends Base_Controller_Api {
      * @param   $page, MUST, [1,-), index of page
      * @return  json data=>array('page', 'pagesize', 'pageall', 'list', 'total')
      */
-    public function listAction() {
+    public function indexAction() {
         $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
         $strType     = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
         $pagesize = 10;
