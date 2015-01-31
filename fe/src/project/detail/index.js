@@ -84,7 +84,7 @@ define(function (require) {
 
                 for(var i = 0, l = data.list.length; i<l; i++) {
                     var tmp = data.list[i];
-                    tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD hh:mm');
+                    tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD HH:mm');
                 }
 
                 htmlContainer.html(etpl.render('list', {
@@ -152,9 +152,9 @@ define(function (require) {
 
                 if (value > min) {
                     error.addClass('show').html('投资金额不得超过可用余额和可投金额');
-                    value > model.amountRest
-                        && $(this).val(model.amountRest)
-                        && error.removeClass('show');
+//                    value > model.amountRest
+//                        && $(this).val(model.amountRest)
+//                        && error.removeClass('show');
                 }
                 else {
                     error.removeClass('show');
@@ -175,9 +175,9 @@ define(function (require) {
 
                 if (value > min) {
                     error.addClass('show').html('投资金额不得超过可用余额和可投金额');
-                    value > model.amountRest
-                        && $(this).val(model.amountRest)
-                        && error.removeClass('show');
+//                    value > model.amountRest
+//                        && $(this).val(model.amountRest)
+//                        && error.removeClass('show');
                 }
                 else {
                     error.removeClass('show');
