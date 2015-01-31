@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="login-username">
-                    <input autocomplete="off" class="login-input login-tuijian" id="regist-tuijian" type="text" />
+                    <input autocomplete="off" {%if $inviter%}readonly value="{%$inviter%}"{%/if%} class="login-input login-tuijian" id="regist-tuijian" type="text" />
                     <label class="user-lable" for="regist-tuijian">推荐人手机号(选填)</label>
                     <div class="username-error" id="regist-tuijian-error"></div>
                 </div>
