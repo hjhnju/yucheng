@@ -94,4 +94,15 @@ class Msg_Api {
         ));
         return $ret;
     }
+    
+    /**
+     * 获取未读消息数
+     * @param int $uid
+     * @return int 
+     */
+    public static function getUnreadMsgNum($uid){
+        $msg = new Msg_Logic_Msg();
+        $ret = $msg->getUnread($uid);
+        return $ret;
+    }
 }

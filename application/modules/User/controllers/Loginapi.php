@@ -89,10 +89,7 @@ class LoginapiController extends Base_Controller_Api{
     public function signOutAction(){
     	$logic   = new User_Logic_Login();
     	$ret = $logic->signOut();
-    	if($ret){
-    		$redirectUri = '/user/login';
-    		$this->redirect($redirectUri);
-    	}
-    	$this->ajaxError();
+    	$redirectUri = '/user/login';
+    	$this->redirect($redirectUri);
     }    
 }
