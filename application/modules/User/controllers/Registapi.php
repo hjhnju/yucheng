@@ -72,7 +72,6 @@ class RegistApiController extends Base_Controller_Api{
         $strType  = trim($_REQUEST['type']);
         $strCode  = trim($_REQUEST['vericode']);
         $ret      = User_Api::checkSmsCode($strPhone, $strCode, $strType);
-        $ret = true;//for test
         if(!$ret){
             return $this->ajaxError(User_RetCode::VERICODE_WRONG,
                 User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
@@ -123,7 +122,6 @@ class RegistApiController extends Base_Controller_Api{
         $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
 
         $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
-        $ret = true;//for test
         if(!$ret){
             return $this->ajaxError(User_RetCode::VERICODE_WRONG,
                 User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));

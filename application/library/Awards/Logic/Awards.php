@@ -122,16 +122,17 @@ class Awards_Logic_Awards {
   
         //未达到
         if($inviterStatus === 1) {
-        	if($inviter['tenderAmount'] <= 10000.00) {
-        		$this->updateRegistStatus($inviterid,self::STATUS_READY);        		
-        	}
+        	if($inviter['tenderAmount'] >= 10000.00) {
+        		$this->updateRegistStatus($inviterid,self::STATUS_READY);  
+        	} 
         	$inviter['awardAmt'] = "点击领取30元";
+        	  	
         }
         //已达到未领取
         if($inviterStatus === 2) {
             if(empty($huifuid)) {
         		$inviter['canBeAwarded'] = 0;
-        		$inviter['awardAmt'] = "点击领取30元";
+        		$inviter['awardAmt'] = "开通汇付并点击领取30元";
         	} else {
         		$inviter['canBeAwarded'] = 1;
         		$inviter['awardAmt'] = "点击领取30元";
@@ -149,6 +150,8 @@ class Awards_Logic_Awards {
         $percent = ($inviter['tenderAmount'] / 10000.00) * 100;      
         $percent = ($percent <= 100) ? $percent : 100;
         $inviter['tenderAmount'] = $percent;
+        //var_dump($inviter);die;
+        
         $ret[0] = $inviter; //返回值得第一项为该用户的信息
                 
         //开始获取该用户邀请的用的信息       
@@ -190,13 +193,12 @@ class Awards_Logic_Awards {
         	if($status === 2) {
         		if(!isset($objInvier->huifuid)) {
         			$data['canBeAwarded'] = 0;
-        			$data['awardAmt'] = "点击领取20元";
+        			$data['awardAmt'] = "开通汇付并点击领取20元";
         		}
         		else {
         			$data['canBeAwarded'] = 1;
         			$data['awardAmt'] = "点击领取20元";
-        		}
-        		
+        		}        		
         	}
         	if($status === 3) {
         		$data['canBeAwarded'] = 0;

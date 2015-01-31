@@ -23,11 +23,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderDate = $orderInfo['date'];
         $orderId   = $orderInfo['orderId'];
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);           
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
     	//充值订单入库
 		$paramOrder = array(
 		    'orderId'   => intval($orderId),
@@ -183,11 +181,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderDate = $orderInfo['date'];
         $orderId   = $orderInfo['orderId'];
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance    = $queryLogic->queryBalanceBg($usrCustId);
-        $avlBal     = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($usrCustId);
+        $avlBal = $userBg['avlBal'];
         
         //主动投标订单记录入表finance_order
         $param = array(
@@ -281,13 +277,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId    = $orderInfo['orderId'];     
         $inHuifuId  = $this->getHuifuid(intval($inUserId));
         $outHuifuId = $this->getHuifuid(intval($outUserId));    
-            
-        $queryLogic = new Finance_Logic_Query();
-        $balance    = $queryLogic->queryBalanceBg($outHuifuId);
-        $avlBal     = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal     = str_replace(',', '', $avlBal);
-        
+       
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($outHuifuId);
+        $avlBal = $userBg['avlBal'];       
+
         //打款订单记录入表finance_order
         $paramOrder = array(
             'orderId'   => intval($orderId),
@@ -419,11 +413,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $usrCustId = strval($this->getHuifuid($userid));
         
         $transAmt = sprintf('%.2f',$transAmt);
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($usrCustId);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($usrCustId);
+        $avlBal = $userBg['avlBal'];
         
         //打款订单记录入表finance_order
         $paramOrder = array(
@@ -486,11 +478,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = $orderInfo['orderId'];
         $huifuid   = $this->getHuifuid($userid);
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         
         //取现订单订单记录入表finance_order
         $param = array(
@@ -548,11 +538,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderDate = $orderInfo['date'];
         $huifuid = $this->getHuifuid(intval($inUserId));
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         
         //还款订单订单记录入表finance_order
         $param = array(
@@ -639,12 +627,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = $orderInfo['orderId'];
         $orderDate = $orderInfo['date'];
         
-        $queryLogic = new Finance_Logic_Query();
         $huifuid = $this->getHuifuid(intval($inUserId));
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         
         //还款订单订单记录入表finance_order
         $param = array(
@@ -690,10 +676,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = strval($orderInfo['orderId']);
         $orderDate = strval($orderInfo['date']);
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        $avlBal = floatval(str_replace(',', '', $avlBal));//用户可用余额(去掉千字符)
+        $huifuid = $this->getHuifuid(intval($userid));
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         $param = array(
             'orderId'   => intval($orderId),
             'orderDate' => intval($orderDate),

@@ -184,6 +184,7 @@ class BgcallController extends Base_Controller_Page {
 	  
 	    $bgret    = $this->financeLogic->balance($userid);
 	    $balance  = $bgret['userBg']['acctBal'];//用户余额
+	    $avlBal   = $bgret['userBg']['avlBal'];//用户可用余额
 	    $total    = $bgret['sysBg']['acctBal'];//系统余额
 	    
 	    $lastip   = Base_Util_Ip::getClientIp();
@@ -195,12 +196,13 @@ class BgcallController extends Base_Controller_Page {
         	Base_Log::error($logParam);        	
         	//充值财务订单状态更新为处理失败         	
         	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::NETSAVE, 
-        		$respCode, $respDesc);
+        		$avlBal, $respCode, $respDesc);
         	return ;
         }        
+        
         //充值财务订单状态更新为处理成功
         $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::NETSAVE,
-	    	$respCode, $respDesc);      
+	    	$avlBal, $respCode, $respDesc);      
         //充值财务记录入库
         $param = array(
             'orderId'   => $orderId,
@@ -262,6 +264,7 @@ class BgcallController extends Base_Controller_Page {
 		
 	    $bgret = $this->financeLogic->balance($userid);
 	    $balance = $bgret['userBg']['acctBal'];//用户余额
+	    $avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 	    $total = $bgret['sysBg']['acctBal'];//系统余额
 	    
 		$lastip = Base_Util_Ip::getClientIp();
@@ -274,12 +277,12 @@ class BgcallController extends Base_Controller_Page {
 			Base_Log::error($logParam);
 			//财务类主动投标订单状态更新为处理失败
 			$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::INITIATIVETENDER, 
-           	    $respCode, $respDesc);			
+           	    $avlBal, $respCode, $respDesc);			
 			return ;
 		}
 		//将主动投标订单状态更改为成功
 		$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::INITIATIVETENDER,
-        	$respCode, $respDesc);
+        	$avlBal, $respCode, $respDesc);
 		//主动投标记录如表pay_record
 		$param = array(
 	        'orderId'   => $orderId,
@@ -343,19 +346,20 @@ class BgcallController extends Base_Controller_Page {
 		$respDesc = $retParam['RespDesc'];
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 		$total = $bgret['sysBg']['acctBal'];//系统余额
 		if($respCode !== '000') {
 			$logParam = $retParam;
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态更改为“处理失败”
-			$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::TENDERCANCEL, 
-		        $respCode, $respDesc);
+			$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::TENDERCANCEL, 
+		        $avlBal, $respCode, $respDesc);
 			return;
 		}
 		//将finance_order表状态更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::TENDERCANCEL,
-			$respCode,$respDesc);
+		$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::TENDERCANCEL,
+			$avlBal, $respCode, $respDesc);
 		//记录入表finance_record
 		$param = array(
 			'orderId'   => $orderId,
@@ -434,6 +438,7 @@ class BgcallController extends Base_Controller_Page {
 		
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 		$lastip    = Base_Util_Ip::getClientIp();
@@ -455,13 +460,13 @@ class BgcallController extends Base_Controller_Page {
 			//同步异步返回处理中
 			if($respCode === '999') {
                 //finance_order状态更改为“处理中”
-                $this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::PROCESSING,Finance_TypeStatus::CASH,
-				    $respCode,$respDesc);
+                $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::PROCESSING, Finance_TypeStatus::CASH,
+				    $avlBal, $respCode, $respDesc);
 			}  
 			if($respCode === '000') {
 				//对finance_order表进行状态更新，更新为“处理成功”
-				$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::CASH, 
-			        $respCode, $respDesc);
+				$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::CASH, 
+			        $avlBal, $respCode, $respDesc);
 				//插入记录至finance_record表
 				$paramRecord = array(
 					'orderId'   => $orderId,
@@ -498,8 +503,8 @@ class BgcallController extends Base_Controller_Page {
 			if($respType === '000') {
 				if($status === '999') {
 					//更新finance_order表状态为“处理成功”
-					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::CASH,
-			             $respCode,$respDesc);
+					$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::CASH,
+			             $avlBal, $respCode, $respDesc);
 					//插入提现记录到finance_record表
 					$paramRecord = array(
 						'orderId'   => $orderId,
@@ -518,13 +523,13 @@ class BgcallController extends Base_Controller_Page {
 			if($respType === '400') {
 				if($status === '999') {
 					//更改finance_order表状态为“处理失败”
-					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::CASH, 
-					    $respCode, $respDesc);
+					$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::CASH, 
+					    $avlBal, $respCode, $respDesc);
 				}
 				if($status === '000') {
 					//首先将finance_order表状态更改为“处理失败”
-					$this->financeLogic->payOrderUpdate($orderId,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::CASH, 
-					    $respCode, $respDesc);
+					$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::CASH, 
+					    $avlBal, $respCode, $respDesc);
 					//再将finance_record中对应的成功记录进行删除
 					$this->financeLogic->payRecordDelete($orderId);									
 				}
@@ -562,6 +567,7 @@ class BgcallController extends Base_Controller_Page {
 	    
         $bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 	    $lastip    = Base_Util_Ip::getClientIp();
@@ -579,14 +585,14 @@ class BgcallController extends Base_Controller_Page {
 	    	));
 	    	//将finance_order表状态更改为“处理失败”
 	    	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::LOANS,
-	    	    $respCode, $respDesc);
+	    	    $avlBal, $respCode, $respDesc);
 	    	//将finance_tender表状态更改为“打款失败”
 	    	$this->financeLogic->payTenderUpdate($subOrdId, Finance_TypeStatus::PAYFAIDED);
             return ;
 	    }
 	    //将finance_order表状态更新为“处理成功”
 	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::LOANS,
-	    	 $respCode,$respDesc);
+	    	 $avlBal, $respCode, $respDesc);
 	    //将finance_tender表状态更新为“已打款”
 	    $this->financeLogic->payTenderUpdate($subOrdId, Finance_TypeStatus::HAVEPAYED);
 	    //将打款记录插入至表finance_record中
@@ -632,6 +638,7 @@ class BgcallController extends Base_Controller_Page {
 	    
 	    $bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 		$total = $bgret['sysBg']['acctBal'];//系统余额
 	    
 	    $lastip    = Base_Util_Ip::getClientIp();
@@ -647,12 +654,12 @@ class BgcallController extends Base_Controller_Page {
 	    	));
 	    	//将finance_order表状态更改为“处理失败”
 	    	$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::REPAYMENT, 
-	    	    $respCode, $respDesc);
+	    	    $avlBal, $respCode, $respDesc);
 	    	return ;
 	    }	    
 	    //将finance_order表状态更改为“处理成功”
 	    $this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::REPAYMENT,
-	    	$respCode,$respDesc);
+	    	$avlBal, $respCode, $respDesc);
 	    //插入还款记录至表finance_record
 	    $paramRecord = array(
 	    	'orderId'   => $orderId,
@@ -691,6 +698,7 @@ class BgcallController extends Base_Controller_Page {
 		
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 		$lastip    = Base_Util_Ip::getClientIp();
@@ -701,13 +709,13 @@ class BgcallController extends Base_Controller_Page {
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态更改为“处理失败”
-			$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::TRANSFER,
-			    $respCode, $respDesc);
+			$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::TRANSFER,
+			    $avlBal, $respCode, $respDesc);
 			return ;
 		}
 		//将finance_order表状态更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::TRANSFER,
-	        $respCode,$respDesc);
+		$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::TRANSFER,
+	        $avlBal, $respCode, $respDesc);
 		//将该条记录插入至表finance_record中
 		$paramRecord = array(
 			'orderId'   => $orderId,
@@ -754,6 +762,7 @@ class BgcallController extends Base_Controller_Page {
 		
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
+		$avlBal = $bgret['userBg']['avlBal'];//用户可用余额
 		$total = $bgret['sysBg']['acctBal'];//系统余额
 		
 		if($respCode !== '000') {
@@ -761,13 +770,13 @@ class BgcallController extends Base_Controller_Page {
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态字段更改为“处理失败”
-			$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHFAIL,Finance_TypeStatus::MERCASH,
-			    $respCode, $respDesc);
+			$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::MERCASH,
+			    $avlBal, $respCode, $respDesc);
 			return ;
 		}
 		//将finance_order表状态字段更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($userid,Finance_TypeStatus::ENDWITHSUCCESS,Finance_TypeStatus::MERCASH,
-			$respCode,$respDesc);
+		$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::MERCASH,
+			$avlBal, $respCode, $respDesc);
 		//将记录如表finance_record
 		$paramRecord = array(
 			'orderId'   => $orderId,

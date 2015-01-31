@@ -173,14 +173,14 @@ class Loan_Api {
      * @return array
      */
     private static function formatLoan($data) {
-        $data['amount_rest'] = $data['amount'] - $data['invest_amount'];
-        $data['amount'] = number_format($data['amount'], 2);
+        $data['amount_rest']   = $data['amount'] - $data['invest_amount'];
+        $data['amount']        = number_format($data['amount'], 2);
         $data['invest_amount'] = number_format($data['invest_amount'], 2);
-        $data['percent'] = number_format(100 * $data['invest_amount'] / $data['amount'], 2);
-        $data['days'] = self::getDays($data['duration']);
+        $data['percent']       = number_format(100 * $data['invest_amount'] / $data['amount'], 0);
+        $data['days']          = self::getDays($data['duration']);
 
-        $safe = new Loan_Type_SafeMode();
-        $refund = new Loan_Type_RefundType();
+        $safe     = new Loan_Type_SafeMode();
+        $refund   = new Loan_Type_RefundType();
         $safe_ids = explode(',', $data['safe_id']);
         foreach ($safe_ids as $safeid) {
             $data['safemode'][$safeid] = $safe->getTypeName($safeid);
@@ -193,8 +193,8 @@ class Loan_Api {
             $data['duration_day'] = $data['duration'];
             $data['duration_type'] = '天';
         } elseif ($data['duration'] == 15) {
-            $data['duration_day'] = '半';
-            $data['duration_type'] = '个月';
+            $data['duration_day'] = '15';
+            $data['duration_type'] = '天';
         } else {
             $data['duration_day'] = $data['duration'] / 30;
             $data['duration_type'] = '个月';
