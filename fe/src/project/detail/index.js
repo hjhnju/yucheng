@@ -119,7 +119,11 @@ define(function (require) {
 
             investError.hasClass('show') && investError.removeClass('show');
 
-            !ipt[0].disabled && ipt.val(Math.min(model.userAmount, model.amountRest));
+            if (ipt[0].disabled) {
+                return;
+            }
+
+            ipt.val(Math.min(model.userAmount, model.amountRest));
         });
 
         // 点差消失error
@@ -130,13 +134,30 @@ define(function (require) {
         // 确定投资
         $('.confirm-submit').click(function () {
             var ipt = $('.right-top-ipt-input');
+            var value = +$.trim(ipt.val());
 
             // 已经提示error或者不可投资
-            if (ipt[0].disabled || investError.hasClass('show')) {
+            if (ipt[0].disabled) {
                 return;
             }
 
+            // 输入不合法
+            if (isNaN(value)) {
+                investError.addClass('show').html('输入内容不合法');
+                return;
+            }
 
+            // 最后一标不得小于100
+            if (model.amountRest < 100 && value < model.amountRest) {
+                investError.addClass('show').html('投标金额必须为' + model.amountRest + '元');
+                return;
+            }
+
+            // 不可大于可用余额
+            if (value > model.userAmount) {
+                investError.addClass('show').html('可用余额不足');
+                return;
+            }
 
             $('#invest-form').get(0).submit();
         });
@@ -145,13 +166,14 @@ define(function (require) {
         $('.right-top-ipt-input').on({
             keyup: function () {
                 var value = +$.trim($(this).val());
+                var tip = $('.chongzhi-span');
 
                 if (isNaN(value)) {
-                    $('.chongzhi-span').html('0.00');
+                    tip.html('0.00');
                     return;
                 }
 
-                $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
+                tip.html(caculateIncome(+$.trim($(this).val()) || 0));
             },
             blur: function () {
                 var value = +$.trim($(this).val());
