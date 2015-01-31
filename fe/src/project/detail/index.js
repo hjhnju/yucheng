@@ -24,12 +24,13 @@ define(function (require) {
     var htmlContainer;
 
     var Error = $('#detail-error-span');
+    var investError = $('#chongzhi-error');
 
     var model = {};
 
     /**
      * 初始化方法
-     * @param {string} id
+     * @param {Object} initData
      */
     function init(initData) {
         htmlContainer = $('#toulist');
@@ -115,9 +116,8 @@ define(function (require) {
         // 全部投资
         $('.confirm-all').click(function () {
             var ipt = $('.right-top-ipt-input');
-            var error = $('.chongzhi-error');
 
-            error.hasClass('show') && error.removeClass('show');
+            investError.hasClass('show') && investError.removeClass('show');
 
             !ipt[0].disabled && ipt.val(Math.min(model.userAmount, model.amountRest));
         });
@@ -134,9 +134,8 @@ define(function (require) {
 //                amount: +$('.right-top-ipt-input').val() || 0
 //            });
             var ipt = $('.right-top-ipt-input');
-            var error = $('.chongzhi-error');
 
-            !ipt[0].disabled && !error.hasClass('show') && $('#invest-form').get(0).submit();
+            !ipt[0].disabled && !investError.hasClass('show') && $('#invest-form').get(0).submit();
         });
 
         // 投资盈利计算
@@ -144,20 +143,20 @@ define(function (require) {
             keydown: function () {
                 var value = +$.trim($(this).val());
                 var min = Math.min(model.userAmount, model.amountRest);
-                var error = $('.chongzhi-error');
+
                 if (isNaN(value)) {
-                    error.addClass('show').html('输入内容不合法');
+                    investError.addClass('show').html('输入内容不合法');
                     return;
                 }
 
                 if (value > min) {
-                    error.addClass('show').html('投资金额不得超过可用余额和可投金额');
+                    investError.addClass('show').html('投资金额不得超过可用余额和可投金额');
 //                    value > model.amountRest
 //                        && $(this).val(model.amountRest)
-//                        && error.removeClass('show');
+//                        && investError.removeClass('show');
                 }
                 else {
-                    error.removeClass('show');
+                    investError.removeClass('show');
                 }
 
                 $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
@@ -166,21 +165,20 @@ define(function (require) {
             keyup: function () {
                 var value = +$.trim($(this).val());
                 var min = Math.min(model.userAmount, model.amountRest);
-                var error = $('.chongzhi-error');
 
                 if (isNaN(value)) {
-                    error.addClass('show').html('输入内容不合法');
+                    investError.addClass('show').html('输入内容不合法');
                     return;
                 }
 
                 if (value > min) {
-                    error.addClass('show').html('投资金额不得超过可用余额和可投金额');
+                    investError.addClass('show').html('投资金额不得超过可用余额和可投金额');
 //                    value > model.amountRest
 //                        && $(this).val(model.amountRest)
-//                        && error.removeClass('show');
+//                        && investError.removeClass('show');
                 }
                 else {
-                    error.removeClass('show');
+                    investError.removeClass('show');
                 }
 
                 $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
