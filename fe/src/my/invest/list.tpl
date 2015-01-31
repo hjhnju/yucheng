@@ -101,7 +101,7 @@
         <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
         <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
         <td>￥${item.tenderAmt}</td>
-        <td>${item.deadline}个月</td>
+        <td>${item.deadline}</td>
         <td>${item.timeInfo}</td>
         <td>
             <span class="span-box"><span class="within" style="width: ${item.tenderProgress}%;"></span></span>
@@ -129,7 +129,7 @@
         <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
         <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
         <td>￥${item.tenderAmt}</td>
-        <td>${item.deadline}个月</td>
+        <td>${item.deadline}</td>
         <td>${item.timeInfo}</td>
         <td>${item.endTimeInfo}</td>
         <td>￥${item.totalRetAmt}</td>
@@ -154,7 +154,7 @@
         <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
         <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
         <td>￥${item.tenderAmt}</td>
-        <td>${item.deadline}个月</td>
+        <td>${item.deadline}</td>
         <td>${item.timeInfo}</td>
         <td>${item.failReason}</td>
     </tr>

@@ -119,7 +119,11 @@ define(function (require) {
 
             investError.hasClass('show') && investError.removeClass('show');
 
-            !ipt[0].disabled && ipt.val(Math.min(model.userAmount, model.amountRest));
+            if (ipt[0].disabled) {
+                return;
+            }
+
+            ipt.val(Math.min(model.userAmount, model.amountRest));
         });
 
         // 点差消失error
@@ -129,59 +133,66 @@ define(function (require) {
 
         // 确定投资
         $('.confirm-submit').click(function () {
-//            investTender.remote({
-//                id: model.id,
-//                amount: +$('.right-top-ipt-input').val() || 0
-//            });
             var ipt = $('.right-top-ipt-input');
+            var value = +$.trim(ipt.val());
 
-            !ipt[0].disabled && !investError.hasClass('show') && $('#invest-form').get(0).submit();
+            // 已经提示error或者不可投资
+            if (ipt[0].disabled) {
+                return;
+            }
+
+            // 输入不能为空
+            if (!value) {
+                investError.addClass('show').html('输入不能为空');
+                return;
+            }
+
+            // 输入不合法
+            if (isNaN(value)) {
+                investError.addClass('show').html('输入内容不合法');
+                return;
+            }
+
+            // 最后一标不得小于100
+            if (model.amountRest < 100 && value < model.amountRest) {
+                investError.addClass('show').html('投标金额必须为' + model.amountRest + '元');
+                return;
+            }
+
+            // 不可大于可用余额
+            if (value > model.userAmount) {
+                investError.addClass('show').html('可用余额不足');
+                return;
+            }
+
+            // 输入不能小于100
+            if (value < 100) {
+                investError.addClass('show').html('最小投标金额100元');
+                return;
+            }
+
+            $('#invest-form').get(0).submit();
         });
 
         // 投资盈利计算
         $('.right-top-ipt-input').on({
-            keydown: function () {
-                var value = +$.trim($(this).val());
-                var min = Math.min(model.userAmount, model.amountRest);
-
-                if (isNaN(value)) {
-                    investError.addClass('show').html('输入内容不合法');
-                    return;
-                }
-
-                if (value > min) {
-                    investError.addClass('show').html('投资金额不得超过可用余额和可投金额');
-//                    value > model.amountRest
-//                        && $(this).val(model.amountRest)
-//                        && investError.removeClass('show');
-                }
-                else {
-                    investError.removeClass('show');
-                }
-
-                $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
-            },
-
             keyup: function () {
                 var value = +$.trim($(this).val());
-                var min = Math.min(model.userAmount, model.amountRest);
+                var tip = $('.chongzhi-span');
 
                 if (isNaN(value)) {
-                    investError.addClass('show').html('输入内容不合法');
+                    tip.html('0.00');
                     return;
                 }
 
-                if (value > min) {
-                    investError.addClass('show').html('投资金额不得超过可用余额和可投金额');
-//                    value > model.amountRest
-//                        && $(this).val(model.amountRest)
-//                        && investError.removeClass('show');
-                }
-                else {
-                    investError.removeClass('show');
-                }
+                tip.html(caculateIncome(+$.trim($(this).val()) || 0));
+            },
+            blur: function () {
+                var value = +$.trim($(this).val());
 
-                $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
+                if (isNaN(value)) {
+                    investError.addClass('show').html('输入内容不合法');
+                }
             }
         });
 

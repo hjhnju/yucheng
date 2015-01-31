@@ -30,7 +30,7 @@ $smarty->assign('level', 1);
 $smarty->assign('amount', '200000.00');
 $smarty->assign('interest', '12');
 $smarty->assign('invest_cnt', 1000000);
-$smarty->assign('amount_rest', '200,000.00');
+$smarty->assign('amount_rest', '20.00');
 $smarty->assign('invest_amount', 0.00);
 $smarty->assign('safe_id', 1);
 $smarty->assign('refund_type', 1);
