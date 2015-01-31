@@ -46,7 +46,14 @@ define(function (require) {
          * @param {number} page 页码value值
          */
         render: function (page) {
+            // 总数为1时不显示分页
+            if (this.opt.total === 1) {
+                this.opt.main.html('');
+                return;
+            }
+
             var result = this.calculateItem(page - this.opt.startPage + 1);
+
             this.opt.main.html(etpl.render('ui-pager', {
                 data: $.extend({}, result, {
                     prevText: this.opt.prevText,
