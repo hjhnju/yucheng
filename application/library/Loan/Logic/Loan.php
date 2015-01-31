@@ -504,7 +504,7 @@ class Loan_Logic_Loan {
      * @return number
      */
     private function getInterestByDay($amount, $interest, $days) {
-        $money = $amount * $interest * $days / 365 / 100;
+        $money = $amount + $amount * $interest * $days / 365 / 100;
         return $money;
     }
 }
