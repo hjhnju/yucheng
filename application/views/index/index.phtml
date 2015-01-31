@@ -121,6 +121,11 @@
                     <div class="investlist-box-title-name jindu">进度</div>
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
+                {%if empty($data.list)%}
+                <div class="xjd-error">
+                    <div class="xjd-error-msg">“新标即将上线，敬请期待”</div>
+                </div>
+                {%else%}
                 {%foreach $data.list as $key => $item%}
                 <div class="investlist-box-title">
 
@@ -172,6 +177,7 @@
 
                 </div>
                 {%/foreach%}
+                {%/if%}
             </div>
             <a href="{%$webroot%}/invest" class="investlist-more">查看更多标的></a>
         </div>

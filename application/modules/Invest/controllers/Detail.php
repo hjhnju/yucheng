@@ -29,5 +29,14 @@ class DetailController extends Base_Controller_Response {
             $this->_view->assign('user', $user);
         }
         $this->_view->assign('data', $loan);
+        
+        // 增加错误信息
+        $sess = Yaf_Session::getInstance();
+        $errorKey = 'invest_error';
+        if ($sess->has($errorKey)) {
+            $error = $sess->get($errorKey);
+            $sess->del($errorKey);
+            $this->_view->assign('error', Invest_RetCode::getMsg($error));
+        }
     }
 }

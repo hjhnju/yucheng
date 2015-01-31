@@ -58,9 +58,14 @@
                     <div class="investlist-box-title-name status">状态</div>
                 </div>
                 <div id="invest-main" class="invest-main">
+                    {%if empty($data.list)%}
+                    <div class="xjd-error">
+                        <div class="xjd-error-msg">“新标即将上线，敬请期待”</div>
+                    </div>
+                    {%else%}
                     {%foreach $data.list as $key => $item%}
-                    <div class="investlist-box-title">
 
+                    <div class="investlist-box-title">
                         <div class="investlist-box-title-name name text-align-name">
                             <span class="name-shi">
                                 {%if $item.type_id == 1%}实
@@ -109,6 +114,7 @@
 
                     </div>
                     {%/foreach%}
+                    {%/if%}
                 </div>
 
             </div>
