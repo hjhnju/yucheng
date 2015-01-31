@@ -18,10 +18,13 @@ define(function (require) {
 
     var tpl = require('./list.tpl');
 
+    var type;
+
     var pager;
 
     function init(opt) {
         var container = $('#infos-list');
+        type = opt.type;
 
         header.init();
         etpl.compile(tpl);
@@ -36,7 +39,8 @@ define(function (require) {
         pager.on('change', function (e) {
             container.html(etpl.render('Loading'));
             getList.remote({
-                page: +e.value
+                page: +e.value,
+                type: type
             });
         });
 
@@ -52,9 +56,16 @@ define(function (require) {
             else {
 
                 if (!data.list.length) {
-                    container.html(etpl.render('Error', {
-                        msg: '当前没有公告'
-                    }));
+                    if (type === 'post') {
+                        container.html(etpl.render('Error', {
+                            msg: '当前没有公告'
+                        }));
+                    }
+                    else {
+                        container.html(etpl.render('Error', {
+                            msg: '当前没有媒体信息'
+                        }));
+                    }
                     $('#pager').html('');
                     return;
                 }

@@ -64,7 +64,7 @@ class SecureController extends Base_Controller_Page{
 		$thirdpay = $userinfo['huifu']['isopen'];//用户是否开通了汇付托管
 		$huifuid = $userinfo['huifu']['value'];//用户的汇付id			
 		if($thirdpay == 2) {
-			$thirdpayurl = $webroot.'/account/secure/bindthirdpay';
+			$thirdpayurl = $webroot.'/user/open';
 		} else {
 			$thirdpayurl = $webroot.'/finance/usermanage/login';
 		}
@@ -91,7 +91,11 @@ class SecureController extends Base_Controller_Page{
 			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
 			$thirdloginurl = $webroot.'/account/secure/unbindthird';
 		}
-		$lastLoginTime = $this->objUser->loginTime;
+		if(!empty($this->objUser->loginTime)){
+		    $lastLoginTime = $this->objUser->loginTime;
+		}else{
+		    $lastLoginTime = $this->objUser->createTime;
+		}
 		$lastLoginTime = date("Y-m-d H:i:s",$lastLoginTime);
 		$this->getView()->assign('lastLoginTime',$lastLoginTime);	
         $this->getView()->assign('userinfo',$userinfo);		
