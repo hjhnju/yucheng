@@ -188,6 +188,7 @@ p{margin:0;padding:0}
 .company-part-title:after{clear:both}
 .company-part-titlectx{float:left;font-size:22px;height:44px;line-height:44px;margin:0;padding:0;border-bottom:2px solid #76cf65}
 .company-part-back{font-size:12px;line-height:44px;float:right;color:#000;text-decoration:none;cursor:pointer}
+.company-intro{line-height:24px;text-indent:2em;font-size:14px}
 .company-address{padding-top:10px;margin-bottom:10px}
 .company-address-intro{*zoom:1}
 .company-address-intro:before,.company-address-intro:after{display:table;content:""}

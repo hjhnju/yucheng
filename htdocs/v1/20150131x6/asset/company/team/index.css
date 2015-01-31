@@ -188,6 +188,7 @@ p{margin:0;padding:0}
 .company-part-title:after{clear:both}
 .company-part-titlectx{float:left;font-size:22px;height:44px;line-height:44px;margin:0;padding:0;border-bottom:2px solid #76cf65}
 .company-part-back{font-size:12px;line-height:44px;float:right;color:#000;text-decoration:none;cursor:pointer}
+.company-intro{line-height:24px;text-indent:2em;font-size:14px}
 .team-item{padding:20px 30px 20px 20px;border-bottom:1px dashed #e3e3e3;*zoom:1}
 .team-item:before,.team-item:after{display:table;content:""}
 .team-item:after{clear:both}
@@ -198,3 +199,4 @@ p{margin:0;padding:0}
 .team-item .team-name{height:30px;line-height:30px;font-size:16px}
 .team-item .team-name-intro{font-size:14px}
 .team-item .team-intro{line-height:24px;margin:0;padding:0}
+.company-intro{line-height:24px;text-indent:2em;font-size:14px;margin-bottom:20px}

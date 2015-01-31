@@ -188,6 +188,7 @@ p{margin:0;padding:0}
 .company-part-title:after{clear:both}
 .company-part-titlectx{float:left;font-size:22px;height:44px;line-height:44px;margin:0;padding:0;border-bottom:2px solid #76cf65}
 .company-part-back{font-size:12px;line-height:44px;float:right;color:#000;text-decoration:none;cursor:pointer}
+.company-intro{line-height:24px;text-indent:2em;font-size:14px}
 #infos-list{min-height:200px}
 .infos-list{margin:0;padding:0}
 .infos-item{*zoom:1;border-bottom:1px dashed #e3e3e3;padding:20px 10px}
