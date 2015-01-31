@@ -46,7 +46,8 @@ exports.getProcessors = function () {
             'src/security/index/index.less',
             'src/security/profit/index.less',
             'src/security/focus/index.less',
-            'src/guide/index.less'
+            'src/guide/index.less',
+            'src/app/index.less'
 
         ]
     });
@@ -82,7 +83,8 @@ exports.getProcessors = function () {
             'src/security/index/index.less',
             'src/security/profit/index.less',
             'src/security/focus/index.less',
-            'src/guide/index.less'
+            'src/guide/index.less',
+            'src/app/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler();
