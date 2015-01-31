@@ -1,1 +1,0 @@
-define("company/common/common",["require","jquery","common/header"],function(require){function e(){n.init(),t(".nav-item-link:eq(4)").addClass("current")}var t=require("jquery"),n=require("common/header");return{init:e}});

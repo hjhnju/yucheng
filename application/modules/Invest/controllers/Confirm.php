@@ -20,8 +20,8 @@ class ConfirmController extends Base_Controller_Response {
                 'req' => $retParam,
                 'ret' => $bolRet,
             ));
-            $this->_view->assign('success', 0);
-            return;
+            $this->redirect('/invest/fail?info=' . '签名验证失败');
+            return false;
         }
         $merPriv = explode('_',$_REQUEST['MerPriv']);       
         $userid  = intval(urldecode($merPriv[0]));
@@ -29,10 +29,12 @@ class ConfirmController extends Base_Controller_Response {
         $amount  = floatval($_REQUEST['TransAmt']);
         $orderId = strval(trim($_REQUEST['OrdId']));
                 
-        $logic  = new Invest_Logic_Invest();        
+        $logic  = new Invest_Logic_Invest();
         $bolRet = $logic->doInvest($orderId, $userid, $loanId, $amount);
         if ($bolRet) {
-            $this->_view->assign('success', 1);
+            $sess = Yaf_Session::getInstance();
+            $sess->set('invest_amount', $amount);
+            $this->redirect('/invest/success');
         } else {
             Base_Log::error(array(
                 'msg'     => '投资confirm保存失败',
@@ -41,7 +43,8 @@ class ConfirmController extends Base_Controller_Response {
                 'loanId'  => $loanId,
                 'amount'  => $amount,
             ));
-            $this->_view->assign('success', 0);
+            $this->redirect('/invest/fail?info=' . '投标失败，请联系客服');
         }
+        return false;
     }
 }

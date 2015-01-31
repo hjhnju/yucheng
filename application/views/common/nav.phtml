@@ -42,7 +42,9 @@
         </li>
         <li class="finish-nav-item-list">
             <a href="{%$webroot%}/account/message" class="finish-nav-item-link mynews {%if $current == '6'%}current{%/if%}">我的消息</a>
+            {%if $userinfo.unreadMsg%}
             <div class="mynews-symbol"></div>
+            {%/if%}
         </li>
     </ul>
 </div>

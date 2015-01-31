@@ -305,9 +305,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 
         //收取费用
         $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
-        $fee       = $arrFeeInfo['totalFee'];
-        $riskFee   = $arrFeeInfo['riskFee'];
-        $servFee   = $arrFeeInfo['serviceFee'] + $arrFeeInfo['manageFee'];
+        $fee       = $arrFeeInfo['total_fee'];
+        $riskFee   = $arrFeeInfo['risk_fee'];
+        $servFee   = $arrFeeInfo['serv_fee'];
         
         $tenderInfo    = $this->getTenderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
@@ -319,13 +319,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             array(
                 'DivCustId'=> '6000060000677575',
                 'DivAcctId'=> 'SDT000002',
-                'DivAmt'   => $riskFee,
+                'DivAmt'   => sprintf('%.2f', $riskFee),
             ),  
             //专属账户
             array(
                 'DivCustId'=> '6000060000677575',
                 'DivAcctId'=> 'MDT000001',
-                'DivAmt'   => $servFee,
+                'DivAmt'   => sprintf('%.2f', $servFee),
             ),          
         );
         $jsonDivDetails  = json_encode($arrDivDetails);

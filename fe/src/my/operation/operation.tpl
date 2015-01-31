@@ -6,6 +6,7 @@
         <th>交易流水号</th>
         <th>金额</th>
         <th>可用余额</th>
+        <th>状态</th>
     </tr>
     <!-- for: ${list} as ${item} -->
     <tr>
@@ -19,6 +20,7 @@
         <td>${item.serialNo}</td>
         <td>${item.tranAmt}元</td>
         <td>${item.avalBg}元</td>
+        <td>${item.status}</td>
     </tr>
     <!--/for-->
 </table>

@@ -80,27 +80,29 @@ class Finance_Fee {
      * @return  array $arrFeeInfo
      */
     public static function totalFeeInfo($loanId, $transAmt){
+        $loanId   = intval($loanId);
+        $transAmt = floatval($transAmt);
+        $loanInfo = Loan_Api::getLoanInfo($loanId);
 
-        $loanInfo  = Loan_Api::getLoanInfo($loanId);
-        //TODO:借款实际时间（天）
-        $days      = $loanInfo['duration'];
-        $riskLevel = $loanInfo['level'];
-        $riskLevel = intval($riskLevel);
-        $transAmt  = floatval($transAmt);
-        $days      = intval($days);
+        //借款实际时间（天）, pay_time实际是当前打款时间。这里用full_time代替
+        $startTime = intval($loanInfo['full_time']);
+        $days      = Loan_Type_Duration::getDays(intval($loanInfo['duration']), $startTime);
 
-        $serviceFee = self::serviceFee($riskLevel, $transAmt);
-        $riskFee    = self::riskFee($riskLevel, $transAmt, $days);
-        $manageFee  = self::manageFee($riskLevel, $transAmt, $days);
+        $servFeeRate = $loanInfo['serv_fee'];
+        $riskFeeRate = $loanInfo['risk_fee'];
+        $mangFeeRate = $loanInfo['mang_fee'];
 
-        $totalFee = $serviceFee + $riskFee + $manageFee;
+        $servFee  = self::servFee($servFeeRate, $transAmt);
+        $riskFee  = self::riskFee($riskFeeRate, $transAmt, $days);
+        $mangFee  = self::mangFee($mangFeeRate, $transAmt, $days);
+        $totalFee = $servFee + $riskFee + $mangFee;
         $arrFeeInfo  = array(
-            'serviceFee' => sprintf('%.2f', $serviceFee),
-            'riskFee'    => sprintf('%.2f', $riskFee),
-            'manageFee'  => sprintf('%.2f', $manageFee),
-            'totalFee'   => sprintf('%.2f', $totalFee),
+            'msg'       => '手续费计算结果',
+            'serv_fee'  => sprintf('%.2f', $servFee + $mangFee),
+            'risk_fee'  => sprintf('%.2f', $riskFee),
+            'total_fee' => sprintf('%.2f', $totalFee),
         );
-        Base_Log::notice(array_merge(array('msg'=>'手续费计算结果'), $arrFeeInfo));
+        Base_Log::notice($arrFeeInfo);
         return $arrFeeInfo;
     }
      
@@ -110,42 +112,34 @@ class Finance_Fee {
     * @param float transAmt
     * 
     */
-    private static function serviceFee($riskLevel,$transAmt) {
-        $riskLevel  = intval($riskLevel);
-        $transAmt   = floatval($transAmt);    
-        $serviceFee = $transAmt * self::$finance_service_fee[$riskLevel];
-        return $serviceFee;
+    private static function servFee($rate, $transAmt) {
+        $rate     = floatval($rate);
+        $transAmt = floatval($transAmt);    
+        $servFee  = $transAmt * $rate;
+        return $servFee;
     }
      
     /**
      * 计算风险准备金
-     * @param int riskLevel 风险等级
-     * @param float transAmt 交易金额
-     * @param int days 借款天数
      * @param float
      */
-    private static function riskFee($riskLevel,$transAmt,$days) {
-        $riskLevel = intval($riskLevel);
-        $transAmt  = floatval($transAmt);
-        $days      = intval($days);
-        $dailyRate = floatval(self::$risk_reserve_fee[$riskLevel] / 365);
-        $riskFee   = $transAmt * $dailyRate * $days;
+    private static function riskFee($rate, $transAmt, $days) {
+        $rate     = floatval($rate);
+        $transAmt = floatval($transAmt);
+        $days     = intval($days);
+        $riskFee  = $transAmt * $rate * $days / 365;
         return $riskFee;
     }
 
     /**
      * 计算账户管理费
-     * @param int riskLevel 风险等级
-     * @param float transAmt 交易金额
-     * @param int days 天数
      * @return float
      */
-    private static function manageFee($riskLevel,$transAmt,$days) {
-        $riskLevel = intval($riskLevel);
+    private static function mangFee($rate, $transAmt, $days) {
+        $rate      = floatval($rate);
         $transAmt  = floatval($transAmt);
         $days      = intval($days);  
-        $dailyRate = floatval(self::$acc_manage_fee[$riskLevel] / 365);
-        $manageFee = $transAmt * $dailyRate * $days;
-        return $manageFee;
+        $mangFee   = $transAmt * $rate * $days / 365;
+        return $mangFee;
     }
 }

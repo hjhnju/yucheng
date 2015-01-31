@@ -32,9 +32,9 @@ class Invest_Logic_Invest {
         if ($amount < self::MIN_INVEST) {
             return false;
         }
-        $max = $this->getUserCanInvest($userid, $loan_id, $amount);
-        if ($max < self::MIN_INVEST) {
-            Base_Log::notice('max smaller then min invest :' . $max);
+        $maxInvest = $this->getUserCanInvest($userid, $loan_id, $amount);
+        if ($maxInvest < self::MIN_INVEST) {
+            Base_Log::notice('max smaller then min invest :' . $maxInvest);
             return false;
         }
         
@@ -46,16 +46,16 @@ class Invest_Logic_Invest {
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
         $retUrl = Base_Config::getConfig('web')->root . '/invest/confirm';
-        $max = $this->formatNumber($max);
+        $maxInvest = $this->formatNumber($maxInvest);
         //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
         $detail = array(
             array(
                 "BorrowerUserId" => $loan['user_id'],
                 //TODO:是否要采用千分位方式？
-                "BorrowerAmt"    => $max,
+                "BorrowerAmt"    => $maxInvest,
             ),
         );
-        Finance_Api::initiativeTender($loan_id, $max, $userid, $detail, $retUrl);
+        return Finance_Api::initiativeTender($loan_id, $maxInvest, $userid, $detail, $retUrl);
     }
     
     /**
@@ -69,8 +69,8 @@ class Invest_Logic_Invest {
     
     /**
      * 确认进行投标
-     * @param $orderId 订单号
-     * @param integer $useri
+     * @param integer $orderId 订单号
+     * @param integer $userid
      * @param integer $loanId
      * @param number $amount
      * @return boolean|string
@@ -79,10 +79,23 @@ class Invest_Logic_Invest {
         if ($amount < self::MIN_INVEST) {
             return false;
         }
-        $max = $this->getUserCanInvest($userid, $loanId, $amount);
-        if ($max < $amount) {
-            //TODO：有什么作用？
-            $this->cancelInvest($userid, $amount);
+        $canInvest = $this->getUserCanInvest($userid, $loanId, $amount);
+        //防止已经被其他人投资，当前已经没有可投金额了
+        if ($canInvest < $amount) {
+            // 如果不满足条件了则撤销投标
+            $this->cancelInvest($orderId, $userid, $amount);
+            return false;
+        }
+        // 防order_id被多次调用
+        $redis = Base_Redis::getInstance();
+        $used_key = 'invest_order_' . $orderId;
+        $used = $redis->setnx($used_key, 1);
+        if (empty($used)) {
+            $msg = array(
+                'msg' => 'orderid被多次调用',
+                'invest' => json_encode(func_get_args()),
+            );
+            Base_Log::warn($msg);
             return false;
         }
         //防并发进行投资
@@ -99,18 +112,21 @@ class Invest_Logic_Invest {
             $arrData = Loan_Api::getLoanInfo($loanId);
             $invest->interest = isset($arrData['interest']) ? $arrData['interest'] : 0;
             $invest->duration = isset($arrData['duration']) ? $arrData['duration'] : 0;
+            //@TODO 这里需要事务保障与前面的更新投标金额强一致性
             if (!$invest->save()) {
                 Base_Log::error(array(
-                    'msg'    => '写入投标信息失败',
+                    'msg'    => '写入投标信息失败 不处理会导致用户资金与投标丢失',
                     'invest' => json_encode($invest)
                 ));
                 return false;
             }
+            // 保存以后检查满标状态
+            Loan_Api::updateFullStatus($loanId);
         } else {
-            $this->cancelInvest($userid, $amount);
+            $this->cancelInvest($orderId, $userid, $amount);
             Base_Log::notice(array(
                 'msg'    => '投标失败，取消投标',
-                'invest' => json_encode($invest)
+                'invest' => json_encode(func_get_args()),
             ));
             return false;
         }
@@ -141,12 +157,13 @@ class Invest_Logic_Invest {
     
     /**
      * 撤销投标
-     * @param integer $uid
+     * @param integer $orderId
+     * @param integer $userid
      * @param number $amount
      * @return boolean
      */
-    public function cancelInvest($uid, $amount) {
-        return true;
+    public function cancelInvest($orderId, $userid, $amount) {
+        return Finance_Api::tenderCancel($amount, $userid, $orderId);
     }
     
     /**
@@ -159,7 +176,7 @@ class Invest_Logic_Invest {
         $avlBal = 0.0;
         if(!empty($arrAmt) && isset($arrAmt['data']['avlBal'])){
             $avlBal = floatval($arrAmt['data']['avlBal']);
-        }else{
+        } else {
             Base_Log::warn(array(
                 'msg' => '获取账户可用余额失败',
                 'uid' => $uid,
