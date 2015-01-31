@@ -244,7 +244,8 @@
                                 <div class="renzheng-title">{%$key%}</div>
                                 <div class="renzheng-box-main">
                                     {%foreach $item as $index => $temp%}
-                                    <div class="renzheng-pic {%$mapType[$temp.name]%}"></div>
+                                    <div class="renzheng-box-main-box-pic {%$mapType[$temp.name]%}"></div>
+                                    <div class="renzheng-box-main-box-name">{%$item.name%}</div>
                                     {%/foreach%}
                                 </div>
                             </div>

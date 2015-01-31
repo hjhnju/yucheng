@@ -15,7 +15,7 @@ define(function (require) {
 
         header.init();
 
-        $('.nav-item-link:eq(1)').addClass('current');
+        //$('.nav-item-link:eq(1)').addClass('current');
     }
 
 
