@@ -229,10 +229,10 @@ p{margin:0;padding:0}
 .banner-item:after{clear:both}
 .banner-item-list{width:25%;float:left;height:300px;position:relative}
 .banner-item-list-link{width:100%;display:block;height:300px}
-.banner-item-list-link.banner-one{background:url(img/banner_one.jpg) center center no-repeat}
-.banner-item-list-link.banner-two{background:url(img/banner_two.jpg) center center no-repeat}
-.banner-item-list-link.banner-three{background:url(img/banner_three.jpg) center center no-repeat}
-.banner-item-list-link.banner-four{background:url(img/banner_four.jpg) center center no-repeat}
+.banner-item-list-link.banner-one{background:url(img/banner_one.png) center center no-repeat}
+.banner-item-list-link.banner-two{background:url(img/banner_two.png) center center no-repeat}
+.banner-item-list-link.banner-three{background:url(img/banner_three.png) center center no-repeat}
+.banner-item-list-link.banner-four{background:url(img/banner_four.png) center center no-repeat}
 .banner-container{width:1000px;margin:0 auto;*zoom:1;height:250px;padding:25px 0;position:relative}
 .banner-container:before,.banner-container:after{display:table;content:""}
 .banner-container:after{clear:both}

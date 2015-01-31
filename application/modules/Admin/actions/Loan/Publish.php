@@ -1,6 +1,6 @@
 <?php
 /**
- * 借款发布
+ * 借款发布(审核通过)
  * @author hejunhua
  *
  */
@@ -10,13 +10,17 @@ class PublishAction extends Yaf_Action_Abstract {
         $loanId = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
 
         $arrRet = Loan_Api::publish($loanId);
-        $bolRet = isset($arrRet['success']) ? $arrRet['success'] === Base_RetCode::SUCCESS : false;
+        $bolRet = false;
+        if(Base_RetCode::SUCCESS === $arrRet['status']) {
+            $bolRet = true;
+        }
+
         Base_Log::notice(array(
-        	'arrRet' => $arrRet,
-        	'bolRet' => $bolRet,
+            'arrRet' => $arrRet,
+            'bolRet' => $bolRet,
         ));
-        
-    	$this->getView()->assign('success', $bolRet);
+
+        $this->getView()->assign('success', $bolRet);
 
     }
 }
