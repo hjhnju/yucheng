@@ -192,7 +192,8 @@ p{margin:0;padding:0}
 .team-item:before,.team-item:after{display:table;content:""}
 .team-item:after{clear:both}
 .team-item img{float:left;width:120px;height:120px;margin-right:20px;display:block}
-.team-item img.huifu{margin-top:-4px;height:36px}
+.team-item img.bank{height:36px}
+.team-item img.huifu{margin-top:-4px}
 .team-item .team-item-intro{float:left;width:550px}
 .team-item .team-name{height:30px;line-height:30px;font-size:16px}
 .team-item .team-name-intro{font-size:14px}
