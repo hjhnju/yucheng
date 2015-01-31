@@ -36,10 +36,10 @@ class ListController extends Base_Controller_Response {
             $arrReturn[$index]['type'] = $val->type;
             $arrReturn[$index]['status'] = $val->status;
             $arrReturn[$index]['content'] = $val->content;
-            $arrReturn[$index]['link'] = $arrLink->link;
-            $arrReturn[$index]['linkname'] = $arrLink->linkname;
+            $arrReturn[$index]['link'] = $arrLink['link'];
+            $arrReturn[$index]['linkname'] = $arrLink['linkname'];
             $arrReturn[$index]['mid'] = $val->mid;
-            $arrReturn[$index]['time'] = $val->create_time;
+            $arrReturn[$index]['time'] = $val->createTime;
         }
         $data['page']    = $intPage + 1;
         $data['pageall'] = intval((count($arrData)-1)/self::PAGE_SIZE)+1;
