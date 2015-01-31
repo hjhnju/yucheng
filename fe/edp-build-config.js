@@ -145,6 +145,7 @@ exports.exclude = [
     'doc',
     'test',
     'entry',
+    'output',
     'mock',
     'node_modules',
     'module.conf',
