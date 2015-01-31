@@ -313,6 +313,28 @@ class Invest_Logic_Invest {
         
         return $data;
     }
+
+    /**
+     * 获取用户一段时间的投资总额
+     * @param number $uid
+     * @param number $startTime
+     * @param number $endTime
+     * @return number
+     */
+    public function getUserInvestTotal($uid, $startTime, $endTime) {
+        $startTime = intval($startTime);
+        $endTime = intval($endTime);
+        $list = new Invest_List_Invest();
+        $filters = array(
+            'status' => array('(status = 5 or status = 6)'),
+            'time' => array(
+                "create_time >= $startTime and create_time <= $endTime", 
+            ),
+        );
+        $list->setFilter($filters);
+        $total = $list->sumField('amount');
+        return $total;
+    }
     
     /**
      * 获取单笔投资信息
@@ -493,6 +515,8 @@ class Invest_Logic_Invest {
 	    if (!empty($period)) {
 	        $filters['duration'][] = $period;
 	    }
+	    // 最低显示为已审核的借款
+	    $filters['status'][] = 'status > 1';
 	    return $filters;
 	}
 	
