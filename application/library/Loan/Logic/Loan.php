@@ -61,69 +61,113 @@ class Loan_Logic_Loan {
 
     /**
      * 满标打款
+     * @param $loanId 
      */
     public function makeLoans($loanId){
         $objRst = new Base_Result();
         if (empty($loanId)) {
-            $objRst->status = Base_RetCode::PARAM_ERROR;
-            $objRst->statusInfo = Base_RetCode::getMsg($objRst->status);
+            $objRst->status     = Basele_RetCode::getMsg($objRst->status);
             return $objRst->format();
         }
 
         $logic       = new Loan_Logic_Loan();
         $arrLoanInfo = $logic->getLoanInfo($loanId);
         $bolRet      = true;
-        if ($arrLoanInfo['status'] === Loan_Type_LoanStatus::FULL_CHECK) {
-            $inUserId = intval($arrLoanInfo['user_id']);
-            //获取该项目所有投资
-            $arrRet   = Invest_Api::getLoanInvests($loanId);
-            foreach($arrRet['list'] as $arrInfo){
-                $subOrdId  = $arrInfo['order_id'];
-                $outUserId = $arrInfo['user_id'];
-                $transAmt  = $arrInfo['amount'];
-                $arrRet  = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
-                if(Base_RetCode::SUCCESS === $arrRet['status']){
-                    Base_Log::debug(array(
-                        'msg'       => '满标打款单笔成功',
-                        'loanId'    => $loanId,
-                        'subOrdId'  => $subOrdId,
-                        'inUserId'  => $inUserId,
-                        'outUserId' => $outUserId,
-                        'transAmt'  => $transAmt,
-                    ));
-                }else{
-                    $bolRet = false;
-                    Base_Log::error(array(
-                        'msg'       => '满标打款单笔失败',
-                        'loanId'    => $loanId,
-                        'subOrdId'  => $subOrdId,
-                        'inUserId'  => $inUserId,
-                        'outUserId' => $outUserId,
-                        'transAmt'  => $transAmt,
-                    ));
-                }
-            }
+        if ($arrLoanInfo['status'] !== Loan_Type_LoanStatus::PAYING) {
+            $objRst->status     = Loan_RetCode::UNABLE_MAKE_LOAN;
+            $objRst->statusInfo = Loan_RetCode::getMsg($objRst->status);
+            Base_Log::notice(array(
+                'msg'    => '该笔投资无需再打款',
+                'info'   => $arrLoanInfo,
+                'bolRet' => $bolRet,
+            ));
+            return $objRst;
+        }
+
+        //借款人（入款用户）
+        $inUserId = intval($arrLoanInfo['user_id']);
+        //获取该项目所有投资
+        $arrRet   = Invest_Api::getLoanInvests($loanId);
+        foreach($arrRet['list'] as $arrInfo){
+
+            $bolRet1 = $this->singleMakeLoans($loanId, $inUserId, $arrInfo);
+            $bolRet  = $bolRet && $bolRet1;
         }
         
-        if ($bolRet) {
-            $objRst->status = Base_RetCode::SUCCESS;
-            $content        = "给客户打款成功";
-            Base_Log::notice(array(
-                'msg'    => '满标打款成功',
-                'loanId' => $loanId,
-            ));
-            $this->addLog($loanId, $content);
-        } else {
+        if (!$bolRet) {
             $objRst->status     = Loan_RetCode::MAKE_LOAN_FAIL;
             $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::MAKE_LOAN_FAIL);
-            $content            = "给客户打款失败（多笔中有失败）";
-            Base_Log::notice(array(
-                'msg'    => '满标打款失败',
+            $content            = "给客户打款失败";
+            Base_Log::error(array(
+                'msg'    => $content,
                 'loanId' => $loanId,
             ));
-            $this->addLog($loanId, $content);
+            return $objRst;
         }
+
+        Loan_Api::updateLoanStatus($loanId, Loan_Type_LoanStatus::REFUNDING);
+
+        $objRst->status = Base_RetCode::SUCCESS;
+        $content = "给客户打款成功";
+        Base_Log::notice(array(
+            'msg'    => $content,
+            'loanId' => $loanId,
+        ));
+        $this->addLog($loanId, $content);
         return $objRst;
+    }
+
+    /**
+     * 单笔打款失败
+     */
+    private function singleMakeLoans($loanId, $inUserId, $arrInvestInfo){
+        $bolRet = false;
+
+        $investId      = $arrInvestInfo['id'];
+        $subOrdId      = $arrInvestInfo['order_id'];
+        $outUserId     = $arrInvestInfo['user_id'];
+        $transAmt      = $arrInvestInfo['amount'];
+        $singlePayStat = $arrInvestInfo['status'];
+        //是否需要打款
+        if($singlePayStat >= Invest_Type_InvestStatus::REFUNDING){
+            $bolRet = true;
+            Base_Log::debug(array(
+                'msg'    => '该笔投资已成功或结束，不能再打款',
+                'info'   => $arrInvestInfo,
+                'bolRet' => $bolRet,
+            ));
+            return $bolRet;
+        }
+
+        //通知财务打款
+        $arrRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+        if(Base_RetCode::SUCCESS !== $arrRet['status']){
+            $bolRet = false;
+            Base_Log::error(array(
+                'msg'    => '财务满标打款单笔失败',
+                'info'   => $arrInvestInfo,
+                'bolRet' => $bolRet,
+            ));
+            return $bolRet;
+        }
+
+        //单笔打款成功，更新投资人已打款字段
+        $bolRet = Invest_Api::updateInvestStatus($investId, Invest_Type_InvestStatus::REFUNDING);
+        if(!$bolRet){
+            Base_Log::error(array(
+                'msg'    => '更新打款状态失败',
+                'info'   => $arrInvestInfo,
+                'bolRet' => $bolRet,
+            ));
+            return $bolRet;
+        }
+
+        Base_Log::notice(array(
+            'msg'    => '满标打款单笔成功',
+            'info'   => $arrInvestInfo,
+            'bolRet' => $bolRet,
+        ));
+        return $bolRet;
     }
 
     /**
@@ -181,22 +225,6 @@ class Loan_Logic_Loan {
         $loan->status = Loan_Type_LoanStatus::PAYING;
         
         return $this->objModel->commit();
-    }
-    
-    /**
-     * 进行打款
-     * @param unknown $loanId
-     * @return boolean
-     */
-    public function sendMoney($loanId) {
-        $invests = Invest_Api::getLoanInvests($loanId);
-        $invests = $invests['list'];
-        //循环组合打款参数
-        foreach ($invests as $invest) {
-            //
-        }
-        //进行打款
-        return true;
     }
     
     public function addRefund($loan, $period, $capital, $interest, $time, $capital_refund, $capital_rest) {
