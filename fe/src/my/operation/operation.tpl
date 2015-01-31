@@ -11,12 +11,7 @@
     <!-- for: ${list} as ${item} -->
     <tr>
         <td>${item.time}</td>
-        <!--if: ${item.transType} == 1-->
-        <td>充值</td>
-        <!-- else -->
-        <td>提现</td>
-        <!-- /if -->
-
+        <td>${item.typeName}</td>
         <td>${item.serialNo}</td>
         <td>${item.tranAmt}元</td>
         <td>${item.avalBg}元</td>
