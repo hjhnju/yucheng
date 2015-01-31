@@ -273,24 +273,14 @@ class Base_List {
     public function sumField($field) {
         $where = $this->getWhere();
         if (is_array($field)) {
-            $sumary = $fary = array();
-            $cnt = 0;
+            $sumary = array();
             foreach ($field as $k) {
-                $sname = 'total' . $cnt;
-                $sumary[$sname] = "sum(`$k`) as $sname";
-                $fary[$sname] = $k;
-                $cnt++;
+                $sumary[] = "sum(`$k`) as $k";
             }
             $field = implode(',', $sumary);
             
             $sql = "select $field from `{$this->dbname}`.`{$this->table}` where $where";
-            $row = $this->db->fetchRow($sql);
-            
-            $total = array();
-            foreach ($row as $key => $val) {
-                $fkey = $fary[$key];
-                $total[$fkey] = floatval($val);
-            }
+            $total = $this->db->fetchRow($sql);
         } else {
             $sql = "select sum(`$field`) as total from `{$this->dbname}`.`{$this->table}` where $where";
             $total = $this->db->fetchOne($sql);
