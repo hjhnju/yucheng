@@ -5,7 +5,9 @@ class Awards_Logic_Awards {
     const STATUS_NOTFIT = 1;
     const STATUS_READY  = 2;
     const STATUS_FINISH = 3;
-    
+    CONST AW_MONTHS     = 3;
+    CONST REGIST_AW     = 30;
+    CONST INVITE_AW     = 20;
     /**
      * 用户注册时点发放的奖励
      * @param int $userid
@@ -103,13 +105,16 @@ class Awards_Logic_Awards {
         $inviter = array();
         $objInvier = User_Api::getUserObject($inviterid);
         $huifuid = $objInvier->huifuid;
+        //var_dump($huifuid);
         if(empty($huifuid)) {
         	$inviter['tenderAmount'] = 0.00;
         	$inviter['registProgress'] = 2;
         } else {
         	$inviter['registProgress'] = 1;
         }       
-        $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid);        
+        $startTime = $objInvier->createTime;
+        $endTime = $startTime+3600*24*30*self::AW_MONTHS;
+        $inviter['tenderAmount'] = Invest_Api::getUserAmount($inviterid,$startTime,$endTime);        
         if(empty($inviter['tenderAmount'])) {
         	$inviter['tenderAmount'] = 0.00;
         }                   
@@ -124,6 +129,7 @@ class Awards_Logic_Awards {
         if($inviterStatus === 1) {
         	if($inviter['tenderAmount'] >= 10000.00) {
         		$this->updateRegistStatus($inviterid,self::STATUS_READY);  
+        		$inviter['canBeAwarded'] = 1;
         	} 
         	$inviter['awardAmt'] = "点击领取30元";
         	  	
@@ -150,7 +156,7 @@ class Awards_Logic_Awards {
         $percent = ($inviter['tenderAmount'] / 10000.00) * 100;      
         $percent = ($percent <= 100) ? $percent : 100;
         $inviter['tenderAmount'] = $percent;
-        //var_dump($inviter);die;
+        
         
         $ret[0] = $inviter; //返回值得第一项为该用户的信息
                 
@@ -166,32 +172,38 @@ class Awards_Logic_Awards {
         }
         $count = 1;
         foreach ($users as $key=>$value) {
-        	$data = array();
+         	$data = array();
         	$id = $value['id'];
         	$userId = $value['userid'];
         	$objUser = User_Api::getUserObject($userId);
         	$huifuid = $objUser->huifuid;
+        	//var_dump(empty($huifuid));die;
         	if(empty($huifuid)){
         		$tenderAmount = 0.00;
         		$data['registProgress'] = 2;        	
         	} else {
-        		$inviter['registProgress'] = 1;
+        		$data['registProgress'] = 1;
         	}        	
-        	$tenderAmount = Invest_Api::getUserAmount($userId); //拿到了被邀请人的投资总额
+        	$startTime = $objUser->createTime;
+            $endTime = $startTime+3600*24*30*self::AW_MONTHS;
+        	$tenderAmount = Invest_Api::getUserAmount($userId,$startTime,$endTime); //拿到了被邀请人的投资总额
         	if(empty($tenderAmount)) {
         		$tenderAmount = 0.00;       		
         	}         	
         	$data['tenderAmount'] = $tenderAmount;
         	$status = intval($value['status']);
+        	//var_dump($id);die;
         	//未达到
         	if($status === 1) {
         		if($tenderAmount >= 10000.00) {
         			$this->updateAwardsStatus($id,self::STATUS_READY);
+        			$data['canBeAwarded'] = 1;
         		}
         		$data['awardAmt'] = "点击领取20元";
         	}
         	if($status === 2) {
-        		if(!isset($objInvier->huifuid)) {
+        		$inviterHuifu = $objInvier->huifuid;
+        		if(empty($inviterHuifu)) {
         			$data['canBeAwarded'] = 0;
         			$data['awardAmt'] = "开通汇付并点击领取20元";
         		}
@@ -243,7 +255,8 @@ class Awards_Logic_Awards {
     			'status' => $status,
     		));
     		return false;   		
-    	}  	
+    	}
+    	return true;  	
     }
     
     /**

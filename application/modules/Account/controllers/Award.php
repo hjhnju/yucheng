@@ -43,16 +43,14 @@ class AwardController extends Base_Controller_Page {
 	public function receiveawardsAction() {
   		$awardsLogic = new Awards_Logic_Awards();
 		$userid = $_REQUEST['id'];
-		$userid = intval($userid);
-
+		$userid = intval($userid);		
 		$logic = new Finance_Logic_Transaction();
 		$outUserId = Finance_Logic_Base::MERCUSTID;
 		$outAcctId = 'MDT000001';
 		//领的是本人的注册奖励
 		if($userid === $this->userid) {
-			$transAmt = 30.00;
-		    $inUserId = $userid;
-		    $ret = $logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
+			$transAmt = 30.00;		    
+		    $ret = Finance_Api::transfer($outUserId,$outAcctId,$transAmt,$this->userid,Finance_TypeStatus::RECE_AWD);
 			if(!$ret) {
 				Base_Log::error(array(
 			        'msg'      => '领取注册奖励失败',
@@ -77,17 +75,16 @@ class AwardController extends Base_Controller_Page {
 			};  
             $this->output();
 			return ;
-		}		
- 
+		}		 
         $transAmt = 20.00;
-		$inUserId = $userid;
+		$userid = intval($userid);
 		$invite = new Awards_List_Invite();
-		$filters = array('userid' => $inUserId); //caution:被邀请人的userid
+		$filters = array('userid' => $userid); //caution:被邀请人的userid
 		$invite->setFilter($filters);
 		$list = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
 		$userData = $list['list'][0];
 		$id = $userData['id'];		
-		$ret = $logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
+		$ret = Finance_Api::transfer($outUserId,$outAcctId,$transAmt,$this->userid,Finance_TypeStatus::RECE_AWD);
 		if(!$ret) {
 			Base_Log::error(array(
 			    'msg'      => '领取邀请奖励失败',
@@ -99,12 +96,14 @@ class AwardController extends Base_Controller_Page {
 			$this->outputError($errCode,$errMsg);
 			return ;
 		}
-		if(!($logic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH))) {
+		if(!($awardsLogic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH))) {
 			Base_Log::error(array(
 			    'msg'      => '领取邀请奖励失败(更新Awards_Invite表失败)',
 			    'userid'   => $userid,
 			    'transAmt' => $transAmt,
 			));
+			$errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
+			$errMsg = Finance_RetCode::getMsg($errCode);
 			$this->outputError($errCode,$errMsg);
 			return ;
 		}

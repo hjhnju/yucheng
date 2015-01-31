@@ -404,7 +404,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param string retUrl
      * redirect || false
      */
-    public function tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl) {
+    public function tenderCancel($transAmt,$userid,$orderId,$retUrl='') {
         if(!isset($transAmt) || !isset($userid) || !isset($orderId) || !isset($orderDate) || 
            !isset($freezeTrxId) || !isset($retUrl)) {
             Base_Log::error(array(
@@ -438,7 +438,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         );
         //投标撤销订单入库
         $this->payOrderEnterDB($paramOrder);
-        
+        $tenderInfo = $this->getTenderInfo($orderId);
+        $orderDate = $tenderInfo['orderDate'];
+        $freezeTrxId = $tenderInfo['freezeTrxId'];
+                
         $webroot = Base_Config::getConfig('web')->root;
         $chinapnr = Finance_Chinapnr_Logic::getInstance();
         $merCustId = strval(self::MERCUSTID);
@@ -621,12 +624,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * 
      * 
      */
-    public function transfer($outUserId,$outAcctId,$transAmt,$inUserId) {
+    public function transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type=Finance_TypeStatus::TRANSFER) {
         if(!isset($outUserId) || !isset($outAcctId) || !isset($transAmt) || !isset($inUserId)) {
             Base_Log::error(array(
                 'msg' => '请求参数错误',
             ));
-            return;
+            return false;
         }
         $webroot   = Base_Config::getConfig('web')->root;
         $chinapnr  = Finance_Chinapnr_Logic::getInstance();
@@ -644,8 +647,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $param = array(
             'orderId'   => intval($orderId),
             'orderDate' => intval($orderDate),
-            'userId'    => intval($outUserId),//还款人的uid
-            'type'      => Finance_TypeStatus::TRANSFER,
+            'userId'    => intval($inUserId),
+            'type'      => $type,
             'amount'    => floatval($transAmt),
             'avlBal'    => floatval($avlBal),
             'status'    => Finance_TypeStatus::PROCESSING,
@@ -660,7 +663,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $inAcctId = 'MDT000001';
         $retUrl = '';
         $bgRetUrl = $webroot.'/finance/bgcall/transfer';
-        $merPriv = strval($orderDate).'_'.strval($inUserId);      
+        $type = strval($type);
+        $merPriv = strval($orderDate).'_'.strval($inUserId).'_'.$type;      
         $ret = $chinapnr->transfer($ordId, $outCustId, $outAcctId, $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
         return $ret;
     }
