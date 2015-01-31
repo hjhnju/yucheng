@@ -29,7 +29,7 @@ class Base_Redis {
     /**
      * singleton
      * @param  int $maxRetry 失败重连次数，每次重连会尝试所有host配置
-     * @return Base_Cache_Redis
+     * @return Redis
      */
     public static function getInstance() {
         if (!self::$_objInstance) {

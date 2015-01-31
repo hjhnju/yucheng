@@ -222,13 +222,34 @@ class Loan_Api {
     
     /**
      * 更新借款的投标金额，如果投标总金额小于借款金额则成功，否则失败
-     * @param integer $loan_id
+     * @param integer $loanId
      * @param number $amount
      * @return boolean
      */
-    public static function updateLoanInvestAmount($loan_id, $amount) {
+    public static function updateLoanInvestAmount($loanId, $amount) {
         $model = new LoanModel();
-        return $model->updateInvestAmount($loan_id, $amount);
+        return $model->updateInvestAmount($loanId, $amount);
+    }
+    
+    /**
+     * 如果有必要的话 更新满标状态
+     * @param integer $loanId
+     * @return boolean
+     */
+    public static function updateFullStatus($loanId) {
+        $loan = new Loan_Object_Loan($loanId);
+        if ($loan->investAmount > $loan->amount) {
+            Base_Log::error($loan, '投标金额错误');
+        }
+        if ($loan->investAmount >= $loan->amount) {
+            $loan->status = Loan_Type_LoanStatus::FULL_CHECK;
+            if (!$loan->save()) {
+                Base_Log::error($loan, '更改满标状态错误');
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
     
     /**
