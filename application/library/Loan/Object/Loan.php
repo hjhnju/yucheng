@@ -26,7 +26,7 @@ class Loan_Object_Loan extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'user_id', 'order_id', 'title', 'pic', 'area', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'start_time', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time', 'fail_info');
+    protected $fields = array('id', 'user_id', 'order_id', 'title', 'pic', 'area', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'start_time', 'deadline', 'risk_fee', 'serv_fee', 'mang_fee', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time', 'fail_info');
 
     /**
      * 字段与属性隐射关系
@@ -54,6 +54,9 @@ class Loan_Object_Loan extends Base_Object {
         'audit_info'      => 'auditInfo',
         'start_time'      => 'startTime',
         'deadline'        => 'deadline',
+        'risk_fee'        => 'riskFee',
+        'serv_fee'        => 'servFee',
+        'mang_fee'        => 'mangFee',
         'status'          => 'status',
         'create_time'     => 'createTime',
         'update_time'     => 'updateTime',
@@ -222,6 +225,24 @@ class Loan_Object_Loan extends Base_Object {
      * @var integer
      */
     public $deadline;
+
+    /**
+     * 风险准备金
+     * @var number
+     */
+    public $riskFee;
+
+    /**
+     * 融资服务费
+     * @var number
+     */
+    public $servFee;
+
+    /**
+     * 账户管理费
+     * @var number
+     */
+    public $mangFee;
 
     /**
      * 状态
