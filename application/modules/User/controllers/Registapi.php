@@ -142,9 +142,7 @@ class RegistApiController extends Base_Controller_Api{
 
         //登记邀请人
         Base_Log::debug(array('userid'=>$userid, 'inviterid'=>$inviterid));
-        //if($inviterid){
-            Awards_Api::registNotify($userid, $inviterid);
-        //}
+        Awards_Api::registNotify($userid, $inviterid);
 
         //进行绑定第三方账户
         if($isThird > 0){
