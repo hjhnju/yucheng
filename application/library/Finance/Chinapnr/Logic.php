@@ -1513,7 +1513,7 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
-		
+
 		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","OutCustId","SubOrdId","SubOrdDate","OutAcctId","TransAmt","Fee","InCustId","InAcctId","FeeObjFlag","BgRetUrl","MerPriv","RespExt"));
 		return $response;
 	}
