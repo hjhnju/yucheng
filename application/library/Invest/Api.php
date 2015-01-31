@@ -38,6 +38,22 @@ class Invest_Api {
     }
     
     /**
+     * 获取用户一段时间的投资总额
+     * @param number $uid
+     * @param number $startTime
+     * @param number $endTime
+     * @return number
+     */
+    public static function getUserInvestTotal($uid, $startTime = 0, $endTime = 0) {
+        $startTime = empty($startTime) ? strtotime('-3months') : $startTime;
+        $endTime = empty($endTime) ? time() : $endTime;
+
+        $logic = new Invest_Logic_Invest();
+        $total = $logic->getUserInvestTotal($uid, $startTime, $endTime);
+        return floatval($total);
+    }
+    
+    /**
      * 获取我的投资收益
      * @param integer $uid
      * @return array <pre>(
@@ -197,6 +213,24 @@ class Invest_Api {
             $list['list'][$key]['level_name'] = $level->getTypeName($val['level']);
         }
         return $list;
+    }
+    
+    /**
+     * 更新投标的状态
+     * @param integer $investId
+     * @param integer $status
+     * @return boolean
+     */
+    public static function updateInvestStatus($investId, $status) {
+        $invest = new Invest_Object_Invest($investId);
+        $invest->status = $status;
+        $res = $invest->save();
+        if ($res) {
+            $type = new Loan_Type_LoanStatus();
+            $content = "更新投标[{$investId}]状态为" . $type->getTypeName($status);
+            Loan_Api::addLog($invest->loanId, $content);
+        }
+        return $res;
     }
     
     /**

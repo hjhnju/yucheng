@@ -13,7 +13,7 @@ define(function (require) {
     function init() {
         $('.insurance-type-box').removeClass('current');
         $('.insurance-type-box.allposition').addClass('current');
-        $('.nav-item-link:eq(2)').addClass('current');
+        //$('.nav-item-link:eq(2)').addClass('current');
         header.init();
     }
 

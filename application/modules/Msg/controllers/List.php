@@ -18,8 +18,8 @@ class ListController extends Base_Controller_Response {
      * 
      */
 	public function indexAction() {
-	    $intType = trim($_REQUEST['status']);
-	    $intPage = trim($_REQUEST['page']) ;
+	    $intType = intval(trim($_REQUEST['status']));
+	    $intPage = intval(trim($_REQUEST['page']));
         $this->msgLogic = new Msg_Logic_Msg();
         $uid = $this->getUserId();
         $arrReturn = array();
@@ -41,7 +41,7 @@ class ListController extends Base_Controller_Response {
             $arrReturn[$index]['link'] = $arrLink['link'];
             $arrReturn[$index]['linkname'] = $arrLink['linkname'];
             $arrReturn[$index]['mid'] = $val['mid'];
-            $arrReturn[$index]['time'] = $val['createTime'];
+            $arrReturn[$index]['time'] = $val['create_time'];
         }
         $data['page']    = $intPage;
         $data['pageall'] = $arrData['pageall'];

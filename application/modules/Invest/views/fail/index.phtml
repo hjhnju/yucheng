@@ -1,1 +1,32 @@
-失败
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="/src/setting/email/index.less" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['setting/email/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="login">
+    <div class="container">
+        <div class="changephone" id="checkemial">
+            <div class="changephone-top">
+
+                <div class="changephone-box">
+                    <div class="success-pic error-pic"></div>
+                    <div class="success-text email-box success-font color-red">投标失败</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{%/block%}

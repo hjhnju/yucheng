@@ -155,10 +155,9 @@
     color: #333333;
     margin-bottom: 15px;
 
-    .jindu-top-text {
-        display: inline-block;
-        margin-right: 5px;
-    }
+    .clearfix;
+
+
     .jindu-top-tiao {
         display: inline-block;
         width: 70px;
@@ -186,10 +185,20 @@
     }
 }
 .jindu-btm {
-    padding-left: 20px;
     font-size: 14px;
     color: #333333;
+
+    .clearfix;
 }
+
+.jindu-top-text {
+    display: inline-block;
+    margin-right: 5px;
+    float: left;
+    text-align: right;
+    width: 80px;
+}
+
 .project-time {
     height: 70px;
     padding: 0 30px;
@@ -412,7 +421,7 @@
         background-position: -502px 0;
     }
 
-    &.zengxin {
+    &.zhengxin {
         background-position: 20px -120px;
     }
 
@@ -509,6 +518,8 @@
     border: 1px solid #efefef;
     padding-left: 5px;
     line-height: 32px;
+    position: relative;
+    margin-bottom: 10px;
 
     &.disabled {
         background-color: #f8f8f8;
@@ -555,7 +566,7 @@
     line-height: 34px;
     position: absolute;
     right: 5px;
-    top: -34px;
+    top: 0;
 
     .chongzhi-span {
         color: @color-red;

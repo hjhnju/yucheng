@@ -12,7 +12,7 @@ define(function (require) {
 
     function init() {
         header.init();
-        $('.nav-item-link:eq(4)').addClass('current');
+        //$('.nav-item-link:eq(4)').addClass('current');
     }
 
     return {
