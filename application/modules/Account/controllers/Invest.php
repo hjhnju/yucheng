@@ -147,6 +147,7 @@ class InvestController extends Base_Controller_Page {
 	    		'all'     => $tenderingRet['total'],
 	    		'list'    => $listRet,
 	    );
+	    //var_dump($ret);die();
 	    $this->output($ret);
 	    return ;
 	}

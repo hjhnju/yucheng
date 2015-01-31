@@ -387,7 +387,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             Base_Log::error(array(
                 'respCode' => $respCode,
                 'respDesc' => $respDesc,
-            );
+            ));
             return $objRst;
         }
 
