@@ -32,7 +32,7 @@ define(function (require) {
 
         htmlContainer = $('#invest-main');
 
-        $('.nav-item-link:eq(0)').addClass('current');
+        //$('.nav-item-link:eq(0)').addClass('current');
 
 
         header.init();
