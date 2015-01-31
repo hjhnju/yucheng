@@ -14,7 +14,7 @@
         <span class="my-invest-title msg-time">发送时间</span>
     </li>
     <!-- for: ${list} as ${item} -->
-    <!-- if: ${list.status} == 1 -->
+    <!-- if: ${item.status} == 1 -->
     <li class="my-invest-item">
     <!-- else -->
     <li class="my-invest-item unread">

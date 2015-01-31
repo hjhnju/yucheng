@@ -152,7 +152,9 @@ define(function (require) {
 
                 if (value > min) {
                     error.addClass('show').html('投资金额不得超过可用余额和可投金额');
-                    value > model.amountRest && $(this).val(model.amountRest);
+                    value > model.amountRest
+                        && $(this).val(model.amountRest)
+                        && error.removeClass('show');
                 }
                 else {
                     error.removeClass('show');
@@ -173,7 +175,9 @@ define(function (require) {
 
                 if (value > min) {
                     error.addClass('show').html('投资金额不得超过可用余额和可投金额');
-                    value > model.amountRest && $(this).val(model.amountRest);
+                    value > model.amountRest
+                        && $(this).val(model.amountRest)
+                        && error.removeClass('show');
                 }
                 else {
                     error.removeClass('show');
