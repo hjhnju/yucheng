@@ -33,7 +33,7 @@ define('common/config', [], function () {
             MY_INVEST_TENDERFAIL: rootUrl + '/account/invest/tenderfail',
             MY_MSG_LIST: rootUrl + '/msg/list',
             MY_MSG_SETREAD_ADD: rootUrl + '/msg/read',
-            COMPANY_INFOS_LIST: rootUrl + '/infos/post/list',
+            COMPANY_INFOS_LIST: rootUrl + '/infos/infoapi',
             USER_REGISTAPI_MODIFYPWD: rootUrl + '/user/registapi/modifypwd',
             LOAN_REQUEST: rootUrl + '/loan/request'
         };
