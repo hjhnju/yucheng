@@ -171,6 +171,12 @@ define(function (require) {
                 return;
             }
 
+            // 超过可投金额
+            if (value > model.amountRest) {
+                investError.addClass('show').html('可投金额不足');
+                return;
+            }
+
             $('#invest-form').get(0).submit();
         });
 
