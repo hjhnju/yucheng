@@ -1,7 +1,14 @@
 exports.input = __dirname;
 
 var path = require( 'path' );
-exports.output = path.resolve( __dirname, 'output' );
+
+var date = new Date();
+var time = ''
+    + date.getFullYear()
+    + ('' + (date.getMonth() + 101)).substr(1)
+    + ('' + (date.getDate() + 100)).substr(1);
+
+exports.output = path.resolve( __dirname, 'output/v1', time + 'x1' );
 
 // var moduleEntries = 'html,htm,phtml,tpl,vm,js';
 // var pageEntries = 'html,htm,phtml,tpl,vm';
