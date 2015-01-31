@@ -8,7 +8,7 @@ var time = ''
     + ('' + (date.getMonth() + 101)).substr(1)
     + ('' + (date.getDate() + 100)).substr(1);
 
-exports.output = path.resolve( __dirname, 'output/v1', time + 'x4' );
+exports.output = path.resolve( __dirname, 'output/v1', time + 'x5' );
 
 // var moduleEntries = 'html,htm,phtml,tpl,vm,js';
 // var pageEntries = 'html,htm,phtml,tpl,vm';
