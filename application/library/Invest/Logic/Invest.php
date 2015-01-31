@@ -465,16 +465,16 @@ class Invest_Logic_Invest {
 	 * @return array
 	 */
 	private function getInvestFilters($data) {
-	    $keys = array('type' => 'type_id', 'cat' => 'cat_id');
+	    $keys = array('type_id', 'cat_id');
 	    $filters = array();
-	    foreach ($keys as $key => $val) {
+	    foreach ($keys as $key) {
 	        if (!empty($data[$key])) {
-	            $filters[$val] = $data[$key];
+	            $filters[$key] = $data[$key];
 	        }
 	    }
 	    $period = $this->getInvestPeriod($data);
 	    if (!empty($period)) {
-	        $filters['period'][] = $period;
+	        $filters['duration'][] = $period;
 	    }
 	    return $filters;
 	}
@@ -486,10 +486,10 @@ class Invest_Logic_Invest {
 	 */
 	private function getInvestPeriod($data) {
 	    $from = $to = 0;
-	    if (empty($data['period'])) {
+	    if (empty($data['duration'])) {
 	        return false;
 	    }
-	    switch ($data['period']) {
+	    switch ($data['duration']) {
 	        case 1:
 	            $from = 1;
 	            $to = 90;
