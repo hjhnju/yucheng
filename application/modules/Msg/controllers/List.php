@@ -18,8 +18,8 @@ class ListController extends Base_Controller_Response {
      * 
      */
 	public function indexAction() {
-	    $intType = trim($_REQUEST['status']);
-	    $intPage = trim($_REQUEST['page']) ;
+	    $intType = intval(trim($_REQUEST['status']));
+	    $intPage = intval(trim($_REQUEST['page']));
         $this->msgLogic = new Msg_Logic_Msg();
         $uid = $this->getUserId();
         $arrReturn = array();
