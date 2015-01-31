@@ -56,9 +56,16 @@ define(function (require) {
             else {
 
                 if (!data.list.length) {
-                    container.html(etpl.render('Error', {
-                        msg: '当前没有公告'
-                    }));
+                    if (type === 'post') {
+                        container.html(etpl.render('Error', {
+                            msg: '当前没有公告'
+                        }));
+                    }
+                    else {
+                        container.html(etpl.render('Error', {
+                            msg: '当前没有媒体信息'
+                        }));
+                    }
                     $('#pager').html('');
                     return;
                 }
