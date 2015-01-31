@@ -24,7 +24,7 @@ class User_Logic_Validate {
      * @param   $strType
      * @param   $value 
      */
-    protected static function check($strType, $value){
+    public static function check($strType, $value){
         $strType  = strtolower($strType);
         if(!isset(self::$_arrRegMap[$strType])){
             return false;
@@ -42,5 +42,15 @@ class User_Logic_Validate {
         return self::check('phone', $strPhone);
     }
     
-
+    public static function getType($strValue){
+        $arrWays = array('name','email','phone');
+        foreach (self::$_arrRegMap as $key => $pattern){
+            if(preg_match($pattern,$strValue)){               
+                if(in_array($key,$arrWays)){
+                    return $key;
+                }
+            }
+        }
+        return null;
+    }
 }
