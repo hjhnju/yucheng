@@ -88,9 +88,9 @@ class Finance_Fee {
         $startTime = intval($loanInfo['full_time']);
         $days      = Loan_Type_Duration::getDays(intval($loanInfo['duration']), $startTime);
 
-        $servFeeRate = $loanInfo['serv_fee'];
-        $riskFeeRate = $loanInfo['risk_fee'];
-        $mangFeeRate = $loanInfo['mang_fee'];
+        $servFeeRate = $loanInfo['serv_rate'];
+        $riskFeeRate = $loanInfo['risk_rate'];
+        $mangFeeRate = $loanInfo['mang_rate'];
 
         $servFee  = self::servFee($servFeeRate, $transAmt);
         $riskFee  = self::riskFee($riskFeeRate, $transAmt, $days);
