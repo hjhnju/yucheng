@@ -84,7 +84,7 @@ define(function (require) {
 
                 for(var i = 0, l = data.list.length; i<l; i++) {
                     var tmp = data.list[i];
-                    tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD hh:mm:ss');
+                    tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD hh:mm');
                 }
 
                 htmlContainer.html(etpl.render('list', {

@@ -12,6 +12,9 @@
         <div class="school">
             <a href="/invest/detail?id=${item.id}" class="school-link">${item.title}</a>
         </div>
+        <!--if: ${item.fresh} == 1-->
+        <span class="school-new">新手专享</span>
+        <!--/if-->
     </div>
     <div class="investlist-box-title-name grade">
 
@@ -39,14 +42,10 @@
         </div>
     </div>
     <div class="investlist-box-title-name status">
-        <!-- if: ${item.status} == 1-->
-        <a class="status-biding" href="###">投标中</a>
-        <!-- elif: ${item.status} == 2-->
-        <span class="status-biding current">回款中</span>
-        <!-- elif: ${item.status} == 3-->
-        <span class="status-biding current">投资失败</span>
+        <!-- if: ${item.status} == 2-->
+        <a class="status-biding" href="/invest/detail?id=${item.id}">${item.status_name}</a>
         <!-- else-->
-        <span class="status-biding current">投资结束</span>
+        <span class="status-biding current">${item.status_name}</span>
         <!--/if-->
     </div>
 </div>

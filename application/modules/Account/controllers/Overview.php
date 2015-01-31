@@ -51,12 +51,18 @@ class OverviewController extends Base_Controller_Page {
      *     
      */
     public function indexAction(){
-        $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);
-        $userBg = $this->userInfoLogic->getUserBg($this->huifuid);
-        $avlBal = strval($userBg['avlBal']);
-        $acctBal = strval($userBg['acctBal']);
-        $frzBal = strval($userBg['frzBal']);
-       
+        $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);        
+        if(empty($this->huifuid)) {
+        	$avlBal = Base_Util_Number::tausendStyle(0.00);
+        	$acctBal = Base_Util_Number::tausendStyle(0.00);
+        	$frzBal = Base_Util_Number::tausendStyle(0.00);
+        } else {
+        	$userBg = $this->userInfoLogic->getUserBg($this->huifuid);
+        	$avlBal = Base_Util_Number::tausendStyle($userBg['avlBal']);
+        	$acctBal = Base_Util_Number::tausendStyle($userBg['acctBal']);
+        	$frzBal = Base_Util_Number::tausendStyle($userBg['frzBal']);
+        }      
+
         $huifuid = $this->objUser->huifuid;
         $openthirdpay = isset($huifuid) ? 1 : 2;
         $rechargeurl = $this->webroot.'/account/cash/recharge';

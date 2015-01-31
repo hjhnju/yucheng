@@ -184,11 +184,13 @@ class UsermanageController extends Base_Controller_Page {
      */
     public function test3Action() {
     	$logic = new Finance_Logic_Transaction();
-    	$transAmt = '200.00';
-    	$userid = '37';
-    	$orderId = '2015012114075243368';
-    	$orderDate = '20150121';
-    	$freezeTrxId = '201501210000703109';
+
+        $transAmt = '10000.00';
+        $userid = '15';
+        $orderId = '2015012917424112320';
+        $orderDate = '20150129';
+        $freezeTrxId = '201501290000815893';
+        $retUrl = '';
     	$logic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);
     }
     
@@ -242,6 +244,11 @@ class UsermanageController extends Base_Controller_Page {
     	echo "<br/>";
     	var_dump($arr1); 
     	return;   	 
+    }
+    
+    public function test8Action() {
+    	$time = date('Y-m-d H:i:s',time());
+    	echo $time;
     }
     
 }

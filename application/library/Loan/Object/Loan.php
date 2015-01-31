@@ -26,7 +26,7 @@ class Loan_Object_Loan extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'user_id', 'title', 'pic', 'area', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'start_time', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time');
+    protected $fields = array('id', 'user_id', 'order_id', 'title', 'pic', 'area', 'content', 'type_id', 'cat_id', 'fresh', 'duration', 'level', 'amount', 'interest', 'invest_cnt', 'invest_amount', 'safe_id', 'refund_type', 'audit_info', 'start_time', 'deadline', 'status', 'create_time', 'update_time', 'create_uid', 'full_time', 'pay_time', 'fail_info');
 
     /**
      * 字段与属性隐射关系
@@ -35,6 +35,7 @@ class Loan_Object_Loan extends Base_Object {
     public $properties = array(
         'id'              => 'id',
         'user_id'         => 'userId',
+        'order_id'        => 'orderId',
         'title'           => 'title',
         'pic'             => 'pic',
         'area'            => 'area',
@@ -59,6 +60,7 @@ class Loan_Object_Loan extends Base_Object {
         'create_uid'      => 'createUid',
         'full_time'       => 'fullTime',
         'pay_time'        => 'payTime',
+        'fail_info'       => 'failInfo',
     );
 
     /**
@@ -68,6 +70,7 @@ class Loan_Object_Loan extends Base_Object {
     protected $intProps = array(
         'id'              => 1,
         'user_id'         => 1,
+        'order_id'        => 1,
         'area'            => 1,
         'type_id'         => 1,
         'cat_id'          => 1,
@@ -105,6 +108,12 @@ class Loan_Object_Loan extends Base_Object {
      * @var integer
      */
     public $userId;
+
+    /**
+     * 订单号
+     * @var integer
+     */
+    public $orderId;
 
     /**
      * 标题
@@ -249,5 +258,11 @@ class Loan_Object_Loan extends Base_Object {
      * @var integer
      */
     public $payTime;
+
+    /**
+     * 失败原因
+     * @var string
+     */
+    public $failInfo;
 
 }

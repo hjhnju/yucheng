@@ -5,8 +5,10 @@
 class AwardController extends Base_Controller_Page {
 	
 	CONST PAGESIZE = 20;	
+	private $huifuid;
 	public function init() {
 		parent::init();
+		$this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
 		$this->userInfoLogic = new Account_Logic_UserInfo();
 		$this->ajax = true;
 	}
@@ -39,20 +41,21 @@ class AwardController extends Base_Controller_Page {
 	 * status 1104:领取奖励失败
 	 */
 	public function receiveawardsAction() {
+  		$awardsLogic = new Awards_Logic_Awards();
 		$userid = $_REQUEST['id'];
 		$userid = intval($userid);
-		$objUser = $this->objUser;
-		$huifuid = $objUser->huifuid;
+
 		$logic = new Finance_Logic_Transaction();
 		$outUserId = Finance_Logic_Base::MERCUSTID;
 		$outAcctId = 'MDT000001';
+		//领的是本人的注册奖励
 		if($userid === $this->userid) {
 			$transAmt = 30.00;
 		    $inUserId = $userid;
 		    $ret = $logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
 			if(!$ret) {
 				Base_Log::error(array(
-			        'msg'      => '领取奖励失败',
+			        'msg'      => '领取注册奖励失败',
 			        'userid'   => $userid,
 			        'transAmt' => $transAmt,
 				));
@@ -61,15 +64,33 @@ class AwardController extends Base_Controller_Page {
 				$this->outputError($errCode,$errMsg);
 				return ;
 			}
-			$this->output();
+			if(!($awardsLogic->updateRegistStatus($userid,Awards_Logic_Awards::STATUS_FINISH))) {
+				Base_Log::error(array(
+				    'msg'      => '领取注册奖励失败(更新Awards_Regist表失败)',
+				    'userid'   => $userid,
+				    'transAmt' => $transAmt,
+				));
+				$errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
+				$errMsg = Finance_RetCode::getMsg($errCode);
+				$this->outputError($errCode,$errMsg);
+				return ;
+			};  
+            $this->output();
 			return ;
-		}				
+		}		
+ 
         $transAmt = 20.00;
 		$inUserId = $userid;
+		$invite = new Awards_List_Invite();
+		$filters = array('userid' => $inUserId); //caution:被邀请人的userid
+		$invite->setFilter($filters);
+		$list = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
+		$userData = $list['list'][0];
+		$id = $userData['id'];		
 		$ret = $logic->transfer($outUserId,$outAcctId,$transAmt,$inUserId);
 		if(!$ret) {
 			Base_Log::error(array(
-			    'msg'      => '领取奖励失败',
+			    'msg'      => '领取邀请奖励失败',
 			    'userid'   => $userid,
 			    'transAmt' => $transAmt,
 			));
@@ -78,7 +99,16 @@ class AwardController extends Base_Controller_Page {
 			$this->outputError($errCode,$errMsg);
 			return ;
 		}
+		if(!($logic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH))) {
+			Base_Log::error(array(
+			    'msg'      => '领取邀请奖励失败(更新Awards_Invite表失败)',
+			    'userid'   => $userid,
+			    'transAmt' => $transAmt,
+			));
+			$this->outputError($errCode,$errMsg);
+			return ;
+		}
 		$this->output();
 		return ;
-	}
+	}  
 }

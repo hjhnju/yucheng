@@ -106,7 +106,7 @@
                                 <div class="select-box">
                                     <select class="select-mar-right" id="select-type">
                                         {%foreach $data.refund_type as $key => $item%}
-                                        <option value="{%$key%}">{%$item%}</option>
+                                        <option value="{%$key%}" {%if $key == 3%}selected{%/if%}>{%$item%}</option>
                                         {%/foreach%}
                                     </select>
                                 </div>

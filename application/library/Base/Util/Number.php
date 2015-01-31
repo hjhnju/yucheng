@@ -1,6 +1,15 @@
 <?php
 class Base_Util_Number {
 
+   /**
+    * 千分位显示金额，默认显示小数点后两位
+    * @param $amount
+    * @param $degit, default 2
+    */
+    public static function tausendStyle($amount, $degit=2) {
+        return number_format(strval($amount), $degit, '.', ',');
+    }
+
    /* 
     * MoXie (SysTem128@GMail.Com) 2010-6-30 17:53:57 
     *  
