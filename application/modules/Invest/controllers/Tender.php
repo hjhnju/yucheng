@@ -16,27 +16,60 @@ class TenderController extends Base_Controller_Page {
     );
 	
 	public function indexAction() {
-	    if (!$this->checkParam($this->param, $_POST)) {
-	        return $this->outputError(Base_RetCode::PARAM_ERROR);
-	    }
-	    
-		$loan_id = intval($_POST['id']);
+		$loanId = intval($_POST['id']);
 		$amount  = intval($_POST['amount']);
 		$uid     = $this->userid;
+	    $sess = Yaf_Session::getInstance();
+		
+	    if (empty($loanId) || empty($amount) || empty($uid)) {
+	        Base_Log::notice(array(
+                'msg'  => '投标参数错误',
+                'post' => $_POST,
+            ));
+	        if (!empty($loanId)) {
+    	        $sess->set('invest_error', Invest_RetCode::PARAM_ERROR);
+    	        return $this->redirect('/invest/detail?id=' . $loanId);
+	        }
+	        return $this->redirect('/invest/fail');
+	    }
+	    
         // 检查是否允许投标
 	    $logic = new Invest_Logic_Invest();
-	    $allowed = $logic->allowInvest($uid, $loan_id);
+	    $allowed = $logic->allowInvest($uid, $loanId);
 	    if (!$allowed) {
-	    	//TODO: 错误打至项目详情页面
-	        return $this->ajaxError(Invest_RetCode::NOT_ALLOWED, 
-		    	Invest_RetCode::getMsg(Invest_RetCode::NOT_ALLOWED));
+	        Base_Log::notice(array(
+                'msg'  => '不允许投新手标',
+                'post' => $_POST,
+            ));
+	        $sess->set('invest_error', Invest_RetCode::NOT_ALLOWED);
+	        return $this->redirect('/invest/detail?id=' . $loanId);
+	    }
+	    // 检查用户余额是否满足
+	    $userAmount = $logic->getAccountAvlBal($uid);
+	    if ($amount > $userAmount) {
+	        Base_Log::notice(array(
+                'msg'  => '用户余额不够',
+                'post' => $_POST,
+            ));
+	        $sess->set('invest_error', Invest_RetCode::AMOUNT_NOTENOUGH);
+	        return $this->redirect('/invest/detail?id=' . $loanId);
+	    }
+	    
+	    // 检查金额是否满足投标要求
+	    if (!$logic->isAmountLegal($loanId, $amount)) {
+	        Base_Log::notice(array(
+                'msg'  => '投标金额不符合投标条件',
+                'post' => $_POST,
+            ));
+	        $sess->set('invest_error', Invest_RetCode::AMOUNT_ERROR);
+	        return $this->redirect('/invest/detail?id=' . $loanId);
 	    }
 	    
         Base_Log::notice(array(
-            'msg'  => '',
+            'msg'  => '主动投标',
             'post' => $_POST,
         ));
 	    // 主动投标（会跳转至汇付）
-	    $logic->invest($uid, $loan_id, $amount);
+	    return $logic->invest($uid, $loanId, $amount);
 	}
 }
