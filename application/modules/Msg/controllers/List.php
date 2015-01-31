@@ -41,7 +41,7 @@ class ListController extends Base_Controller_Response {
             $arrReturn[$index]['link'] = $arrLink['link'];
             $arrReturn[$index]['linkname'] = $arrLink['linkname'];
             $arrReturn[$index]['mid'] = $val['mid'];
-            $arrReturn[$index]['time'] = $val['createTime'];
+            $arrReturn[$index]['time'] = $val['create_time'];
         }
         $data['page']    = $intPage;
         $data['pageall'] = $arrData['pageall'];
