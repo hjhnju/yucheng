@@ -277,20 +277,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId    = $orderInfo['orderId'];     
         $inHuifuId  = $this->getHuifuid(intval($inUserId));
         $outHuifuId = $this->getHuifuid(intval($outUserId));    
-<<<<<<< HEAD
-                    
+       
         $bgLogic = new Account_Logic_UserInfo();
         $userBg = $bgLogic->getUserBg($outHuifuId);
         $avlBal = $userBg['avlBal'];       
-=======
-            
-        $queryLogic = new Finance_Logic_Query();
-        $balance    = $queryLogic->queryBalanceBg($outHuifuId);
-        $avlBal     = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal     = str_replace(',', '', $avlBal);
-        
->>>>>>> 6821e7d917735f1853af56d4c830e87c364e9394
+
         //打款订单记录入表finance_order
         $paramOrder = array(
             'orderId'   => intval($orderId),
