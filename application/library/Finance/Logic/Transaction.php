@@ -310,7 +310,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $transAmt  = sprintf('%.2f',$transAmt);
 
         //收取费用
-        $arrFeeInfo    = Finance_Fee::totalFeeInfo($loanId, $transAmt);
+        $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
+        $fee       = $arrFeeInfo['totalFee'];
+        $riskFee   = $arrFeeInfo['riskFee'];
+        $servFee   = $arrFeeInfo['serviceFee'] + $arrFeeInfo['manageFee'];
         
         $tenderInfo    = $this->getTenderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
@@ -322,13 +325,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             array(
                 'DivCustId'=> '6000060000677575',
                 'DivAcctId'=> 'SDT000002',
-                'DivAmt'   => $arrFeeInfo['riskFee'],
+                'DivAmt'   => $riskFee,
             ),  
             //专属账户
             array(
                 'DivCustId'=> '6000060000677575',
                 'DivAcctId'=> 'MDT000001',
-                'DivAmt'   => $arrFeeInfo['serviceFee'] + $arrFeeInfo['manageFee'],
+                'DivAmt'   => $servFee,
             ),          
         );
         $jsonDivDetails  = json_encode($arrDivDetails);
@@ -352,7 +355,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'orderDate'      => $orderDate,
             'outCustId'      => $outCustId,
             'transAmt'       => $transAmt, 
-            'fee'            => $arrFeeInfo['totalFee'],
+            'fee'            => $fee,
             'subOrdDate'     => $subOrdId,
             'subOrdDate'     => $subOrdDate,
             'inCustId'       => $inCustId,
@@ -367,9 +370,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'reqExt'         => $reqExt,
         ));
 
-        // $mixRet  = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, 
-        //     $arrFeeInfo['totalFee'], $subOrdId, $subOrdDate,$inCustId, $jsonDivDetails, $feeObjFlag, $isDefault,
-        //     $isUnFreeze, $unFreezeOrdId, $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
+        $mixRet  = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, 
+            $transAmt, $fee, $subOrdId, $subOrdDate, $inCustId, 
+            $jsonDivDetails, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, 
+            $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
 
         if(empty($mixRet)){
             $objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
