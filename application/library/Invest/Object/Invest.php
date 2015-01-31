@@ -26,7 +26,7 @@ class Invest_Object_Invest extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'loan_id', 'user_id', 'order_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'amount_refund', 'amount_rest', 'income', 'fail_info', 'status', 'create_time', 'update_time');
+    protected $fields = array('id', 'loan_id', 'user_id', 'order_id', 'name', 'duration', 'interest', 'amount', 'capital_refund', 'capital_rest', 'amount_refund', 'amount_rest', 'income', 'fail_info', 'start_time', 'finish_time', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -47,6 +47,8 @@ class Invest_Object_Invest extends Base_Object {
         'amount_rest'     => 'amountRest',
         'income'          => 'income',
         'fail_info'       => 'failInfo',
+        'start_time'      => 'startTime',
+        'finish_time'     => 'finishTime',
         'status'          => 'status',
         'create_time'     => 'createTime',
         'update_time'     => 'updateTime',
@@ -62,6 +64,8 @@ class Invest_Object_Invest extends Base_Object {
         'user_id'         => 1,
         'order_id'        => 1,
         'duration'        => 1,
+        'start_time'      => 1,
+        'finish_time'     => 1,
         'status'          => 1,
         'create_time'     => 1,
         'update_time'     => 1,
@@ -158,6 +162,18 @@ class Invest_Object_Invest extends Base_Object {
      * @var string
      */
     public $failInfo;
+
+    /**
+     * 开始回款时间
+     * @var integer
+     */
+    public $startTime;
+
+    /**
+     * 完成时间
+     * @var integer
+     */
+    public $finishTime;
 
     /**
      * 状态
