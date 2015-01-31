@@ -86,9 +86,9 @@
                             <td><div class="jindu"><div class="within" style="width: {%$item.tenderAmount%}%;"></div></div></td>
                             <td>
                                 {%if $item.canBeAwarded%}
-                                <span class="table-tr-span" data-id="{%$item.id%}">点击领取{%$item.awardAmt%}元</span>
+                                <span class="table-tr-span" data-id="{%$item.id%}">{%$item.awardAmt%}</span>
                                 {%else%}
-                                <span class="table-tr-span current">点击领取{%$item.awardAmt%}元</span>
+                                <span class="table-tr-span current">{%$item.awardAmt%}</span>
                                 {%/if%}
                             </td>
                         </tr>

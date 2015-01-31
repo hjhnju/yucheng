@@ -3,9 +3,9 @@ $host      = 'xingjiaodai.mysql.rds.aliyuncs.com';
 $user      = 'xingjiaodai';
 $pass      = 'xingjiaodai';
 $dbname    = 'xjd';
-$tb_pre    = 'finance';
-$save_path = '/home/work/user/lilu/yucheng/application/library/Finance';
-$author    = 'lilu';
+$tb_pre    = 'loan';
+$save_path = '/Users/hejunhua/Dev/yucheng/application/library/Loan';
+$author    = 'jiangsongfang';
 
 if(!file_exists($save_path)){
     mkdir($save_path, 0775); 
@@ -185,6 +185,7 @@ function dumpList($table, $tb, $columns) {
     global $save_path, $tb_pre, $tb_class, $types, $author;
     $tbname = $table['TABLE_NAME'];
     $tbclass = ucfirst($tb_pre) . '_List_' . ucfirst($tb);
+	$objclass = ucfirst($tb_pre) . '_Object_' . ucfirst($tb);
     $content = '<?php';
     $content .= "\n";
     $content .= "/**\n";
@@ -247,6 +248,17 @@ function dumpList($table, $tb, $columns) {
     $content .= "     */\n";
     $content .= "    protected \$intProps = array(\n$intstr    );\n";
     $content .= "\n";
+	
+	$intstr = implode("", $intary);
+	$content .= "    /**\n";
+	$content .= "     * 获取数据的对象数组\n";
+	$content .= "     * @return array|{$objclass}[]\n";
+	$content .= "     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象\n";
+	$content .= "     */\n";
+	$content .= "    public function getObjects() {\n";
+	$content .= "        return parent::getObjects('$objclass');\n";
+	$content .= "    }\n";
+	$content .= "\n";
     
     $content .= "}";
     $filename = $save_path . '/List/' . ucfirst($tb) . ".php";

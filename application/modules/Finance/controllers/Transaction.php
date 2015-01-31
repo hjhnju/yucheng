@@ -33,7 +33,7 @@ class TransactionController extends Base_Controller_Page{
         $gateBusiId = strval($_REQUEST['gateBusiId']);
         ///notice
         //$dcFlag     = strval($_REQUEST['dcFlag']);
-        $transAmt   = sprintf('%.2f',300000);
+        $transAmt   = sprintf('%.2f',300000000);
         $gateBusiId = 'B2C';
         $openBankId = 'CIB';
         $dcFlag     = 'D';

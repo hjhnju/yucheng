@@ -13,7 +13,7 @@ class User_Api{
      * User/Object.php封装了User_Object_Login, User_Object_Info实例
      */
     public static function checkLogin(){
-        $logic   = new User_Logic_Login();
+        $logic  = new User_Logic_Login();
         $userid = $logic->checkLogin();
         if(false === $userid){
             return null;
@@ -78,11 +78,10 @@ class User_Api{
      * @param string $strEmail
      * @return boolean
      */
-    public static function setEmail($uid,$strEmail){
-        $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('userid'=>$uid));
+    public static function setEmail($userid,$strEmail){
+        $objLogin        = new User_Object_Login($userid);
         $objLogin->email = $strEmail;
-        $ret            = $objLogin->save();
+        $ret             = $objLogin->save();
         return $ret;
     }
     
@@ -92,11 +91,10 @@ class User_Api{
      * @param string $strPhone
      * @return boolean
      */
-    public static function setPhone($uid,$strPhone){
-        $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('userid'=>$uid));
+    public static function setPhone($userid,$strPhone){
+        $objLogin        = new User_Object_Login($userid);
         $objLogin->phone = $strPhone;
-        $ret            = $objLogin->save();
+        $ret             = $objLogin->save();
         return $ret;
     }
     
@@ -106,9 +104,8 @@ class User_Api{
      * @param string $strType,$strContent
      * @return boolean
      */
-    public static function setCertificate($uid,$strContent,$strType='00'){
-        $objInfo = new User_Object_Info();
-        $objInfo->fetch(array('userid'=>$uid));
+    public static function setCertificate($userid,$strContent,$strType='00'){
+        $objInfo = new User_Object_Info($userid);
         $objInfo->certificateType      = $strType;
         $objInfo->certificateContent   = $strContent;
         $ret                           = $objInfo->save();

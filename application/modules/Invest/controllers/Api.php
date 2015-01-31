@@ -11,9 +11,9 @@ class ApiController extends Base_Controller_Api {
 	    $pagesize = 10;
 	    
 	    $filter = array();
-	    $filter['type'] = $this->getInt('type');
-	    $filter['cat'] = $this->getInt('cat');
-	    $filter['period'] = $this->getInt('period');
+	    $filter['type_id'] = $this->getInt('type_id');
+	    $filter['cat_id'] = $this->getInt('cat_id');
+	    $filter['duration'] = $this->getInt('duration');
 	    $list = Invest_Api::getInvestList($page, $pagesize, $filter);
 	    
 	    $this->ajax($list);

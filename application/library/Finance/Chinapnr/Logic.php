@@ -32,7 +32,7 @@ class Finance_Chinapnr_Logic {
 	const CMDID_USR_UN_FREEZE= "UsrUnFreeze"; //资金（货款）解冻,后台数据流方式
 	const CMDID_INITIATIVE_TENDER= "InitiativeTender"; //主动投标,页面浏览器方式
 	const CMDID_AUTO_TENDER= "AutoTender"; //自动投标,后台数据流方式
-	const CMDID_TENDER_CANCEL= "TenderCancel"; //投标撤销,页面浏览器方式
+	const CMDID_TENDER_CANCEL= "TenderCancle"; //投标撤销,页面浏览器方式
 	const CMDID_AUTO_TENDER_PLAN= "AutoTenderPlan"; //自动投标计划,页面浏览器方式
 	const CMDID_AUTO_TENDER_PLAN_CLOSE= "AutoTenderPlanClose"; //自动投标关闭,页面浏览器方式
 	const CMDID_LOANS= "Loans"; //自动扣款（放款）,后台数据流方式
@@ -1112,7 +1112,6 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
-
 		$this->autoRedirect($reqData);
 	}
 	/**
@@ -1464,6 +1463,7 @@ HTML;
 				"ReqExt"	=>	$reqExt,
 				"ChkValue"	=>	$checkValue,
 		);
+		Base_Log::debug($reqData);
 		
 		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","OutCustId","OutAcctId","TransAmt","Fee","InCustId","InAcctId","SubOrdId","SubOrdDate","FeeObjFlag","IsDefault","IsUnFreeze","UnFreezeOrdId","FreezeTrxId","BgRetUrl","MerPriv","RespExt"));
 		return $response;
@@ -1514,7 +1514,6 @@ HTML;
 				"ChkValue"	=>	$checkValue,
 		);
 
-        
 		$response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","OutCustId","SubOrdId","SubOrdDate","OutAcctId","TransAmt","Fee","InCustId","InAcctId","FeeObjFlag","BgRetUrl","MerPriv","RespExt"));
 		return $response;
 	}

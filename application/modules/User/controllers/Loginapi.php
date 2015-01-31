@@ -64,9 +64,9 @@ class LoginapiController extends Base_Controller_Api{
             $logicThird = new User_Logic_Third();
             $logicThird->binding($logic->checkLogin(), $openid, $authtype);
             Base_Log::notice(array(
-            'msg'     => 'bind success',
-            'openid'  => $openid,
-            'name'    => $strName,
+                'msg'     => 'bind success',
+                'openid'  => $openid,
+                'name'    => $strName,
             ));
         }
         
@@ -89,10 +89,7 @@ class LoginapiController extends Base_Controller_Api{
     public function signOutAction(){
     	$logic   = new User_Logic_Login();
     	$ret = $logic->signOut();
-    	if($ret){
-    		$redirectUri = '/user/login/index';
-    		$this->redirect($redirectUri);
-    	}
-    	$this->ajaxError();
+    	$redirectUri = '/user/login';
+    	$this->redirect($redirectUri);
     }    
 }

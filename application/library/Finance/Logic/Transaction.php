@@ -23,11 +23,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderDate = $orderInfo['date'];
         $orderId   = $orderInfo['orderId'];
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);           
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
     	//充值订单入库
 		$paramOrder = array(
 		    'orderId'   => intval($orderId),
@@ -72,22 +70,29 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param proArea 项目所在地
      * @param guarCompId 担保公司唯一标识
      * @param guarAmt 担保金额
-     * @return array || boolean
+     * @return Base_Result
+     * data=array('orderId'=>)
      * 
      */
-    public function addBidInfo($proId,$borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
-        if(!isset($proId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
+    public function addBidInfo($loanId, $borrUserId,$borrTotAmt,$yearRate,$retType,$bidStartDate,$bidEndDate,$retAmt,$retDate,$proArea, $guarCompId='', $guarAmt='') {     
+        $objRst = new Base_Result();
+        if(!isset($loanId) || !isset($borrUserId) || !isset($borrTotAmt) || !isset($yearRate) ||
            !isset($retType) || !isset($bidStartDate) || !isset($bidEndDate) || !isset($proArea)) {
-            Base_Log::error(array(
-                'msg' => '请求参数出错',
-            ));     
-            return false;
-        }       
-        $webroot  = Base_Config::getConfig('web')->root;
-        $chinapnr = Finance_Chinapnr_Logic::getInstance();
-        
+            $objRst->status     = Base_RetCode::PARAM_ERROR;
+            $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);    
+            Base_Log::warn(array(
+                'msg'  => $objRst->statusInfo,
+                'args' => func_get_args(),
+            ));
+            return $objRst;
+        }
+        //为借款标的生成一个订单号，返回
+        $orderId      = Finance_Logic_Order::genOrderId();
+
+        $proId        = $loanId;
+        $webroot      = Base_Config::getConfig('web')->root;
+        $chinapnr     = Finance_Chinapnr_Logic::getInstance();
         $merCustId    = strval(self::MERCUSTID);
-        $proId        = strval($proId); //借款的Loan_id
         $borrCustId   = strval($this->getHuifuid(intval($borrUserId)));
         $borrTotAmt   = sprintf('%.2f',$borrTotAmt);
         $yearRate     = sprintf('%.2f',$yearRate);
@@ -102,12 +107,22 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $guarCompId   = strval($guarCompId);
         $guarAmt      = strval($guarAmt);
         $proArea      = strval($proArea);
-        $bgRetUrl     = $webroot.'/finance/bgcall/addBidInfo';
+        $bgRetUrl     = $webroot . '/finance/bgcall/addBidInfo';
         $merPriv      = '';
         $reqExt       = '';       
-        $ret = $chinapnr->addBidInfo($merCustId, $proId, $borrCustId, $borrTotAmt, $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
-                $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
-        return $ret;
+        $mixRet       = $chinapnr->addBidInfo($merCustId, $proId, $borrCustId, $borrTotAmt, 
+            $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
+            $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
+        
+        if(!is_null($mixRet)){
+            $objRst->status = Base_RetCode::SUCCESS;
+            $objRst->data   = array('orderId' => $orderId);
+        }else{
+            $objRst->status = Finance_RetCode::ADD_BIDINFO_FAIL;
+            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::ADD_BIDINFO_FAIL);
+        }
+
+        return $objRst;
     }
     
     /**
@@ -166,11 +181,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderDate = $orderInfo['date'];
         $orderId   = $orderInfo['orderId'];
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance    = $queryLogic->queryBalanceBg($usrCustId);
-        $avlBal     = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($usrCustId);
+        $avlBal = $userBg['avlBal'];
         
         //主动投标订单记录入表finance_order
         $param = array(
@@ -242,7 +255,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param float transAmt 放款金额
      * 
      */
-    public function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt) {
+    public function loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt) {
+        $objRst = new Base_Result();
         if(!isset($loanId) || !isset($subOrdId) || !isset($inUserId) || !isset($outUserId) || !isset($transAmt)) {
             Base_Log::error(array(
                 'msg'       => '请求参数错误',
@@ -252,22 +266,22 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'outUserId' => $outUserId,
                 'transAmt'  => $transAmt,
             ));
-            return false;
+            $objRst->status     = Base_RetCode::PARAM_ERROR;
+            $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
+            return $objRst;  
         }
-        $webroot = Base_Config::getConfig('web')->root;
-        $chinapnr = Finance_Chinapnr_Logic::getInstance();
-        $orderInfo = $this->genOrderInfo();
-        $orderDate = $orderInfo['date'];
-        $orderId   = $orderInfo['orderId'];     
-        $inHuifuId = $this->getHuifuid(intval($inUserId));
+        $webroot    = Base_Config::getConfig('web')->root;
+        $chinapnr   = Finance_Chinapnr_Logic::getInstance();
+        $orderInfo  = $this->genOrderInfo();
+        $orderDate  = $orderInfo['date'];
+        $orderId    = $orderInfo['orderId'];     
+        $inHuifuId  = $this->getHuifuid(intval($inUserId));
         $outHuifuId = $this->getHuifuid(intval($outUserId));    
-            
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
-        
+       
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($outHuifuId);
+        $avlBal = $userBg['avlBal'];       
+
         //打款订单记录入表finance_order
         $paramOrder = array(
             'orderId'   => intval($orderId),
@@ -281,58 +295,96 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         );
         $this->payOrderEnterDB($paramOrder);
         //投标记录表状态更改为“打款中”
-        $this->payTenderUpdate(intval($subOrdId),Finance_TypeStatus::PAYING);       
+        $this->payTenderUpdate(intval($subOrdId), Finance_TypeStatus::PAYING);       
         
         $merCustId = strval(self::MERCUSTID);
-        $orderId = strval($orderId);
+        $orderId   = strval($orderId);
         $orderDate = strval($orderDate);
         $outCustId = strval($outHuifuId);
-        $transAmt = sprintf('%.2f',$transAmt);
-            
-        $loanInfo = Loan_Api::getLoanInfo(intval($loanId));
+        $transAmt  = sprintf('%.2f',$transAmt);
+
+        //收取费用
+        $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
+        $fee       = $arrFeeInfo['totalFee'];
+        $riskFee   = $arrFeeInfo['riskFee'];
+        $servFee   = $arrFeeInfo['serviceFee'] + $arrFeeInfo['manageFee'];
         
-        $duration = $loanInfo['days'];////////////////////////////
-        $duration = 10;
-        $riskLevel = $loanInfo['level'];////////////////////////
-        $riskLevel = 10;
-        $prepareFee = Fee::prepareFee($riskLevel,$transAmt,$duration);//风险准备金
-        $serviceFee = Fee::serviceFee($riskLevel,$transAmt);//融资服务费     
-        $fee = $prepareFee + $serviceFee;
-            
-        $tenderInfo = $this->getTenderInfo($subOrdId);
-        $subOrdId = strval($subOrdId);
-        $subOrdDate = strval($tenderInfo['orderDate']);
-        $inCustId = strval($inHuifuId);
+        $tenderInfo    = $this->getTenderInfo($subOrdId);
+        $subOrdId      = strval($subOrdId);
+        $subOrdDate    = strval($tenderInfo['orderDate']);
+        $inCustId      = strval($inHuifuId);
         $arrDivDetails = array(
             //风险金账户
+            //TODO:配置化
             array(
-                'DivCustId'=>'6000060000677575',
-                'DivAcctId'=>'SDT000002',
-                'DivAmt'   => $prepareFee,
+                'DivCustId'=> '6000060000677575',
+                'DivAcctId'=> 'SDT000002',
+                'DivAmt'   => $riskFee,
             ),  
             //专属账户
             array(
-                'DivCustId'=>'6000060000677575',
-                'DivAcctId'=>'MDT000001',
-                'DivAmt'   => $serviceFee,
+                'DivCustId'=> '6000060000677575',
+                'DivAcctId'=> 'MDT000001',
+                'DivAmt'   => $servFee,
             ),          
         );
-        $jsonDivDetails = json_encode($arrDivDetails);
-        $feeObjFlag = 'I';//手续费向入款人收取               
-        $isDefault = 'Y';
-        $isUnFreeze = 'Y';
+        $jsonDivDetails  = json_encode($arrDivDetails);
+        $feeObjFlag      = 'I';//手续费向入款人收取               
+        $isDefault       = 'Y';
+        $isUnFreeze      = 'Y';
         $unFreezeOrdInfo = $this->genOrderInfo();
-        $unFreezeOrdId = strval($unFreezeOrdInfo['orderId']);
-        $freezeTrxId = strval($tenderInfo['freezeTrxId']);
-        $bgRetUrl = $webroot.'/finance/bgcall/loans';
-        $merPriv = strval($outUserId);//投标人的uid
-        $reqExt = array(
-            'ProId' => strval($loanId),
+        $unFreezeOrdId   = strval($unFreezeOrdInfo['orderId']);
+        $freezeTrxId     = strval($tenderInfo['freezeTrxId']);
+        $bgRetUrl        = $webroot.'/finance/bgcall/loans';
+        $merPriv         = strval($outUserId);//投标人的uid
+        $reqExt          = array(
+            'ProId'   => strval($loanId),
         );
-        $reqExt = json_encode($reqExt);
-        $ret = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, $transAmt, $fee, $subOrdId, $subOrdDate,$inCustId, 
-            $jsonDivDetails, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, $freezeTrxId, $bgRetUrl, $merPriv, $reqExt); 
-        return $ret;    
+        $reqExt          = json_encode($reqExt);
+        
+        Base_Log::notice(array(
+            'msg'            => '准备单笔放款',
+            'merCustId'      => $merCustId,
+            'orderId'        => $orderId,
+            'orderDate'      => $orderDate,
+            'outCustId'      => $outCustId,
+            'transAmt'       => $transAmt, 
+            'fee'            => $fee,
+            'subOrdDate'     => $subOrdId,
+            'subOrdDate'     => $subOrdDate,
+            'inCustId'       => $inCustId,
+            'jsonDivDetails' => $jsonDivDetails,
+            'feeObjFlag'     => $feeObjFlag,
+            'isDefault'      => $isDefault,
+            'isUnFreeze'     => $isUnFreeze,
+            'unFreezeOrdId'  => $unFreezeOrdId,
+            'freezeTrxId'    => $freezeTrxId,
+            'bgRetUrl'       => $bgRetUrl,
+            'merPriv'        => $merPriv,
+            'reqExt'         => $reqExt,
+        ));
+
+        $mixRet  = $chinapnr->loans($merCustId, $orderId, $orderDate, $outCustId, 
+            $transAmt, $fee, $subOrdId, $subOrdDate, $inCustId, 
+            $jsonDivDetails, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, 
+            $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
+
+        if(empty($mixRet)){
+            $objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
+            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
+            return $objRst;
+        }
+        $respCode = $mixRet['RespCode'];
+        $respDesc = $mixRet['RespDesc'];
+        if($respCode !== '000') {           
+            $objRst->status     = $respCode;
+            $objRst->statusInfo = $respDesc;
+            Base_Log::error($objRst->format());
+            return $objRst;
+        }
+
+        $objRst->status = Base_RetCode::SUCCESS;
+        return $objRst; 
     }
     
     /**
@@ -358,12 +410,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return false;
         }       
+        $usrCustId = strval($this->getHuifuid($userid));
+        
         $transAmt = sprintf('%.2f',$transAmt);
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($usrCustId);
+        $avlBal = $userBg['avlBal'];
         
         //打款订单记录入表finance_order
         $paramOrder = array(
@@ -385,15 +437,16 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId = strval($orderId);
         $orderDate = strval($orderDate);
         $transAmt = $transAmt;
-        $usrCustId = strval($this->getHuifuid($userid));
+        $usrCustId = strval($usrCustId);
         $isUnFreeze = strval('Y');
         $unFreezeOrdInfo = $this->genOrderInfo();
         $unFreezeOrdId = $unFreezeOrdInfo['orderId'];
         $unFreezeOrderId = strval($unFreezeOrdId);
-        //$freezeTrxId = '';
+        $freezeTrxId = strval($freezeTrxId);
         $retUrl = strval($retUrl);
         $bgRetUrl = $webroot.'/finance/bgcall/tendercancel';
         $merPriv = strval($userid);     
+
         $chinapnr->tenderCancel($merCustId, $usrCustId, $orderId, $orderDate, $transAmt, $usrCustId,
             $isUnFreeze, $unFreezeOrderId, $freezeTrxId, $retUrl, $bgRetUrl, $merPriv);     
     }
@@ -423,12 +476,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderInfo = $this->genOrderInfo();
         $orderDate = $orderInfo['date'];
         $orderId   = $orderInfo['orderId'];
+        $huifuid   = $this->getHuifuid($userid);
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         
         //取现订单订单记录入表finance_order
         $param = array(
@@ -444,7 +496,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $this->payOrderEnterDB($param);
         
         $orderId = strval($orderId);
-        $huifuid = $this->getHuifuid($userid);
         $transAmt = $transAmt;
         $servFee = '';
         $openAcctId = '';
@@ -485,12 +536,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderInfo = $this->genOrderInfo();
         $orderId = $orderInfo['orderId'];
         $orderDate = $orderInfo['date'];
+        $huifuid = $this->getHuifuid(intval($inUserId));
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         
         //还款订单订单记录入表finance_order
         $param = array(
@@ -577,12 +627,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = $orderInfo['orderId'];
         $orderDate = $orderInfo['date'];
         
-        $queryLogic = new Finance_Logic_Query();
         $huifuid = $this->getHuifuid(intval($inUserId));
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal  = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        //去掉千字分隔符
-        $avlBal = str_replace(',', '', $avlBal);
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         
         //还款订单订单记录入表finance_order
         $param = array(
@@ -628,10 +676,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = strval($orderInfo['orderId']);
         $orderDate = strval($orderInfo['date']);
         
-        $queryLogic = new Finance_Logic_Query();
-        $balance = $queryLogic->queryBalanceBg($huifuid);
-        $avlBal = !is_null($balance['AvlBal']) ? $balance['AvlBal'] : '0.00';
-        $avlBal = floatval(str_replace(',', '', $avlBal));//用户可用余额(去掉千字符)
+        $huifuid = $this->getHuifuid(intval($userid));
+        $bgLogic = new Account_Logic_UserInfo();
+        $userBg = $bgLogic->getUserBg($huifuid);
+        $avlBal = $userBg['avlBal'];
         $param = array(
             'orderId'   => intval($orderId),
             'orderDate' => intval($orderDate),

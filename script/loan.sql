@@ -1,6 +1,7 @@
 CREATE TABLE `loan` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '借款ID',
   `user_id` int(11) NOT NULL COMMENT '用户ID',
+  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL COMMENT '标题',
   `pic` varchar(255) DEFAULT NULL COMMENT '图片',
   `area` int(11) NOT NULL COMMENT '所在地',
@@ -19,13 +20,17 @@ CREATE TABLE `loan` (
   `audit_info` varchar(512) DEFAULT NULL COMMENT '审核信息',
   `start_time` int(11) NOT NULL DEFAULT '0' COMMENT '开始时间',
   `deadline` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '截止时间',
+  `risk_fee` decimal(10,2) NOT NULL DEFAULT '0' COMMENT '风险准备金',
+  `serv_fee` decimal(10,2) NOT NULL DEFAULT '0' COMMENT '融资服务费',
+  `mang_fee` decimal(10,2) NOT NULL DEFAULT '0' COMMENT '账户管理费',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
   `create_uid` int(11) NOT NULL COMMENT '创建人',
   `full_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '满标时间',
   `pay_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '放款时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='借款信息表';
 
 

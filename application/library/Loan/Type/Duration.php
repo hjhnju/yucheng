@@ -85,7 +85,7 @@ class Loan_Type_Duration extends Base_Type {
     public static $names = array(
         self::DAY => '1天',
         self::WEEK => '7天',
-        self::MONTH_HALF => '半个月',
+        self::MONTH_HALF => '15天',
         self::MONTH => '1个月',
         self::MONTH_2 => '2个月',
         self::MONTH_3 => '3个月',
@@ -102,7 +102,7 @@ class Loan_Type_Duration extends Base_Type {
      * @var array
      */
     public static $enabled = array(
-        self::MONTH_HALF => '半个月',
+        self::MONTH_HALF => '15天',
         self::MONTH => '1个月',
         self::MONTH_2 => '2个月',
         self::MONTH_3 => '3个月',

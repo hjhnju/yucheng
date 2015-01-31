@@ -32,6 +32,10 @@ class TenderController extends Base_Controller_Page {
 		    	Invest_RetCode::getMsg(Invest_RetCode::NOT_ALLOWED));
 	    }
 	    
+        Base_Log::notice(array(
+            'msg'  => '',
+            'post' => $_POST,
+        ));
 	    // 主动投标（会跳转至汇付）
 	    $logic->invest($uid, $loan_id, $amount);
 	}

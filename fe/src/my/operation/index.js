@@ -23,7 +23,9 @@ define(function (require) {
         'type': 1,
         'data': 1,
         'page': 1,
-        'pagesize': 10
+        'pagesize': 10,
+        'startTime': 0,
+        'endTime': 0
     };
 
     /**
@@ -66,8 +68,8 @@ define(function (require) {
             $(this).addClass('current');
 
             $('#time-start, #time-end').val('');
-            selectDate.stime = 0;
-            selectDate.etime = 0;
+            option.startTime = 0;
+            option.endTime = 0;
 
             option.data = +$(this).attr('data-value');
             option.page = 1;
@@ -117,10 +119,10 @@ define(function (require) {
                 $('#operation-data .time-data-type-link').removeClass('current');
                 option.page = 1;
                 htmlContainer.html(etpl.render('Loading'));
-                getList.remote($.extend({}, option, {
-                    startTime: selectDate.stime / 1000,
-                    endTime: selectDate.etime / 1000
-                }));
+                option.startTime = selectDate.stime / 1000;
+                option.endTime = selectDate.etime / 1000;
+
+                getList.remote(option);
             }
             else {
                 alert('请选择开始时间和结束时间');

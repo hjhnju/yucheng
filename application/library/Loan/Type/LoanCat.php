@@ -33,7 +33,7 @@ class Loan_Type_LoanCat extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::SCHOOL => '学校助力贷',
+        self::SCHOOL => '学校助业贷',
         self::TEACHER => '教师圆梦贷',
     );
 }

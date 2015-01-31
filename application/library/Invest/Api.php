@@ -140,6 +140,7 @@ class Invest_Api {
         //@todo 自动投标使用
     }
     
+    
     /**
      * 获取用户的帐户可用余额
      * @param integer $uid
