@@ -1,10 +1,4 @@
-define('common/ui/Pager/Pager', [
-    'require',
-    'common/XEmitter',
-    'jquery',
-    'etpl',
-    './pager.tpl'
-], function (require) {
+define('common/ui/Pager/Pager', function (require) {
     var XEmitter = require('common/XEmitter');
     var $ = require('jquery');
     var etpl = require('etpl');
@@ -32,6 +26,10 @@ define('common/ui/Pager/Pager', [
             });
         },
         render: function (page) {
+            if (this.opt.total === 1) {
+                this.opt.main.html('');
+                return;
+            }
             var result = this.calculateItem(page - this.opt.startPage + 1);
             this.opt.main.html(etpl.render('ui-pager', {
                 data: $.extend({}, result, {
