@@ -64,6 +64,7 @@ define(function (require) {
                     });
                 }
 
+                pager.setOpt('total', +data.pageall);
                 pager.render(+data.page);
 
                 for (var i = 0, l = data.list.length; i < l; i++) {

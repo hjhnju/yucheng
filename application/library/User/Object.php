@@ -27,8 +27,9 @@ class User_Object {
         'email',
         'huifuid',
         'lastip',
-        'logintime',
-        'createtime',
+        'loginTime',
+        'createTime',
+        'updateTime',
     );
 
    /**
