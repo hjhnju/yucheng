@@ -216,6 +216,24 @@ class Invest_Api {
     }
     
     /**
+     * 更新投标的状态
+     * @param integer $investId
+     * @param integer $status
+     * @return boolean
+     */
+    public static function updateInvestStatus($investId, $status) {
+        $invest = new Invest_Object_Invest($investId);
+        $invest->status = $status;
+        $res = $invest->save();
+        if ($res) {
+            $type = new Loan_Type_LoanStatus();
+            $content = "更新投标[{$investId}]状态为" . $type->getTypeName($status);
+            Loan_Api::addLog($invest->loanId, $content);
+        }
+        return $res;
+    }
+    
+    /**
      * 创建收款计划
      * @param integer $invest_id
      * @param boolean
