@@ -110,22 +110,15 @@ class OverviewController extends Base_Controller_Page {
             $this->outputView = 'test/noThirdPay.phtml';
             $this->output($data);
         } else {
-            $now = intval(date("m",time()));
-            $now = 7;
-            if($now > 6) {
-            	$arrRet = Invest_Api::getEarningsMonthly($userid,$now-5,$now);            	
-            }
-            
+            	$arrRet = Invest_Api::getEarningsMonthly($userid);            	            
             foreach ($arrRet as $key => $value) {
                 $x[] = $key;
-                $y[] = $value;
+                $y[] = intval($value);
             }
-          //  var_dump($arrRet);die;
-        	
             $ret = array(
-                x => array('2014-05','2014-06','2014-07','2014-08','2014-09','2014-10'),
-                y => array(10,20,500,60,49,1000),
-            );          
+                x => $x,
+                y => $y,
+            );         
             if($ret==false) {
                 $this->outputError(Account_RetCode::GET_PROFIT_CURVE_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_PROFIT_CURVE_FAIL));
                 return ;

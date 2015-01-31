@@ -73,7 +73,7 @@ class SecureController extends Base_Controller_Page{
 		$emailnum = $userinfo['email']['value'];
 		$emailnum = substr_replace($emailnum,'*****',4,4);
 		if($email == 2) {
-			$emailurl = $webroot.'/account/edit/bindemail';
+			$emailurl = $webroot.'/user/open';
 		} else {
 			$emailurl = $webroot.'/account/edit/chemail';				
 		}
