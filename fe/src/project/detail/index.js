@@ -129,59 +129,36 @@ define(function (require) {
 
         // 确定投资
         $('.confirm-submit').click(function () {
-//            investTender.remote({
-//                id: model.id,
-//                amount: +$('.right-top-ipt-input').val() || 0
-//            });
             var ipt = $('.right-top-ipt-input');
 
-            !ipt[0].disabled && !investError.hasClass('show') && $('#invest-form').get(0).submit();
+            // 已经提示error或者不可投资
+            if (ipt[0].disabled || investError.hasClass('show')) {
+                return;
+            }
+
+
+
+            $('#invest-form').get(0).submit();
         });
 
         // 投资盈利计算
         $('.right-top-ipt-input').on({
-            keydown: function () {
+            keyup: function () {
                 var value = +$.trim($(this).val());
-                var min = Math.min(model.userAmount, model.amountRest);
 
                 if (isNaN(value)) {
-                    investError.addClass('show').html('输入内容不合法');
+                    $('.chongzhi-span').html('0.00');
                     return;
-                }
-
-                if (value > min) {
-                    investError.addClass('show').html('投资金额不得超过可用余额和可投金额');
-//                    value > model.amountRest
-//                        && $(this).val(model.amountRest)
-//                        && investError.removeClass('show');
-                }
-                else {
-                    investError.removeClass('show');
                 }
 
                 $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
             },
-
-            keyup: function () {
+            blur: function () {
                 var value = +$.trim($(this).val());
-                var min = Math.min(model.userAmount, model.amountRest);
 
                 if (isNaN(value)) {
                     investError.addClass('show').html('输入内容不合法');
-                    return;
                 }
-
-                if (value > min) {
-                    investError.addClass('show').html('投资金额不得超过可用余额和可投金额');
-//                    value > model.amountRest
-//                        && $(this).val(model.amountRest)
-//                        && investError.removeClass('show');
-                }
-                else {
-                    investError.removeClass('show');
-                }
-
-                $('.chongzhi-span').html(caculateIncome(+$.trim($(this).val()) || 0));
             }
         });
 
