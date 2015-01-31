@@ -6,9 +6,9 @@
  */
 class Infos_Logic_Post {
 
-    // 发布状态:1-未发布，2-已发布
-    const STATUS_NOTPUB  = 1;
-    const STATUS_PUBLISH = 2;
+    // 发布状态:1-已发布,2-未发布
+    const STATUS_PUBLISH = 1;
+    const STATUS_NOTPUB  = 2;
 
     // 资讯类型:1-官方公告，2-媒体报道
     const TYPE_POST  = 1;
@@ -22,12 +22,11 @@ class Infos_Logic_Post {
      * @param
      * @return
      */
-    public function getList($page = 1, $pagesize = 10) {
+    public function getList($page = 1, $pagesize = 10,$strType) {
         $list = new Infos_List_Infos();
         $list->setPage($page);
         $list->setPagesize($pagesize);
-        // $filters = array('status'=>self::STATUS_PUBLISH, 'type'=>self::TYPE_POST);
-        $filters = array();
+        $filters = array('status'=>self::STATUS_PUBLISH, 'type'=>$this->getInfoType($strType));
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
         $arrRet = $list->toArray();
@@ -63,7 +62,7 @@ class Infos_Logic_Post {
         $object               = new Infos_Object_Infos();
         $object->title        = isset($arrPost['title']) ? $arrPost['title'] : null;
         $object->author       = isset($arrPost['author']) ? $arrPost['author'] : '兴教贷团队';
-        $object->type         = self::TYPE_POST;
+        $object->type         = isset($arrPost['type']) ? $arrPost['type'] :self::TYPE_POST;
         $object->status       = self::STATUS_NOTPUB;
         $object->publishTime  = isset($arrPost['publishtime']) ? intval($arrPost['publishtime']) : null;
         $arrCtx               = array('ctx' => $arrPost['ctx']);
@@ -88,6 +87,14 @@ class Infos_Logic_Post {
         $object->publishTime = time();
         $ret                 = $object->save();
         return $ret;
+    }
+    
+    private function getInfoType($strType){
+        if('post' === $strType){
+            return self::TYPE_POST;
+        }else{
+            return self::TYPE_MEDIA;
+        }
     }
 
 }

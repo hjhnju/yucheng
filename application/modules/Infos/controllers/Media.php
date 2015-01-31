@@ -1,8 +1,8 @@
 <?php
 /**
- * 官方公告
+ * 媒体报道
  */
-class PostController extends Base_Controller_Page {
+class MediaController extends Base_Controller_Page {
 
     public function init(){
         $this->setNeedLogin(false);
@@ -10,9 +10,9 @@ class PostController extends Base_Controller_Page {
     }
     
     /**
-     * 公告列表页
+     * 媒体报道列表页
      *
-     * /infos/post
+     * /infos/media
      * @param   $page, MUST, [1,-), index of page
      * @assign  data=>array('page', 'pagesize', 'pageall', 'list', 'total')
      */
@@ -20,16 +20,17 @@ class PostController extends Base_Controller_Page {
         $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
         $pagesize = 10;
         $logic    = new Infos_Logic_Post();
-        $ret      = $logic->getList($page, $pagesize,'post');
+        $ret      = $logic->getList($page, $pagesize,'media');
         Base_Log::notice($ret);
         $this->getView()->assign('data', $ret);
     }
     
+ 
 
     /**
-     * 公告详情页
+     * 媒体报道详情页
      *
-     * /infos/post/detail?id=
+     * /infos/media/detail?id=
      * @param   $id 公告id
      * @assign  data=>array('title','ctx','author','publish_time')
      */
@@ -41,5 +42,4 @@ class PostController extends Base_Controller_Page {
             'title' => isset($ret['title'])? $ret['title'] : ''));
         $this->getView()->assign('data', $ret);
     }
-
 }
