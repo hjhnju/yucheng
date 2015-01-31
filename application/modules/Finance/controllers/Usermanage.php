@@ -251,4 +251,11 @@ class UsermanageController extends Base_Controller_Page {
     	echo $time;
     }
     
+    public function test9Action() {
+    	$logic = new Finance_Logic_Query();
+    	$ret = $logic->queryAccts();
+    	var_dump($ret);
+    	return;
+    }
+    
 }
