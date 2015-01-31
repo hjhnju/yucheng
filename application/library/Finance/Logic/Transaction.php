@@ -342,7 +342,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         );
         $reqExt          = json_encode($reqExt);
         
-        Base_Log::notice(array(
+        Base_Log::debug(array(
             'msg'            => '准备单笔放款',
             'merCustId'      => $merCustId,
             'orderId'        => $orderId,
@@ -369,6 +369,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $jsonDivDetails, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, 
             $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
 
+        Base_Log::debug(array(
+            'msg'=>'满标打款接口', 
+            'ret'=> $mixRet,
+        ));
+
         if(empty($mixRet)){
             $objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
             $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
@@ -379,7 +384,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         if($respCode !== '000') {           
             $objRst->status     = $respCode;
             $objRst->statusInfo = $respDesc;
-            Base_Log::error($objRst->format());
+            Base_Log::error(array(
+                'respCode' => $respCode,
+                'respDesc' => $respDesc,
+            );
             return $objRst;
         }
 

@@ -435,6 +435,11 @@ class Finance_Api {
     public static function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt) {
         $transLogic = new Finance_Logic_Transaction();
         $objRst     = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+        Base_Log::notice(array(
+            'msg'  => '财务满标打款接口', 
+            'args' => func_get_args(), 
+            'ret'  => $objRst->format(),
+        ));
         return $objRst->format();
     }
      
