@@ -141,6 +141,12 @@ define(function (require) {
                 return;
             }
 
+            // 输入不能为空
+            if (!value) {
+                investError.addClass('show').html('输入不能为空');
+                return;
+            }
+
             // 输入不合法
             if (isNaN(value)) {
                 investError.addClass('show').html('输入内容不合法');
@@ -156,6 +162,12 @@ define(function (require) {
             // 不可大于可用余额
             if (value > model.userAmount) {
                 investError.addClass('show').html('可用余额不足');
+                return;
+            }
+
+            // 输入不能小于100
+            if (value < 100) {
+                investError.addClass('show').html('最小投标金额100元');
                 return;
             }
 
