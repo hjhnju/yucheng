@@ -48,12 +48,22 @@ class User_RetCode extends Base_RetCode{
     
     const SAVE_PASSWD_WRONG         = 1058; //保存用户密码错误
     
+    const USER_PHONE_NOTEXIT        = 1059; //手机号不存在
+    
+    const PHONE_OR_PASSWD_ERROR     = 1060; //手机号或密码错误
+    
+    const USER_EMAIL_NOTEXIT        = 1061; //邮箱不存在
+    
+    const USER_EMAIL_FORMAT_ERROR   = 1062; //邮箱格式错误
+    
+    const EMAIL_OR_PASSWD_ERROR     = 1063; //邮箱或密码错误
+    
     /* 消息函数
      * @var array
      */
     protected static $_arrErrMap = array(
         self::USERNAME_EXIST           => '用户名已存在',
-        self::USERNAME_SYNTEX_ERROR    => '用户名请使用6～25位字母、数字、下划线或横线组合，首字符必须为字母。',
+        self::USERNAME_SYNTEX_ERROR    => '用户名格式错误',
         self::USERPHONE_EXIST          => '手机号已存在',
         self::PHONE_FORMAT_ERROR       => '手机号格式有误',
         self::GETVERICODE_FAIL         => '获取短信验证码失败',
@@ -75,6 +85,10 @@ class User_RetCode extends Base_RetCode{
         self::USER_NAME_OR_PHONE_ERROR => '用户名或手机号错误',
         self::SAVE_PASSWD_WRONG        => '保存用户密码错误',
         self::ORIGIN_PASSWD_WRONG      => '原密码错误',
+        self::USER_PHONE_NOTEXIT       => '手机号不存在',
+        self::USER_EMAIL_NOTEXIT       => '邮箱不存在',
+        self::PHONE_OR_PASSWD_ERROR => '手机号或密码错误',
+        self::EMAIL_OR_PASSWD_ERROR => '邮箱或密码错误',
     );
 
 }
