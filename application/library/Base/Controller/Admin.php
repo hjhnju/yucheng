@@ -19,5 +19,8 @@ class Base_Controller_Admin extends Base_Controller_Response {
         
         $uri = $this->_request->getRequestUri();
         $this->_view->assign('uri', $uri);
+
+        //覆盖用户端的feroot
+        $this->getView()->assign('feroot', $this->webroot . '/asset');
     }
 }
