@@ -18,10 +18,13 @@ define(function (require) {
 
     var tpl = require('./list.tpl');
 
+    var type;
+
     var pager;
 
     function init(opt) {
         var container = $('#infos-list');
+        type = opt.type;
 
         header.init();
         etpl.compile(tpl);
@@ -36,7 +39,8 @@ define(function (require) {
         pager.on('change', function (e) {
             container.html(etpl.render('Loading'));
             getList.remote({
-                page: +e.value
+                page: +e.value,
+                type: type
             });
         });
 
