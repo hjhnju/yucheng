@@ -1,18 +1,4 @@
-define('echarts/chart/funnel', [
-    'require',
-    '../component/base',
-    './base',
-    'zrender/shape/Text',
-    'zrender/shape/Line',
-    'zrender/shape/Polygon',
-    '../config',
-    '../util/ecData',
-    '../util/number',
-    'zrender/tool/util',
-    'zrender/tool/color',
-    'zrender/tool/area',
-    '../chart'
-], function (require) {
+define('echarts/chart/funnel', function (require) {
     var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var TextShape = require('zrender/shape/Text');

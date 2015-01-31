@@ -1,4 +1,4 @@
-define('common/config', [], function () {
+define('common/config', function () {
     var rootUrl = '' + window.location.protocol + '//' + window.location.host;
     var URL = {
             IMG_GET: rootUrl + '/user/imagecode/getimage?type=',

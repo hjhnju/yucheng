@@ -1,8 +1,4 @@
-define('zrender/shape/Rectangle', [
-    'require',
-    './Base',
-    '../tool/util'
-], function (require) {
+define('zrender/shape/Rectangle', function (require) {
     var Base = require('./Base');
     var Rectangle = function (options) {
         Base.call(this, options);
