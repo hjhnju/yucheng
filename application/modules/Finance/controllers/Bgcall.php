@@ -216,6 +216,13 @@ class BgcallController extends Base_Controller_Page {
         	'ip'        => $lastip,        	
         );
         $this->financeLogic->payRecordEnterDB($param);
+        /* if(!Msg_Api::sendmsg(0,$userid,3,"充值消息")) {
+        	Base_Log::error(array(
+        		'msg' => "充值消息发送失败",
+        		'from' => 0,
+        		'to' => $userid,
+         	));
+        }  */       
 		Base_Log::notice($retParam);
 		//页面打印
 		$trxId = strval($trxId);
@@ -419,7 +426,7 @@ class BgcallController extends Base_Controller_Page {
 	 * notice:异步对账
 	 * 打印RECV_ORD_ID_OrderId
 	 */
-	public function cashAction() {
+	public function tixianAction() {
 		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
 		   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['UsrCustId']) || 
 		   !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) ||
@@ -739,7 +746,7 @@ class BgcallController extends Base_Controller_Page {
 	 * 商户待取现回调
 	 * 打印RECV_ORD_ID_OrdId
 	 */
-	public function merCashAction() {
+	public function merTixianAction() {
 		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
 		   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['UsrCustId']) || 
 		   !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) || 

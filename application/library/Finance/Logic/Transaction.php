@@ -511,7 +511,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $servFee = '';
         $openAcctId = '';
         $retUrl = '';
-        $bgRetUrl = $webroot.'/finance/bgcall/cash';
+        $bgRetUrl = $webroot.'/finance/bgcall/tixian';
         $merPriv = strval($userid);
         $reqExt = array(array(
             'FeeObjFlag' => 'U',
@@ -713,7 +713,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $servFee = '';
         $servFeeAcctId = '';
         $retUrl = '';
-        $bgRetUrl = $webroot.'/finance/bgcall/merCash';
+        $bgRetUrl = $webroot.'/finance/bgcall/merTixian';
         $remark = '';
         $charSet = '';
         $merPriv = strval($userid).'_'.strval($orderDate);

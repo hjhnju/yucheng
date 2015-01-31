@@ -73,6 +73,7 @@ class AwardController extends Base_Controller_Page {
 				$this->outputError($errCode,$errMsg);
 				return ;
 			};  
+			Msg_Api_sendmsg();
             $this->output();
 			return ;
 		}		 
@@ -107,7 +108,8 @@ class AwardController extends Base_Controller_Page {
 			$this->outputError($errCode,$errMsg);
 			return ;
 		}
-		$this->output();
+		
+		$this->output();		
 		return ;
 	}  
 }
