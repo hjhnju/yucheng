@@ -12,7 +12,8 @@ class Base_Controller_Page extends Base_Controller_Abstract {
         parent::init();
 
         $this->getView()->assign('webroot', $this->webroot);
-        $this->getView()->assign('feroot', $this->webroot . '/asset');
+        $feversion = Base_Config::getConfig('web')->version;
+        $this->getView()->assign('feroot', $this->webroot . '/v1/'. $feversion . '/asset');
 
         //set csrf token
         $token = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
