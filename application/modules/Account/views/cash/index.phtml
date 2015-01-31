@@ -28,12 +28,20 @@
             <div class="operation">
                 <div class="operation-money">
                     <div class="operation-money-account">
-                        <div class="operation-money-acc-price">￥{%$acctBal%}</div>
+                        <div class="operation-money-acc-price">
+                            ￥{%if isset({%$acctBal%})%}{%$acctBal%}
+                            {%else%} 0
+                            {%/if%}
+                        </div>
                         <div class="operation-money-acc-text">账户余额</div>
                     </div>
                     <div class="operation-border"></div>
                     <div class="operation-money-account">
-                        <div class="operation-money-acc-price use-price">￥{%$avlBal%}</div>
+                        <div class="operation-money-acc-price use-price">￥
+                            {%if isset({%$avlBal%})%}{%$avlBal%}
+                            {%else%}0
+                            {%/if%}
+                        </div>
                         <div class="operation-money-acc-text use-price">可用余额
                             <a class="link-help">
                                 <div class="all-pay-tip">

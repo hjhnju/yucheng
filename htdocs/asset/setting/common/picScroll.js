@@ -1,4 +1,7 @@
-define('setting/common/picScroll', function (require) {
+define('setting/common/picScroll', [
+    'require',
+    'jquery'
+], function (require) {
     var $ = require('jquery');
     function init() {
         picScroll();
