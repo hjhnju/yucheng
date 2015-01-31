@@ -64,7 +64,7 @@ class SecureController extends Base_Controller_Page{
 		$thirdpay = $userinfo['huifu']['isopen'];//用户是否开通了汇付托管
 		$huifuid = $userinfo['huifu']['value'];//用户的汇付id			
 		if($thirdpay == 2) {
-			$thirdpayurl = $webroot.'/account/secure/bindthirdpay';
+			$thirdpayurl = $webroot.'/user/open';
 		} else {
 			$thirdpayurl = $webroot.'/finance/usermanage/login';
 		}
