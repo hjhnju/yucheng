@@ -184,11 +184,12 @@ class Finance_Logic_Base {
 	 * @param string $failDesc
  	 * @return boolean
 	 */
-	public function payOrderUpdate($orderId,$status,$type,$failCode='',$failDesc='') {
+	public function payOrderUpdate($orderId,$status,$type,$avlBal,$failCode='',$failDesc='') {
 		Base_Log::debug(array(
 			$orderId,
 			$status,
 			$type,
+			$avlBal,
 			$failCode,
 			$failDesc,
 		));
@@ -196,9 +197,10 @@ class Finance_Logic_Base {
 		$orderId = intval($orderId);
 		$status = intval($status);
 		$type = intval($type);
+		$avlBal = floatval($avlBal);
 		$regOrder->orderId = $orderId;
 		$regOrder->status = $status;
-
+        $regOrder->avlBal = $avlBal;		
 		$statusDesc = Finance_TypeStatus::getStatusDesc(intval($status));
 		$type = Finance_TypeStatus::getType(intval($type));
 		$regOrder->comment = "$type".'订单'."$statusDesc";
@@ -427,6 +429,7 @@ class Finance_Logic_Base {
 				'userId'      => array("(`userId`='$userid')"),
 				'create_time' => array("(`create_time` between '$startTime' and '$endTime')"),
 				'type'        => array("(`type`= '$recharge' or `type`= '$withdraw') "),
+				'status'      => array("(`status`= 3)"),//只拉取成功的数据
 			);
 			$record->setFilter($filters);
 			$record->setPagesize($pageSize);
@@ -470,6 +473,7 @@ class Finance_Logic_Base {
 				'userId'      => array("(`userId`='$userid')"),
 				'create_time' => array("(create_time between '$startTime' and '$endTime')"),
 				'type'        => $recharge,
+				'status'      => array("(`status`= 3)"),//只拉取成功的数据
 			);
 			$record->setFilter($filters);
 			$record->setPagesize($pageSize);
@@ -513,6 +517,7 @@ class Finance_Logic_Base {
 				'userId'      => array("(`userId`='$userid')"),
 				'create_time' => array("(create_time between '$startTime' and '$endTime')"),
 				'type'        => $withdraw,
+				'status'      => array("(`status`= 3)"),//只拉取成功的数据
 			);
 			$record->setFilter($filters);
 			$record->setPagesize($pageSize);
