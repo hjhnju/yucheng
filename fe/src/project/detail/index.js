@@ -159,6 +159,11 @@ define(function (require) {
                 return;
             }
 
+            if (value < 100) {
+                investError.addClass('show').html('最小投标金额100元');
+                return;
+            }
+
             $('#invest-form').get(0).submit();
         });
 
