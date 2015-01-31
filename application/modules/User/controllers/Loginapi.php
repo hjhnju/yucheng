@@ -16,6 +16,7 @@ class LoginapiController extends Base_Controller_Api{
     public function indexAction(){
         $strName   = trim($_POST['name']);
         $strPasswd = trim($_POST['passwd']);
+        $strType   = User_Logic_Validate::getType($strName);
         $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
         $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
         //检查错误次数
@@ -27,7 +28,7 @@ class LoginapiController extends Base_Controller_Api{
                     'url' => $this->webroot . '/user/imagecode/getimage?type=login')
             );
         }
-
+ 
         //检查验证码
         if($strCode){
             $bolRet = User_Logic_ImageCode::checkCode('login', $strCode);
@@ -36,20 +37,20 @@ class LoginapiController extends Base_Controller_Api{
                     User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
             }
         }
-  
         //检查用户名语法
-        if(!User_Logic_Validate::checkName($strName)) {
+        if(!User_Logic_Validate::check($strType, $strName)) {
             $intFails = intval($intFails) + 1;
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), $intFails);
-    
-            return $this->ajaxError(User_RetCode::USERNAME_SYNTEX_ERROR,
+            if(empty($strType)){
+                 return $this->ajaxError(User_RetCode::USERNAME_SYNTEX_ERROR,
                 User_RetCode::getMsg(User_RetCode::USERNAME_SYNTEX_ERROR)
-            );
+                );
+            }
         }
        
         //登陆
         $logic   = new User_Logic_Login();
-        $retCode = $logic->login($strName, $strPasswd);
+        $retCode = $logic->login($strType,$strName, $strPasswd);
         if(User_RetCode::SUCCESS !== $retCode) {
             $intFails = intval($intFails) + 1;
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), $intFails);

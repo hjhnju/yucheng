@@ -61,11 +61,11 @@ class User_Logic_Login {
      * @param string $strPasswd,用户密码
      * @return User_RetCode::USER_NAME_NOTEXIT | USER_PASSWD_ERROR | SUCCESS
      */
-    public function login($strName, $strPasswd){
+    public function login($strType,$strName, $strPasswd){
         $strPasswd = Base_Util_Secure::encrypt($strPasswd);
 
         $objLogin = new User_Object_Login();
-        $objLogin->fetch(array('name'=>$strName));
+        $objLogin->fetch(array($strType=>$strName));
 
         $objRecord     = new User_Object_Record();
         $lastip        = Base_Util_Ip::getClientIp();
@@ -75,14 +75,26 @@ class User_Logic_Login {
         if(empty($objLogin->userid)){
             $objRecord->status = self::STATUS_LOGIN_FAIL;
             $objRecord->save();
-            return User_RetCode::USER_NAME_NOTEXIT;
+            if('name' === $strType){
+                return User_RetCode::USER_NAME_NOTEXIT;
+            }elseif('phone' === $strType){
+                return User_RetCode::USER_PHONE_NOTEXIT;
+            }elseif('email' === $strType){
+                return User_RetCode::USER_EMAIL_NOTEXIT;
+            }
         }
 
         //用户名或密码错误
         if($objLogin->passwd !== $strPasswd){
             $objRecord->status = self::STATUS_LOGIN_FAIL;
             $objRecord->save();
-            return User_RetCode::USER_NAME_OR_PASSWD_ERROR;
+            if('name' === $strType){
+                return  User_RetCode::USER_NAME_OR_PASSWD_ERROR;;
+            }elseif('phone' === $strType){
+                return User_RetCode::PHONE_OR_PASSWD_ERROR;
+            }elseif('email' === $strType){
+                return User_RetCode::EMAIL_OR_PASSWD_ERROR;
+            }
         }
 
         //正确保存
