@@ -93,7 +93,8 @@ class Msg_Logic_Msg {
             $objsMsg->setPage($intPage);
             $objsMsg->setPagesize($intPageSize);
         }
-        $arrObjs = $objsMsg->getObjects();
+        $arrObjs = $objsMsg->toArray();
+        //$arrObjs = $objsMsg->getObjects();
         return $arrObjs;
     }
     

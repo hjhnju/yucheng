@@ -43,7 +43,13 @@ class Account_Logic_UserInfo {
     public function getUserInfo($objUser){
         $webroot = Base_Config::getConfig('web')->root;
         $ret = array();
-        
+        $userid = $objUser->userid;
+        $unreadMsg = Msg_Api::getUnreadMsgNum($userid);
+        if($unreadMsg === 0) {
+        	$ret['unreadMsg'] = 0;
+        } else {
+        	$ret['unreadMsg'] = 1;
+        }      
         //用户名
         $username        = $objUser->name;
         $username        = isset($username) ? $username : '';
@@ -85,8 +91,7 @@ class Account_Logic_UserInfo {
         );
         $ret['securedegree'] = $this->scoreDegree($param);
         $ret['securedegree']['up'] = $webroot.'/account/secure';     
-        return $ret;   
-
+        return $ret;
     }
     
     /**
