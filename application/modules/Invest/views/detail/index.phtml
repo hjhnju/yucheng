@@ -342,14 +342,14 @@
                     <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$data.amount_rest%}元</span></div>
                     <div class="right-top-allmoney-time">剩余时间：<span> </span></div>
                 </div>
-                <div id="chongzhi-error" class="chongzhi-error"></div>
                 <div class="right-top-ipt {%if !isset($user)%}disabled{%/if%}">
-                    <input name="amount" type="text" class="right-top-ipt-input" {%if !isset($user)%} disabled{%/if%} />
+                    <input name="amount" maxlength="10" type="text" autocomplete="off" class="right-top-ipt-input" {%if !isset($user)%} disabled{%/if%} />
                     <input name="id" type="hidden" value="{%$data.id%}" />
+                    <div class="chongzhi-right">预期收益：<span class="chongzhi-span">0.00</span></div>
                 </div>
+                <div id="chongzhi-error" class="chongzhi-error"></div>
                 <div class="right-top-chongzhi">
                     <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount_text%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a target="_blank" href="{%$webroot%}/account/cash/recharge" class="chongzhi-link"> [充值]</a></div>
-                    <div class="chongzhi-right">预期收益：<span class="chongzhi-span">0.00</span></div>
                 </div>
                 <div class="right-top-btn">
                     <a class="right-top-btn-confirm confirm-submit">确定投资</a>

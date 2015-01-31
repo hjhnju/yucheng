@@ -83,7 +83,7 @@ class Finance_Logic_Query extends Finance_Logic_Base {
 				'msg' => '请求汇付接口失败',
 			));
 			return false;
-		}
+		} 
 		return $result;
 	}
 	

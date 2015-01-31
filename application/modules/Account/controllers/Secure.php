@@ -91,7 +91,9 @@ class SecureController extends Base_Controller_Page{
 			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
 			$thirdloginurl = $webroot.'/account/secure/unbindthird';
 		}
-		
+		$lastLoginTime = $this->objUser->loginTime;
+		$lastLoginTime = date("Y-m-d H:i:s",$lastLoginTime);
+		$this->getView()->assign('lastLoginTime',$lastLoginTime);	
         $this->getView()->assign('userinfo',$userinfo);		
 		
 		$this->getView()->assign('phone', $phone);
@@ -113,6 +115,7 @@ class SecureController extends Base_Controller_Page{
 		$this->getView()->assign('emailnum', $emailnum);
 		
 		$this->getView()->assign('chpwdurl',$chpwdurl);
+		
 		
 		$this->getView()->assign('bindthirdlogin',$this->retData['bindthirdlogin']);				
 		$this->getView()->assign('thirdPlatform',$this->retData['thirdPlatform']);
