@@ -169,7 +169,7 @@
                     </div>
                     <div class="investlist-box-title-name status">
                         {%if $item.status == 2%}
-                        <a class="status-biding" href="###">{%$item.status_name%}</a>
+                        <a class="status-biding" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
                         {%else%}
                         <span class="status-biding current">{%$item.status_name%}</span>
                         {%/if%}

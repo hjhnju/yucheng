@@ -47,6 +47,7 @@ define(function (require) {
         // 检查验证码
         $('#sms-ipt').blur(function () {
             var value = $.trim($(this).val());
+            var phone = $('.get-sms').attr('data-value');
 
             if (!value) {
                 $('#smscode-error').html('验证码不能为空');
@@ -55,6 +56,7 @@ define(function (require) {
             }
 
             checksmscode.remote({
+                phone: phone,
                 vericode: value,
                 type: 6
             });

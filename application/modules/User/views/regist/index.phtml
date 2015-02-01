@@ -56,7 +56,7 @@
                 </div>
                 <div class="login-username">
                     <input autocomplete="off" {%if $result.data.inviter%}readonly value="{%$result.data.inviter%}"{%/if%} class="login-input login-tuijian" id="regist-tuijian" type="text" />
-                    <label class="user-lable" for="regist-tuijian">推荐人手机号(选填)</label>
+                    <label class="user-lable {%if $result.data.inviter%}hidden{%/if%}" for="regist-tuijian">推荐人手机号(选填)</label>
                     <div class="username-error" id="regist-tuijian-error"></div>
                 </div>
                 <a href="###" class="login-fastlogin">快速注册</a>
