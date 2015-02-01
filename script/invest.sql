@@ -13,7 +13,7 @@ CREATE TABLE `invest` (
   `amount_rest` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '待回收收益',
   `income` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '预期收益',
   `fail_info` varchar(255) DEFAULT NULL COMMENT '失败原因',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态:1-审核中，5-回款中',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`),

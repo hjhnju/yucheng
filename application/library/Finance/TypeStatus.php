@@ -5,14 +5,17 @@
 class Finance_TypeStatus {
 
 	//订单类型
-	CONST NETSAVE          = 0;  //充值
-	CONST CASH             = 1;  //提现
-	CONST INITIATIVETENDER = 2;  //主动投标
-	CONST TENDERCANCEL     = 3;  //投标撤销
-	CONST LOANS            = 4;  //满标打款
-	CONST REPAYMENT        = 5;  //还款
-	CONST TRANSFER         = 6;  //商户用自动扣款转账
-	CONST UNKNOWN_TYPE     = 7;  //未知类型
+	CONST NETSAVE          = 2;  //充值
+	CONST CASH             = 3;  //提现
+	CONST INITIATIVETENDER = 4;  //主动投标
+	CONST TENDERCANCEL     = 5;  //投标撤销
+	CONST LOANS            = 6;  //满标打款
+	CONST REPAYMENT        = 7;  //还款
+	CONST TRANSFER         = 8;  //商户用自动扣款转账	
+	CONST RECE_AWD         = 9;  //领取奖励
+	CONST MONEY_BACK       = 10;  //退款
+	CONST MERCASH          = 11;  //商户代取现
+	CONST UNKNOWN_TYPE     = 12;  //未知类型
 	//订单状态
 	CONST ORDER_INITIALIZE = 0;  //订单初始化
 	CONST PROCESSING       = 1;  //订单处理中
@@ -22,8 +25,7 @@ class Finance_TypeStatus {
 	CONST PAYING           = 5;  //打款中
 	CONST HAVEPAYED        = 6;  //已打款
 	CONST PAYFAIDED        = 7;  //打款失败
-	CONST CANCELD          = 8;  //投标已撤销
-	CONST MERCASH          = 9;  //商户代取现
+	CONST CANCELD          = 8;  //投标已撤销	
 	CONST UNKNOWN_STATUS   = 10;  //未知状态
 	
 	public static $typeMapping = array(
@@ -35,6 +37,8 @@ class Finance_TypeStatus {
 		self::REPAYMENT        => '还款',	
 		self::TRANSFER         => '商户用自动扣款转账',
 		self::MERCASH          => '商户代取现',
+		self::RECE_AWD         => '领取奖励',
+	    self::MONEY_BACK       => '退款',
 		self::UNKNOWN_TYPE     => '未知类型',	
 	);
 	

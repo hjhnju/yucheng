@@ -147,8 +147,41 @@ class Finance_Api {
         $ret = Finance_Api::queryBalanceBg($huifuid);
         return $ret;        
     }
+    
     /**
-     * 添加标的信息借口 Finance_Api::addBidInfo
+     * 自动扣款转账(商户用)接口
+     * @param string $outUserId 
+     * @param string $outAcctId
+     * @param float $transAmt
+     * @param string $inUserId
+     * @param string $type
+     */
+    public static function transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type=Finance_TypeStatus::TRANSFER) {
+        if(!isset($outUserId) || !isset($outAcctId) || !isset($transAmt) || !isset($inUserId)) {
+        	Base_Log::error(array(
+        		'msg' => '请求参数错误',
+        		'outUserId' => $outUserId,
+        		'outAccId' => $outAcctId,
+        		'transAmt' => $transAmt,
+        		'inUserId' => $inUserId,
+        		'type' => $type,
+        	));
+        	return false;
+        }
+        $transLogic = new Finance_Logic_Transaction();
+        $ret = $transLogic->transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type);
+        if(!$ret || $ret['RespCode'] !== '000') {
+        	Base_Log::error(array(
+        		'msg' => '转账失败',
+        		'param' => $ret,
+        	));
+        	return false;
+        }
+        return true;        
+    }
+    
+    /**
+     * 添加标的信息接口 Finance_Api::addBidInfo
      * @param int proId 标的唯一标示
      * @param int borrUserId 借款人uid
      * @param float borrTotAmt 借款总金额
@@ -399,9 +432,8 @@ class Finance_Api {
      * @param String UnFreezeOrdId 解冻订单号(optional) 解冻订单号
      * @return bool true--撤销成功  false--撤销失败
      */
-    public static function tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl) {
-        if(!isset($transAmt) || !isset($userid) || !isset($orderId) || !isset($orderDate) || !isset($retUrl) ||
-           !isset($freezeTrxId)) {
+    public static function tenderCancel($transAmt,$userid,$orderId,$retUrl='') {
+        if(!isset($transAmt) || !isset($userid) || !isset($orderId)) {
             Base_Log::error(array(
                 'msg'       => '请求参数错误',
                 'transAmt'  => $transAmt,
@@ -419,7 +451,7 @@ class Finance_Api {
             'orderDate' => $orderDate,
             'retUrl'    => $retUrl,
         ));
-        $transLogic->tenderCancel($transAmt,$userid,$orderId,$orderDate,$freezeTrxId,$retUrl);      
+        $transLogic->tenderCancel($transAmt,$userid,$orderId,$retUrl);      
     }
     
     /**
