@@ -166,7 +166,7 @@ define(function (require) {
             }
 
             // 输入不能小于100
-            if (value < 100) {
+            if (value < 100 && value !== model.amountRest) {
                 investError.addClass('show').html('最小投标金额100元');
                 return;
             }

@@ -95,8 +95,7 @@ class CashController extends Base_Controller_Page {
 		}
 		$userid = intval($this->userid);		
 		$phone   = $this->phone;
-		if(!empty($_POST)) {			
-			
+		if(!empty($_POST)) {						
 			$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
 			$bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
 			$bindBank = $bankInfo['bindbank'];
@@ -119,7 +118,8 @@ class CashController extends Base_Controller_Page {
 			$openAcctId = strval($_REQUEST['openAcctId']);
 			$type = 6;
 			$smsRet = User_Api::checkSmscode($phone,$captcha,$type);
-			if(!$smsRet) {
+			//var_dump($smsRet);die;
+			/* if(!$smsRet) {
 			    Base_Log::error(array(
 				    'msg'     => '验证码验证失败',
 				    'phone'   => $phone,
@@ -127,7 +127,7 @@ class CashController extends Base_Controller_Page {
 				    'type'    => $type,
 			    ));
 			    return ;
-			} 
+			}  */
 			$transAmt = sprintf('%.2f',$transAmt);
 			$openAcctId = strval($bankNum);
 			$this->transLogic->cash($userid,$transAmt,$openAcctId);

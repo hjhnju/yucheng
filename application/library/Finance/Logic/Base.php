@@ -190,6 +190,7 @@ class Finance_Logic_Base {
 			$status,
 			$type,
 			$avlBal,
+			Finance_TypeStatus::getStatusDesc(intval($status)),
 			$failCode,
 			$failDesc,
 		));
@@ -421,18 +422,42 @@ class Finance_Logic_Base {
 		}
 		$recharge = intval(Finance_TypeStatus::NETSAVE);
 		$withdraw = intval(Finance_TypeStatus::CASH);
+		$tender = intval(Finance_TypeStatus::INITIATIVETENDER)   ;  //主动投标
+		$cancel = intval(Finance_TypeStatus::TENDERCANCEL);  //投标撤销
+		$loans = intval(Finance_TypeStatus::LOANS);  //满标打款
+		$repay = intval(Finance_TypeStatus::REPAYMENT);  //还款
+		$transfer = intval(Finance_TypeStatus::TRANSFER);  //商户用自动扣款转账
+		$merCash = intval(Finance_TypeStatus::MERCASH);
+		$receAwd = intval(Finance_TypeStatus::RECE_AWD);
+		$moneyBack = intval(Finance_TypeStatus::MONEY_BACK);
 		$record = new Finance_List_Order();
 		//获取全部数据
 		if($queryType === 1) {
 			$startTime = strval($startTime);
 			$endTime = strval($endTime);
 			$filters = array(
-				'userId'      => array("(`userId`='$userid')"),
-				'create_time' => array("(`create_time` between '$startTime' and '$endTime')"),
-				'type'        => array("(												
-						(`type`= '$recharge' and `status`=3)						
-						or 						
-						(`type`= '$withdraw' and (`status`=1 or `status`=3))     				
+				array("(`userId`='$userid')"),
+				array("(`create_time` between '$startTime' and '$endTime')"),
+				array("(												
+					(`type`= '$recharge' and `status`=3)						
+					or 						
+					(`type`= '$withdraw' and (`status` IN (1,3)))
+				    or
+					(`type`= '$tender' and `status`=3) 
+				    or
+					(`type`= '$cancel' and `status`=3) 
+				    or
+					(`type`= '$loans' and `status`=3)
+					or
+					(`type`= '$repay' and `status`=3)    
+					or
+					(`type`= '$transfer' and `status`=3) 	
+					or
+					(`type`= '$merCash' and `status`=3)
+					or
+					(`type`= '$receAwd' and `status`=3)
+					or
+					(`type`= '$moneyBack' and `status`=3)		
 				)"),
 			);
 			$record->setFilter($filters);
@@ -440,8 +465,7 @@ class Finance_Logic_Base {
 			$record->setPage($page);
 			$record->setOrder("`create_time` desc");
 			$list = $record->toArray();			
-			$data = $list['list'];
-             
+			$data = $list['list'];            
 			if(empty($data)) {
 				$ret = array();
 				$ret['page'] = 0;
@@ -451,30 +475,14 @@ class Finance_Logic_Base {
 				$ret['list'] = array();
 				return $ret;
 			}			
-			//var_dump($data);die;
+			//var_dump($list);die;
 			$_ret = array();
 			foreach ($data as $key => $value) {			
 				$status = $value['status'];
-				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
-                if($value['type'] === Finance_TypeStatus::NETSAVE) {
-                    $_ret[$key]['transType'] = 1;
-                    if($status===Finance_TypeStatus::ENDWITHSUCCESS) {
-                    	$_ret[$key]['status'] = "充值成功";
-                    }
-                }   
-                if($value['type'] === Finance_TypeStatus::CASH) {
-                    $_ret[$key]['transType'] = 2;
-                    if($status===Finance_TypeStatus::ENDWITHSUCCESS) {
-                    	$_ret[$key]['status'] = "提现成功";
-                    }
-                    if($status===Finance_TypeStatus::PROCESSING) {
-                    	$_ret[$key]['status'] = "提现处理中";
-                    }
-                    if($status===Finance_TypeStatus::ENDWITHFAIL) {
-                    	$_ret[$key]['status'] = "充值失败";
-                    }
-                    
-                }   
+				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间                
+                $_ret[$key]['transType'] = intval($value['type']);
+                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
+                $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
                 $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
                 $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
                 $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
@@ -515,24 +523,9 @@ class Finance_Logic_Base {
 			foreach ($data as $key => $value) {
 				$status = $value['status'];
 				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
-				if($value['type'] === Finance_TypeStatus::NETSAVE) {
-					$_ret[$key]['transType'] = 1;
-				    if($status===Finance_TypeStatus::ENDWITHSUCCESS) {
-                    	$_ret[$key]['status'] = "充值成功";
-                    }
-				}
-				if($value['type'] === Finance_TypeStatus::CASH) {
-					$_ret[$key]['transType'] = 2;
-					if($status===Finance_TypeStatus::ENDWITHSUCCESS) {
-						$_ret[$key]['status'] = "提现成功";
-					}
-					if($status===Finance_TypeStatus::PROCESSING) {
-						$_ret[$key]['status'] = "提现处理中";
-					}
-					if($status===Finance_TypeStatus::ENDWITHFAIL) {
-						$_ret[$key]['status'] = "充值失败";
-					}
-				}
+				$_ret[$key]['transType'] = intval($value['type']);
+                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
+                $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
 				$_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
 				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
 				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
@@ -572,24 +565,9 @@ class Finance_Logic_Base {
 			foreach ($data as $key => $value) {
 				$status = $value['status'];
 				$_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
-				if($value['type'] === Finance_TypeStatus::NETSAVE) {
-					$_ret[$key]['transType'] = 1;
-					if($status===Finance_TypeStatus::ENDWITHSUCCESS) {
-						$_ret[$key]['status'] = "充值成功";
-					}
-				}
-				if($value['type'] === Finance_TypeStatus::CASH) {
-					$_ret[$key]['transType'] = 2;
-					if($status===Finance_TypeStatus::ENDWITHSUCCESS) {
-						$_ret[$key]['status'] = "提现成功";
-					}
-					if($status===Finance_TypeStatus::PROCESSING) {
-						$_ret[$key]['status'] = "提现处理中";
-					}
-					if($status===Finance_TypeStatus::ENDWITHFAIL) {
-						$_ret[$key]['status'] = "充值失败";
-					}
-				}
+				$_ret[$key]['transType'] = intval($value['type']);
+                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
+                $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
 				$_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
 				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
 				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
