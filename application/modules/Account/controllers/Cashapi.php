@@ -13,46 +13,6 @@ class CashapiController extends Base_Controller_Api {
 	}
 	
 	/**
-	 * 充值
-	 * @param token csrf token 
-	 * @param transamt 交易金额
-	 * @return 标准json
-	 */
-	public function rechargeAction() {
-		$userid  = $this->userid;
-        $huifuid = $this->huifuid;	
-        $transAmt = $_REQUEST['value'];
-        $transAmt = sprintf('%.2f',$transAmt);      
-        $openBankId = strval($_REQUEST['openBankId']);
-        $gateBusiId = strval($_REQUEST['gateBusiId']);
-        ///notice
-        //$dcFlag     = strval($_REQUEST['dcFlag']);
-        $transAmt   = sprintf('%.2f',300000);
-        $gateBusiId = 'B2C';
-        $openBankId = 'CIB';
-        $dcFlag     = 'D';
-        Base_Log::notice(array(
-            'userid'     => $userid,
-            'huifuid'    => $huifuid,
-            'transAmt'   => $transAmt,
-            'gateBusiId' => $gateBusiId,
-            'openBankId' => $openBankId,
-            'dcFlag'     => $dcFlag,
-        ));
-        $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);         
-	}
-	
-	/**
-	 * 提现
-	 * @param token csrf token
-	 * @param transamt  交易金额
-	 * @param 标准json
-	 */
-	public function withdrawAction() {
-		$this->output();
-	}
-	
-	/**
 	 * 接口 /account/cashapi/list
 	 * 获取充值提现列表
 	 * @param type 0--全部 1--充值  2--提现
@@ -247,8 +207,6 @@ class CashapiController extends Base_Controller_Api {
 				$this->output($ret);
 				return;
 			}
-		}
-		
-	
+		}	
 	}
 }

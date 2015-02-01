@@ -216,6 +216,13 @@ class BgcallController extends Base_Controller_Page {
         	'ip'        => $lastip,        	
         );
         $this->financeLogic->payRecordEnterDB($param);
+        /* if(!Msg_Api::sendmsg(0,$userid,3,"充值消息")) {
+        	Base_Log::error(array(
+        		'msg' => "充值消息发送失败",
+        		'from' => 0,
+        		'to' => $userid,
+         	));
+        }  */       
 		Base_Log::notice($retParam);
 		//页面打印
 		$trxId = strval($trxId);
@@ -419,7 +426,7 @@ class BgcallController extends Base_Controller_Page {
 	 * notice:异步对账
 	 * 打印RECV_ORD_ID_OrderId
 	 */
-	public function cashAction() {
+	public function tixianAction() {
 		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
 		   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['UsrCustId']) || 
 		   !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) ||
@@ -695,6 +702,7 @@ class BgcallController extends Base_Controller_Page {
 		$orderId   = intval($_REQUEST['OrdId']);
 		$orderDate = $merPriv[0];
 		$amount    = floatval($_REQUEST['TransAmt']);
+		$type      = $merPriv[2];
 		
 		$bgret = $this->financeLogic->balance($userid);
 		$balance = $bgret['userBg']['acctBal'];//用户余额
@@ -709,12 +717,12 @@ class BgcallController extends Base_Controller_Page {
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态更改为“处理失败”
-			$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::TRANSFER,
+			$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, $type,
 			    $avlBal, $respCode, $respDesc);
 			return ;
 		}
 		//将finance_order表状态更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::TRANSFER,
+		$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, $type,
 	        $avlBal, $respCode, $respDesc);
 		//将该条记录插入至表finance_record中
 		$paramRecord = array(
@@ -725,7 +733,7 @@ class BgcallController extends Base_Controller_Page {
 			'amount'    => $amount,
 			'balance'   => $balance,
 			'total'     => $total,
-			'comment'   => '财务类自动扣款转账(商户用)记录',
+			'comment'   => Finance_TypeStatus::getType(intval($type)).'记录',
 			'ip'        => $lastip,
 		);
 		$this->financeLogic->payRecordEnterDB($paramRecord);
@@ -738,7 +746,7 @@ class BgcallController extends Base_Controller_Page {
 	 * 商户待取现回调
 	 * 打印RECV_ORD_ID_OrdId
 	 */
-	public function merCashAction() {
+	public function merTixianAction() {
 		if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
 		   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['UsrCustId']) || 
 		   !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) || 
@@ -770,12 +778,12 @@ class BgcallController extends Base_Controller_Page {
 			$logParam['msg'] = $respDesc;
 			Base_Log::error($logParam);
 			//将finance_order表状态字段更改为“处理失败”
-			$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::MERCASH,
+			$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL, Finance_TypeStatus::MERCASH,
 			    $avlBal, $respCode, $respDesc);
 			return ;
 		}
 		//将finance_order表状态字段更改为“处理成功”
-		$this->financeLogic->payOrderUpdate($userid, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::MERCASH,
+		$this->financeLogic->payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS, Finance_TypeStatus::MERCASH,
 			$avlBal, $respCode, $respDesc);
 		//将记录如表finance_record
 		$paramRecord = array(

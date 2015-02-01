@@ -5,7 +5,7 @@
  */
 class InvestController extends Base_Controller_Page {
 
-    CONST PAGESIZE   = 10; //每次出来10条数据
+    CONST PAGESIZE   = 6; //每次出6条数据
     CONST BACKING    = 5;
     CONST TENDERING  = 2;
     CONST ENDED      = 6;
@@ -132,7 +132,7 @@ class InvestController extends Base_Controller_Page {
 	    	return ;
 	    }
 	    foreach ($list as $key => $value) {
-	    	$listRet[$key]['proId'] = $value['loan_id'];
+	    	$listRet[$key]['proId'] = intval($value['loan_id']);    	
 	    	$loanInfo = Loan_Api::getLoanDetail($listRet[$key]['proId']);
 	    	$listRet[$key]['investPro'] = $value['title'];
 	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
@@ -144,10 +144,11 @@ class InvestController extends Base_Controller_Page {
 	    $ret = array(
 	    		'page'    => $page,
 	    		'pageall' => $tenderingRet['pageall'],
+	    		
 	    		'all'     => $tenderingRet['total'],
 	    		'list'    => $listRet,
 	    );
-	    //var_dump($ret);die();
+	    
 	    $this->output($ret);
 	    return ;
 	}
@@ -310,6 +311,7 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function repayplanAction() {
 		$invest_id = $_REQUEST['id'];
+		$invest_id = intval($invest_id);
 		$retData = Invest_Api::getRefunds($invest_id);
 		$list = array();
 		$data = array();
