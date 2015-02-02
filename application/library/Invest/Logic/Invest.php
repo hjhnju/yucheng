@@ -130,18 +130,23 @@ class Invest_Logic_Invest {
      */
     public function allowInvest($uid, $loanId) {
         $loan = Loan_Api::getLoanInfo($loanId);
-        if ($loan['fresh'] == 0) {
-            return true;
+        // 已满标不允许投标
+        if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
+            return false;
         }
         
-        $fresh = new Invest_Object_Fresh();
-        $fresh->userId = $uid;
-        $fresh->fetch();
-        
-        if (empty($fresh->id)) {
-            return true;
+        // 新手标不允许重复投标
+        if (!empty($loan['fresh'])) {
+            $fresh = new Invest_Object_Fresh();
+            $fresh->userId = $uid;
+            $fresh->fetch();
+            
+            if (!empty($fresh->id)) {
+                return false;
+            }
         }
-        return false;
+        
+        return true;
     }
     
     /**
