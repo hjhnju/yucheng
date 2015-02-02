@@ -297,16 +297,15 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $inCustId      = strval($inHuifuId);
         $arrDivDetails = array(
             //风险金账户
-            //TODO:配置化
             array(
-                'DivCustId'=> '6000060000677575',
-                'DivAcctId'=> 'SDT000002',
+                'DivCustId'=> Base_Config::getConfig('huifu.merCustId', CONF_PATH.'/huifu.ini'),
+                'DivAcctId'=> Base_Config::getConfig('huifu.acct.SDT2', CONF_PATH.'/huifu.ini'),
                 'DivAmt'   => sprintf('%.2f', $riskFee),
             ),  
             //专属账户
             array(
-                'DivCustId'=> '6000060000677575',
-                'DivAcctId'=> 'MDT000001',
+                'DivCustId'=> Base_Config::getConfig('huifu.merCustId', CONF_PATH.'/huifu.ini'),
+                'DivAcctId'=> Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH.'/huifu.ini'),
                 'DivAmt'   => sprintf('%.2f', $servFee),
             ),          
         );
@@ -530,42 +529,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $ordDate    = strval($orderDate);
         $outCustId  = strval($this->getHuifuid(intval($outUserId)));//还款人的汇付ID
         $tenderInfo = Finance_Logic_Order::getTenderInfo(intval($subOrdId));
-        $subOrdId   = strval($subOrdId);
+        $subOrdId   = strval($s);
         $subOrdDate = strval($tenderInfo['orderDate']);
         $outAcctId  = '';
         $transAmt   = $transAmt;
-        $loanInfo   = Loan_Api::getLoanInfo(intval($loanId));
-        $duration   = $loanInfo['days'];
-        ///test
-        $duration   = 10;
-        $riskLevel  = $loanInfo['level'];
-        ///test
-        $riskLevel  = 10;
-        $arrFee     = $this->getFee($riskLevel,$transAmt,$duration);
-        $fee        = strval($arrFee['all']);
-        $serviceFee = strval($arrFee['serviceFee']);
-        $prepareFee = strval($arrFee['prepareFee']);
-        $inCustId = strval($this->getHuifuid(intval($inUserId)));//收款人的汇付ID
-        $inAcctId = '';
-        /////////////////////////////////////////////////////////////////////////
-        //管理费到底应该怎么收取
-        //打到专属户中！！
-        $arrDivDetails = array(
-            //风险金账户
-            array(
-                'DivCustId'=>'6000060000677575',
-                'DivAcctId'=>'SDT000002',
-                'DivAmt'   => strval($prepareFee),
-            ),
-            //专属账户
-            array(
-                'DivCustId'=>'6000060000677575',
-                'DivAcctId'=>'MDT000001',
-                'DivAmt'   => strval($serviceFee),
-            ),
-        );
-        /////////////////////////////////////////////////////////////////////////
-        $divDetails = json_encode($arrDivDetails);
+        $fee        = '0.00'
+        $divDetails = '';
         $feeObjFlag = 'O';//像还款人收取手续费
         $bgRetUrl   = $this->webroot.'/finance/bgcall/repayment';
         $merPriv    = strval($outUserId);//借款人的uid
@@ -615,12 +584,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $outCustId = strval($outUserId);
         $outAcctId = strval($outAcctId);
         $inCustId  = strval($huifuid);
-        $inAcctId  = 'MDT000001';
+        $inAcctId  = '';
         $retUrl    = '';
         $bgRetUrl  = $this->webroot.'/finance/bgcall/transfer';
         $type      = strval($type);
         $merPriv   = strval($orderDate).'_'.strval($inUserId).'_'.$type;      
-        $ret = $this->chinapnr->transfer($ordId, $outCustId, $outAcctId, $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
+        $ret       = $this->chinapnr->transfer($ordId, $outCustId, $outAcctId, 
+            $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
         return $ret;
     }
     
