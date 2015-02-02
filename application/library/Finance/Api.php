@@ -8,144 +8,68 @@ class Finance_Api {
     /**
      * 验证签名
      */
-    public static function verifySign($arrFields, $arrValues, $sign){
-        $logic  = new Finance_Logic_Base();
-        $bolRet = $logic->verifySign($arrFields, $arrValues, $sign);
+    public static function verifySign($arrFields, $arrParams, $sign){
+        $chinapnr  = Finance_Chinapnr_Client::getInstance();
+        $originStr = $chinapnr->getSignContent($arrParams, $arrFields);
+        $bolRet    = $chinapnr->verify($originStr, $sign);
         Base_Log::notice(array(
-            'msg' => '验证签名',
+            'msg'    => '验证签名',
             'bolRet' => $bolRet,
         ));
         return $bolRet;
     }
-    
+
     /**
-     * 商户子账户信息查询 Finance_Api::queryAccts
-     * @return 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
-     * status=0请求成功  返回正常数据
-     * status=Finance_RetCode::REQUEST_API_ERROR 请求汇付API接口失败
-     * data=array(
-     * 
-     * )
+     * 获取平台账户各种余额
+     * @return $array array("AvlBal":"10.00" , "AcctBal":"10.00" , "FrzBal":"10.00")
      */
-    public static function queryAccts() {
-        $ret = new Base_Result();
-        $queryLogic = new Finance_Logic_Query();
-        $return = $queryLogic->queryAccts();
-        
-        if($return === false) {         
-            $ret->status = Finance_RetCode::REQUEST_API_ERROR;
-            $ret->data = array();
-            $ret->statusInfo = Finance_RetCode::getMsg($ret->status);
-            
-            $logParam = array();
-            $logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
-            Base_Log::error($logParam);
-            
-            return $ret->format();
-        } 
-        if($return['RespCode'] !== '000') {
-            $ret->status = $return['RespCode'];
-            $ret->data = array();
-            $ret->statusInfo = $return['RespDesc'];
-            
-            $logParam = array();
-            $logParam['msg'] = $return['RespDesc']; 
-            $logParam = array_merge($logParam,$return);
-            Base_Log::error($logParam);
-            
-            return $ret->format();
-        }
-        $ret->status = $return['RespCode'];
-        $ret->data = $return;
-        Base_Log::notice($return);      
-        return $ret->format();
+    public static function getPlatformBalance(){
+        $logic   = new Finance_Logic_Query();
+        $arrAcct = $logic->queryAccts();
+        Base_Log::notice(array(
+            'msg' => '获取平台账户各种余额',
+            'mdt' => $arrAcct,
+        ));
+        return $arrAcct['MDT000001']['AvlBal'];
     }
-    
+
+
     /**
-     * 余额查询接口 Finance_Api::queryBalanceBg
-     * @param String $UserCustId 用户客户号(require)
-     * 
-     * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
-     * status=0 请求成功 返回正常数据
-     * status=Base_RetCode::PARAM_ERROR 参数错误
-     * status=Finance_RetCode::REQUEST_API_ERROR 请求汇付API接口失败
-     * data=array(
-     *    'avlBal' 可用余额         
-     *    'acctBal' 账户余额         
-     *    'frzBal' 冻结余额   
-     * )
-     */ 
-    public static function queryBalanceBg($userCustId) {
-        if(!isset($userCustId) || empty($userCustId)) {
-            Base_Log::error(array(
-                'msg' => '请求参数错误',
-                'userCustId' => $userCustId,
-            ));
-            return false;
-        }
-        $ret = new Base_Result();
-        $queryLogic = new Finance_Logic_Query();
-        $return = $queryLogic->queryBalanceBg($userCustId);
-        if($return === false) {
-            $ret->status = Finance_RetCode::REQUEST_API_ERROR;
-            $ret->data = array(
-                'avlBal'  => 0.00,
-                'acctBal' => 0.00,
-                'frzBal'  => 0.00,
-            );
-            $ret->statusInfo = Finance_RetCode::getMsg($ret->status);
-            
-            $logParam = array();
-            $logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
-            $logParam['userCustId'] = $userCustId;
-            Base_Log::error($logParam);
-                        
-            return $ret->format();
-        }
-        if($return['RespCode'] !== '000') {
-            $ret->status = $return['RespCode'];
-            $ret->data = array(
-                'avlBal'  => 0.00,
-                'acctBal' => 0.00,
-                'frzBal'  => 0.00,
-            );
-            $ret->statusInfo = $return['RespDesc'];
-            
-            $logParam = array();
-            $logParam['msg'] = $return['RespDesc']; 
-            $logParam = array_merge($logParam,$return);
-            Base_Log::error($logParam);
-            
-            return $ret->format();
-        } 
-        $ret->status = $return['RespCode'];
-        $ret->data = array(
-            'avlBal'  => floatval(str_replace(',', '', $return['AvlBal'])),
-            'acctBal' => floatval(str_replace(',', '', $return['AcctBal'])),
-            'frzBal'  => floatval(str_replace(',', '', $return['FrzBal'])),
-        );      
-        Base_Log::notice($return);      
-        return $ret->format();      
-    }
-    
-    /**
-     * 获取用户余额Finance_Api::getUserBalance
+     * 获取用户可用余额Finance_Api::getUserAvlBalance
      * @param int userid
      * @return array || false
      */
-    public static function getUserBalance($userid) {
-        if(!isset($userid) || $userid <= 0) {
+    public static function getUserAvlBalance($userid) {
+        $userid = intval($userid);
+        if($userid <= 0) {
             Base_Log::error(array(
                 'msg'    => '请求参数错误',
                 'userid' => $userid,
             ));
             return false;
         }
-        $baseLogic = new Finance_Logic_Base();
-        $userid = intval($userid);
-        $huifuid = $baseLogic->getHuifuid($userid);
-        $ret = Finance_Api::queryBalanceBg($huifuid);
-        return $ret;        
+        $logic  = new Finance_Logic_Query();
+        $avlBal = $logic->getUserAvlBalance($userid);
+        Base_Log::notice(array(
+            'avlBal' => $avlBal,
+            'userid' => $userid,
+         ));
+        return $avlBal;        
+    }
+
+    /**
+     * 获取用户各种余额Finance_Api::getUserBalance
+     * @param int userid
+     * @return array 出错时，各值返回0.00
+     * array('AvlBal'=>可用余额, 
+     *      'AcctBal' => 账户余额,
+     *      'FrzBal'  => 冻结金额,)
+     */
+    public static function getUserBalance($userid) {
+        $logic  = new Finance_Logic_Query();
+        $arrBal = $logic->getUserBalance($userid);
+        Base_Log::notice($arrBal);
+        return $arrBal;        
     }
     
     /**
@@ -159,21 +83,21 @@ class Finance_Api {
     public static function transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type=Finance_TypeStatus::TRANSFER) {
         if(!isset($outUserId) || !isset($outAcctId) || !isset($transAmt) || !isset($inUserId)) {
         	Base_Log::error(array(
-        		'msg' => '请求参数错误',
-        		'outUserId' => $outUserId,
-        		'outAccId' => $outAcctId,
-        		'transAmt' => $transAmt,
-        		'inUserId' => $inUserId,
-        		'type' => $type,
+                'msg'       => '请求参数错误',
+                'outUserId' => $outUserId,
+                'outAccId'  => $outAcctId,
+                'transAmt'  => $transAmt,
+                'inUserId'  => $inUserId,
+                'type'      => $type,
         	));
         	return false;
         }
         $transLogic = new Finance_Logic_Transaction();
-        $ret = $transLogic->transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type);
+        $ret        = $transLogic->transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type);
         if(!$ret || $ret['RespCode'] !== '000') {
         	Base_Log::error(array(
-        		'msg' => '转账失败',
-        		'param' => $ret,
+                'msg'   => '转账失败',
+                'param' => $ret,
         	));
         	return false;
         }
@@ -266,43 +190,43 @@ class Finance_Api {
      *  
      */ 
     public static function queryCardInfo($userCustId,$cardId='') {
-        $ret = new Base_Result();       
+        $ret        = new Base_Result();       
         $queryLogic = new Finance_Logic_Query();
-        $return = $queryLogic->queryBankCard($userCustId,$cardId);
+        $return     = $queryLogic->queryBankCard($userCustId,$cardId);
         if($return == false) {
-            $ret->status = Finance_RetCode::REQUEST_API_ERROR;
-            $ret->data = array();
-            $ret->statusInfo = Finance_RetCode::getMsg($ret->status);
+            $ret->status            = Finance_RetCode::REQUEST_API_ERROR;
+            $ret->data              = array();
+            $ret->statusInfo        = Finance_RetCode::getMsg($ret->status);
             
-            $logParam = array();
-            $logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
+            $logParam               = array();
+            $logParam['msg']        = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
             $logParam['userCustId'] = $userCustId;
-            $logParam['cardId'] = $cardId;
+            $logParam['cardId']     = $cardId;
             
             Base_Log::error($logParam);
             
             return $ret->format();
         } 
         if($return['RespCode'] != '000') {
-            $ret->status = $return['RespCode'];
-            $ret->data = $return;
+            $ret->status     = $return['RespCode'];
+            $ret->data       = $return;
             $ret->statusInfo = $return['RespDesc'];
             
-            $logParam = array();
+            $logParam        = array();
             $logParam['msg'] = $return['RespDesc'];
-            $logParam = array_merge($logParam,$return);
+            $logParam        = array_merge($logParam,$return);
             Base_Log::error($logParam);
             
             return $ret->format();
         } 
         if (empty($return['UsrCardInfolist'])) {
-            $ret->status = Finance_RetCode::NOTBINDANYCARD;
-            $ret->data = array();
+            $ret->status     = Finance_RetCode::NOTBINDANYCARD;
+            $ret->data       = array();
             $ret->statusInfo = Finance_RetCode::getMsg($ret->status);
-        
-            $logParam = array();
+            
+            $logParam        = array();
             $logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::NOTBINDANYCARD);
-            $logParam = array_merge($logParam,$return);
+            $logParam        = array_merge($logParam,$return);
             Base_Log::notice($logParam);
             
             return $ret->format();
@@ -336,28 +260,28 @@ class Finance_Api {
                 'card'    => $card,
             ));
         }
-        $ret = new Base_Result();
+        $ret             = new Base_Result();
         $userManageLogic = new Finance_Logic_UserManage();
-        $return = $userManageLogic->delCard($huifuid,$card);
+        $return          = $userManageLogic->delCard($huifuid,$card);
         if($return == false) {
-            $ret->status = Finance_RetCode::REQUEST_API_ERROR;
-            $ret->data = array();
+            $ret->status     = Finance_RetCode::REQUEST_API_ERROR;
+            $ret->data       = array();
             $ret->statusInfo = Finance_RetCode::getMsg($ret->status);
             
-            $logParam = array();
+            $logParam        = array();
             $logParam['msg'] = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
             Base_Log::error($logParam);
             
             return $ret->format();
         } 
         if ($return['RespCode'] != "000") { //汇付返回值为非正常处理结构
-            $ret->status = $return['RespCode'];
-            $ret->data = $return;
+            $ret->status     = $return['RespCode'];
+            $ret->data       = $return;
             $ret->statusInfo = $return['RespDesc'];
             
-            $logParam = array();
+            $logParam        = array();
             $logParam['msg'] = $return['RespDesc'];         
-            $logParam = array_merge($logParam,$return);
+            $logParam        = array_merge($logParam,$return);
             Base_Log::error($logParam);
             
             return $ret->format();          

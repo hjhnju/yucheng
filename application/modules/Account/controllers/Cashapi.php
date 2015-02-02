@@ -45,12 +45,11 @@ class CashapiController extends Base_Controller_Api {
         $page = $_REQUEST['page'];//页码
         $startTime = $_REQUEST['startTime'];       
 		$endTime = $_REQUEST['endTime'];
-		$baseLogic = new Finance_Logic_Base();
 		$userid = $this->userid;
 		$pageSize = 6;
 		//只有在没有选择时间范围的情况下才可以进行开始时间与结束时间的数据拉取
 		if(isset($startTime) && isset($endTime) && $startTime !== "0" && $endTime !== "0") {
-	        $ret = $baseLogic->getReWiRecord($userid,$startTime,$endTime,$queryType,$page,$pageSize);
+	        $ret = Finance_Logic_Order::getReWiRecord($userid,$startTime,$endTime,$queryType,$page,$pageSize);
 	        if(!$ret) {
 	        	Base_Log::error(array(
 	        	    'msg'       => '请求充值提现数据',
@@ -77,7 +76,7 @@ class CashapiController extends Base_Controller_Api {
 			if($time === 1) {
 				$begin = mktime(0,0,0,date('m'),date('d'),date('Y'));			
 				$end = time();
-				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);				
+				$ret = Finance_Logic_Order::getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);				
 				if(!$ret) {
 					Base_Log::error(array(
 						'msg'       => '请求充值提现数据',
@@ -105,7 +104,7 @@ class CashapiController extends Base_Controller_Api {
 				//$endLastweek=mktime(23,59,59,date('m'),date('d')-date('w')+7-7,date('Y'));
 				$begin = strtotime('-1 week');
 				$end = time();
-				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				$ret = Finance_Logic_Order::getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
 				if(!$ret) {
 					Base_Log::error(array(
 					    'msg'       => '请求充值提现数据',
@@ -133,7 +132,7 @@ class CashapiController extends Base_Controller_Api {
 				//$endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
 				$begin = strtotime('-1 month');
 				$end = time();
-				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				$ret = Finance_Logic_Order::getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
 				if(!$ret) {
 					Base_Log::error(array(
 					    'msg'       => '请求充值提现数据',
@@ -159,7 +158,7 @@ class CashapiController extends Base_Controller_Api {
 			if($time === 4) {
 				$begin = strtotime('-2 month');
 				$end = time();	
-				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				$ret = Finance_Logic_Order::getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
 				if(!$ret) {
 					Base_Log::error(array(
 					    'msg'       => '请求充值提现数据',
@@ -185,7 +184,7 @@ class CashapiController extends Base_Controller_Api {
 			if($time === 5) {
 				$begin = strtotime('-6 month');
 				$end = time();
-				$ret = $baseLogic->getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
+				$ret = Finance_Logic_Order::getReWiRecord($userid,$begin,$end,$queryType,$page,$pageSize);
 				if(!$ret) {
 					Base_Log::error(array(
 					    'msg'       => '请求充值提现数据',

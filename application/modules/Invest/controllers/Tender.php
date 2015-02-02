@@ -45,7 +45,7 @@ class TenderController extends Base_Controller_Page {
 	        return $this->redirect('/invest/detail?id=' . $loanId);
 	    }
 	    // 检查用户余额是否满足
-	    $userAmount = $logic->getAccountAvlBal($uid);
+	    $userAmount = Finance_Api::getUserAvlBalance($uid);
 	    if ($amount > $userAmount) {
 	        Base_Log::notice(array(
                 'msg'  => '用户余额不够',

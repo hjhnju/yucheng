@@ -181,26 +181,6 @@ class Invest_Logic_Invest {
     }
     
     /**
-     * 获取用户的可用余额
-     * @param integer $uid
-     * @return number
-     */
-    public function getAccountAvlBal($uid) {
-        $arrAmt = Finance_Api::getUserBalance($uid);
-        $avlBal = 0.0;
-        if(!empty($arrAmt) && isset($arrAmt['data']['avlBal'])){
-            $avlBal = floatval($arrAmt['data']['avlBal']);
-        } else {
-            Base_Log::warn(array(
-                'msg' => '获取账户可用余额失败',
-                'uid' => $uid,
-                'avlBal' => $avlBal,
-            ));
-        }
-        return $avlBal;
-    }
-    
-    /**
      * 获取用户的总投资金额
      * @param integer $uid
      * @return number
@@ -365,11 +345,11 @@ class Invest_Logic_Invest {
      * 获取用户累计投资收益情况
      * @param integer $uid
      * @return array <pre>(
-            'all_invest' => $all,
-            'all_income' => $incomes,
-            'wait_capital' => $capital,
-            'wait_interest' => $interest,
-        );
+     *      'all_invest' => $all,
+     *       'all_income' => $incomes,
+     *       'wait_capital' => $capital,
+     *       'wait_interest' => $interest,
+     *   );
      */
     public function getUserEarnings($uid) {
         $list = new Invest_List_Invest();
