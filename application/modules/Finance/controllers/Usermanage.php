@@ -141,7 +141,7 @@ class UsermanageController extends Base_Controller_Page {
    //  }
     
    //  /**
-   //   * FOR TEST
+   //   * 根据身份证查询用户汇付信息
    //   */
    //  public function liluAction() {
    //      $chinapnr = Finance_Chinapnr_Client::getInstance();

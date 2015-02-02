@@ -132,7 +132,7 @@ class Invest_Logic_Invest {
         $loan = Loan_Api::getLoanInfo($loanId);
         // 已满标不允许投标
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
-            return false;
+            return Invest_RetCode::NOT_ALLOWED;
         }
         
         // 新手标不允许重复投标
@@ -142,11 +142,11 @@ class Invest_Logic_Invest {
             $fresh->fetch();
             
             if (!empty($fresh->id)) {
-                return false;
+                return Invest_RetCode::FRESH_ONLY;
             }
         }
         
-        return true;
+        return Invest_RetCode::SUCCESS;
     }
     
     /**

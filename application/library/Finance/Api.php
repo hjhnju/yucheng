@@ -30,7 +30,7 @@ class Finance_Api {
             'msg' => '获取平台账户各种余额',
             'mdt' => $arrAcct,
         ));
-        $acct = Base_Log::getConfig('huifu.acct.MDT1', CONF_PATH.'/huifu.ini');
+        $acct = Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH.'/huifu.ini');
         return $arrAcct[$acct]['AvlBal'];
     }
 
