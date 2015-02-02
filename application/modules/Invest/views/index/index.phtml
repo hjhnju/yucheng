@@ -38,7 +38,7 @@
                 <div class="toulist-box-class" id="qixian">
                     <span class="toulist-box-class-name">借款期限：</span>
                     <a class="toulist-box-class-all qixian current" data-value="0">全部</a>
-                    <a class="toulist-box-class-all qixian" data-value="1">1-3月</a>
+                    <a class="toulist-box-class-all qixian" data-value="1">0-3月</a>
                     <a class="toulist-box-class-all qixian" data-value="2">4-6月</a>
                     <a class="toulist-box-class-all qixian" data-value="3">7-12月</a>
                     <a class="toulist-box-class-all qixian" data-value="4">13-24月</a>
@@ -120,8 +120,9 @@
             </div>
 
             <div class="test">
-
+                {%if !empty($data.list)%}
                 <div id="test2"></div>
+                {%/if%}
             </div>
         </div>
     </div>
