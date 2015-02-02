@@ -533,14 +533,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $subOrdDate = strval($tenderInfo['orderDate']);
         $outAcctId  = '';
         $transAmt   = $transAmt;
-        $fee        = '0.00'
+        $fee        = '0.00';
         $divDetails = '';
         $feeObjFlag = 'O';//像还款人收取手续费
         $bgRetUrl   = $this->webroot.'/finance/bgcall/repayment';
         $merPriv    = strval($outUserId);//借款人的uid
-        $reqExt     = array(
-        'ProId'     => strval($loanId),
-        );
+        $reqExt     = array('ProId'=> strval($loanId));
         $reqExt     = json_encode($reqExt);     
         $ret        = $this->chinapnr->repayment($this->merCustId, $ordId, $ordDate, $outCustId, 
             $subOrdId, $subOrdDate, $outAcctId, $transAmt, $fee, $inCustId, $inAcctId,
