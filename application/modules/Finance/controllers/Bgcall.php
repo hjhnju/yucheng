@@ -39,7 +39,7 @@ class BgcallController extends Base_Controller_Page {
      * @param  $arrParams array('field' => 'value')
      */
     protected function verify($arrFields, $arrParams, $sign) {
-        $chinapnr  = Finance_Chinapnr_Client::getInstance()
+        $chinapnr  = Finance_Chinapnr_Client::getInstance();
         $originStr = $chinapnr->getSignContent($arrParams, $arrFields);
         return $chinapnr->verify($originStr, $sign);
     }

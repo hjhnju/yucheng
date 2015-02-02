@@ -255,6 +255,8 @@ HTML;
                 "CharSet"   =>  $charSet,
                 "ChkValue"  =>  $checkValue,
         );
+
+        Base_Log::notice($reqData);
         $this->autoRedirect($reqData);
     }
 

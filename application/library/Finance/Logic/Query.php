@@ -51,8 +51,8 @@ class Finance_Logic_Query extends Finance_Logic_Base {
             'FrzBal'  => 0.00,
         );
         if(empty($userCustId)) {
-            Base_Log::error(array(
-                'msg'     => '请求参数错误',
+            Base_Log::notice(array(
+                'msg'     => '汇付id为空',
                 'huifuid' => $userCustId,
             ));
             return $arrBal;
