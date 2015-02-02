@@ -1,0 +1,50 @@
+.ui-pager {
+    text-align: center;
+    width: 100%;
+}
+
+.ui-pager-box {
+    display: inline-block;
+    .clearfix;
+
+    .ui-pager-item {
+//        float: left;
+//        border: 1px solid #ccc;
+//        padding: 2px 5px;
+//        text-decoration: none;
+//        margin-right: 10px;
+//        color: #000;
+//        cursor: pointer;
+//
+//        &:hover {
+//            background-color: #dfdfdf;
+//        }
+        float: left;
+        padding: 6px 10px;
+        border: 1px solid #cccccc;
+        margin: 30px 10px 30px 0;
+        color: #000000;
+        text-decoration: none;
+
+        .border-radius(3px);
+
+        &:hover,
+        &.current {
+            background-color: @color-green;
+            color: #FFFFFF;
+            border-color: @color-green;
+        }
+    }
+
+    .ui-pager-select {
+        &.current {
+//            border: 0;
+//            color: #333;
+            cursor: default;
+
+//            &:hover {
+//                background: #fff;
+//            }
+        }
+    }
+}
