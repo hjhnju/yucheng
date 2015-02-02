@@ -211,7 +211,7 @@ class BgcallController extends Base_Controller_Page {
       
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal']//用户可用余额
+        $avlBal   = $arrBal['AvlBal'];//用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
         
         $lastip   = Base_Util_Ip::getClientIp();
@@ -298,7 +298,7 @@ class BgcallController extends Base_Controller_Page {
 
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal']//用户可用余额
+        $avlBal   = $arrBal['AvlBal'];//用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
         
         $lastip      = Base_Util_Ip::getClientIp();
@@ -382,7 +382,7 @@ class BgcallController extends Base_Controller_Page {
 
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal']//用户可用余额
+        $avlBal   = $arrBal['AvlBal'];//用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
 
         if($respCode !== '000') {
@@ -477,7 +477,7 @@ class BgcallController extends Base_Controller_Page {
         
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal']//用户可用余额
+        $avlBal   = $arrBal['AvlBal'];//用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
         
         $lastip    = Base_Util_Ip::getClientIp();
@@ -606,7 +606,7 @@ class BgcallController extends Base_Controller_Page {
         $amount    = floatval($retParam['TransAmt']);
         $arrBal    = Finance_Api::getUserBalance($userid);
         $balance   = $arrBal['AcctBal'];//用户余额
-        $avlBal    = $arrBal['AvlBal']//用户可用余额
+        $avlBal    = $arrBal['AvlBal'];//用户可用余额
         $total     = Finance_Api::getPlatformBalance();//系统余额
         
         $lastip    = Base_Util_Ip::getClientIp();
@@ -677,7 +677,7 @@ class BgcallController extends Base_Controller_Page {
         $amount    = floatval($retParam['TransAmt']);
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal']//用户可用余额
+        $avlBal   = $arrBal['AvlBal'];//用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
         
         $lastip    = Base_Util_Ip::getClientIp();
@@ -739,7 +739,7 @@ class BgcallController extends Base_Controller_Page {
         
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal']//用户可用余额
+        $avlBal   = $arrBal['AvlBal'];//用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
 
         $lastip    = Base_Util_Ip::getClientIp();
@@ -803,7 +803,7 @@ class BgcallController extends Base_Controller_Page {
         
         $arrBal  = Finance_Api::getUserBalance($userid);
         $balance = $arrBal['AcctBal'];//用户余额
-        $avlBal  = $arrBal['AvlBal']//用户可用余额
+        $avlBal  = $arrBal['AvlBal'];//用户可用余额
         $total   = Finance_Api::getPlatformBalance();//系统余额
 
         if($respCode !== '000') {
