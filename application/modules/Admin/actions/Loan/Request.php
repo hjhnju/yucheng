@@ -71,14 +71,15 @@ class RequestAction extends Yaf_Action_Abstract {
             ),
             //借款企业信息
             'company'     => array(
-                'id'        => 6,
-                'school'    => '福建101中学',
-                'area'      => '福建东城区',
-                'assets'    => '5000万',
-                'employers' => 234,
-                'years'     => 2010,
-                'funds'     => '100万',
-                'students'  => 2018,
+                'id'          => 6,
+                'school'      => '***中学',
+                //TODO: 'school_real' => '福建101中学',
+                'area'        => '福建东城区',
+                'assets'      => '5000万',
+                'employers'   => 234,
+                'years'       => 2010,
+                'funds'       => '100万',
+                'students'    => 2018,
             ),
             //借款担保人信息
             'guarantee' => array(
