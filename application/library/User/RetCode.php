@@ -58,6 +58,8 @@ class User_RetCode extends Base_RetCode{
     
     const EMAIL_OR_PASSWD_ERROR     = 1063; //邮箱或密码错误
     
+    
+    
     /* 消息函数
      * @var array
      */
@@ -87,8 +89,9 @@ class User_RetCode extends Base_RetCode{
         self::ORIGIN_PASSWD_WRONG      => '原密码错误',
         self::USER_PHONE_NOTEXIT       => '手机号不存在',
         self::USER_EMAIL_NOTEXIT       => '邮箱不存在',
-        self::PHONE_OR_PASSWD_ERROR => '手机号或密码错误',
-        self::EMAIL_OR_PASSWD_ERROR => '邮箱或密码错误',
+        self::PHONE_OR_PASSWD_ERROR    => '手机号或密码错误',
+        self::EMAIL_OR_PASSWD_ERROR    => '邮箱或密码错误',
+     
     );
 
 }

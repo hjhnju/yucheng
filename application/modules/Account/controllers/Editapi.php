@@ -199,6 +199,18 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     		return;
     	}
+    	
+    	$objLogin = new User_List_Login();
+    	$filters = array('email'=>$email);
+    	$objLogin->setFilter($filters);
+        $list = $objLogin->toArray();  	
+  	
+    	if(!empty($list[0])) {
+    		$errCode = Account_RetCode::EMAIL_EXISTS;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	}    	
     	$type = strval('email');    	
     	$bolCheckImg = User_Api::checkImageCode($vericode,$type);   
     	if(!$bolCheckImg) {

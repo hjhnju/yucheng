@@ -76,7 +76,7 @@ class SecureController extends Base_Controller_Page{
 		$emailnum = Base_Util_String::starEmail($emailnum);
 		
 		if($email == 2) {
-			$emailurl = $webroot.'/user/open';
+			$emailurl = $webroot.'/account/edit/chemail';
 		} else {
 			$emailurl = $webroot.'/account/edit/chemail';				
 		}

@@ -31,6 +31,7 @@ class Account_RetCode extends Base_RetCode {
 	CONST INPUT_CONTENT              = 1121;
 	CONST INPUT_PWD                  = 1122;
 	CONST UNBIND_FAIL                = 1123;
+	const EMAIL_EXISTS               = 1124; //邮箱已经被注册
 	/* 消息函数
 	 * @var array
 	*/
@@ -57,6 +58,7 @@ class Account_RetCode extends Base_RetCode {
 		self::INPUT_CONTENT              => '请输入邮箱与验证码',
 		self::INPUT_PWD                  => '请输入原始密码与新密码',
 		self::UNBIND_FAIL                => '解绑失败',
+		self::EMAIL_EXISTS               => '该邮箱已被注册',
 	);
 	
 	/**
