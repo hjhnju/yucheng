@@ -14,6 +14,15 @@ class Loan_Api {
     }
 
     /**
+     * 满标审核是否可以打款
+     */
+    public function fullPassAudit($loanId){
+        $objLoan = new Loan_Object_Loan($loanId);
+        $objLoan->status = Loan_Type_LoanStatus::PAYING;
+        return $objLoan->save();
+    }
+
+    /**
      * 发布借款
      * @param integer $loanId 借款ID
      * @return boolean
