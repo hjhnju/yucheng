@@ -39,7 +39,7 @@ class InfoApiController extends Base_Controller_Api {
     public function saveAction() {
         $strTitle  = $_REQUEST['title'];
         $strAuthor = $_REQUEST['author'];
-        $strAbstrace = $_REQUEST['abstract'];
+        $strAbstract = $_REQUEST['abstract'];
         $strCtx    = $_REQUEST['ctx'];
         $strTime   = $_REQUEST['time'];
         $intType   = $_REQUEST['type'];
@@ -48,7 +48,7 @@ class InfoApiController extends Base_Controller_Api {
         $arrPost                 = array();
         $arrPost['title']        = $strTitle;
         $arrPost['author']       = $strAuthor;
-        $arrPost['abstract']     = $strAbstract;
+        $arrPost['abstract']       = $strAbstract;
         $arrPost['publishtime']  = strtotime($strTime);
         $arrPost['ctx']          = $strCtx;
         $arrPost['type']         = $intType;
