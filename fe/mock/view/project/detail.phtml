@@ -43,7 +43,10 @@
             <div class="project">
                 <div class="project-box">
                     <div class="project-title">
-                        <div class="project-title-name">{%$title%}</div>
+                        <div class="project-title-name">
+                            <span class="grade-star level-hr"></span>
+                            {%$title%}
+                        </div>
                         <div class="project-title-number">
                             <span>借款编号：</span>
                             <span>{%$id%}</span>
@@ -337,7 +340,7 @@
                 </div>
             </div>
             {%else%}
-            <div class="right-top">
+            <form id="invest-form" method="post" action="/mock/entry/project/detail.php" class="right-top">
                 <div class="right-top-title">我来投资</div>
                 <div class="right-top-new"></div>
 
@@ -358,7 +361,7 @@
                     <a class="right-top-btn-confirm confirm-submit">确定投资</a>
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
-            </div>
+            </form>
             {%/if%}
             <div class="right-bottom">
                 <div class="right-bottom-title">

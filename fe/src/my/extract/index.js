@@ -107,6 +107,16 @@ define(function (require) {
         });
 
         $('#submit').click(function () {
+
+            $('#extract').trigger('submit');
+
+//            withdraw.remote({
+//                value: value,
+//                invercode: invercode
+//            });
+        });
+
+        $('#extract').on('submit', function () {
             var ipt = $('#search-ipt');
             var value = ipt.val();
             var smsid = $('#sms-ipt');
@@ -116,27 +126,20 @@ define(function (require) {
                 $('#money-error').html('输入金额不能为空');
                 ipt.addClass('current');
 
-                return;
+                return false;
             }
             if(isNaN(value)) {
                 $('#money-error').html('输入金额只能为数字');
                 ipt.addClass('current');
 
-                return;
+                return false;
             }
             $('.ext-ipt.current').trigger('blur');
             if (!invercode) {
                 $('#smscode-error').html('验证码不能为空');
                 smsid.addClass('current');
-                return;
+                return false;
             }
-
-            $('#extract')[0].submit();
-
-//            withdraw.remote({
-//                value: value,
-//                invercode: invercode
-//            });
         });
 
         // withdrawCb

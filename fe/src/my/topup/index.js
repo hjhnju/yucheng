@@ -42,6 +42,10 @@ define(function (require) {
         //点击充值
         $('#pay').click(function () {
 
+            $('#topup-form').trigger('submit');
+        });
+
+        $('#topup-form').on('submit', function () {
             var value = $('#box-ipt').val();
 //            var id = $('.topup-select-con-box.current').find('.topup-select-ipt').attr('data-value');
             var iptvalue = $('.topup-money-box-ipt').val();
@@ -49,12 +53,12 @@ define(function (require) {
 
             if(!value) {
                 error.html('充值金额不能为空');
-                return;
+                return false;
             }
 
             if(isNaN(iptvalue)) {
                 error.html('输入金额必须是数字');
-                return;
+                return false;
             }
 
             error.html('');
@@ -62,8 +66,6 @@ define(function (require) {
 //                id: id,
 //                value: value
 //            });
-
-            $('#topup-form')[0].submit();
         });
 
         //rechargeCb

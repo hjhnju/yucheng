@@ -41,7 +41,12 @@
             <div class="project">
                 <div class="project-box">
                     <div class="project-title">
-                        <div class="project-title-name">{%$data.title%}</div>
+                        <div class="project-title-name" title="{%$data.title%}">
+                            {%if isset({%$data.level_name%})%}
+                            <span class="grade-star level-{%$data.level_name%}"></span>
+                            {%/if%}
+                            {%$data.title%}
+                        </div>
                         <div class="project-title-number">
                             <span>借款编号：</span>
                             <span>{%$data.id%}</span>
