@@ -12,10 +12,6 @@ class Loan_Api {
      */
     public static function buildRefunds($loan_id) {
     }
-    
-    public static function buildInvestRefunds($invest_id) {
-        
-    }
 
     /**
      * 发布借款
@@ -151,6 +147,8 @@ class Loan_Api {
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
         $data = $loan->toArray();
+        $data['amount'] = floatval($data['amount']);
+        $data['invest_amount'] = floatval($data['invest_amount']);
 
         Base_Log::debug(array('loan_id'=> $loan_id, 'data'=>$data));
         
@@ -173,10 +171,10 @@ class Loan_Api {
      * @return array
      */
     private static function formatLoan($data) {
+        $data['percent']       = floor(100 * $data['invest_amount'] / $data['amount']);
         $data['amount_rest']   = $data['amount'] - $data['invest_amount'];
         $data['amount']        = number_format($data['amount'], 2);
         $data['invest_amount'] = number_format($data['invest_amount'], 2);
-        $data['percent']       = number_format(100 * $data['invest_amount'] / $data['amount'], 0);
         $data['days']          = self::getDays($data['duration']);
 
         $safe     = new Loan_Type_SafeMode();
@@ -243,6 +241,7 @@ class Loan_Api {
         }
         if ($loan->investAmount >= $loan->amount) {
             $loan->status = Loan_Type_LoanStatus::FULL_CHECK;
+            $loan->fullTime = time();
             if (!$loan->save()) {
                 Base_Log::error($loan, '更改满标状态错误');
                 return false;

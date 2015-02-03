@@ -10,7 +10,7 @@
         "common": {
             "bdSnsKey": {},
             "bdText": "{%$data.title%}",
-            "bdDesc": "{%$data.ctx%}",
+            "bdDesc": "{%$data.abstract%}",
             "bdUrl": window.location.href,
             "bdMini": "2",
             "bdMiniList": false,
@@ -50,7 +50,7 @@
                 </span>
             </div>
             <p class="infos-detail-ctx">
-                {%$data.ctx%}
+                {%$data.ctx|escape:'html'%}
             </p>
         </div>
     </div>

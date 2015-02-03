@@ -9,9 +9,9 @@ class Infos_Api {
      * 获取最新公告
      * @return $arrPost | null
      */
-    public static function getNewPost(){
+    public static function getNewPost($strType){
         $logic   = new Infos_Logic_Post();
-        $list    = $logic->getList(1, 1);
+        $list    = $logic->getList(1, 1,$strType);
         unset($list['list'][0]['content']);
         return $list['list'][0];
     }   

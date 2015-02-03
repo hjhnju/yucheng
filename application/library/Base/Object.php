@@ -54,13 +54,13 @@ class Base_Object {
     
     public function __construct($id = 0, $db = null) {
         if (!empty($id)) {
-            if (is_int($id)) {
+            if (is_array($id)) {
+                $this->setData($id);
+                $this->fetch();
+            } else {
                 $key = $this->prikey;
                 $this->$key = $id;
                 $this->fetchFromPrimary();
-            } elseif (is_array($id)) {
-                $this->setData($id);
-                $this->fetch();
             }
         }
         if (!empty($db)) {

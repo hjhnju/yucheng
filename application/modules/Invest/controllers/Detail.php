@@ -12,13 +12,17 @@ class DetailController extends Base_Controller_Response {
         }
         
         $loan = Loan_Api::getLoanDetail($id);
+        // 对打款状态 标记为满标状态
+        if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
+            $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
+        }
         
         //检查是否允许投标
         $logic = new Invest_Logic_Invest();
         $loan['allow_invest'] = $logic->allowInvest($this->userid, $loan['id']);
         
         if (!empty($this->userid)) {
-            $amount = Invest_Api::getAccountAvlBal($this->userid);
+            $amount = Finance_Api::getUserAvlBalance($this->userid);
             $user   = array(
                 'uid'         => $this->userid,
                 'username'    => $this->objUser->name,

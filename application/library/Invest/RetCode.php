@@ -17,14 +17,19 @@ class Invest_RetCode extends Base_RetCode {
      * @var 用户余额不足
      */
     const AMOUNT_NOTENOUGH = 1027;
+    /**
+     * @var 新手专享标
+     */
+    const FRESH_ONLY = 1028;
     
     /**
      * 消息描述
      * @var array
      */
     protected static $_arrErrMap = array(
-        self::NOT_ALLOWED => '抱歉，您无法投此标',
-        self::AMOUNT_ERROR => '投标金额不正确',
+        self::NOT_ALLOWED      => '抱歉，您无法投此标',
+        self::AMOUNT_ERROR     => '投标金额不正确',
         self::AMOUNT_NOTENOUGH => '用户余额不足',
+        self::FRESH_ONLY       => '抱歉，本标为新手专享标'
     );
 }

@@ -273,7 +273,7 @@
                             <div class="main-detail-content">
                                 <ul class="detail-item">
                                     {%foreach $data.attach['1'] as $key => $item%}
-                                    <li class="detail-item-list img-cicy">
+                                    <li class="detail-item-list img-city">
                                         <img alt="{%$item.title%}" class="detail-item-list-img img-width" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
@@ -333,9 +333,9 @@
                 {%/if%}
                 <div class="right-box-top">
                     <div class="right-top2nd-title">已满标</div>
-                    <div class="right-top2nd-box">满标时间:{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
-                    <div class="right-top2nd-box">满标耗时:<span id="full-time"></span></div>
-                    <div class="right-top2nd-box">投标人数:{%$data.invest_cnt%}人</div>
+                    <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
                 </div>
             </div>
             {%else%}

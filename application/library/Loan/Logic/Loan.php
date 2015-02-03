@@ -409,6 +409,7 @@ class Loan_Logic_Loan {
             $date->modify('+' . $loan['duration'] . 'days');
             $time = $date->getTimestamp() - 1;
         
+            //TODO 金额需要核对正确
             $interest = $this->getInterestByDay($loan['amount'], $loan['interest'], $loan['duration']);
             $amount = number_format($loan['amount'] + $interest, 2);
             return array(
@@ -416,7 +417,7 @@ class Loan_Logic_Loan {
                     'period' => 1,
                     'amount' => $amount,
                     'capital'=> $loan['amount'],
-                    'interest'=> number_format($interest, 2),
+                    'interest'=> $amount,
                     'promise_time'  => $time,
                     'status'  => 1,
                 ),
@@ -435,17 +436,22 @@ class Loan_Logic_Loan {
                 $days = ($promise - $start) / 3600 / 24;
                 $interest = $this->getInterestByDay($loan['amount'], $loan['interest'], $days);
                 if ($period == $periods) {
-                    $capital = $loan['amount'];
+                    $capital = intval($loan['amount']);
                 } else {
                     $capital = 0;
                 }
                 $amount = number_format($capital + $interest, 2);
+                if ($period == $periods) {
+                    $interest = $amount;
+                } else {
+                    $interest = number_format($interest, 2);
+                }
                 
                 $refund = array(
                     'period' => $period,
                     'amount' => $amount,
                     'capital'=> $capital,
-                    'interest'=> number_format($interest, 2),
+                    'interest'=> $interest,
                     'promise_time'  => $promise,
                     'status'  => 1,
                 );
@@ -532,7 +538,7 @@ class Loan_Logic_Loan {
      * @return number
      */
     private function getInterestByDay($amount, $interest, $days) {
-        $money = $amount + $amount * $interest * $days / 365 / 100;
+        $money = $amount * $interest * $days / 365 / 100;
         return $money;
     }
 }

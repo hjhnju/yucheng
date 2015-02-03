@@ -41,7 +41,7 @@
                         </div>
                         {%else%}
                         <div class="fix-box-title">
-                            <p class="fix-title-number">15.8
+                            <p class="fix-title-number">18.0
                                 <span class="fix-title-number-bai">%</span>
                             </p>
                             <p class="fix-title-text">最高年化收利率</p>
@@ -169,7 +169,7 @@
                     </div>
                     <div class="investlist-box-title-name status">
                         {%if $item.status == 2%}
-                        <a class="status-biding" href="###">{%$item.status_name%}</a>
+                        <a class="status-biding" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
                         {%else%}
                         <span class="status-biding current">{%$item.status_name%}</span>
                         {%/if%}
@@ -179,7 +179,7 @@
                 {%/foreach%}
                 {%/if%}
             </div>
-            <a href="{%$webroot%}/invest" class="investlist-more">查看更多标的></a>
+            <a href="{%$webroot%}/invest" class="investlist-more">{%if !empty($data.list)%}查看更多标的>{%/if%}</a>
         </div>
     </div>
 </div>
