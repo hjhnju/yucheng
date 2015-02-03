@@ -219,11 +219,13 @@ class Awards_Logic_Awards {
         	$data['name']  = $objUser->name;
         	$data['phone'] = $objUser->phone;
         	$data['id'] = $userId;
-        	$data['tenderAmount'] = floatval(($data['tenderAmount'] / 10000.00) * 100);       	 
-        	
+        	$percent = floatval(($data['tenderAmount'] / 10000.00) * 100); 
+        	$percent = ($percent <= 100) ? $percent : 100;
+        	$data['tenderAmount'] = $percent;        	
         	$ret[$count] = $data;
         	$count++;
         }
+        
         return $ret;
     }
     
