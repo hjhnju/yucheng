@@ -43,8 +43,8 @@ class AwardController extends Base_Controller_Page {
         $awardsLogic = new Awards_Logic_Awards();
         $userid      = intval($_REQUEST['id']);     
         $logic       = new Finance_Logic_Transaction();
-        $outUserId   = Base_Config::getConfig('huifu.merCustId', CONF_PATH . 'huifu.ini');
-        $outAcctId   = Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH . 'huifu.ini');
+        $outUserId   = Base_Config::getConfig('huifu.merCustId', CONF_PATH . '/huifu.ini');
+        $outAcctId   = Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH . '/huifu.ini');
         //领的是本人的注册奖励
         if($userid === $this->userid) {
             $transAmt = Base_Config::getConfig('awards.regist.amount', CONF_PATH.'/awards.ini');   
