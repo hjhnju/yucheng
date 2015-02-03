@@ -203,9 +203,10 @@ class EditapiController extends Base_Controller_Api {
     	$objLogin = new User_List_Login();
     	$filters = array('email'=>$email);
     	$objLogin->setFilter($filters);
-        $list = $objLogin->toArray();  	
-  	
-    	if(!empty($list[0])) {
+        $list = $objLogin->toArray(); 
+        $data = $list['list'][0]; 
+        
+    	if(!empty($data)) {
     		$errCode = Account_RetCode::EMAIL_EXISTS;
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
