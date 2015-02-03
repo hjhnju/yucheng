@@ -382,7 +382,7 @@ class Finance_Logic_Order {
             $record->setPage($page);
             $record->setOrder("`create_time` desc");
             $list = $record->toArray();         
-            $data = $list['list'];            
+            $data = $list['list'];     
             if(empty($data)) {
                 $ret = array();
                 $ret['page'] = 0;
@@ -392,14 +392,41 @@ class Finance_Logic_Order {
                 $ret['list'] = array();
                 return $ret;
             }           
-            //var_dump($list);die;
             $_ret = array();
             foreach ($data as $key => $value) {         
                 $status = $value['status'];
                 $_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间                
                 $_ret[$key]['transType'] = intval($value['type']);
-                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
-                $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
+                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);       
+                switch ($value['status']) {
+                	case Finance_TypeStatus::ORDER_INITIALIZE:
+                		$_ret[$key]['status'] = "初始化";
+                	    break;
+                	case Finance_TypeStatus::PROCESSING:
+                		$_ret[$key]['status'] = "处理中";
+                		break;
+                	case Finance_TypeStatus::ENDWITHFAIL:
+                		$_ret[$key]['status'] = "失败";
+                		break;
+                	case Finance_TypeStatus::ENDWITHSUCCESS:
+                		$_ret[$key]['status'] = "成功";
+                		break;
+                	case Finance_TypeStatus::FREEZING:
+                		$_ret[$key]['status'] = "资金冻结中";
+                		break;   
+                	case Finance_TypeStatus::PAYING:
+                		$_ret[$key]['status'] = "打款中";
+                		break;
+                	case Finance_TypeStatus::HAVEPAYED:
+                		$_ret[$key]['status'] = "打款中";
+                		break;
+                	case Finance_TypeStatus::PAYFAIDED:
+                		$_ret[$key]['status'] = "已打款";
+                		break;
+                	case Finance_TypeStatus::CANCELD:
+                		$_ret[$key]['status'] = "投标已撤销";
+                		break;
+                }           
                 $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
                 $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
                 $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
@@ -442,7 +469,35 @@ class Finance_Logic_Order {
                 $_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
                 $_ret[$key]['transType'] = intval($value['type']);
                 $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
-                $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
+                switch ($value['status']) {
+                	case Finance_TypeStatus::ORDER_INITIALIZE:
+                		$_ret[$key]['status'] = "初始化";
+                		break;
+                	case Finance_TypeStatus::PROCESSING:
+                		$_ret[$key]['status'] = "处理中";
+                		break;
+                	case Finance_TypeStatus::ENDWITHFAIL:
+                		$_ret[$key]['status'] = "失败";
+                		break;
+                	case Finance_TypeStatus::ENDWITHSUCCESS:
+                		$_ret[$key]['status'] = "成功";
+                		break;
+                	case Finance_TypeStatus::FREEZING:
+                		$_ret[$key]['status'] = "资金冻结中";
+                		break;
+                	case Finance_TypeStatus::PAYING:
+                		$_ret[$key]['status'] = "打款中";
+                		break;
+                	case Finance_TypeStatus::HAVEPAYED:
+                		$_ret[$key]['status'] = "打款中";
+                		break;
+                	case Finance_TypeStatus::PAYFAIDED:
+                		$_ret[$key]['status'] = "已打款";
+                		break;
+                	case Finance_TypeStatus::CANCELD:
+                		$_ret[$key]['status'] = "投标已撤销";
+                		break;
+                }                          
                 $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
                 $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
                 $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
@@ -484,7 +539,35 @@ class Finance_Logic_Order {
                 $_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
                 $_ret[$key]['transType'] = intval($value['type']);
                 $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
-                $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
+                switch ($value['status']) {
+                	case Finance_TypeStatus::ORDER_INITIALIZE:
+                		$_ret[$key]['status'] = "初始化";
+                		break;
+                	case Finance_TypeStatus::PROCESSING:
+                		$_ret[$key]['status'] = "处理中";
+                		break;
+                	case Finance_TypeStatus::ENDWITHFAIL:
+                		$_ret[$key]['status'] = "失败";
+                		break;
+                	case Finance_TypeStatus::ENDWITHSUCCESS:
+                		$_ret[$key]['status'] = "成功";
+                		break;
+                	case Finance_TypeStatus::FREEZING:
+                		$_ret[$key]['status'] = "资金冻结中";
+                		break;
+                	case Finance_TypeStatus::PAYING:
+                		$_ret[$key]['status'] = "打款中";
+                		break;
+                	case Finance_TypeStatus::HAVEPAYED:
+                		$_ret[$key]['status'] = "打款中";
+                		break;
+                	case Finance_TypeStatus::PAYFAIDED:
+                		$_ret[$key]['status'] = "已打款";
+                		break;
+                	case Finance_TypeStatus::CANCELD:
+                		$_ret[$key]['status'] = "投标已撤销";
+                		break;
+                }                
                 $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
                 $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
                 $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
