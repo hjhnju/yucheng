@@ -484,8 +484,8 @@ class Finance_Logic_Base {
                 $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
                 $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
                 $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
-                $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
-                $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+                $_ret[$key]['tranAmt'] = Base_Util_Number::tausendStyle(floatval($value['amount']));//交易金额
+                $_ret[$key]['avalBg'] = Base_Util_Number::tausendStyle(floatval($value['avlBal']));//可用余额
 			}
 			
 			$ret = array();
@@ -527,8 +527,8 @@ class Finance_Logic_Base {
                 $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
                 $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
 				$_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
-				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
-				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+				$_ret[$key]['tranAmt'] = Base_Util_Number::tausendStyle(floatval($value['amount']));//交易金额
+				$_ret[$key]['avalBg'] = Base_Util_Number::tausendStyle(floatval($value['avlBal']));//可用余额
 			}
 			$ret = array();
 			$ret['page'] = $list['page'];
@@ -569,8 +569,8 @@ class Finance_Logic_Base {
                 $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
                 $_ret[$key]['status'] = Finance_TypeStatus::getType($value['type']).Finance_TypeStatus::getStatusDesc(intval($value['status']));                               
 				$_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
-				$_ret[$key]['tranAmt'] = $value['amount'];//交易金额
-				$_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
+				$_ret[$key]['tranAmt'] = Base_Util_Number::tausendStyle(floatval($value['amount']));//交易金额
+				$_ret[$key]['avalBg'] = Base_Util_Number::tausendStyle(floatval($value['avlBal']));//可用余额
 			}
 			$ret = array();
 			$ret['page'] = $list['page'];

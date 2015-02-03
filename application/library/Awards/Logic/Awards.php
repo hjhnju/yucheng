@@ -151,7 +151,7 @@ class Awards_Logic_Awards {
         }                   
         $inviter['name']  = '我';
         $inviter['phone'] = $objInvier->phone;   
-        $inviter['phone'] = substr_replace($inviter['phone'],'****',3,4);
+        $inviter['phone'] = Base_Util_String::starPhone($inviter['phone']);
         $inviter['id'] = $inviterid;  
         $percent = ($inviter['tenderAmount'] / 10000.00) * 100;      
         $percent = ($percent <= 100) ? $percent : 100;

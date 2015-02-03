@@ -70,11 +70,11 @@ class OverviewController extends Base_Controller_Page {
         $money = Invest_Api::getUserEarnings($this->userid);
         
         
-        $totalProfit = sprintf('%.2f',$money['all_income']);// 累计收益
-        $totalInvest = sprintf('%.2f',$money['all_invest']);//累计投资
-        $reposPrifit = sprintf('%.2f',$money['wait_interest']);//待收收益
-        $reposPrincipal = sprintf('%.2f',$money['wait_capital']);//待收本金
-        
+        $totalProfit = Base_Util_Number::tausendStyle(floatval($money['all_income']));// 累计收益
+        $totalInvest = Base_Util_Number::tausendStyle(floatval($money['all_invest']));//累计投资
+        $reposPrifit = Base_Util_Number::tausendStyle(floatval($money['wait_interest']));//待收收益
+        $reposPrincipal = Base_Util_Number::tausendStyle(floatval($money['wait_capital']));//待收本金
+
         $this->getView()->assign("avlBal",$avlBal);
         $this->getView()->assign("acctBal",$acctBal);
         $this->getView()->assign("frzBal",$frzBal);
