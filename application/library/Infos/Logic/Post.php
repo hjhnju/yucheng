@@ -61,7 +61,7 @@ class Infos_Logic_Post {
     public function save($arrPost){
         $object               = new Infos_Object_Infos();
         $object->title        = isset($arrPost['title']) ? $arrPost['title'] : null;
-        $object->abstract        = isset($arrPost['abstract']) ? $arrPost['abstract'] : null;
+        $object->abstract     = isset($arrPost['abstract']) ? $arrPost['abstract'] : null;
         $object->author       = isset($arrPost['author']) ? $arrPost['author'] : '兴教贷团队';
         $object->type         = isset($arrPost['type']) ? $arrPost['type'] :self::TYPE_POST;
         $object->status       = self::STATUS_NOTPUB;
