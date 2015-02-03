@@ -84,6 +84,9 @@ class SecureController extends Base_Controller_Page{
 		$chpwdurl = $webroot.'/account/edit/chpwd';
 		
 		$thirdBindRet = User_Api::checkBind($userid);
+
+		$this->retData['thirdPlatform'] = false;
+		$this->retData['thirdNickName'] = false;
 		//没有绑定第三方登陆
 		if(empty($thirdBindRet)) {
 			$this->retData['bindthirdlogin'] = 2;

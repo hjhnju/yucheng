@@ -71,7 +71,7 @@ class InvestController extends Base_Controller_Page {
         }
  	    foreach ($list as $key => $value) {
 	        $listRet[$key]['proId'] = $value['loan_id'];
-	        $loanInfo = loan_api::getLoanDetail();
+	        $loanInfo = loan_api::getLoanDetail($value['loan_id']);
 	    	$listRet[$key]['investPro'] = $value['title'];
 	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
 	    	$listRet[$key]['tenderAmt'] = $value['amount'];
