@@ -241,6 +241,7 @@ class Loan_Api {
         }
         if ($loan->investAmount >= $loan->amount) {
             $loan->status = Loan_Type_LoanStatus::FULL_CHECK;
+            $loan->fullTime = time();
             if (!$loan->save()) {
                 Base_Log::error($loan, '更改满标状态错误');
                 return false;
