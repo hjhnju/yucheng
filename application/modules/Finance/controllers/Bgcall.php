@@ -108,13 +108,15 @@ class BgcallController extends Base_Controller_Page {
                 'realName' => $realName,
             ));
         }
-        if(!User_Api::setEmail($userid,$email)) {
+        /*
+         if(!User_Api::setEmail($userid,$email)) {
             Base_Log::error(array(
                 'msg'    => '用户email入库失败',
                 'userid' => $userid,
                 'email'  => $email,
             ));
-        }
+        } 
+        */
         //证件信息入库，默认为身份证
         if(!User_Api::setCertificate($userid,$idNo)) {
             Base_Log::error(array(
@@ -729,8 +731,12 @@ class BgcallController extends Base_Controller_Page {
             Base_Log::error($logParam);
             return;
         }      
+       
         //验签处理SDK中验过了       
-        $merPriv = explode('_',$_REQUEST['MerPriv']);       
+        $merPriv = explode('_',$_REQUEST['MerPriv']);   
+        Base_Log::debug(array(
+            $merPriv,
+        ));
         $userid    = $merPriv[1];
         $orderId   = intval($_REQUEST['OrdId']);
         $orderDate = $merPriv[0];
