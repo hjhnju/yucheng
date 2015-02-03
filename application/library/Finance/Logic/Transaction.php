@@ -586,7 +586,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $retUrl    = '';
         $bgRetUrl  = $this->webroot.'/finance/bgcall/transfer';
         $type      = strval($type);
-        $merPriv   = strval($orderDate).'_'.strval($inUserId).'_'.$type;      
+        $merPriv   = strval($orderDate).'_'.strval($inUserId).'_'.$type;    
+        //var_dump($merPriv);die;  
         $ret       = $this->chinapnr->transfer($ordId, $outCustId, $outAcctId, 
             $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
         return $ret;
