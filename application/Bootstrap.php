@@ -41,8 +41,12 @@ class Bootstrap extends Base_Bootstrap{
     public function _initRoute(Yaf_Dispatcher $dispatcher) {
         //路由协议栈，后入先验证
         //默认已添加Yaf_Route_Static自动划分module/controller/action
-        //$router = Yaf_Dispatcher::getInstance()->getRouter();
-        //$router->addConfig(Base_Config::getConfig('routes', CONF_PATH . '/route.ini'));
+       $conf = Base_Config::getConfig('index', CONF_PATH . '/route.ini');
+        if (!empty($conf)) {
+            $router = Yaf_Dispatcher::getInstance()->getRouter();
+            $router->addConfig($conf);
+            $routes = $router->getRoutes();
+        }
     }
 
 }
