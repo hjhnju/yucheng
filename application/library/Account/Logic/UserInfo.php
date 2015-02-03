@@ -119,33 +119,6 @@ class Account_Logic_UserInfo {
     }
     
     /**
-     * 获取用户的账户余额值
-     * @param string huifuid
-     * @return array 
-     */
-    public function getUserBg($huifuid) {
-    	$userBg = Finance_Api::queryBalanceBg($huifuid);
-    	if($userBg['status'] === Finance_RetCode::REQUEST_API_ERROR) {
-    		Base_Log::error(array(
-    		    'msg'    => $userBg['statusInfo'],
-    		    'huifuid' => $huifuid,
-    		));
-    		$ret = $userBg['data'];
-    		return $ret;
-    	}
-    	if($userBg['status'] !== '000') {
-    		Base_Log::error(array(
-    		    'msg'    => $userBg['statusInfo'],
-    		    'huifuid' => $huifuid,
-    		));
-    		$ret = $userBg['data'];
-    		return $ret;
-    	}
-    	$ret = $userBg['data'];
-    	return $ret;
-    }
-    
-    /**
      * 获取用户银卡信息
      * @param string huifuid
      * @return array

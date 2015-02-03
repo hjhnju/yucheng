@@ -4,9 +4,25 @@
  */
 class ConfirmController extends Base_Controller_Response {
     
+    /**
+     * 对$_REQUEST进行urldecode
+     * @param array
+     * @return array || flase
+     */   
+    protected function arrUrlDec($arrParam) {
+        $ret = array();
+        foreach ($arrParam as $key => $value) {
+            if(!is_array($value)) {
+                $ret[$key] = urldecode($value);
+            } else {
+                $ret[$key] = $this->arrUrlDec($value);//对数组值进行递归解码
+            }
+        }
+        return $ret;
+    }
+    
     public function indexAction() {
-        $baseLogic = new Finance_Logic_Base();
-    	$retParam = $baseLogic->arrUrlDec($_REQUEST); 
+    	$retParam = $this->arrUrlDec($_REQUEST); 
         //签名
         $checkValue = isset($retParam['ChkValue']) ? $retParam['ChkValue'] : '';
         //验签字段

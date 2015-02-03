@@ -2,12 +2,11 @@
 
 today=`date +'%Y%m%d'`
 
-BASEPATH=$HOME'/Dev'
-#BASEPATH=$HOME
+BASEPATH=$HOME
 echo $BASEPATH
 
-NGINX_LOG=$BASEPATH'/var/access.log'
-NGINX_ELOG=$BASEPATH'/var/error.log'
+NGINX_LOG=$BASEPATH'/var/nginx/access.log'
+NGINX_ELOG=$BASEPATH'/var/nginx/error.log'
 
 PHP_ELOG=$BASEPATH'/var/php_errors.log'
 BIZ_ELOG=$BASEPATH"/var/yucheng/$today/*.log"

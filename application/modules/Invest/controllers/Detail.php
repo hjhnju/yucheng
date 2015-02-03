@@ -22,7 +22,7 @@ class DetailController extends Base_Controller_Response {
         $loan['allow_invest'] = $logic->allowInvest($this->userid, $loan['id']);
         
         if (!empty($this->userid)) {
-            $amount = Invest_Api::getAccountAvlBal($this->userid);
+            $amount = Finance_Api::getUserAvlBalance($this->userid);
             $user   = array(
                 'uid'         => $this->userid,
                 'username'    => $this->objUser->name,

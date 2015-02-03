@@ -5,10 +5,11 @@
     <title>发布公告</title>
 </head>
 <body>
-    <form method="get" target="csrf" action="http://www.xingjiaodai.com:8301/infos/infoapi/save">
+    <form method="post" target="csrf" action="http://www.xingjiaodai.com.cn:8301/infos/infoapi/save">
 	<br>标题: <input name="title" value=""><br>
 	<br>类型: <input name="type" value=""><br>
 	<br>作者: <input name="author" value=""><br>
+	<br>摘要: <input name="abstract" value=""><br>
 	<br>内容：<br><br><textarea  name="ctx" rows=10 cols=80></textarea><br>
 	<br>发布时间：<input name="time" value="">&nbsp;例子：2015-01-24<br>
     <br><input value="保存" type="submit" style="width:80px;height:40px"><br>  
@@ -16,7 +17,7 @@
     <iframe name="csrf"></iframe> 
     </form>
 
-    <form method="post" target="csrf" action="http://www.xingjiaodai.com:8301/infos/infoapi/publish">
+    <form method="post" target="csrf" action="http://www.xingjiaodai.com.cn:8301/infos/infoapi/publish">
 	<br>公告id: <input name="id" value=""><br>
     <br><input value="发布" type="submit" style="width:80px;height:40px"><br>   
     </form>
