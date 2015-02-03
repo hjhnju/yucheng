@@ -62,16 +62,12 @@ class OverviewController extends Base_Controller_Page {
         $openthirdpay = isset($huifuid) ? 1 : 2;
         $rechargeurl  = $this->webroot.'/account/cash/recharge';
         $money        = Invest_Api::getUserEarnings($this->userid);
-        
-        
 
         $totalProfit = Base_Util_Number::tausendStyle(floatval($money['all_income']));// 累计收益
         $totalInvest = Base_Util_Number::tausendStyle(floatval($money['all_invest']));//累计投资
         $reposPrifit = Base_Util_Number::tausendStyle(floatval($money['wait_interest']));//待收收益
         $reposPrincipal = Base_Util_Number::tausendStyle(floatval($money['wait_capital']));//待收本金
 
-
-        
         $this->getView()->assign("avlBal",$avlBal);
         $this->getView()->assign("acctBal",$acctBal);
         $this->getView()->assign("frzBal",$frzBal);
