@@ -23,5 +23,16 @@
 		{%include file='../../../views/common/footer.phtml'%}
 	{%/if%}
     {%block name="script"%}{%/block%}
+    {%if $tongji%}
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1a153ca582e27235304d94fd094eb8a1";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    {%/if%}
 </body>
 </html>

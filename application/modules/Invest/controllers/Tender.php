@@ -35,17 +35,18 @@ class TenderController extends Base_Controller_Page {
 	    
         // 检查是否允许投标
 	    $logic = new Invest_Logic_Invest();
-	    $allowed = $logic->allowInvest($uid, $loanId);
-	    if (!$allowed) {
+	    $retCode = $logic->allowInvest($uid, $loanId);
+	    if (Base_RetCode::SUCCESS !== $retCode) {
 	        Base_Log::notice(array(
-                'msg'  => '不允许投新手标',
+                'msg'  => Invest_RetCode::getMsg($retCode),
+                'retCode' => $retCode,
                 'post' => $_POST,
             ));
-	        $sess->set('invest_error', Invest_RetCode::NOT_ALLOWED);
+	        $sess->set('invest_error', $retCode);
 	        return $this->redirect('/invest/detail?id=' . $loanId);
 	    }
 	    // 检查用户余额是否满足
-	    $userAmount = $logic->getAccountAvlBal($uid);
+	    $userAmount = Finance_Api::getUserAvlBalance($uid);
 	    if ($amount > $userAmount) {
 	        Base_Log::notice(array(
                 'msg'  => '用户余额不够',

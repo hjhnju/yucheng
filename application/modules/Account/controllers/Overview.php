@@ -4,12 +4,13 @@
  */
 class OverviewController extends Base_Controller_Page {
 
-	private $huifuid;	
+	private $huifuid;
+
     public function init(){
         parent::init();
-        $this->huifuid = !empty($this->objUser) ? $this->objUser->huifuid : '';
+        $this->huifuid       = !empty($this->objUser) ? $this->objUser->huifuid : '';
         $this->userInfoLogic = new Account_Logic_UserInfo();
-        $this->ajax = true;
+        $this->ajax          = true;
     }
 
 
@@ -51,28 +52,21 @@ class OverviewController extends Base_Controller_Page {
      *     
      */
     public function indexAction(){
-        $userInfo = $this->userInfoLogic->getUserInfo($this->objUser);        
-        if(empty($this->huifuid)) {
-        	$avlBal = Base_Util_Number::tausendStyle(0.00);
-        	$acctBal = Base_Util_Number::tausendStyle(0.00);
-        	$frzBal = Base_Util_Number::tausendStyle(0.00);
-        } else {
-        	$userBg = $this->userInfoLogic->getUserBg($this->huifuid);
-        	$avlBal = Base_Util_Number::tausendStyle($userBg['avlBal']);
-        	$acctBal = Base_Util_Number::tausendStyle($userBg['acctBal']);
-        	$frzBal = Base_Util_Number::tausendStyle($userBg['frzBal']);
-        }      
-
-        $huifuid = $this->objUser->huifuid;
+        $userInfo     = $this->userInfoLogic->getUserInfo($this->objUser);        
+        $userBg       = Finance_Api::getUserBalance($this->userid);
+        $avlBal       = Base_Util_Number::tausendStyle($userBg['AvlBal']);
+        $acctBal      = Base_Util_Number::tausendStyle($userBg['AcctBal']);
+        $frzBal       = Base_Util_Number::tausendStyle($userBg['FrzBal']);
+        
+        $huifuid      = $this->objUser->huifuid;
         $openthirdpay = isset($huifuid) ? 1 : 2;
-        $rechargeurl = $this->webroot.'/account/cash/recharge';
+        $rechargeurl  = $this->webroot.'/account/cash/recharge';
+        $money        = Invest_Api::getUserEarnings($this->userid);
         
-        $money = Invest_Api::getUserEarnings($this->userid);
         
-        
-        $totalProfit = sprintf('%.2f',$money['all_income']);// 累计收益
-        $totalInvest = sprintf('%.2f',$money['all_invest']);//累计投资
-        $reposPrifit = sprintf('%.2f',$money['wait_interest']);//待收收益
+        $totalProfit    = sprintf('%.2f',$money['all_income']);// 累计收益
+        $totalInvest    = sprintf('%.2f',$money['all_invest']);//累计投资
+        $reposPrifit    = sprintf('%.2f',$money['wait_interest']);//待收收益
         $reposPrincipal = sprintf('%.2f',$money['wait_capital']);//待收本金
         
         $this->getView()->assign("avlBal",$avlBal);
@@ -99,32 +93,30 @@ class OverviewController extends Base_Controller_Page {
      *  }
      */
     public function profitcurveAction() {
-        $userid = $this->userid;
-        $huifuid = $this->huifuid;
         $userName = $this->objUser->name;
-        if(!isset($huifuid)) {
-           // $this->ajax = false;
+        if(!isset($this->huifuid)) {
             $data = array(
             	'name' => $userName,
             );
             $this->outputView = 'test/noThirdPay.phtml';
             $this->output($data);
-        } else {
-            	$arrRet = Invest_Api::getEarningsMonthly($userid);            	            
-            foreach ($arrRet as $key => $value) {
-                $x[] = $key;
-                $y[] = intval($value);
-            }
-            $ret = array(
-                x => $x,
-                y => $y,
-            );         
-            if($ret==false) {
-                $this->outputError(Account_RetCode::GET_PROFIT_CURVE_FAIL,Account_RetCode::getMsg(Account_RetCode::GET_PROFIT_CURVE_FAIL));
-                return ;
-            }                        
-            $this->output($ret);
-      
-        }       
+            return;
+        }
+
+    	$arrRet = Invest_Api::getEarningsMonthly($this->userid);            	            
+        foreach ($arrRet as $key => $value) {
+            $x[] = $key;
+            $y[] = intval($value);
+        }
+        $ret = array(
+            'x' => $x,
+            'y' => $y,
+        );         
+        if($ret==false) {
+            $this->outputError(Account_RetCode::GET_PROFIT_CURVE_FAIL,
+                Account_RetCode::getMsg(Account_RetCode::GET_PROFIT_CURVE_FAIL));
+            return;
+        }                        
+        $this->output($ret);
     }
 }

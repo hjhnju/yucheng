@@ -132,7 +132,7 @@ class Invest_Logic_Invest {
         $loan = Loan_Api::getLoanInfo($loanId);
         // 已满标不允许投标
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
-            return false;
+            return Invest_RetCode::NOT_ALLOWED;
         }
         
         // 新手标不允许重复投标
@@ -142,11 +142,11 @@ class Invest_Logic_Invest {
             $fresh->fetch();
             
             if (!empty($fresh->id)) {
-                return false;
+                return Invest_RetCode::FRESH_ONLY;
             }
         }
         
-        return true;
+        return Invest_RetCode::SUCCESS;
     }
     
     /**
@@ -178,26 +178,6 @@ class Invest_Logic_Invest {
      */
     public function cancelInvest($orderId, $userid, $amount) {
         return Finance_Api::tenderCancel($amount, $userid, $orderId);
-    }
-    
-    /**
-     * 获取用户的可用余额
-     * @param integer $uid
-     * @return number
-     */
-    public function getAccountAvlBal($uid) {
-        $arrAmt = Finance_Api::getUserBalance($uid);
-        $avlBal = 0.0;
-        if(!empty($arrAmt) && isset($arrAmt['data']['avlBal'])){
-            $avlBal = floatval($arrAmt['data']['avlBal']);
-        } else {
-            Base_Log::warn(array(
-                'msg' => '获取账户可用余额失败',
-                'uid' => $uid,
-                'avlBal' => $avlBal,
-            ));
-        }
-        return $avlBal;
     }
     
     /**
@@ -365,11 +345,11 @@ class Invest_Logic_Invest {
      * 获取用户累计投资收益情况
      * @param integer $uid
      * @return array <pre>(
-            'all_invest' => $all,
-            'all_income' => $incomes,
-            'wait_capital' => $capital,
-            'wait_interest' => $interest,
-        );
+     *      'all_invest' => $all,
+     *       'all_income' => $incomes,
+     *       'wait_capital' => $capital,
+     *       'wait_interest' => $interest,
+     *   );
      */
     public function getUserEarnings($uid) {
         $list = new Invest_List_Invest();

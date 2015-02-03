@@ -179,7 +179,7 @@
                 {%/foreach%}
                 {%/if%}
             </div>
-            <a href="{%$webroot%}/invest" class="investlist-more">查看更多标的></a>
+            <a href="{%$webroot%}/invest" class="investlist-more">{%if !empty($data.list)%}查看更多标的>{%/if%}</a>
         </div>
     </div>
 </div>

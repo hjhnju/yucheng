@@ -32,19 +32,20 @@
                     <input autocomplete="off" class="login-input" id="regist-user" type="text" data-text="用户名" />
                     <label class="user-lable" for="regist-user">用户名</label>
                     <div class="username-error" id="regist-user-error"></div>
-                    <div class="username-point">请使用6～25位字母、数字、下划线或横线组合，首字符必须为字母</div>
+                    <div class="username-point">用户名由6～25位字母、数字、下划线或横线组合，首字符必须为字母</div>
                 </div>
                 <div class="login-username">
                     <input autocomplete="off" class="login-input" id="regist-pwd" type="password" data-text="密码" />
                     <label class="user-lable" for="regist-pwd">密码</label>
                     <div class="username-error" id="regist-pwd-error"></div>
-                    <div class="username-point">请使用6～32位字母、数字及常用符号组成</div>
+                    <div class="username-point">密码由6～32位字母、数字及常用符号组成</div>
                 </div>
 
                 <div class="login-username">
-                    <input autocomplete="off" class="login-input" id="regist-phone" type="text" data-text="电话" />
-                    <label class="user-lable" for="regist-phone">电话</label>
+                    <input autocomplete="off" class="login-input" id="regist-phone" type="text" data-text="手机号" />
+                    <label class="user-lable" for="regist-phone">手机号</label>
                     <div class="username-error" id="regist-phone-error"></div>
+                    <div class="username-point">请输入11位手机号</div>
                 </div>
                 <div class="login-username">
                     <input autocomplete="off" class="login-input testing" id="regist-testing" type="text" data-text="验证码" />
@@ -58,6 +59,7 @@
                     <input autocomplete="off" {%if $result.data.inviter%}readonly value="{%$result.data.inviter%}"{%/if%} class="login-input login-tuijian" id="regist-tuijian" type="text" />
                     <label class="user-lable {%if $result.data.inviter%}hidden{%/if%}" for="regist-tuijian">推荐人手机号(选填)</label>
                     <div class="username-error" id="regist-tuijian-error"></div>
+                    <div class="username-point">请输入推荐人的11位手机号</div>
                 </div>
                 <a href="###" class="login-fastlogin">快速注册</a>
                 <div class="login-tiaoyue">
