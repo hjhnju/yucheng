@@ -78,7 +78,7 @@ class AwardController extends Base_Controller_Page {
             return;
         }        
 
-        $transAmt = Base_Config::getConfig('awards.amount.inviter', CONF_PATH.'/awards.ini');
+        $transAmt = Base_Config::getConfig('awards.inviter.amount', CONF_PATH.'/awards.ini');
         $userid   = intval($userid);
         $invite   = new Awards_List_Invite();
         $filters  = array('userid' => $userid); //caution:被邀请人的userid
