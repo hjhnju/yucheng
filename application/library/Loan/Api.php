@@ -262,8 +262,10 @@ class Loan_Api {
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();
+        $level = new Invest_Type_LevelName();
         $data['loan_type'] = $type->getTypeName($data['type_id']);
         $data['loan_cat'] = $cat->getTypeName($data['cat_id']);
+        $data['level_name'] = $level->getTypeName($data['level']);
 
         $cond = array('loan_id' => $loan_id);
         $company = new Loan_Object_Company($cond);
