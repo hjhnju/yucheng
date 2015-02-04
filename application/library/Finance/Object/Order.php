@@ -26,7 +26,7 @@ class Finance_Object_Order extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('orderId', 'orderDate', 'userId', 'type', 'amount', 'avlBal', 'status', 'failCode', 'failDesc', 'create_time', 'update_time', 'comment');
+    protected $fields = array('orderId', 'orderDate', 'userId', 'type', 'amount', 'avlBal', 'status', 'failCode', 'failDesc', 'create_time', 'update_time', 'comment', 'freezeTrxId');
 
     /**
      * 字段与属性隐射关系
@@ -45,6 +45,7 @@ class Finance_Object_Order extends Base_Object {
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
         'comment'     => 'comment',
+        'freezeTrxId' => 'freezeTrxId',
     );
 
     /**
@@ -140,5 +141,11 @@ class Finance_Object_Order extends Base_Object {
      * @var string
      */
     public $comment;
+
+    /**
+     * 冻结标记
+     * @var string
+     */
+    public $freezeTrxId;
 
 }

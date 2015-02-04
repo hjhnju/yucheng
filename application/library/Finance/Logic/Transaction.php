@@ -22,41 +22,37 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
     		$objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
     		return $objRst;
     	}
-    	   	
-    	$orderInfo = Finance_Logic_Order::genOrderInfo();
-    	$orderDate = $orderInfo['date'];
-    	$orderId   = $orderInfo['orderId'];
-    	
-    	$orderInfo = Finance_Logic_Order::getOrderInfo($tenderOrderId);
-    	$userid = $orderInfo['userid'];
-    	
-    	$tenderInfo = Finance_Logic_Order::getTenderInfo($tenderOrderId);
-    	$transAmt = $tenderInfo['amount'];
-    	$trxId = $tenderInfo['freezeTrxId'];
+        
+        $arrOrderInfo = Finance_Logic_Order::getOrderInfo($tenderOrderId);
+        $userid       = $arrOrderInfo['userid'];
+        $transAmt     = $arrOrderInfo['amount'];
+        $trxId        = $arrOrderInfo['freezeTrxId'];
     	
     	$avlBal = Finance_Api::getUserAvlBalance($userid);
     	//资金解冻订单入库
     	$paramOrder = array(
-    		'orderId'   => intval($orderId),
-    		'orderDate' => intval($orderDate),
-    		'userId'    => intval($userid),
-    		'type'      => Finance_TypeStatus::USRUNFREEZE,
-    		'amount'    => floatval($transAmt),
-    		'avlBal'    => floatval($avlBal),
-    		'status'    => Finance_TypeStatus::PROCESSING,
-    		'comment'   => '资金解冻订单处理中',
+            'userId'      => intval($userid),
+            'type'        => Finance_Order_Type::USRUNFREEZE,
+            'amount'      => floatval($transAmt),
+            'avlBal'      => floatval($avlBal),
+            'status'      => Finance_Order_Status::PROCESSING,
+            'freezeTrxId' => $trxId,
+            'comment'     => '资金解冻订单处理',
     	);
-    	Finance_Logic_Order::payOrderEnterDB($paramOrder);
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
    	
     	$merCustId = $this->merCustId;
-    	$ordId = strval($orderId);
-    	$ordDate = strval($orderDate);
     	$trxId = strval($trxId);
     	$retUrl = strval($retUrl);
     	$bgRetUrl = $this->webroot.'/finance/bgcall/canceltenderbg';
     	$merPriv = strval($userid).'_'.strval($transAmt).'_'.strval($tenderOrderId);
     	//调用汇付API进行解冻处理
-    	$ret = $this->chinapnr->usrUnFreeze($merCustId,$ordId,$ordDate,$trxId,$retUrl,$bgRetUrl,$merPriv);
+    	$ret = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,$trxId,$retUrl,$bgRetUrl,$merPriv);
     	if(empty($ret)) {
     		$objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
     		$objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
@@ -89,40 +85,36 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      */
 
     public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
-        $orderInfo = Finance_Logic_Order::genOrderInfo();
-        $orderDate = $orderInfo['date'];
-        $orderId   = $orderInfo['orderId'];
-
         $avlBal    = Finance_Api::getUserAvlBalance($userid);
-    	//充值订单入库
-		$paramOrder = array(
-		    'orderId'   => intval($orderId),
-			'orderDate' => intval($orderDate),
-			'userId'    => intval($userid),
-			'type'      => Finance_TypeStatus::NETSAVE,
-			'amount'    => floatval($transAmt),
-			'avlBal'    => floatval($avlBal),
-			'status'    => Finance_TypeStatus::PROCESSING,
-			'comment'   => '充值订单处理中',
-		);
-		Finance_Logic_Order::payOrderEnterDB($paramOrder);
-		
-		$huifuid    = strval($huifuid);
-		$orderId    = strval($orderId);
-		$orderDate  = strval($orderDate);
-		$openBankId = strval($openBankId);
-		$gateBusiId = strval($gateBusiId);
-		$dcFlag     = strval($dcFlag);
-		$transAmt   = sprintf('%.2f',$transAmt);
-		$bgRetUrl   = $this->webroot.'/finance/bgcall/netsave';
-		$retUrl     = '';
-		$merPriv    = strval($userid);				
-		//调用汇付API进行充值处理
-		$this->chinapnr->netSave($this->merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, 
-	        $dcFlag, $transAmt, $retUrl, $bgRetUrl, $merPriv);
-	}
-	
-	
+        //充值订单入库
+        $paramOrder = array(
+            'userId'    => intval($userid),
+            'type'      => Finance_Order_Type::NETSAVE,
+            'amount'    => floatval($transAmt),
+            'avlBal'    => floatval($avlBal),
+            'status'    => Finance_Order_Status::PROCESSING,
+            'comment'   => '充值订单处理中',
+        );
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
+        $huifuid    = strval($huifuid);
+        $openBankId = strval($openBankId);
+        $gateBusiId = strval($gateBusiId);
+        $dcFlag     = strval($dcFlag);
+        $transAmt   = sprintf('%.2f',$transAmt);
+        $bgRetUrl   = $this->webroot.'/finance/bgcall/netsave';
+        $retUrl     = '';
+        $merPriv    = strval($userid);              
+        //调用汇付API进行充值处理
+        $this->chinapnr->netSave($this->merCustId, $huifuid, $orderId, $orderDate, $gateBusiId, $openBankId, 
+            $dcFlag, $transAmt, $retUrl, $bgRetUrl, $merPriv);
+    }
+    
+    
     /**
      * 标信息录入Logic层
      * @param investID 标的唯一标示
@@ -235,28 +227,23 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $transAmt  = sprintf('%.2f',$transAmt);
         $usrCustId = strval($this->getHuifuid($userid));
         $loanId    = strval($loanId);
-
-        $orderInfo = Finance_Logic_Order::genOrderInfo();
-        $orderDate = $orderInfo['date'];
-        $orderId   = $orderInfo['orderId'];
-        
-
         $avlBal    = Finance_Api::getUserAvlBalance($userid);
         //主动投标订单记录入表finance_order
-        $param = array(
-            'orderId'     => intval($orderId),
-            'orderDate'   => intval($orderDate),
-            'userId'      => intval($userid),           
-            'type'        => Finance_TypeStatus::INITIATIVETENDER,
-            'amount'      => floatval($transAmt),
-            'avlBal'      => floatval($avlBal),
-            'status'      => Finance_TypeStatus::PROCESSING,
-            'comment'     => '主动投标订单处理中',   
+        $paramOrder = array(
+            'userId'  => intval($userid),           
+            'type'    => Finance_Order_Type::TENDERFREEZE,
+            'amount'  => floatval($transAmt),
+            'avlBal'  => floatval($avlBal),
+            'status'  => Finance_Order_Status::PROCESSING,
+            'comment' => '投标冻结订单处理中',   
         );
-        Finance_Logic_Order::payOrderEnterDB($param);
- 
-        $orderId         = strval($orderId);
-        $orderDate       = strval($orderDate);
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate = $orderInfo['orderDate'];
+        $orderId   = $orderInfo['orderId'];
+
         $maxTenderRate   = Finance_Fee::MaxTenderRate;
         $borrowerDetails = array();
         foreach ($arrDetails as $detail) {
@@ -325,32 +312,26 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
             return $objRst;  
         }
-        $orderInfo  = Finance_Logic_Order::genOrderInfo();
-        $orderDate  = $orderInfo['date'];
-        $orderId    = $orderInfo['orderId'];     
-        $inHuifuId  = $this->getHuifuid(intval($inUserId));
-        $outHuifuId = $this->getHuifuid(intval($outUserId));    
+        $inCustId  = $this->getHuifuid(intval($inUserId));
+        $outCustId = $this->getHuifuid(intval($outUserId));    
        
         $avlBal    = Finance_Api::getUserAvlBalance($outUserId);
         //打款订单记录入表finance_order
         $paramOrder = array(
-            'orderId'   => intval($orderId),
-            'orderDate' => intval($orderDate),
             'userId'    => intval($outUserId),//投标人的uid
-            'type'      => Finance_TypeStatus::LOANS,
+            'type'      => Finance_Order_Type::LOANS,
             'amount'    => floatval(sprintf('%.2f',$transAmt)),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_TypeStatus::PROCESSING,
+            'status'    => Finance_Order_Status::PROCESSING,
             'comment'   => '打款订单处理中',
         );
-        Finance_Logic_Order::payOrderEnterDB($paramOrder);
-        //投标记录表状态更改为“打款中”
-        Finance_Logic_Order::payTenderUpdate(intval($subOrdId), Finance_TypeStatus::PAYING);       
-        
-        $orderId   = strval($orderId);
-        $orderDate = strval($orderDate);
-        $outCustId = strval($outHuifuId);
-        $transAmt  = sprintf('%.2f',$transAmt);
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
+        $transAmt   = sprintf('%.2f',$transAmt);
 
         //收取费用
         $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
@@ -358,10 +339,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $riskFee   = $arrFeeInfo['risk_fee'];
         $servFee   = $arrFeeInfo['serv_fee'];
         
-        $tenderInfo    = Finance_Logic_Order::getTenderInfo($subOrdId);
+        $subOrderInfo  = Finance_Logic_Order::getOrderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
-        $subOrdDate    = strval($tenderInfo['orderDate']);
-        $inCustId      = strval($inHuifuId);
+        $subOrdDate    = strval($subOrderInfo['orderDate']);
+        $freezeTrxId   = strval($subOrderInfo['freezeTrxId']);
         $arrDivDetails = array(
             //风险金账户
             array(
@@ -380,9 +361,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $feeObjFlag      = 'I';//手续费向入款人收取               
         $isDefault       = 'Y';
         $isUnFreeze      = 'Y';
-        $unFreezeOrdInfo = Finance_Logic_Order::genOrderInfo();
-        $unFreezeOrdId   = strval($unFreezeOrdInfo['orderId']);
-        $freezeTrxId     = strval($tenderInfo['freezeTrxId']);
+        $unFreezeOrdId   = Finance_Logic_Order::genOrderId();
         $bgRetUrl        = $this->webroot.'/finance/bgcall/loans';
         $merPriv         = strval($outUserId);//投标人的uid
         $reqExt          = array(
@@ -474,17 +453,17 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'orderId'   => intval($orderId),
             'orderDate' => intval($orderDate),
             'userId'    => intval($userid),//投标人的uid
-            'type'      => Finance_TypeStatus::TENDERCANCEL,
+            'type'      => Finance_Order_Type::TENDERCANCEL,
             'amount'    => floatval($transAmt),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_TypeStatus::PROCESSING,
+            'status'    => Finance_Order_Status::PROCESSING,
             'comment'   => '主动投标撤销处理中',
         );
         //投标撤销订单入库
-        Finance_Logic_Order::payOrderEnterDB($paramOrder);
-        Finance_Logic_Order::getTenderInfo($orderId);
-        $orderDate = $tenderInfo['orderDate'];
-        $freezeTrxId = $tenderInfo['freezeTrxId'];
+        Finance_Logic_Order::saveOrder($paramOrder);
+        $arrOrderInfo = Finance_Logic_Order::getOrderInfo($orderId);
+        $orderDate    = $arrOrderInfo['orderDate'];
+        $freezeTrxId  = $arrOrderInfo['freezeTrxId'];
                 
         $orderId         = strval($orderId);
         $orderDate       = strval($orderDate);
@@ -520,27 +499,24 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             return false;
         }
         $transAmt = sprintf('%.2f',$transAmt);
-        $orderInfo = Finance_Logic_Order::genOrderInfo();
-        $orderDate = $orderInfo['date'];
-        $orderId   = $orderInfo['orderId'];
         $huifuid   = $this->getHuifuid($userid);
         $avlBal    = Finance_Api::getUserAvlBalance($userid);
         
         //取现订单订单记录入表finance_order
-        $param = array(
-            'orderId'     => intval($orderId),
-            'orderDate'   => intval($orderDate),
+        $paramOrder = array(
             'userId'      => intval($userid),
-            'type'        => Finance_TypeStatus::CASH,
+            'type'        => Finance_Order_Type::CASH,
             'amount'      => floatval($transAmt),
             'avlBal'      => floatval($avlBal),
-            'status'      => Finance_TypeStatus::ORDER_INITIALIZE,
+            'status'      => Finance_Order_Status::INITIALIZE,
             'comment'     => '提现订单初始化',
         );
-        Finance_Logic_Order::payOrderEnterDB($param);
-        
-        $orderId    = strval($orderId);
-        $transAmt   = $transAmt;
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
         $servFee    = '';
         $openAcctId = '';
         $retUrl     = '';
@@ -574,30 +550,27 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             return false;
         }
         $transAmt  = sprintf('%.2f',$transAmt);
-        $orderInfo = Finance_Logic_Order::genOrderInfo();
-        $orderId   = $orderInfo['orderId'];
-        $orderDate = $orderInfo['date'];
         $huifuid   = $this->getHuifuid(intval($inUserId));
         $avlBal    = Finance_Api::getUserAvlBalance($userid);
         //还款订单订单记录入表finance_order
-        $param = array(
-            'orderId'   => intval($orderId),
-            'orderDate' => intval($orderDate),
+        $paramOrder = array(
             'userId'    => intval($outUserId),//还款人的uid
-            'type'      => Finance_TypeStatus::REPAYMENT,
+            'type'      => Finance_Order_Type::REPAYMENT,
             'amount'    => floatval($transAmt),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_TypeStatus::PROCESSING,
+            'status'    => Finance_Order_Status::PROCESSING,
             'comment'   => '还款订单处理中',
         );
-        Finance_Logic_Order::payOrderEnterDB($param);
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
         
-        $ordId      = strval($orderId);
-        $ordDate    = strval($orderDate);
         $outCustId  = strval($this->getHuifuid(intval($outUserId)));//还款人的汇付ID
-        $tenderInfo = Finance_Logic_Order::getTenderInfo(intval($subOrdId));
-        $subOrdId   = strval($s);
-        $subOrdDate = strval($tenderInfo['orderDate']);
+        $arrOrderInfo = Finance_Logic_Order::getOrderInfo(intval($subOrdId));
+        $subOrdDate = strval($arrOrderInfo['orderDate']);
         $outAcctId  = '';
         $transAmt   = $transAmt;
         $fee        = '0.00';
@@ -607,7 +580,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $merPriv    = strval($outUserId);//借款人的uid
         $reqExt     = array('ProId'=> strval($loanId));
         $reqExt     = json_encode($reqExt);     
-        $ret        = $this->chinapnr->repayment($this->merCustId, $ordId, $ordDate, $outCustId, 
+        $ret        = $this->chinapnr->repayment($this->merCustId, $orderId, $orderDate, $outCustId, 
             $subOrdId, $subOrdDate, $outAcctId, $transAmt, $fee, $inCustId, $inAcctId,
             $divDetails, $feeObjFlag, $bgRetUrl, $merPriv, $reqExt);
         
@@ -618,7 +591,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * 
      * 
      */
-    public function transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type=Finance_TypeStatus::TRANSFER) {
+    public function transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type=Finance_Order_Type::TRANSFER) {
         if(!isset($outUserId) || !isset($outAcctId) || !isset($transAmt) || !isset($inUserId)) {
             Base_Log::error(array(
                 'msg' => '请求参数错误',
@@ -626,26 +599,26 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             return false;
         }
         $transAmt  = sprintf('%.2f',$transAmt);
-        $orderInfo = Finance_Logic_Order::genOrderInfo();
-        $orderId   = $orderInfo['orderId'];
-        $orderDate = $orderInfo['date'];
         $huifuid   = $this->getHuifuid(intval($inUserId));
         $avlBal    = Finance_Api::getUserAvlBalance($userid);
         
         //还款订单订单记录入表finance_order
-        $param = array(
-            'orderId'   => intval($orderId),
-            'orderDate' => intval($orderDate),
+        $paramOrder = array(
             'userId'    => intval($inUserId),
             'type'      => $type,
             'amount'    => floatval($transAmt),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_TypeStatus::PROCESSING,
+            'status'    => Finance_Order_Status::PROCESSING,
             'comment'   => '自动扣款转账(商户用)订单处理中',
         );
-        Finance_Logic_Order::payOrderEnterDB($param);
+
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
         
-        $ordId     = strval($orderId);
         $outCustId = strval($outUserId);
         $outAcctId = strval($outAcctId);
         $inCustId  = strval($huifuid);
@@ -654,8 +627,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $bgRetUrl  = $this->webroot.'/finance/bgcall/transfer';
         $type      = strval($type);
         $merPriv   = strval($orderDate).'_'.strval($inUserId).'_'.$type;    
-        //var_dump($merPriv);die;  
-        $ret       = $this->chinapnr->transfer($ordId, $outCustId, $outAcctId, 
+        $ret       = $this->chinapnr->transfer($orderId, $outCustId, $outAcctId, 
             $transAmt, $inCustId, $inAcctId, $retUrl, $bgRetUrl, $merPriv);      
         return $ret;
     }
@@ -675,22 +647,24 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return false;
         }
-        $orderInfo = Finance_Logic_Order::genOrderInfo();
-        $orderId   = strval($orderInfo['orderId']);
-        $orderDate = strval($orderInfo['date']);
         $huifuid   = $this->getHuifuid(intval($userid));
         $avlBal    = Finance_Api::getUserAvlBalance($userid);
-        $param     = array(
+        $paramOrder     = array(
             'orderId'   => intval($orderId),
             'orderDate' => intval($orderDate),
             'userId'    => intval($userid),//还款人的uid
-            'type'      => Finance_TypeStatus::MERCASH,
+            'type'      => Finance_Order_Type::MERCASH,
             'amount'    => floatval(sprintf('%.2f',$transAmt)),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_TypeStatus::PROCESSING,
+            'status'    => Finance_Order_Status::PROCESSING,
             'comment'   => '商户代取现订单处理中',
         );
-        Finance_Logic_Order::payOrderEnterDB($param);
+        $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+        if(empty($orderInfo)){
+            return false;
+        }
+        $orderDate  = $orderInfo['orderDate'];
+        $orderId    = $orderInfo['orderId'];
         
         $usrCustId     = strval($this->getHuifuid(intval($userid)));
         $transAmt      = sprintf('%.2f',$transAmt);

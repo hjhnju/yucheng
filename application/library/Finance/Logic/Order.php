@@ -21,7 +21,7 @@ class Finance_Logic_Order {
      * @param $orderId 订单号
      */
     public static function getOrderDate($orderId){
-        return substr(strval($orderId), 0, 4);
+        return substr(strval($orderId), 0, 6);
     }
 
     /**
@@ -46,95 +46,84 @@ class Finance_Logic_Order {
         }
 
         $arrInfo = array(
-            'date'    => $orderDate,
-            'orderId' => $orderId,
+            'orderDate' => $orderDate,
+            'orderId'   => $orderId,
         );
         return $arrInfo;
     }
 
     /**
      * 财务类finance_order表入库统一入口
-     * @param array $param 参数数组
+     * @param array $arrOrder 参数数组
      * @return boolean
      */
-    public static function payOrderEnterDB($param) {       
-        if(is_null($param) || !isset($param)) {
+    public static function saveOrder($arrOrder) {       
+        if(is_null($arrOrder) || !isset($arrOrder)) {
             //未给出参数，无法插入或者更新
             Base_Log::error(array(
                 'msg'=>'请求参数错误',
             ));
             return false;
-        }       
-        $regOrder = new Finance_Object_Order();
-        $logParam = array();
-        foreach ($param as $key => $value) {            
-            $regOrder->$key =  $value;
-            $logParam[$key] = $value;
         }
-        $ret = $regOrder->save();   
+        $order = null;
+        if(!isset($arrOrder['orderId'])){
+            $orderInfo = Finance_Logic_Order::genOrderInfo();
+            $arrOrder['orderId']   = $orderInfo['orderId'];
+            $arrOrder['orderDate'] = $orderInfo['orderDate'];
+            $order = new Finance_Object_Order();
+        }else{
+            $order = new Finance_Object_Order(intval($arrOrder['orderId']));
+        }
+
+        foreach ($arrOrder as $key => $value) {            
+            $order->$key = $value;
+        }
+        $ret = $order->save();   
         if(!$ret) {         
-            $logParam['msg'] = '财务类交易类型订单入库失败';
-            Base_Log::error($logParam);
+            $arrOrder['msg'] = '财务类交易类型订单入库失败';
+            Base_Log::error($arrOrder);
             return false;
         }           
-        return true;
+        return $order->toArray();
     }
     
     /**
      * 财务类finance_record表入库统一入口
-     * @param array $param 参数数组
+     * @param string $orderid 订单号
+     * @param int $userid
+     * @param int $type 订单类型
+     * @param float $transAmt
+     * @param string $comment
      * @return boolean
      */
-    public static function payRecordEnterDB($param) {
+    public static function saveRecord($orderId, $userid, $type, $transAmt, $comment = '') {
+        $arrBal   = Finance_Api::getUserBalance($userid);
+        $balance  = $arrBal['AcctBal'];//用户余额
+        $avlBal   = $arrBal['AvlBal']; //用户可用余额
+        $total    = Finance_Api::getPlatformBalance();//系统余额
+        $param    = array(
+            'orderId'   => $orderId,
+            'orderDate' => self::getOrderDate($orderId),
+            'userId'    => $userid,
+            'type'      => $type,
+            'amount'    => $transAmt,
+            'balance'   => $balance,
+            'total'     => $total,
+            'comment'   => $comment,
+            'ip'        => Base_Util_Ip::getClientIp(),
+        );
+
         $regRecord = new Finance_Object_Record();
-        $logParam = array();
-        if(is_null($param)) {
-            //未给出参数，无法插入或者更新
-            Base_Log::error(array(
-                'msg'=>'参数错误'
-            ));
-            return false;
-        }
         foreach ($param as $key => $value) {
             $regRecord->$key = $value;
-            $logParam[$key] = $value;
         }
         $ret = $regRecord->save();
         if(!$ret){
-            $logParam['msg'] = '财务类交易类型记录入库失败';
-            Base_Log::error($logParam);
+            $param['msg'] = '快照记录入库失败';
+            Base_Log::error($param);
             return false;
         }
         return true;        
-    }   
-    
-    /**
-     * 财务类finance_tender表插入入口
-     * @param array $param 参数数组
-     * @return boolean
-     */
-    public static function payTenderEnterDB($param) {
-        $tender = new Finance_Object_Tender();
-        $logParam = array();
-        if(is_null($param)) {
-            //未给出参数，无法插入或者更新
-            Base_Log::error(array(
-                'msg'=>'参数错误'
-            ));
-            return false;
-        }
-        foreach ($param as $key => $value) {
-            $tender->$key = $value;
-            $logParam[$key] = $value;
-        }
-        $ret = $tender->save();
-        if(!$ret){
-            $logParam['msg'] = '投标记录入库失败';
-            Base_Log::error($logParam);
-            return false;
-        }
-        return true;
-        
     }
     
     /**
@@ -157,35 +146,25 @@ class Finance_Logic_Order {
     }
     
     /**
-     * 财务类pay_order表更新状态
+     * 财务类finance_order表更新订单状态
      * @param string $orderId
      * @param integer $status
-     * @param int $type 
      * @param string $failCode
      * @param string $failDesc
      * @return boolean
      */
-    public static function payOrderUpdate($orderId,$status,$type,$avlBal,$failCode='',$failDesc='') {
-        Base_Log::debug(array(
-            $orderId,
-            $status,
-            $type,
-            $avlBal,
-            Finance_TypeStatus::getStatusDesc(intval($status)),
-            $failCode,
-            $failDesc,
-        ));
-        $regOrder          = new Finance_Object_Order();
-        $orderId           = intval($orderId);
+    public static function updateOrderStatus($orderId, $status, $failCode='',$failDesc='') {
+        $regOrder          = new Finance_Object_Order(intval($orderId));
         $status            = intval($status);
-        $type              = intval($type);
         $avlBal            = floatval($avlBal);
         $regOrder->orderId = $orderId;
         $regOrder->status  = $status;
-        $regOrder->avlBal  = $avlBal;        
-        $statusDesc        = Finance_TypeStatus::getStatusDesc(intval($status));
-        $type              = Finance_TypeStatus::getType(intval($type));
-        $regOrder->comment = "$type".'订单'."$statusDesc";
+        $arrBal            = Finance_Api::getUserBalance($regOrder->userId);
+        $balance           = $arrBal['AcctBal'];//用户余额
+        $regOrder->avlBal  = $arrBal['AvlBal']; //用户可用余额
+        
+        $statusDesc        = Finance_Order_Status::getTypeName(intval($status));
+        $regOrder->comment = '订单'."$statusDesc";
         if(!empty($failCode) && !empty($failDesc)) {
             $regOrder->failCode = strval($failCode);
             $regOrder->failDesc = strval($failDesc);
@@ -200,49 +179,15 @@ class Finance_Logic_Order {
             ));
             return false;
         }
-        return true;
-    }
-        
-    /**
-     * 财务类finance_tender表更新状态
-     * @param int orderId 
-     * @param int status
-     * @return boolean
-     */
-    public static function payTenderUpdate($orderId, $status) {
-        if(!isset($orderId) || !isset($status)) {
-            Base_Log::error(array(
-                'msg'     => '请求参数错误',
-                'orderId' => $orderId,
-                'status'  => $status,
-            ));
-            return false;
-        }
-        $orderId            = intval($orderId);
-        $status             = intval($status);
-        $regTender          = new Finance_Object_Tender();
-        $regTender->orderId = $orderId;
-        $regTender->status  = $status;
-        $statusDesc         = Finance_TypeStatus::getStatusDesc($status);
-        $regTender->comment = '订单'."$statusDesc";
-        $ret                = $regTender->save();
-        if(!$ret) {
-            Base_Log::error(array(
-                'msg'     => 'tender表状态更新失败',
-                'orderId' => $orderId,
-                'status'  => $status,
-            ));
-            return false;
-        }
-        return true;
+        return $ret;
     }
 
     /**
-     * 根据orderId获取投标的相关信息
+     * 根据orderId获取订单信息
      * @param int orderId
      * @return array || bool
      */
-    public static function getTenderInfo($orderId) {
+    public static function getOrderInfo($orderId) {
         if(!isset($orderId)) {
             Base_Log::error(array(
                 'msg'     => '请求参数错误',
@@ -251,52 +196,9 @@ class Finance_Logic_Order {
             return false;
         }
         $orderId = intval($orderId);
-        $tender = new Finance_List_Tender();
-        $filters = array('orderId' => $orderId);
-        $tender->setFilter($filters);
-        $list = $tender->toArray();
-        $tenderInfo = $list['list'][0];
-        $ret = array(
-            'orderId'    => $tenderInfo['orderId'],
-            'orderDate'  => $tenderInfo['orderDate'],
-            'proId'      => $tenderInfo['proId'],
-            'freezeTrxId'=> $tenderInfo['freezeTrxId'],
-            'amount'     => $tenderInfo['amount'],
-            'status'     => $tenderInfo['status'],
-        );
+        $order   = new Finance_Object_Order($orderId);
+        $ret     = $order->toArray();
         return $ret;
-    }
-    
-    /**
-     * 根据orderId获取订单的相关信息
-     * @param int orderId 
-     * @return array || bool
-     */
-    public static function getOrderInfo($orderId) {
-    	if(!isset($orderId)) {
-    		Base_Log::error(array(
-    			'msg' => '请求参数错误',
-    		));
-    		return false;
-    	}
-    	$orderId  = intval($orderId);
-    	$order = new Finance_List_Order();
-    	$filters = array('orderId' => $orderId);
-    	$order->setFilter($filters);
-    	$list = $order->toArray();
-    	$orderInfo = $list['list'][0];
-    	$ret = array(
-    		'orderId'   => $orderInfo['orderId'],
-    		'orderDate' => $orderInfo['orderDate'],
-    		'userid'    => $orderInfo['userId'],
-    		'type'      => $orderInfo['type'],
-    		'amount'    => $orderInfo['amount'],
-    		'avlBal'    => $orderInfo['avlBal'],
-    		'status'    => $orderInfo['status'],
-    		'failCode'  => $orderInfo['failCode'],
-    		'failDesc'  => $orderInfo['failDesc'],    			
-    	);
-    	return $ret;
     }
     
     /**
@@ -311,16 +213,16 @@ class Finance_Logic_Order {
             ));
             return;
         }
-        $loanId = intval($loanId);
-        $return = Loan_Api::getLoanInfo($loanId);
-        $borrUserId = intval($return['user_id']);//借款人uid
-        $borrTotAmt = floatval($return['amount']);//借款总金额
-        $yearRate = floatval($return['interest']);//年利率
-        $retType = $return['refund_type'];//还款方式
-        $now = time();
+        $loanId       = intval($loanId);
+        $return       = Loan_Api::getLoanInfo($loanId);
+        $borrUserId   = intval($return['user_id']);//借款人uid
+        $borrTotAmt   = floatval($return['amount']);//借款总金额
+        $yearRate     = floatval($return['interest']);//年利率
+        $retType      = $return['refund_type'];//还款方式
+        $now          = time();
         $bidStartDate = $now;//投标创建时间
-        $bidEndDate = $return['deadline'];//标的截止时间
-        $proArea = $return['proArea'];//投标地区
+        $bidEndDate   = $return['deadline'];//标的截止时间
+        $proArea      = $return['proArea'];//投标地区
         $ret = array(
             'borrUserId'   => $borrUserId,
             'borrTotAmt'   => $borrTotAmt,
@@ -332,7 +234,7 @@ class Finance_Logic_Order {
         );
         return $ret;        
     }
-    
+
     /**
      * 获取充值提现列表数据
      * @param int userid
@@ -341,276 +243,49 @@ class Finance_Logic_Order {
      * @param int queryType 1--全部  2--充值  3--提现
      * @return array || boolean
      */
-    public static function getReWiRecord($userid,$startTime,$endTime,$queryType,$page,$pageSize) {
-        if(!isset($userid) || !isset($startTime) || !isset($endTime) || !isset($queryType) || 
-           !isset($page) || !isset($pageSize)) {
-            echo 0;die;
-            Base_Log::error(array(          
-                'msg' => '请求参数错误',
-            ));
-            return false;
-        }
-        $userid = intval($userid);
+    public static function getRecords($userid, $startTime, $endTime, $queryType,
+        $page, $pageSize) {
+        $userid    = intval($userid);
         $queryType = intval($queryType);
-        $page = intval($page);
-        $pageSize = intval($pageSize);
-        $userid = intval($userid);
-        if($userid <= 0) {
-            echo 1;die;
-            Base_Log::error(array(
-                'msg' => '请求参数错误',
+        $page      = intval($page);
+        $pageSize  = intval($pageSize);
+        $startTime = intval($startTime);
+        $endTime   = intval($endTime);
+        if($userid<=0 || ($startTime > $endTime) || $queryType<=0) {
+            Base_Log::error(array(       
+                'msg'  => '请求参数错误',
+                'args' => func_get_args(),
             ));
             return false;
         }
-        if($startTime > $endTime) {
-            echo 2;die;
-            Base_Log::error(array(
-                'msg' => '请求参数错误',
-            ));
-            return false;
+        $list = new Finance_List_Order();
+        $list->setFilter(array('userId' => $userid));
+        $list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
+        if($queryType !== 1){
+            $list->appendFilter(array('type' => $queryType));
         }
-        $recharge = intval(Finance_TypeStatus::NETSAVE);
-        $withdraw = intval(Finance_TypeStatus::CASH);
-        $tender = intval(Finance_TypeStatus::INITIATIVETENDER)   ;  //主动投标
-        $cancel = intval(Finance_TypeStatus::TENDERCANCEL);  //投标撤销
-        $loans = intval(Finance_TypeStatus::LOANS);  //满标打款
-        $repay = intval(Finance_TypeStatus::REPAYMENT);  //还款
-        $transfer = intval(Finance_TypeStatus::TRANSFER);  //商户用自动扣款转账
-        $merCash = intval(Finance_TypeStatus::MERCASH);
-        $receAwd = intval(Finance_TypeStatus::RECE_AWD);
-        $moneyBack = intval(Finance_TypeStatus::MONEY_BACK);
-        $record = new Finance_List_Order();
-        //获取全部数据
-        if($queryType === 1) {
-            $startTime = strval($startTime);
-            $endTime = strval($endTime);
-            $filters = array(
-                array("(`userId`='$userid')"),
-                array("(`create_time` between '$startTime' and '$endTime')"),
-                array("(                                                
-                    (`type`= '$recharge' and `status`=3)                        
-                    or                      
-                    (`type`= '$withdraw' and (`status` IN (1,3)))
-                    or
-                    (`type`= '$tender' and `status`=3) 
-                    or
-                    (`type`= '$cancel' and `status`=3) 
-                    or
-                    (`type`= '$loans' and `status`=3)
-                    or
-                    (`type`= '$repay' and `status`=3)    
-                    or
-                    (`type`= '$transfer' and `status`=3)    
-                    or
-                    (`type`= '$merCash' and `status`=3)
-                    or
-                    (`type`= '$receAwd' and `status`=3)
-                    or
-                    (`type`= '$moneyBack' and `status`=3)       
-                )"),
-            );
-            $record->setFilter($filters);
-            $record->setPagesize($pageSize);
-            $record->setPage($page);
-            $record->setOrder("`create_time` desc");
-            $list = $record->toArray();         
-            $data = $list['list'];     
-            if(empty($data)) {
-                $ret = array();
-                $ret['page'] = 0;
-                $ret['pagesize'] = 0;
-                $ret['pageall'] = 0;
-                $ret['total'] = 0;
-                $ret['list'] = array();
-                return $ret;
-            }           
-            $_ret = array();
-            foreach ($data as $key => $value) {         
-                $status = $value['status'];
-                $_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间                
-                $_ret[$key]['transType'] = intval($value['type']);
-                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);       
-                switch ($value['status']) {
-                	case Finance_TypeStatus::ORDER_INITIALIZE:
-                		$_ret[$key]['status'] = "初始化";
-                	    break;
-                	case Finance_TypeStatus::PROCESSING:
-                		$_ret[$key]['status'] = "处理中";
-                		break;
-                	case Finance_TypeStatus::ENDWITHFAIL:
-                		$_ret[$key]['status'] = "失败";
-                		break;
-                	case Finance_TypeStatus::ENDWITHSUCCESS:
-                		$_ret[$key]['status'] = "成功";
-                		break;
-                	case Finance_TypeStatus::FREEZING:
-                		$_ret[$key]['status'] = "资金冻结中";
-                		break;   
-                	case Finance_TypeStatus::PAYING:
-                		$_ret[$key]['status'] = "打款中";
-                		break;
-                	case Finance_TypeStatus::HAVEPAYED:
-                		$_ret[$key]['status'] = "打款中";
-                		break;
-                	case Finance_TypeStatus::PAYFAIDED:
-                		$_ret[$key]['status'] = "已打款";
-                		break;
-                	case Finance_TypeStatus::CANCELD:
-                		$_ret[$key]['status'] = "投标已撤销";
-                		break;
-                }           
-                $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
-                $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
-                $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
-            }
-            
-            $ret = array();
-            $ret['page'] = $list['page'];
-            $ret['pagesize'] = $list['pagesize'];
-            $ret['pageall'] = $list['pageall'];
-            $ret['total'] = $list['total'];
-            $ret['list'] = $_ret;
-            return $ret;
+        $list->setPagesize($pageSize);
+        $list->setPage($page);
+        $list->setOrder("`create_time` desc");
+        $list    = $list->toArray();
+
+        $arrData = array();
+        foreach ($list['list'] as $key => $value) {         
+            $arrData[$key]['time']      = date("Y-m-d H:i",$value['create_time']);//交易时间                
+            $arrData[$key]['transType'] = intval($value['type']);
+            $arrData[$key]['typeName']  = Finance_Order_Type::getTypeName($value['type']);       
+            $arrData[$key]['status']    = Finance_Order_Status::getTypeName($value['status']);
+            $arrData[$key]['serialNo']  = strval($value['orderId']);//序列号
+            $arrData[$key]['tranAmt']   = $value['amount'];//交易金额
+            $arrData[$key]['avalBg']    = $value['avlBal'];//可用余额
         }
-        //获取充值数据
-        if($queryType === 2) {
-            $filters = array(
-                'userId'      => array("(`userId`='$userid')"),
-                'create_time' => array("(create_time between '$startTime' and '$endTime')"),
-                'type'        => $recharge,
-                'status'      => array("(`status`= 3)"),//只拉取成功的数据
-            );
-            $record->setFilter($filters);
-            $record->setPagesize($pageSize);
-            $record->setPage($page);
-            $record->setOrder("create_time desc");
-            $list = $record->toArray();
-            $data = $list['list'];
-            if(empty($data)) {
-                $ret = array();
-                $ret['page'] = 0;
-                $ret['pagesize'] = 0;
-                $ret['pageall'] = 0;
-                $ret['total'] = 0;
-                $ret['list'] = array();
-                return $ret;
-            }
-            $_ret = array();
-            foreach ($data as $key => $value) {
-                $status = $value['status'];
-                $_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
-                $_ret[$key]['transType'] = intval($value['type']);
-                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
-                switch ($value['status']) {
-                	case Finance_TypeStatus::ORDER_INITIALIZE:
-                		$_ret[$key]['status'] = "初始化";
-                		break;
-                	case Finance_TypeStatus::PROCESSING:
-                		$_ret[$key]['status'] = "处理中";
-                		break;
-                	case Finance_TypeStatus::ENDWITHFAIL:
-                		$_ret[$key]['status'] = "失败";
-                		break;
-                	case Finance_TypeStatus::ENDWITHSUCCESS:
-                		$_ret[$key]['status'] = "成功";
-                		break;
-                	case Finance_TypeStatus::FREEZING:
-                		$_ret[$key]['status'] = "资金冻结中";
-                		break;
-                	case Finance_TypeStatus::PAYING:
-                		$_ret[$key]['status'] = "打款中";
-                		break;
-                	case Finance_TypeStatus::HAVEPAYED:
-                		$_ret[$key]['status'] = "打款中";
-                		break;
-                	case Finance_TypeStatus::PAYFAIDED:
-                		$_ret[$key]['status'] = "已打款";
-                		break;
-                	case Finance_TypeStatus::CANCELD:
-                		$_ret[$key]['status'] = "投标已撤销";
-                		break;
-                }                          
-                $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
-                $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
-                $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
-            }
-            $ret = array();
-            $ret['page'] = $list['page'];
-            $ret['pagesize'] = $list['pagesize'];
-            $ret['pageall'] = $list['pageall'];
-            $ret['total'] = $list['total'];
-            $ret['list'] = $_ret;       
-            return $ret;            
-        }
-        //获取提现数据
-        if($queryType === 3) {
-            $filters = array(
-                'userId'      => array("(`userId`='$userid')"),
-                'create_time' => array("(create_time between '$startTime' and '$endTime')"),
-                'type'        => $withdraw,
-                'status'      => array("(`status`= 3 or `status`=1)"),//只拉取成功的数据
-            );
-            $record->setFilter($filters);
-            $record->setPagesize($pageSize);
-            $record->setPage($page);
-            $record->setOrder("`create_time` desc");
-            $list = $record->toArray();
-            $data = $list['list'];
-            if(empty($data)) {
-                $ret = array();
-                $ret['page'] = 0;
-                $ret['pagesize'] = 0;
-                $ret['pageall'] = 0;
-                $ret['total'] = 0;
-                $ret['list'] = array();
-                return $ret;
-            }
-            $_ret = array();
-            foreach ($data as $key => $value) {
-                $status = $value['status'];
-                $_ret[$key]['time'] = date("Y-m-d H:i",$value['create_time']);//交易时间
-                $_ret[$key]['transType'] = intval($value['type']);
-                $_ret[$key]['typeName'] = Finance_TypeStatus::getType($value['type']);                  
-                switch ($value['status']) {
-                	case Finance_TypeStatus::ORDER_INITIALIZE:
-                		$_ret[$key]['status'] = "初始化";
-                		break;
-                	case Finance_TypeStatus::PROCESSING:
-                		$_ret[$key]['status'] = "处理中";
-                		break;
-                	case Finance_TypeStatus::ENDWITHFAIL:
-                		$_ret[$key]['status'] = "失败";
-                		break;
-                	case Finance_TypeStatus::ENDWITHSUCCESS:
-                		$_ret[$key]['status'] = "成功";
-                		break;
-                	case Finance_TypeStatus::FREEZING:
-                		$_ret[$key]['status'] = "资金冻结中";
-                		break;
-                	case Finance_TypeStatus::PAYING:
-                		$_ret[$key]['status'] = "打款中";
-                		break;
-                	case Finance_TypeStatus::HAVEPAYED:
-                		$_ret[$key]['status'] = "打款中";
-                		break;
-                	case Finance_TypeStatus::PAYFAIDED:
-                		$_ret[$key]['status'] = "已打款";
-                		break;
-                	case Finance_TypeStatus::CANCELD:
-                		$_ret[$key]['status'] = "投标已撤销";
-                		break;
-                }                
-                $_ret[$key]['serialNo'] = strval($value['orderId']);//序列号
-                $_ret[$key]['tranAmt'] = $value['amount'];//交易金额
-                $_ret[$key]['avalBg'] = $value['avlBal'];//可用余额
-            }
-            $ret = array();
-            $ret['page'] = $list['page'];
-            $ret['pagesize'] = $list['pagesize'];
-            $ret['pageall'] = $list['pageall'];
-            $ret['total'] = $list['total'];
-            $ret['list'] = $_ret;
-            return $ret;
-        }       
+
+        $arrRet['page']     = $list['page'];
+        $arrRet['pagesize'] = $list['pagesize'];
+        $arrRet['pageall']  = $list['pageall'];
+        $arrRet['total']    = $list['total'];
+        $arrRet['list']     = $arrData;
+        return $arrRet;         
     }
+    
 }
