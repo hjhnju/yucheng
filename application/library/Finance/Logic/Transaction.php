@@ -15,7 +15,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param int orderId 
      * @return bool
      */
-    public function cancelTenderBG($tenderOrderId,$retUrl='') {
+    public function cancelTenderBG($tenderOrderId, $retUrl='') {
         $objRst = new Base_Result();
         if(empty($tenderOrderId)) {
             $objRst->status     = Base_RetCode::PARAM_ERROR;
@@ -26,7 +26,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $arrOrderInfo = Finance_Logic_Order::getOrderInfo($tenderOrderId);
         $userid       = $arrOrderInfo['userId'];
         $transAmt     = $arrOrderInfo['amount'];
-        $trxId        = $arrOrderInfo['freezeTrxId'];
+        $freezeTrxId  = $arrOrderInfo['freezeTrxId'];
+
+        Base_Log::debug(array(
+            'orderId'      => $tenderOrderId, 
+            'arrOrderInfo' => $arrOrderInfo,
+        ));
         
         $avlBal = Finance_Api::getUserAvlBalance($userid);
         //资金解冻订单入库
@@ -36,9 +41,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'amount'      => floatval($transAmt),
             'avlBal'      => floatval($avlBal),
             'status'      => Finance_Order_Status::INITIALIZE,
-            'freezeTrxId' => $trxId,
+            'freezeTrxId' => $freezeTrxId,
             'comment'     => '资金解冻',
         );
+        Base_Log::debug(array(
+            'orderId'=>$tenderOrderId, 
+            'param' => $paramOrder,
+        ));
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){
             return false;
@@ -47,12 +56,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId    = $orderInfo['orderId'];
     
         $merCustId = $this->merCustId;
-        $trxId     = strval($trxId);
         $retUrl    = strval($retUrl);
         $bgRetUrl  = $this->webroot.'/finance/bgcall/canceltenderbg';
         $merPriv   = strval($userid).'_'.strval($transAmt).'_'.strval($tenderOrderId);
         //调用汇付API进行解冻处理
-        $ret = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,$trxId,$retUrl,$bgRetUrl,$merPriv);
+        $ret = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,$freezeTrxId,$retUrl,$bgRetUrl,$merPriv);
         if(empty($ret)) {
             $objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
             $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
