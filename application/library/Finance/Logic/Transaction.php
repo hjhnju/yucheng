@@ -17,14 +17,14 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      */
     public function cancelTenderBG($tenderOrderId,$retUrl='') {
         $objRst = new Base_Result();
-        if(!isset($tenderOrderId)) {
+        if(empty($tenderOrderId)) {
             $objRst->status     = Base_RetCode::PARAM_ERROR;
             $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
             return $objRst;
         }
         
         $arrOrderInfo = Finance_Logic_Order::getOrderInfo($tenderOrderId);
-        $userid       = $arrOrderInfo['userid'];
+        $userid       = $arrOrderInfo['userId'];
         $transAmt     = $arrOrderInfo['amount'];
         $trxId        = $arrOrderInfo['freezeTrxId'];
         
@@ -69,9 +69,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return $objRst;
         }
-
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS);
-
+        //不修改状态，在bgcall里修改
         $objRst->status = Base_RetCode::SUCCESS;
         return $objRst;     
     }

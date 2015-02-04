@@ -59,7 +59,6 @@ class BgcallController extends Base_Controller_Page {
     		return;
     	}   	
     	//SDK中已经验签，此处不再验签了
-    	
         $_merPriv      = $_REQUEST['MerPriv'];
         $merPriv       = explode('_',$_merPriv);
         $userid        = intval($merPriv[0]);
@@ -81,11 +80,8 @@ class BgcallController extends Base_Controller_Page {
                 $respCode, $respDesc);
     	}
     	//资金解冻订单状态更新为“处理成功”
-    	Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, $respCode, $respDesc);    	
-    	
-
-    	//投finance_tender表状态更新为“资金已解冻”
-    	Finance_Logic_Order::payTenderUpdate($tenderOrderId,Finance_TypeStatus::FREEZED);
+    	Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+            $respCode, $respDesc);    	
     	
     	//快照
     	Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::USRUNFREEZE,
@@ -96,6 +92,7 @@ class BgcallController extends Base_Controller_Page {
     	$orderId = strval($orderId);
     	print('RECV_ORD_ID_'.$orderId);    	
     }
+    
     /**
      * 汇付天下回调Action
      * 用户开户BgUrl回调webroot/Finance/bgcall/userregist
