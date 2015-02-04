@@ -1,1 +1,0 @@
-define("company/detail/index",["require","jquery","common/header"],function(require){function e(){t.init()}var t=(require("jquery"),require("common/header"));return{init:e}});
