@@ -243,8 +243,8 @@ class Finance_Api {
     /**
      * 资金解冻接口
      * @param string orderId 
-     * @param bool
-     * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
+     * @param string retUrl
+     * @return bool
      * 
      */
     public static function cancelTenderBG($orderID,$retUrl='') {
@@ -254,8 +254,11 @@ class Finance_Api {
     	    'msg'  => '资金解冻接口',
     	    'args' => func_get_args(),
     	    'ret'  => $objRst->format(),
-    	));
-    	return $objRst->format();    	
+    	));    	
+    	if($objRst->status === Base_RetCode::SUCCESS) {
+    		return true;
+    	}
+    	return false;
     }
     
     /**
