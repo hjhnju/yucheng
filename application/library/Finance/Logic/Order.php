@@ -21,7 +21,7 @@ class Finance_Logic_Order {
      * @param $orderId 订单号
      */
     public static function getOrderDate($orderId){
-        return substr(strval($orderId), 0, 4);
+        return substr(strval($orderId), 0, 6);
     }
 
     /**
@@ -99,7 +99,7 @@ class Finance_Logic_Order {
     public static function saveRecord($orderId, $userid, $type, $transAmt, $comment = '') {
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal'];//用户可用余额
+        $avlBal   = $arrBal['AvlBal']; //用户可用余额
         $total    = Finance_Api::getPlatformBalance();//系统余额
         $param    = array(
             'orderId'   => $orderId,
@@ -107,9 +107,9 @@ class Finance_Logic_Order {
             'userId'    => $userid,
             'type'      => $type,
             'amount'    => $transAmt,
-            'balance'   => $balance,
+            'avlBal'    => $avlBal,
             'total'     => $total,
-            'comment'   => '资金解冻记录',
+            'comment'   => $comment,
             'ip'        => Base_Util_Ip::getClientIp(),
         );
 

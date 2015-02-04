@@ -26,7 +26,7 @@ class Finance_Object_Record extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'orderId', 'orderDate', 'userId', 'type', 'amount', 'balance', 'total', 'comment', 'create_time', 'update_time', 'ip');
+    protected $fields = array('id', 'orderId', 'orderDate', 'userId', 'type', 'amount', 'avlBal', 'total', 'comment', 'create_time', 'update_time', 'ip');
 
     /**
      * 字段与属性隐射关系
@@ -39,7 +39,7 @@ class Finance_Object_Record extends Base_Object {
         'userId'      => 'userId',
         'type'        => 'type',
         'amount'      => 'amount',
-        'balance'     => 'balance',
+        'avlBal'      => 'avlBal',
         'total'       => 'total',
         'comment'     => 'comment',
         'create_time' => 'createTime',
@@ -109,7 +109,7 @@ class Finance_Object_Record extends Base_Object {
      * 余额
      * @var number
      */
-    public $balance;
+    public $avlBal;
 
     /**
      * 系统总额

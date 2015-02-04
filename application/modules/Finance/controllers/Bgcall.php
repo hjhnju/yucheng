@@ -361,7 +361,7 @@ class BgcallController extends Base_Controller_Page {
             $respCode, $respDesc);
         //投标冻结后保存快照
         Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
-            $transAmt, '主动投标记录');
+            $transAmt, '投标冻结记录');
 
         print('RECV_ORD_ID_'.strval($orderId));     
     }
@@ -520,7 +520,7 @@ class BgcallController extends Base_Controller_Page {
                     $respCode, $respDesc);
                 //插入记录至finance_record表
                 Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH, 
-                    $transAmt, '财务类充值记录');
+                    $transAmt, '充值记录');
             }               
         }                   
         //存在异步对账
@@ -548,7 +548,7 @@ class BgcallController extends Base_Controller_Page {
                         $respCode, $respDesc);
                     //插入提现记录到finance_record表
                     Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH,
-                        $transAmt, '财务类充值记录');
+                        $transAmt, '充值记录');
                 }
             }
             if($respType === '400') {
