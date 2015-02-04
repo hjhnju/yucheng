@@ -241,5 +241,12 @@ class UsermanageController extends Base_Controller_Page {
    //   var_dump($ret);
    //   return;
    //  }
+   
+    public function testAction() {
+    	$orderId = '2015020414212872454';
+    	$ret = Finance_Api::cancelTenderBG($orderId);
+    	var_dump($ret);
+    	return ;
+    }
     
 }
