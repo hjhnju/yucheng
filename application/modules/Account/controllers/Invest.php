@@ -70,6 +70,7 @@ class InvestController extends Base_Controller_Page {
         	return ;
         }
  	    foreach ($list as $key => $value) {
+	        $listRet[$key]['invest_id'] = $value['id'];//invest_id
 	        $listRet[$key]['proId'] = $value['loan_id'];
 	        $loanInfo = loan_api::getLoanDetail($value['loan_id']);
 	    	$listRet[$key]['investPro'] = $value['title'];
@@ -78,7 +79,8 @@ class InvestController extends Base_Controller_Page {
 	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
 	    	$listRet[$key]['tenderTime'] = $value['create_time'];
 	    	$listRet[$key]['haveBack'] = $value['capital_refund'];
-	    	$listRet[$key]['toBeBack'] = $value['capital_rest'];	    		    	
+	    	$listRet[$key]['toBeBack'] = $value['capital_rest'];
+	    	$listRet[$key]['status'] = $value['status'];
 	    }
 	    
 	    $ret = array(

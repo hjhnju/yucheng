@@ -34,6 +34,11 @@ class Invest_Api {
     public static function getUserInvests($uid, $status = -1, $page = 1, $pagesize = 10) {
         $logic = new Invest_Logic_Invest();
         $data = $logic->getUserInvests($uid, $status, $page, $pagesize);
+        Base_Log::debug(array(
+            'uid'      => $uid,
+            'status'   => $status,
+            'data' => $data,
+        ));
         return $data;
     }
     
@@ -120,6 +125,10 @@ class Invest_Api {
         $list = $refunds->toArray();
         
         $data = $list['list'];
+        Base_Log::notice(array(
+            'invest_id' => $invest_id,
+            'data' => $data,
+        ));
         return $data;
     }
     
