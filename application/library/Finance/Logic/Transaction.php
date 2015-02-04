@@ -16,51 +16,51 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @return bool
      */
     public function cancelTenderBG($tenderOrderId,$retUrl='') {
-    	$objRst = new Base_Result();
-    	if(!isset($tenderOrderId)) {
-    		$objRst->status     = Base_RetCode::PARAM_ERROR;
-    		$objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
-    		return $objRst;
-    	}
+        $objRst = new Base_Result();
+        if(!isset($tenderOrderId)) {
+            $objRst->status     = Base_RetCode::PARAM_ERROR;
+            $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
+            return $objRst;
+        }
         
         $arrOrderInfo = Finance_Logic_Order::getOrderInfo($tenderOrderId);
         $userid       = $arrOrderInfo['userid'];
         $transAmt     = $arrOrderInfo['amount'];
         $trxId        = $arrOrderInfo['freezeTrxId'];
-    	
-    	$avlBal = Finance_Api::getUserAvlBalance($userid);
-    	//资金解冻订单入库
-    	$paramOrder = array(
+        
+        $avlBal = Finance_Api::getUserAvlBalance($userid);
+        //资金解冻订单入库
+        $paramOrder = array(
             'userId'      => intval($userid),
             'type'        => Finance_Order_Type::USRUNFREEZE,
             'amount'      => floatval($transAmt),
             'avlBal'      => floatval($avlBal),
-            'status'      => Finance_Order_Status::PROCESSING,
+            'status'      => Finance_Order_Status::INITIALIZE,
             'freezeTrxId' => $trxId,
-            'comment'     => '资金解冻订单处理',
-    	);
+            'comment'     => '资金解冻',
+        );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){
             return false;
         }
         $orderDate  = $orderInfo['orderDate'];
         $orderId    = $orderInfo['orderId'];
-   	
-    	$merCustId = $this->merCustId;
-    	$trxId = strval($trxId);
-    	$retUrl = strval($retUrl);
-    	$bgRetUrl = $this->webroot.'/finance/bgcall/canceltenderbg';
-    	$merPriv = strval($userid).'_'.strval($transAmt).'_'.strval($tenderOrderId);
-    	//调用汇付API进行解冻处理
-    	$ret = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,$trxId,$retUrl,$bgRetUrl,$merPriv);
-    	if(empty($ret)) {
-    		$objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
-    		$objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
-    		return $objRst;
-    	}
-    	$respCode = $ret['RespCode'];
-    	$respDesc = $ret['RespDesc'];
-    	if($respCode !== '000') {           
+    
+        $merCustId = $this->merCustId;
+        $trxId     = strval($trxId);
+        $retUrl    = strval($retUrl);
+        $bgRetUrl  = $this->webroot.'/finance/bgcall/canceltenderbg';
+        $merPriv   = strval($userid).'_'.strval($transAmt).'_'.strval($tenderOrderId);
+        //调用汇付API进行解冻处理
+        $ret = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,$trxId,$retUrl,$bgRetUrl,$merPriv);
+        if(empty($ret)) {
+            $objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
+            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
+            return $objRst;
+        }
+        $respCode = $ret['RespCode'];
+        $respDesc = $ret['RespDesc'];
+        if($respCode !== '000') {           
             $objRst->status     = $respCode;
             $objRst->statusInfo = $respDesc;
             Base_Log::error(array(
@@ -68,9 +68,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'respDesc' => $respDesc,
             ));
             return $objRst;
-    	}
+        }
+
+        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS);
+
         $objRst->status = Base_RetCode::SUCCESS;
-        return $objRst;    	
+        return $objRst;     
     }
     
     /**
@@ -234,8 +237,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'type'    => Finance_Order_Type::TENDERFREEZE,
             'amount'  => floatval($transAmt),
             'avlBal'  => floatval($avlBal),
-            'status'  => Finance_Order_Status::PROCESSING,
-            'comment' => '投标冻结订单处理中',   
+            'status'  => Finance_Order_Status::INITIALIZE,
+            'comment' => '投标冻结',   
         );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){

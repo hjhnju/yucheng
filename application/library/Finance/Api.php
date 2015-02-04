@@ -385,7 +385,6 @@ class Finance_Api {
                 'transAmt'  => $transAmt,
                 'userid'    => $userid,
                 'orderId'   => $orderId,
-                'orderDate' => $orderDate,
                 'retUrl'    => $retUrl,
             ));     
         }
@@ -394,7 +393,6 @@ class Finance_Api {
             'transAmt'  => $transAmt,
             'userid'    => $userid,
             'orderId'   => $orderId,
-            'orderDate' => $orderDate,
             'retUrl'    => $retUrl,
         ));
         $transLogic->tenderCancel($transAmt,$userid,$orderId,$retUrl);      

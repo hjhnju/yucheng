@@ -53,7 +53,7 @@ class ConfirmController extends Base_Controller_Response {
             $this->redirect('/invest/success');
         } else {
             Base_Log::error(array(
-                'msg'     => '投资confirm保存失败',
+                'msg'     => '投资confirm失败',
                 'orderId' => $orderId,
                 'userid'  => $userid,
                 'loanId'  => $loanId,

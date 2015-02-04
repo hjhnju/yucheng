@@ -156,13 +156,12 @@ class Finance_Logic_Order {
     public static function updateOrderStatus($orderId, $status, $failCode='',$failDesc='') {
         $regOrder          = new Finance_Object_Order(intval($orderId));
         $status            = intval($status);
-        $avlBal            = floatval($avlBal);
         $regOrder->orderId = $orderId;
         $regOrder->status  = $status;
         $arrBal            = Finance_Api::getUserBalance($regOrder->userId);
         $balance           = $arrBal['AcctBal'];//用户余额
         $regOrder->avlBal  = $arrBal['AvlBal']; //用户可用余额
-        
+
         $statusDesc        = Finance_Order_Status::getTypeName(intval($status));
         $regOrder->comment = '订单'."$statusDesc";
         if(!empty($failCode) && !empty($failDesc)) {
@@ -261,6 +260,7 @@ class Finance_Logic_Order {
         $list = new Finance_List_Order();
         $list->setFilter(array('userId' => $userid));
         $list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
+        $list->appendFilterString("`status` IN (1,2,3)");
         if($queryType !== 1){
             $list->appendFilter(array('type' => $queryType));
         }
