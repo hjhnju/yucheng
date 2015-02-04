@@ -264,7 +264,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $inHuifuId  = $this->getHuifuid(intval($inUserId));
         $outHuifuId = $this->getHuifuid(intval($outUserId));    
        
-        $avlBal    = Finance_Api::getUserAvlBalance($userid);
+        $avlBal    = Finance_Api::getUserAvlBalance($outUserId);
         //打款订单记录入表finance_order
         $paramOrder = array(
             'orderId'   => intval($orderId),
