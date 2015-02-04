@@ -107,7 +107,7 @@ class Finance_Logic_Order {
             'userId'    => $userid,
             'type'      => $type,
             'amount'    => $transAmt,
-            'avlBal'    => $avlBal,
+            'balance'   => $balance,
             'total'     => $total,
             'comment'   => $comment,
             'ip'        => Base_Util_Ip::getClientIp(),
@@ -159,6 +159,10 @@ class Finance_Logic_Order {
         $avlBal            = floatval($avlBal);
         $regOrder->orderId = $orderId;
         $regOrder->status  = $status;
+        $arrBal            = Finance_Api::getUserBalance($regOrder->userId);
+        $balance           = $arrBal['AcctBal'];//用户余额
+        $regOrder->avlBal  = $arrBal['AvlBal']; //用户可用余额
+        
         $statusDesc        = Finance_Order_Status::getTypeName(intval($status));
         $regOrder->comment = '订单'."$statusDesc";
         if(!empty($failCode) && !empty($failDesc)) {
