@@ -241,6 +241,24 @@ class Finance_Api {
     }
     
     /**
+     * 资金解冻接口
+     * @param string orderId 
+     * @param bool
+     * @return API 返回array格式 {'status'=>,'statusInfo'=>,'data'=>}
+     * 
+     */
+    public static function cancelTenderBG($orderID,$retUrl='') {
+    	$transLogic = new Finance_Logic_Transaction();
+    	$objRst = $transLogic->cancelTenderBG($orderID,$retUrl);
+    	Base_Log::notice(array(
+    	    'msg'  => '资金解冻接口',
+    	    'args' => func_get_args(),
+    	    'ret'  => $objRst->format(),
+    	));
+    	return $objRst->format();    	
+    }
+    
+    /**
      * 删除银行卡接口
      * @param string huifuid
      * @param string cardId
@@ -253,7 +271,7 @@ class Finance_Api {
      *     'cardId'
      * )
      */
-    public function delCard($huifuid,$card) {
+    public static function delCard($huifuid,$card) {
         if(!isset($huifuid) || empty($huifuid) || !isset($card) || empty($card)) {
             Base_Log::error(array(
                 'msg' => '请求参数错误',

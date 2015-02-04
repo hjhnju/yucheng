@@ -46,6 +46,80 @@ class BgcallController extends Base_Controller_Page {
 
     /**
      * 汇付天下回调Action
+     * 资金解冻BgUrl回调webroot/Finance/bgcall/cancelTenderBG
+     * 打印 RECV_ORD_ID_OrdId
+     */
+    public function canceltenderbgAction() {
+    	if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
+    	   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['OrdDate']) ||
+    	   !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
+    		$logParam        = $_REQUEST;
+    		$logParam['msg'] = '汇付返回参数错误';
+    	   	Base_Log($logParam);
+    		return;
+    	}   	
+    	//SDK中已经验签，此处不再验签了
+    	
+    	$_merPriv = $_REQUEST['MerPriv'];
+    	$merPriv = explode('_',$_merPriv);
+    	$userid = intval($merPriv[0]);
+    	$transAmt = floatval($merPriv[1]);
+    	$tenderOrderId = intval($merPriv[2]);
+    	
+    	
+    	$orderId = intval($_REQUEST['OrdId']);
+    	$orderDate = intval($_REQUEST['OrdDate']);
+    	$trxId = $_REQUEST['TrxId'];
+    	
+    	$arrBal   = Finance_Api::getUserBalance($userid);
+    	$balance  = $arrBal['AcctBal'];//用户余额
+    	$avlBal   = $arrBal['AvlBal'];//用户可用余额
+    	$total    = Finance_Api::getPlatformBalance();//系统余额
+    	
+    	$lastip   = Base_Util_Ip::getClientIp();
+    	$respCode = $_REQUEST['RespCode'];
+    	$respDesc = $_REQUEST['RespDesc'];
+    	
+    	if($respCode !== '000') {
+    		Base_Log::error(array(
+    			'msg' => $respDesc,
+    			'ret' => $_REQUEST,
+    		));
+    		//资金解冻订单状态更新为“处理失败”
+    		Finance_Logic_Order::payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHFAIL,
+    		    Finance_TypeStatus::USRUNFREEZE, $avlBal, $respCode, $respDesc);
+    		return ;
+    	}
+    	//资金解冻订单状态更新为“处理成功”
+    	Finance_Logic_Order::payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS,
+    	    Finance_TypeStatus::USRUNFREEZE, $avlBal, $respCode, $respDesc);    	
+    	
+    	//投标订单状态更新为“资金已解冻”
+    	Finance_Logic_Order::payOrderUpdate($tenderOrderId, Finance_TypeStatus::FREEZED,
+    	    Finance_TypeStatus::INITIATIVETENDER, $avlBal, $respCode, $respDesc);
+    	//投finance_tender表状态更新为“资金已解冻”
+    	Finance_Logic_Order::payTenderUpdate($tenderOrderId,Finance_TypeStatus::FREEZED);
+    	
+    	//资金解冻记录入库
+    	$param = array(
+    		'orderId'   => $orderId,
+    		'orderDate' => $orderDate,
+    		'userId'    => $userid,
+    		'type'      => Finance_TypeStatus::USRUNFREEZE,
+    		'amount'    => $transAmt,
+    		'balance'   => $balance,
+    		'total'     => $total,
+    		'comment'   => '资金解冻记录',
+    		'ip'        => $lastip,
+    	);
+    	Finance_Logic_Order::payRecordEnterDB($param);
+    	Base_Log::notice($_REQUEST);
+    	//页面打印
+    	$orderId = strval($orderId);
+    	print('RECV_ORD_ID_'.$orderId);    	
+    }
+    /**
+     * 汇付天下回调Action
      * 用户开户BgUrl回调webroot/Finance/bgcall/userregist
      * 打印RECV_ORD_ID_TrxId
      * 
@@ -70,8 +144,7 @@ class BgcallController extends Base_Controller_Page {
                 'CmdId' => $retParam,
             ));
             return;
-        }       
-        
+        }              
         $trxId    = $retParam['TrxId'];
         $userid   = $retParam['MerPriv'];//取客户私用域中的userid
         $huifuid  = $retParam['UsrCustId'];//用户汇付id入库

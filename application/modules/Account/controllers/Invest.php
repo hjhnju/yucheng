@@ -72,7 +72,7 @@ class InvestController extends Base_Controller_Page {
  	    foreach ($list as $key => $value) {
 	        $listRet[$key]['invest_id'] = $value['id'];//invest_id
 	        $listRet[$key]['proId'] = $value['loan_id'];
-	        $loanInfo = loan_api::getLoanDetail($value['loan_id']);
+	        $loanInfo = Loan_Api::getLoanDetail($value['loan_id']);
 	    	$listRet[$key]['investPro'] = $value['title'];
 	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
 	    	$listRet[$key]['tenderAmt'] = $value['amount'];
@@ -327,7 +327,7 @@ class InvestController extends Base_Controller_Page {
 		}
 		
 		foreach ($retData as $key=>$value) {
-			$list[$key]['time'] = $value[''];
+			$list[$key]['time'] = $value['create_time'];
 			$list[$key]['repossPrincipal'] = $value['capital_rest'];
 			$list[$key]['recePrincipal'] = $value['capital_refund'];
 			if($value['transfer'] === 1) {
@@ -338,7 +338,7 @@ class InvestController extends Base_Controller_Page {
 				$list[$key]['repossProfit'] = $value['amount'];
 				$list[$key]['receProfit'] = 0.00;
 			}			
-			$list[$key]['paymentStatus'] = $value[''];
+			$list[$key]['status'] = $value['status'];
 			$list[$key]['punitive'] = $value['late_charge'];
 		}
 		

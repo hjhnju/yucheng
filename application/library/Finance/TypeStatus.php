@@ -13,9 +13,10 @@ class Finance_TypeStatus {
 	CONST REPAYMENT        = 7;  //还款
 	CONST TRANSFER         = 8;  //商户用自动扣款转账	
 	CONST RECE_AWD         = 9;  //领取奖励
-	CONST MONEY_BACK       = 10;  //退款
-	CONST MERCASH          = 11;  //商户代取现
-	CONST UNKNOWN_TYPE     = 12;  //未知类型
+	CONST MONEY_BACK       = 10; //退款
+	CONST MERCASH          = 11; //商户代取现
+	CONST USRUNFREEZE      = 12; //用户资金解冻
+	CONST UNKNOWN_TYPE     = 13; //未知类型
 	//订单状态
 	CONST ORDER_INITIALIZE = 0;  //订单初始化
 	CONST PROCESSING       = 1;  //订单处理中
@@ -26,6 +27,7 @@ class Finance_TypeStatus {
 	CONST HAVEPAYED        = 6;  //已打款
 	CONST PAYFAIDED        = 7;  //打款失败
 	CONST CANCELD          = 8;  //投标已撤销	
+	CONST FREEZED          = 9;  //资金已解冻
 	CONST UNKNOWN_STATUS   = 10;  //未知状态
 	
 	public static $typeMapping = array(
@@ -39,6 +41,7 @@ class Finance_TypeStatus {
 		self::MERCASH          => '商户代取现',
 		self::RECE_AWD         => '领取奖励',
 	    self::MONEY_BACK       => '退款',
+		self::USRUNFREEZE      => '用户资金解冻',
 		self::UNKNOWN_TYPE     => '未知类型',	
 	);
 	
@@ -52,6 +55,7 @@ class Finance_TypeStatus {
 		self::HAVEPAYED        => '已打款',
 		self::PAYFAIDED        => '打款失败',
 		self::CANCELD          => '投标已撤销',
+		self::FREEZED          => '资金已解冻',
 		self::UNKNOWN_STATUS   => '未知状态',		
 	);  
 	public static function getStatusDesc($statusCode) {

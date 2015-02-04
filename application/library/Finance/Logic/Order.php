@@ -34,7 +34,7 @@ class Finance_Logic_Order {
 
         $time    = substr($timeStr, 0, 10);
         $ms      = substr($timeStr, 10, 3);
-        $orderDate    = date("Ymd", $time);
+        $orderDate = date("Ymd", $time);
         $orderId = date("YmdHis", $time) . $ms ;
 
         $numbers = range(0, 9);
@@ -240,7 +240,7 @@ class Finance_Logic_Order {
     /**
      * 根据orderId获取投标的相关信息
      * @param int orderId
-     * @return array || boolean
+     * @return array || bool
      */
     public static function getTenderInfo($orderId) {
         if(!isset($orderId)) {
@@ -265,6 +265,38 @@ class Finance_Logic_Order {
             'status'     => $tenderInfo['status'],
         );
         return $ret;
+    }
+    
+    /**
+     * 根据orderId获取订单的相关信息
+     * @param int orderId 
+     * @return array || bool
+     */
+    public static function getOrderInfo($orderId) {
+    	if(!isset($orderId)) {
+    		Base_Log::error(array(
+    			'msg' => '请求参数错误',
+    		));
+    		return false;
+    	}
+    	$orderId  = intval($orderId);
+    	$order = new Finance_List_Order();
+    	$filters = array('orderId' => $orderId);
+    	$order->setFilter($filters);
+    	$list = $order->toArray();
+    	$orderInfo = $list['list'][0];
+    	$ret = array(
+    		'orderId'   => $orderInfo['orderId'],
+    		'orderDate' => $orderInfo['orderDate'],
+    		'userid'    => $orderInfo['userId'],
+    		'type'      => $orderInfo['type'],
+    		'amount'    => $orderInfo['amount'],
+    		'avlBal'    => $orderInfo['avlBal'],
+    		'status'    => $orderInfo['status'],
+    		'failCode'  => $orderInfo['failCode'],
+    		'failDesc'  => $orderInfo['failDesc'],    			
+    	);
+    	return $ret;
     }
     
     /**

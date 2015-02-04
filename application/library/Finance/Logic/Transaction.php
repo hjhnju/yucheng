@@ -11,6 +11,73 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
     }
 
     /**
+     * 资金解冻接口logic层
+     * @param int orderId 
+     * @return bool
+     */
+    public function cancelTenderBG($tenderOrderId,$retUrl='') {
+    	$objRst = new Base_Result();
+    	if(!isset($tenderOrderId)) {
+    		$objRst->status     = Base_RetCode::PARAM_ERROR;
+    		$objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
+    		return $objRst;
+    	}
+    	   	
+    	$orderInfo = Finance_Logic_Order::genOrderInfo();
+    	$orderDate = $orderInfo['date'];
+    	$orderId   = $orderInfo['orderId'];
+    	
+    	$orderInfo = Finance_Logic_Order::getOrderInfo($tenderOrderId);
+    	$userid = $orderInfo['userid'];
+    	
+    	$tenderInfo = Finance_Logic_Order::getTenderInfo($tenderOrderId);
+    	$transAmt = $tenderInfo['amount'];
+    	$trxId = $tenderInfo['freezeTrxId'];
+    	
+    	$avlBal = Finance_Api::getUserAvlBalance($userid);
+    	//资金解冻订单入库
+    	$paramOrder = array(
+    		'orderId'   => intval($orderId),
+    		'orderDate' => intval($orderDate),
+    		'userId'    => intval($userid),
+    		'type'      => Finance_TypeStatus::USRUNFREEZE,
+    		'amount'    => floatval($transAmt),
+    		'avlBal'    => floatval($avlBal),
+    		'status'    => Finance_TypeStatus::PROCESSING,
+    		'comment'   => '资金解冻订单处理中',
+    	);
+    	Finance_Logic_Order::payOrderEnterDB($paramOrder);
+   	
+    	$merCustId = $this->merCustId;
+    	$ordId = strval($orderId);
+    	$ordDate = strval($orderDate);
+    	$trxId = strval($trxId);
+    	$retUrl = strval($retUrl);
+    	$bgRetUrl = $this->webroot.'/finance/bgcall/canceltenderbg';
+    	$merPriv = strval($userid).'_'.strval($transAmt).'_'.strval($tenderOrderId);
+    	//调用汇付API进行解冻处理
+    	$ret = $this->chinapnr->usrUnFreeze($merCustId,$ordId,$ordDate,$trxId,$retUrl,$bgRetUrl,$merPriv);
+    	if(empty($ret)) {
+    		$objRst->status     = Finance_RetCode::REQUEST_API_ERROR;
+    		$objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_API_ERROR);
+    		return $objRst;
+    	}
+    	$respCode = $ret['RespCode'];
+    	$respDesc = $ret['RespDesc'];
+    	if($respCode !== '000') {           
+            $objRst->status     = $respCode;
+            $objRst->statusInfo = $respDesc;
+            Base_Log::error(array(
+                'respCode' => $respCode,
+                'respDesc' => $respDesc,
+            ));
+            return $objRst;
+    	}
+        $objRst->status = Base_RetCode::SUCCESS;
+        return $objRst;    	
+    }
+    
+    /**
      * 网银充值logic层
      * @param int userid
      * @param string huifuid
