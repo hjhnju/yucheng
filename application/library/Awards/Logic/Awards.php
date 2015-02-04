@@ -227,7 +227,7 @@ class Awards_Logic_Awards {
                 $data['awardAmt'] = '已领取'. $this->invAmt .'元';
             }           
             $data['name']         = $objUser->name;
-            $data['phone']        = $objUser->phone;
+            $data['phone']        = Base_Util_String::starPhone($objUser->phone);
             $data['id']           = $userId;
             $percent              = floatval(($data['tenderAmount'] / $this->invLimitAmt) * 100);            
             $percent              = ($percent <= 100) ? $percent : 100;

@@ -94,9 +94,6 @@ class BgcallController extends Base_Controller_Page {
     	Finance_Logic_Order::payOrderUpdate($orderId, Finance_TypeStatus::ENDWITHSUCCESS,
     	    Finance_TypeStatus::USRUNFREEZE, $avlBal, $respCode, $respDesc);    	
     	
-    	//投标订单状态更新为“资金已解冻”
-    	Finance_Logic_Order::payOrderUpdate($tenderOrderId, Finance_TypeStatus::FREEZED,
-    	    Finance_TypeStatus::INITIATIVETENDER, $avlBal, $respCode, $respDesc);
     	//投finance_tender表状态更新为“资金已解冻”
     	Finance_Logic_Order::payTenderUpdate($tenderOrderId,Finance_TypeStatus::FREEZED);
     	
