@@ -112,12 +112,7 @@ class Invest_Logic_Invest {
                 $fresh->save();
             }
         } else {
-            Finance_Api::cancelTenderBG($orderId);
-            Base_Log::notice(array(
-                'msg'    => '投标失败，取消投标',
-                'invest' => json_encode(func_get_args()),
-            ));
-            return false;
+            return Finance_Api::cancelTenderBG($orderId);
         }
         return true;
     }

@@ -247,9 +247,10 @@ class Finance_Api {
      * @return bool
      * 
      */
-    public static function cancelTenderBG($orderID,$retUrl='') {
+    public static function cancelTenderBG($orderId, $retUrl='') {
+        $orderId = strval($orderId);
     	$transLogic = new Finance_Logic_Transaction();
-    	$objRst = $transLogic->cancelTenderBG($orderID,$retUrl);
+    	$objRst = $transLogic->cancelTenderBG($orderId, $retUrl);
     	Base_Log::notice(array(
     	    'msg'  => '资金解冻接口',
     	    'args' => func_get_args(),
