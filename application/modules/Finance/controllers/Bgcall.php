@@ -359,7 +359,8 @@ class BgcallController extends Base_Controller_Page {
         }
         //将投标冻结订单状态更改为成功
         Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-            $respCode, $respDesc);
+            $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));
+
         //投标冻结后保存快照
         Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
             $transAmt, '投标冻结记录');

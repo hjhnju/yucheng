@@ -151,9 +151,10 @@ class Finance_Logic_Order {
      * @param integer $status
      * @param string $failCode
      * @param string $failDesc
+     * @param string $arrExts, 额外保存的字段，e.g array('freezeTrxId'=>)
      * @return boolean
      */
-    public static function updateOrderStatus($orderId, $status, $failCode='',$failDesc='') {
+    public static function updateOrderStatus($orderId, $status, $failCode='',$failDesc='',$arrExts=false) {
         $regOrder          = new Finance_Object_Order(intval($orderId));
         $status            = intval($status);
         $regOrder->orderId = $orderId;
@@ -167,14 +168,18 @@ class Finance_Logic_Order {
         if(!empty($failCode) && !empty($failDesc)) {
             $regOrder->failCode = strval($failCode);
             $regOrder->failDesc = strval($failDesc);
-        }       
+        }
+        if(is_array($arrExts)){
+            foreach ($arrExts as $key => $value) {
+                $regOrder->$key = $value;
+            }
+        }
         $ret = $regOrder->save();       
         if(!$ret){
             Base_Log::error(array(
-                'msg'     => "$type".'订单状态更新失败',
+                'msg'     => '订单状态更新失败',
                 'orderId' => $orderId,
                 'status'  => $status,
-                'type'    => $type,
             ));
             return false;
         }
