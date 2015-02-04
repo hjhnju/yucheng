@@ -95,8 +95,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'type'      => Finance_Order_Type::NETSAVE,
             'amount'    => floatval($transAmt),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_Order_Status::PROCESSING,
-            'comment'   => '充值订单处理中',
+            'status'    => Finance_Order_Status::INITIALIZE,
+            'comment'   => '充值订单',
         );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){
@@ -325,8 +325,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'type'      => Finance_Order_Type::LOANS,
             'amount'    => floatval(sprintf('%.2f',$transAmt)),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_Order_Status::PROCESSING,
-            'comment'   => '打款订单处理中',
+            'status'    => Finance_Order_Status::INITIALIZE,
+            'comment'   => '订单打款',
         );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){
@@ -420,6 +420,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return $objRst;
         }
+
+        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS);
 
         $objRst->status = Base_RetCode::SUCCESS;
         return $objRst; 
@@ -561,8 +563,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'type'      => Finance_Order_Type::REPAYMENT,
             'amount'    => floatval($transAmt),
             'avlBal'    => floatval($avlBal),
-            'status'    => Finance_Order_Status::PROCESSING,
-            'comment'   => '还款订单处理中',
+            'status'    => Finance_Order_Status::INITIALIZE,
+            'comment'   => '订单还款',
         );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){

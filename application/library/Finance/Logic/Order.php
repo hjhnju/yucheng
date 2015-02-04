@@ -260,7 +260,7 @@ class Finance_Logic_Order {
         $list = new Finance_List_Order();
         $list->setFilter(array('userId' => $userid));
         $list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
-        $list->appendFilterString("`status` IN (1,2,3)");
+        $list->appendFilterString("`status` IN (0,1,2,3)");
         if($queryType !== 1){
             $list->appendFilter(array('type' => $queryType));
         }
