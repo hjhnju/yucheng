@@ -1,0 +1,1 @@
+define("my/success/index",function(require){function e(){t()}function t(){r.init();var e,t=6;e=setInterval(function(){if(n("#time-span").text(--t+"秒后自动跳转"),0===t)clearInterval(e),window.location.href="/account/overview/index"},1e3)}var n=require("jquery"),r=(require("common/Remoter"),require("common/config"),require("common/header"));return{init:e}});
