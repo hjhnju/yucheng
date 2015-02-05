@@ -10,6 +10,7 @@ define(function (require) {
     var util = require('common/util');
     var header = require('common/header');
     var Remoter = require('common/Remoter');
+    var config = require('common/config');
     var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
     var event;
     var codeUrl;
@@ -47,7 +48,7 @@ define(function (require) {
         
         // 邀请奖励
         $('.reward-type-link-span').zclip({
-            path: 'http://img.jb51.net/js/ZeroClipboard.swf',
+            path: config.URL.ROOT + '/htdocs/static/ZeroClipboard.swf',
             copy: $.trim($('.reward-type-link-http').html()),
             afterCopy: function() {
                 alert('复制成功');

@@ -22,6 +22,7 @@ define(function () {
      * @type {Object}
      */
     var URL = {
+        ROOT: rootUrl,
         IMG_GET: rootUrl
             + '/user/imagecode/getimage?type=',
         REGIST_CHECKNAME_CHECK: rootUrl
