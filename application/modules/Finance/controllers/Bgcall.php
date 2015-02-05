@@ -92,7 +92,7 @@ class BgcallController extends Base_Controller_Page {
     	$orderId = strval($orderId);
     	print('RECV_ORD_ID_'.$orderId);    	
     }
-    
+
     /**
      * 汇付天下回调Action
      * 用户开户BgUrl回调webroot/Finance/bgcall/userregist
@@ -335,13 +335,6 @@ class BgcallController extends Base_Controller_Page {
         $transAmt      = floatval($retParam['TransAmt']);
         $freezeOrdId = $retParam['FreezeOrdId'];
         $freezeTrxId = $retParam['FreezeTrxId'];
-
-        $arrBal   = Finance_Api::getUserBalance($userid);
-        $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal'];//用户可用余额
-        $total    = Finance_Api::getPlatformBalance();//系统余额
-        
-        $lastip      = Base_Util_Ip::getClientIp();
         $respCode    = $retParam['RespCode'];
         $respDesc    = $retParam['RespDesc'];
 
@@ -350,17 +343,17 @@ class BgcallController extends Base_Controller_Page {
             $logParam['msg'] = $respDesc;
             Base_Log::error($logParam);
             //财务类投标冻结订单状态更新为处理失败
-            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
-                $respCode, $respDesc);
+            //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
+            //    $respCode, $respDesc);
             return ;
         }
         //将投标冻结订单状态更改为成功
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-            $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));
+        //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+        //    $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));
 
         //投标冻结后保存快照
-        Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
-            $transAmt, '投标冻结记录');
+        //Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
+        //    $transAmt, '投标冻结记录');
 
         print('RECV_ORD_ID_'.strval($orderId));     
     }

@@ -21,7 +21,7 @@ class Loan_Type_Audit extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::COMPANY => '企业认证',
+        self::COMPANY   => '机构认证',
         self::GUARANTEE => '担保人认证',
     );
     

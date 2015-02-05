@@ -297,6 +297,64 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $maxTenderRate, $borrowerDetails, $isFreeze, $freezeOrdId, $retUrl, $bgRetUrl, $merPriv
         );      
     }
+
+    /**
+     * 汇付RetUrl到投标确认页，投标确认页调用本方法确认投标信息
+     */
+    public function initiativeTenderBg($arrRequest){
+        //返回值
+        $arrRet    = array();
+
+        $retParam  = $this->arrUrlDec($arrRequest);      
+        //验签处理
+        $signKeys  = array("CmdId", "RespCode", "MerCustId", "OrdId", "OrdDate", 
+            "TransAmt", "UsrCustId", "TrxId", "IsFreeze","FreezeOrdId","FreezeTrxId",
+            "RetUrl","BgRetUrl","MerPriv","RespExt");
+        $chinapnr  = Finance_Chinapnr_Client::getInstance();
+        $originStr = $chinapnr->getSignContent($signKeys, $retParam);
+        $bolRet    = $chinapnr->verify($originStr, $retParam['ChkValue']);
+        if(!$bolRet) {
+            $retParam['msg'] = '验签错误';
+            Base_Log::error($retParam);
+            //TODO:为什么会验签失败
+            //return false;
+        }
+
+        $orderId     = intval($retParam['OrdId']);
+        $orderDate   = intval($retParam['OrdDate']);
+        $transAmt    = floatval($retParam['TransAmt']);
+        $huifuid     = $retParam['UsrCustId'];
+        $freezeOrdId = $retParam['FreezeOrdId'];
+        $freezeTrxId = $retParam['FreezeTrxId'];
+        $respCode    = $retParam['RespCode'];
+        $respDesc    = $retParam['RespDesc'];
+
+        if($respCode !== '000') {
+            //日志
+            $arrRequest['msg'] = '投标冻结失败';
+            Base_Log::error($arrRequest);
+            //财务类投标冻结订单状态更新为处理失败
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
+                $respCode, $respDesc);
+
+            return false;
+        }
+        //将投标冻结订单状态更改为成功
+        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+            $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));
+
+        //投标冻结后保存快照
+        Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
+            $transAmt, '投标冻结记录');
+        
+        $merPriv               = explode('_',$retParam['MerPriv']);
+        $arrRet['userid']      = intval($merPriv[0]);
+        $arrRet['loanId']      = intval($merPriv[1]);   
+        $arrRet['orderId']     = $retParam['OrdId'];
+        $arrRet['orderDate']   = $retParam['OrdDate'];
+        $arrRet['transAmt']    = floatval($retParam['TransAmt']);
+        return $arrRet;   
+    }
     
     /**
      * 满标打款Logic层
@@ -690,6 +748,23 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $ret = $this->chinapnr->merCash($this->merCustId,$orderId,$usrCustId,$transAmt,
             $servFee = '',$servFeeAcctId = '',$retUrl = '',
             $bgRetUrl,$remark = '',$charSet = '',$merPriv = '',$reqExt = '');       
+        return $ret;
+    }
+
+    /**
+     * 对$_REQUEST进行urldecode
+     * @param array
+     * @return array || flase
+     */   
+    protected function arrUrlDec($arrParam) {
+        $ret = array();
+        foreach ($arrParam as $key => $value) {
+            if(!is_array($value)) {
+                $ret[$key] = urldecode($value);
+            } else {
+                $ret[$key] = $this->arrUrlDec($value);//对数组值进行递归解码
+            }
+        }
         return $ret;
     }
 }

@@ -628,6 +628,27 @@ class Finance_Api {
          ));
          $userManageLogic->userLogin($userCustId);
      }
+
+
+    /**
+     * 汇付RetUrl到投标确认页，投标确认页调用本方法确认投标信息
+     * @param $arrRequst $_REQUEST
+     */
+    public function initiativeTenderBg($arrRequest) {
+        if(!isset($arrRequest['CmdId']) || !isset($arrRequest['RespCode']) || !isset($arrRequest['RespDesc']) || 
+           !isset($arrRequest['MerCustId']) || !isset($arrRequest['OrdId']) || !isset($arrRequest['OrdDate']) || 
+           !isset($arrRequest['TransAmt']) || !isset($arrRequest['UsrCustId']) || !isset($arrRequest['IsFreeze']) || 
+           !isset($arrRequest['BgRetUrl']) || !isset($arrRequest['ChkValue'])) {
+            $arrRequest['msg'] = '汇付返回参数错误';
+            Base_Log::error($arrRequest);
+            return false;
+        }
+        $logic  = new Finance_Logic_Transaction();
+        $arrRet = $logic->initiativeTenderBg($arrRequest);
+        return $arrRet;
+    }
+
+    
      
     
 }
