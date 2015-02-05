@@ -590,6 +590,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $openAcctId = '';
         $retUrl     = '';
         $bgRetUrl   = $this->webroot.'/finance/bgcall/tixian';
+
         $merPriv    = strval($userid);
         $reqExt     = array(array(
             'FeeObjFlag' => 'U',
@@ -669,7 +670,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }
         $transAmt  = sprintf('%.2f',$transAmt);
         $huifuid   = $this->getHuifuid(intval($inUserId));
-        $avlBal    = Finance_Api::getUserAvlBalance($userid);
+        $avlBal    = Finance_Api::getUserAvlBalance($inUserId);
         
         //还款订单订单记录入表finance_order
         $paramOrder = array(
