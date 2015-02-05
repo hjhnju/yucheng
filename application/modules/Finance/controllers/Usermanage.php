@@ -67,14 +67,13 @@ class UsermanageController extends Base_Controller_Page {
    //      $this->userManageLogic->corpRegist($userid,$userName,$busiCode);
    //  }
 
-   //  /**
-   //   * 用户登录Action层
-   //   * FOR TEST
-   //   */
-   //  public function loginAction() {
-   //   $huifuid = $this->huifuid;
-   //   $this->userManageLogic->userLogin($huifuid);
-   //  }
+    /**
+     * 用户登录Action层
+     */
+    public function loginAction() {
+     $huifuid = $this->huifuid;
+     $this->userManageLogic->userLogin($huifuid);
+    }
     
    //  /**
    //   * 账户信息修改Action层
@@ -242,5 +241,12 @@ class UsermanageController extends Base_Controller_Page {
    //   var_dump($ret);
    //   return;
    //  }
+   
+    public function testAction() {
+    	$orderId = '2015020414212872454';
+    	$ret = Finance_Api::cancelTenderBG($orderId);
+    	var_dump($ret);
+    	return ;
+    }
     
 }

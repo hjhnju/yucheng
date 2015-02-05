@@ -133,51 +133,56 @@ define(function (require) {
 
         // 确定投资
         $('.confirm-submit').click(function () {
+
+            $('#invest-form').trigger('submit');
+        });
+
+        // form 提交
+        $('#invest-form').on('submit', function () {
             var ipt = $('.right-top-ipt-input');
             var value = +$.trim(ipt.val());
 
             // 已经提示error或者不可投资
             if (ipt[0].disabled) {
-                return;
+                return false;
             }
 
             // 输入不能为空
             if (!value) {
                 investError.addClass('show').html('输入不能为空');
-                return;
+                return false;
             }
 
             // 输入不合法
             if (isNaN(value)) {
                 investError.addClass('show').html('输入内容不合法');
-                return;
+                return false;
             }
 
             // 最后一标不得小于100
-            if (model.amountRest < 100 && value < model.amountRest) {
+            if (model.amountRest < 100 && value !== model.amountRest) {
                 investError.addClass('show').html('投标金额必须为' + model.amountRest + '元');
-                return;
+                return false;
             }
 
             // 不可大于可用余额
             if (value > model.userAmount) {
                 investError.addClass('show').html('可用余额不足');
-                return;
+                return false;
             }
 
             // 输入不能小于100
             if (value < 100 && value !== model.amountRest) {
                 investError.addClass('show').html('最小投标金额100元');
-                return;
+                return false;
             }
 
             // 超过可投金额
             if (value > model.amountRest) {
                 investError.addClass('show').html('可投金额不足');
-                return;
+                return false;
             }
 
-            $('#invest-form').get(0).submit();
         });
 
         // 投资盈利计算

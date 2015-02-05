@@ -1,7 +1,7 @@
 <?php
 /**
  * 资讯表
- * @author 
+ * @author jiangsongfang
  */
 class Infos_Object_Infos extends Base_Object {
     /**
@@ -26,7 +26,7 @@ class Infos_Object_Infos extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'status', 'type', 'title', 'content', 'author', 'publish_time', 'create_time');
+    protected $fields = array('id', 'status', 'type', 'title', 'abstract', 'content', 'author', 'publish_time', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -37,10 +37,12 @@ class Infos_Object_Infos extends Base_Object {
         'status'      => 'status',
         'type'        => 'type',
         'title'       => 'title',
+        'abstract'    => 'abstract',
         'content'     => 'content',
         'author'      => 'author',
         'publish_time'=> 'publishTime',
         'create_time' => 'createTime',
+        'update_time' => 'updateTime',
     );
 
     /**
@@ -53,6 +55,7 @@ class Infos_Object_Infos extends Base_Object {
         'type'        => 1,
         'publish_time'=> 1,
         'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
@@ -88,6 +91,12 @@ class Infos_Object_Infos extends Base_Object {
     public $title;
 
     /**
+     * 
+     * @var string
+     */
+    public $abstract;
+
+    /**
      * 序列化内容
      * @var string
      */
@@ -110,5 +119,11 @@ class Infos_Object_Infos extends Base_Object {
      * @var integer
      */
     public $createTime;
+
+    /**
+     * 修改时间
+     * @var integer
+     */
+    public $updateTime;
 
 }

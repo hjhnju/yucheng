@@ -45,9 +45,10 @@ class SecureController extends Base_Controller_Page{
 		$userinfo = $this->userInfoLogic->getUserInfo($this->objUser);		
 		$phone = $userinfo['phone']['isopen'];//用户手机是否开通
 		$phonenum = $userinfo['phone']['value'];//用户手机号码
-		$phonenum = substr_replace($phonenum,'****',3,4);
+	
+		$phonenum =  Base_Util_String::starPhone($phonenum);
 		if($phone == 2) {
-			$phoneurl = $webroot.'/account/secure/bindphone';
+			$phoneurl = $webroot.'/user/open';
 		} else {
 			$phoneurl = $webroot.'/account/edit/chphone';
 		}		
@@ -70,10 +71,12 @@ class SecureController extends Base_Controller_Page{
 		}
 		
 		$email = $userinfo['email']['isopen'];//用户是否开通了email
+	
 		$emailnum = $userinfo['email']['value'];
-		$emailnum = substr_replace($emailnum,'*****',4,4);
+		$emailnum = Base_Util_String::starEmail($emailnum);
+		
 		if($email == 2) {
-			$emailurl = $webroot.'/user/open';
+			$emailurl = $webroot.'/account/edit/chemail';
 		} else {
 			$emailurl = $webroot.'/account/edit/chemail';				
 		}
@@ -81,6 +84,9 @@ class SecureController extends Base_Controller_Page{
 		$chpwdurl = $webroot.'/account/edit/chpwd';
 		
 		$thirdBindRet = User_Api::checkBind($userid);
+
+		$this->retData['thirdPlatform'] = false;
+		$this->retData['thirdNickName'] = false;
 		//没有绑定第三方登陆
 		if(empty($thirdBindRet)) {
 			$this->retData['bindthirdlogin'] = 2;

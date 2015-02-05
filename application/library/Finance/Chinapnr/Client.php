@@ -1371,14 +1371,15 @@ HTML;
                 "Version"   =>  $this::VERSION_10,
                 "CmdId"     =>  $this::CMDID_USR_UN_FREEZE,
                 "MerCustId" =>  $merCustId,
-                "OrdId" =>  $ordId,
+                "OrdId"     =>  $ordId,
                 "OrdDate"   =>  $ordDate,
-                "TrxId" =>  $trxId,
+                "TrxId"     =>  $trxId,
                 "RetUrl"    =>  $retUrl,
                 "BgRetUrl"  =>  $bgRetUrl,
                 "MerPriv"   =>  $merPriv,
                 "ChkValue"  =>  $checkValue,
         );
+        Base_Log::debug($reqData);
         $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","TrxId","RetUrl","BgRetUrl","MerPriv"));
         return $response;
     }

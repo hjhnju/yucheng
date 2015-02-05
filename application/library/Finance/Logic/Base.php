@@ -9,8 +9,8 @@ class Finance_Logic_Base {
     CONST VERSION_10 = "10";
     CONST VERSION_20 = "20";
 
-    protected $merCustId;
 
+    protected $merCustId;
     protected $chinapnr;
 
     public function __construct(){

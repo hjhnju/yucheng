@@ -72,37 +72,37 @@ class Finance_Api {
         Base_Log::notice($arrBal);
         return $arrBal;        
     }
-    
+
     /**
-     * 自动扣款转账(商户用)接口
-     * @param string $outUserId 
-     * @param string $outAcctId
-     * @param float $transAmt
-     * @param string $inUserId
-     * @param string $type
+     * 发放奖励
+     * @param $inUserId 入账用户
+     * @param $transAmt 金额
      */
-    public static function transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type=Finance_TypeStatus::TRANSFER) {
-        if(!isset($outUserId) || !isset($outAcctId) || !isset($transAmt) || !isset($inUserId)) {
-        	Base_Log::error(array(
-                'msg'       => '请求参数错误',
-                'outUserId' => $outUserId,
-                'outAccId'  => $outAcctId,
-                'transAmt'  => $transAmt,
-                'inUserId'  => $inUserId,
-                'type'      => $type,
-        	));
-        	return false;
+    public static function giveAwards($inUserId, $transAmt){
+        $inUserId   = intval($inUserId);
+        $transAmt = floatval($transAmt);
+        if($inUserId<=0 || $transAmt<=0.00) {
+            Base_Log::error(array(
+                'msg'      => '请求参数错误',
+                'userid'   => $inUserId,
+                'transAmt' => $transAmt,
+            ));
+            return false;
         }
+
+        $outUserId   = Base_Config::getConfig('huifu.merCustId', CONF_PATH . '/huifu.ini');
+        $outAcctId   = Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH . '/huifu.ini');
         $transLogic = new Finance_Logic_Transaction();
-        $ret        = $transLogic->transfer($outUserId,$outAcctId,$transAmt,$inUserId,$type);
+        $ret = $transLogic->transfer($outUserId, $outAcctId, $transAmt,
+            $inUserId, Finance_Order_Type::RECE_AWD);
         if(!$ret || $ret['RespCode'] !== '000') {
-        	Base_Log::error(array(
+            Base_Log::error(array(
                 'msg'   => '转账失败',
                 'param' => $ret,
-        	));
-        	return false;
+            ));
+            return false;
         }
-        return true;        
+        return true; 
     }
     
     /**
@@ -241,6 +241,28 @@ class Finance_Api {
     }
     
     /**
+     * 资金解冻接口
+     * @param string orderId 
+     * @param string retUrl
+     * @return bool
+     * 
+     */
+    public static function cancelTenderBG($orderId, $retUrl='') {
+        $orderId = strval($orderId);
+    	$transLogic = new Finance_Logic_Transaction();
+    	$objRst = $transLogic->cancelTenderBG($orderId, $retUrl);
+    	Base_Log::notice(array(
+    	    'msg'  => '资金解冻接口',
+    	    'args' => func_get_args(),
+    	    'ret'  => $objRst->format(),
+    	));    	
+    	if($objRst->status === Base_RetCode::SUCCESS) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    /**
      * 删除银行卡接口
      * @param string huifuid
      * @param string cardId
@@ -253,7 +275,7 @@ class Finance_Api {
      *     'cardId'
      * )
      */
-    public function delCard($huifuid,$card) {
+    public static function delCard($huifuid,$card) {
         if(!isset($huifuid) || empty($huifuid) || !isset($card) || empty($card)) {
             Base_Log::error(array(
                 'msg' => '请求参数错误',
@@ -364,7 +386,6 @@ class Finance_Api {
                 'transAmt'  => $transAmt,
                 'userid'    => $userid,
                 'orderId'   => $orderId,
-                'orderDate' => $orderDate,
                 'retUrl'    => $retUrl,
             ));     
         }
@@ -373,7 +394,6 @@ class Finance_Api {
             'transAmt'  => $transAmt,
             'userid'    => $userid,
             'orderId'   => $orderId,
-            'orderDate' => $orderDate,
             'retUrl'    => $retUrl,
         ));
         $transLogic->tenderCancel($transAmt,$userid,$orderId,$retUrl);      
@@ -608,6 +628,27 @@ class Finance_Api {
          ));
          $userManageLogic->userLogin($userCustId);
      }
+
+
+    /**
+     * 汇付RetUrl到投标确认页，投标确认页调用本方法确认投标信息
+     * @param $arrRequst $_REQUEST
+     */
+    public function initiativeTenderBg($arrRequest) {
+        if(!isset($arrRequest['CmdId']) || !isset($arrRequest['RespCode']) || !isset($arrRequest['RespDesc']) || 
+           !isset($arrRequest['MerCustId']) || !isset($arrRequest['OrdId']) || !isset($arrRequest['OrdDate']) || 
+           !isset($arrRequest['TransAmt']) || !isset($arrRequest['UsrCustId']) || !isset($arrRequest['IsFreeze']) || 
+           !isset($arrRequest['BgRetUrl']) || !isset($arrRequest['ChkValue'])) {
+            $arrRequest['msg'] = '汇付返回参数错误';
+            Base_Log::error($arrRequest);
+            return false;
+        }
+        $logic  = new Finance_Logic_Transaction();
+        $arrRet = $logic->initiativeTenderBg($arrRequest);
+        return $arrRet;
+    }
+
+    
      
     
 }

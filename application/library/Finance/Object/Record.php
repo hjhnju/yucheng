@@ -100,13 +100,13 @@ class Finance_Object_Record extends Base_Object {
     public $type;
 
     /**
-     * 金额
+     * 交易金额
      * @var number
      */
     public $amount;
 
     /**
-     * 余额
+     * 用户账户余额
      * @var number
      */
     public $balance;

@@ -41,7 +41,12 @@
             <div class="project">
                 <div class="project-box">
                     <div class="project-title">
-                        <div class="project-title-name">{%$data.title%}</div>
+                        <div class="project-title-name" title="{%$data.title%}">
+                            {%if isset({%$data.level_name%})%}
+                            <span class="grade-star level-{%$data.level_name%}"></span>
+                            {%/if%}
+                            {%$data.title%}
+                        </div>
                         <div class="project-title-number">
                             <span>借款编号：</span>
                             <span>{%$data.id%}</span>
@@ -120,11 +125,11 @@
                     <div class="main-box-details showproject-main">
                         {%if !empty($data.company)%}
                         <div class="details-main-box">
-                            <div class="main-box-detail-title">借款企业</div>
+                            <div class="main-box-detail-title">借款机构</div>
                             <div class="main-detail-content">
                                 <div class="main-detail-content-left">
                                     <div class="left-box">
-                                        <div class="content-left-name">借款学校：</div>
+                                        <div class="content-left-name">借款机构：</div>
                                         <div class="content-left-text">{%$data.company.school%}</div>
                                     </div>
                                     <div class="left-box">
@@ -140,14 +145,14 @@
                                         <div class="content-left-text">{%$data.company.employers%}名</div>
                                     </div>
                                     <div class="left-box">
-                                        <div class="content-left-name">借款用提：</div>
+                                        <div class="content-left-name">借款用途：</div>
                                         <div class="content-left-text">{%$data.content%}</div>
                                     </div>
 
                                 </div>
                                 <div class="main-detail-content-right">
                                     <div class="left-box">
-                                        <div class="content-left-name">注册年限：</div>
+                                        <div class="content-left-name">成立日期：</div>
                                         <div class="content-left-text right-text">{%$data.company.years%}年</div>
                                     </div>
                                     <div class="left-box">
@@ -212,15 +217,19 @@
                                         <div class="file-left-name">所处职位：</div>
                                         <div class="file-left-text">{%$data.guarantee.job_title%}</div>
                                     </div>
+                                    <!-- <div class="file-left-box">
+                                        <div class="file-left-name">婚否：</div>
+                                        <div class="file-left-text">{%if $data.guarantee.marriage == 1%}是{%else%}否{%/if%}</div>
+                                    </div> -->
+                                </div>
+                                <div class="file-enter">
+                                    <!-- <div class="file-left-box">
+                                        <div class="file-left-name">单位类别：</div>
+                                        <div class="file-left-text">{%$data.guarantee.company_type%}</div>
+                                    </div> -->
                                     <div class="file-left-box">
                                         <div class="file-left-name">婚否：</div>
                                         <div class="file-left-text">{%if $data.guarantee.marriage == 1%}是{%else%}否{%/if%}</div>
-                                    </div>
-                                </div>
-                                <div class="file-enter">
-                                    <div class="file-left-box">
-                                        <div class="file-left-name">单位类别：</div>
-                                        <div class="file-left-text">{%$data.guarantee.company_type%}</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">年龄：</div>

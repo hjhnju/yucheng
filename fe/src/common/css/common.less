@@ -123,8 +123,7 @@ p {
 }
 
 .weibo-tip{
-    background: none;
-    background-color: #ffffff;
+    background: #ffffff;
     width: 150px;
     height: 40px;
     line-height: 20px;
@@ -303,7 +302,7 @@ p {
 .nav-myaccount {
     float: right;
     width: 110px;
-    margin: 22px 10px 0 0;
+    margin: 25px 10px 0 0;
     height: 24px;
     line-height: 24px;
     color: #676767;
@@ -393,7 +392,6 @@ p {
 }
 
 .footer-tip {
-    background: none;
     background-color: #ffffff;
     width: 150px;
     height: 40px;
@@ -512,37 +510,8 @@ p {
             width: 100px;
             height: 64px;
             margin-right: 4px;
-            background: url("../img/grade_icon.png") 0 0 no-repeat;
             float: left;
             margin-top: 10px;
-
-            &.level-aaa {
-                background-position: 7px 0;
-            }
-
-            &.level-aa {
-                background-position: 7px -100px;
-            }
-
-            &.level-a {
-                background-position: 7px -200px;
-            }
-
-            &.level-b {
-                background-position: 7px -300px;
-            }
-
-            &.level-c {
-                background-position: 7px -400px;
-            }
-
-            &.level-d {
-                background-position: 7px -500px;
-            }
-
-            &.level-hr {
-                background-position: 7px -600px;
-            }
         }
     }
 
@@ -826,5 +795,40 @@ p {
 
     &:hover {
         border: 0;
+    }
+}
+
+.grade-star {
+    width: 50px;
+    height: 44px;
+    background: url("../img/grade_icon.png") 0 0 no-repeat;
+    float: left;
+
+    &.level-aaa {
+        background-position: 7px 0;
+    }
+
+    &.level-aa {
+        background-position: 7px -100px;
+    }
+
+    &.level-a {
+        background-position: 7px -200px;
+    }
+
+    &.level-b {
+        background-position: 7px -300px;
+    }
+
+    &.level-c {
+        background-position: 7px -400px;
+    }
+
+    &.level-d {
+        background-position: 7px -500px;
+    }
+
+    &.level-hr {
+        background-position: 7px -600px;
     }
 }

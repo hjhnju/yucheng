@@ -3,19 +3,38 @@
 一、环境部署
 1. 添加系统用户名
 	passwd root
-	#线上机器root 密码：XjdRoot@20141201
+	#线上机器root 密码：
 
+	hostname 
 	#创建work用户
 	useradd -d /home/work -m work
-	passwd work 
-
+	passwd work
 	#Work@Xjd2014
 
 	vim /etc/sudoers
 	添加work	ALL=(ALL) 	ALL
 
+2.环境配置
+	a) 增加/etc/ld.so.conf：https://github.com/hjhnju/yucheng/issues/4
+	$ cat /etc/ld.so.conf 
+	include ld.so.conf.d/*.conf
+	/home/work/local/openssl/lib
+	$ sudo ldconfig
 
+	b) 创建一些默认目录
+	$ mkdir -p /home/work/var/apc
+	$ mkdir -p /home/work/var/nginx
+	$ mkdir -p /home/work/publish
+	$ mkdir -p /home/work/bin
+	$ mkdir -p /home/work/tools
 
 2. 执行安装脚本
-	a) 增加/etc/ld.so.conf：https://github.com/hjhnju/yucheng/issues/4
-	b) sh install -p /home/work/local -t all
+	c) 获取安装包及脚本(阿里云内网地址超快)
+	$ cd ~/tools
+	$ scp -r work@10.173.13.95:/home/work/tools/lnmp_20150201.tar.gz .	
+	$ tar zxvf lnmp_20150201.tar.gz
+	$ scp -r work@10.173.13.95:/home/work/tools/bin_20150201.tar.gz .
+	$ tar zxvf bin_20150201.tar.gz
+	$ cp bin/ ~/	
+	b) 执行安装脚本
+	sh install -p /home/work/local -t all

@@ -21,7 +21,7 @@ class Loan_Type_LoanStatus extends Base_Type {
      */
     const FULL_CHECK = 3;
     /**
-     * 4打款中 
+     * 4打款中(审核通过后才进入打款中)
      * @var integer
      */
     const PAYING = 4;
