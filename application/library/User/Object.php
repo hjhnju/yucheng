@@ -129,7 +129,7 @@ class User_Object {
         if(!$this->loginProps){
             return false;
         }
-        $bolRet1 = $bolRet2 = $bolRet3 = false;
+        $bolRet1 = $bolRet2 = $bolRet3 = true;
         $bolRet1 = $this->loginObj->save();
         if($this->infoObj){
             $bolRet2 = $this->infoObj->save();

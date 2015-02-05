@@ -142,18 +142,22 @@ class BgcallController extends Base_Controller_Page {
         $huifuid  = strval($huifuid);
         $email    = strval($email);
         $realName = strval($realName);
-        if(!User_Api::setHuifuId($userid,$huifuid)) {       
+        $bolRet   = User_Api::setHuifuId($userid,$huifuid);
+        if(!$bolRet) {       
             Base_Log::error(array(
                 'msg'       => '汇付id入库失败',
                 'userid:'   => $userid,
                 'usrCustId' => $huifuid,
+                'bolRet'   => $bolRet,
             ));
         }
-        if(!User_Api::setRealName($userid,$realName)) {
+        $bolRet = User_Api::setRealName($userid,$realName);
+        if(!$bolRet) {
             Base_Log::error(array(
                 'msg'      => '用户真实姓名入库失败',
                 'userid'   => $userid,
                 'realName' => $realName,
+                'bolRet'   => $bolRet,
             ));
         }
         /*
