@@ -48,7 +48,7 @@ define(function (require) {
         
         // 邀请奖励
         $('.reward-type-link-span').zclip({
-            path: config.URL.ROOT + '/htdocs/static/ZeroClipboard.swf',
+            path: config.URL.ROOT + '/static/ZeroClipboard.swf',
             copy: $.trim($('.reward-type-link-http').html()),
             afterCopy: function() {
                 alert('复制成功');
