@@ -1,3 +1,1 @@
-define('setting/chpassword/chpassword.tpl', function () {
-    return '<!--target: list--><div class="changephone-top"><div class="changephone-box success-main"><div class="success-pic"></div><div class="success-text">\u4FEE\u6539\u6210\u529F</div><div class="success-box-time"><span class="timer-span" id="time-span">8\u79D2\u540E\u81EA\u52A8\u8DF3\u8F6C\u81F3</span>&nbsp;<a class="success-link" href="/account/overview/index">\u6211\u7684\u8D26\u6237</a></div></div></div>';
-});
+define(function () {return '<!--target: list--><div class="changephone-top"><div class="changephone-box success-main"><div class="success-pic"></div><div class="success-text">修改成功</div><div class="success-box-time"><span class="timer-span" id="time-span">8秒后自动跳转至</span>&nbsp;<a class="success-link" href="/account/overview/index">我的账户</a></div></div></div>';});
