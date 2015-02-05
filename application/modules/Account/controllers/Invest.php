@@ -65,7 +65,7 @@ class InvestController extends Base_Controller_Page {
         		'pageall' => $backingRet['pageall'],
         		'all'     => $backingRet['total'],
         		'list'    => $list,
-        	);        	
+        	);
         	$this->output($ret);
         	return ;
         }
