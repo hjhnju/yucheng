@@ -26,14 +26,10 @@ class TransactionController extends Base_Controller_Page{
      */ 
     public function netsaveAction(){
         $userid  = $this->userid;
-        $huifuid = $this->huifuid;	
-        $transAmt   = $_REQUEST['transAmt'];
+        $arrConf = Base_Config::getConfig('huifu', CONF_PATH . '/huifu.ini');
+        $huifuid  = $arrConf['merCustId'];
+        $transAmt = $_REQUEST['transAmt'];
         $transAmt = sprintf('%.2f',$transAmt);
-        $openBankId = strval($_REQUEST['openBankId']);
-        $gateBusiId = strval($_REQUEST['gateBusiId']);
-        ///notice
-        //$dcFlag     = strval($_REQUEST['dcFlag']);
-        $transAmt   = sprintf('%.2f',300000000);
         $gateBusiId = 'B2C';
         $openBankId = 'CIB';
         $dcFlag     = 'D';
