@@ -146,6 +146,9 @@ class User_Api{
      * 获取短信验证码信息,需要参数手机号及类型
      */
     public static function sendSmsCode($strPhone, $strType){
+        if('dev' === ini_get('yaf.environ')){
+            return true;
+        }
         $srandNum = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
         $arrArgs  = array($srandNum, self::LAST_TIME);
         $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
@@ -162,6 +165,9 @@ class User_Api{
      * 验证用户输入的短信验证码是否正确
      */
     public static function checkSmscode($strPhone, $strVeriCode, $strType){
+        if('dev' === ini_get('yaf.environ')){
+            return true;
+        }
         $storeCode = Base_Redis::getInstance()->get(User_Keys::getSmsCodeKey($strPhone, $strType));
         if($strVeriCode === $storeCode){
             return true;
