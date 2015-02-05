@@ -298,10 +298,10 @@ class InvestController extends Base_Controller_Page {
 	 *             'repossProfit' 待收收益
 	 *             'recePrincipal' 已收本金
 	 *             'receProfit'已收收益
-	 *             'paymentStatus' 还款状态 
+	 *             'status' 还款状态 
 	 *             'punitive' 罚息
 	 *         }
-	 *         'data'={ 
+	 *         'total'={ 
 	 *             'repossPrincipal' 待收本金
 	 *             'repossProfit' 待收收益
 	 *             'recePrincipal' 已收本金
@@ -311,21 +311,26 @@ class InvestController extends Base_Controller_Page {
 	 *     }
 	 *  }
 	 */
-	public function repayplanAction() {
-		$invest_id = $_REQUEST['id'];
+	public function repayplanAction() {	
+		$invest_id = $_REQUEST['invest_id'];
 		$invest_id = intval($invest_id);
 		$retData = Invest_Api::getRefunds($invest_id);
+		
 		$list = array();
 		$data = array();
 		if(empty($retData)) {
 			$ret = array(
-				'list' => array(),
-				'data' => array(),
+				'invester' => '',
+				'list'     => array(),
+				'data'     => array(),
 			);
 			$this->output($ret);
 			return ;
 		}
-		
+		$userid = $retData[0]['user_id'];
+		$userid = intval($userid);
+		$objUser = User_Api::getUserObject($userid);
+		$invester = $objUser->name;
 		foreach ($retData as $key=>$value) {
 			$list[$key]['time'] = $value['create_time'];
 			$list[$key]['repossPrincipal'] = $value['capital_rest'];
@@ -355,15 +360,16 @@ class InvestController extends Base_Controller_Page {
 			$punitive += $value['punitive'];
 		}
 		$data = array(
-			'repossPrincipal' => $repossPrincipal,
-			'repossProfit'    => $repossProfit,
-			'recePrincipal'   => $recePrincipal,
-			'receProfit'      => $receProfit,
-			'punitive'        => $punitive,
+			'repossPrincipal' => strval($repossPrincipal),
+			'repossProfit'    => strval($repossProfit),
+			'recePrincipal'   => strval($recePrincipal),
+			'receProfit'      => strval($receProfit),
+			'punitive'        => strval($punitive),
 		);
 		$ret = array(
-			'list' => $list,
-			'data' => $data,
+			'invester' => $invester,
+			'list'     => $list,
+			'total'    => $data,
 		);
 		$this->output($ret);
 		return ;		

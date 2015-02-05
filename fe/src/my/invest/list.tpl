@@ -76,12 +76,12 @@
     <!-- /for -->
     <tr class="my-invest-plan-all">
         <td>总计</td>
-        <td>${data.all.repossPrincipal}</td>
-        <td>${data.all.repossProfit}</td>
-        <td>${data.all.recePrincipal}</td>
-        <td>${data.all.receProfit}</td>
+        <td>${data.total.repossPrincipal}</td>
+        <td>${data.total.repossProfit}</td>
+        <td>${data.total.recePrincipal}</td>
+        <td>${data.total.receProfit}</td>
         <td></td>
-        <td>${data.all.punitive}</td>
+        <td>${data.total.punitive}</td>
     </tr>
 </table>
 <!-- /target -->

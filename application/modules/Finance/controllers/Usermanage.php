@@ -243,8 +243,11 @@ class UsermanageController extends Base_Controller_Page {
    //  }
    
     public function testAction() {
-    	$orderId = '2015020414212872454';
-    	$ret = Finance_Api::cancelTenderBG($orderId);
+    	//$orderId = '2015020421130446663';
+        //$orderId = '2015020421502719406';
+        $orderId = 2015020422193519249;
+        $logic = new Finance_Logic_Transaction();
+    	$ret = $logic->cancelTenderBG($orderId);
     	var_dump($ret);
     	return ;
     }
