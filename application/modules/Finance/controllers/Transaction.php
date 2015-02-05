@@ -17,7 +17,7 @@ class TransactionController extends Base_Controller_Page{
     }
    
     /**
-     * 充值controller层入口
+     * 用于平台对自己的子账户充值controller层入口
      * @param String transAmt 交易金额(required)
      * @param String openBankId 开户银行代号(optional)
      * @param String gateBusiId 支付网关业务代号(optional)
@@ -30,7 +30,7 @@ class TransactionController extends Base_Controller_Page{
         $huifuid  = $arrConf['merCustId'];
         $transAmt = $_REQUEST['transAmt'];
         $transAmt = sprintf('%.2f',$transAmt);
-        $gateBusiId = 'B2C';
+        $gateBusiId = 'B2B';
         $openBankId = 'CIB';
         $dcFlag     = 'D';
         Base_Log::notice(array(
