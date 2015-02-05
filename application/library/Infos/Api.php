@@ -13,6 +13,6 @@ class Infos_Api {
         $logic   = new Infos_Logic_Post();
         $list    = $logic->getList(1, 1,$strType);
         unset($list['list'][0]['content']);
-        return $list['list'][0];
+        $ret = isset($list['list'][0]) ? $list['list'][0] : null;
     }   
 }

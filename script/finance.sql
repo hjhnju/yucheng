@@ -1,7 +1,7 @@
 use xjd;
 set names utf8;
 
-DROP TABLE IF EXISTS `finance_order`;
+DROP TABLE IF EXISTS  `finance_order`;
 CREATE TABLE `finance_order` (
   `orderId` bigint(20) unsigned NOT NULL DEFAULT '0',
   `orderDate` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '订单日期',
@@ -19,7 +19,7 @@ CREATE TABLE `finance_order` (
   PRIMARY KEY (`orderId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支付订单';
 
-DROP TABLE IF EXISTS `finance_record`;
+DROP TABLE IF EXISTS  `finance_record`;
 CREATE TABLE `finance_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `orderId` bigint(20) unsigned DEFAULT NULL,

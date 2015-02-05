@@ -22,9 +22,9 @@ CREATE TABLE `loan` (
   `audit_info` varchar(512) DEFAULT NULL COMMENT '审核信息',
   `start_time` int(11) NOT NULL DEFAULT '0' COMMENT '开始时间',
   `deadline` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '截止时间',
-  `risk_rate` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '风险准备金费率',
-  `serv_rate` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '融资服务费费率',
-  `mang_rate` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '账户管理费费率',
+  `risk_rate` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '风险准备金',
+  `serv_rate` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '融资服务费',
+  `mang_rate` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '账户管理费',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
@@ -32,9 +32,8 @@ CREATE TABLE `loan` (
   `full_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '满标时间',
   `pay_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '放款时间',
   `fail_info` varchar(255) DEFAULT NULL COMMENT '失败原因',
-  PRIMARY KEY (`id`),
-  UNIQUE (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='借款信息表';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8 COMMENT='借款信息表';
 
 DROP TABLE IF EXISTS  `loan_attach`;
 CREATE TABLE `loan_attach` (
@@ -48,8 +47,7 @@ CREATE TABLE `loan_attach` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款附件'; 
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款附件';
 
 DROP TABLE IF EXISTS  `loan_audit`;
 CREATE TABLE `loan_audit` (
@@ -64,7 +62,6 @@ CREATE TABLE `loan_audit` (
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款审核信息';
-
 
 DROP TABLE IF EXISTS  `loan_company`;
 CREATE TABLE `loan_company` (
@@ -84,7 +81,6 @@ CREATE TABLE `loan_company` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款企业信息';
 
-
 DROP TABLE IF EXISTS  `loan_counter`;
 CREATE TABLE `loan_counter` (
   `userid` int(11) NOT NULL COMMENT '用户ID',
@@ -99,7 +95,6 @@ CREATE TABLE `loan_counter` (
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款统计数据';
-
 
 DROP TABLE IF EXISTS  `loan_guarantee`;
 CREATE TABLE `loan_guarantee` (
@@ -119,7 +114,6 @@ CREATE TABLE `loan_guarantee` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款担保信息';
 
-
 DROP TABLE IF EXISTS  `loan_log`;
 CREATE TABLE `loan_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -131,6 +125,25 @@ CREATE TABLE `loan_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款操作记录';
 
+DROP TABLE IF EXISTS  `loan_refund`;
+CREATE TABLE `loan_refund` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `loan_id` int(11) NOT NULL COMMENT '借款ID',
+  `user_id` int(11) NOT NULL COMMENT '借款人ID',
+  `period` tinyint(4) NOT NULL COMMENT '期数',
+  `capital` decimal(10,2) NOT NULL COMMENT '本金',
+  `capital_rest` decimal(10,2) NOT NULL COMMENT '剩余本金',
+  `capital_refund` decimal(10,2) NOT NULL COMMENT '已还本金',
+  `interest` decimal(10,2) NOT NULL COMMENT '利息',
+  `amount` decimal(10,2) NOT NULL COMMENT '应还本息',
+  `late_charge` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '逾期罚息',
+  `promise_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '应还日期',
+  `refund_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '还款时间',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 1正常 2已还 3逾期',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款的还款计划';
 
 DROP TABLE IF EXISTS  `loan_request`;
 CREATE TABLE `loan_request` (
@@ -153,40 +166,3 @@ CREATE TABLE `loan_request` (
   `update_uid` int(11) NOT NULL DEFAULT '0' COMMENT '跟进人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款申请表';
-
-
-DROP TABLE IF EXISTS  `loan_refund`;
-CREATE TABLE `loan_refund` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `loan_id` int(11) NOT NULL COMMENT '借款ID',
-  `user_id` int(11) NOT NULL COMMENT '借款人ID',
-  `period` tinyint(4) NOT NULL COMMENT '期数',
-  `capital` decimal(10,2) NOT NULL COMMENT '本金',
-  `capital_rest` decimal(10,2) NOT NULL COMMENT '剩余本金',
-  `capital_refund` decimal(10,2) NOT NULL COMMENT '已还本金',
-  `interest` decimal(10,2) NOT NULL COMMENT '利息',
-  `amount` decimal(10,2) NOT NULL COMMENT '应还本息',
-  `late_charge` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '逾期罚息',
-  `promise_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '应还日期',
-  `refund_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '还款时间',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 1正常 2已还 3逾期',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款的还款计划';
-
-
-DROP TABLE IF EXISTS  `loan_attach`;
-CREATE TABLE `loan_attach` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `loan_id` int(11) NOT NULL COMMENT '借款ID',
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
-  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '类别 1认证 2合同 3实地照片',
-  `title` varchar(255) NOT NULL COMMENT '标题',
-  `url` varchar(255) NOT NULL COMMENT '地址',
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款附件';
-
