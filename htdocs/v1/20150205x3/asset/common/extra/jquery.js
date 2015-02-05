@@ -3220,7 +3220,3 @@
         return st;
     });
 }(window));
-
-
-/** d e f i n e */
-define("jquery/jquery.min", function(require){ return require("jquery"); });
