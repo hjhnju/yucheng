@@ -2,8 +2,8 @@ CREATE DATABASE IF NOT EXISTS `xjd` DEFAULT CHARSET=utf8;
 set names utf8;
 use xjd;
 
-DROP TABLE IF EXISTS user_login;
-CREATE TABLE IF NOT EXISTS user_login (
+DROP TABLE IF EXISTS `user_login`;
+CREATE TABLE IF NOT EXISTS `user_login` (
 `userid` int(11) unsigned NOT NULL auto_increment COMMENT '用户id',
 `usertype` tinyint(3) unsigned NOT NULL COMMENT '用户类型 1:个人用户 2:企业用户',
 `status` tinyint(3) unsigned NOT NULL COMMENT '是否允许登录',
@@ -19,11 +19,11 @@ PRIMARY KEY  (`userid`),
 UNIQUE (name),
 UNIQUE (phone),
 UNIQUE (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户登录表';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT '用户登录表';
 
 
-DROP TABLE IF EXISTS user_info;
-CREATE TABLE IF NOT EXISTS user_info (
+DROP TABLE IF EXISTS `user_info`;
+CREATE TABLE IF NOT EXISTS `user_info` (
 `userid` int(11) unsigned NOT NULL COMMENT '用户id',
 `realname` varchar(100) default NULL COMMENT '用户真实姓名',
 `certificate_type` tinyint(3) unsigned NOT NULL COMMENT '证件类型',
@@ -34,8 +34,7 @@ CREATE TABLE IF NOT EXISTS user_info (
 PRIMARY KEY  (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '普通用户信息表';
 
-
-DROP TABLE IF EXISTS user_corpinfo;
+DROP TABLE IF EXISTS `user_corpinfo`;
 CREATE TABLE IF NOT EXISTS user_corpinfo (
 `userid` int(11) unsigned NOT NULL COMMENT '用户id',
 `corpname` varchar(100) default NULL COMMENT '企业名称',
@@ -49,8 +48,7 @@ CREATE TABLE IF NOT EXISTS user_corpinfo (
 PRIMARY KEY  (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '企业用户信息表';
 
-
-DROP TABLE IF EXISTS user_third;
+DROP TABLE IF EXISTS `user_third`;
 CREATE TABLE IF NOT EXISTS user_third(
 `id` int(11) unsigned NOT NULL auto_increment COMMENT '自增id',
 `userid` int(11) unsigned NOT NULL COMMENT '用户id',
@@ -61,14 +59,23 @@ CREATE TABLE IF NOT EXISTS user_third(
 PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户第三方登陆表';
 
+DROP TABLE IF EXISTS  `user_record`;
+CREATE TABLE `user_record` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `userid` int(11) unsigned NOT NULL COMMENT '用户id',
+  `status` tinyint(3) unsigned NOT NULL COMMENT '登录状态',
+  `ip` varchar(50) NOT NULL COMMENT 'IP',
+  `create_time` int(11) NOT NULL COMMENT '登录时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登录历史纪录表';
 
-DROP TABLE IF EXISTS user_record;
-CREATE TABLE IF NOT EXISTS user_record (
-`id` int(11) unsigned NOT NULL auto_increment COMMENT '自增id',
-`userid` int(11) unsigned NOT NULL COMMENT '用户id',
-`status` tinyint(3) unsigned NOT NULL COMMENT '登录状态',
-`ip` varchar(50) NOT NULL COMMENT 'IP',
-`create_time` int(11) NOT NULL COMMENT '登录时间',
-PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户登录历史纪录表';
-
+DROP TABLE IF EXISTS  `admin`;
+CREATE TABLE `admin` (
+  `uid` int(11) NOT NULL COMMENT '用户ID',
+  `name` varchar(32) NOT NULL COMMENT '姓名',
+  `role` int(11) NOT NULL COMMENT '角色',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员信息表';
