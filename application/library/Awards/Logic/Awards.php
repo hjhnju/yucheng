@@ -151,6 +151,7 @@ class Awards_Logic_Awards {
                 $this->updateRegistStatus($inviterid,self::STATUS_READY);  
                 $inviter['canBeAwarded'] = 1;
             } 
+            $inviter['canBeAwarded'] = 0;
         }
         //已达到未领取
         if($inviterStatus === self::STATUS_READY) {
@@ -164,7 +165,6 @@ class Awards_Logic_Awards {
         if($inviterStatus === self::STATUS_FINISH) {
             $inviter['canBeAwarded'] = 0;
             $inviter['awardAmt'] = '已领取'. $this->regAmt .'元';
-
         }                   
         $inviter['name']         = '我';
         $inviter['phone']        = $objInvier->phone;   
@@ -214,6 +214,7 @@ class Awards_Logic_Awards {
                     $this->updateAwardsStatus($id,self::STATUS_READY);
                     $data['canBeAwarded'] = 1;
                 }
+                $data['canBeAwarded'] = 0;
             }else if($status === self::STATUS_READY) {
                 $inviterHuifu = $objInvier->huifuid;
                 if(empty($inviterHuifu)) {
@@ -236,7 +237,6 @@ class Awards_Logic_Awards {
             $ret[$count] = $data;
             $count++;
         }
-        
         return $ret;
     }
     
