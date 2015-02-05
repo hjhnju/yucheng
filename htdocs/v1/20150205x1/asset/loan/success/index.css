@@ -107,7 +107,7 @@ p{margin:0;padding:0}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-site-me-xinlang.weixin:hover{background-position:0 -250px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../../common/img/footer_phone.png) 0 0 no-repeat}
-.footer-tip{background-color:#fff;width:150px;height:40px;line-height:20px;text-align:center;padding:5px 0;display:block;left:0;top:10px;color:#a7a7a7;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
+.footer-tip{background:#fff;width:150px;height:40px;line-height:20px;text-align:center;padding:5px 0;display:block;left:0;top:10px;color:#a7a7a7;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .footer-tip .weibo-tip-span{color:#00f}
 .footer-tip .triangle-top{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #ccc;left:70px;top:-8px}
 .footer-tip .triangle-top.footer-erweima-top{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #ccc;border-bottom:none;top:50px;left:62px}
