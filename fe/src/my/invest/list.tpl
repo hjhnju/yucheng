@@ -26,7 +26,7 @@
         <span class="my-invest-project invest-time">${item.timeInfo}</span>
         <span class="my-invest-project invest-finish">￥${item.haveBack}</span>
         <span class="my-invest-project invest-wait">￥${item.toBeBack}</span>
-        <span class="my-invest-project view-plan"><span class="view-plan-btn" data-id="${item.proId}">查看还款计划</span></span>
+        <span class="my-invest-project view-plan"><span class="view-plan-btn" data-id="${item.invest_id}">查看还款计划</span></span>
     </div>
     <div class="my-invest-detail">
         <span class="trangle-border"></span>
