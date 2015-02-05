@@ -112,7 +112,8 @@ class Invest_Logic_Invest {
                 $fresh->save();
             }
         } else {
-            return Finance_Api::cancelTenderBG($orderId);
+            Finance_Api::cancelTenderBG($orderId);
+            return false;
         }
         return true;
     }
