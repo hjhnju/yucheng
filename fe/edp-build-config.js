@@ -127,7 +127,8 @@ exports.getProcessors = function () {
             'src/security/index/index.js',
             'src/security/profit/index.js',
             'src/security/focus/index.js',
-            'src/guide/index.js'
+            'src/guide/index.js',
+            'dep/jquery/1.9.1/src/jquery.min.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
