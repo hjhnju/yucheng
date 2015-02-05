@@ -96,7 +96,7 @@ define(function (require) {
             // 获取内容后再次展开不再发送请求
             if (!$(this).hasClass('hasDetail')) {
                 getReturnDetail.remote({
-                    id: value
+                    invest_id: value
                 });
             }
         });
