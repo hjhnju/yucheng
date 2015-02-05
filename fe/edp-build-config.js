@@ -87,7 +87,16 @@ exports.getProcessors = function () {
             'src/app/index.less'
         ]
     });
-    var moduleProcessor = new ModuleCompiler();
+    var moduleProcessor = new ModuleCompiler({
+        files: [
+            '*.js',
+            '!~src/common/extra/jquery.js',
+            '!~src/common/extra/jquery.qrcode.js',
+            '!~src/common/extra/jquery.zclip.js',
+            '!~src/common/extra/esl.js',
+            '!~src/common/extra/Datepicker.js'
+        ]
+    });
     var jsProcessor = new JsCompressor({
         files: [
             'src/setting/login/index.js',
