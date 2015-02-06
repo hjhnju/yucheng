@@ -115,28 +115,21 @@
     height: 38px;
     margin-bottom: 8px;
     float: left;
+    .clearfix;
 
     span {
         font-size: 14px;
         color: #333333;
-        display: inline-block;
         height: 20px;
-    }
-    .span {
-        vertical-align: top;
+        line-height: 20px;
+        float: left;
     }
 
     .baozhang-box {
-        display: inline-block;
+        float: left;
         width: 316px;
-        margin-top: -4px;
 
         .clearfix;
-
-        .baozhang-type {
-            float: left;
-
-        }
     }
 
     .baozhang-type {
@@ -149,10 +142,6 @@
         &.benxi {
             background-position: 0 -150px;
         }
-
-        &.gudong {
-            background-position: 0 -150px;
-        }
     }
 }
 .gaishu-bottom-jindu {
@@ -161,6 +150,7 @@
 .jindu-top {
     font-size: 14px;
     color: #333333;
+    line-height: 20px;
 
     .clearfix;
 
