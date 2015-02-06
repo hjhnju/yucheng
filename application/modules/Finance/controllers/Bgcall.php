@@ -331,7 +331,7 @@ class BgcallController extends Base_Controller_Page {
             return;
         }
         $merPriv     = explode('_',$_REQUEST['MerPriv']);
-        $userid      = intval($merPriv[0]);
+        $userId      = intval($merPriv[0]);
         $proId       = intval($merPriv[1]);        
         $huifuid     = $retParam['UsrCustId'];
         $orderId     = intval($retParam['OrdId']);
@@ -343,29 +343,21 @@ class BgcallController extends Base_Controller_Page {
         $respCode    = $retParam['RespCode'];
         $respDesc    = $retParam['RespDesc'];
 
+        $bolSucc = true;
         if($respCode !== '000') {
+            $bolSucc  = false;
             $logParam = $retParam;
             $logParam['msg'] = $respDesc;
             Base_Log::error($logParam);
-            //财务类投标冻结订单状态更新为处理失败
-            //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
-            //    $respCode, $respDesc);
-            return ;
         }
 
         $logic  = new Finance_Logic_Transaction();
-        $bolRet = $logic->confirmTender();
+        $bolRet = $logic->tenderConfirm($orderId, $userId, $transAmt, $freezeTrxId,
+            $bolSucc, $respCode, $respDesc);
+
         if(!$bolRet){
             return;
         }
-
-        //将投标冻结订单状态更改为成功
-        //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-        //    $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));
-
-        //投标冻结后保存快照
-        //Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
-        //    $transAmt, '投标冻结记录');
 
         print('RECV_ORD_ID_'.strval($orderId));     
     }
