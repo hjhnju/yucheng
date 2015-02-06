@@ -302,7 +302,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             //财务类投标冻结订单状态更新为处理失败
             Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
                 $respCode, $respDesc);
-            return;
+            return true;
         }
 
         //将投标冻结订单状态更改为成功
@@ -323,7 +323,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'transAmt' => $transAmt,
             ));
             $bolRet2 = $this->unfreezeOrder($orderId);
-            if($bolRet2) {
+            if(!$bolRet2) {
                 Base_Log::error(array(
                     'msg'      => '资金解冻失败',
                     'orderId'  => $orderId,
@@ -334,7 +334,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 return false;
             }
         }
-
         return true;  
     }
     

@@ -354,6 +354,12 @@ class BgcallController extends Base_Controller_Page {
         $bolRet = $logic->tenderConfirm($orderId, $userId, $proId, $transAmt, $freezeTrxId,
             $bolSucc, $respCode, $respDesc);
 
+        //TODO:
+        $intRet = $bolRet ? 1 : 2;
+
+        Base_Redis::getInstance()->hSet(Finance_Keys::getTenderStKey(), 
+            Finance_Keys::getTenderStField($orderId), $intRet);
+
         if(!$bolRet){
             return;
         }

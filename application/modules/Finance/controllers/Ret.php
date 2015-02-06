@@ -35,6 +35,23 @@ class RetController extends Base_Controller_Page {
 
         $arrData = $this->cmdMap[$cmdId];
         $status  = ($retCode === Base_RetCode::SUCCESS) ? 1 : 0;
+
+        //为主动投标增加的逻辑，后续优化
+        if($status && $cmdId === Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER){
+            $orderId = $_REQUEST['OrderID'];
+            $intRet  = false;
+            $i       = 0;
+            while (!$intRet && $i <= 3) {
+                $intRet = Base_Redis::getInstance()->hGet(Finance_Keys::getTenderStKey(), 
+                    Finance_Keys::getTenderStField($orderId));
+                sleep(1);
+                $i = $i + 1;
+            }
+            if($intRet === 1){
+                $status = $intRet;
+            }
+        }//为主动投标增加的逻辑，后续优化
+
         $cmdDesc = $status ? '成功' : '失败';
 
         $_REQUEST['status'] = $cmdDesc;
@@ -67,10 +84,10 @@ class RetController extends Base_Controller_Page {
             'varkeys'  => array('TransAmt', 'status'),
         ),
         Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER => array(
-            'desc'     => '投标%s, 您的投标金额为%s',
+            'desc'     => '您的投标金额为%s，投标%s',
             'backurl'  => '/account/overview',
             'backname' => '我的账户',
-            'varkeys'  => array('status', 'TransAmt'),
+            'varkeys'  => array('TransAmt','status'),
         ),
     );  
 }

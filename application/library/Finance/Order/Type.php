@@ -16,8 +16,8 @@ class Finance_Order_Type  extends Base_Type{
     CONST RECE_AWD         = 9;  //领取奖励
     CONST MONEY_BACK       = 10; //退款
     CONST MERCASH          = 11; //商户代取现
-    CONST USRUNFREEZE   = 12; //未知类型
-    CONST UNKNOWN_TYPE     = 13; //投标资金解冻
+    CONST USRUNFREEZE      = 12; //投标资金解冻
+    CONST UNKNOWN_TYPE     = 13; //未知类型
 
     public static $names = array(
         self::ALL              => '所有类型',
