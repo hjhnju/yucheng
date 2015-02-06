@@ -113,13 +113,11 @@ class Finance_Logic_Query extends Finance_Logic_Base {
         $arrAcct = array();
         $mixRet = $this->chinapnr->queryAccts($this->merCustId);
         if($mixRet['RespCode'] !== '000'){
-            Base_Log::error(
-                array_merge(array(
-                    'msg'        => '调用汇付Client失败',
-                    'merCustId'  => $this->merCustId,
-                ),
-                $mixRet)
-            );
+            Base_Log::error(array(
+                'msg'       => '调用汇付Client失败',
+                'merCustId' => $this->merCustId,
+                'ret'       => $mixRet,
+            ));
             return false;
         }
         foreach ($mixRet['AcctDetails'] as $value) {

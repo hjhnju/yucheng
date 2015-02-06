@@ -296,7 +296,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * 2. invest_api发起确定投标
      * 3. 若确定投标失败则发起资金解冻
      */
-    public function tenderConfirm($orderId, $userId, $transAmt, $freezeTrxId,
+    public function tenderConfirm($orderId, $userId, $loanId, $transAmt, $freezeTrxId,
         $bolSucc, $respCode, $respDesc){
         if(!$bolSucc) {
             //财务类投标冻结订单状态更新为处理失败
@@ -313,23 +313,23 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::TENDERFREEZE,
             $transAmt, '投标冻结记录');
 
-        $bolRet = Invest_Api::doInvest($orderId, $userid, $loanId, $amount);
+        $bolRet = Invest_Api::doInvest($orderId, $userId, $loanId, $transAmt);
         if (!$bolRet) {
             Base_Log::notice(array(
-                'msg'     => '投资确认失败，发起资金解冻',
-                'orderId' => $orderId,
-                'userid'  => $userid,
-                'loanId'  => $loanId,
-                'amount'  => $amount,
+                'msg'      => '投资确认失败，发起资金解冻',
+                'orderId'  => $orderId,
+                'userId'   => $userId,
+                'loanId'   => $loanId,
+                'transAmt' => $transAmt,
             ));
             $bolRet2 = $this->unfreezeOrder($orderId);
             if($bolRet2) {
                 Base_Log::error(array(
-                    'msg'     => '资金解冻失败',
-                    'orderId' => $orderId,
-                    'userid'  => $userid,
-                    'loanId'  => $loanId,
-                    'amount'  => $amount,
+                    'msg'      => '资金解冻失败',
+                    'orderId'  => $orderId,
+                    'userId'   => $userId,
+                    'loanId'   => $loanId,
+                    'transAmt' => $transAmt,
                 ));
                 return false;
             }

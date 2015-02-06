@@ -335,9 +335,8 @@ class BgcallController extends Base_Controller_Page {
         $proId       = intval($merPriv[1]);        
         $huifuid     = $retParam['UsrCustId'];
         $orderId     = intval($retParam['OrdId']);
-        
         $orderDate   = intval($retParam['OrdDate']);
-        $transAmt      = floatval($retParam['TransAmt']);
+        $transAmt    = floatval($retParam['TransAmt']);
         $freezeOrdId = $retParam['FreezeOrdId'];
         $freezeTrxId = $retParam['FreezeTrxId'];
         $respCode    = $retParam['RespCode'];
@@ -345,14 +344,14 @@ class BgcallController extends Base_Controller_Page {
 
         $bolSucc = true;
         if($respCode !== '000') {
-            $bolSucc  = false;
-            $logParam = $retParam;
+            $logParam        = $retParam;
             $logParam['msg'] = $respDesc;
             Base_Log::error($logParam);
+            $bolSucc         = false;
         }
 
         $logic  = new Finance_Logic_Transaction();
-        $bolRet = $logic->tenderConfirm($orderId, $userId, $transAmt, $freezeTrxId,
+        $bolRet = $logic->tenderConfirm($orderId, $userId, $proId, $transAmt, $freezeTrxId,
             $bolSucc, $respCode, $respDesc);
 
         if(!$bolRet){

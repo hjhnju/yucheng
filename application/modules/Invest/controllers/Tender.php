@@ -17,9 +17,9 @@ class TenderController extends Base_Controller_Page {
 	
 	public function indexAction() {
 		$loanId = intval($_POST['id']);
-		$amount  = intval($_POST['amount']);
-		$uid     = $this->userid;
-	    $sess = Yaf_Session::getInstance();
+		$amount = floatval($_POST['amount']);
+		$uid    = $this->userid;
+		$sess   = Yaf_Session::getInstance();
 		
 	    if (empty($loanId) || empty($amount) || empty($uid)) {
 	        Base_Log::notice(array(
