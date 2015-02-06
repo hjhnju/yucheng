@@ -49,7 +49,7 @@ class BgcallController extends Base_Controller_Page {
      * 资金解冻BgUrl回调webroot/Finance/bgcall/cancelTenderBG
      * 打印 RECV_ORD_ID_OrdId
      */
-    public function canceltenderbgAction() {
+    public function unfreezeOrderAction() {
     	if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
     	   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['OrdDate']) ||
     	   !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
@@ -63,8 +63,7 @@ class BgcallController extends Base_Controller_Page {
         $merPriv       = explode('_',$_merPriv);
         $userid        = intval($merPriv[0]);
         $transAmt      = floatval($merPriv[1]);
-        $tenderOrderId = intval($merPriv[2]);
-        
+        $originOrderId = intval($merPriv[2]);
         $orderId       = intval($_REQUEST['OrdId']);
         $orderDate     = intval($_REQUEST['OrdDate']);
         $trxId         = $_REQUEST['TrxId'];
@@ -76,9 +75,11 @@ class BgcallController extends Base_Controller_Page {
     			'ret' => $_REQUEST,
     		));
     		//资金解冻订单状态更新为“处理失败”
-    		return Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
+    		Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
                 $respCode, $respDesc);
+            return;
     	}
+
     	//资金解冻订单状态更新为“处理成功”
     	Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
             $respCode, $respDesc);    	
@@ -351,6 +352,13 @@ class BgcallController extends Base_Controller_Page {
             //    $respCode, $respDesc);
             return ;
         }
+
+        $logic  = new Finance_Logic_Transaction();
+        $bolRet = $logic->confirmTender();
+        if(!$bolRet){
+            return;
+        }
+
         //将投标冻结订单状态更改为成功
         //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
         //    $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));

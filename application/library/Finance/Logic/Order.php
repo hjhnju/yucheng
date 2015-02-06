@@ -58,14 +58,16 @@ class Finance_Logic_Order {
      * @return boolean
      */
     public static function saveOrder($arrOrder) {       
-        if(is_null($arrOrder) || !isset($arrOrder)) {
+        if(empty($arrOrder) || !isset($arrOrder['userid'])) {
             //未给出参数，无法插入或者更新
             Base_Log::error(array(
                 'msg'=>'请求参数错误',
             ));
             return false;
         }
-        $order = null;
+
+        $userid = $arrOrder['userid'];
+        $order  = null;
         if(!isset($arrOrder['orderId'])){
             $orderInfo = Finance_Logic_Order::genOrderInfo();
             $arrOrder['orderId']   = $orderInfo['orderId'];
@@ -78,6 +80,9 @@ class Finance_Logic_Order {
         foreach ($arrOrder as $key => $value) {            
             $order->$key = $value;
         }
+        //统一修改用户当前可用余额
+        $order->avlBal = Finance_Api::getUserAvlBalance($userid);
+
         $ret = $order->save();   
         if(!$ret) {         
             $arrOrder['msg'] = '财务类交易类型订单入库失败';
@@ -154,7 +159,15 @@ class Finance_Logic_Order {
      * @param string $arrExts, 额外保存的字段，e.g array('freezeTrxId'=>)
      * @return boolean
      */
-    public static function updateOrderStatus($orderId, $status, $failCode='',$failDesc='',$arrExts=false) {
+    public static function updateOrderStatus($orderId, $status, $failCode='', $failDesc='', $arrExts=false) {
+        Base_Log::notice(array(
+                'msg'     => '订单状态开始更新',
+                'orderId' => $orderId,
+                'status'  => $status,
+                'failCode'=> $failCode,
+                'failDesc'=> $failDesc,
+                'arrExts' => $arrExts,
+        ));
         $regOrder          = new Finance_Object_Order(intval($orderId));
         $status            = intval($status);
         $regOrder->orderId = $orderId;
@@ -180,10 +193,13 @@ class Finance_Logic_Order {
                 'msg'     => '订单状态更新失败',
                 'orderId' => $orderId,
                 'status'  => $status,
+                'failCode'=> $failCode,
+                'failDesc'=> $failDesc,
+                'arrExts' => $arrExts,
             ));
             return false;
         }
-        return $ret;
+        return true;
     }
 
     /**

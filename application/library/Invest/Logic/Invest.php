@@ -36,7 +36,6 @@ class Invest_Logic_Invest {
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        $retUrl = Base_Config::getConfig('web')->root . '/invest/confirm';
         $amount = $this->formatNumber($amount);
         //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
         $detail = array(
@@ -46,7 +45,7 @@ class Invest_Logic_Invest {
                 "BorrowerAmt"    => $amount,
             ),
         );
-        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $retUrl);
+        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail);
     }
     
     /**
@@ -68,12 +67,12 @@ class Invest_Logic_Invest {
      */
     public function doInvest($orderId, $userid, $loanId, $amount) {
         // 防order_id被多次调用 TODO：对redis的稳定性有要求
-        $redis = Base_Redis::getInstance();
+        $redis    = Base_Redis::getInstance();
         $used_key = 'invest_order_' . $orderId;
-        $used = $redis->setnx($used_key, 1);
+        $used     = $redis->setnx($used_key, 1);
         if (empty($used)) {
             $msg = array(
-                'msg' => 'orderid被多次调用',
+                'msg'    => 'orderid被多次调用',
                 'invest' => json_encode(func_get_args()),
             );
             Base_Log::warn($msg);
@@ -81,40 +80,40 @@ class Invest_Logic_Invest {
         }
         // 防并发进行投资 先确认我的资金能借出去
         $res = Loan_Api::updateLoanInvestAmount($loanId, $amount);
-        if ($res === true) {
-            $invest          = new Invest_Object_Invest();
-            $invest->userId  = intval($userid);
-            $invest->loanId  = intval($loanId);
-            $invest->amount  = floatval($amount);
-            $objUser         = User_Api::getUserObject($userid);
-            $invest->name    = $objUser->name;
-            $invest->orderId = intval($orderId);
-            //投资的该项目的利率和周期
-            $arrData = Loan_Api::getLoanInfo($loanId);
-            $invest->interest = isset($arrData['interest']) ? $arrData['interest'] : 0;
-            $invest->duration = isset($arrData['duration']) ? $arrData['duration'] : 0;
-            //@TODO 这里需要事务保障与前面的更新投标金额强一致性
-            if (!$invest->save()) {
-                Base_Log::error(array(
-                    'msg'    => '写入投标信息失败 不处理会导致用户资金与投标丢失',
-                    'invest' => json_encode($invest),
-                ));
-                return false;
-            }
-            // 保存以后检查满标状态
-            Loan_Api::updateFullStatus($loanId);
-            // 对于新手标 保存新手投标状态
-            $loan = Loan_Api::getLoanInfo($loanId);
-            if (!empty($loan['fresh'])) {
-                $fresh = new Invest_Object_Fresh();
-                $fresh->loanId = $loanId;
-                $fresh->userId = $userid;
-                $fresh->save();
-            }
-        } else {
-            Finance_Api::cancelTenderBG($orderId);
+        if ($res !== true) {
             return false;
         }
+
+        $invest          = new Invest_Object_Invest();
+        $invest->userId  = intval($userid);
+        $invest->loanId  = intval($loanId);
+        $invest->amount  = floatval($amount);
+        $objUser         = User_Api::getUserObject($userid);
+        $invest->name    = $objUser->name;
+        $invest->orderId = intval($orderId);
+        //投资的该项目的利率和周期
+        $arrData = Loan_Api::getLoanInfo($loanId);
+        $invest->interest = isset($arrData['interest']) ? $arrData['interest'] : 0;
+        $invest->duration = isset($arrData['duration']) ? $arrData['duration'] : 0;
+        //@TODO 这里需要事务保障与前面的更新投标金额强一致性
+        if (!$invest->save()) {
+            Base_Log::error(array(
+                'msg'    => '写入投标信息失败 不处理会导致用户资金与投标丢失',
+                'invest' => json_encode($invest),
+            ));
+            return false;
+        }
+        // 保存以后检查满标状态
+        Loan_Api::updateFullStatus($loanId);
+        // 对于新手标 保存新手投标状态
+        $loan = Loan_Api::getLoanInfo($loanId);
+        if (!empty($loan['fresh'])) {
+            $fresh = new Invest_Object_Fresh();
+            $fresh->loanId = $loanId;
+            $fresh->userId = $userid;
+            $fresh->save();
+        }
+
         return true;
     }
     

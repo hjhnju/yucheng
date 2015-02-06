@@ -5,6 +5,26 @@
  *
  */
 class Invest_Api {
+
+    /**
+     * 主动投标后，财务回调投标模块进行确定投标
+     * @author hejunhua
+     */
+    public static function doInvest($orderId, $userid, $loanId, $amount){
+        $logic  = new Invest_Logic_Invest();
+        $bolRet = $logic->doInvest($orderId, $userid, $loanId, $amount);
+        if (!$bolRet) {
+            Base_Log::error(array(
+                'msg'     => '投资确认失败',
+                'orderId' => $orderId,
+                'userid'  => $userid,
+                'loanId'  => $loanId,
+                'amount'  => $amount,
+            ));
+        }
+        return $bolRet;
+    }
+
     /**
      * 获取借款的投资列表
      * @param integer $loan_id

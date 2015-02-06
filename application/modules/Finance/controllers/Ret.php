@@ -53,7 +53,6 @@ class RetController extends Base_Controller_Page {
         return;
     }  
 
-
     protected $cmdMap = array(
         Finance_Chinapnr_Client::CMDID_USER_REGISTER => array(
             'desc'     => '开通第三方支付账户%s',
@@ -66,6 +65,12 @@ class RetController extends Base_Controller_Page {
             'backurl'  => '/account/overview',
             'backname' => '我的账户',
             'varkeys'  => array('TransAmt', 'status'),
+        ),
+        Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER => array(
+            'desc'     => '投标%s, 您的投标金额为%s',
+            'backurl'  => '/account/overview',
+            'backname' => '我的账户',
+            'varkeys'  => array('status', 'TransAmt'),
         ),
     );  
 }
