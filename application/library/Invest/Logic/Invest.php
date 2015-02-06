@@ -30,7 +30,7 @@ class Invest_Logic_Invest {
      */
     public function invest($userid, $loan_id, $amount, $interest = 0) {
         $loan = Loan_Api::getLoanInfo($loan_id);
-        if ($loan['status'] != 2) {
+        if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
             Base_Log::notice('loan status is finished');
             return false; //投标已结束
         }

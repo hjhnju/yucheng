@@ -26,6 +26,9 @@ class Bootstrap extends Base_Bootstrap{
     public function _initPlugin(Yaf_Dispatcher $dispatcher) {
         //注册一个插件
         parent::_initPlugin($dispatcher); 
+        
+        $plugin = new ModulePlugin();
+        $dispatcher->registerPlugin($plugin);
     }
 
     public function _initLog(Yaf_Dispatcher $dispatcher) {
@@ -42,7 +45,7 @@ class Bootstrap extends Base_Bootstrap{
 
     public function _initRoute(Yaf_Dispatcher $dispatcher) {
        // $router = Yaf_Dispatcher::getInstance()->getRouter();
-      //  $router->addConfig(Base_Config::getConfig('routes', CONF_PATH . '/route.ini'));
+       // $router->addConfig(Base_Config::getConfig('routes', CONF_PATH . '/route.ini'));
        // $routes = $router->getRoutes();
     }
 }

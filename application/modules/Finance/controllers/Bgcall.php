@@ -261,7 +261,7 @@ class BgcallController extends Base_Controller_Page {
         $orderDate = intval($retParam['OrdDate']);
         $userid    = intval($retParam['MerPriv']);//取客户私用域中的userid
         $huifuid   = strval($retParam['UsrCustId']); //用户的huifuid
-        $transAmt    = floatval($retParam['TransAmt']);
+        $transAmt  = floatval($retParam['TransAmt']);
       
         $arrBal   = Finance_Api::getUserBalance($userid);
         $balance  = $arrBal['AcctBal'];//用户余额
