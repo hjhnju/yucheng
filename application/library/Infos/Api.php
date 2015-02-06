@@ -14,5 +14,6 @@ class Infos_Api {
         $list    = $logic->getList(1, 1,$strType);
         unset($list['list'][0]['content']);
         $ret = isset($list['list'][0]) ? $list['list'][0] : null;
+        return $ret;
     }   
 }
