@@ -237,11 +237,17 @@ class EditapiController extends Base_Controller_Api {
     	
     	$to = strval($email);    	
     	$subject = '修改邮箱地址';
+        $webroot = $this->webroot;
         $body = <<<EOF
                             尊敬的兴教贷用户：<br/>
-                            您好，请点击以下链接进行您的邮箱更改验证与激活，谢谢。<br/>
+                            <br/>
+                            您好，请点击以下链接激活您的绑定邮箱<br/>
+                            <br/>
+                            激活链接：$webroot/account/edit/emailsuccess?param=$param&id=$id <br/>
                             若不能直接打开，请将地址复制至浏览器地址栏。<br/>
-                           激活链接：http://123.57.46.229:8082/account/edit/emailsuccess?param=$param&id=$id
+                            <br/>
+                            谢谢！<br/>
+                            兴教贷
 EOF;
         Base_Mailer::getInstance()->send($to, $subject, $body);    	
     	$this->output();
