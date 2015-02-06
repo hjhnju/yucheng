@@ -8,7 +8,7 @@ var time = ''
     + ('' + (date.getMonth() + 101)).substr(1)
     + ('' + (date.getDate() + 100)).substr(1);
 
-exports.output = path.resolve( __dirname, 'output/v1', time + 'x3' );
+exports.output = path.resolve( __dirname, 'output/v1', time + 'x4' );
 
 // var moduleEntries = 'html,htm,phtml,tpl,vm,js';
 // var pageEntries = 'html,htm,phtml,tpl,vm';
@@ -127,7 +127,8 @@ exports.getProcessors = function () {
             'src/security/index/index.js',
             'src/security/profit/index.js',
             'src/security/focus/index.js',
-            'src/guide/index.js'
+            'src/guide/index.js',
+            'dep/jquery/1.9.1/src/jquery.min.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

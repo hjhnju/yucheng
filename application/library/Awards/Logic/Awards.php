@@ -115,9 +115,7 @@ class Awards_Logic_Awards {
             ));
             return false;
         }
-
         $ret       = array();
-
         //首先拿到邀请人的信息
         $inviter   = array();
         $objInvier = User_Api::getUserObject($inviterid);
@@ -136,21 +134,24 @@ class Awards_Logic_Awards {
         }                   
 
         //取一个记录，不是唯一的吗？Awards_Oject_Regist不行？
-        $regRegist     = new Awards_List_Regist();
-        $filters       = array('userid' => $inviterid);
-        $regRegist->setFilter($filters);
-        $list          = $regRegist->toArray();
-        $inviterData   = $list['list'][0];
-        $inviterStatus = intval($inviterData['status']);     
-  
-
-        $inviter['awardAmt'] = '点击领取'. $this->regAmt .'元';
+        $regRegist     = new Awards_Object_Regist($inviterid);
+        if(empty($regRegist->userid)) {
+        	return null;
+        }
+             
+        $inviterAmt = $regRegist->amount;
+        $inviterStatus = intval($regRegist->status);     
+        $inviter['awardAmt'] = '点击领取'.strval($inviterAmt).'元';
+        
         //未达到
         if($inviterStatus === self::STATUS_NOTFIT) {
             if($inviter['tenderAmount'] >= $this->regLimitAmt) {
                 $this->updateRegistStatus($inviterid,self::STATUS_READY);  
                 $inviter['canBeAwarded'] = 1;
-            } 
+            } else {
+            	$inviter['canBeAwarded'] = 0;
+            }
+            
         }
         //已达到未领取
         if($inviterStatus === self::STATUS_READY) {
@@ -163,8 +164,7 @@ class Awards_Logic_Awards {
         //已领取
         if($inviterStatus === self::STATUS_FINISH) {
             $inviter['canBeAwarded'] = 0;
-            $inviter['awardAmt'] = '已领取'. $this->regAmt .'元';
-
+            $inviter['awardAmt'] = '已领取'.strval($inviterAmt).'元';
         }                   
         $inviter['name']         = '我';
         $inviter['phone']        = $objInvier->phone;   
@@ -175,7 +175,7 @@ class Awards_Logic_Awards {
         $inviter['tenderAmount'] = $percent;
         //返回值得第一项为该用户的信息
         $ret[0]                  = $inviter; 
-                
+        
         //开始获取该用户邀请的用的信息       
         $invite  = new Awards_List_Invite();
         $filters = array('inviterid' => $inviterid); //caution:被邀请人的userid
@@ -205,15 +205,19 @@ class Awards_Logic_Awards {
             if(empty($tenderAmount)) {
                 $tenderAmount = 0.00;               
             }           
+            $invAmt = $value['amount'];
             $data['tenderAmount'] = $tenderAmount;
             $status               = intval($value['status']);
-            $data['awardAmt'] = '点击领取'. $this->invAmt .'元';
+            $data['awardAmt'] = '点击领取'. strval($invAmt) .'元';
             //未达到
             if($status === self::STATUS_NOTFIT) {
                 if($tenderAmount >= $this->regLimitAmt) {
                     $this->updateAwardsStatus($id,self::STATUS_READY);
                     $data['canBeAwarded'] = 1;
+                } else {
+                	$data['canBeAwarded'] = 0;
                 }
+                
             }else if($status === self::STATUS_READY) {
                 $inviterHuifu = $objInvier->huifuid;
                 if(empty($inviterHuifu)) {
@@ -224,7 +228,7 @@ class Awards_Logic_Awards {
                 }               
             }else if($status === self::STATUS_FINISH) {
                 $data['canBeAwarded'] = 0;
-                $data['awardAmt'] = '已领取'. $this->invAmt .'元';
+                $data['awardAmt'] = '已领取'. strval($invAmt) .'元';
             }           
             $data['name']         = $objUser->name;
             $data['phone']        = Base_Util_String::starPhone($objUser->phone);
@@ -236,7 +240,6 @@ class Awards_Logic_Awards {
             $ret[$count] = $data;
             $count++;
         }
-        
         return $ret;
     }
     

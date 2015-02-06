@@ -18,6 +18,8 @@ class Finance_RetCode extends Base_RetCode {
     CONST RECEIVE_AWARDS_FAIL   = 1106;//领取奖励失败
     
     CONST ADD_BIDINFO_FAIL      = 1107;//录入投标信息失败
+    
+    CONST CAN_NOT_REC_AWARD     = 1108;//没有领奖资格
 
     /* 消息函数
      * @var array
@@ -30,6 +32,7 @@ class Finance_RetCode extends Base_RetCode {
         self::HUIFU_RETURN_ERROR    => '汇付返回参数错误',
         self::RECEIVE_AWARDS_FAIL   => '领取奖励失败',
         self::ADD_BIDINFO_FAIL      => '录入投标信息失败',
+    	self::CAN_NOT_REC_AWARD     => '该用户不能领奖',
     );
     
     /**

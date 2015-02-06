@@ -1,3 +1,0 @@
-define('project/detail/detail.tpl', function () {
-    return '<!--target: list--><table border="0" cellspacing="0" cellpadding="0" width="100%"><tr class="color-hui"><td>\u6210\u4EA4\u65F6\u95F4</td><td>\u6295\u8D44\u4EBA</td><td>\u6295\u8D44\u91D1\u989D</td></tr><!--for: ${list} as ${item}--><tr><td>${item.timeInfo}</td><td>${item.name}</td><td>\uFFE5${item.amount}</td></tr><!--/for--></table><!-- target: startTime -->\u672A\u5F00\u59CB<!-- /target --><!-- target: leftTime -->${d}\u5929${h}\u5C0F\u65F6${M}\u5206<!-- /target --><!-- target: over -->\u5DF2\u7ED3\u675F<!-- /target -->';
-});
