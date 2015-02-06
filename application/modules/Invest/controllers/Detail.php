@@ -16,6 +16,12 @@ class DetailController extends Base_Controller_Response {
         if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
             $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
         }
+
+        if($loan['status'] === 5){
+            $loan['rest_total'] = ' ¥ 1,234,222.09';
+            $loan['left_month'] = ' 9';
+            $loan['next_date']  = 1423485997;
+        }
         
         //检查是否允许投标
         $logic = new Invest_Logic_Invest();
