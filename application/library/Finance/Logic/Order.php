@@ -58,15 +58,16 @@ class Finance_Logic_Order {
      * @return boolean
      */
     public static function saveOrder($arrOrder) {       
-        if(empty($arrOrder) || !isset($arrOrder['userid'])) {
+        if(empty($arrOrder) || !isset($arrOrder['userId'])) {
             //未给出参数，无法插入或者更新
             Base_Log::error(array(
-                'msg'=>'请求参数错误',
+                'msg'   =>'请求参数错误',
+                'order' => $arrOrder,
             ));
             return false;
         }
 
-        $userid = $arrOrder['userid'];
+        $userId = $arrOrder['userId'];
         $order  = null;
         if(!isset($arrOrder['orderId'])){
             $orderInfo = Finance_Logic_Order::genOrderInfo();
@@ -81,7 +82,7 @@ class Finance_Logic_Order {
             $order->$key = $value;
         }
         //统一修改用户当前可用余额
-        $order->avlBal = Finance_Api::getUserAvlBalance($userid);
+        $order->avlBal = Finance_Api::getUserAvlBalance($userId);
 
         $ret = $order->save();   
         if(!$ret) {         
