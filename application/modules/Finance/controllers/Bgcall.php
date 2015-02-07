@@ -347,22 +347,29 @@ class BgcallController extends Base_Controller_Page {
             $logParam        = $retParam;
             $logParam['msg'] = $respDesc;
             Base_Log::error($logParam);
-            $bolSucc         = false;
+            //财务类投标冻结订单状态更新为处理失败
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
+                $respCode, $respDesc);
+        } else {
+            $logic  = new Finance_Logic_Transaction();
+            //确定投标，返回是否投标成功
+            $bolRet = $logic->tenderConfirm($orderId, $userId, $proId, $transAmt, $freezeTrxId,
+                $bolSucc, $respCode, $respDesc);
+            if (!$bolRet) {
+                Base_Log::notice(array(
+                    'msg'      => '投资确认失败，发起资金解冻',
+                    'orderId'  => $orderId,
+                    'userId'   => $userId,
+                    'prodId'   => $prodId,
+                    'transAmt' => $transAmt,
+                ));
+
+                //不做解冻失败的错误处理
+                $bolRet2 = $logic->unfreezeOrder($orderId);
+            }
         }
 
-        $logic  = new Finance_Logic_Transaction();
-        $bolRet = $logic->tenderConfirm($orderId, $userId, $proId, $transAmt, $freezeTrxId,
-            $bolSucc, $respCode, $respDesc);
-
-        //TODO:
-        $intRet = $bolRet ? 1 : 2;
-
-        Base_Redis::getInstance()->hSet(Finance_Keys::getTenderStKey(), 
-            Finance_Keys::getTenderStField($orderId), $intRet);
-
-        if(!$bolRet){
-            return;
-        }
+        Finance_Logic_Order::setTenderStatus($orderId, $bolRet);
 
         print('RECV_ORD_ID_'.strval($orderId));     
     }

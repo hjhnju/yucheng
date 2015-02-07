@@ -77,13 +77,12 @@ class Finance_Logic_Order {
         }else{
             $order = new Finance_Object_Order(intval($arrOrder['orderId']));
         }
+        //统一修改用户当前可用余额
+        $arrOrder['avlBal'] = Finance_Api::getUserAvlBalance($userId);
 
         foreach ($arrOrder as $key => $value) {            
             $order->$key = $value;
         }
-        //统一修改用户当前可用余额
-        $order->avlBal = Finance_Api::getUserAvlBalance($userId);
-
         $ret = $order->save();   
         if(!$ret) {         
             $arrOrder['msg'] = '财务类交易类型订单入库失败';
@@ -308,6 +307,34 @@ class Finance_Logic_Order {
         $arrRet['total']    = $list['total'];
         $arrRet['list']     = $arrData;
         return $arrRet;         
+    }
+
+    /**
+     * 在redis 中设置投标状态
+     * @param [type] $orderId [description]
+     * @param [type] $bolSucc [description]
+     */
+    public static function setTenderStatus($orderId, $bolSucc){
+        $intSt = $bolSucc ? 1 : 2;
+        Base_Redis::getInstance()->hSet(Finance_Keys::getTenderStKey(), 
+            Finance_Keys::getTenderStField($orderId), $intSt);
+        return true;
+    }
+
+    /**
+     * 获取投标状态
+     * @return $res true|false|null 表示没有状态
+     */
+    public static function getTenderStatus($orderId){
+        $intSt   = Base_Redis::getInstance()->hGet(Finance_Keys::getTenderStKey(), 
+            Finance_Keys::getTenderStField($orderId));
+        $bolSucc = null;
+        if($intSt === 1){
+            $bolSucc = true;
+        }elseif ($intSt === 2) {
+            $bolSucc = false;
+        }
+        return $bolSucc;
     }
     
 }

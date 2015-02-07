@@ -4,7 +4,6 @@
  * 1. 状态提示（成功/失败）
  * 2. 按类型 文字描述
  * 3. 按类型 6秒跳转至响应的url
- * TODO:如何支持含变量："充值成功,您的充值金额为x元"
  * @author hejunhua
  */
 class RetController extends Base_Controller_Page {
@@ -32,34 +31,30 @@ class RetController extends Base_Controller_Page {
             $this->getView()->assign('data', $arrData);
             return;
         }
-
         $arrData = $this->cmdMap[$cmdId];
-        $status  = ($retCode === Base_RetCode::SUCCESS) ? 1 : 0;
+        $bolSucc  = ($retCode === Base_RetCode::SUCCESS) ? true : false;
 
         //为主动投标增加的逻辑，后续优化
-        if($status && $cmdId === Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER){
-            $orderId = $_REQUEST['OrderID'];
-            $intRet  = false;
+        if($bolSucc && $cmdId === Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER){
+            $orderId = $_REQUEST['OrdID'];
+            $mixRet  = true;
             $i       = 0;
-            while (!$intRet && $i <= 3) {
-                $intRet = Base_Redis::getInstance()->hGet(Finance_Keys::getTenderStKey(), 
-                    Finance_Keys::getTenderStField($orderId));
+            while (is_null($mixRet) && $i <= 3) {
+                $mixRet = Finance_Logic_Order::getTenderStatus($orderId);
                 sleep(1);
                 $i = $i + 1;
             }
-            if($intRet === 1){
-                $status = $intRet;
-            }
-        }//为主动投标增加的逻辑，后续优化
+            $bolSucc = is_null($mixRet)? true : $mixRet;
+        }///为主动投标增加的逻辑，后续优化
 
-        $cmdDesc = $status ? '成功' : '失败';
+        $cmdDesc = $bolSucc ? '成功' : '失败';
 
         $_REQUEST['status'] = $cmdDesc;
         $arrVars = array();
         foreach ($arrData['varkeys'] as $field) {
             $arrVars[$field] = isset($_REQUEST[$field]) ? $_REQUEST[$field] : '';
         }
-        $arrData['status'] = $status;
+        $arrData['status'] = $bolSucc;
         $arrData['desc']   = vsprintf($arrData['desc'], $arrVars);
 
         $this->getView()->assign('data', $arrData);

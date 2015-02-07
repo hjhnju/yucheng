@@ -109,6 +109,7 @@ class Finance_Chinapnr_Client {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); //
         $result=curl_exec($ch);
         curl_close($ch);
+        Base_Log::debug(array('post'=>$postData,'result'=>$result));
         return $result;
     }
 
@@ -1379,8 +1380,10 @@ HTML;
                 "MerPriv"   =>  $merPriv,
                 "ChkValue"  =>  $checkValue,
         );
-        Base_Log::debug($reqData);
         $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","TrxId","RetUrl","BgRetUrl","MerPriv"));
+        $reqData['msg']      = '发起资金解冻结果';
+        $reqData['response'] = '$response';
+        Base_Log::notice($reqData);
         return $response;
     }
     /**

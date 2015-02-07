@@ -15,7 +15,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param int orinOrderId, 需要解冻的订单（注意区别解冻订单号） 
      * @return bool
      */
-    protected function unfreezeOrder($orinOrderId, $retUrl='') {
+    public function unfreezeOrder($orinOrderId, $retUrl='') {
         if(empty($orinOrderId)) {
             return false;
         }
@@ -56,13 +56,18 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         //调用汇付API进行解冻处理
         $ret       = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,
             $freezeTrxId,$retUrl,$bgRetUrl,$merPriv);
+
         $respCode  = isset($ret['RespCode']) ? $ret['RespCode'] : '';
         $respDesc  = isset($ret['RespDesc']) ? $ret['RespDesc'] : '';
         if($respCode !== '000') {           
             Base_Log::error(array(
-                'respCode' => $respCode,
-                'respDesc' => $respDesc,
-                'ret'      => $ret,
+                'msg'         => '资金解冻失败',
+                'respCode'    => $respCode,
+                'respDesc'    => $respDesc,
+                'orinOrderId' => $orinOrderId,
+                'orderId'     => $orderId,
+                'transAmt'    => $transAmt,
+                'ret'         => $ret,
             ));
             return false;
         }
@@ -88,7 +93,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param string dcFlag
      * redirect
      */
-
     public function netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag) {
         //充值订单入库
         $paramOrder = array(
@@ -295,15 +299,17 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * 1. 根据汇付状态修改资金冻结订单状态
      * 2. invest_api发起确定投标
      * 3. 若确定投标失败则发起资金解冻
+     * @param $orderId 
+     * @param $userId
+     * @param $loanId
+     * @param $transAmt
+     * @param $freezeTrxId, 冻结标记，若不成功用来解冻
+     * @param $bolSucc，当前汇付返回的冻结是否成功。
+     * @param $respCode
+     * @param $respDesc
      */
     public function tenderConfirm($orderId, $userId, $loanId, $transAmt, $freezeTrxId,
         $bolSucc, $respCode, $respDesc){
-        if(!$bolSucc) {
-            //财务类投标冻结订单状态更新为处理失败
-            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
-                $respCode, $respDesc);
-            return true;
-        }
 
         //将投标冻结订单状态更改为成功
         Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
@@ -314,27 +320,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $transAmt, '投标冻结记录');
 
         $bolRet = Invest_Api::doInvest($orderId, $userId, $loanId, $transAmt);
-        if (!$bolRet) {
-            Base_Log::notice(array(
-                'msg'      => '投资确认失败，发起资金解冻',
-                'orderId'  => $orderId,
-                'userId'   => $userId,
-                'loanId'   => $loanId,
-                'transAmt' => $transAmt,
-            ));
-            $bolRet2 = $this->unfreezeOrder($orderId);
-            if(!$bolRet2) {
-                Base_Log::error(array(
-                    'msg'      => '资金解冻失败',
-                    'orderId'  => $orderId,
-                    'userId'   => $userId,
-                    'loanId'   => $loanId,
-                    'transAmt' => $transAmt,
-                ));
-                return false;
-            }
-        }
-        return true;  
+        
+        return $bolRet;  
     }
     
     /**
@@ -471,7 +458,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
     }
     
     /**
-     * 投标撤销Logic层
+     * 投标撤销Logic层 TODO://NOT USED and NOT FIXED
      * @param float tramsAmt
      * @param int userid
      * @param int orderId
