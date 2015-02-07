@@ -21,8 +21,7 @@ class Finance_Logic_Query extends Finance_Logic_Base {
      * 
      */
     public function getUserAvlBalance($userid){
-        $huifuid = $this->getHuifuid($userid);
-        $arrBal  = $this->queryBalanceBg($huifuid);
+        $arrBal = $this->getUserBalance($userid);
         return  $arrBal['AvlBal'];
     }
 
@@ -73,7 +72,7 @@ class Finance_Logic_Query extends Finance_Logic_Base {
             'AvlBal'  => floatval(str_replace(',', '', $mixRet['AvlBal'])),
             'AcctBal' => floatval(str_replace(',', '', $mixRet['AcctBal'])),
             'FrzBal'  => floatval(str_replace(',', '', $mixRet['FrzBal'])),
-        );      
+        );
 
         return $arrBal;     
     }

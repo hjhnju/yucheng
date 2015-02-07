@@ -154,8 +154,16 @@ class Finance_Chinapnr_Client {
         $ret = $this->arrUrlDec($res);
         // 指定的signKeys 拼接字符串进行验签
         if($ret){
-            if($this->verify($this->getSignContent($ret, $signKeys), $ret['ChkValue']))
+            if($this->verify($this->getSignContent($ret, $signKeys), $ret['ChkValue'])){
                 return $ret;
+            }else{
+                Base_Log::error(array(
+                    'msg' => '汇付返回签名失败',
+                    'ret' => $ret,
+                ));
+                //还是返回
+                return $ret;
+            }
         }
         return null;
     }
@@ -468,7 +476,8 @@ HTML;
                 "UsrCustId" =>  $usrCustId,
                 "ChkValue"  =>  $checkValue,
         );
-        $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","AvlBal","AcctBal","FrzBal"));
+        $result = $this->request($reqData);
+        $response = $this->reactResponse($result, array("CmdId","RespCode","MerCustId","UsrCustId","AvlBal","AcctBal","FrzBal"));
         return $response;
 
     }
@@ -1382,8 +1391,8 @@ HTML;
         );
         $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","TrxId","RetUrl","BgRetUrl","MerPriv"));
         $reqData['msg']      = '发起资金解冻结果';
-        $reqData['response'] = '$response';
-        Base_Log::notice($reqData);
+        $reqData['response'] = $response;
+        Base_Log::debug($reqData);
         return $response;
     }
     /**

@@ -323,7 +323,7 @@ class Finance_Api {
      * )   
      * 
      */
-    public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails) {
+    public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails, $retUrl='') {
         if(!isset($loanId) || empty($loanId) || !isset($transAmt) || empty($transAmt) || 
            !isset($userid) || empty($userid) || !isset($borrowerDetails) || empty($borrowerDetails)) {
             Base_Log::error(array(
@@ -341,8 +341,9 @@ class Finance_Api {
             'transAmt'        => $transAmt,
             'userid'          => $userid,
             'borrowerDetails' => $borrowerDetails,
+            'retUrl'          => $retUrl,
         ));
-        $transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails);      
+        $transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl);
     }
     
     /**

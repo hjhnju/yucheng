@@ -19,7 +19,7 @@ class Invest_Logic_Invest {
     public function __construct() {
         $this->objModel = new InvestModel();
     }
-    
+
     /**
      * 准备进行投标（主动投标）
      * @param integer $userid
@@ -45,7 +45,8 @@ class Invest_Logic_Invest {
                 "BorrowerAmt"    => $amount,
             ),
         );
-        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail);
+        $returl = Base_Config::getConfig('web')->root . '/invest/confirm';
+        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $returl);
     }
     
     /**
@@ -64,6 +65,9 @@ class Invest_Logic_Invest {
      * @param integer $loanId
      * @param number $amount
      * @return boolean|string
+     *
+     * 修改：若重复投标，算投标确认成功，返回true
+     * @author hejunhua
      */
     public function doInvest($orderId, $userid, $loanId, $amount) {
         // 防order_id被多次调用 TODO：对redis的稳定性有要求
@@ -76,11 +80,12 @@ class Invest_Logic_Invest {
                 'invest' => json_encode(func_get_args()),
             );
             Base_Log::warn($msg);
-            return false;
+            return true;
         }
         // 防并发进行投资 先确认我的资金能借出去
         $res = Loan_Api::updateLoanInvestAmount($loanId, $amount);
         if ($res !== true) {
+            $this->setInvestSt($orderId, false);
             return false;
         }
 
@@ -101,6 +106,7 @@ class Invest_Logic_Invest {
                 'msg'    => '写入投标信息失败 不处理会导致用户资金与投标丢失',
                 'invest' => json_encode($invest),
             ));
+            $this->setInvestSt($orderId, true);
             return false;
         }
         // 保存以后检查满标状态
@@ -114,6 +120,7 @@ class Invest_Logic_Invest {
             $fresh->save();
         }
 
+        Invest_Logic_ChkStatus::setInvestStatus($orderId, true);
         return true;
     }
     

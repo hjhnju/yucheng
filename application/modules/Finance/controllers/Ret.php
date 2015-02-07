@@ -19,7 +19,7 @@ class RetController extends Base_Controller_Page {
      */ 
     public function indexAction() {
         $cmdId   = isset($_REQUEST['CmdId']) ? $_REQUEST['CmdId'] : '';
-        $retCode = isset($_REQUEST['RespCode']) ? intval($_REQUEST['RespCode']) : false;
+        $retCode = isset($_REQUEST['RespCode']) ? strval($_REQUEST['RespCode']) : '';
         
         //提示页面暂不用验签
         $arrData = array();
@@ -32,21 +32,7 @@ class RetController extends Base_Controller_Page {
             return;
         }
         $arrData = $this->cmdMap[$cmdId];
-        $bolSucc  = ($retCode === Base_RetCode::SUCCESS) ? true : false;
-
-        //为主动投标增加的逻辑，后续优化
-        if($bolSucc && $cmdId === Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER){
-            $orderId = $_REQUEST['OrdId'];
-            $mixRet  = true;
-            $i       = 0;
-            while (is_null($mixRet) && $i <= 3) {
-                $mixRet = Finance_Logic_Order::getTenderStatus($orderId);
-                sleep(1);
-                $i = $i + 1;
-            }
-            $bolSucc = is_null($mixRet)? true : $mixRet;
-        }///为主动投标增加的逻辑，后续优化
-
+        $bolSucc = ($retCode === '000') ? true : false;
         $cmdDesc = $bolSucc ? '成功' : '失败';
 
         $_REQUEST['status'] = $cmdDesc;
@@ -77,12 +63,6 @@ class RetController extends Base_Controller_Page {
             'backurl'  => '/account/overview',
             'backname' => '我的账户',
             'varkeys'  => array('TransAmt', 'status'),
-        ),
-        Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER => array(
-            'desc'     => '您的投标金额为%s，投标%s',
-            'backurl'  => '/account/overview',
-            'backname' => '我的账户',
-            'varkeys'  => array('TransAmt','status'),
         ),
     );  
 }

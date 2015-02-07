@@ -64,7 +64,7 @@ class TenderController extends Base_Controller_Page {
             ));
 	        $sess->set('invest_error', Invest_RetCode::AMOUNT_ERROR);
 	        return $this->redirect('/invest/detail?id=' . $loanId);
-	    }*/
+        }*/
 	    
         Base_Log::notice(array(
             'msg'  => '主动投标',

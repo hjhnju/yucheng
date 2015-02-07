@@ -46,7 +46,7 @@ class BgcallController extends Base_Controller_Page {
 
     /**
      * 汇付天下回调Action
-     * 资金解冻BgUrl回调webroot/Finance/bgcall/cancelTenderBG
+     * 资金解冻BgUrl回调
      * 打印 RECV_ORD_ID_OrdId
      */
     public function unfreezeOrderAction() {
@@ -81,9 +81,9 @@ class BgcallController extends Base_Controller_Page {
     	}
 
     	//资金解冻订单状态更新为“处理成功”
-    	Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
-            $respCode, $respDesc);    	
-    	
+        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+            $respCode, $respDesc, array('freezeTrxId' => $trxId));
+
     	//快照
     	Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::USRUNFREEZE,
             $transAmt, '资金解冻记录');
@@ -263,13 +263,6 @@ class BgcallController extends Base_Controller_Page {
         $userid    = intval($retParam['MerPriv']);//取客户私用域中的userid
         $huifuid   = strval($retParam['UsrCustId']); //用户的huifuid
         $transAmt  = floatval($retParam['TransAmt']);
-      
-        $arrBal   = Finance_Api::getUserBalance($userid);
-        $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal'];//用户可用余额
-        $total    = Finance_Api::getPlatformBalance();//系统余额
-        
-        $lastip   = Base_Util_Ip::getClientIp();
         $respCode = $retParam['RespCode'];
         $respDesc = $retParam['RespDesc'];
         if($respCode !== '000') {           
@@ -350,14 +343,20 @@ class BgcallController extends Base_Controller_Page {
             //财务类投标冻结订单状态更新为处理失败
             Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
                 $respCode, $respDesc);
+            $bolSucc = false;
         } else {
-            $logic  = new Finance_Logic_Transaction();
-            //确定投标，返回是否投标成功
-            $bolRet = $logic->tenderConfirm($orderId, $userId, $proId, $transAmt, $freezeTrxId,
-                $bolSucc, $respCode, $respDesc);
-            if (!$bolRet) {
+            //将投标冻结订单状态更改为成功
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+                $respCode, $respDesc, array('freezeTrxId' => $freezeTrxId));
+            //保存快照
+            Finance_Logic_Order::saveRecord($orderId, $userId, 
+                Finance_Order_Type::TENDERFREEZE, $transAmt, '投标冻结记录');
+    
+            $bolSucc = Invest_Api::doInvest($orderId, $userId, $proId, $transAmt);
+
+            if (!$bolSucc) {
                 Base_Log::notice(array(
-                    'msg'      => '投资确认失败，发起资金解冻',
+                    'msg'      => '投标失败，发起资金解冻',
                     'orderId'  => $orderId,
                     'userId'   => $userId,
                     'proId'    => $proId,
@@ -365,11 +364,16 @@ class BgcallController extends Base_Controller_Page {
                 ));
 
                 //不做解冻失败的错误处理
+                $logic   = new Finance_Logic_Transaction();
                 $bolRet2 = $logic->unfreezeOrder($orderId);
             }
         }
 
-        Finance_Logic_Order::setTenderStatus($orderId, $bolRet);
+        Base_Log::notice(array(
+            'msg'   => 'bgcallreturn',
+            'print' => 'RECV_ORD_ID_'.strval($orderId),
+            'req'   => $_REQUEST,
+        ));
 
         print('RECV_ORD_ID_'.strval($orderId));     
     }

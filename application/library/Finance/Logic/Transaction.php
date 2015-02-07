@@ -16,6 +16,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @return bool
      */
     public function unfreezeOrder($orinOrderId, $retUrl='') {
+        Base_Log::debug(array(
+            'msg' => '发起资金解冻',
+            'orinOrderId' => $orinOrderId,
+        ));
         if(empty($orinOrderId)) {
             return false;
         }
@@ -73,12 +77,12 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }
 
         //将解冻订单状态更改为成功
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-            $respCode, $respDesc, array('freezeTrxId' => $freezeTrxId));
+        // Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+        //    $respCode, $respDesc, array('freezeTrxId' => $freezeTrxId));
 
         //保存快照
-        Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::TENDERFREEZE,
-            $transAmt, '解冻订单记录');
+        //Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::TENDERFREEZE,
+        //    $transAmt, '解冻订单记录');
 
         return true;     
     }
@@ -220,7 +224,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * redirect
      * 
      */
-    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails) {
+    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $retUrl = '') {
         if(!isset($loanId) || !isset($transAmt) || !isset($userid) || !isset($arrDetails)) {
             Base_Log::error(array(
                 'msg'        => '请求参数错误',
@@ -228,6 +232,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'transAmt'   => $transAmt,
                 'userid'     => $userid,
                 'arrDetails' => $arrDetails,
+                'retUrl'     => $retUrl,
             ));
         }
         
@@ -270,7 +275,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         //订单号唯一性
         $freezeOrdId   = Finance_Logic_Order::genOrderId();
         $freezeOrdId   = strval($freezeOrdId);
-        $retUrl        = $this->webroot.'/finance/ret';
+        $retUrl        = strval($retUrl);
         $bgRetUrl      = $this->webroot.'/finance/bgcall/initiativeTender';
         $userid        = strval($userid);
         $proId         = $loanId;
@@ -292,36 +297,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $this->chinapnr->initiativeTender($this->merCustId, $orderId, $orderDate, $transAmt, $usrCustId,
             $maxTenderRate, $borrowerDetails, $isFreeze, $freezeOrdId, $retUrl, $bgRetUrl, $merPriv
         );      
-    }
-
-    /**
-     * 投标确认
-     * 1. 根据汇付状态修改资金冻结订单状态
-     * 2. invest_api发起确定投标
-     * 3. 若确定投标失败则发起资金解冻
-     * @param $orderId 
-     * @param $userId
-     * @param $loanId
-     * @param $transAmt
-     * @param $freezeTrxId, 冻结标记，若不成功用来解冻
-     * @param $bolSucc，当前汇付返回的冻结是否成功。
-     * @param $respCode
-     * @param $respDesc
-     */
-    public function tenderConfirm($orderId, $userId, $loanId, $transAmt, $freezeTrxId,
-        $bolSucc, $respCode, $respDesc){
-
-        //将投标冻结订单状态更改为成功
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-            $respCode, $respDesc, array('freezeTrxId' => $freezeTrxId));
-
-        //保存快照
-        Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::TENDERFREEZE,
-            $transAmt, '投标冻结记录');
-
-        $bolRet = Invest_Api::doInvest($orderId, $userId, $loanId, $transAmt);
-        
-        return $bolRet;  
     }
     
     /**

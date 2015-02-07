@@ -168,8 +168,18 @@ class Finance_Logic_Order {
                 'failDesc'=> $failDesc,
                 'arrExts' => $arrExts,
         ));
+
         $regOrder          = new Finance_Object_Order(intval($orderId));
         $status            = intval($status);
+        if($status === $regOrder->status){
+            Base_Log::warn(array(
+                'msg' => '订单状态一致时不再更新, 防止余额计算非实时不一致',
+                'orderId' => $orderId,
+                'status'  => $status,
+            ));
+            return false;
+        }
+
         $regOrder->orderId = $orderId;
         $regOrder->status  = $status;
         $arrBal            = Finance_Api::getUserBalance($regOrder->userId);
@@ -281,7 +291,9 @@ class Finance_Logic_Order {
         $list = new Finance_List_Order();
         $list->setFilter(array('userId' => $userid));
         $list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
-        $list->appendFilterString("`status` IN (1,2,3)");
+        $strSt = implode(',', array(Finance_Order_Status::SUCCESS, Finance_Order_Status::PROCESSING, 
+            Finance_Order_Status::FAILED));
+        $list->appendFilterString("`status` IN ($strSt)");
         if($queryType !== 1){
             $list->appendFilter(array('type' => $queryType));
         }
@@ -297,7 +309,8 @@ class Finance_Logic_Order {
             $arrData[$key]['typeName']  = Finance_Order_Type::getTypeName($value['type']);       
             $arrData[$key]['status']    = Finance_Order_Status::getTypeName($value['status']);
             $arrData[$key]['serialNo']  = strval($value['orderId']);//序列号
-            $arrData[$key]['tranAmt']   = $value['amount'];//交易金额
+            $plusOrMinus                = Finance_Order_Type::getPlusMinusChar($value['type']);       
+            $arrData[$key]['tranAmt']   = $plusOrMinus . $value['amount'];//交易金额
             $arrData[$key]['avalBg']    = $value['avlBal'];//可用余额
         }
 
@@ -308,33 +321,4 @@ class Finance_Logic_Order {
         $arrRet['list']     = $arrData;
         return $arrRet;         
     }
-
-    /**
-     * 在redis 中设置投标状态
-     * @param [type] $orderId [description]
-     * @param [type] $bolSucc [description]
-     */
-    public static function setTenderStatus($orderId, $bolSucc){
-        $intSt = $bolSucc ? 1 : 2;
-        Base_Redis::getInstance()->hSet(Finance_Keys::getTenderStKey(), 
-            Finance_Keys::getTenderStField($orderId), $intSt);
-        return true;
-    }
-
-    /**
-     * 获取投标状态
-     * @return $res true|false|null 表示没有状态
-     */
-    public static function getTenderStatus($orderId){
-        $intSt   = Base_Redis::getInstance()->hGet(Finance_Keys::getTenderStKey(), 
-            Finance_Keys::getTenderStField($orderId));
-        $bolSucc = null;
-        if($intSt === 1){
-            $bolSucc = true;
-        }elseif ($intSt === 2) {
-            $bolSucc = false;
-        }
-        return $bolSucc;
-    }
-    
 }
