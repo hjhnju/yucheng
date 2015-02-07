@@ -360,7 +360,7 @@ class BgcallController extends Base_Controller_Page {
                     'msg'      => '投资确认失败，发起资金解冻',
                     'orderId'  => $orderId,
                     'userId'   => $userId,
-                    'prodId'   => $prodId,
+                    'proId'    => $proId,
                     'transAmt' => $transAmt,
                 ));
 

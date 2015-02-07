@@ -36,7 +36,7 @@ class RetController extends Base_Controller_Page {
 
         //为主动投标增加的逻辑，后续优化
         if($bolSucc && $cmdId === Finance_Chinapnr_Client::CMDID_INITIATIVE_TENDER){
-            $orderId = $_REQUEST['OrdID'];
+            $orderId = $_REQUEST['OrdId'];
             $mixRet  = true;
             $i       = 0;
             while (is_null($mixRet) && $i <= 3) {
