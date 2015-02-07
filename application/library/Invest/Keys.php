@@ -1,14 +1,9 @@
 <?php
 class Invest_Keys {
 
-    const TENDER_STATUS_KEY   = 'tender';
-    const TENDER_STATUS_FIELD = 'orderid_%s';
+    const TENDER_STATUS_KEY = 'inv_oid_%s_status';
 
-    public static function getStatusKey(){
-        return self::TENDER_STATUS_KEY;
-    }
-
-    public static function getStatusField($orderId){
-        return sprintf(self::TENDER_STATUS_FIELD, $orderId);
+    public static function getStatusKey($orderId){
+        return sprintf(self::TENDER_STATUS_KEY, $orderId);
     }
 }

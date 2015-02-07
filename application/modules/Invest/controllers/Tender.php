@@ -57,14 +57,14 @@ class TenderController extends Base_Controller_Page {
 	    }
 	    
 	    // 检查金额是否满足投标要求
-	    /*if (!$logic->isAmountLegal($loanId, $amount)) {
+	    if (!$logic->isAmountLegal($loanId, $amount)) {
 	        Base_Log::notice(array(
                 'msg'  => '投标金额不符合投标条件',
                 'post' => $_REQUEST,
             ));
 	        $sess->set('invest_error', Invest_RetCode::AMOUNT_ERROR);
 	        return $this->redirect('/invest/detail?id=' . $loanId);
-        }*/
+        }
 	    
         Base_Log::notice(array(
             'msg'  => '主动投标',
