@@ -305,8 +305,8 @@ class Invest_Logic_Invest {
      * @param integer $loan_id
      * @return array
      */
-    public function getUserInvests($uid, $status, $page = 1, $pagesize = 10) {
-        $data = $this->objModel->getUserInvests($uid, $status, $page, $pagesize);
+    public function getUserInvests($uid, $mixStatus, $page = 1, $pagesize = 10) {
+        $data = $this->objModel->getUserInvests($uid, $mixStatus, $page, $pagesize);
         
         return $data;
     }

@@ -117,12 +117,13 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */	
 	public function  tenderingAction() {
-		$status = self::TENDERING;
-        $userid = $this->userid;
-		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-	    $tenderingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);
-	    $listRet = array();
-	    $list = $tenderingRet['list'];
+		$arrStatus = array(Invest_Type_InvestStatus::LENDING,
+			Invest_Type_InvestStatus::FULL_CHECK, Invest_Type_InvestStatus::PAYING);
+		$userid       = $this->userid;
+		$page         = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+		$tenderingRet = Invest_Api::getUserInvests($userid, $arrStatus, $page, self::PAGESIZE);
+		$listRet      = array();
+		$list         = $tenderingRet['list'];
 	    if(empty($list)) {
 	    	$ret = array(
 	    		'page'    => $page,
@@ -134,14 +135,14 @@ class InvestController extends Base_Controller_Page {
 	    	return ;
 	    }
 	    foreach ($list as $key => $value) {
-	    	$listRet[$key]['proId'] = intval($value['loan_id']);    	
-	    	$loanInfo = Loan_Api::getLoanDetail($listRet[$key]['proId']);
-	    	$listRet[$key]['investPro'] = $value['title'];
-	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
-	    	$listRet[$key]['tenderAmt'] = $value['amount'];
-	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
-	    	$listRet[$key]['tenderTime'] = $value['create_time'];
-	    	$listRet[$key]['tenderProgress'] = $loanInfo['percent'];
+			$listRet[$key]['proId']           = intval($value['loan_id']);    	
+			$loanInfo                         = Loan_Api::getLoanDetail($listRet[$key]['proId']);
+			$listRet[$key]['investPro']       = $value['title'];
+			$listRet[$key]['annlnterestRate'] = $value['interest'];
+			$listRet[$key]['tenderAmt']       = $value['amount'];
+			$listRet[$key]['deadline']        = $loanInfo['duration_name'];
+			$listRet[$key]['tenderTime']      = $value['create_time'];
+			$listRet[$key]['tenderProgress']  = $loanInfo['percent'];
 	    }
 	    $ret = array(
 	    		'page'    => $page,

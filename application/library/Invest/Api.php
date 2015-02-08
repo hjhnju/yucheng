@@ -40,7 +40,8 @@ class Invest_Api {
     /**
      * 获取我的投资列表 借款维度
      * @param number $uid
-     * @param integer $status -1全部 1审核中 2投标中 3放款审核 4打款中 5回款中 6已完成 9失败
+     * @param mix $mixStatus, 可以是 -1/array/int
+     *  -1全部 1审核中 2投标中 3放款审核 4打款中 5回款中 6已完成 9失败
      * @param number $page
      * @param number $pagesize
      * @return array <pre>(
@@ -51,12 +52,12 @@ class Invest_Api {
      *      'list' => $data,
      *  );</pre>
      */
-    public static function getUserInvests($uid, $status = -1, $page = 1, $pagesize = 10) {
+    public static function getUserInvests($uid, $mixStatus = -1, $page = 1, $pagesize = 10) {
         $logic = new Invest_Logic_Invest();
-        $data = $logic->getUserInvests($uid, $status, $page, $pagesize);
+        $data = $logic->getUserInvests($uid, $mixStatus, $page, $pagesize);
         Base_Log::debug(array(
             'uid'      => $uid,
-            'status'   => $status,
+            'status'   => $mixStatus,
             'data' => $data,
         ));
         return $data;
