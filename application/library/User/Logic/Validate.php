@@ -15,7 +15,7 @@ class User_Logic_Validate {
         self::REG_NAME           => '/^([a-zA-Z])+[-_.0-9a-zA-Z]{5,24}$/', //6-25位
         self::REG_EMAIL          => '/^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,3}$/',
         //企业用户手机号前加0
-        self::REG_PHONE          => '/^0*(13[0-9]|15[0|3|6|7|8|9]|18[6|0|8|9])\d{8}$/',
+        self::REG_PHONE          => '/^0*(1[0-9])\d{9}$/',
         self::REG_REALNAME       => '/^[\x7f-\xff]{2,4}$/',
     );
 
