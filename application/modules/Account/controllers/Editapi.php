@@ -10,7 +10,7 @@ class EditapiController extends Base_Controller_Api {
 	
 	protected static $_arrRegMap = array(
 			self::REG_EMAIL => '/^[_.0-9a-z-]+@([0-9a-z][0-9a-z-]+.)+[a-z]{2,3}$/',
-			self::REG_PHONE => '/^(13[0-9]|15[0|3|6|7|8|9]|18[0|8|9])\d{8}$/',		
+			self::REG_PHONE => '/^0*(1[0-9])\d{9}$/',		
 	);
 	
     public function init(){
@@ -38,28 +38,27 @@ class EditapiController extends Base_Controller_Api {
      * status 1120: 手机号输入与原手机号不同
      */
     public function checkphoneAction() {
-    	$objUser = $this->objUser;
-    	$userId = !empty($this->objUser) ? $this->objUser->userid : 0;
-    	$_originPhone = $objUser->phone;
-    	$originPhone = isset($_originPhone) ? $_originPhone : '';
-    	$phone = $_REQUEST['oldPhone'];//前端会判空
-    	$checkRet = $this->checkReg(self::REG_PHONE,$phone);      	 	
-    	$checkRet = $this->checkReg(self::REG_PHONE,$phone);
+        $objUser      = $this->objUser;
+        $userId       = !empty($this->objUser) ? $this->objUser->userid : 0;
+        $_originPhone = $objUser->phone;
+        $originPhone  = isset($_originPhone) ? $_originPhone : '';
+        $phone        = $_REQUEST['oldPhone'];//前端会判空
+        $checkRet     = $this->checkReg(self::REG_PHONE,$phone);
     	if(!$checkRet) {
-    		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
-    		$errMsg = Account_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
+            $errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
+            $errMsg  = Account_RetCode::getMsg($errCode);
+            $this->outputError($errCode,$errMsg);
     		return ;
     	}   	
     	if($phone != $originPhone) {
-    		$errCode = Account_RetCode::PHONE_INPUT_ERROR;//手机号输入与原手机号不同
-    		$errMsg = Account_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
+            $errCode = Account_RetCode::PHONE_INPUT_ERROR;//手机号输入与原手机号不同
+            $errMsg  = Account_RetCode::getMsg($errCode);
+            $this->outputError($errCode,$errMsg);
     		return ;
     	}   	
-    	$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
-    	$type = 3;
-    	$chkret = User_Api::checkSmscode($phone,$veriCode,$type);
+        $veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
+        $type     = 3;
+        $chkret   = User_Api::checkSmscode($phone,$veriCode,$type);
     	if(!$chkret) {
     		$errCode = Account_RetCode::VERCODE_ERROR; //验证码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
@@ -86,18 +85,18 @@ class EditapiController extends Base_Controller_Api {
      * 若前端检测返回值为0,即可以跳入至修改成功页面
      */
     public function bindnewphoneAction(){
-    	$objUser = $this->objUser;
-    	$userId = !empty($this->objUser) ? $this->objUser->userid : 0;
-    	$_oldphone = $objUser->phone;
-    	$oldphone = isset($_oldphone) ? $_oldphone : '';     	
-    	$phone = $_REQUEST['newPhone'];//前端会判空
-    	$veriCode = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
-    	$checkReg = $this->checkReg(self::REG_PHONE,$phone);
-    	$chkret = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE);
+        $objUser   = $this->objUser;
+        $userId    = !empty($this->objUser) ? $this->objUser->userid : 0;
+        $_oldphone = $objUser->phone;
+        $oldphone  = isset($_oldphone) ? $_oldphone : '';     	
+        $phone     = $_REQUEST['newPhone'];//前端会判空
+        $veriCode  = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
+        $checkReg  = $this->checkReg(self::REG_PHONE,$phone);
+        $chkret    = User_Api::checkSmscode($phone,$veriCode,Account_VeriCodeType::MODIFY_PHONE);
     	if(!$checkReg) {
-    		$errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
-    		$errMsg = Account_RetCode::getMsg($errCode);
-    		$this->outputError($errCode,$errMsg);
+            $errCode = Account_RetCode::PHONE_FORMAT_ERROR;//手机号码格式错误
+            $errMsg  = Account_RetCode::getMsg($errCode);
+            $this->outputError($errCode,$errMsg);
     		return ;
     	} 
     	if($phone === $oldphone) {
