@@ -64,9 +64,9 @@ class User_Api{
      * @param int $pagesize
      * @return array
      */
-    public static function getPrivUsers($page = 1, $pagesize = 10){
+    public static function getPrivUsers($page = 1, $pagesize = 10, $user){
         $logic = new User_Logic_Query();
-        $list  = $logic->queryPrivUsers($page, $pagesize);
+        $list  = $logic->queryPrivUsers($page, $pagesize, $user);
         Base_Log::notice(array(
         'page'     => $list['page'],
         'pagesize' => $list['pagesize'],
