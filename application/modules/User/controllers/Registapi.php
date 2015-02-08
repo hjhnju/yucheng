@@ -167,9 +167,9 @@ class RegistApiController extends Base_Controller_Api{
                 ));
             }
         }
-        $objUser = new User_Object($userid);
+        //注册成功后设置用户为登录状态并将登录信息入库
         $logic   = new User_Logic_Login();
-        $logic->setLogin($objUser);
+        $logic->login('name', $strName, $strPasswd);
         Base_Log::notice($_REQUEST);
         
         //注册后的系统消息
