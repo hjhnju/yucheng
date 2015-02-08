@@ -24,5 +24,25 @@ class User_Logic_Query{
         //TODO:增加用户信息
         return $list;
     }
+    
+    /**
+     * 查询私人用户
+     * @param int $page
+     * @param int $pagesize
+     * @return array
+     */
+    public function queryPrivUsers($page, $pagesize){
+        //TODO:User_List
+        $list    = new User_List_Login();
+        $filters = array('usertype' => self::TYPE_PRIV);
+        $list->setFilter($filters);
+        $list->setOrder('create_time desc');
+        $list->setPage($page);
+        $list->setPagesize($pagesize);
+        $list = $list->toArray();
+        //TODO:增加用户信息
+        return $list;
+    }
+    
 
 }

@@ -59,6 +59,22 @@ class User_Api{
     }
     
     /**
+     * 获取私人用户列表
+     * @param int $page
+     * @param int $pagesize
+     * @return array
+     */
+    public static function getPrivUsers($page = 1, $pagesize = 10){
+        $logic = new User_Logic_Query();
+        $list  = $logic->queryPrivUsers($page, $pagesize);
+        Base_Log::notice(array(
+        'page'     => $list['page'],
+        'pagesize' => $list['pagesize'],
+        ));
+        return $list['list'];
+    }
+    
+    /**
      * 设置用户真实姓名
      * @param int $uid
      * @param string $strRealName
