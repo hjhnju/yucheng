@@ -5,7 +5,7 @@
 	passwd root
 	#线上机器root 密码：
 
-	hostname 
+	hostname xjd-web01
 	#创建work用户
 	useradd -d /home/work -m work
 	passwd work
@@ -15,13 +15,14 @@
 	添加work	ALL=(ALL) 	ALL
 
 2.环境配置
+
 	a) 增加/etc/ld.so.conf：https://github.com/hjhnju/yucheng/issues/4
 	$ cat /etc/ld.so.conf 
 	include ld.so.conf.d/*.conf
 	/home/work/local/openssl/lib
 	$ sudo ldconfig
 
-	b) 创建一些默认目录
+	b) 切换为work账号登录，创建一些默认目录
 	$ mkdir -p /home/work/var/apc
 	$ mkdir -p /home/work/var/nginx
 	$ mkdir -p /home/work/publish
@@ -29,12 +30,13 @@
 	$ mkdir -p /home/work/tools
 
 2. 执行安装脚本
-	c) 获取安装包及脚本(阿里云内网地址超快)
+	c) 从开发机获取安装包及脚本(阿里云内网地址超快)
 	$ cd ~/tools
-	$ scp -r work@10.173.13.95:/home/work/tools/lnmp_20150201.tar.gz .	
-	$ tar zxvf lnmp_20150201.tar.gz
-	$ scp -r work@10.173.13.95:/home/work/tools/bin_20150201.tar.gz .
-	$ tar zxvf bin_20150201.tar.gz
+	$ scp -r work@10.173.13.95:/home/work/tools/lnmp.tar.gz .	
+	$ tar zxvf lnmp.tar.gz
+	$ scp -r work@10.173.13.95:/home/work/tools/install.sh .
+	$ scp -r work@10.173.13.95:/home/work/tools/bin.tar.gz .
+	$ tar zxvf bin.tar.gz
 	$ cp bin/ ~/	
 	b) 执行安装脚本
 	sh install -p /home/work/local -t all

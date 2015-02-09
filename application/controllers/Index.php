@@ -10,11 +10,6 @@ class IndexController extends Base_Controller_Page {
     }
     
     public function indexAction() {
-
-        $refer = $_SERVER['HTTP_REFERER'];
-        if(preg_match('songhf.cn', $refer)){
-            die();
-        }
         
         //投资列表
         $list = Invest_Api::getInvestList(1, 5);
