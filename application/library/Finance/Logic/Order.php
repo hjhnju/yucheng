@@ -290,7 +290,7 @@ class Finance_Logic_Order {
         }
         $list = new Finance_List_Order();
         $list->setFilter(array('userId' => $userid));
-        $list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
+        	$list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
         $strSt = implode(',', array(Finance_Order_Status::SUCCESS, Finance_Order_Status::PROCESSING, 
             Finance_Order_Status::FAILED));
         $list->appendFilterString("`status` IN ($strSt)");
