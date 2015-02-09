@@ -128,12 +128,16 @@ class Invest_Logic_Invest {
      * 是否允许投标 如果命中某个限制策略 则不允许投标
      * @param integer $uid
      * @param integer $loanId
-     * @return boolean
+     * @return integer
      */
     public function allowInvest($uid, $loanId) {
         $loan = Loan_Api::getLoanInfo($loanId);
         // 已满标不允许投标
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
+            return Invest_RetCode::NOT_ALLOWED;
+        }
+        // 已结束的不允许投标
+        if ($loan['deadline'] < time()) {
             return Invest_RetCode::NOT_ALLOWED;
         }
         
@@ -149,6 +153,30 @@ class Invest_Logic_Invest {
         }
         
         return Invest_RetCode::SUCCESS;
+    }
+    
+    /**
+     * 获取借款的详情信息
+     * @param integer $loanId
+     * @return array
+     */
+    public function getLoanDetail($loanId) {
+        $loan = Loan_Api::getLoanDetail($loanId);
+        if (empty($loan)) {
+            return $loan;
+        }
+        // 对打款状态 标记为满标状态
+        if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
+            $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
+        }
+        // 对于学校不对外显示
+        $loan['company']['school'] = Base_Util_Secure::hideDetail($loan['company']['school']);
+        // 对于投标时间已经结束的 进行修正
+        if ($loan['status'] == Invest_Type_InvestStatus::LENDING && $loan['deadline'] < time()) {
+            $loan['status'] = Invest_Type_InvestStatus::FAILED;
+            $loan['status_name'] = Invest_Type_InvestStatus::getTypeName(Invest_Type_InvestStatus::FAILED);
+        }
+        return $loan;
     }
     
     /**

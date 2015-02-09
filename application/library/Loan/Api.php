@@ -148,6 +148,10 @@ class Loan_Api {
      */
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
+        if (!$loan->isLoaded()) {
+            return array();
+        }
+        
         $data = $loan->toArray();
         $data['amount'] = floatval($data['amount']);
         $data['invest_amount'] = floatval($data['invest_amount']);
@@ -260,6 +264,9 @@ class Loan_Api {
      */
     public static function getLoanDetail($loan_id) {
         $data = self::getLoanInfo($loan_id);
+        if (empty($data)) {
+            return $data;
+        }
         $data = self::formatLoan($data);
         
         $type = new Loan_Type_LoanType();
@@ -272,6 +279,12 @@ class Loan_Api {
         $cond = array('loan_id' => $loan_id);
         $company = new Loan_Object_Company($cond);
         $data['company'] = $company->toArray();
+        // 转换省份信息
+        $area = new Area_Object_Area($data['company']['area']);
+        if ($area->province !== 0) {
+            $area = new Area_Object_Area($area->province);
+        }
+        $data['company']['area'] = $area->name;
         
         $counter = new Loan_Object_Counter($data['user_id']);
         $data['counter'] = $counter->toArray();

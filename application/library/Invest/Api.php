@@ -239,7 +239,11 @@ class Invest_Api {
         $status = new Invest_Type_InvestStatus();
         $level  = new Invest_Type_LevelName();
         foreach ($list['list'] as $key => $val) {
-            $list['list'][$key]['status_name'] = $status->getTypeName($val['status']);
+            // 对于投标时间已经结束的 进行修正
+            if ($val['status'] == Invest_Type_InvestStatus::LENDING && $val['deadline'] < time()) {
+                $list['list'][$key]['status'] = Invest_Type_InvestStatus::FAILED;
+            }
+            $list['list'][$key]['status_name'] = $status->getTypeName($list['list'][$key]['status']);
             $list['list'][$key]['level_name'] = $level->getTypeName($val['level']);
         }
         return $list;
