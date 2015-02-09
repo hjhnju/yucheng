@@ -363,19 +363,19 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'DivCustId'=> Base_Config::getConfig('huifu.merCustId', CONF_PATH.'/huifu.ini'),
                 'DivAcctId'=> Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH.'/huifu.ini'),
                 'DivAmt'   => sprintf('%.2f', $servFee),
-            ),          
+            ),
         );
-        $jsonDivDetails  = json_encode($arrDivDetails);
-        $feeObjFlag      = 'I';//手续费向入款人收取               
-        $isDefault       = 'Y';
-        $isUnFreeze      = 'Y';
-        $unFreezeOrdId   = Finance_Logic_Order::genOrderId();
-        $bgRetUrl        = $this->webroot.'/finance/bgcall/loans';
-        $merPriv         = strval($outUserId);//投标人的uid
-        $reqExt          = array(
-            'ProId'   => strval($loanId),
+        $jsonDivDetails = json_encode($arrDivDetails);
+        $feeObjFlag     = 'I';//手续费向入款人收取               
+        $isDefault      = 'Y';
+        $isUnFreeze     = 'Y';
+        $unFreezeOrdId  = Finance_Logic_Order::genOrderId();
+        $bgRetUrl       = $this->webroot.'/finance/bgcall/loans';
+        $merPriv        = strval($outUserId);//投标人的uid
+        $reqExt         = array(
+        'ProId'         => strval($loanId),
         );
-        $reqExt          = json_encode($reqExt);
+        $reqExt         = json_encode($reqExt);
         
         Base_Log::debug(array(
             'msg'            => '准备单笔放款',
@@ -399,7 +399,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'reqExt'         => $reqExt,
         ));
 
-        $mixRet  = $this->chinapnr->loans($this->merCustId, $orderId, $orderDate, $outCustId, 
+        $mixRet = $this->chinapnr->loans($this->merCustId, $orderId, $orderDate, $outCustId, 
             $transAmt, $fee, $subOrdId, $subOrdDate, $inCustId, 
             $jsonDivDetails, $feeObjFlag, $isDefault, $isUnFreeze, $unFreezeOrdId, 
             $freezeTrxId, $bgRetUrl, $merPriv, $reqExt);
@@ -425,8 +425,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return $objRst;
         }
-
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS);
 
         $objRst->status = Base_RetCode::SUCCESS;
         return $objRst; 

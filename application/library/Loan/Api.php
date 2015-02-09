@@ -7,14 +7,7 @@
 class Loan_Api {
 
     /**
-     * 生成借款标的还款计划
-     * @param integer $lid
-     */
-    public static function buildRefunds($loan_id) {
-    }
-
-    /**
-     * 满标审核是否可以打款
+     * 满标时审核是否可以打款
      */
     public function fullPassAudit($loanId){
         $objLoan = new Loan_Object_Loan($loanId);
@@ -57,7 +50,7 @@ class Loan_Api {
         $logic = new Loan_Logic_Loan();
         $loan = $logic->getLoanInfo($loan_id);
         $res = false;
-        if ($loan['status'] == Loan_Type_LoanStatus::FULL_CHECK) {
+        if ($loan['status'] == Loan_Type_LoanStatus::PAYING) {
             $res = $logic->lendSuccess($loan_id);
         }
         

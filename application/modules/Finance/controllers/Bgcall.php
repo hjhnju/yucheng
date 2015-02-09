@@ -608,12 +608,6 @@ class BgcallController extends Base_Controller_Page {
         $orderDate = intval($retParam['OrdDate']);
         $subOrdId  = intval($retParam['SubOrdId']);
         $amount    = floatval($retParam['TransAmt']);
-        $arrBal    = Finance_Api::getUserBalance($userid);
-        $balance   = $arrBal['AcctBal'];//用户余额
-        $avlBal    = $arrBal['AvlBal'];//用户可用余额
-        $total     = Finance_Api::getPlatformBalance();//系统余额
-        
-        $lastip    = Base_Util_Ip::getClientIp();
         $respCode  = strval($retParam['RespCode']);
         $respDesc  = strval($retParam['RespDesc']);
         
@@ -636,6 +630,7 @@ class BgcallController extends Base_Controller_Page {
         //将打款记录插入至表finance_record中
         Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH,
             $amount, '财务类满标打款记录');
+
         Base_Log::notice($retParam);
         print('RECV_ORD_ID_'.strval($orderId));
     }

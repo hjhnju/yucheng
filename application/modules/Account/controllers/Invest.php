@@ -53,12 +53,12 @@ class InvestController extends Base_Controller_Page {
 	 * 
 	 */
 	public function backingAction() {
-		$status = self::BACKING;
-        $userid = $this->userid;
-		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+		$status     = self::BACKING;
+		$userid     = $this->userid;
+		$page       = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);		
-		$listRet = array();
-        $list = $backingRet['list'];
+		$listRet    = array();
+		$list       = $backingRet['list'];
         if(empty($list)) {
         	$ret = array(
         		'page'    => $page,
@@ -70,17 +70,17 @@ class InvestController extends Base_Controller_Page {
         	return ;
         }
  	    foreach ($list as $key => $value) {
-	        $listRet[$key]['invest_id'] = $value['id'];//invest_id
-	        $listRet[$key]['proId'] = $value['loan_id'];
-	        $loanInfo = Loan_Api::getLoanDetail($value['loan_id']);
-	    	$listRet[$key]['investPro'] = $value['title'];
-	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
-	    	$listRet[$key]['tenderAmt'] = $value['amount'];
-	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
-	    	$listRet[$key]['tenderTime'] = $value['create_time'];
-	    	$listRet[$key]['haveBack'] = $value['capital_refund'];
-	    	$listRet[$key]['toBeBack'] = $value['capital_rest'];
-	    	$listRet[$key]['status'] = $value['status'];
+			$listRet[$key]['invest_id']       = $value['id'];//invest_id
+			$listRet[$key]['proId']           = $value['loan_id'];
+			$loanInfo                         = Loan_Api::getLoanDetail($value['loan_id']);
+			$listRet[$key]['investPro']       = $value['title'];
+			$listRet[$key]['annlnterestRate'] = $value['interest'];
+			$listRet[$key]['tenderAmt']       = $value['amount'];
+			$listRet[$key]['deadline']        = $loanInfo['duration_name'];
+			$listRet[$key]['tenderTime']      = $value['create_time'];
+			$listRet[$key]['haveBack']        = $value['capital_refund'];
+			$listRet[$key]['toBeBack']        = $value['capital_rest'];
+			$listRet[$key]['status']          = $value['status'];
 	    }
 	    
 	    $ret = array(
@@ -313,9 +313,8 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */
 	public function repayplanAction() {	
-		$invest_id = $_REQUEST['invest_id'];
-		$invest_id = intval($invest_id);
-		$retData = Invest_Api::getRefunds($invest_id);
+		$investId = intval($_REQUEST['invest_id']);
+		$retData  = Invest_Api::getRefunds($investId);
 		
 		$list = array();
 		$data = array();
@@ -325,25 +324,32 @@ class InvestController extends Base_Controller_Page {
 				'list'     => array(),
 				'data'     => array(),
 			);
-			$this->output($ret);
-			return ;
+			return $this->output($ret);
 		}
-		$userid = $retData[0]['user_id'];
-		$userid = intval($userid);
-		$objUser = User_Api::getUserObject($userid);
+
+		$userid   = intval($retData[0]['user_id']);
+		$objUser  = User_Api::getUserObject($userid);
 		$invester = $objUser->name;
 		foreach ($retData as $key=>$value) {
-			$list[$key]['time'] = $value['create_time'];
+			$list[$key]['time']            = $value['create_time'];
+			//待收本金
 			$list[$key]['repossPrincipal'] = sprintf('%.2f',$value['capital_rest']);
-			$list[$key]['recePrincipal'] = sprintf('%.2f',$value['capital_refund']);
+			//已收本金
+			$list[$key]['recePrincipal']   = sprintf('%.2f',$value['capital_refund']);
+			//是否已还款
 			if($value['transfer'] === 1) {
+				//待收收益
 				$list[$key]['repossProfit'] = '0.00';
-				$list[$key]['receProfit'] = sprintf('%.2f',$value['amount']);
+				//已收收益
+				$list[$key]['receProfit']   = sprintf('%.2f', $value['interest']);
 			}
 			if($value['transfer'] === 0) {
-				$list[$key]['repossProfit'] = sprintf('%.2f',$value['amount']);
-				$list[$key]['receProfit'] = '0.00';
-			}			
+				//待收收益
+				$list[$key]['repossProfit'] = sprintf('%.2f', $value['interest']);
+				//已收收益
+				$list[$key]['receProfit']   = '0.00';
+			}
+			//还款状态
 			switch ($value['status']) {
 				case 1:
 					$list[$key]['paymentStatus'] = 0;
@@ -357,19 +363,22 @@ class InvestController extends Base_Controller_Page {
 				default:
 					break;
 			}
+			//罚息
 			$list[$key]['punitive'] = sprintf('%.2f',$value['late_charge']);
 		}
+
+		//总计
 		$repossPrincipal = 0.00;
-		$repossProfit = 0.00;
-		$recePrincipal = 0.00;
-		$receProfit = 0.00;
-		$punitive = 0.00;
+		$repossProfit    = 0.00;
+		$recePrincipal   = 0.00;
+		$receProfit      = 0.00;
+		$punitive        = 0.00;
 		foreach ($list as $key => $value) {
 			$repossPrincipal += floatval($value['repossPrincipal']);
-			$repossProfit += floatval($value['repossProfit']);
-			$recePrincipal += floatval($value['recePrincipal']);
-			$receProfit += floatval($value['receProfit']);
-			$punitive += floatval($value['punitive']);
+			$repossProfit    += floatval($value['repossProfit']);
+			$recePrincipal   += floatval($value['recePrincipal']);
+			$receProfit      += floatval($value['receProfit']);
+			$punitive        += floatval($value['punitive']);
 		}		
 		$data = array(
 			'repossPrincipal' => sprintf('%.2f',$repossPrincipal),
@@ -383,7 +392,7 @@ class InvestController extends Base_Controller_Page {
 			'list'     => $list,
 			'total'    => $data,
 		);
-		$this->output($ret);
-		return ;		
+		
+		return $this->output($ret);		
 	}	
 }

@@ -198,7 +198,7 @@ class Loan_Logic_Loan {
         }
         
         $res = $this->objModel->beginTransaction();
-        if (!res) {
+        if (!$res) {
             return false;
         }
         
@@ -222,21 +222,27 @@ class Loan_Logic_Loan {
         }
         
         //更新状态
-        $loan->status = Loan_Type_LoanStatus::PAYING;
+        $loan->status = Loan_Type_LoanStatus::REFUNDING;
         
         return $this->objModel->commit();
     }
     
-    public function addRefund($loan, $period, $capital, $interest, $time, $capital_refund, $capital_rest) {
-        $refund = new Loan_Object_Refund();
-        $refund->amount = $capital + $interest;
-        $refund->interest = $interest;
-        $refund->capital = $capital;
-        $refund->lateCharge = 0;
-        $refund->loanId = $loan['id'];
-        $refund->period = $period;
-        $refund->userId = $loan['user_id'];
-        $refund->promiseTime = $time;
+    /**
+     * 添加借款人还款计划
+     * 
+     */
+    private static function addRefund($loan, $period, $capital, $interest, $promise_time, $capital_refund, $capital_rest) {
+        $refund                = new Loan_Object_Refund();
+        $refund->amount        = $capital + $interest;
+        $refund->interest      = $interest;
+        $refund->capital       = $capital;
+        $refund->lateCharge    = 0;
+        $refund->loanId        = $loan['id'];
+        $refund->period        = $period;
+        $refund->userId        = $loan['user_id'];
+        $refund->promiseTime   = $promise_time;
+        $refund->capitalRefund = $capital_refund; //'已回收本金',
+        $refund->capitalRest   = $capital_rest;   //'剩余本金',
         return $refund->save();
     }
     
@@ -296,59 +302,59 @@ class Loan_Logic_Loan {
      * @param integer $loanId
      * @return boolean
      */
-    public function buildRefunds($loanId) {
+    private function buildRefunds($loanId) {
         $loan = $this->getLoanInfo($loanId);
         
         if ($loan['duration'] < 30) {
-            $date = new DateTime('tomorrow');
+            $date        = new DateTime('tomorrow');
             $date->modify('+' . $loan['duration'] . 'days');
-            $time = $date->getTimestamp() - 1;
-        
-            $interest = $this->getInterestByDay($loan['amount'], $loan['interest'], $loan['duration']);
-            return $this->addRefund($loan, 1, $loan['amount'], $interest, $time, 0, 0, $loan['amount']);
+            $promiseTime = $date->getTimestamp() - 1;
+            $interest    = $this->getInterestByDay($loan['amount'], $loan['interest'], $loan['duration']);
+            //$loan, $period, $capital, $interest, $promiseTime, $capital_refund, $capital_rest
+            return self::addRefund($loan, 1, $loan['amount'], $interest, $promiseTime, 0, $loan['amount']);
         }
         
         //超过30天 按月还款
         $periods = ceil($loan['duration'] / 30);
         if ($loan['refund_type'] == Invest_Type_RefundType::MONTH_INTEREST) {
-            $date = new DateTime('tomorrow');
-            $start = $date->getTimestamp() - 1;
+            $date           = new DateTime('tomorrow');
+            $start          = $date->getTimestamp() - 1;
             $capital_refund = 0;
             for ($period = 1; $period <= $periods; $period++) {
                 $date->modify('+1month');
-                $promise = $date->getTimestamp() - 1;
-                $days = ($promise - $start) / 3600 / 24;
+                $promise  = $date->getTimestamp() - 1;
+                $days     = ($promise - $start) / 3600 / 24;
                 $interest = $this->getInterestByDay($loan['amount'], $loan['interest'], $days);
                 if ($period == $periods) {
                     $capital = $loan['amount'];
                 } else {
                     $capital = 0;
                 }
-                $capital_rest = $loan['amount'] - $capital;
+                $capital_rest   = $loan['amount'] - $capital;
                 $capital_refund += $capital;
-                $res = self::addRefund($loan, $period, $capital, $interest, $promise, $capital_refund, $capital_rest);
+                $res            = self::addRefund($loan, $period, $capital, $interest, 
+                    $promise, $capital_refund, $capital_rest);
         
                 if (!$res) {
                     $msg = array(
-                        'msg'    => 'add refund error',
-                        'invest' => json_encode($loan),
-                        'period' => $period,
-                        'capital'=> 0,
+                        'msg'      => 'add refund error',
+                        'invest'   => json_encode($loan),
+                        'period'   => $period,
+                        'capital'  => 0,
                         'interest' => $interest,
-                        'promise'=> $promise,
+                        'promise'  => $promise,
                     );
                     Base_Log::error($msg);
                     return false;
                 }
-        
                 $start = $promise;
             }
         } elseif ($loan['refund_type'] == Invest_Type_RefundType::AVERAGE) {
-            $date = new DateTime('tomorrow');
-            $start = $date->getTimestamp() - 1;
-            $b = $loan['interest'] / 12;
-            $a = $loan['amount'];
-            $n = $periods;
+            $date           = new DateTime('tomorrow');
+            $start          = $date->getTimestamp() - 1;
+            $b              = $loan['interest'] / 12;
+            $a              = $loan['amount'];
+            $n              = $periods;
             $capital_refund = 0;
             for ($period = 1; $period <= $periods; $period++) {
                 /*  收益计算公式
@@ -364,13 +370,15 @@ class Loan_Logic_Loan {
                  总利息=还款月数×每月月供额-贷款本金
                  */
                 $date->modify('+1month');
-                $promise = $date->getTimestamp() - 1;
-                $days = ($promise - $start) / 3600 / 24;
-                $interest = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1)) / (pow(1 + $b, $periods) - 1);
-                $capital = $a * $b * pow(1 + $b, $period - 1) / (pow(1 + $b, $periods) - 1);
-                $capital_rest = $loan['amount'] - $capital;
+                $promise        = $date->getTimestamp() - 1;
+                $days           = ($promise - $start) / 3600 / 24;
+                $interest       = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1))
+                    / (pow(1 + $b, $periods) - 1);
+                $capital        = $a * $b * pow(1 + $b, $period - 1) / (pow(1 + $b, $periods) - 1);
+                $capital_rest   = $loan['amount'] - $capital;
                 $capital_refund += $capital;
-                $res = self::addRefund($loan, $period, $capital, $interest, $promise, $capital_refund, $capital_rest);
+                $res            = self::addRefund($loan, $period, $capital, $interest, $promise, 
+                    $capital_refund, $capital_rest);
         
                 if (!$res) {
                     $msg = array(
