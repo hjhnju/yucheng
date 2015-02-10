@@ -181,9 +181,9 @@ class User_Api{
      * 验证用户输入的短信验证码是否正确
      */
     public static function checkSmscode($strPhone, $strVeriCode, $strType){
-        /* if('dev' === ini_get('yaf.environ')){
+        if('dev' === ini_get('yaf.environ')){
             return true;
-        } */
+        }
         $storeCode = Base_Redis::getInstance()->get(User_Keys::getSmsCodeKey($strPhone, $strType));
         if($strVeriCode === $storeCode){
             return true;
