@@ -16,4 +16,17 @@ class Infos_Api {
         $ret = isset($list['list'][0]) ? $list['list'][0] : null;
         return $ret;
     }   
+    
+    /**
+     * 获取未发布公告列表
+     * @param int $page
+     * @param int $pagesize
+     * @return array
+     */
+    public static function getAllPost($page, $pagesize){
+        $logic   = new Infos_Logic_Post();
+        $list1    = $logic->getList($page, $pagesize, 'post', 1);
+        $list2    = $logic->getList($page, $pagesize, 'post', 2);
+        return array_merge($list1['list'],$list2['list']);
+    }
 }

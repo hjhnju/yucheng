@@ -41,7 +41,7 @@ class InfoApiController extends Base_Controller_Api {
         $strAuthor = $_REQUEST['author'];
         $strAbstract = $_REQUEST['abstract'];
         $strCtx    = $_REQUEST['ctx'];
-        $strTime   = $_REQUEST['time'];
+        $strTime   = isset($_REQUEST['time'])?$_REQUEST['time']:date();
         $intType   = $_REQUEST['type'];
         $this->ajax              = true;
         $logic                   = new Infos_Logic_Post();
@@ -65,7 +65,7 @@ class InfoApiController extends Base_Controller_Api {
      * @param   $id postid
      */
     public function publishAction() {
-        $postid = isset($_POST['id'])? intval($_POST['id']) : 0; 
+        $postid = isset($_REQUEST['id'])? intval($_REQUEST['id']) : 0; 
         if($postid <= 0){
             $this->ajaxError();
         }
