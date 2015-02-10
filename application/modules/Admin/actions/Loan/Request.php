@@ -17,9 +17,7 @@ class RequestAction extends Yaf_Action_Abstract {
             return;
         }
         //参数获取－借款id
-        $loanId  = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
-        $loanId  = 15; //test
-        $userid  = 15; //hjhnju2
+        $loanId  = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : 0;
 
         //获取申请借款人
         $objUser = User_Api::getUserObject($userid);
@@ -29,118 +27,23 @@ class RequestAction extends Yaf_Action_Abstract {
 
         //申请借款信息
         //TODO:
-        //若有loanid从数据库先获取信息
-        $_POST = array(
-            'id' => $loanId,
-            //基本借款信息
-            'user_id'   => $userid,
-            'title'     => '全走一遍(1)',
-            'area'      => 2458,
-            'type_id'   => Loan_Type_LoanType::ENTITY, //1
-            'cat_id'    => Loan_Type_LoanCat::SCHOOL,
-            'content'   => '改扩建，期末教职工工资发放需要资金周转。',
-            'fresh'     => 1, //是否新手
-            'duration'  => 30,
-            'level'     => 4, //评估等级
-            'amount'    => 1000000.00,
-            'interest'  => 10.6,
-            'safe_id'   => implode(',', array(Loan_Type_SafeMode::SHAREHOLDER, Loan_Type_SafeMode::CAPITAL, Loan_Type_SafeMode::PLEDGE)),
-            'refund_type' => Loan_Type_RefundType::MONTH_INTEREST,
-            'audit_info'  => '经过兴教贷线下实地尽调，该中学运营状况良好，未来收益可覆盖借款额度。批准借款', //不应该在这
-            'start_time'  => strtotime('2015-02-07 10:00:00'),
-            'deadline'    => strtotime('2015-02-14 00:00:00'),
-            'risk_rate'   => '0.0100',
-            'serv_rate'   => '0.0030',
-            'mang_rate'   => '0.0020',
-            'create_uid'  => $createUid,
-            //借款审核信息
-            'audit'       => array(
-                array('id'=>70, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'实地认证'),
-                array('id'=>71, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'营业执照'),
-                array('id'=>72, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'税务登记证'),
-                array('id'=>73, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'银行开户许可证'),
-                array('id'=>74, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'组织机构代码证'),
-                array('id'=>75, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'征信报告'),
-                array('id'=>76, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'抵押手续'),
-                array('id'=>77, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'抵押手续'),
-                array('id'=>78, 'status'=>1, 'type'=>Loan_Type_Audit::COMPANY, 'name'=>'抵押手续'),
-                array('id'=>79, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'身份证'),
-                array('id'=>80, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'户口本'),
-                array('id'=>81, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'结婚证'),
-                array('id'=>82, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'房产证'),
-                array('id'=>83, 'status'=>1, 'type'=>Loan_Type_Audit::GUARANTEE, 'name'=>'行驶证'),
-            ),
-            //借款企业信息
-            'company'     => array(
-                'id'          => 7,
-                'school'      => '***中学',
-                //TODO: 'school_real' => '福建101中学',
-                'area'        => '福建省',
-                'assets'      => '5000万',
-                'employers'   => 234,
-                'years'       => 2010,
-                'funds'       => '100万',
-                'students'    => 2018,
-            ),
-            //借款担保人信息
-            'guarantee' => array(
-                'id'          => 8,
-                'name'        => '李**',
-                //'realname'        => '李若彤',
-                'account'     => '浙江',
-                'age'         => 30,
-                'marriage'    => 1,
-                'companyType' => Loan_Type_SchoolType::getTypeName(Loan_Type_SchoolType::BASE),
-                'jobTitle'    => '校长',
-                'income'      => '100-200万',
-                'status'      => 1,
-            ),
-            'attach' => array(
-                array(
-                    'id'     => 30,
-                    'type'   => Loan_Type_Attach::CERTIFICATION,
-                    'title'  => '身份证',
-                    'url'    => 'http://sn.people.com.cn/NMediaFile/2012/0919/LOCAL201209191518214553001689727.jpg',
-                    'status' => 0,
-                ),
-                array(
-                    'id'     => 40,
-                    'type'   => Loan_Type_Attach::CERTIFICATION,
-                    'title'  => '身份证',
-                    'url'    => 'http://img4.cache.netease.com/photo/0031/2013-05-29/902N04R659P50031.jpg',
-                    'status' => 0,
-                ),
-                array(
-                    'id'     => 41,
-                    'type'   => Loan_Type_Attach::CONTRACT,
-                    'title'  => '借款合同',
-                    'url'    => 'http://new.gdcp.cn/images/20120827/201208271513521616.jpg',
-                    'status' => 0,
-                ),
-                array(
-                    'id'     => 42,
-                    'type'   => Loan_Type_Attach::ENTITY,
-                    'title'  => '学校大门',
-                    'url'    => 'http://house.china.com.cn/taiyuan/UserFiles/20110118/09002660.jpg',
-                    'status' => 0,
-                ),
-                array(
-                    'id'     => 43,
-                    'type'   => Loan_Type_Attach::ENTITY,
-                    'title'  => '教学楼',
-                    'url'    => 'http://www.zjc.com.cn/admin1/edit/UploadFile/2008922134658235.jpg',
-                    'status' => 0,
-                ),
-            ),
-        );
+        if (!empty($_POST)) {
+            //var_dump($_POST);
+        }
         Base_Log::notice(array(
             'msg'  => '创建借款申请', 
             'post' => $_POST
         ));
         if (!empty($_POST)) {
             //基本借款信息
+            $_POST['id'] = $loanId;
             $_POST['status'] = Loan_Type_LoanStatus::AUDIT;
+            $_POST['safe_id'] = !empty($_POST['safes']) ? implode(',', $_POST['safes']) : '1';
             $objLoan         = Loan_Object_Loan::init($_POST);
+            if (empty($objLoan->startTime)) {
+                $objLoan->startTime = time();
+                $objLoan->deadline = time() + 7 * 24 * 3600;
+            }
             if (!$objLoan->save()) {
                 $errMsg = '保存借款基本信息失败';
                 $this->getView()->assign('error_msg', $errMsg);
@@ -172,22 +75,24 @@ class RequestAction extends Yaf_Action_Abstract {
             $objLoanGuar->account     = $guarantee['account'];
             $objLoanGuar->age         = $guarantee['age'];
             $objLoanGuar->marriage    = $guarantee['marriage'];
-            $objLoanGuar->companyType = $guarantee['companyType'];
-            $objLoanGuar->jobTitle    = $guarantee['jobTitle'];
+            $objLoanGuar->companyType = $guarantee['company_type'];
+            $objLoanGuar->jobTitle    = $guarantee['job_title'];
             $objLoanGuar->income      = $guarantee['income'];
-            $objLoanGuar->status      = $guarantee['status'];
+            $objLoanGuar->status      = 0;
             $objLoanGuar->save();
 
             //借款审核信息
             foreach ($_POST['audit'] as $audit) {
-                $audiId = isset($audit['id']) ? intval($audit['id']) : 0;
-                $objLoanAudi = new Loan_Object_Audit($audiId);
-                $objLoanAudi->loanId = $loanId;
-                $objLoanAudi->userId = $userid;
-                $objLoanAudi->type   = $audit['type'];
-                $objLoanAudi->name   = $audit['name'];
-                $objLoanAudi->status = $audit['status'];
-                $objLoanAudi->save();
+                if (!empty($audit['name'])) {
+                    $audiId = isset($audit['id']) ? intval($audit['id']) : 0;
+                    $objLoanAudi = new Loan_Object_Audit($audiId);
+                    $objLoanAudi->loanId = $loanId;
+                    $objLoanAudi->userId = $userid;
+                    $objLoanAudi->type   = $audit['type'];
+                    $objLoanAudi->name   = $audit['name'];
+                    $objLoanAudi->status = $audit['status'];
+                    $objLoanAudi->save();
+                }
             }
 
             //借款附件
@@ -199,10 +104,11 @@ class RequestAction extends Yaf_Action_Abstract {
                 $objLoanAtta->type   = $attach['type'];
                 $objLoanAtta->title  = $attach['title'];
                 $objLoanAtta->url    = $attach['url'];
-                $objLoanAtta->status = $attach['status'];
+                $objLoanAtta->status = 0;
                 $objLoanAtta->save();
             }
 
         }
+        $this->_view->assign('loanId', $loanId);
     }
 }

@@ -313,7 +313,7 @@ class Loan_Api {
         $attachs = new Loan_List_Attach();
         $attachs->setFilter($cond);
         $attachs_data = $attachs->toArray();
-        $data['attach'] = self::stepArray($attachs_data['list'], 'type');
+        $data['attach'] = self::stepArray($attachs_data['list'], 'type', Loan_Type_Attach::$names);
         
         $data['refunds'] = self::getRefunds($loan_id);
         //$invests = Invest_Api::getLoanInvests($loan_id);

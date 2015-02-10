@@ -34,7 +34,13 @@ class UploadController extends Base_Controller_Page {
                 'hash' => $hash,
                 'url'  => Base_Util_Image::getUrl($hash),
             );
-            return $this->ajax($data);
+            $res = array(
+                'status' => 0,
+                'statusInfo' => '',
+                'data' => $data,
+            );
+            echo json_encode($res);
+            return false;
         }
 
         $msg = array(
