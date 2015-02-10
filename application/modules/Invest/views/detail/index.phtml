@@ -125,6 +125,51 @@
                     </div>
                     <div class="main-box-details showproject-main">
                         {%if isset($user.amount)%}
+                        {%if !empty($data.private)%}
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">借款人信息</div>
+                            <div class="main-detail-content">
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">姓名：</div>
+                                        <div class="file-left-text">{%$data.private.showname%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">所处职位：</div>
+                                        <div class="file-left-text">{%$data.private.job_title%}</div>
+                                    </div>
+                                    <!-- <div class="file-left-box">
+                                        <div class="file-left-name">婚否：</div>
+                                        <div class="file-left-text">{%if $data.private.marriage == 1%}是{%else%}否{%/if%}</div>
+                                    </div> -->
+                                </div>
+                                <div class="file-enter">
+                                    <!-- <div class="file-left-box">
+                                        <div class="file-left-name">单位类别：</div>
+                                        <div class="file-left-text">{%$data.private.company_type%}</div>
+                                    </div> -->
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">婚否：</div>
+                                        <div class="file-left-text">{%if $data.private.marriage == 1%}是{%else%}否{%/if%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">年龄：</div>
+                                        <div class="file-left-text">{%$data.private.age%} 岁</div>
+                                    </div>
+                                </div>
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">户口：</div>
+                                        <div class="file-left-text">{%$data.private.account%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">年收入：</div>
+                                        <div class="file-left-text">{%$data.private.income%}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {%/if%}
                         {%if !empty($data.company)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">借款机构</div>
@@ -144,7 +189,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">教职工数量：</div>
-                                        <div class="content-left-text">{%$data.company.employers%}名</div>
+                                        <div class="content-left-text">{%$data.company.employers%} 名</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">借款用途：</div>
@@ -155,7 +200,7 @@
                                 <div class="main-detail-content-right">
                                     <div class="left-box">
                                         <div class="content-left-name">成立日期：</div>
-                                        <div class="content-left-text right-text">{%$data.company.years%}年</div>
+                                        <div class="content-left-text right-text">{%$data.company.years%} 年</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">注册资金：</div>
@@ -163,7 +208,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">学生数量：</div>
-                                        <div class="content-left-text right-text">{%$data.company.students%}名</div>
+                                        <div class="content-left-text right-text">{%$data.company.students%} 名</div>
                                     </div>
                                 </div>
                             </div>
@@ -176,31 +221,31 @@
                                 <div class="file-left">
                                     <div class="file-left-box">
                                         <div class="file-left-name">成功借款：</div>
-                                        <div class="file-left-text">{%$data.counter.success%}笔</div>
+                                        <div class="file-left-text">{%$data.counter.success%} 笔</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">还清笔数：</div>
-                                        <div class="file-left-text">{%$data.counter.finished%}笔</div>
+                                        <div class="file-left-text">{%$data.counter.finished%} 笔</div>
                                     </div>
                                 </div>
                                 <div class="file-enter">
                                     <div class="file-left-box">
                                         <div class="file-left-name">授信额度：</div>
-                                        <div class="file-left-text">{%$data.counter.limit%}元</div>
+                                        <div class="file-left-text">{%$data.counter.limit%} 元</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">已还金额：</div>
-                                        <div class="file-left-text">{%$data.counter.refund%}元</div>
+                                        <div class="file-left-text">{%$data.counter.refund%} 元</div>
                                     </div>
                                 </div>
                                 <div class="file-left">
                                     <div class="file-left-box">
                                         <div class="file-left-name">累计借款：</div>
-                                        <div class="file-left-text">{%$data.counter.total%}元</div>
+                                        <div class="file-left-text">{%$data.counter.total%} 元</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">待还本息：</div>
-                                        <div class="file-left-text">{%$data.counter.rest%}元</div>
+                                        <div class="file-left-text">{%$data.counter.rest%} 元</div>
                                     </div>
                                 </div>
                             </div>

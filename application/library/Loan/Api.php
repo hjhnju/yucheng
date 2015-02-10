@@ -276,21 +276,34 @@ class Loan_Api {
         $data['loan_cat'] = $cat->getTypeName($data['cat_id']);
         $data['level_name'] = $level->getTypeName($data['level']);
 
-        $cond = array('loan_id' => $loan_id);
-        $company = new Loan_Object_Company($cond);
-        $data['company'] = $company->toArray();
-        // 转换省份信息
-        $area = new Area_Object_Area($data['company']['area']);
-        if ($area->province !== 0) {
-            $area = new Area_Object_Area($area->province);
+        //判断个人or学校借款
+        if($data['cat_id'] === Loan_Type_LoanCat::TEACHER){
+            $cond = array('loan_id' => $loan_id);
+            $private = new Loan_Object_Private($cond);
+            $data['private'] = $private->toArray();
+        }elseif ($data['cat_id'] === Loan_Type_LoanCat::SCHOOL) {
+            $cond = array('loan_id' => $loan_id);
+            $company = new Loan_Object_Company($cond);
+            $data['company'] = $company->toArray();
+            //转换省份信息
+            $area = new Area_Object_Area($data['company']['area']);
+            if ($area->province !== 0) {
+                $area = new Area_Object_Area($area->province);
+            }
+            // 对于学校不对外显示
+            $loan['company']['school'] = Base_Util_Secure::hideDetail($loan['company']['school']);
+            $data['company']['area'] = $area->name;
         }
-        $data['company']['area'] = $area->name;
-        
-        $counter = new Loan_Object_Counter($data['user_id']);
-        $data['counter'] = $counter->toArray();
-        
+
         $guarantee = new Loan_Object_Guarantee($cond);
-        $data['guarantee'] = $guarantee->toArray();
+        if($guarantee->isLoaded()){
+            $data['guarantee'] = $guarantee->toArray();
+        }
+
+        $counter = new Loan_Object_Counter($data['user_id']);
+        if($counter->isLoaded()){
+            $data['counter'] = $counter->toArray();
+        }
         
         $audits = new Loan_List_Audit();
         $audits->setFilter($cond);

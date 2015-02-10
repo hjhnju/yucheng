@@ -169,8 +169,6 @@ class Invest_Logic_Invest {
         if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
             $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
         }
-        // 对于学校不对外显示
-        $loan['company']['school'] = Base_Util_Secure::hideDetail($loan['company']['school']);
         // 对于投标时间已经结束的 进行修正
         if ($loan['status'] == Invest_Type_InvestStatus::LENDING && $loan['deadline'] < time()) {
             $loan['status'] = Invest_Type_InvestStatus::FAILED;
