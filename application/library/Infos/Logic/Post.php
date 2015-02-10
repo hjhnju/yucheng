@@ -31,9 +31,7 @@ class Infos_Logic_Post {
         $list->setOrder('publish_time desc');
         $arrRet = $list->toArray();
         foreach ($arrRet['list'] as $key => $val){
-            $content    = unserialize($val['content']);
-            unset($val['content']);
-            $arrRet['list'][$key]['content'] = $content['ctx'];         
+            $arrRet['list'][$key]['content'] = $val['abstract'];         
         }        
         return $arrRet;
     }

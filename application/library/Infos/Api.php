@@ -27,6 +27,8 @@ class Infos_Api {
         $logic   = new Infos_Logic_Post();
         $list1    = $logic->getList($page, $pagesize, 'post', 1);
         $list2    = $logic->getList($page, $pagesize, 'post', 2);
-        return array_merge($list1['list'],$list2['list']);
+        $list3    = $logic->getList($page, $pagesize, 'media', 1);
+        $list4    = $logic->getList($page, $pagesize, 'media', 2);
+        return array_merge($list1['list'],$list2['list'],$list3['list'],$list4['list']);
     }
 }
