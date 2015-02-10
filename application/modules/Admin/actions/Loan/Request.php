@@ -40,6 +40,7 @@ class RequestAction extends Yaf_Action_Abstract {
             $_POST['status'] = Loan_Type_LoanStatus::AUDIT;
             $_POST['safe_id'] = !empty($_POST['safes']) ? implode(',', $_POST['safes']) : '1';
             $objLoan         = Loan_Object_Loan::init($_POST);
+            $objLoan->userId = $userid;
             if (empty($objLoan->startTime)) {
                 $objLoan->startTime = time();
                 $objLoan->deadline = time() + 7 * 24 * 3600;
