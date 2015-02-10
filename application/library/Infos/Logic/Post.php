@@ -18,22 +18,20 @@ class Infos_Logic_Post {
     }
 
     /**
-     * 获取公告列表
+     * 获取已发布公告列表
      * @param
      * @return
      */
-    public function getList($page = 1, $pagesize = 10,$strType) {
+    public function getList($page = 1, $pagesize = 10,$strType, $status = 1) {
         $list = new Infos_List_Infos();
         $list->setPage($page);
         $list->setPagesize($pagesize);
-        $filters = array('status'=>self::STATUS_PUBLISH, 'type'=>$this->getInfoType($strType));
+        $filters = array('status'=>$status, 'type'=>$this->getInfoType($strType));
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
         $arrRet = $list->toArray();
         foreach ($arrRet['list'] as $key => $val){
-            $content    = unserialize($val['content']);
-            unset($val['content']);
-            $arrRet['list'][$key]['content'] = $content['ctx'];         
+            $arrRet['list'][$key]['content'] = $val['abstract'];         
         }        
         return $arrRet;
     }

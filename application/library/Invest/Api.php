@@ -5,6 +5,26 @@
  *
  */
 class Invest_Api {
+
+    /**
+     * 主动投标后，财务回调投标模块进行确定投标
+     * @author hejunhua
+     */
+    public static function doInvest($orderId, $userid, $loanId, $amount){
+        $logic  = new Invest_Logic_Invest();
+        $bolRet = $logic->doInvest($orderId, $userid, $loanId, $amount);
+        if (!$bolRet) {
+            Base_Log::error(array(
+                'msg'     => '投资确认失败',
+                'orderId' => $orderId,
+                'userid'  => $userid,
+                'loanId'  => $loanId,
+                'amount'  => $amount,
+            ));
+        }
+        return $bolRet;
+    }
+
     /**
      * 获取借款的投资列表
      * @param integer $loan_id
@@ -20,7 +40,8 @@ class Invest_Api {
     /**
      * 获取我的投资列表 借款维度
      * @param number $uid
-     * @param integer $status -1全部 1审核中 2投标中 3放款审核 4打款中 5回款中 6已完成 9失败
+     * @param mix $mixStatus, 可以是 -1/array/int
+     *  -1全部 1审核中 2投标中 3放款审核 4打款中 5回款中 6已完成 9失败
      * @param number $page
      * @param number $pagesize
      * @return array <pre>(
@@ -31,12 +52,12 @@ class Invest_Api {
      *      'list' => $data,
      *  );</pre>
      */
-    public static function getUserInvests($uid, $status = -1, $page = 1, $pagesize = 10) {
+    public static function getUserInvests($uid, $mixStatus = -1, $page = 1, $pagesize = 10) {
         $logic = new Invest_Logic_Invest();
-        $data = $logic->getUserInvests($uid, $status, $page, $pagesize);
+        $data = $logic->getUserInvests($uid, $mixStatus, $page, $pagesize);
         Base_Log::debug(array(
             'uid'      => $uid,
-            'status'   => $status,
+            'status'   => $mixStatus,
             'data' => $data,
         ));
         return $data;
@@ -218,7 +239,11 @@ class Invest_Api {
         $status = new Invest_Type_InvestStatus();
         $level  = new Invest_Type_LevelName();
         foreach ($list['list'] as $key => $val) {
-            $list['list'][$key]['status_name'] = $status->getTypeName($val['status']);
+            // 对于投标时间已经结束的 进行修正
+            if ($val['status'] == Invest_Type_InvestStatus::LENDING && $val['deadline'] < time()) {
+                $list['list'][$key]['status'] = Invest_Type_InvestStatus::FAILED;
+            }
+            $list['list'][$key]['status_name'] = $status->getTypeName($list['list'][$key]['status']);
             $list['list'][$key]['level_name'] = $level->getTypeName($val['level']);
         }
         return $list;
@@ -249,27 +274,28 @@ class Invest_Api {
      */
     public static function buildRefunds($invest_id) {
         $invest = self::getInvest($invest_id);
-        $loan = Loan_Api::getLoanInfo($invest['loan_id']);
+        $loan   = Loan_Api::getLoanInfo($invest['loan_id']);
         
         if ($loan['duration'] < 30) {
             $date = new DateTime('tomorrow');
             $date->modify('+' . $loan['duration'] . 'days');
-            $time = $date->getTimestamp() - 1;
+            $promise = $date->getTimestamp() - 1;
             
             $income = self::getInterestByDay($invest['amount'], $invest['interest'], $loan['duration']);
-            return self::addRefund($invest, 1, $invest['amount'], $income, $time);
+            //$invest, $period, $capital, $income, $promiseTime
+            return self::addRefund($invest, 1, $invest['amount'], $income, $promise);
         }
         
         //超过30天 按月还款
         $periods = ceil($loan['duration'] / 30);
         if ($loan['refund_type'] == Invest_Type_RefundType::MONTH_INTEREST) {
-            $date = new DateTime('tomorrow');
+            $date  = new DateTime('tomorrow');
             $start = $date->getTimestamp() - 1;
             for ($period = 1; $period <= $periods; $period++) {
                 $date->modify('+1month');
                 $promise = $date->getTimestamp() - 1;
-                $days = ($promise - $start) / 3600 / 24;
-                $income = self::getInterestByDay($invest['amount'], $loan['interest'], $days);
+                $days    = ($promise - $start) / 3600 / 24;
+                $income  = self::getInterestByDay($invest['amount'], $loan['interest'], $days);
                 if ($period == $periods) {
                     $capital = $invest['amount'];
                 } else {
@@ -279,12 +305,12 @@ class Invest_Api {
                 
                 if (!$res) {
                     $msg = array(
-                        'msg'    => 'add refund error',
-                        'invest' => json_encode($invest),
-                        'period' => $period,
-                        'capital'=> 0,
-                        'income' => $income,
-                        'promise'=> $promise,
+                        'msg'     => 'add refund error',
+                        'invest'  => json_encode($invest),
+                        'period'  => $period,
+                        'capital' => 0,
+                        'income'  => $income,
+                        'promise' => $promise,
                     );
                     Base_Log::error($msg);
                     return false;
@@ -313,10 +339,10 @@ class Invest_Api {
                 */
                 $date->modify('+1month');
                 $promise = $date->getTimestamp() - 1;
-                $days = ($promise - $start) / 3600 / 24;
-                $income = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1)) / (pow(1 + $b, $periods) - 1);
+                $days    = ($promise - $start) / 3600 / 24;
+                $income  = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1)) / (pow(1 + $b, $periods) - 1);
                 $capital = $a * $b * pow(1 + $b, $period - 1) / (pow(1 + $b, $periods) - 1);
-                $res = self::addRefund($invest, $period, $capital, $income, $promise);
+                $res     = self::addRefund($invest, $period, $capital, $income, $promise);
                 
                 if (!$res) {
                     $msg = array(
@@ -342,22 +368,25 @@ class Invest_Api {
      * 新增一个收款计划
      * @param unknown $invest
      * @param unknown $period
-     * @param unknown $capital
-     * @param unknown $income
-     * @param unknown $time
+     * @param unknown $capital, 本金
+     * @param unknown $income, 利息
+     * @param unknown $promiseTime
      * @return boolean
      */
-    private static function addRefund($invest, $period, $capital, $income, $time) {
-        $refund = new Invest_Object_Refund();
-        $refund->amount = $capital + $income;
-        $refund->interest = $income;
-        $refund->capital = $capital;
-        $refund->investId = $invest['id'];
-        $refund->lateCharge = 0;
-        $refund->loanId = $invest['loan_id'];
-        $refund->period = $period;
-        $refund->userId = $invest['user_id'];
-        $refund->promiseTime = $time;
+    private static function addRefund($invest, $period, $capital, $income, $promiseTime) {
+        $refund                = new Invest_Object_Refund();
+        $refund->amount        = $capital + $income; //应还本息
+        $refund->interest      = $income;  //利息
+        $refund->capital       = $capital; //本金
+        $refund->investId      = $invest['id'];
+        $refund->lateCharge    = 0;
+        $refund->loanId        = $invest['loan_id'];
+        $refund->period        = $period;
+        $refund->userId        = $invest['user_id'];
+        $refund->promiseTime   = $promiseTime; //应还日期
+        $refund->capitalRefund = 0;        //'已回收本金',
+        $refund->capitalRest   = $capital; //'剩余本金',
+        $refund->transfer      = 0;        //已还款标记:0-尚未还款
         return $refund->save();
     }
     

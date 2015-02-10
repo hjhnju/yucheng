@@ -47,34 +47,34 @@ class CashapiController extends Base_Controller_Api {
         $startTime = isset($_REQUEST['startTime']) ? intval($_REQUEST['startTime']) : 0;       
         $endTime   = isset($_REQUEST['endTime']) ? intval($_REQUEST['endTime']) : 0;       
         $userid    = $this->userid;
-
-        switch ($range) {
-            //今天
-            case 1:
-                $startTime = mktime(0,0,0,date('m'),date('d'),date('Y'));           
-                $endTime = time();
-                break;
-            case 2:
-                $startTime = strtotime('-1 week');
-                $endTime = time();
-                break;
-            case 3:
-                $startTime = strtotime('-1 month');
-                $endTime = time();
-                break;
-            case 4:
-                $startTime = strtotime('-2 month');
-                $endTime = time();
-                break;
-            case 5:
-                $startTime = strtotime('-6 month');
-                $endTime = time();
-                break;
-            default:
-                # code...
-                break;
-        }
-
+        if($startTime===0 && $endTime===0) {
+        	switch ($range) {
+        		//今天
+        		case 1:
+        			$startTime = mktime(0,0,0,date('m'),date('d'),date('Y'));
+        			$endTime = time();
+        			break;
+        		case 2:
+        			$startTime = strtotime('-1 week');
+        			$endTime = time();
+        			break;
+        		case 3:
+        			$startTime = strtotime('-1 month');
+        			$endTime = time();
+        			break;
+        		case 4:
+        			$startTime = strtotime('-2 month');
+        			$endTime = time();
+        			break;
+        		case 5:
+        			$startTime = strtotime('-6 month');
+        			$endTime = time();
+        			break;
+        		default:
+        			# code...
+        			break;
+        	}        	 
+        }        
         $ret = Finance_Logic_Order::getRecords($userid, $startTime, $endTime, $queryType, 
             $page, $pageSize);
         if(!$ret) {

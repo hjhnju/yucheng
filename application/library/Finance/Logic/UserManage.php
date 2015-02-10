@@ -32,7 +32,7 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
             return false;
         }
         $bgRetUrl = $this->webroot.'/finance/bgcall/userregist';
-        $retUrl   = $this->webroot.'/account/overview';
+        $retUrl   = $this->webroot.'/finance/ret';
         $usrId    = strval($userName);
         $usrMp    = '';//strval($userMp);
         $usrName  = '';

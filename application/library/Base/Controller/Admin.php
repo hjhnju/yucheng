@@ -3,11 +3,18 @@
  * 后台管理页面controller基础类
  * @author jiangsongfang
  */
-class Base_Controller_Admin extends Base_Controller_Response {
+class Base_Controller_Admin extends Base_Controller_Page {
     protected $loginUrl = '/admin/login';
     
     public function init() {
         parent::init();
+
+        //必须管理员登录
+        $admin = new Admin_Object_Admin($this->userid);
+        if ($admin->status !== 0) {
+            return $this->redirect('/');
+        }
+
         // 定义的默认的action
         $controller = $this->_request->controller;
         $action     = $this->_request->action;

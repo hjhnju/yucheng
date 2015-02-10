@@ -35,4 +35,16 @@ class Base_Controller_Page extends Base_Controller_Abstract {
         parent::redirect($url);
         exit;
     }
+    
+    /**
+     * 设置在浏览器端的缓存时间
+     * @param number $lifetime
+     */
+    public function setBrowserCache($lifetime = 3600) {
+        $ts = gmdate("D, d M Y H:i:s", time() + $lifetime) . " GMT";
+        header("Expires: $ts");
+        header("Pragma: cache");
+        header("Cache-Control: max-age=$lifetime");
+        return true;
+    }
 }

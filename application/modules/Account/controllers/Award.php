@@ -42,76 +42,68 @@ class AwardController extends Base_Controller_Page {
      */
     public function receiveawardsAction() {
         $awardsLogic = new Awards_Logic_Awards();
-        $userid      = intval($_REQUEST['id']);     
+        $userid = intval($_REQUEST['id']);    
+        $canNotErrCode = Finance_RetCode::CAN_NOT_REC_AWARD;
+        $canNotErrMsg  = Finance_RetCode::getMsg($canNotErrCode);
         //领的是本人的注册奖励
-        if($userid === $this->userid) {
-            $transAmt = Base_Config::getConfig('awards.regist.amount', CONF_PATH.'/awards.ini');   
-            $ret      = Finance_Api::giveAwards($this->userid, $transAmt);
-            if(!$ret) {
-                Base_Log::error(array(
-                    'msg'      => '领取注册奖励失败',
-                    'userid'   => $userid,
-                    'transAmt' => $transAmt,
-                ));
-                //错误码不应该在Finance模块定义
-                $errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
-                $errMsg  = Finance_RetCode::getMsg($errCode);
-                $this->outputError($errCode,$errMsg);
-                return ;
-            }
-            if(!($awardsLogic->updateRegistStatus($userid,Awards_Logic_Awards::STATUS_FINISH))) {
-                Base_Log::error(array(
-                    'msg'      => '领取注册奖励失败(更新Awards_Regist表失败)',
-                    'userid'   => $userid,
-                    'transAmt' => $transAmt,
-                ));
-                $errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
-                $errMsg  = Finance_RetCode::getMsg($errCode);
-                $this->outputError($errCode,$errMsg);
-                return;
-            };  
-            //TODO:?
-            //Msg_Api::sendmsg();
-            $this->output();
-            return;
-        }        
-
-        $transAmt = Base_Config::getConfig('awards.inviter.amount', CONF_PATH.'/awards.ini');
-        $userid   = intval($userid);
-        $invite   = new Awards_List_Invite();
-        $filters  = array('userid' => $userid); //caution:被邀请人的userid
-        $invite->setFilter($filters);
-        
-        $list     = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
-        $userData = $list['list'][0];
-        $id       = $userData['id'];     
-        $ret      = Finance_Api::giveAwards($this->userid, $transAmt); 
-        if(!$ret) {
-            Base_Log::error(array(
-                'msg'      => '领取邀请奖励失败',
+        if($userid === $this->userid) {       	
+        	$regRegist = new Awards_Object_Regist($this->userid);
+        	if(empty($regRegist->userid)) {
+        		$this->outputError($canNotErrCode,$canNotErrMsg);
+        		return ;
+        	}
+            $transAmt = $regRegist->amount;
+        } else {
+        	$invite   = new Awards_Object_Invite(array('userid'=>$userid));
+        	if(empty($invite->userid) || $invite->status===1 || $invite->status===3) {
+        		$this->outputError($canNotErrCode,$canNotErrMsg);
+        		return ;
+        	}
+        	$id       = $invite->id;
+        	$transAmt = $invite->amount;
+        }                        
+        $failErrCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
+        $failErrMsg = Finance_RetCode::getMsg($failErrCode);
+        $db = Base_Db::getInstance('xjd');
+        $db->beginTransaction();
+        if($userid === $this->userid) {     
+        	$registRet = $awardsLogic->updateRegistStatus($userid,Awards_Logic_Awards::STATUS_FINISH);
+        	if(!$registRet) {
+        		Base_Log::error(array(
+        		    'msg'      => '更新Awards_Regist表失败',
+        		    'userid'   => $userid,
+        		    'transAmt' => $transAmt,
+        		));
+        		$db->rollBack();        		
+        		$this->outputError($failErrCode,$failErrMsg);
+        		return ;
+        	}
+        } else {
+        	$inviteRet = $awardsLogic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH);
+        	if(!$inviteRet) {
+        		Base_Log::error(array(
+        		    'msg'      => '更新Awards_Invite表失败',
+        		    'userid'   => $userid,
+        		    'transAmt' => $transAmt,
+        		));
+        		$db->rollBack();
+        		$this->outputError($failErrCode,$failErrMsg);
+        		return ;
+        	}
+        }       
+        $receRet = Finance_Api::giveAwards($this->userid, $transAmt);
+        if(!$receRet) {
+        	Base_Log::error(array(
+        	    'msg'      => '领取邀请奖励失败',
                 'userid'   => $userid,
-                'transAmt' => $transAmt,
-            ));
-            $errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
-            $errMsg  = Finance_RetCode::getMsg($errCode);
-            $this->outputError($errCode,$errMsg);
-            return ;
+        	    'transAmt' => $transAmt,
+        	));
+        	$db->rollBack();
+        	$this->outputError($failErrCode,$failErrMsg);
+        	return ;
         }
-
-        //TODO:为什么发完奖励还允许报不成功！不应该是先更新再发奖（一个事务里）
-        if(!($awardsLogic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH))) {
-            Base_Log::error(array(
-                'msg'      => '领取邀请奖励失败(更新Awards_Invite表失败)',
-                'userid'   => $userid,
-                'transAmt' => $transAmt,
-            ));
-            $errCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
-            $errMsg  = Finance_RetCode::getMsg($errCode);
-            $this->outputError($errCode,$errMsg);
-            return ;
-        }
-        
-        $this->output();        
-        return ;
+        $db->commit();
+        $this->output();
+        return ; 
     }  
 }

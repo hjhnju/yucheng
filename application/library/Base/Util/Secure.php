@@ -160,4 +160,19 @@ class Base_Util_Secure {
         $ret = md5(self::PASSWD_KEY.$strPasswd);
         return $ret;
     }  
+    
+    /**
+     * 隐藏资料中间的详细信息
+     * 会得到类似于 学校 => 学***校 的转换结果
+     * @param string $str
+     * @return string
+     */
+    public static function hideDetail($str) {
+        if (mb_strlen($str) > 1) {
+            $first = mb_substr($str, 0, 1);
+            $last = mb_substr($str, -1);
+            $str = $first . str_repeat('*', 3) . $last;
+        }
+        return $str;
+    }
 }

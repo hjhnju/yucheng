@@ -94,7 +94,7 @@ class SecureController extends Base_Controller_Page{
 		} else {
 			$this->retData['bindthirdlogin'] = 1;
 			$this->retData['thirdPlatform'] = $thirdBindRet['type'];
-			$this->retData['thirdNickName'] = $thirdBindRet['nickName'];
+			$this->retData['thirdNickName'] = $thirdBindRet['nickname'];
 			$thirdloginurl = $webroot.'/account/secure/unbindthird';
 		}
 		if(!empty($this->objUser->loginTime)){

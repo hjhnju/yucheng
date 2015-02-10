@@ -116,6 +116,7 @@
                         <span class="project-time-start">截止日期：{%$data.deadline|date_format:'%Y-%m-%d %H:%M'%}</span>
                     </div>
                 </div>
+
                 <div class="project-main project">
                     <div class="project-main-title">
                         <div class="main-title-box showproject current">项目详情</div>
@@ -123,6 +124,7 @@
                         <div class="main-title-box showrecord">投资记录</div>
                     </div>
                     <div class="main-box-details showproject-main">
+                        {%if isset($user.amount)%}
                         {%if !empty($data.company)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">借款机构</div>
@@ -274,8 +276,14 @@
                             <div class="detail-symbol"></div>
                         </div>
                         {%/if%}
+                        {%else%}
+                        <div class="detail-unlogin">
+                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                        </div>
+                        {%/if%}
                     </div>
                     <div class="main-box-details showfile-main">
+                        {%if isset($user.amount)%}
                         {%if !empty($data.attach['1'])%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">认证材料</div>
@@ -321,14 +329,25 @@
                             </div>
                         </div>
                         {%/if%}
+                        {%else%}
+                        <div class="detail-unlogin">
+                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                        </div>
+                        {%/if%}
                     </div>
                     <div class="main-box-details showrecord-main">
+                        {%if isset($user.amount)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">投资记录</div>
                             <div class="main-detail-content" id="toulist">
                             </div>
                         </div>
                         <div id="page"></div>
+                        {%else%}
+                        <div class="detail-unlogin">
+                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                        </div>
+                        {%/if%}
                     </div>
                 </div>
             </div>
@@ -345,6 +364,19 @@
                     <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
                     <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
                     <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
+                </div>
+            </div>
+            {%else if $data.status == 5%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div class="right-top2nd-title refund">还款中</div>
+                    <div class="right-top2nd-box">待还本息（元）: ￥{%$data.rest_total%}</div>
+                    <div class="right-top2nd-box">剩余期数（月）: {%$data.left_month%}</div>
+                    <div class="right-top2nd-box">下次合约还款日: {%$data.next_date|date_format:'%Y-%m-%d'%}</div>
                 </div>
             </div>
             {%else%}

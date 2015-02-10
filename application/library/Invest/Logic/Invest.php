@@ -19,7 +19,7 @@ class Invest_Logic_Invest {
     public function __construct() {
         $this->objModel = new InvestModel();
     }
-    
+
     /**
      * 准备进行投标（主动投标）
      * @param integer $userid
@@ -30,13 +30,12 @@ class Invest_Logic_Invest {
      */
     public function invest($userid, $loan_id, $amount, $interest = 0) {
         $loan = Loan_Api::getLoanInfo($loan_id);
-        if ($loan['status'] != 2) {
+        if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
             Base_Log::notice('loan status is finished');
             return false; //投标已结束
         }
         
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
-        $retUrl = Base_Config::getConfig('web')->root . '/invest/confirm';
         $amount = $this->formatNumber($amount);
         //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
         $detail = array(
@@ -46,7 +45,8 @@ class Invest_Logic_Invest {
                 "BorrowerAmt"    => $amount,
             ),
         );
-        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $retUrl);
+        $returl = Base_Config::getConfig('web')->root . '/invest/confirm';
+        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $returl);
     }
     
     /**
@@ -65,56 +65,62 @@ class Invest_Logic_Invest {
      * @param integer $loanId
      * @param number $amount
      * @return boolean|string
+     *
+     * 修改：若重复投标，算投标确认成功，返回true
+     * @author hejunhua
      */
     public function doInvest($orderId, $userid, $loanId, $amount) {
         // 防order_id被多次调用 TODO：对redis的稳定性有要求
-        $redis = Base_Redis::getInstance();
+        $redis    = Base_Redis::getInstance();
         $used_key = 'invest_order_' . $orderId;
-        $used = $redis->setnx($used_key, 1);
+        $used     = $redis->setnx($used_key, 1);
         if (empty($used)) {
             $msg = array(
-                'msg' => 'orderid被多次调用',
+                'msg'    => 'orderid被多次调用',
                 'invest' => json_encode(func_get_args()),
             );
             Base_Log::warn($msg);
-            return false;
+            return true;
         }
         // 防并发进行投资 先确认我的资金能借出去
         $res = Loan_Api::updateLoanInvestAmount($loanId, $amount);
-        if ($res === true) {
-            $invest          = new Invest_Object_Invest();
-            $invest->userId  = intval($userid);
-            $invest->loanId  = intval($loanId);
-            $invest->amount  = floatval($amount);
-            $objUser         = User_Api::getUserObject($userid);
-            $invest->name    = $objUser->name;
-            $invest->orderId = intval($orderId);
-            //投资的该项目的利率和周期
-            $arrData = Loan_Api::getLoanInfo($loanId);
-            $invest->interest = isset($arrData['interest']) ? $arrData['interest'] : 0;
-            $invest->duration = isset($arrData['duration']) ? $arrData['duration'] : 0;
-            //@TODO 这里需要事务保障与前面的更新投标金额强一致性
-            if (!$invest->save()) {
-                Base_Log::error(array(
-                    'msg'    => '写入投标信息失败 不处理会导致用户资金与投标丢失',
-                    'invest' => json_encode($invest),
-                ));
-                return false;
-            }
-            // 保存以后检查满标状态
-            Loan_Api::updateFullStatus($loanId);
-            // 对于新手标 保存新手投标状态
-            $loan = Loan_Api::getLoanInfo($loanId);
-            if (!empty($loan['fresh'])) {
-                $fresh = new Invest_Object_Fresh();
-                $fresh->loanId = $loanId;
-                $fresh->userId = $userid;
-                $fresh->save();
-            }
-        } else {
-            Finance_Api::cancelTenderBG($orderId);
+        if ($res !== true) {
+            $this->setInvestSt($orderId, false);
             return false;
         }
+
+        $invest          = new Invest_Object_Invest();
+        $invest->userId  = intval($userid);
+        $invest->loanId  = intval($loanId);
+        $invest->amount  = floatval($amount);
+        $objUser         = User_Api::getUserObject($userid);
+        $invest->name    = $objUser->name;
+        $invest->orderId = intval($orderId);
+        //投资的该项目的利率和周期
+        $arrData = Loan_Api::getLoanInfo($loanId);
+        $invest->interest = isset($arrData['interest']) ? $arrData['interest'] : 0;
+        $invest->duration = isset($arrData['duration']) ? $arrData['duration'] : 0;
+        //@TODO 这里需要事务保障与前面的更新投标金额强一致性
+        if (!$invest->save()) {
+            Base_Log::error(array(
+                'msg'    => '写入投标信息失败 不处理会导致用户资金与投标丢失',
+                'invest' => json_encode($invest),
+            ));
+            $this->setInvestSt($orderId, true);
+            return false;
+        }
+        // 保存以后检查满标状态
+        Loan_Api::updateFullStatus($loanId);
+        // 对于新手标 保存新手投标状态
+        $loan = Loan_Api::getLoanInfo($loanId);
+        if (!empty($loan['fresh'])) {
+            $fresh = new Invest_Object_Fresh();
+            $fresh->loanId = $loanId;
+            $fresh->userId = $userid;
+            $fresh->save();
+        }
+
+        Invest_Logic_ChkStatus::setInvestStatus($orderId, true);
         return true;
     }
     
@@ -122,12 +128,16 @@ class Invest_Logic_Invest {
      * 是否允许投标 如果命中某个限制策略 则不允许投标
      * @param integer $uid
      * @param integer $loanId
-     * @return boolean
+     * @return integer
      */
     public function allowInvest($uid, $loanId) {
         $loan = Loan_Api::getLoanInfo($loanId);
         // 已满标不允许投标
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
+            return Invest_RetCode::NOT_ALLOWED;
+        }
+        // 已结束的不允许投标
+        if ($loan['deadline'] < time()) {
             return Invest_RetCode::NOT_ALLOWED;
         }
         
@@ -143,6 +153,30 @@ class Invest_Logic_Invest {
         }
         
         return Invest_RetCode::SUCCESS;
+    }
+    
+    /**
+     * 获取借款的详情信息
+     * @param integer $loanId
+     * @return array
+     */
+    public function getLoanDetail($loanId) {
+        $loan = Loan_Api::getLoanDetail($loanId);
+        if (empty($loan)) {
+            return $loan;
+        }
+        // 对打款状态 标记为满标状态
+        if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
+            $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
+        }
+        // 对于学校不对外显示
+        $loan['company']['school'] = Base_Util_Secure::hideDetail($loan['company']['school']);
+        // 对于投标时间已经结束的 进行修正
+        if ($loan['status'] == Invest_Type_InvestStatus::LENDING && $loan['deadline'] < time()) {
+            $loan['status'] = Invest_Type_InvestStatus::FAILED;
+            $loan['status_name'] = Invest_Type_InvestStatus::getTypeName(Invest_Type_InvestStatus::FAILED);
+        }
+        return $loan;
     }
     
     /**
@@ -299,8 +333,8 @@ class Invest_Logic_Invest {
      * @param integer $loan_id
      * @return array
      */
-    public function getUserInvests($uid, $status, $page = 1, $pagesize = 10) {
-        $data = $this->objModel->getUserInvests($uid, $status, $page, $pagesize);
+    public function getUserInvests($uid, $mixStatus, $page = 1, $pagesize = 10) {
+        $data = $this->objModel->getUserInvests($uid, $mixStatus, $page, $pagesize);
         
         return $data;
     }

@@ -98,9 +98,9 @@ class Finance_Fee {
         $totalFee = $servFee + $riskFee + $mangFee;
         $arrFeeInfo  = array(
             'msg'       => '手续费计算结果',
-            'serv_fee'  => sprintf('%.2f', $servFee + $mangFee),
-            'risk_fee'  => sprintf('%.2f', $riskFee),
-            'total_fee' => sprintf('%.2f', $totalFee),
+            'serv_fee'  => $servFee + $mangFee,
+            'risk_fee'  => $riskFee,
+            'total_fee' => $totalFee,
         );
         Base_Log::notice($arrFeeInfo);
         return $arrFeeInfo;
@@ -115,7 +115,7 @@ class Finance_Fee {
     private static function servFee($rate, $transAmt) {
         $rate     = floatval($rate);
         $transAmt = floatval($transAmt);    
-        $servFee  = $transAmt * $rate;
+        $servFee  = round($transAmt * $rate, 2);
         return $servFee;
     }
      
@@ -127,7 +127,7 @@ class Finance_Fee {
         $rate     = floatval($rate);
         $transAmt = floatval($transAmt);
         $days     = intval($days);
-        $riskFee  = $transAmt * $rate * $days / 365;
+        $riskFee  = round($transAmt * $rate * $days / 365, 2);
         return $riskFee;
     }
 
@@ -139,7 +139,7 @@ class Finance_Fee {
         $rate      = floatval($rate);
         $transAmt  = floatval($transAmt);
         $days      = intval($days);  
-        $mangFee   = $transAmt * $rate * $days / 365;
+        $mangFee   = round($transAmt * $rate * $days / 365, 2);
         return $mangFee;
     }
 }

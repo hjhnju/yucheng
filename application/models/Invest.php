@@ -8,7 +8,7 @@ class InvestModel extends BaseModel{
     
     /**
      * 获取用户的投资列表
-     * @param integer $status
+     * @param integer $mixStatus, -1全部 1审核中 (2投标中 3放款审核 4打款中) 5回款中 6已完成 9失败
      * @param number $page
      * @param number $pagesize
      * @param string $order
@@ -20,12 +20,16 @@ class InvestModel extends BaseModel{
      *      'list' => $data,
      *  );</pre>
      */
-    public function getUserInvests($uid, $status, $page = 1, $pagesize = 10, $order = 'id desc') {
+    public function getUserInvests($uid, $mixStatus, $page = 1, $pagesize = 10, $order = 'id desc') {
         $loan_table = 'loan';
         $offset = ($page - 1) * $pagesize;
         $where = "invest.user_id = '$uid'";
-        if ($status != -1) {
-            $where.= " and loan.status='$status'";
+        if ($mixStatus != -1 && is_array($mixStatus)) {
+            $status = implode(',', $mixStatus);
+            $where .= " and loan.status IN ($status)";
+        }elseif ($mixStatus != -1 && is_integer($mixStatus)) {
+            $status = $mixStatus;
+            $where .= " and loan.status = '$status'";
         }
         $sql = "select invest.*, loan.title,loan.start_time,loan.deadline, loan.status as loan_status  from `$this->table` as invest
                 left join `$loan_table` as loan

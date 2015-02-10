@@ -53,12 +53,14 @@ class InvestController extends Base_Controller_Page {
 	 * 
 	 */
 	public function backingAction() {
-		$status = self::BACKING;
-        $userid = $this->userid;
-		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+    
+		$status     = self::BACKING;
+		$userid     = $this->userid;
+		$page       = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);		
-		$listRet = array();
-        $list = $backingRet['list'];
+		$listRet    = array();
+		$list       = $backingRet['list'];
+
         if(empty($list)) {
         	$ret = array(
         		'page'    => $page,
@@ -70,7 +72,9 @@ class InvestController extends Base_Controller_Page {
         	return ;
         }
  	    foreach ($list as $key => $value) {
-	        $listRet[$key]['invest_id'] = $value['id'];//invest_id
+	        $listRet[$key]['invest_id'] = $value['id'];//invest_id	        
+	        $backingRefund = Account_Logic_Repayplan::getRepayplan($value['id']);
+	        $total = $backingRefund['total'];	        
 	        $listRet[$key]['proId'] = $value['loan_id'];
 	        $loanInfo = Loan_Api::getLoanDetail($value['loan_id']);
 	    	$listRet[$key]['investPro'] = $value['title'];
@@ -78,11 +82,10 @@ class InvestController extends Base_Controller_Page {
 	    	$listRet[$key]['tenderAmt'] = $value['amount'];
 	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
 	    	$listRet[$key]['tenderTime'] = $value['create_time'];
-	    	$listRet[$key]['haveBack'] = $value['capital_refund'];
-	    	$listRet[$key]['toBeBack'] = $value['capital_rest'];
+	    	$listRet[$key]['haveBack'] = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
+	    	$listRet[$key]['toBeBack'] = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
 	    	$listRet[$key]['status'] = $value['status'];
-	    }
-	    
+ 	    }  
 	    $ret = array(
 	    	'page' => $page,
 	    	'pageall' => $backingRet['pageall'],
@@ -90,7 +93,7 @@ class InvestController extends Base_Controller_Page {
 	    	'list' => $listRet,
 	    );
 	    $this->output($ret);
-	    return ;
+        return ;
 	}
 	
 	/**
@@ -312,76 +315,8 @@ class InvestController extends Base_Controller_Page {
 	 *  }
 	 */
 	public function repayplanAction() {	
-		$invest_id = $_REQUEST['invest_id'];
-		$invest_id = intval($invest_id);
-		$retData = Invest_Api::getRefunds($invest_id);
-		
-		$list = array();
-		$data = array();
-		if(empty($retData)) {
-			$ret = array(
-				'invester' => '',
-				'list'     => array(),
-				'data'     => array(),
-			);
-			$this->output($ret);
-			return ;
-		}
-		$userid = $retData[0]['user_id'];
-		$userid = intval($userid);
-		$objUser = User_Api::getUserObject($userid);
-		$invester = $objUser->name;
-		foreach ($retData as $key=>$value) {
-			$list[$key]['time'] = $value['create_time'];
-			$list[$key]['repossPrincipal'] = sprintf('%.2f',$value['capital_rest']);
-			$list[$key]['recePrincipal'] = sprintf('%.2f',$value['capital_refund']);
-			if($value['transfer'] === 1) {
-				$list[$key]['repossProfit'] = '0.00';
-				$list[$key]['receProfit'] = sprintf('%.2f',$value['amount']);
-			}
-			if($value['transfer'] === 0) {
-				$list[$key]['repossProfit'] = sprintf('%.2f',$value['amount']);
-				$list[$key]['receProfit'] = '0.00';
-			}			
-			switch ($value['status']) {
-				case 1:
-					$list[$key]['paymentStatus'] = 0;
-					break;
-				case 2:
-					$list[$key]['paymentStatus'] = 1;
-					break;
-				case 3:
-					$list[$key]['paymentStatus'] = 2;
-					break;
-				default:
-					break;
-			}
-			$list[$key]['punitive'] = sprintf('%.2f',$value['late_charge']);
-		}
-		$repossPrincipal = 0.00;
-		$repossProfit = 0.00;
-		$recePrincipal = 0.00;
-		$receProfit = 0.00;
-		$punitive = 0.00;
-		foreach ($list as $key => $value) {
-			$repossPrincipal += floatval($value['repossPrincipal']);
-			$repossProfit += floatval($value['repossProfit']);
-			$recePrincipal += floatval($value['recePrincipal']);
-			$receProfit += floatval($value['receProfit']);
-			$punitive += floatval($value['punitive']);
-		}		
-		$data = array(
-			'repossPrincipal' => sprintf('%.2f',$repossPrincipal),
-			'repossProfit'    => sprintf('%.2f',$repossProfit),
-			'recePrincipal'   => sprintf('%.2f',$recePrincipal),
-			'receProfit'      => sprintf('%.2f',$receProfit),
-			'punitive'        => sprintf('%.2f',$punitive),
-		);		 
-		$ret = array(
-			'invester' => $invester,
-			'list'     => $list,
-			'total'    => $data,
-		);
+		$investId = intval($_REQUEST['invest_id']);
+		$ret = Account_Logic_Repayplan::getRepayplan($investId);
 		$this->output($ret);
 		return ;		
 	}	

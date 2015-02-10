@@ -46,10 +46,10 @@ class BgcallController extends Base_Controller_Page {
 
     /**
      * 汇付天下回调Action
-     * 资金解冻BgUrl回调webroot/Finance/bgcall/cancelTenderBG
+     * 资金解冻BgUrl回调
      * 打印 RECV_ORD_ID_OrdId
      */
-    public function canceltenderbgAction() {
+    public function unfreezeOrderAction() {
     	if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
     	   !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['OrdId']) || !isset($_REQUEST['OrdDate']) ||
     	   !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
@@ -63,8 +63,7 @@ class BgcallController extends Base_Controller_Page {
         $merPriv       = explode('_',$_merPriv);
         $userid        = intval($merPriv[0]);
         $transAmt      = floatval($merPriv[1]);
-        $tenderOrderId = intval($merPriv[2]);
-        
+        $originOrderId = intval($merPriv[2]);
         $orderId       = intval($_REQUEST['OrdId']);
         $orderDate     = intval($_REQUEST['OrdDate']);
         $trxId         = $_REQUEST['TrxId'];
@@ -76,13 +75,15 @@ class BgcallController extends Base_Controller_Page {
     			'ret' => $_REQUEST,
     		));
     		//资金解冻订单状态更新为“处理失败”
-    		return Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
+    		Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
                 $respCode, $respDesc);
+            return;
     	}
+
     	//资金解冻订单状态更新为“处理成功”
-    	Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
-            $respCode, $respDesc);    	
-    	
+        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+            $respCode, $respDesc, array('freezeTrxId' => $trxId));
+
     	//快照
     	Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::USRUNFREEZE,
             $transAmt, '资金解冻记录');
@@ -142,18 +143,22 @@ class BgcallController extends Base_Controller_Page {
         $huifuid  = strval($huifuid);
         $email    = strval($email);
         $realName = strval($realName);
-        if(!User_Api::setHuifuId($userid,$huifuid)) {       
+        $bolRet   = User_Api::setHuifuId($userid,$huifuid);
+        if(!$bolRet) {       
             Base_Log::error(array(
                 'msg'       => '汇付id入库失败',
                 'userid:'   => $userid,
                 'usrCustId' => $huifuid,
+                'bolRet'   => $bolRet,
             ));
         }
-        if(!User_Api::setRealName($userid,$realName)) {
+        $bolRet = User_Api::setRealName($userid,$realName);
+        if(!$bolRet) {
             Base_Log::error(array(
                 'msg'      => '用户真实姓名入库失败',
                 'userid'   => $userid,
                 'realName' => $realName,
+                'bolRet'   => $bolRet,
             ));
         }
         /*
@@ -257,14 +262,7 @@ class BgcallController extends Base_Controller_Page {
         $orderDate = intval($retParam['OrdDate']);
         $userid    = intval($retParam['MerPriv']);//取客户私用域中的userid
         $huifuid   = strval($retParam['UsrCustId']); //用户的huifuid
-        $transAmt    = floatval($retParam['TransAmt']);
-      
-        $arrBal   = Finance_Api::getUserBalance($userid);
-        $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal'];//用户可用余额
-        $total    = Finance_Api::getPlatformBalance();//系统余额
-        
-        $lastip   = Base_Util_Ip::getClientIp();
+        $transAmt  = floatval($retParam['TransAmt']);
         $respCode = $retParam['RespCode'];
         $respDesc = $retParam['RespDesc'];
         if($respCode !== '000') {           
@@ -326,34 +324,56 @@ class BgcallController extends Base_Controller_Page {
             return;
         }
         $merPriv     = explode('_',$_REQUEST['MerPriv']);
-        $userid      = intval($merPriv[0]);
+        $userId      = intval($merPriv[0]);
         $proId       = intval($merPriv[1]);        
         $huifuid     = $retParam['UsrCustId'];
         $orderId     = intval($retParam['OrdId']);
-        
         $orderDate   = intval($retParam['OrdDate']);
-        $transAmt      = floatval($retParam['TransAmt']);
+        $transAmt    = floatval($retParam['TransAmt']);
         $freezeOrdId = $retParam['FreezeOrdId'];
         $freezeTrxId = $retParam['FreezeTrxId'];
         $respCode    = $retParam['RespCode'];
         $respDesc    = $retParam['RespDesc'];
 
+        $bolSucc = true;
         if($respCode !== '000') {
-            $logParam = $retParam;
+            $logParam        = $retParam;
             $logParam['msg'] = $respDesc;
             Base_Log::error($logParam);
             //财务类投标冻结订单状态更新为处理失败
-            //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
-            //    $respCode, $respDesc);
-            return ;
-        }
-        //将投标冻结订单状态更改为成功
-        //Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-        //    $respCode, $respDesc, array('freezeTrxId'=>$freezeTrxId));
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
+                $respCode, $respDesc);
+            $bolSucc = false;
+        } else {
+            //将投标冻结订单状态更改为成功
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+                $respCode, $respDesc, array('freezeTrxId' => $freezeTrxId));
+            //保存快照
+            Finance_Logic_Order::saveRecord($orderId, $userId, 
+                Finance_Order_Type::TENDERFREEZE, $transAmt, '投标冻结记录');
+    
+            $bolSucc = Invest_Api::doInvest($orderId, $userId, $proId, $transAmt);
 
-        //投标冻结后保存快照
-        //Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::TENDERFREEZE,
-        //    $transAmt, '投标冻结记录');
+            if (!$bolSucc) {
+                Base_Log::notice(array(
+                    'msg'      => '投标失败，发起资金解冻',
+                    'orderId'  => $orderId,
+                    'userId'   => $userId,
+                    'proId'    => $proId,
+                    'transAmt' => $transAmt,
+                ));
+
+                //不做解冻失败的错误处理
+                $logic   = new Finance_Logic_Transaction();
+                $bolRet2 = $logic->unfreezeOrder($orderId);
+            }
+        }
+
+        Base_Log::notice(array(
+            'msg'   => 'bgcallreturn',
+            'print' => 'RECV_ORD_ID_'.strval($orderId),
+            'req'   => $_REQUEST,
+        ));
 
         print('RECV_ORD_ID_'.strval($orderId));     
     }
@@ -588,12 +608,6 @@ class BgcallController extends Base_Controller_Page {
         $orderDate = intval($retParam['OrdDate']);
         $subOrdId  = intval($retParam['SubOrdId']);
         $amount    = floatval($retParam['TransAmt']);
-        $arrBal    = Finance_Api::getUserBalance($userid);
-        $balance   = $arrBal['AcctBal'];//用户余额
-        $avlBal    = $arrBal['AvlBal'];//用户可用余额
-        $total     = Finance_Api::getPlatformBalance();//系统余额
-        
-        $lastip    = Base_Util_Ip::getClientIp();
         $respCode  = strval($retParam['RespCode']);
         $respDesc  = strval($retParam['RespDesc']);
         
@@ -616,6 +630,7 @@ class BgcallController extends Base_Controller_Page {
         //将打款记录插入至表finance_record中
         Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH,
             $amount, '财务类满标打款记录');
+
         Base_Log::notice($retParam);
         print('RECV_ORD_ID_'.strval($orderId));
     }

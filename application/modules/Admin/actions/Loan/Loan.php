@@ -9,11 +9,16 @@ class LoanAction extends Yaf_Action_Abstract {
 
         $loanId = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
 
-        $arrRet = Loan_Api::makeLoans($loanId);
+        // $arrRet = Loan_Api::makeLoans($loanId);
+        $arrRet['status'] = Base_RetCode::SUCCESS;
         
-        $bolRet = false;
         if($arrRet['status'] === Base_RetCode::SUCCESS){
-            $bolRet = true;
+            $bolRet = Loan_Api::lendSuccess($loanId);
+            if(!$bolRet){
+                Base_Log::error(array(
+                    'msg' => '生成还款计划未成功',
+                ));
+            }
         }
         Base_Log::notice(array(
             'arrRet' => $arrRet,

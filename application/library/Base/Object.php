@@ -362,4 +362,12 @@ class Base_Object {
         return true;
     }
     
+    /**
+     * 对象是否已经从DB中装载
+     * @return boolean
+     */
+    public function isLoaded() {
+        return $this->fetched ? true : false;
+    }
+    
 }

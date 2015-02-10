@@ -12,11 +12,13 @@ class ErrorController extends Base_Controller_Page {
 	}
 
     public function errorAction($exception){
-        $code = $exception->getCode();
-        $msg = $exception->getMessage();
-        Base_Log::warn(array('code'=>$code, 'msg'=>$msg));
+        $code    = $exception->getCode();
+        $message = $exception->getMessage();
+        Base_Log::notice(array('code'=>$code, 'message'=>$message));
 
-        $this->getView()->assign("code", $exception->getCode());
-        $this->getView()->assign("message", $exception->getMessage());
+        if(ENVIRON !== 'product'){
+            $this->getView()->assign("code", $exception->getCode());
+            $this->getView()->assign("message", $exception->getMessage());
+        }
     }
 }

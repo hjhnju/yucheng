@@ -59,6 +59,22 @@ class User_Api{
     }
     
     /**
+     * 获取私人用户列表
+     * @param int $page
+     * @param int $pagesize
+     * @return array
+     */
+    public static function getPrivUsers($page = 1, $pagesize = 10, $user){
+        $logic = new User_Logic_Query();
+        $list  = $logic->queryPrivUsers($page, $pagesize, $user);
+        Base_Log::notice(array(
+        'page'     => $list['page'],
+        'pagesize' => $list['pagesize'],
+        ));
+        return $list['list'];
+    }
+    
+    /**
      * 设置用户真实姓名
      * @param int $uid
      * @param string $strRealName
@@ -165,9 +181,9 @@ class User_Api{
      * 验证用户输入的短信验证码是否正确
      */
     public static function checkSmscode($strPhone, $strVeriCode, $strType){
-        if('dev' === ini_get('yaf.environ')){
+        /* if('dev' === ini_get('yaf.environ')){
             return true;
-        }
+        } */
         $storeCode = Base_Redis::getInstance()->get(User_Keys::getSmsCodeKey($strPhone, $strType));
         if($strVeriCode === $storeCode){
             return true;

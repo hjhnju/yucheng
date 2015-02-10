@@ -10,7 +10,7 @@
         main.init({
             pageall: '{%$data.pageall%}',
             page: '{%$data.page%}',
-            type: 'media'
+            type: 'post'
         });
     });
 </script>
@@ -30,7 +30,7 @@
                     <span class="infos-dot">•</span>
                     <div class="infos-box">
                         <div class="infos-title">
-                            <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}">{%$item.title%}</a>
+                            <a href="{%$webroot%}/infos/media/detail?id={%$item.id%}">{%$item.title%}</a>
                         </div>
                         <div class="infos-ctx">
                             {%$item.content%}
@@ -40,9 +40,7 @@
                 {%/foreach%}
             </ul>
         </div>
-        {%if !empty($data.list)%}
         <div id="pager"></div>
-        {%/if%}
     </div>
 </div>
 

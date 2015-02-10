@@ -124,6 +124,7 @@
                         <div class="main-title-box showrecord">投资记录</div>
                     </div>
                     <div class="main-box-details showproject-main">
+                        {%if isset($user.amount)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">借款企业</div>
                             <div class="main-detail-content">
@@ -272,6 +273,11 @@
                             <div class="detail-pass">{%$audit_info%}</div>
                             <div class="detail-symbol"></div>
                         </div>
+                        {%else%}
+                        <div class="detail-unlogin">
+                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                        </div>
+                        {%/if%}
                     </div>
                     <div class="main-box-details showfile-main">
                         <div class="details-main-box">
@@ -337,6 +343,17 @@
                     <div class="right-top2nd-box">满标时间:{%$full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
                     <div class="right-top2nd-box">满标耗时:<span id="full-time"></span></div>
                     <div class="right-top2nd-box">投标人数:{%$invest_cnt%}人</div>
+                </div>
+            </div>
+            {%else if $status == 5%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                <div class="right-top-new"></div>
+                <div class="right-box-top">
+                    <div class="right-top2nd-title refund">还款中</div>
+                    <div class="right-top2nd-box">待还本息（元）:{%$rest_total%}</div>
+                    <div class="right-top2nd-box">剩余期数（月）:{%$left_month%}</div>
+                    <div class="right-top2nd-box">下次合约还款日:{%$next_date|date_format:'%Y-%m-%d %H:%M'%}人</div>
                 </div>
             </div>
             {%else%}

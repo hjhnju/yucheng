@@ -58,14 +58,17 @@ class Finance_Logic_Order {
      * @return boolean
      */
     public static function saveOrder($arrOrder) {       
-        if(is_null($arrOrder) || !isset($arrOrder)) {
+        if(empty($arrOrder) || !isset($arrOrder['userId'])) {
             //未给出参数，无法插入或者更新
             Base_Log::error(array(
-                'msg'=>'请求参数错误',
+                'msg'   =>'请求参数错误',
+                'order' => $arrOrder,
             ));
             return false;
         }
-        $order = null;
+
+        $userId = $arrOrder['userId'];
+        $order  = null;
         if(!isset($arrOrder['orderId'])){
             $orderInfo = Finance_Logic_Order::genOrderInfo();
             $arrOrder['orderId']   = $orderInfo['orderId'];
@@ -74,6 +77,8 @@ class Finance_Logic_Order {
         }else{
             $order = new Finance_Object_Order(intval($arrOrder['orderId']));
         }
+        //统一修改用户当前可用余额
+        $arrOrder['avlBal'] = Finance_Api::getUserAvlBalance($userId);
 
         foreach ($arrOrder as $key => $value) {            
             $order->$key = $value;
@@ -154,9 +159,27 @@ class Finance_Logic_Order {
      * @param string $arrExts, 额外保存的字段，e.g array('freezeTrxId'=>)
      * @return boolean
      */
-    public static function updateOrderStatus($orderId, $status, $failCode='',$failDesc='',$arrExts=false) {
+    public static function updateOrderStatus($orderId, $status, $failCode='', $failDesc='', $arrExts=false) {
+        Base_Log::notice(array(
+                'msg'     => '订单状态开始更新',
+                'orderId' => $orderId,
+                'status'  => $status,
+                'failCode'=> $failCode,
+                'failDesc'=> $failDesc,
+                'arrExts' => $arrExts,
+        ));
+
         $regOrder          = new Finance_Object_Order(intval($orderId));
         $status            = intval($status);
+        if($status === $regOrder->status){
+            Base_Log::warn(array(
+                'msg' => '订单状态一致时不再更新, 防止余额计算非实时不一致',
+                'orderId' => $orderId,
+                'status'  => $status,
+            ));
+            return false;
+        }
+
         $regOrder->orderId = $orderId;
         $regOrder->status  = $status;
         $arrBal            = Finance_Api::getUserBalance($regOrder->userId);
@@ -180,10 +203,13 @@ class Finance_Logic_Order {
                 'msg'     => '订单状态更新失败',
                 'orderId' => $orderId,
                 'status'  => $status,
+                'failCode'=> $failCode,
+                'failDesc'=> $failDesc,
+                'arrExts' => $arrExts,
             ));
             return false;
         }
-        return $ret;
+        return true;
     }
 
     /**
@@ -264,8 +290,10 @@ class Finance_Logic_Order {
         }
         $list = new Finance_List_Order();
         $list->setFilter(array('userId' => $userid));
-        $list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
-        $list->appendFilterString("`status` IN (0,1,2,3)");
+        	$list->appendFilterString("(`create_time` between '$startTime' and '$endTime')");
+        $strSt = implode(',', array(Finance_Order_Status::SUCCESS, Finance_Order_Status::PROCESSING, 
+            Finance_Order_Status::FAILED));
+        $list->appendFilterString("`status` IN ($strSt)");
         if($queryType !== 1){
             $list->appendFilter(array('type' => $queryType));
         }
@@ -281,7 +309,8 @@ class Finance_Logic_Order {
             $arrData[$key]['typeName']  = Finance_Order_Type::getTypeName($value['type']);       
             $arrData[$key]['status']    = Finance_Order_Status::getTypeName($value['status']);
             $arrData[$key]['serialNo']  = strval($value['orderId']);//序列号
-            $arrData[$key]['tranAmt']   = $value['amount'];//交易金额
+            $plusOrMinus                = Finance_Order_Type::getPlusMinusChar($value['type']);       
+            $arrData[$key]['tranAmt']   = $plusOrMinus . $value['amount'];//交易金额
             $arrData[$key]['avalBg']    = $value['avlBal'];//可用余额
         }
 
@@ -292,5 +321,4 @@ class Finance_Logic_Order {
         $arrRet['list']     = $arrData;
         return $arrRet;         
     }
-    
 }

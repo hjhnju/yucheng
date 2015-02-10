@@ -21,8 +21,7 @@ class Finance_Logic_Query extends Finance_Logic_Base {
      * 
      */
     public function getUserAvlBalance($userid){
-        $huifuid = $this->getHuifuid($userid);
-        $arrBal  = $this->queryBalanceBg($huifuid);
+        $arrBal = $this->getUserBalance($userid);
         return  $arrBal['AvlBal'];
     }
 
@@ -73,7 +72,7 @@ class Finance_Logic_Query extends Finance_Logic_Base {
             'AvlBal'  => floatval(str_replace(',', '', $mixRet['AvlBal'])),
             'AcctBal' => floatval(str_replace(',', '', $mixRet['AcctBal'])),
             'FrzBal'  => floatval(str_replace(',', '', $mixRet['FrzBal'])),
-        );      
+        );
 
         return $arrBal;     
     }
@@ -113,13 +112,11 @@ class Finance_Logic_Query extends Finance_Logic_Base {
         $arrAcct = array();
         $mixRet = $this->chinapnr->queryAccts($this->merCustId);
         if($mixRet['RespCode'] !== '000'){
-            Base_Log::error(
-                array_merge(array(
-                    'msg'        => '调用汇付Client失败',
-                    'merCustId'  => $this->merCustId,
-                ),
-                $mixRet)
-            );
+            Base_Log::error(array(
+                'msg'       => '调用汇付Client失败',
+                'merCustId' => $this->merCustId,
+                'ret'       => $mixRet,
+            ));
             return false;
         }
         foreach ($mixRet['AcctDetails'] as $value) {

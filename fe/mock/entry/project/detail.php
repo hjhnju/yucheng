@@ -14,7 +14,6 @@ $smarty = new Smarty();
 
 $smarty->assign('user',
     array(
-        'amount' => '100,000.00'
     )
 );
 

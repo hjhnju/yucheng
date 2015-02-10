@@ -41,7 +41,7 @@ class Invest_Type_InvestStatus extends Base_Type {
      */
     const CANCEL = 7;
     /**
-     * 9借款失败
+     * 9借款失败 已结束
      * @var integer
      */
     const FAILED = 9;
@@ -70,6 +70,6 @@ class Invest_Type_InvestStatus extends Base_Type {
         self::REFUNDING => '还款中',
         self::FINISHED => '已完成',
         self::CANCEL => '已撤销',
-        self::FAILED => '借款失败',
+        self::FAILED => '已结束',
     );
 }

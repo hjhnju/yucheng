@@ -241,28 +241,6 @@ class Finance_Api {
     }
     
     /**
-     * 资金解冻接口
-     * @param string orderId 
-     * @param string retUrl
-     * @return bool
-     * 
-     */
-    public static function cancelTenderBG($orderId, $retUrl='') {
-        $orderId = strval($orderId);
-    	$transLogic = new Finance_Logic_Transaction();
-    	$objRst = $transLogic->cancelTenderBG($orderId, $retUrl);
-    	Base_Log::notice(array(
-    	    'msg'  => '资金解冻接口',
-    	    'args' => func_get_args(),
-    	    'ret'  => $objRst->format(),
-    	));    	
-    	if($objRst->status === Base_RetCode::SUCCESS) {
-    		return true;
-    	}
-    	return false;
-    }
-    
-    /**
      * 删除银行卡接口
      * @param string huifuid
      * @param string cardId
@@ -341,22 +319,19 @@ class Finance_Api {
      *        )
      * @param boolean $IsFreeze 是否冻结(required) true--冻结false--不冻结    
      * @param string $FreezeOrdId 冻结订单号(optional)    
-     * @param string retUrl 汇付回调返回url
      * @return false || redirect  
      * )   
      * 
      */
-    public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails, $retUrl) {
+    public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails, $retUrl='') {
         if(!isset($loanId) || empty($loanId) || !isset($transAmt) || empty($transAmt) || 
-           !isset($userid) || empty($userid) || !isset($borrowerDetails) || empty($borrowerDetails) ||
-           !isset($retUrl) || empty($retUrl)) {
+           !isset($userid) || empty($userid) || !isset($borrowerDetails) || empty($borrowerDetails)) {
             Base_Log::error(array(
                 'msg'             => '请求参数错误',
                 'loanId'          => $loanId,
                 'transAmt'        => $transAmt,
                 'userid'          => $userid,
                 'borrowerDetails' => $borrowerDetails,
-                'retUrl'          => $retUrl,
             ));
             return false;   
         }
@@ -366,9 +341,9 @@ class Finance_Api {
             'transAmt'        => $transAmt,
             'userid'          => $userid,
             'borrowerDetails' => $borrowerDetails,
-            'retUrl'          => $retUrl,           
+            'retUrl'          => $retUrl,
         ));
-        $transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl);      
+        $transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl);
     }
     
     /**
@@ -629,26 +604,4 @@ class Finance_Api {
          $userManageLogic->userLogin($userCustId);
      }
 
-
-    /**
-     * 汇付RetUrl到投标确认页，投标确认页调用本方法确认投标信息
-     * @param $arrRequst $_REQUEST
-     */
-    public function initiativeTenderBg($arrRequest) {
-        if(!isset($arrRequest['CmdId']) || !isset($arrRequest['RespCode']) || !isset($arrRequest['RespDesc']) || 
-           !isset($arrRequest['MerCustId']) || !isset($arrRequest['OrdId']) || !isset($arrRequest['OrdDate']) || 
-           !isset($arrRequest['TransAmt']) || !isset($arrRequest['UsrCustId']) || !isset($arrRequest['IsFreeze']) || 
-           !isset($arrRequest['BgRetUrl']) || !isset($arrRequest['ChkValue'])) {
-            $arrRequest['msg'] = '汇付返回参数错误';
-            Base_Log::error($arrRequest);
-            return false;
-        }
-        $logic  = new Finance_Logic_Transaction();
-        $arrRet = $logic->initiativeTenderBg($arrRequest);
-        return $arrRet;
-    }
-
-    
-     
-    
 }

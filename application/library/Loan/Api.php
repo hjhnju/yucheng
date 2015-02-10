@@ -7,14 +7,7 @@
 class Loan_Api {
 
     /**
-     * 生成借款标的还款计划
-     * @param integer $lid
-     */
-    public static function buildRefunds($loan_id) {
-    }
-
-    /**
-     * 满标审核是否可以打款
+     * 满标时审核是否可以打款
      */
     public function fullPassAudit($loanId){
         $objLoan = new Loan_Object_Loan($loanId);
@@ -57,7 +50,7 @@ class Loan_Api {
         $logic = new Loan_Logic_Loan();
         $loan = $logic->getLoanInfo($loan_id);
         $res = false;
-        if ($loan['status'] == Loan_Type_LoanStatus::FULL_CHECK) {
+        if ($loan['status'] == Loan_Type_LoanStatus::PAYING) {
             $res = $logic->lendSuccess($loan_id);
         }
         
@@ -155,6 +148,10 @@ class Loan_Api {
      */
     public static function getLoanInfo($loan_id) {
         $loan = new Loan_Object_Loan($loan_id);
+        if (!$loan->isLoaded()) {
+            return array();
+        }
+        
         $data = $loan->toArray();
         $data['amount'] = floatval($data['amount']);
         $data['invest_amount'] = floatval($data['invest_amount']);
@@ -267,6 +264,9 @@ class Loan_Api {
      */
     public static function getLoanDetail($loan_id) {
         $data = self::getLoanInfo($loan_id);
+        if (empty($data)) {
+            return $data;
+        }
         $data = self::formatLoan($data);
         
         $type = new Loan_Type_LoanType();
@@ -279,6 +279,12 @@ class Loan_Api {
         $cond = array('loan_id' => $loan_id);
         $company = new Loan_Object_Company($cond);
         $data['company'] = $company->toArray();
+        // 转换省份信息
+        $area = new Area_Object_Area($data['company']['area']);
+        if ($area->province !== 0) {
+            $area = new Area_Object_Area($area->province);
+        }
+        $data['company']['area'] = $area->name;
         
         $counter = new Loan_Object_Counter($data['user_id']);
         $data['counter'] = $counter->toArray();
