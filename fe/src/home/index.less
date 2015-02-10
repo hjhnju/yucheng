@@ -260,6 +260,7 @@
     width: 100%;
     display: block;
     height: 300px;
+    cursor: pointer;
 
     &.banner-one {
         background: url(./img/banner_one.jpg) center center no-repeat;
@@ -295,6 +296,14 @@
     padding: 25px 0;
     position: relative;
 
+}
+.fix-container {
+    position: absolute;
+    z-index: 5;
+    top: 25px;
+    left: 50%;
+    margin-left: 220px;
+    width: 280px;
 }
 .fix-box {
     background-color: transparent;
@@ -376,23 +385,22 @@
 
 
 //箭头
-.jiantou-left {
+.jiantou {
+    position: absolute;
     width: 50px;
     height: 100px;
-    background: url(./img/banner_jiantou.png) 0 0 no-repeat;
-    position: absolute;
-    left: -90px;
     top: 140px;
     cursor: pointer;
+    left: 50%;
+    z-index: 5;
+}
+.jiantou-left {
+    background: url(./img/banner_jiantou.png) 0 0 no-repeat;
+    margin-left: -590px;
 }
 .jiantou-right {
-    width: 50px;
-    height: 100px;
-    background: url(./img/banner_jiantou.png) 0 -100px no-repeat;
-    position: absolute;
-    right: -110px;
-    top: 140px;
-    cursor: pointer;
+    background: url(./img/banner_jiantou.png) 21px -100px no-repeat;
+    margin-left: 540px;
 }
 
 
