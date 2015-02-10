@@ -69,7 +69,7 @@
                     <tbody>
                         {%foreach from=$arrLoan key=i item=loan%}
                         <tr>
-                            <td><a href="/admin/loan/detail?loanid={%$loan.id%}">{%$loan.id%}</a></td>
+                            <td><a href="/admin/loan/request?loanid={%$loan.id%}&userid={%$loan.user_id%}">{%$loan.id%}</a></td>
                             <td><a href="/admin/corp/detail?userid={%$loan.user_id%}">{%$loan.user_id%}</a></td>
                             <td>{%$loan.title%}</td>
                             <td>{%$loan.amount%}</td>

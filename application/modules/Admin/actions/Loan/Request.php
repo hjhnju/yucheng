@@ -36,14 +36,22 @@ class RequestAction extends Yaf_Action_Abstract {
         ));
         if (!empty($_POST)) {
             //基本借款信息
-            $_POST['id'] = $loanId;
             $_POST['status'] = Loan_Type_LoanStatus::AUDIT;
             $_POST['safe_id'] = !empty($_POST['safes']) ? implode(',', $_POST['safes']) : '1';
-            $objLoan         = Loan_Object_Loan::init($_POST);
-            $objLoan->userId = $userid;
+            $objLoan         = new Loan_Object_Loan($loanId);
+            $objLoan->setData($_POST);
+            if (empty($objLoan->userId)) {
+                $objLoan->userId = $userid;
+                $objLoan->createUid = $createUid;
+            }
             if (empty($objLoan->startTime)) {
                 $objLoan->startTime = time();
                 $objLoan->deadline = time() + 7 * 24 * 3600;
+            }
+            if (empty($objLoan->riskRate)) {
+                $objLoan->riskRate = '0.0100';
+                $objLoan->servRate = '0.0030';
+                $objLoan->mangRate = '0.0020';
             }
             if (!$objLoan->save()) {
                 $errMsg = '保存借款基本信息失败';

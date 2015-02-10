@@ -66,6 +66,7 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">基本借款信息 <small>loan</small></h3>
+                            <input type="hidden" name="loanid" value="{%$loanId%}">
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
@@ -103,6 +104,12 @@
                                 <label for="duration">借款时长</label>
                                 <select name="duration">
                                 {%selection name='Loan_Type_Duration'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="refund_type">还款方式</label>
+                                <select name="refund_type">
+                                {%selection name='Loan_Type_RefundType'%}
                                 </select>
                             </div>
                             <div class="form-group">
@@ -375,7 +382,7 @@
                 if (key == 'fresh') {
                     continue;
                 }
-                $('input[name='+key+']').val(val);
+                $('input[name='+key+'], select[name='+key+']').val(val);
             }
             if (data.fresh == 1) {
                 $('input[name=fresh]').attr('checked', true).parent().addClass('checked');
