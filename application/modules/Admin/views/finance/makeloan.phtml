@@ -1,0 +1,98 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                             Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+            {%if $status==1%}借款审核
+            {%elseif $status==3%}满标审核
+            {%elseif $status==4%}借款放款
+            {%else%}借款列表 <small>所有借款</small>
+            {%/if%}
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="/admin">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">借款列表</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN LIST -->
+            <div class="row-fluid">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>借款编号</th>
+                            <th>借款用户</th>
+                            <th>借款标题</th>
+                            <th>金额 ¥</th>
+                            <th>利率 %</th>
+                            <th>期限/天</th>
+                            <th>
+                            {%if $status==1%}操作
+                            {%elseif $status==3%}操作
+                            {%elseif $status==4%}操作
+                            {%else%}状态
+                            {%/if%}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%foreach from=$arrLoan key=i item=loan%}
+                        <tr>
+                            <td><a href="/admin/loan/detail?loanid={%$loan.id%}">{%$loan.id%}</a></td>
+                            <td><a href="/admin/corp/detail?userid={%$loan.user_id%}">{%$loan.user_id%}</a></td>
+                            <td>{%$loan.title%}</td>
+                            <td>{%$loan.amount%}</td>
+                            <td>{%$loan.interest%}</td>
+                            <td>{%$loan.duration%}</td>
+                            <td>
+                            {%if $status==1%}<!--借款审核-->
+                                <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
+                                <a href="/admin/loan/publish?loanid={%$loan.id%}">发布上线</a>
+                            {%elseif $status==3%}<!--满标审核-->
+                                <a href="/admin/loan/audit?loanid={%$loan.id%}">确定通过</a>
+                            {%elseif $status==4%}<!--借款放款-->
+                                <a href="/admin/loan/loan?loanid={%$loan.id%}">放款</a>
+                            {%else%}
+                                {%$loan.status%}
+                            {%/if%}
+                            </td>
+                        </tr>
+                        {%/foreach%}
+                    </tbody>
+                </table>
+            </div>
+            <!-- END LIST -->
+        </div>
+    </div>
+{%/block%}
