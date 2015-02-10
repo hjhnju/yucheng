@@ -31,7 +31,8 @@ class ListController extends Base_Controller_Api {
         }
         $retList['page'] = $list['page'];
         $retList['pagesize'] = $list['pagesize'];
-        $retList['totol'] = $list['total'];
+        $retList['total'] = $list['total'];
+        $retList['pageall'] = $list['pageall'];
 
         $this->ajax($retList);
     }

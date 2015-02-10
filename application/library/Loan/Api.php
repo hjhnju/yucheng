@@ -290,15 +290,16 @@ class Loan_Api {
             if ($area->province !== 0) {
                 $area = new Area_Object_Area($area->province);
             }
-            // 对于学校不对外显示
-            $data['company']['school'] = Base_Util_Secure::hideDetail($data['company']['school']);
-            $data['company']['area_name'] = $area->name;
+            // 对于学校不对外显示 //去除Base_Util_Secure::hideDetail($data['company']['school']);，采用人工加＊
+            $data['company']['school'] = $data['company']['school'];
+            $data['company']['area'] = $area->name;
         }
 
         $guarantee = new Loan_Object_Guarantee($cond);
         if($guarantee->isLoaded()){
             $data['guarantee'] = $guarantee->toArray();
-            $data['guarantee']['name'] = Base_Util_Secure::hideDetail($data['guarantee']['name']);
+            $data['guarantee']['name'] = $data['guarantee']['name'];
+            //Base_Util_Secure::hideDetail($data['guarantee']['name']);
         }
 
         $counter = new Loan_Object_Counter($data['user_id']);
@@ -316,8 +317,14 @@ class Loan_Api {
         $attachs_data = $attachs->toArray();
         foreach ($attachs_data['list'] as $key => $row) {
             $attachs_data['list'][$key]['hash'] = $row['url'];
-            $attachs_data['list'][$key]['url'] = Base_Util_Image::getUrl($row['url']);
-            $attachs_data['list'][$key]['thumb'] = Base_Util_Image::getUrl($row['url'], 200, 200);
+            //$attachs_data['list'][$key]['url'] = Base_Util_Image::getUrl($row['url']);
+            if($row['type'] === Loan_Type_Attach::CONTRACT){
+                $attachs_data['list'][$key]['thumb'] = Base_Util_Image::getUrl($row['url'], 130*3, 180*3);
+            }else if($row['type'] === Loan_Type_Attach::ENTITY){
+                $attachs_data['list'][$key]['thumb'] = Base_Util_Image::getUrl($row['url'], 250, 180);
+            }else{
+                $attachs_data['list'][$key]['thumb'] = Base_Util_Image::getUrl($row['url'], 192, 144);
+            }
         }
         $data['attach'] = self::stepArray($attachs_data['list'], 'type', Loan_Type_Attach::$names);
         

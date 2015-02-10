@@ -24,7 +24,7 @@
 {%block name="content"%}
 {%assign var=mapType value=['实地认证'=>'shidi', '营业执照'=>'yingye', '税务登记证'=>'shuiwu', '银行开户许可证'=>'bank',
 '组织机构代码证'=>'zuzhi', '征信报告'=>'zhengxin', '抵押手续'=>'diya', '身份证'=>'shenfen', '户口本'=>'hukou',
-'结婚证'=>'jiehun', '房产证'=>'fangchan', '行驶证'=>'xingshi']%}
+'结婚证'=>'jiehun', '房产证'=>'fangchan', '行驶证'=>'xingshi', '登记证书'=>'yingye']%}
 <div class="details">
     <div class="container">
         <div class="detail-left">
@@ -189,7 +189,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">教职工数量：</div>
-                                        <div class="content-left-text">{%$data.company.employers%} 名</div>
+                                        <div class="content-left-text">{%$data.company.employers%}+ 名</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">借款用途：</div>
@@ -208,7 +208,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">学生数量：</div>
-                                        <div class="content-left-text right-text">{%$data.company.students%} 名</div>
+                                        <div class="content-left-text right-text">{%$data.company.students%}+ 名</div>
                                     </div>
                                 </div>
                             </div>
@@ -336,7 +336,7 @@
                                 <ul class="detail-item">
                                     {%foreach $data.attach['认证材料'] as $key => $item%}
                                     <li class="detail-item-list img-city">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img img-width" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img img-width" src="{%$item.thumb%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -351,7 +351,7 @@
                                 <ul class="detail-item">
                                     {%foreach $data.attach['合同协议'] as $key => $item%}
                                     <li class="detail-item-list">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.thumb%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -359,14 +359,14 @@
                             </div>
                         </div>
                         {%/if%}
-                        {%if !empty($data.attach['实地图片'])%}
+                        {%if !empty($data.attach['实地照片'])%}
                         <div class="details-main-box item-last">
-                            <div class="main-box-detail-title">实地图片</div>
+                            <div class="main-box-detail-title">实地照片</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['实地图片'] as $key => $item%}
-                                    <li class="detail-item-list img-city">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
+                                    {%foreach $data.attach['实地照片'] as $key => $item%}
+                                    <li class="detail-item-list img-city" style="margin-right:70px">
+                                        <img alt="{%$item.title%}" style="width: 250px;height:180px;" class="detail-item-list-img" src="{%$item.thumb%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -407,7 +407,7 @@
                 <div class="right-box-top">
                     <div class="right-top2nd-title">已满标</div>
                     <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
-                    <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">满标耗时：{%$data.expend_time%}</div>
                     <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
                 </div>
             </div>
