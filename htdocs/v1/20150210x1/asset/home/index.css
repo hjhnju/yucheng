@@ -62,6 +62,8 @@ p{margin:0;padding:0}
 .header-left-attention .attention-me.weibo:hover{background-position:0 -300px}
 .header-left-attention .attention-me.weixin{background-position:0 -100px}
 .header-left-attention .attention-me.weixin:hover{background-position:0 -251px}
+.header-left-attention .attention-me.qq{background-position:0 -350px}
+.header-left-attention .attention-me.qq:hover{background-position:0 -380px}
 .xinlang-erweima{width:258px;height:258px;position:absolute;left:-117px;top:27px;z-index:12;border:1px solid #ccc;display:none;background:url(../common/img/weixin.jpg) 0 0 no-repeat;text-decoration:none;color:#333}
 .xinlang-erweima.footer-erweima{top:-270px}
 .xinlang-erweima.footer-tip{top:-64px;left:-62px;display:none}
@@ -106,6 +108,8 @@ p{margin:0;padding:0}
 .footer-site-me-xinlang.weibo:hover{background-position:0 -300px}
 .footer-site-me-xinlang.weixin{background-position:0 -200px}
 .footer-site-me-xinlang.weixin:hover{background-position:0 -250px}
+.footer-site-me-xinlang.qq{background-position:-30px -380px}
+.footer-site-me-xinlang.qq:hover{background-position:0 -380px}
 .footer-right{float:right;font-size:14px;height:30px;line-height:30px;color:#b1b1b3;padding-left:40px;background:url(../common/img/footer_phone.png) 0 0 no-repeat}
 .footer-tip{background:#fff;width:150px;height:40px;line-height:20px;text-align:center;padding:5px 0;display:block;left:0;top:10px;color:#a7a7a7;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .footer-tip .weibo-tip-span{color:#00f}
