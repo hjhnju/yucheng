@@ -8,7 +8,7 @@ class RegistController extends Base_Controller_Page{
         $this->setNeedLogin(false);
         parent::init();
     }
-    
+      
     /**
      * 用户注册类
      * 若有第三方登陆，则显示绑定提示
