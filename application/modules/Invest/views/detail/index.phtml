@@ -411,6 +411,16 @@
                     <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
                 </div>
             </div>
+            {%else if $data.status == 10%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div style="width:200px;margin:20px" class="right-top2nd-title refund">即将开启</div>
+                </div>
+            </div>
             {%else if $data.status == 5%}
             <div class="right-top right-bg-color">
                 <div class="right-top-title">我来投资</div>
@@ -424,7 +434,7 @@
                     <div class="right-top2nd-box">下次合约还款日: {%$data.next_date|date_format:'%Y-%m-%d'%}</div>
                 </div>
             </div>
-            {%else%}
+            {%else if $data.status == 2%}
             <form id="invest-form" method="post" action="/invest/tender" class="right-top">
                 <div class="right-top-title">我来投资</div>
                 {%if $data.fresh%}
@@ -448,6 +458,19 @@
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
             </form>
+            {%else%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div class="right-top2nd-title">已结束</div>
+                    <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
+                </div>
+            </div>
             {%/if%}
             <div class="right-bottom">
                 <div class="right-bottom-title">

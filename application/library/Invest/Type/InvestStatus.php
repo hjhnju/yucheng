@@ -11,6 +11,11 @@ class Invest_Type_InvestStatus extends Base_Type {
      */
     const AUDIT = 1;
     /**
+     * 10敬请期待
+     * @var integer
+     */
+    const WAITING = 10;
+    /**
      * 2投标中 
      * @var integer
      */
@@ -64,6 +69,7 @@ class Invest_Type_InvestStatus extends Base_Type {
      */
     public static $names = array(
         self::AUDIT => '审核中',
+        self::WAITING => '即将开启',
         self::LENDING => '投标中',
         self::FULL_CHECK => '已满标',
         self::PAYING => '已满标',

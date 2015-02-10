@@ -11,6 +11,11 @@ class Loan_Type_LoanStatus extends Base_Type {
      */
     const AUDIT = 1;
     /**
+     * 10敬请期待
+     * @var integer
+     */
+    const WAITING = 10;
+    /**
      * 2投标中 
      * @var integer
      */
@@ -63,13 +68,14 @@ class Loan_Type_LoanStatus extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::AUDIT => '审核中',
-        self::LENDING => '投标中',
+        self::AUDIT      => '审核中',
+        self::WAITING    => '即将开启',
+        self::LENDING    => '投标中',
         self::FULL_CHECK => '已满标',
-        self::PAYING => '打款中',
-        self::REFUNDING => '还款中',
-        self::FINISHED => '已完成',
-        self::CANCEL => '已撤销',
-        self::FAILED => '借款失败',
+        self::PAYING     => '打款中',
+        self::REFUNDING  => '还款中',
+        self::FINISHED   => '已完成',
+        self::CANCEL     => '已撤销',
+        self::FAILED     => '借款失败',
     );
 }
