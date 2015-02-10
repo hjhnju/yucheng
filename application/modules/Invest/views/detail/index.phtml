@@ -329,12 +329,12 @@
                     </div>
                     <div class="main-box-details showfile-main">
                         {%if isset($user.amount)%}
-                        {%if !empty($data.attach['1'])%}
+                        {%if !empty($data.attach['认证材料'])%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">认证材料</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['1'] as $key => $item%}
+                                    {%foreach $data.attach['认证材料'] as $key => $item%}
                                     <li class="detail-item-list img-city">
                                         <img alt="{%$item.title%}" class="detail-item-list-img img-width" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
@@ -344,12 +344,12 @@
                             </div>
                         </div>
                         {%/if%}
-                        {%if !empty($data.attach['2'])%}
+                        {%if !empty($data.attach['合同协议'])%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">合同协议</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['2'] as $key => $item%}
+                                    {%foreach $data.attach['合同协议'] as $key => $item%}
                                     <li class="detail-item-list">
                                         <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
@@ -359,12 +359,12 @@
                             </div>
                         </div>
                         {%/if%}
-                        {%if !empty($data.attach['3'])%}
+                        {%if !empty($data.attach['实地图片'])%}
                         <div class="details-main-box item-last">
                             <div class="main-box-detail-title">实地图片</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['3'] as $key => $item%}
+                                    {%foreach $data.attach['实地图片'] as $key => $item%}
                                     <li class="detail-item-list img-city">
                                         <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>

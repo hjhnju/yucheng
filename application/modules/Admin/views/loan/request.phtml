@@ -304,7 +304,7 @@
                                 <input type="file" id="file" name="file">
                             </div>
 
-                            <button type="button" id="upload_btn" class="btn btn-success">提交附件</button>
+                            <button type="button" id="upload_btn" class="btn btn-success">添加附件</button>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
@@ -339,7 +339,7 @@
                     var row = {
                             id: 0,
                             type: $('#attach_type').val(),
-                            url: res.data.hash,
+                            hash: res.data.hash,
                             title: title,
                             type_name: $('#attach_type').find('option:selected').text()
                     };
@@ -358,11 +358,11 @@
         upindex ++;
         var link = '<a class="del" href="javascript:;">删除</a>';
         var inputs = '<input type="hidden" name="attach[' + upindex + '][type]" value="' + row.type + '">' +
-                    '<input type="hidden" name="attach[' + upindex + '][url]" value="' + row.url + '">' +
+                    '<input type="hidden" name="attach[' + upindex + '][url]" value="' + row.hash + '">' +
                     '<input type="hidden" name="attach[' + upindex + '][title]" value="' + row.title + '">' +
                     '<input type="hidden" name="attach[' + upindex + '][id]" value="' + row.id + '">';
         link = link + inputs;
-        var pic = '<a href="/pic/' + row.url + '.jpg" target="_blank">' + row.url + '</a>';
+        var pic = '<a href="/pic/' + row.hash + '.jpg" target="_blank">' + row.hash + '</a>';
         var ary = [upindex, row.type_name, pic, row.title, link];
         var str = ary.join('</td><td>');
         var el = $('<tr><td>' + str + '</tr>').appendTo($('#uploaded tbody'));

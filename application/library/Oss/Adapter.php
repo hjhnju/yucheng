@@ -69,6 +69,7 @@ class Oss_Adapter {
                 'info' => 'oss write file wrong',
                 'object' => $object,
                 'filename' => $filename,
+                'ex'    => $ex->getMessage(),
             );
             Base_Log::error($msg);
             return false;

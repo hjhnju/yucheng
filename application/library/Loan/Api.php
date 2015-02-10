@@ -298,6 +298,7 @@ class Loan_Api {
         $guarantee = new Loan_Object_Guarantee($cond);
         if($guarantee->isLoaded()){
             $data['guarantee'] = $guarantee->toArray();
+            $data['guarantee']['name'] = Base_Util_Secure::hideDetail($data['guarantee']['name']);
         }
 
         $counter = new Loan_Object_Counter($data['user_id']);
@@ -313,6 +314,11 @@ class Loan_Api {
         $attachs = new Loan_List_Attach();
         $attachs->setFilter($cond);
         $attachs_data = $attachs->toArray();
+        foreach ($attachs_data['list'] as $key => $row) {
+            $attachs_data['list'][$key]['hash'] = $row['url'];
+            $attachs_data['list'][$key]['url'] = Base_Util_Image::getUrl($row['url']);
+            $attachs_data['list'][$key]['thumb'] = Base_Util_Image::getUrl($row['url'], 200, 200);
+        }
         $data['attach'] = self::stepArray($attachs_data['list'], 'type', Loan_Type_Attach::$names);
         
         $data['refunds'] = self::getRefunds($loan_id);
