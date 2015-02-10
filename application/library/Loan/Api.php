@@ -291,7 +291,7 @@ class Loan_Api {
                 $area = new Area_Object_Area($area->province);
             }
             // 对于学校不对外显示
-            $loan['company']['school'] = Base_Util_Secure::hideDetail($loan['company']['school']);
+            $data['company']['school'] = Base_Util_Secure::hideDetail($data['company']['school']);
             $data['company']['area'] = $area->name;
         }
 
