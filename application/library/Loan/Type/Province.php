@@ -6,15 +6,20 @@
  */
 class Loan_Type_Province extends Base_Type {
     /**
-     * 是
+     * 广西
      * @var integer
      */
-    const GX = 2043;
+    const GUANGXI = 2403;
     /**
-     * 否
+     * 福建
      * @var integer
      */
-    const HB = 2042;
+    const FUJIAN = 1310;
+    /**
+     * 湖南
+     * @var integer
+     */
+    const HUNAN = 2034;
     
     /**
      * 默认key名
@@ -33,7 +38,8 @@ class Loan_Type_Province extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::GX => '广西省',
-        self::HB  => '湖北省',
+        self::GUANGXI => '广西省',
+        self::FUJIAN  => '福建省',
+        self::HUNAN  => '湖南省',
     );
 }
