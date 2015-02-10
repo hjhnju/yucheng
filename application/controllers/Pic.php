@@ -36,6 +36,10 @@ class PicController extends Base_Controller_Page {
         $filename = $hash . '.jpg';
         $oss = Oss_Adapter::getInstance();
         $image = $oss->getContent($filename);
+        if (empty($image)) {
+            header("HTTP/1.1 404 Not Found");
+            exit;
+        }
 
         $imagick = new Imagick();
         $imagick->readimageblob($image);
