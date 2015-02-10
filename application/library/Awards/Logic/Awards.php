@@ -180,9 +180,10 @@ class Awards_Logic_Awards {
         $invite  = new Awards_List_Invite();
         $filters = array('inviterid' => $inviterid); //caution:被邀请人的userid
         $invite->setFilter($filters);
+        $invite->setPagesize(PHP_INT_MAX);
         $invite->setOrder('create_time desc');
         $list    = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
-        $users   = $list['list'];        
+        $users   = $list['list'];
         if(empty($users)) { 
             return $ret; //若没有邀请者，返回false
         }
