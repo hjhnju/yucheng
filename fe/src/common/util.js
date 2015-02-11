@@ -66,8 +66,31 @@ define(function () {
         }
     }
 
+    /**
+     * 对指定的函数进行包装, 返回一个在指定的时间内一次的函数
+     * @param  {Function} fn   待包装函数
+     * @param  {number}   wait 时间范围
+     * @return {Function}      包装后的函数
+     */
+    function debounce(fn, wait) {
+        var timer = null;
+        return function () {
+
+            if (timer) {
+                return;
+            }
+
+            timer = setTimeout(function () {
+                timer = null;
+            }, wait);
+
+            return fn.apply(null, arguments);
+        };
+    }
+
     return {
         addCommas: addCommas,
-        copyToClipBoard: copyToClipBoard
+        copyToClipBoard: copyToClipBoard,
+        debounce: debounce
     };
 });

@@ -25,7 +25,7 @@ define(function (require) {
     function bindEvent() {
 
         //点击领取
-        $('.table-tr-span').click(function () {
+        $('.table-tr-span').click(util.debounce(function () {
             event = $(this);
             if($(this).hasClass('current')) {
                 return;
@@ -34,14 +34,15 @@ define(function (require) {
             receiveAwards.remote({
                 id: $(this).attr('data-id')
             });
-        });
+        }, 1000));
+
         //receiveAwardsCb
         receiveAwards.on('success', function (data) {
             if(data && data.bizError) {
                 alert(data.statusInfo);
             }
             else {
-                event.addClass('current');
+                event.addClass('current').html('领取成功');
                 alert('领取成功');
             }
         });
