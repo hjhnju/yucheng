@@ -79,6 +79,9 @@
                             {%if $status==1%}<!--借款审核-->
                                 <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
                                 <a href="/admin/loan/publish?loanid={%$loan.id%}">发布上线</a>
+                            {%elseif $status==10%}<!--即将开启-->
+                                <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
+                                <a href="/admin/loan/publish?loanid={%$loan.id%}">发布上线</a>
                             {%elseif $status==3%}<!--满标审核-->
                                 <a href="/admin/loan/audit?loanid={%$loan.id%}">确定通过</a>
                             {%elseif $status==4%}<!--借款放款-->
