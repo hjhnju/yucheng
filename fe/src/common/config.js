@@ -66,8 +66,8 @@ define(function () {
             + '/account/editapi/modifypwd',
         //+ '/test/account/edit/emailConfirm.json',
         ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl
-        //+ '/account/award/receiveawards',
-        + '/test/account/award/receiveAwards.json',
+        + '/account/award/receiveawards',
+        //+ '/test/account/award/receiveAwards.json',
         ACCOUNT_CASH_LIST: rootUrl
         + '/account/cashapi/list',
 //        + '/test/account/cash/list.json',
