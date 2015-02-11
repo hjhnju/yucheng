@@ -45,6 +45,20 @@ class AwardController extends Base_Controller_Page {
         $userid = intval($_REQUEST['id']);    
         $canNotErrCode = Finance_RetCode::CAN_NOT_REC_AWARD;
         $canNotErrMsg  = Finance_RetCode::getMsg($canNotErrCode);
+        //
+        $redis = Base_Redis::getInstance();
+        $ownid = $this->userid;
+        $used  = $redis->setnx("awards_rec_$userid_ownid_$ownid", 1);
+        if (empty($used)) {
+            $msg = array(
+                'userid' => $userid,
+                'msg' => Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI),
+            );
+            Base_Log::warn($msg);
+            return $this->outputError(Finance_RetCode::RECEIVE_MULTI, 
+                Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI));
+        }
+
         //领的是本人的注册奖励
         if($userid === $this->userid) {       	
         	$regRegist = new Awards_Object_Regist($this->userid);
@@ -53,15 +67,16 @@ class AwardController extends Base_Controller_Page {
         		return ;
         	}
             $transAmt = $regRegist->amount;
+
         } else {
         	$invite   = new Awards_Object_Invite(array('userid'=>$userid));
         	if(empty($invite->userid) || $invite->status===1 || $invite->status===3) {
-        		$this->outputError($canNotErrCode,$canNotErrMsg);
-        		return ;
+        		return $this->outputError($canNotErrCode,$canNotErrMsg);
         	}
         	$id       = $invite->id;
         	$transAmt = $invite->amount;
-        }                        
+        }    
+        
         $failErrCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
         $failErrMsg = Finance_RetCode::getMsg($failErrCode);
         $db = Base_Db::getInstance('xjd');
@@ -74,9 +89,9 @@ class AwardController extends Base_Controller_Page {
         		    'userid'   => $userid,
         		    'transAmt' => $transAmt,
         		));
-        		$db->rollBack();        		
-        		$this->outputError($failErrCode,$failErrMsg);
-        		return ;
+        		$db->rollBack();    
+                $redis->delete("awards_rec_$userid_ownid_$ownid");    		
+        		return $this->outputError($failErrCode,$failErrMsg);
         	}
         } else {
         	$inviteRet = $awardsLogic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH);
@@ -87,8 +102,8 @@ class AwardController extends Base_Controller_Page {
         		    'transAmt' => $transAmt,
         		));
         		$db->rollBack();
-        		$this->outputError($failErrCode,$failErrMsg);
-        		return ;
+                $redis->delete("awards_rec_$userid_ownid_$ownid");
+                return $this->outputError($failErrCode,$failErrMsg);
         	}
         }       
         $receRet = Finance_Api::giveAwards($this->userid, $transAmt);
@@ -99,11 +114,12 @@ class AwardController extends Base_Controller_Page {
         	    'transAmt' => $transAmt,
         	));
         	$db->rollBack();
-        	$this->outputError($failErrCode,$failErrMsg);
-        	return ;
+
+            $redis->delete("awards_rec_$userid_ownid_$ownid");
+        	return $this->outputError($failErrCode,$failErrMsg);
         }
         $db->commit();
-        $this->output();
-        return ; 
+
+        return $this->output(); 
     }  
 }
