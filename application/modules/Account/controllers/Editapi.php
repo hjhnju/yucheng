@@ -105,7 +105,18 @@ class EditapiController extends Base_Controller_Api {
     		$this->outputError($errCode,$errMsg);
     		return ;
     	}
-    	/* if(!$chkret) {
+    	$objLogin = new User_List_Login();
+    	$filters = array('phone'=>$phone);
+    	$objLogin->setFilter($filters);
+    	$list = $objLogin->toArray();
+    	$data = $list['list'][0];    	
+    	if(!empty($data)) {
+    		$errCode = Account_RetCode::PHONE_EXISTS;
+    		$errMsg = Account_RetCode::getMsg($errCode);
+    		$this->outputError($errCode,$errMsg);
+    		return;
+    	}
+    	if(!$chkret) {
     		$errCode = Account_RetCode::VERCODE_ERROR; //验证码输入错误
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
@@ -117,7 +128,7 @@ class EditapiController extends Base_Controller_Api {
     		$errMsg = Account_RetCode::getMsg($errCode);
     		$this->outputError($errCode,$errMsg);
     		return ;
-    	}  */
+    	}
     	//所有验证通过，返回status=0
     	$this->output();  	    	   	
     }
