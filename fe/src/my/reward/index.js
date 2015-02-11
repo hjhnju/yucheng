@@ -25,8 +25,9 @@ define(function (require) {
     function bindEvent() {
 
         //点击领取
-        $('.table-tr-span').click(util.debounce(function () {
-            event = $(this);
+        $('.table-tr-span').click(util.debounce(function (e) {
+            e.preventDefault();
+
             if($(this).hasClass('current')) {
                 return;
             }
