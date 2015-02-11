@@ -9,7 +9,7 @@ class LoanAction extends Yaf_Action_Abstract {
 
         $loanId = isset($_REQUEST['loanid']) ? intval($_REQUEST['loanid']) : null;
 
-        // $arrRet = Loan_Api::makeLoans($loanId);
+        $arrRet = Loan_Api::makeLoans($loanId);
         $arrRet['status'] = Base_RetCode::SUCCESS;
         
         if($arrRet['status'] === Base_RetCode::SUCCESS){

@@ -11,8 +11,11 @@ class Loan_Api {
      */
     public function fullPassAudit($loanId){
         $objLoan = new Loan_Object_Loan($loanId);
-        $objLoan->status = Loan_Type_LoanStatus::PAYING;
-        return $objLoan->save();
+        if($objLoan->status === Loan_Type_LoanStatus::FULL_CHECK){
+            $objLoan->status = Loan_Type_LoanStatus::PAYING;
+            return $objLoan->save();
+        }
+        return false;
     }
 
     /**
