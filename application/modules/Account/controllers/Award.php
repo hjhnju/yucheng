@@ -48,6 +48,7 @@ class AwardController extends Base_Controller_Page {
         //
         $redis = Base_Redis::getInstance();
         $ownid = $this->userid;
+        Base_Log::notice(array("awards_rec2_$userid_ownid_$ownid"));
         $used  = $redis->setnx("awards_rec2_$userid_ownid_$ownid", 1);
         if (empty($used)) {
             $msg = array(
@@ -61,19 +62,22 @@ class AwardController extends Base_Controller_Page {
         //领的是本人的注册奖励
         if($userid === $this->userid) {       	
         	$regRegist = new Awards_Object_Regist($this->userid);
-        	if($regRegist->isLoaded()) {
+                Base_Log::notice(array($regRegist->status));
+          	if(empty($regRegist->status)) {//使用非空字段来判空，不能用userid
                 $redis->delete("awards_rec2_$userid_ownid_$ownid"); 
                 Base_Log::error(array(
                     'userid' => $userid,
                     'msg'    => '用户不在注册奖励表中',
                 ));
-        		return $this->outputError($canNotErrCode,$canNotErrMsg);
+        	    return $this->outputError($canNotErrCode,$canNotErrMsg);
         	}
             $transAmt = $regRegist->amount;
 
         } else {
         	$invite   = new Awards_Object_Invite(array('userid'=>$userid));
-        	if(!$invite->isLoaded() || $invite->status===2) {
+        	Base_Log::notice(array('status'=>$invite->status));
+                //使用主键非空字段判空（不能使用userid），过滤掉未达到和已领取
+                if(empty($invite->id) || $invite->status===1 || $invite->status===3) {
                 $redis->delete("awards_rec2_$userid_ownid_$ownid");
                 Base_Log::error(array(
                     'userid' => $userid,
