@@ -84,7 +84,7 @@ define(function () {
                 timer = null;
             }, wait);
 
-            return fn.apply(null, arguments);
+            return fn.apply(this, arguments);
         };
     }
 
