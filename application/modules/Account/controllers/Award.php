@@ -41,94 +41,103 @@ class AwardController extends Base_Controller_Page {
      * status 1104:领取奖励失败
      */
     public function receiveawardsAction() {
-        $awardsLogic = new Awards_Logic_Awards();
-        $userid = intval($_REQUEST['id']);    
+       
+        //被邀请人userid
+        $inviteeId     = intval($_REQUEST['id']);    
         $canNotErrCode = Finance_RetCode::CAN_NOT_REC_AWARD;
         $canNotErrMsg  = Finance_RetCode::getMsg($canNotErrCode);
-        //
+        
+        //领的是本人的注册奖励
+        if($inviteeId === $this->userid) {          
+            $regRegist = new Awards_Object_Regist($this->userid);
+            Base_Log::notice(array($regRegist->status));
+            if(empty($regRegist->status)) {//使用非空字段来判空，不能用userid
+                Base_Log::error(array(
+                    'userid' => $inviteeId,
+                    'msg'    => '用户不在注册奖励表中',
+                ));
+                return $this->outputError($canNotErrCode,$canNotErrMsg);
+            }
+            $transAmt = $regRegist->amount;
+
+        } else {
+            $invite   = new Awards_Object_Invite(array('userid' => $inviteeId, 'inviterid'=>$this->userid));
+            Base_Log::notice(array(
+                'inviterid' => $this->userid,
+                'inviteeId' => $inviteeId,
+                'status'    => $invite->status,
+            ));
+            
+            //使用主键非空字段判空（不能使用userid），过滤掉未达到和已领取
+            if(empty($invite->id) || $invite->status===1 || $invite->status===3) {
+                Base_Log::error(array(
+                    'inviteeId' => $inviteeId,
+                    'msg'       => '用户不在邀请奖励表中或未达投资满额或已领取',
+                    'status'    => $invite->status,
+                ));
+                return $this->outputError($canNotErrCode,$canNotErrMsg);
+            }
+            $id       = $invite->id;
+            $transAmt = $invite->amount;
+        }    
+        
+        $failErrCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
+        $failErrMsg  = Finance_RetCode::getMsg($failErrCode);
+        $awardsLogic = new Awards_Logic_Awards();
+        $db          = Base_Db::getInstance('xjd');
+        $db->beginTransaction();
+        if($inviteeId === $this->userid) {     
+            $registRet = $awardsLogic->updateRegistStatus($inviteeId, Awards_Logic_Awards::STATUS_FINISH);
+            if(!$registRet) {
+                Base_Log::error(array(
+                    'msg'      => '更新Awards_Regist表失败',
+                    'userid'   => $inviteeId,
+                    'transAmt' => $transAmt,
+                ));
+                $db->rollBack();    
+                return $this->outputError($failErrCode,$failErrMsg);
+            }
+        } else {
+            $inviteRet = $awardsLogic->updateAwardsStatus($id, Awards_Logic_Awards::STATUS_FINISH);
+            if(!$inviteRet) {
+                Base_Log::error(array(
+                    'msg'      => '更新Awards_Invite表失败',
+                    'userid'   => $inviteeId,
+                    'transAmt' => $transAmt,
+                ));
+                $db->rollBack();
+                return $this->outputError($failErrCode,$failErrMsg);
+            }
+        }
+
+        //防止并发
         $redis = Base_Redis::getInstance();
-        $ownid = $this->userid;
-        Base_Log::notice(array("awards_rec2_$userid_ownid_$ownid"));
-        $used  = $redis->setnx("awards_rec2_$userid_ownid_$ownid", 1);
+        $nxkey = Awards_Keys::getReceiveNxKey($inviteeId, $this->userid);
+        $used  = $redis->setnx($nxkey, 1);
+        Base_Log::notice(array(
+            'key'  => $nxkey,
+            'used' => $used,
+        ));
         if (empty($used)) {
             $msg = array(
-                'userid' => $userid,
-                'msg' => Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI),
+                'inviteeId' => $inviteeId,
+                'ownid'     => $this->userid,
+                'msg'       => Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI),
             );
             Base_Log::warn($msg);
             return $this->outputError(Finance_RetCode::RECEIVE_MULTI, Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI));
         }
 
-        //领的是本人的注册奖励
-        if($userid === $this->userid) {       	
-        	$regRegist = new Awards_Object_Regist($this->userid);
-                Base_Log::notice(array($regRegist->status));
-          	if(empty($regRegist->status)) {//使用非空字段来判空，不能用userid
-                $redis->delete("awards_rec2_$userid_ownid_$ownid"); 
-                Base_Log::error(array(
-                    'userid' => $userid,
-                    'msg'    => '用户不在注册奖励表中',
-                ));
-        	    return $this->outputError($canNotErrCode,$canNotErrMsg);
-        	}
-            $transAmt = $regRegist->amount;
-
-        } else {
-        	$invite   = new Awards_Object_Invite(array('userid'=>$userid));
-        	Base_Log::notice(array('status'=>$invite->status));
-                //使用主键非空字段判空（不能使用userid），过滤掉未达到和已领取
-                if(empty($invite->id) || $invite->status===1 || $invite->status===3) {
-                $redis->delete("awards_rec2_$userid_ownid_$ownid");
-                Base_Log::error(array(
-                    'userid' => $userid,
-                    'msg'    => '用户不在邀请奖励表中或未达投资满额',
-                ));
-        		return $this->outputError($canNotErrCode,$canNotErrMsg);
-        	}
-        	$id       = $invite->id;
-        	$transAmt = $invite->amount;
-        }    
-        
-        $failErrCode = Finance_RetCode::RECEIVE_AWARDS_FAIL;
-        $failErrMsg = Finance_RetCode::getMsg($failErrCode);
-        $db = Base_Db::getInstance('xjd');
-        $db->beginTransaction();
-        if($userid === $this->userid) {     
-        	$registRet = $awardsLogic->updateRegistStatus($userid, Awards_Logic_Awards::STATUS_FINISH);
-        	if(!$registRet) {
-        		Base_Log::error(array(
-        		    'msg'      => '更新Awards_Regist表失败',
-        		    'userid'   => $userid,
-        		    'transAmt' => $transAmt,
-        		));
-        		$db->rollBack();    
-                $redis->delete("awards_rec2_$userid_ownid_$ownid");    		
-        		return $this->outputError($failErrCode,$failErrMsg);
-        	}
-        } else {
-        	$inviteRet = $awardsLogic->updateAwardsStatus($id, Awards_Logic_Awards::STATUS_FINISH);
-        	if(!$inviteRet) {
-        		Base_Log::error(array(
-        		    'msg'      => '更新Awards_Invite表失败',
-        		    'userid'   => $userid,
-        		    'transAmt' => $transAmt,
-        		));
-        		$db->rollBack();
-                $redis->delete("awards_rec2_$userid_ownid_$ownid");
-                return $this->outputError($failErrCode,$failErrMsg);
-        	}
-        }       
         $receRet = Finance_Api::giveAwards($this->userid, $transAmt);
         if(!$receRet) {
-        	Base_Log::error(array(
-        	    'msg'      => '领取邀请奖励失败',
-                'userid'   => $userid,
-        	    'transAmt' => $transAmt,
-        	));
-        	$db->rollBack();
-
-            $redis->delete("awards_rec2_$userid_ownid_$ownid");
-        	return $this->outputError($failErrCode,$failErrMsg);
+            Base_Log::error(array(
+                'msg'      => '领取邀请奖励失败',
+                'userid'   => $inviteeId,
+                'transAmt' => $transAmt,
+            ));
+            $redis->delete($nxkey);
+            $db->rollBack();
+            return $this->outputError($failErrCode,$failErrMsg);
         }
         $db->commit();
 
