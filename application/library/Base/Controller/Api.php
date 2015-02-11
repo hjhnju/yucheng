@@ -16,7 +16,7 @@ class Base_Controller_Api extends Base_Controller_Abstract {
         //统一验证csrf token
         $token     = isset($_POST['token']) ? trim($_POST['token']) : '';
         $csrftoken = Yaf_Session::getInstance()->get(Base_Keys::getCsrfTokenKey());
-        if($token !== $csrftoken && ENVIRON === 'product'){
+        if($token !== $csrftoken){
             Base_Log::warn(array(
                 'msg'        => 'Csrf token invalid', 
                 'post_token' => $token,
@@ -34,7 +34,7 @@ class Base_Controller_Api extends Base_Controller_Abstract {
     }
 
     protected function isAjax() {
-        return false;
+        return true;
     }
    
     public function ajax($arrData = array(), $errorMsg = '', $status = 0){

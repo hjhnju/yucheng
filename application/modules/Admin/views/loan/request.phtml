@@ -66,57 +66,73 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">基本借款信息 <small>loan</small></h3>
+                            <input type="hidden" name="loanid" value="{%$loanId%}">
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="title">借款标题</label>
-                                <input type="email" class="form-control" id="title" placeholder="填写借款标题">
+                                <input type="text" class="form-control" id="title" name="title" placeholder="填写借款标题">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">借款金额</label>
+                                <input type="text" class="form-control" id="amount" name="amount" placeholder="填写借款金额">
+                            </div>
+                            <div class="form-group">
+                                <label for="interest">借款利率</label>
+                                <input type="text" class="form-control" id="interest" name="interest" placeholder="填写借款利率">
                             </div>
                             <div class="form-group">
                                 <label for="area">所在地</label>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">广西 <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">湖北</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">北京</a></li>
-                                    </ul>
-                                </div>
+                                <select name="area">
+                                    {%selection name='Loan_Type_Province'%}
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="typeid">标的类型</label>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">实地认证标 <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">信用认证表</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">机构担保标</a></li>
-                                    </ul>
-                                </div>
+                                <label for="type_id">标的类型</label>
+                                <select name="type_id">
+                                {%selection name='Loan_Type_LoanType'%}
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="catid">借款类型</label>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">学校助力贷 <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">教师圆梦贷</a></li>
-                                    </ul>
-                                </div>
+                                <label for="cat_id">借款类型</label>
+                                <select name="cat_id">
+                                {%selection name='Loan_Type_LoanCat'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration">借款时长</label>
+                                <select name="duration">
+                                {%selection name='Loan_Type_Duration'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="refund_type">还款方式</label>
+                                <select name="refund_type">
+                                {%selection name='Loan_Type_RefundType'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="level">风险等级</label>
+                                <select name="level">
+                                {%selection name='Loan_Type_LevelName'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="level">保障方式</label>
+                                {%checkboxes name='Loan_Type_SafeMode' tag='safes'%}
                             </div>
                             <div class="form-group">
                                 <label for="content">借款原因</label>
                                 <div class="text">
-                                    <input type="text" name="content">
+                                    <input type="text" name="content" class="form-control">
                                 </div>
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="fresh"> 新手专项标
+                                    <input type="checkbox" name="fresh" value="1"> 新手专项标
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-success">保存</button>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
@@ -124,8 +140,53 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">借款企业信息 <small>loan_company</small></h3>
+                            <input type="hidden" name="company[id]" value="0">
                         </div>
                         <div class="panel-body">
+                            <div class="form-group">
+                                <label for="school">学校</label>
+                                <div class="text">
+                                    <input type="text" name="company[school]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="area">所在地</label>
+                                <div class="text">
+                                    <select name="company[area]">
+                                    {%selection name='Loan_Type_Province'%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="assets">公司资产</label>
+                                <div class="text">
+                                    <input type="text" name="company[assets]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="employers">员工数</label>
+                                <div class="text">
+                                    <input type="text" name="company[employers]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="years">成立时间</label>
+                                <div class="text">
+                                    <input type="text" name="company[years]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="funds">注册资金</label>
+                                <div class="text">
+                                    <input type="text" name="company[funds]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="students">学生数</label>
+                                <div class="text">
+                                    <input type="text" name="company[students]">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
@@ -133,8 +194,55 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">借款担保信息 <small>loan_guarantee</small></h3>
+                            <input type="hidden" name="guarantee[id]" value="0">
                         </div>
                         <div class="panel-body">
+                            <div class="form-group">
+                                <label for="name">担保人</label>
+                                <div class="text">
+                                    <input type="text" name="guarantee[name]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="account">户口所在地</label>
+                                <div class="text">
+                                    <input type="text" name="guarantee[account]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">年龄</label>
+                                <div class="text">
+                                    <input type="text" name="guarantee[age]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="marriage">已婚</label>
+                                <div class="text">
+                                <select name="guarantee[marriage]">
+                                {%selection name='Loan_Type_YesNo'%}
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="company_type">企业类型</label>
+                                <div class="text">
+                                    <select name="guarantee[company_type]">
+                                    {%selection name='Loan_Type_SchoolType'%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="jobtitle">职务</label>
+                                <div class="text">
+                                    <input type="text" name="guarantee[job_title]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="income">年收入</label>
+                                <div class="text">
+                                    <input type="text" name="guarantee[income]">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
@@ -144,36 +252,187 @@
                             <h3 class="panel-title">借款审核信息 <small>loan_audit</small></h3>
                         </div>
                         <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr><th>审核类型</th><th>说明</th></tr>
+                            </thead>
+                            {%section name=loop loop=15%}
+                            <tr>
+                                <td><select name="audit[{%$smarty.section.loop.index%}][type]">
+                                {%selection name='Loan_Type_Audit'%}
+                                </select></td>
+                                <td><input type="text" name="audit[{%$smarty.section.loop.index%}][name]"></td>
+                                <td><input type="hidden" name="audit[{%$smarty.section.loop.index%}][id]"></td>
+                            </tr>
+                            {%/section%}
+                        </table>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
                     <!-- FORM FIELDS-->
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">借款附件 <small>loan_attach</small></h3>
+                            <h3 class="panel-title">已上传的附件 <small>loan_attach</small></h3>
                         </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="filename">附件描述</label>
-                                <input type="text" id="filename">
-                                <label for="select">附件类型</label>
-                                <select name="select">
-                                    <option value="1">认证材料</option>
-                                    <option value="2">合同协议</option>
-                                    <option value="3">实地照片</option>
-                                </select>
-                                <input type="file" id="inputfile">
-                                <p class="help-block">上传后保存</p>
-                            </div>
-
-                            <button type="submit" class="btn btn-success">提交附件</button>
+                        <div class="panel-body" id="uploaded">
+                            <table class="table">
+                                <thead>
+                                    <tr id="0"><th>序号</th><th>附件类型</th><th>文件</th><th>描述</th><th></th></tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <button type="submit" class="btn btn-success">填写完毕-发布</button>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
                 </form>
                 <!-- END FORM-->  
+                <form action="/upload/pic" method="post" enctype="multipart/form-data" id="uploadfile">
+                    <!-- FORM FIELDS-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">上传附件</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="filename">附件描述</label>
+                                <input type="text" name="attach_title" id="attach_title">
+                                <label for="select">附件类型</label>
+                                <select name="attach_type" id="attach_type">
+                                    {%selection name='Loan_Type_Attach'%}
+                                </select>
+                                <input type="file" id="file" name="file">
+                            </div>
+
+                            <button type="button" id="upload_btn" class="btn btn-success">添加附件</button>
+                        </div>
+                    </div>
+                    <!-- FORM FIELDS-->
+                </form>
             </div>
 
         </div>
     </div>
+{%/block%}
+
+{%block name='script'%}
+<script src="{%$feroot%}s/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    var upindex = 0;
+    $('#upload_btn').on({
+        click: function (e) {
+            var title = $('#attach_title').val();
+            if (!title) {
+                alert('附件描述不能为空');
+                return false;
+            }
+            if (!$('#file').val()) {
+                alert('图片文件不能为空');
+                return false;
+            }
+            $.ajaxFileUpload({
+                url: '/upload/pic',
+                secureuri: false,
+                fileElementId: 'file',
+                dataType: 'json',
+                success: function (res, status) {
+                    var row = {
+                            id: 0,
+                            type: $('#attach_type').val(),
+                            hash: res.data.hash,
+                            title: title,
+                            type_name: $('#attach_type').find('option:selected').text()
+                    };
+                    addAttach(row);
+                },
+                error: function (data, status, e) {
+                    alert(e);
+                }
+            })
+
+            return false;
+        }
+    });
+
+    function addAttach(row) {
+        upindex ++;
+        var link = '<a class="del" href="javascript:;">删除</a>';
+        var inputs = '<input type="hidden" name="attach[' + upindex + '][type]" value="' + row.type + '">' +
+                    '<input type="hidden" name="attach[' + upindex + '][url]" value="' + row.hash + '">' +
+                    '<input type="hidden" name="attach[' + upindex + '][title]" value="' + row.title + '">' +
+                    '<input type="hidden" name="attach[' + upindex + '][id]" value="' + row.id + '">';
+        link = link + inputs;
+        var pic = '<a href="/pic/' + row.hash + '.jpg" target="_blank">' + row.hash + '</a>';
+        var ary = [upindex, row.type_name, pic, row.title, link];
+        var str = ary.join('</td><td>');
+        var el = $('<tr><td>' + str + '</tr>').appendTo($('#uploaded tbody'));
+        el.find('.del').on({
+            click: function(e) {
+                $(this).parents('tr').remove();
+            }
+        });
+    }
+    
+    var loanId = {%$loanId%};
+    if (loanId > 0) {
+        $.post('/admin/loan/getdetail', {loanid: loanId}, function(res) {
+            var data = res.data;
+            for(var key in data) {
+                var val = data[key];
+                if (key == 'fresh') {
+                    continue;
+                }
+                $('input[name='+key+'], select[name='+key+']').val(val);
+            }
+            if (data.fresh == 1) {
+                $('input[name=fresh]').attr('checked', true).parent().addClass('checked');
+            }
+            if (data.safe_id.length > 0) {
+                var safes = data.safe_id.split(',');
+                for (var i = 0; i < safes.length; i++) {
+                    $('#safes_'+safes[i]).attr('checked', true).parent().addClass('checked');
+                }
+            }
+            
+            loadsub('guarantee', data.guarantee);
+            loadsub('company', data.company);
+            loadaudit(data.audit);
+            loadAttach(data.attach);
+        });
+    }
+
+    function loadsub(name, data) {
+        for(var key in data) {
+            var val = data[key];
+            $('input[name="'+name+'['+key+']"], select[name="'+name+'['+key+']"]').val(val);
+        }
+    }
+
+    function loadAttach(data) {
+        for (var type in data) {
+            var attachs = data[type];
+            for (var i = 0; i < attachs.length; i++) {
+                attachs[i].type_name = type;
+                addAttach(attachs[i]);
+            }
+        }
+    }
+
+    function loadaudit(data) {
+        var id = -1;
+        for (var type in data) {
+            var audits = data[type];
+            for (var i = 0; i < audits.length; i++) {
+                var audit = audits[i];
+                id ++;
+                var name = 'audit[' + id + '][type]';
+                $('select[name="' + name + '"]').val(audit.type);
+                name = 'audit[' + id + '][name]';
+                $('input[name="' + name + '"]').val(audit.name);
+                name = 'audit[' + id + '][id]';
+                $('input[name="' + name + '"]').val(audit.id);
+            }
+        }
+    }
+    </script>
 {%/block%}

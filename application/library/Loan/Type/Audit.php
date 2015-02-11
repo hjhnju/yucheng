@@ -15,7 +15,12 @@ class Loan_Type_Audit extends Base_Type {
      * @var integer
      */
     const GUARANTEE = 2;
-    
+    /**
+     * 借款人认证
+     * @var integer
+     */
+    const PRIVLENDER = 3;
+
     /**
      * 状态名
      * @var array
@@ -23,6 +28,7 @@ class Loan_Type_Audit extends Base_Type {
     public static $names = array(
         self::COMPANY   => '机构认证',
         self::GUARANTEE => '担保人认证',
+        self::PRIVLENDER=> '借款人认证',
     );
     
     /**

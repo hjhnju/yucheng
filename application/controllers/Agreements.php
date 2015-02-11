@@ -12,7 +12,8 @@ class AgreementsController extends Base_Controller_Page {
     
     /**
      * 注册协议
-     */
-    public function registAction() {
+     */ 
+    public function indexAction() {
+    	
     }
 }

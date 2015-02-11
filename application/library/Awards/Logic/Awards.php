@@ -47,7 +47,7 @@ class Awards_Logic_Awards {
         $regAwd->userid      = $userid;
         $regAwd->status      = self::STATUS_NOTFIT;
         $regAwd->amount      = $this->regAmt;
-        $regAwd->create_time = $time;
+        $regAwd->createTime  = $time;
         $ret1                = $regAwd->save();
         if(!$ret1){
             Base_Log::error(array(
@@ -67,7 +67,7 @@ class Awards_Logic_Awards {
             $ivtAwd->inviterid   = $inviterid;
             $ivtAwd->status      = self::STATUS_NOTFIT;
             $ivtAwd->amount      = $this->invAmt;
-            $ivtAwd->create_time = $time; 
+            $ivtAwd->createTime = $time; 
             $ret2                = $ivtAwd->save();
             if(!$ret2){
                 Base_Log::fatal(array(
@@ -176,13 +176,15 @@ class Awards_Logic_Awards {
         //返回值得第一项为该用户的信息
         $ret[0]                  = $inviter; 
         
-        //开始获取该用户邀请的用的信息       
+        //开始获取该用户邀请的用户的信息       
         $invite  = new Awards_List_Invite();
         $filters = array('inviterid' => $inviterid); //caution:被邀请人的userid
         $invite->setFilter($filters);
+        $invite->setPagesize(PHP_INT_MAX);
         $invite->setOrder('create_time desc');
+        $invite->setPagesize(PHP_INT_MAX);
         $list    = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
-        $users   = $list['list'];        
+        $users   = $list['list'];
         if(empty($users)) { 
             return $ret; //若没有邀请者，返回false
         }

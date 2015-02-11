@@ -14,51 +14,14 @@
 
 {%block name="content"%}
 {%assign var="bannerList" value=[0 => "banner-one", 1 => "banner-two", 2 => "banner-three", 3 => "banner-four"]%}
+{%assign var="bannerHref" value=[0 => "/security", 1 => "/infos/post/detail?id=31", 2 => "/infos/post/detail?id=31", 3 => "/"]%}
 
 <div class="banner-floation">
-
 
     <ul class="banner-item">
         {%foreach $bannerList as $key => $item%}
         <li class="banner-item-list">
-            <div class="banner-item-list-link {%$item%}">
-
-                <div class="banner-container">
-                    <div class="jiantou-left"></div>
-                    <div class="jiantou-right"></div>
-                    <div class="fix-box">
-                        {%if isset($user)%}
-                        <div class="fix-box-title">
-                            <p class="fix-title-number logining">欢迎您
-                            </p>
-                            <p class="fix-title-text">{%$user.username%}</p>
-                        </div>
-                        <div class="fix-box-main mar-top">
-                            <a href="{%$webroot%}/account/overview" class="fix-box-main-regist ">管理我的账户</a>
-                            <div class="fix-box-main-box">
-
-                            </div>
-                        </div>
-                        {%else%}
-                        <div class="fix-box-title">
-                            <p class="fix-title-number">18.0
-                                <span class="fix-title-number-bai">%</span>
-                            </p>
-                            <p class="fix-title-text">最高年化收利率</p>
-                        </div>
-                        <div class="fix-box-main">
-                            <a href="{%$webroot%}/user/regist" class="fix-box-main-regist">快速注册</a>
-                            <div class="fix-box-main-box">
-                                已有账号？<a href="{%$webroot%}/user/login" class="fix-box-main-box-login">立即登录</a>
-                            </div>
-                        </div>
-                        {%/if%}
-
-                    </div>
-                </div>
-
-            </div>
-
+            <a href="{%$bannerHref[$key]%}" class="banner-item-list-link {%$item%}"></a>
         </li>
         {%/foreach%}
     </ul>
@@ -68,6 +31,40 @@
         <a class="banner-select-link"></a>
         <a class="banner-select-link"></a>
     </div>
+    <div class="fix-container">
+        <div class="fix-box">
+            {%if isset($user)%}
+            <div class="fix-box-title">
+                <p class="fix-title-number logining">欢迎您
+                </p>
+                <p class="fix-title-text">{%$user.username%}</p>
+            </div>
+            <div class="fix-box-main mar-top">
+                <a href="{%$webroot%}/account/overview" class="fix-box-main-regist ">管理我的账户</a>
+                <div class="fix-box-main-box">
+
+                </div>
+            </div>
+            {%else%}
+            <div class="fix-box-title">
+                <p class="fix-title-number">18.0
+                    <span class="fix-title-number-bai">%</span>
+                </p>
+                <p class="fix-title-text">最高年化收利率</p>
+            </div>
+            <div class="fix-box-main">
+                <a href="{%$webroot%}/user/regist" class="fix-box-main-regist">快速注册</a>
+                <div class="fix-box-main-box">
+                    已有账号？<a href="{%$webroot%}/user/login" class="fix-box-main-box-login">立即登录</a>
+                </div>
+            </div>
+            {%/if%}
+
+        </div>
+    </div>
+
+    <div class="jiantou jiantou-left"></div>
+    <div class="jiantou jiantou-right"></div>
 </div>
 <div class="introduce">
     <div class="container">

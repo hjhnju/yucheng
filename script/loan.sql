@@ -166,3 +166,21 @@ CREATE TABLE `loan_request` (
   `update_uid` int(11) NOT NULL DEFAULT '0' COMMENT '跟进人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借款申请表';
+
+DROP TABLE IF EXISTS  `loan_private`;
+CREATE TABLE `loan_private` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `loan_id` int(11) NOT NULL COMMENT '借款ID',
+  `user_id` int(11) NOT NULL COMMENT '创建人ID',
+  `showname` varchar(255) NOT NULL COMMENT '显示用户名',
+  `account` varchar(255) DEFAULT NULL COMMENT '户口',
+  `age` tinyint(4) DEFAULT NULL COMMENT '年龄',
+  `marriage` tinyint(4) DEFAULT NULL COMMENT '婚姻',
+  `company_type` varchar(255) DEFAULT NULL COMMENT '企业类型',
+  `job_title` varchar(255) DEFAULT NULL COMMENT '职务',
+  `income` varchar(255) DEFAULT NULL COMMENT '收入',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人借款用户信息';

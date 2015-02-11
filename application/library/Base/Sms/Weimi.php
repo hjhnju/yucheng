@@ -56,8 +56,9 @@ class Base_Sms_Weimi implements Base_Sms_Interface{
                 return $ret;
             }
         }
-        Base_Log::warn(array('ret'=>$ret, 'phone'=>$mixPhone, 'tplid'=>$strTplid, 'args'=>$arrArgs, 'timing'=>$timing));
-        return $ret;
+        Base_Log::warn(array('ret'=>$ret, 'phone'=>$mixPhone, 
+            'tplid'=>$strTplid, 'args'=>$arrArgs, 'timing'=>$timing));
+        return false;
     }
 
 	/**
@@ -93,6 +94,6 @@ class Base_Sms_Weimi implements Base_Sms_Interface{
             }
         }
         Base_Log::warn(array('ret'=>$ret, 'phone'=>$mixPhone, 'content'=>$strCtx, 'timing'=>$timing));
-        return $ret;
+        return false;
     }
 }

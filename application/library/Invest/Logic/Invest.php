@@ -169,12 +169,29 @@ class Invest_Logic_Invest {
         if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
             $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
         }
-        // 对于学校不对外显示
-        $loan['company']['school'] = Base_Util_Secure::hideDetail($loan['company']['school']);
         // 对于投标时间已经结束的 进行修正
         if ($loan['status'] == Invest_Type_InvestStatus::LENDING && $loan['deadline'] < time()) {
             $loan['status'] = Invest_Type_InvestStatus::FAILED;
             $loan['status_name'] = Invest_Type_InvestStatus::getTypeName(Invest_Type_InvestStatus::FAILED);
+        }
+        //满标耗时
+        if($loan['status'] == Invest_Type_InvestStatus::FULL_CHECK){
+            $expendTime = intval($loan['full_time']) - intval($loan['start_time']);
+            //$expendTime = 48 * 60 * 60 + 560;
+            $day = intval($expendTime / (24 * 60 * 60));
+            $hours = intval(($expendTime - $day * 24 * 60 * 60) / (60 * 60));
+            $mins = intval(($expendTime - $day * 24 * 60 * 60 - $hours * 60 * 60) / 60);
+            $extime = "";
+            if($day > 0){
+                $extime = $day . "天";
+            }
+            if($hours > 0){
+                $extime = $extime . $hours . "小时";
+            }
+            if($mins > 0){
+                $extime = $extime . $mins . "分";
+            }
+            $loan['expend_time'] = $extime;
         }
         return $loan;
     }

@@ -24,7 +24,7 @@
 {%block name="content"%}
 {%assign var=mapType value=['实地认证'=>'shidi', '营业执照'=>'yingye', '税务登记证'=>'shuiwu', '银行开户许可证'=>'bank',
 '组织机构代码证'=>'zuzhi', '征信报告'=>'zhengxin', '抵押手续'=>'diya', '身份证'=>'shenfen', '户口本'=>'hukou',
-'结婚证'=>'jiehun', '房产证'=>'fangchan', '行驶证'=>'xingshi']%}
+'结婚证'=>'jiehun', '房产证'=>'fangchan', '行驶证'=>'xingshi', '登记证书'=>'yingye']%}
 <div class="details">
     <div class="container">
         <div class="detail-left">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="project-title-number">
                             <span>借款编号：</span>
-                            <span>{%$data.id%}</span>
+                            <span><a target="_blank" style="color:#76cf65" href="/loan/contract">{%$data.id%}</a></span>
                         </div>
                     </div>
                     <div class="project-gaishu">
@@ -125,6 +125,51 @@
                     </div>
                     <div class="main-box-details showproject-main">
                         {%if isset($user.amount)%}
+                        {%if !empty($data.private)%}
+                        <div class="details-main-box">
+                            <div class="main-box-detail-title">借款人信息</div>
+                            <div class="main-detail-content">
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">姓名：</div>
+                                        <div class="file-left-text">{%$data.private.showname%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">所处职位：</div>
+                                        <div class="file-left-text">{%$data.private.job_title%}</div>
+                                    </div>
+                                    <!-- <div class="file-left-box">
+                                        <div class="file-left-name">婚否：</div>
+                                        <div class="file-left-text">{%if $data.private.marriage == 1%}是{%else%}否{%/if%}</div>
+                                    </div> -->
+                                </div>
+                                <div class="file-enter">
+                                    <!-- <div class="file-left-box">
+                                        <div class="file-left-name">单位类别：</div>
+                                        <div class="file-left-text">{%$data.private.company_type%}</div>
+                                    </div> -->
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">婚否：</div>
+                                        <div class="file-left-text">{%if $data.private.marriage == 1%}是{%else%}否{%/if%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">年龄：</div>
+                                        <div class="file-left-text">{%$data.private.age%} 岁</div>
+                                    </div>
+                                </div>
+                                <div class="file-left">
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">户口：</div>
+                                        <div class="file-left-text">{%$data.private.account%}</div>
+                                    </div>
+                                    <div class="file-left-box">
+                                        <div class="file-left-name">年收入：</div>
+                                        <div class="file-left-text">{%$data.private.income%}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {%/if%}
                         {%if !empty($data.company)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">借款机构</div>
@@ -136,7 +181,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">区域位置：</div>
-                                        <div class="content-left-text">{%$data.company.area%}</div>
+                                        <div class="content-left-text">{%$data.company.area_name%}</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">资产总值：</div>
@@ -144,7 +189,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">教职工数量：</div>
-                                        <div class="content-left-text">{%$data.company.employers%}名</div>
+                                        <div class="content-left-text">{%$data.company.employers%}+ 名</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">借款用途：</div>
@@ -155,7 +200,7 @@
                                 <div class="main-detail-content-right">
                                     <div class="left-box">
                                         <div class="content-left-name">成立日期：</div>
-                                        <div class="content-left-text right-text">{%$data.company.years%}年</div>
+                                        <div class="content-left-text right-text">{%$data.company.years%} 年</div>
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">注册资金：</div>
@@ -163,7 +208,7 @@
                                     </div>
                                     <div class="left-box">
                                         <div class="content-left-name">学生数量：</div>
-                                        <div class="content-left-text right-text">{%$data.company.students%}名</div>
+                                        <div class="content-left-text right-text">{%$data.company.students%}+ 名</div>
                                     </div>
                                 </div>
                             </div>
@@ -176,31 +221,31 @@
                                 <div class="file-left">
                                     <div class="file-left-box">
                                         <div class="file-left-name">成功借款：</div>
-                                        <div class="file-left-text">{%$data.counter.success%}笔</div>
+                                        <div class="file-left-text">{%$data.counter.success%} 笔</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">还清笔数：</div>
-                                        <div class="file-left-text">{%$data.counter.finished%}笔</div>
+                                        <div class="file-left-text">{%$data.counter.finished%} 笔</div>
                                     </div>
                                 </div>
                                 <div class="file-enter">
                                     <div class="file-left-box">
                                         <div class="file-left-name">授信额度：</div>
-                                        <div class="file-left-text">{%$data.counter.limit%}元</div>
+                                        <div class="file-left-text">{%$data.counter.limit%} 元</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">已还金额：</div>
-                                        <div class="file-left-text">{%$data.counter.refund%}元</div>
+                                        <div class="file-left-text">{%$data.counter.refund%} 元</div>
                                     </div>
                                 </div>
                                 <div class="file-left">
                                     <div class="file-left-box">
                                         <div class="file-left-name">累计借款：</div>
-                                        <div class="file-left-text">{%$data.counter.total%}元</div>
+                                        <div class="file-left-text">{%$data.counter.total%} 元</div>
                                     </div>
                                     <div class="file-left-box">
                                         <div class="file-left-name">待还本息：</div>
-                                        <div class="file-left-text">{%$data.counter.rest%}元</div>
+                                        <div class="file-left-text">{%$data.counter.rest%} 元</div>
                                     </div>
                                 </div>
                             </div>
@@ -284,14 +329,14 @@
                     </div>
                     <div class="main-box-details showfile-main">
                         {%if isset($user.amount)%}
-                        {%if !empty($data.attach['1'])%}
+                        {%if !empty($data.attach['认证材料'])%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">认证材料</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['1'] as $key => $item%}
+                                    {%foreach $data.attach['认证材料'] as $key => $item%}
                                     <li class="detail-item-list img-city">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img img-width" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img img-width" src="{%$item.thumb%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -299,14 +344,14 @@
                             </div>
                         </div>
                         {%/if%}
-                        {%if !empty($data.attach['2'])%}
+                        {%if !empty($data.attach['合同协议'])%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">合同协议</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['2'] as $key => $item%}
+                                    {%foreach $data.attach['合同协议'] as $key => $item%}
                                     <li class="detail-item-list">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.thumb%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -314,14 +359,14 @@
                             </div>
                         </div>
                         {%/if%}
-                        {%if !empty($data.attach['3'])%}
+                        {%if !empty($data.attach['实地照片'])%}
                         <div class="details-main-box item-last">
-                            <div class="main-box-detail-title">实地图片</div>
+                            <div class="main-box-detail-title">实地照片</div>
                             <div class="main-detail-content">
                                 <ul class="detail-item">
-                                    {%foreach $data.attach['3'] as $key => $item%}
-                                    <li class="detail-item-list img-city">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.url%}" />
+                                    {%foreach $data.attach['实地照片'] as $key => $item%}
+                                    <li class="detail-item-list img-city" style="margin-right:70px">
+                                        <img alt="{%$item.title%}" style="width: 250px;height:180px;" class="detail-item-list-img" src="{%$item.thumb%}" />
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%}
@@ -362,8 +407,18 @@
                 <div class="right-box-top">
                     <div class="right-top2nd-title">已满标</div>
                     <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
-                    <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">满标耗时：{%$data.expend_time%}</div>
                     <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
+                </div>
+            </div>
+            {%else if $data.status == 10%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div style="width:200px;margin:20px" class="right-top2nd-title refund">即将开启</div>
                 </div>
             </div>
             {%else if $data.status == 5%}
@@ -379,7 +434,7 @@
                     <div class="right-top2nd-box">下次合约还款日: {%$data.next_date|date_format:'%Y-%m-%d'%}</div>
                 </div>
             </div>
-            {%else%}
+            {%else if $data.status == 2%}
             <form id="invest-form" method="post" action="/invest/tender" class="right-top">
                 <div class="right-top-title">我来投资</div>
                 {%if $data.fresh%}
@@ -403,6 +458,19 @@
                     <a class="right-top-btn-confirm confirm-all">全部投资</a>
                 </div>
             </form>
+            {%else%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div class="right-top2nd-title">已结束</div>
+                    <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
+                </div>
+            </div>
             {%/if%}
             <div class="right-bottom">
                 <div class="right-bottom-title">

@@ -69,7 +69,7 @@
                     <tbody>
                         {%foreach from=$arrLoan key=i item=loan%}
                         <tr>
-                            <td><a href="/admin/loan/detail?loanid={%$loan.id%}">{%$loan.id%}</a></td>
+                            <td><a href="/admin/loan/request?loanid={%$loan.id%}&userid={%$loan.user_id%}">{%$loan.id%}</a></td>
                             <td><a href="/admin/corp/detail?userid={%$loan.user_id%}">{%$loan.user_id%}</a></td>
                             <td>{%$loan.title%}</td>
                             <td>{%$loan.amount%}</td>
@@ -77,6 +77,9 @@
                             <td>{%$loan.duration%}</td>
                             <td>
                             {%if $status==1%}<!--借款审核-->
+                                <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
+                                <a href="/admin/loan/publish?loanid={%$loan.id%}">发布上线</a>
+                            {%elseif $status==10%}<!--即将开启-->
                                 <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
                                 <a href="/admin/loan/publish?loanid={%$loan.id%}">发布上线</a>
                             {%elseif $status==3%}<!--满标审核-->
