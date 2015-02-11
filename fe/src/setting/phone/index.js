@@ -162,7 +162,7 @@ define(function (require) {
                     $('#time-span').text(--value + '秒后自动跳转');
                     if(value === 0) {
                         clearInterval(timer);
-                        window.location.href = '/account/views/overview/index';
+                        window.location.href = '/account/overview/index';
                     }
 
                 },1000);
