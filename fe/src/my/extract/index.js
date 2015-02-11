@@ -13,6 +13,7 @@ define(function (require) {
 //    var withdraw = new Remoter('ACCOUNT_CASH_WITHDRAW_ADD');
     var checksmscode = new Remoter('REGIST_CHECKSMSCODE_CHECK');
     var sendsmscode = new Remoter('REGIST_SENDSMSCODE_CHECK');
+    var util = require('common/util');
 
     function init() {
         header.init();
@@ -72,7 +73,7 @@ define(function (require) {
         });
 
         // 检查是否获取验证码
-        $('.get-sms').click(function (e) {
+        $('.get-sms').click(util.debounce(function (e) {
             e.preventDefault();
             var phone = $('.get-sms').attr('data-value');
 
@@ -80,7 +81,7 @@ define(function (require) {
                 phone: phone,
                 type: 6
             });
-        });
+        }, 1000));
 
         // sendsmscodeCb
         sendsmscode.on('success', function(data) {
