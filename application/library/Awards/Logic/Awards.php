@@ -181,7 +181,7 @@ class Awards_Logic_Awards {
         $filters = array('inviterid' => $inviterid); //caution:被邀请人的userid
         $invite->setFilter($filters);
         $invite->setPagesize(PHP_INT_MAX);
-        $invite->setOrder('create_time desc');
+        $invite->setOrder('id desc');
         $invite->setPagesize(PHP_INT_MAX);
         $list    = $invite->toArray(); //拿到了该邀请人邀请到的所有人的信息
         $users   = $list['list'];

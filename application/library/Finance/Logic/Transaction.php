@@ -343,9 +343,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 
         //收取费用
         $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
-        $fee       = $arrFeeInfo['total_fee'];
-        $riskFee   = $arrFeeInfo['risk_fee'];
-        $servFee   = $arrFeeInfo['serv_fee'];
+        //里面函数已经round(,2)
+        $fee       = sprintf('%.2f', $arrFeeInfo['total_fee']);
+        $riskFee   = sprintf('%.2f', $arrFeeInfo['risk_fee']);
+        $servFee   = sprintf('%.2f', $arrFeeInfo['serv_fee']);
         
         $subOrderInfo  = Finance_Logic_Order::getOrderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
@@ -356,13 +357,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             array(
                 'DivCustId'=> Base_Config::getConfig('huifu.merCustId', CONF_PATH.'/huifu.ini'),
                 'DivAcctId'=> Base_Config::getConfig('huifu.acct.SDT2', CONF_PATH.'/huifu.ini'),
-                'DivAmt'   => sprintf('%.2f', $riskFee),
+                'DivAmt'   => $riskFee,
             ),  
             //专属账户
             array(
                 'DivCustId'=> Base_Config::getConfig('huifu.merCustId', CONF_PATH.'/huifu.ini'),
                 'DivAcctId'=> Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH.'/huifu.ini'),
-                'DivAmt'   => sprintf('%.2f', $servFee),
+                'DivAmt'   => $servFee,
             ),
         );
         $jsonDivDetails = json_encode($arrDivDetails);
