@@ -17,7 +17,7 @@ define('common/config', [], function () {
             EDIT_PHONE_SUBMITE2ND: rootUrl + '/account/editapi/bindnewphone',
             EDIT_EMAILCONFIRM: rootUrl + '/account/editapi/newemail',
             EDIT_CHPWD_SUBMITE: rootUrl + '/account/editapi/modifypwd',
-            ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl + '/test/account/award/receiveAwards.json',
+            ACCOUNT_AWARD_RECEIVEAWARDS: rootUrl + '/account/award/receiveawards',
             ACCOUNT_CASH_LIST: rootUrl + '/account/cashapi/list',
             LINE_GET: rootUrl + '/account/overview/profitCurve',
             SECURE_DEGREE: rootUrl + '/account/secure/securedegree',
