@@ -10,6 +10,7 @@ define(function (require) {
 
     var $ = require('jquery');
     var picScroll = require('../common/picScroll');
+    var util = require('common/util');
     var header = require('common/header');
     var dialog = require('common/ui/Dialog/Dialog');
     var login = require('setting/login/index');
@@ -183,7 +184,7 @@ define(function (require) {
         });
 
         // 检查是否获取验证码
-        $('.login-username-testing').click(function (e) {
+        $('.login-username-testing').click(util.debounce(function (e) {
             e.preventDefault();
 
             var value = $.trim(loginInput.loginPhone.val());
@@ -195,7 +196,7 @@ define(function (require) {
                 });
             }
 
-        });
+        }, 1000) );
 
         // 检查推荐人
         loginInput.loginTuiJian.blur(function () {
@@ -210,7 +211,7 @@ define(function (require) {
         });
 
         // 检查快速注册
-        $('.regist .login-fastlogin').click(function (e) {
+        $('.regist .login-fastlogin').click(util.debounce(function (e) {
             e.preventDefault();
 
             var status = 1;
@@ -238,7 +239,7 @@ define(function (require) {
                 isthird: isthird
             });
 
-        });
+        }, 1000));
 
     }
 
