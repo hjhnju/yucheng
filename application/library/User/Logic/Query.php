@@ -37,6 +37,9 @@ class User_Logic_Query{
         $filters = array('usertype' => self::TYPE_PRIV);
         if(!empty($user)){
             $type = User_Logic_Validate::getType($user);
+            if(empty($type)){
+                $type = 'name';
+            }
             $filters = array('usertype' => self::TYPE_PRIV, $type => $user);
         }
         $list->setFilter($filters);
