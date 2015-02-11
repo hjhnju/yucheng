@@ -48,29 +48,37 @@ class AwardController extends Base_Controller_Page {
         //
         $redis = Base_Redis::getInstance();
         $ownid = $this->userid;
-        $used  = $redis->setnx("awards_rec1_$userid_ownid_$ownid", 1);
+        $used  = $redis->setnx("awards_rec2_$userid_ownid_$ownid", 1);
         if (empty($used)) {
             $msg = array(
                 'userid' => $userid,
                 'msg' => Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI),
             );
             Base_Log::warn($msg);
-            return $this->outputError(Finance_RetCode::RECEIVE_MULTI, 
-                Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI));
+            return $this->outputError(Finance_RetCode::RECEIVE_MULTI, Finance_RetCode::getMsg(Finance_RetCode::RECEIVE_MULTI));
         }
 
         //领的是本人的注册奖励
         if($userid === $this->userid) {       	
         	$regRegist = new Awards_Object_Regist($this->userid);
-        	if(empty($regRegist->userid)) {
-        		$this->outputError($canNotErrCode,$canNotErrMsg);
-        		return ;
+        	if($regRegist->isLoaded()) {
+                $redis->delete("awards_rec2_$userid_ownid_$ownid"); 
+                Base_Log::error(array(
+                    'userid' => $userid,
+                    'msg'    => '用户不在注册奖励表中',
+                ));
+        		return $this->outputError($canNotErrCode,$canNotErrMsg);
         	}
             $transAmt = $regRegist->amount;
 
         } else {
         	$invite   = new Awards_Object_Invite(array('userid'=>$userid));
-        	if(empty($invite->userid) || $invite->status===1 || $invite->status===3) {
+        	if(!$invite->isLoaded() || $invite->status===2) {
+                $redis->delete("awards_rec2_$userid_ownid_$ownid");
+                Base_Log::error(array(
+                    'userid' => $userid,
+                    'msg'    => '用户不在邀请奖励表中或未达投资满额',
+                ));
         		return $this->outputError($canNotErrCode,$canNotErrMsg);
         	}
         	$id       = $invite->id;
@@ -82,7 +90,7 @@ class AwardController extends Base_Controller_Page {
         $db = Base_Db::getInstance('xjd');
         $db->beginTransaction();
         if($userid === $this->userid) {     
-        	$registRet = $awardsLogic->updateRegistStatus($userid,Awards_Logic_Awards::STATUS_FINISH);
+        	$registRet = $awardsLogic->updateRegistStatus($userid, Awards_Logic_Awards::STATUS_FINISH);
         	if(!$registRet) {
         		Base_Log::error(array(
         		    'msg'      => '更新Awards_Regist表失败',
@@ -90,11 +98,11 @@ class AwardController extends Base_Controller_Page {
         		    'transAmt' => $transAmt,
         		));
         		$db->rollBack();    
-                $redis->delete("awards_rec1_$userid_ownid_$ownid");    		
+                $redis->delete("awards_rec2_$userid_ownid_$ownid");    		
         		return $this->outputError($failErrCode,$failErrMsg);
         	}
         } else {
-        	$inviteRet = $awardsLogic->updateAwardsStatus($id,Awards_Logic_Awards::STATUS_FINISH);
+        	$inviteRet = $awardsLogic->updateAwardsStatus($id, Awards_Logic_Awards::STATUS_FINISH);
         	if(!$inviteRet) {
         		Base_Log::error(array(
         		    'msg'      => '更新Awards_Invite表失败',
@@ -102,7 +110,7 @@ class AwardController extends Base_Controller_Page {
         		    'transAmt' => $transAmt,
         		));
         		$db->rollBack();
-                $redis->delete("awards_rec1_$userid_ownid_$ownid");
+                $redis->delete("awards_rec2_$userid_ownid_$ownid");
                 return $this->outputError($failErrCode,$failErrMsg);
         	}
         }       
@@ -115,7 +123,7 @@ class AwardController extends Base_Controller_Page {
         	));
         	$db->rollBack();
 
-            $redis->delete("awards_rec1_$userid_ownid_$ownid");
+            $redis->delete("awards_rec2_$userid_ownid_$ownid");
         	return $this->outputError($failErrCode,$failErrMsg);
         }
         $db->commit();
