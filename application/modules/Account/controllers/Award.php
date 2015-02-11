@@ -48,7 +48,7 @@ class AwardController extends Base_Controller_Page {
         //
         $redis = Base_Redis::getInstance();
         $ownid = $this->userid;
-        $used  = $redis->setnx("awards_rec_$userid_ownid_$ownid", 1);
+        $used  = $redis->setnx("awards_rec1_$userid_ownid_$ownid", 1);
         if (empty($used)) {
             $msg = array(
                 'userid' => $userid,
@@ -90,7 +90,7 @@ class AwardController extends Base_Controller_Page {
         		    'transAmt' => $transAmt,
         		));
         		$db->rollBack();    
-                $redis->delete("awards_rec_$userid_ownid_$ownid");    		
+                $redis->delete("awards_rec1_$userid_ownid_$ownid");    		
         		return $this->outputError($failErrCode,$failErrMsg);
         	}
         } else {
@@ -102,7 +102,7 @@ class AwardController extends Base_Controller_Page {
         		    'transAmt' => $transAmt,
         		));
         		$db->rollBack();
-                $redis->delete("awards_rec_$userid_ownid_$ownid");
+                $redis->delete("awards_rec1_$userid_ownid_$ownid");
                 return $this->outputError($failErrCode,$failErrMsg);
         	}
         }       
@@ -115,7 +115,7 @@ class AwardController extends Base_Controller_Page {
         	));
         	$db->rollBack();
 
-            $redis->delete("awards_rec_$userid_ownid_$ownid");
+            $redis->delete("awards_rec1_$userid_ownid_$ownid");
         	return $this->outputError($failErrCode,$failErrMsg);
         }
         $db->commit();
