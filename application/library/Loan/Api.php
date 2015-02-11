@@ -292,7 +292,7 @@ class Loan_Api {
             }
             // 对于学校不对外显示 //去除Base_Util_Secure::hideDetail($data['company']['school']);，采用人工加＊
             $data['company']['school'] = $data['company']['school'];
-            $data['company']['area'] = $area->name;
+            $data['company']['area_name'] = $area->name;
         }
 
         $guarantee = new Loan_Object_Guarantee($cond);

@@ -1,9 +1,4 @@
 <?php
-$refer = $_SERVER['HTTP_REFERER'];
-if(preg_match('/songhf.cn/', $refer)){
-    die();
-}
-
 //xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 
 //添加应用路径
