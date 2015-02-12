@@ -12,6 +12,7 @@ class LoanAction extends Yaf_Action_Abstract {
         $arrRet = Loan_Api::makeLoans($loanId);
         $arrRet['status'] = Base_RetCode::SUCCESS;
         
+        $bolRet = false;
         if($arrRet['status'] === Base_RetCode::SUCCESS){
             $bolRet = Loan_Api::lendSuccess($loanId);
             if(!$bolRet){

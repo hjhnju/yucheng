@@ -7,12 +7,14 @@ class ListController extends Base_Controller_Api {
     protected $needLogin = true;
         
     public function indexAction() {
-        $loanId = intval($_REQUEST['id']);
+        $loanId   = intval($_REQUEST['id']);
+        $page     = intval($_REQUEST['page']);
+        $pagesize = 15;
         if (empty($loanId)) {
             $this->ajaxError(Base_RetCode::PARAM_ERROR);
         }
         
-        $list = Invest_Api::getLoanInvests($loanId);
+        $list = Invest_Api::getLoanInvests($loanId, $page, $pagesize);
 
         //用户名加星
         $ownUserName = $this->objUser->name;
