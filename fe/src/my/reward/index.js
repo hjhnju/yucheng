@@ -44,7 +44,7 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
-                item.addClass('current').html('领取成功');
+                item.addClass('current').html('已领取' + data.amount + '元');
                 alert('领取成功');
             }
         });
