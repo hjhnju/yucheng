@@ -12,7 +12,7 @@ define(function (require) {
     var Remoter = require('common/Remoter');
     var config = require('common/config');
     var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
-    var event;
+    var item;
     var codeUrl;
 
     function init(url) {
@@ -27,6 +27,7 @@ define(function (require) {
         //点击领取
         $('.table-tr-span').click(util.debounce(function (e) {
             e.preventDefault();
+            item = $(this);
 
             if($(this).hasClass('current')) {
                 return;
@@ -43,7 +44,7 @@ define(function (require) {
                 alert(data.statusInfo);
             }
             else {
-                event.addClass('current').html('领取成功');
+                item.addClass('current').html('领取成功');
                 alert('领取成功');
             }
         });
