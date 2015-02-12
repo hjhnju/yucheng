@@ -53,7 +53,8 @@ class Loan_Api {
         $logic = new Loan_Logic_Loan();
         $loan = $logic->getLoanInfo($loan_id);
         $res = false;
-        if ($loan['status'] == Loan_Type_LoanStatus::PAYING) {
+        //状态已经在打款时变为还款中
+        if ($loan['status'] == Loan_Type_LoanStatus::REFUNDING) {
             $res = $logic->lendSuccess($loan_id);
         }
         
@@ -64,7 +65,12 @@ class Loan_Api {
             $content = "生成还款计划失败";
             self::addLog($loan_id, $content);
         }
-        
+
+        Base_Log::notice(array(
+	    'loanid' => $loan_id,
+	    'beginstatus' => $loan['status'],
+            'res' => $res,
+        ));
         return $res;
     }
     

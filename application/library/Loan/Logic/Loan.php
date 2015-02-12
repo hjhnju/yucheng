@@ -200,6 +200,10 @@ class Loan_Logic_Loan {
     public function lendSuccess($loanId) {
         $loan = new Loan_Object_Loan($loanId);
         if (empty($loan->id)) {
+            Base_Log::error(array(
+               'loanid' => $loanId,
+               'loanid2' => $loan->id,
+	    ));
             return false;
         }
         
@@ -211,6 +215,10 @@ class Loan_Logic_Loan {
         //创建还款计划
         $res = $this->buildRefunds($loanId);
         if (empty($res)) {
+	    Base_Log::error(array(
+               'res' => $res,
+               'loanid' => $loanId,
+	    ));
             $this->objModel->rollback();
             return false;
         }
@@ -222,6 +230,11 @@ class Loan_Logic_Loan {
             $res = Invest_Api::buildRefunds($invest['id']);
             
             if (empty($res)) {
+                Base_Log::error(array(
+		    'res' => $res,
+		    'loanid' => $loanId,
+		    'investid' => $invest['id'],
+                ));
                 $this->objModel->rollback();
                 return false;
             }
