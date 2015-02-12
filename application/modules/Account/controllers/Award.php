@@ -141,6 +141,6 @@ class AwardController extends Base_Controller_Page {
         }
         $db->commit();
 
-        return $this->output(); 
+        return $this->output(array('amount'=>sprintf('%.2f', $transAmt))); 
     }  
 }
