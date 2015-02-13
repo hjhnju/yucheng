@@ -654,8 +654,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }
         $huifuid   = $this->getHuifuid(intval($userid));
         $paramOrder     = array(
-            'orderId'   => intval($orderId),
-            'orderDate' => intval($orderDate),
             'userId'    => intval($userid),//还款人的uid
             'type'      => Finance_Order_Type::MERCASH,
             'amount'    => floatval(sprintf('%.2f',$transAmt)),

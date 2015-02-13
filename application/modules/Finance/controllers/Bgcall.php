@@ -765,12 +765,6 @@ class BgcallController extends Base_Controller_Page {
         $transAmt  = $retParam['TransAmt'];
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];      
-        $lastip    = Base_Util_Ip::getClientIp();
-        
-        $arrBal  = Finance_Api::getUserBalance($userid);
-        $balance = $arrBal['AcctBal'];//用户余额
-        $avlBal  = $arrBal['AvlBal'];//用户可用余额
-        $total   = Finance_Api::getPlatformBalance();//系统余额
 
         if($respCode !== '000') {
             $logParam        = $retParam;
