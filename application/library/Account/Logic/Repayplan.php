@@ -22,7 +22,7 @@ class Account_Logic_Repayplan {
             );
             return $ret ;
         }
-        $objUser  = User_Api::getUserObject($investId);
+        $objUser  = User_Api::getUserObject($retData[0]['user_id']);
         $invester = $objUser->name;
         foreach ($retData as $key=>$value) {
 
