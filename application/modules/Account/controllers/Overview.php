@@ -71,9 +71,13 @@ class OverviewController extends Base_Controller_Page {
         $reposPrifit = Base_Util_Number::tausendStyle(floatval($money['wait_interest']));//待收收益
         // 待收本金
         $reposPrincipal = Base_Util_Number::tausendStyle(floatval($money['wait_capital']));//待收本金
-
+        // 资产总计
+        $totalAsset = Base_Util_Number::tausendStyle(floatval($userBg['AvlBal'] + $userBg['FrzBal'] 
+            + $money['wait_interest'] + $money['wait_capital']));
+         
         $this->getView()->assign("avlBal",$avlBal);
         $this->getView()->assign("acctBal",$acctBal);
+        $this->getView()->assign("totalAsset", $totalAsset);
         $this->getView()->assign("frzBal",$frzBal);
         $this->getView()->assign("totalProfit",$totalProfit);
         $this->getView()->assign("totalInvest",$totalInvest);
