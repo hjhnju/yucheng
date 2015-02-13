@@ -7,7 +7,6 @@ class InvestController extends Base_Controller_Page {
 
     CONST PAGESIZE   = 6; //每次出6条数据
     CONST BACKING    = 5;
-    CONST TENDERING  = 2;
     CONST ENDED      = 6;
     CONST TENDERFAIL = 9;
 	public function init(){
@@ -54,7 +53,7 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function backingAction() {
     
-		$status     = self::BACKING;
+		$status     = Invest_Type_InvestStatus::REFUNDING;
 		$userid     = $this->userid;
 		$page       = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);		
@@ -72,25 +71,25 @@ class InvestController extends Base_Controller_Page {
         	return ;
         }
  	    foreach ($list as $key => $value) {
-	        $listRet[$key]['invest_id'] = $value['id'];//invest_id	        
-	        $backingRefund = Account_Logic_Repayplan::getRepayplan($value['id']);
-	        $total = $backingRefund['total'];	        
-	        $listRet[$key]['proId'] = $value['loan_id'];
-	        $loanInfo = Loan_Api::getLoanDetail($value['loan_id']);
-	    	$listRet[$key]['investPro'] = $value['title'];
-	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
-	    	$listRet[$key]['tenderAmt'] = $value['amount'];
-	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
-	    	$listRet[$key]['tenderTime'] = $value['create_time'];
-	    	$listRet[$key]['haveBack'] = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
-	    	$listRet[$key]['toBeBack'] = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
-	    	$listRet[$key]['status'] = $value['status'];
+			$listRet[$key]['invest_id']       = $value['id'];//invest_id	        
+			$backingRefund                    = Account_Logic_Repayplan::getRepayplan($value['id']);
+			$total                            = $backingRefund['total'];	        
+			$listRet[$key]['proId']           = $value['loan_id'];
+			$loanInfo                         = Loan_Api::getLoanDetail($value['loan_id']);
+			$listRet[$key]['investPro']       = $value['title'];
+			$listRet[$key]['annlnterestRate'] = $value['interest'];
+			$listRet[$key]['tenderAmt']       = $value['amount'];
+			$listRet[$key]['deadline']        = $loanInfo['duration_name'];
+			$listRet[$key]['tenderTime']      = $value['create_time'];
+			$listRet[$key]['haveBack']        = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
+			$listRet[$key]['toBeBack']        = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
+			$listRet[$key]['status']          = $value['status'];
  	    }  
 	    $ret = array(
-	    	'page' => $page,
-	    	'pageall' => $backingRet['pageall'],
-	    	'all' => $backingRet['total'],
-	    	'list' => $listRet,
+			'page'    => $page,
+			'pageall' => $backingRet['pageall'],
+			'all'     => $backingRet['total'],
+			'list'    => $listRet,
 	    );
 	    $this->output($ret);
         return ;

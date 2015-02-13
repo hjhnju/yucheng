@@ -11,7 +11,7 @@ class Account_Logic_Repayplan {
      */
     public static function getRepayplan($investId) {        
         $investId = intval($investId);
-        $retData = Invest_Api::getRefunds($investId);       
+        $retData  = Invest_Api::getRefunds($investId);       
         $list = array();
         $data = array();
         if(empty($retData)) {
@@ -22,10 +22,7 @@ class Account_Logic_Repayplan {
             );
             return $ret ;
         }
-
-        $userid   = $retData[0]['user_id'];
-        $userid   = intval($userid);
-        $objUser  = User_Api::getUserObject($userid);
+        $objUser  = User_Api::getUserObject($investId);
         $invester = $objUser->name;
         foreach ($retData as $key=>$value) {
 
@@ -72,10 +69,15 @@ class Account_Logic_Repayplan {
         $receProfit      = 0.00;        
         $punitive        = 0.00;        
         foreach ($list as $key => $value) {     
-            $repossPrincipal += floatval($value['repossPrincipal']);        
-            $repossProfit    += floatval($value['repossProfit']);       
-            $recePrincipal   += floatval($value['recePrincipal']);      
-            $receProfit      += floatval($value['receProfit']);     
+            //待收本金  
+            $repossPrincipal += floatval($value['repossPrincipal']);   
+            //待收收益     
+            $repossProfit    += floatval($value['repossProfit']);
+            //已收本金       
+            $recePrincipal   += floatval($value['recePrincipal']); 
+            //已收收益
+            $receProfit      += floatval($value['receProfit']); 
+            //罚息      
             $punitive        += floatval($value['punitive']);       
         }               
         $data = array(      

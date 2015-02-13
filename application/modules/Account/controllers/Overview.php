@@ -63,9 +63,13 @@ class OverviewController extends Base_Controller_Page {
         $rechargeurl  = $this->webroot.'/account/cash/recharge';
         $money        = Invest_Api::getUserEarnings($this->userid);
 
+        // 累计收益
         $totalProfit = Base_Util_Number::tausendStyle(floatval($money['all_income']));// 累计收益
+        // 累计投资
         $totalInvest = Base_Util_Number::tausendStyle(floatval($money['all_invest']));//累计投资
+        // 待收收益
         $reposPrifit = Base_Util_Number::tausendStyle(floatval($money['wait_interest']));//待收收益
+        // 待收本金
         $reposPrincipal = Base_Util_Number::tausendStyle(floatval($money['wait_capital']));//待收本金
 
         $this->getView()->assign("avlBal",$avlBal);

@@ -34,11 +34,17 @@ class DetailController extends Base_Controller_Response {
             $this->_view->assign('user', $user);
         }
         //紧急备用
-        if($id === 10001 && $loan['status'] === Invest_Type_InvestStatus::REFUNDING){
+        if($id === 100001 && $loan['status'] === Invest_Type_InvestStatus::REFUNDING){
              $loan['rest_total'] = Base_Util_Number::tausendStyle(10115.07);
              $loan['left_month'] = 1;
              $loan['next_date']  = strftime("2015-03-12 10:30:00");
-        }//待删除
+        }
+        if($id === 100000 && $loan['status'] === Invest_Type_InvestStatus::REFUNDING){
+             $loan['rest_total'] = Base_Util_Number::tausendStyle(100920.55);
+             $loan['left_month'] = 1;
+             $loan['next_date']  = strftime("2015-03-13 10:30:00");
+        }
+        //待删除
 
 
         $this->_view->assign('data', $loan);

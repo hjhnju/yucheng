@@ -365,6 +365,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'DivAcctId'=> Base_Config::getConfig('huifu.acct.MDT1', CONF_PATH.'/huifu.ini'),
                 'DivAmt'   => $servFee,
             ),
+            
         );
         $jsonDivDetails = json_encode($arrDivDetails);
         $feeObjFlag     = 'I';//手续费向入款人收取               

@@ -399,6 +399,7 @@ class Invest_Logic_Invest {
      *   );
      */
     public function getUserEarnings($uid) {
+        //1.累计投资
         $list = new Invest_List_Invest();
         $filters = array(
             'user_id' => $uid,
@@ -408,13 +409,14 @@ class Invest_Logic_Invest {
             ),
         );
         $list->setFilter($filters);
-        //累计投资
         $all = $list->sumField('amount');
+
         
+        //2.累计收益
         $refunds = new Invest_List_Refund();
         $filters = array(
             'user_id' => $uid,
-            'status' => Invest_Type_InvestStatus::FINISHED,
+            'status' => Invest_Type_RefundStatus::RETURNED,
         );
         $refunds->setFilter($filters);
         $fields = array(
@@ -422,12 +424,12 @@ class Invest_Logic_Invest {
             'late_charge',
         );
         $income = $refunds->sumField($fields);
-        //累计收益
         $incomes = $income['interest'] + $income['late_charge'];
         
+        //3.待收计算
         $filters = array(
             'user_id' => $uid,
-            'status' => Invest_Type_InvestStatus::REFUNDING,
+            'status'  => Invest_Type_RefundStatus::NORMAL,
         );
         $refunds->setFilter($filters);
         $fields = array(
@@ -440,6 +442,7 @@ class Invest_Logic_Invest {
         //待收收益
         $interest = $waiting['interest'];
         
+        //4.返回值
         $data = array(
             'all_invest' => $all,
             'all_income' => $incomes,
