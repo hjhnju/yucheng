@@ -56,7 +56,23 @@ class Infos_Logic_Post {
      * @param $arrPost
      * @return $postid || false
      */
-    public function save($arrPost){
+    public function save($arrPost,$id = 0){
+        if(!empty($id)){
+            $object               = new Infos_Object_Infos($id);
+            $object->title        = isset($arrPost['title']) ? $arrPost['title'] : null;
+            $object->abstract     = isset($arrPost['abstract']) ? $arrPost['abstract'] : null;
+            $object->author       = isset($arrPost['author']) ? $arrPost['author'] : '兴教贷团队';
+            $object->type         = isset($arrPost['type']) ? $arrPost['type'] :self::TYPE_POST;
+            $object->status       = self::STATUS_NOTPUB;
+            $object->publishTime  = isset($arrPost['publishtime']) ? intval($arrPost['publishtime']) : null;
+            $arrCtx               = array('ctx' => $arrPost['ctx']);
+            $object->content      = serialize($arrCtx);
+            
+            $ret = $object->save();
+            
+            $postid = $ret ? $object->id : false;
+            return $postid;
+        }
         $object               = new Infos_Object_Infos();
         $object->title        = isset($arrPost['title']) ? $arrPost['title'] : null;
         $object->abstract     = isset($arrPost['abstract']) ? $arrPost['abstract'] : null;
@@ -85,6 +101,18 @@ class Infos_Logic_Post {
         $object->status      = self::STATUS_PUBLISH;
         $object->publishTime = time();
         $ret                 = $object->save();
+        return $ret;
+    }
+    
+    /**
+     * 删除公告
+     * @param int $postid
+     * @return boolean
+     */
+    public function del($postid){
+        $postid = intval($postid);       
+        $object              = new Infos_Object_Infos($postid);
+        $ret = $object->erase();
         return $ret;
     }
     

@@ -31,4 +31,15 @@ class Infos_Api {
         $list4    = $logic->getList($page, $pagesize, 'media', 2);
         return array_merge($list1['list'],$list2['list'],$list3['list'],$list4['list']);
     }
+    
+    /**
+     * 获取公告详情
+     * @param int $postid
+     * @return 
+     */
+    public static function getPost($postid){
+        $logic   = new Infos_Logic_Post();
+        $ret = $logic->getPost($postid);
+        return $ret;
+    }
 }

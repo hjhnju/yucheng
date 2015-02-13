@@ -43,6 +43,7 @@ class InfoApiController extends Base_Controller_Api {
         $strCtx    = $_REQUEST['ctx'];
         $strTime   = isset($_REQUEST['time'])?$_REQUEST['time']:date();
         $intType   = $_REQUEST['type'];
+        $id   = isset($_REQUEST['id'])?$_REQUEST['id']:0;
         $this->ajax              = true;
         $logic                   = new Infos_Logic_Post();
         $arrPost                 = array();
@@ -52,7 +53,7 @@ class InfoApiController extends Base_Controller_Api {
         $arrPost['publishtime']  = strtotime($strTime);
         $arrPost['ctx']          = $strCtx;
         $arrPost['type']         = $intType;
-        $postid = $logic->save($arrPost);
+        $postid = $logic->save($arrPost,$id);
         Base_Log::notice(array('postid' => $postid));
         $this->ajax($postid);
     } 
@@ -73,6 +74,30 @@ class InfoApiController extends Base_Controller_Api {
         $logic  = new Infos_Logic_Post();
         $ret    = $logic->publish($postid);
 
+        Base_Log::notice(array('postid'=>$postid, 'ret'=>$ret));
+        if($ret){
+            $this->ajax();
+        }else{
+            $this->ajaxError();
+        }
+    }
+    
+    /**
+     * 测试使用
+     * TODO:Admin后台使用
+     * /infos/post/del?id=
+     * 删除公告
+     * @param   $id postid
+     */
+    public function delAction() {
+        $postid = isset($_REQUEST['id'])? intval($_REQUEST['id']) : 0;
+        if($postid <= 0){
+            $this->ajaxError();
+        }
+    
+        $logic  = new Infos_Logic_Post();
+        $ret    = $logic->del($postid);
+    
         Base_Log::notice(array('postid'=>$postid, 'ret'=>$ret));
         if($ret){
             $this->ajax();
