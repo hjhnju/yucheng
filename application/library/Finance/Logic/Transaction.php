@@ -369,7 +369,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         );
         $jsonDivDetails = json_encode($arrDivDetails);
         $feeObjFlag     = 'I';//手续费向入款人收取               
-        $isDefault      = 'Y';
+        $isDefault      = 'N';
         $isUnFreeze     = 'Y';
         $unFreezeOrdId  = Finance_Logic_Order::genOrderId();
         $bgRetUrl       = $this->webroot.'/finance/bgcall/loans';

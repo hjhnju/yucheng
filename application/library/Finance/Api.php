@@ -566,7 +566,6 @@ class Finance_Api {
          }
          Base_Log::notice($ret);
          return true;
-        
      }
      /**
       * 用户登录汇付login接口
