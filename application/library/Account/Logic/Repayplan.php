@@ -26,7 +26,7 @@ class Account_Logic_Repayplan {
         $invester = $objUser->name;
         foreach ($retData as $key=>$value) {
 
-            $list[$key]['time']            = $value['create_time'];     
+            $list[$key]['time']            = $value['promise_time'];     
             //待收本金      
             $list[$key]['repossPrincipal'] = sprintf('%.2f',$value['capital_rest']);        
             //已收本金      
