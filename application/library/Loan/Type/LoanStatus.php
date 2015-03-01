@@ -72,7 +72,7 @@ class Loan_Type_LoanStatus extends Base_Type {
         self::WAITING    => '即将开启',
         self::LENDING    => '投标中',
         self::FULL_CHECK => '已满标',
-        self::FULL_PAYING=> '满标打款中',
+        self::FULL_PAYING=> '已满标待打款',
         self::REFUNDING  => '还款中',
         self::FINISHED   => '已完成',
         self::CANCEL     => '已撤销',

@@ -257,13 +257,15 @@ public function publish($loanId, $isOpen = 0, $days = 7) {
      * @return boolean
      */
     public static function updateFullStatus($loanId) {
+
         $loan = new Loan_Object_Loan($loanId);
         if ($loan->investAmount > $loan->amount) {
             Base_Log::error($loan, '投标金额错误');
         }
+
         if ($loan->investAmount >= $loan->amount) {
-            $loan->status   = Loan_Type_LoanStatus::FULL_CHECK;
             //Add:不再需要满标审核，只要满标即可放款
+            $loan->status   = Loan_Type_LoanStatus::FULL_CHECK;
             $loan->status   = Loan_Type_LoanStatus::FULL_PAYING;
             $loan->fullTime = time();
             if (!$loan->save()) {

@@ -21,6 +21,7 @@ class PublishAction extends Yaf_Action_Abstract {
         ));
 
         $this->getView()->assign('success', $bolRet);
+        $this->getView()->assign('isopen', $isOpen);
 
     }
 }

@@ -48,7 +48,15 @@
 
 			<!-- BEGIN LIST -->
 			<div class="row-fluid">
-				<h3> {%if $success%} 借款发布成功，用户端可见“立即开启”状态。可在借款审核列表开启投标。 {%else%} 借款发布失败 {%/if%}</h3>
+				<h3> {%if $success%} 借款状态修改成功。
+				<p>
+				{%if $isopen==0%}用户端可见“立即开启”状态。请在借款审核列表开启投标。 
+				{%elseif $isopen==-1%}下线当前借款，用户端不可见。
+				{%elseif $isopen==1%}用户可以开始投标。
+				{%/if%}
+				</p>
+				{%else%} 借款状态修改失败 {%/if%}
+				</h3>
 			</div>
 
 		</div>

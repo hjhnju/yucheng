@@ -38,7 +38,8 @@ class RequestAction extends Yaf_Action_Abstract {
         }
 
         //基本借款信息
-        //$_POST['status']  = Loan_Type_LoanStatus::AUDIT;
+        $_POST['fresh']   = isset($_POST['fresh']) ? intval($_POST['fresh']) : 0;
+        rsort($_POST['safes']); //收费权最前面
         $_POST['safe_id'] = !empty($_POST['safes']) ? implode(',', $_POST['safes']) : '1';
         $_POST['amount']  = Base_Util_Number::rmTausendStyle($_POST['amount']);
         $objLoan = new Loan_Object_Loan($loanId);

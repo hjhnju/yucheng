@@ -29,7 +29,7 @@ class Invest_Type_InvestStatus extends Base_Type {
      * 4打款中 
      * @var integer
      */
-    const PAYING = 4;
+    const FULL_PAYING = 4;
     /**
      * 5回款中
      * @var integer
@@ -72,7 +72,7 @@ class Invest_Type_InvestStatus extends Base_Type {
         self::WAITING => '即将开启',
         self::LENDING => '投标中',
         self::FULL_CHECK => '已满标',
-        self::PAYING => '已满标',
+        self::FULL_PAYING => '已满标',
         self::REFUNDING => '还款中',
         self::FINISHED => '已完成',
         self::CANCEL => '已撤销',

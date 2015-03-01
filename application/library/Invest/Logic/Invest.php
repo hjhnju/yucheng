@@ -111,6 +111,7 @@ class Invest_Logic_Invest {
         }
         // 保存以后检查满标状态
         Loan_Api::updateFullStatus($loanId);
+
         // 对于新手标 保存新手投标状态
         $loan = Loan_Api::getLoanInfo($loanId);
         if (!empty($loan['fresh'])) {
@@ -166,7 +167,7 @@ class Invest_Logic_Invest {
             return $loan;
         }
         // 对打款状态 标记为满标状态
-        if ($loan['status'] == Invest_Type_InvestStatus::PAYING) {
+        if ($loan['status'] == Invest_Type_InvestStatus::FULL_PAYING) {
             $loan['status'] = Invest_Type_InvestStatus::FULL_CHECK;
         }
         // 对于投标时间已经结束的 进行修正
