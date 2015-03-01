@@ -172,7 +172,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $retDate      = strval($retDate);
         $guarCompId   = strval($guarCompId);
         $guarAmt      = strval($guarAmt);
-        $proArea      = 3501;//str_pad($proArea, 4, '0', STR_PAD_RIGHT);//4位显示，不足前面补零。如福建省：0035
+        $proArea      = str_pad($proArea, 4, '0', STR_PAD_RIGHT);//4位显示，不足前面补零。如福建省：0035
         $bgRetUrl     = $this->webroot . '/finance/bgcall/addBidInfo';
         $merPriv      = '';
         $reqExt       = '';       

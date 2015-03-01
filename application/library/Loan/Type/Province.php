@@ -9,12 +9,14 @@ class Loan_Type_Province extends Base_Type {
      * 广西
      * @var integer
      */
-    const GUANGXI = 2403;
+    // const GUANGXI = 2403;
+    const GUANGXI = 2458;
     /**
      * 福建
      * @var integer
      */
-    const FUJIAN = 1310;
+    // const FUJIAN = 1310;
+    const FUJIAN = 1394;
     /**
      * 湖南
      * @var integer

@@ -101,24 +101,24 @@ class RequestAction extends Yaf_Action_Abstract {
             $objLoanComp->funds     = $company['funds'];
             $objLoanComp->students  = $company['students'];
             $objLoanComp->save();
-        }
 
-        //借款担保信息
-        if(!empty($_POST['guarantee'])){
-            $guarantee = $_POST['guarantee'];
-            $guarId  = isset($guarantee['id']) ? intval($guarantee['id']) : 0;
-            $objLoanGuar = new Loan_Object_Guarantee($guarId);
-            $objLoanGuar->loanId      = $loanId;
-            $objLoanGuar->userId      = $userid;
-            $objLoanGuar->name        = $guarantee['name'];
-            $objLoanGuar->account     = $guarantee['account'];
-            $objLoanGuar->age         = $guarantee['age'];
-            $objLoanGuar->marriage    = $guarantee['marriage'];
-            $objLoanGuar->companyType = $guarantee['company_type'];
-            $objLoanGuar->jobTitle    = $guarantee['job_title'];
-            $objLoanGuar->income      = $guarantee['income'];
-            $objLoanGuar->status      = 0;
-            $objLoanGuar->save();
+            //借款担保信息
+            if(!empty($_POST['guarantee'])){
+                $guarantee = $_POST['guarantee'];
+                $guarId  = isset($guarantee['id']) ? intval($guarantee['id']) : 0;
+                $objLoanGuar = new Loan_Object_Guarantee($guarId);
+                $objLoanGuar->loanId      = $loanId;
+                $objLoanGuar->userId      = $userid;
+                $objLoanGuar->name        = $guarantee['name'];
+                $objLoanGuar->account     = $guarantee['account'];
+                $objLoanGuar->age         = $guarantee['age'];
+                $objLoanGuar->marriage    = $guarantee['marriage'];
+                $objLoanGuar->companyType = $guarantee['company_type'];
+                $objLoanGuar->jobTitle    = $guarantee['job_title'];
+                $objLoanGuar->income      = $guarantee['income'];
+                $objLoanGuar->status      = 0;
+                $objLoanGuar->save();
+            }
         }
 
         //借款审核信息
@@ -149,5 +149,7 @@ class RequestAction extends Yaf_Action_Abstract {
                 $objLoanAtta->save();
             }
         }
+
+        header("Location:/admin/loan/list");
     }
 }
