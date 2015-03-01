@@ -180,7 +180,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
             $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
         
-        if(!is_null($mixRet) && ($mixRet['RespCode'] === '000'||$mixRet['RespCode'] === '395'){//标的已存在
+        if(!is_null($mixRet) && ($mixRet['RespCode'] === '000'||$mixRet['RespCode'] === '395')){//标的已存在
             $objRst->status = Base_RetCode::SUCCESS;
             $objRst->data   = array('orderId' => $orderId);
         }else{
