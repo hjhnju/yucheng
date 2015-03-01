@@ -9,23 +9,23 @@ class Loan_Api {
     /**
      * 满标时审核是否可以打款
      */
-    public function fullPassAudit($loanId){
+    /*public function fullPassAudit($loanId){
         $objLoan = new Loan_Object_Loan($loanId);
         if($objLoan->status === Loan_Type_LoanStatus::FULL_CHECK){
-            $objLoan->status = Loan_Type_LoanStatus::PAYING;
+            $objLoan->status = Loan_Type_LoanStatus::FULL_PAYING;
             return $objLoan->save();
         }
         return false;
-    }
+    }*////不再调用
 
     /**
      * 发布借款
      * @param integer $loanId 借款ID
      * @return boolean
      */
-    public function publish($loanId, $days = 7) {
+public function publish($loanId, $isOpen = 0, $days = 7) {
         $logic  = new Loan_Logic_Loan();
-        $objRst = $logic->publish($loanId, $days);
+        $objRst = $logic->publish($loanId, $isOpen, $days);
         return $objRst->format();
     }
     
@@ -126,11 +126,16 @@ class Loan_Api {
      * @param array $filters
      * @return array
      */
-    public static function getLoans($page = 1, $pagesize = 10, $filters = array()) {
+    public static function getLoans($page = 1, $pagesize = 10, $filters = array(), $strFilter = '') {
         $list = new Loan_List_Loan();
         $list->setPage($page);
         $list->setPagesize($pagesize);
-        $list->setFilter($filters);
+        if(!empty($filters) && is_array($filters)){
+            $list->setFilter($filters);
+        }
+        if(!empty($strFilter)){
+            $list->appendFilterString($strFilter);
+        }
         
         $type = new Loan_Type_LoanType();
         $cat = new Loan_Type_LoanCat();
@@ -194,11 +199,13 @@ class Loan_Api {
 
         $safe     = new Loan_Type_SafeMode();
         $refund   = new Loan_Type_RefundType();
+        $status   = new Loan_Type_LoanStatus();
         $safe_ids = explode(',', $data['safe_id']);
         foreach ($safe_ids as $safeid) {
             $data['safemode'][$safeid] = $safe->getTypeName($safeid);
         }
         $data['refund_typename'] = $refund->getTypeName($data['refund_type']);
+        $data['status_name']     = $status->getTypeName($data['status']);
         
         $duration = new Loan_Type_Duration();
         $data['duration_name'] = $duration->getTypeName($data['duration']);
@@ -255,7 +262,9 @@ class Loan_Api {
             Base_Log::error($loan, '投标金额错误');
         }
         if ($loan->investAmount >= $loan->amount) {
-            $loan->status = Loan_Type_LoanStatus::FULL_CHECK;
+            $loan->status   = Loan_Type_LoanStatus::FULL_CHECK;
+            //Add:不再需要满标审核，只要满标即可放款
+            $loan->status   = Loan_Type_LoanStatus::FULL_PAYING;
             $loan->fullTime = time();
             if (!$loan->save()) {
                 Base_Log::error($loan, '更改满标状态错误');
@@ -286,15 +295,16 @@ class Loan_Api {
         $data['level_name'] = $level->getTypeName($data['level']);
 
         //判断个人or学校借款
-        if($data['cat_id'] === Loan_Type_LoanCat::TEACHER){
+        $catId = intval($data['cat_id']);
+        if($catId === Loan_Type_LoanCat::TEACHER){
             $cond = array('loan_id' => $loan_id);
             $private = new Loan_Object_Private($cond);
             $data['private'] = $private->toArray();
-        }elseif ($data['cat_id'] === Loan_Type_LoanCat::SCHOOL) {
+        }elseif ($catId === Loan_Type_LoanCat::SCHOOL) {
             $cond = array('loan_id' => $loan_id);
             $company = new Loan_Object_Company($cond);
             $data['company'] = $company->toArray();
-            //转换省份信息
+            //城市转换为省份信息显示
             $area = new Area_Object_Area($data['company']['area']);
             if ($area->province !== 0) {
                 $area = new Area_Object_Area($area->province);

@@ -8,11 +8,12 @@ class Loan_Logic_Loan {
     }
 
     /**
-     * 发布借款
+     * 发布借款, 默认发布后状态为立即开启，
      * @param integer $loanId 借款ID
+     * @param integer $isOpen 默认发布后状态为“立即开启”，＝1时开启投标
      * @return Base_Result
      */
-    public function publish($loanId, $days = 7) {
+    public function publish($loanId, $isOpen = 0, $days = 7) {
 
         $objRst = new Base_Result();
 
@@ -20,8 +21,7 @@ class Loan_Logic_Loan {
         $db->beginTransaction();
 
         $loan = new Loan_Object_Loan($loanId);
-        $loan->status    = Loan_Type_LoanStatus::LENDING;
-        //时间戳投标开始时间
+        //时间戳投标开始时间(选用创建时设定的起至时间)
         $loan->startTime = time();
         //时间戳投标截止时间
         $loan->deadline  = time() + $days * 24 * 3600;
@@ -34,19 +34,27 @@ class Loan_Logic_Loan {
         $retDate  = $duration->getTimestamp($loan->duration, $loan->deadline);
         //总还款金额
         $retAmt  = Loan_Api::getLoanRefundAmount($loanId);
-        //调用财务API进行借款录入
-        $arrRst  = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, 
+
+        if($isOpen >= 1){
+            $loan->status = Loan_Type_LoanStatus::LENDING;
+            //调用财务API进行借款录入
+            $arrRst  = Finance_Api::addBidInfo($loanId, $loan->userId, $loan->amount, 
             $loan->interest/100, $loan->refundType, $loan->startTime, 
             $loan->deadline, $retAmt, $retDate, $proArea);
-        
-        if ($arrRst['status'] !== Base_RetCode::SUCCESS) {
-            $objRst->status     = $arrRst['status'];
-            $objRst->statusInfo = $arrRst['statusInfo'];
-            Base_Log::warn($arrRst);
-            return $objRst;
+            if ($arrRst['status'] !== Base_RetCode::SUCCESS) {
+                $objRst->status     = $arrRst['status'];
+                $objRst->statusInfo = $arrRst['statusInfo'];
+                Base_Log::warn($arrRst);
+                return $objRst;
+            }
+            //订单号
+            $loan->orderId = intval($arrRst['data']['orderId']);
+        }else if($isOpen <= -1) {
+            $loan->status = Loan_Type_LoanStatus::AUDIT;
+        }else if($isOpen === 0) {
+            $loan->status = Loan_Type_LoanStatus::WAITING;
         }
-        //订单号
-        $loan->orderId = intval($arrRst['data']['orderId']);
+
         if (!$loan->save()) {
             $objRst->status     = Loan_RetCode::LOAN_SAVE_FAIL;
             $objRst->statusInfo = Loan_RetCode::getMsg(Loan_RetCode::LOAN_SAVE_FAIL);
@@ -73,7 +81,7 @@ class Loan_Logic_Loan {
         $logic       = new Loan_Logic_Loan();
         $arrLoanInfo = $logic->getLoanInfo($loanId);
         $bolRet      = true;
-        if ($arrLoanInfo['status'] !== Loan_Type_LoanStatus::PAYING) {
+        if ($arrLoanInfo['status'] !== Loan_Type_LoanStatus::FULL_PAYING) {
             $objRst->status     = Loan_RetCode::UNABLE_MAKE_LOAN;
             $objRst->statusInfo = Loan_RetCode::getMsg($objRst->status);
             Base_Log::notice(array(

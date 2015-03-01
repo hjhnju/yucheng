@@ -4,8 +4,8 @@
  * @author jiangsongfang
  */
 class Base_Controller_Admin extends Base_Controller_Page {
-    protected $loginUrl = '/admin/login';
-    
+    protected $loginUrl  = '/admin/login';
+
     public function init() {
         parent::init();
 

@@ -36,7 +36,7 @@
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="/admin/loan">借款列表</a>
+						<a href="/admin/loan/audit">借款审核列表</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
@@ -48,7 +48,7 @@
 
 			<!-- BEGIN LIST -->
 			<div class="row-fluid">
-				<h3> {%if $success%} 借款发布成功 {%else%} 借款发布失败 {%/if%}</h3>
+				<h3> {%if $success%} 借款发布成功，用户端可见“立即开启”状态。可在借款审核列表开启投标。 {%else%} 借款发布失败 {%/if%}</h3>
 			</div>
 
 		</div>

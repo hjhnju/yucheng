@@ -314,8 +314,9 @@ HTML;
             "ReqExt"       => $reqExt,
             "ChkValue"     => $checkValue,              
         );
-        Base_Log::notice($reqData);
-        return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","ProId","BorrCustId","BorrTotAmt","GuarCompId","GuarAmt","ProArea","BgRetUrl","MerPriv","RespExt"));
+        $ret = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","ProId","BorrCustId","BorrTotAmt","GuarCompId","GuarAmt","ProArea","BgRetUrl","MerPriv","RespExt"));
+        Base_Log::debug(array('req' => $reqData, 'ret' => $ret));
+        return $ret;
     }
     /**
      * 通过用户身份证号查询用户信息

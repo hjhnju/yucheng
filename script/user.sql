@@ -12,6 +12,7 @@ CREATE TABLE `user_login` (
   `phone` varchar(12) DEFAULT NULL COMMENT '用户手机号',
   `email` varchar(50) DEFAULT NULL COMMENT '用户邮箱',
   `huifuid` varchar(50) DEFAULT NULL COMMENT '汇付用户ID',
+  `isborrower` tinyint(3) NOT NULL DEFAULT 0 COMMENT '是否借款人0:否，1:是',
   `lastip` varchar(50) DEFAULT NULL COMMENT '最近登陆ip',
   `login_time` int(11) NOT NULL COMMENT '最近一次登录时间',
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新信息时间',
@@ -79,3 +80,5 @@ CREATE TABLE `admin` (
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员信息表';
+
+ALTER TABLE `user_login` ADD COLUMN `isborrower` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '是否借款人' AFTER `huifuid`;

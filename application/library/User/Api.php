@@ -44,6 +44,21 @@ class User_Api{
     }
 
     /**
+     * 获取借款用户列表
+     * @param   $usertype 用户类型
+     * @param   $list 用户列表
+     */
+    public static function getBorrowers($page = 1, $pagesize = 10){
+        $logic = new User_Logic_Query();
+        $list  = $logic->queryBorrowers($page, $pagesize);
+        Base_Log::notice(array(
+            'page'     => $list['page'],
+            'pagesize' => $list['pagesize'],
+        ));
+        return $list['list'];
+    }
+
+    /**
      * 获取企业用户列表
      * @param   $usertype 用户类型
      * @param   $list 用户列表

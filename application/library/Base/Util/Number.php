@@ -10,6 +10,13 @@ class Base_Util_Number {
         return number_format(strval($amount), $degit, '.', ',');
     }
 
+    /**
+     * 去除千分号
+     */
+    public static function rmTausendStyle($amount) {
+        return str_replace(',', '', $amount);
+    }
+
    /* 
     * MoXie (SysTem128@GMail.Com) 2010-6-30 17:53:57 
     *  

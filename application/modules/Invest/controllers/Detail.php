@@ -44,7 +44,7 @@ class DetailController extends Base_Controller_Response {
              $loan['left_month'] = 1;
              $loan['next_date']  = strftime("2015-03-13 10:30:00");
         }
-        //待删除
+        ///待删除
 
 
         $this->_view->assign('data', $loan);

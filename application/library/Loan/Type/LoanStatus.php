@@ -11,7 +11,7 @@ class Loan_Type_LoanStatus extends Base_Type {
      */
     const AUDIT = 1;
     /**
-     * 10敬请期待
+     * 10即将开启
      * @var integer
      */
     const WAITING = 10;
@@ -21,15 +21,15 @@ class Loan_Type_LoanStatus extends Base_Type {
      */
     const LENDING = 2;
     /**
-     * 3满标 放款审核 
+     * 3满标 待审核 
      * @var integer
      */
     const FULL_CHECK = 3;
     /**
-     * 4打款中(审核通过后才进入打款中)
+     * 4满标 打款中(审核通过后才进入打款中)
      * @var integer
      */
-    const PAYING = 4;
+    const FULL_PAYING = 4;
     /**
      * 5回款中
      * @var integer
@@ -72,7 +72,7 @@ class Loan_Type_LoanStatus extends Base_Type {
         self::WAITING    => '即将开启',
         self::LENDING    => '投标中',
         self::FULL_CHECK => '已满标',
-        self::PAYING     => '打款中',
+        self::FULL_PAYING=> '满标打款中',
         self::REFUNDING  => '还款中',
         self::FINISHED   => '已完成',
         self::CANCEL     => '已撤销',

@@ -8,7 +8,21 @@ class User_Logic_Query{
     const TYPE_PRIV = 1;
     //用户类型－企业用户
     const TYPE_CORP = 2;
-    
+
+    /**
+     * 查询用户
+     */
+    public function queryBorrowers($page, $pagesize){
+        $list    = new User_List_Login();
+        $filters = array('isborrower' => 1);
+        $list->setFilter($filters);
+        $list->setOrder('create_time desc');
+        $list->setPage($page);
+        $list->setPagesize($pagesize);
+        $list = $list->toArray();
+        return $list;
+    }
+
     /**
      * 查询用户
      */

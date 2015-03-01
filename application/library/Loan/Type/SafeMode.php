@@ -5,21 +5,22 @@
  *
  */
 class Loan_Type_SafeMode extends Base_Type {
+    
     /**
-     * 本金保障计划
+     * 收费权质押
      * @var integer
      */
-    const CAPITAL = 1;
+    const PLEDGE = 3;
     /**
      * 大股东担保
      * @var integer
      */
     const SHAREHOLDER = 2;
     /**
-     * 收费权质押
+     * 本金保障计划
      * @var integer
      */
-    const PLEDGE = 3;
+    const CAPITAL = 1;
     
     /**
      * 默认key名

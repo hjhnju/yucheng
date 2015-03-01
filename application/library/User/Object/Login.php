@@ -26,7 +26,7 @@ class User_Object_Login extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('userid', 'usertype', 'status', 'name', 'passwd', 'phone', 'email', 'huifuid', 'lastip', 'login_time', 'create_time', 'update_time');
+    protected $fields = array('userid', 'usertype', 'status', 'name', 'passwd', 'phone', 'email', 'huifuid', 'isborrower', 'lastip', 'login_time', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -41,6 +41,7 @@ class User_Object_Login extends Base_Object {
         'phone'       => 'phone',
         'email'       => 'email',
         'huifuid'     => 'huifuid',
+        'isborrower'  => 'isborrower',
         'lastip'      => 'lastip',
         'login_time'  => 'loginTime',
         'create_time' => 'createTime',
@@ -55,6 +56,7 @@ class User_Object_Login extends Base_Object {
         'userid'      => 1,
         'usertype'    => 1,
         'status'      => 1,
+        'isborrower'  => 1,
         'login_time'  => 1,
         'create_time' => 1,
         'update_time' => 1,
@@ -115,6 +117,12 @@ class User_Object_Login extends Base_Object {
      * @var string
      */
     public $huifuid;
+
+    /**
+     * 
+     * @var integer
+     */
+    public $isborrower;
 
     /**
      * 最近登陆ip

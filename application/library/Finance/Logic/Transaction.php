@@ -172,7 +172,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $retDate      = strval($retDate);
         $guarCompId   = strval($guarCompId);
         $guarAmt      = strval($guarAmt);
-        $proArea      = strval($proArea);
+        $proArea      = 3501;//str_pad($proArea, 4, '0', STR_PAD_RIGHT);//4位显示，不足前面补零。如福建省：0035
         $bgRetUrl     = $this->webroot . '/finance/bgcall/addBidInfo';
         $merPriv      = '';
         $reqExt       = '';       
@@ -180,12 +180,13 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $yearRate, $retType, $bidStartDate, $bidEndDate, $retAmt,
             $retDate, $guarCompId,$guarAmt,$proArea,$bgRetUrl,$merPriv,$reqExt);        
         
-        if(!is_null($mixRet)){
+        if(!is_null($mixRet) && ($mixRet['RespCode'] === '000'||$mixRet['RespCode'] === '395'){//标的已存在
             $objRst->status = Base_RetCode::SUCCESS;
             $objRst->data   = array('orderId' => $orderId);
         }else{
             $objRst->status = Finance_RetCode::ADD_BIDINFO_FAIL;
             $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::ADD_BIDINFO_FAIL);
+            Base_Log::error(array('msg'=>'汇付添加标的失败', 'ret' => $mixRet));
         }
 
         return $objRst;

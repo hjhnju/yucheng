@@ -120,7 +120,7 @@ class InvestController extends Base_Controller_Page {
 	 */	
 	public function  tenderingAction() {
 		$arrStatus = array(Invest_Type_InvestStatus::LENDING,
-			Invest_Type_InvestStatus::FULL_CHECK, Invest_Type_InvestStatus::PAYING);
+			Invest_Type_InvestStatus::FULL_CHECK, Invest_Type_InvestStatus::FULL_PAYING);
         $userid = $this->userid;
 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 	    $tenderingRet = Invest_Api::getUserInvests($userid, $arrStatus, $page, self::PAGESIZE);

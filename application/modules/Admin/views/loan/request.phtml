@@ -26,7 +26,7 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title">
-            客户列表 <small>开户企业</small>
+            申请借款 <small></small>
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
@@ -36,7 +36,7 @@
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a href="/admin/corp">客户列表</a>
+                        <a href="/admin/loan/borrower">客户列表</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
@@ -70,15 +70,15 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="title">借款标题</label>
+                                <label for="title">借款标题<small>(最好控制在8个字及以内，列表中超出部分以...显示)</small></label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="填写借款标题">
                             </div>
                             <div class="form-group">
-                                <label for="amount">借款金额</label>
+                                <label for="amount">借款金额<small>(单位元，精确到.00)</small></label>
                                 <input type="text" class="form-control" id="amount" name="amount" placeholder="填写借款金额">
                             </div>
                             <div class="form-group">
-                                <label for="interest">借款利率</label>
+                                <label for="interest">借款利率<small>(单位%, 精确到.00)</small></label>
                                 <input type="text" class="form-control" id="interest" name="interest" placeholder="填写借款利率">
                             </div>
                             <div class="form-group">
@@ -122,49 +122,105 @@
                                 <label for="level">保障方式</label>
                                 {%checkboxes name='Loan_Type_SafeMode' tag='safes'%}
                             </div>
-                            <div class="form-group">
-                                <label for="content">借款原因</label>
-                                <div class="text">
-                                    <input type="text" name="content" class="form-control">
-                                </div>
-                            </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="fresh" value="1"> 新手专项标
                                 </label>
                             </div>
+                            <div class="form-group">
+                                <label for="content">借款原因<small>(借款详情)</small></label>
+                                <div class="text">
+                                    <input type="text" name="content" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="audit_info">审核信息</label>
+                                <div class="text">
+                                    <input type="text" name="audit_info" class="form-control">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">教师圆梦贷 － 借款人信息(可选，个人借款时必填) <small>loan_private</small></h3>
+                            <input type="hidden" name="private[id]" value="0">
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="showname">显示用户名 <small>(手动加星，如：李**)</small></label>
+                                <div class="text">
+                                    <input type="text" name="private[showname]">
+                                </div>
+                            </div>                            
+                            <div class="form-group">
+                                <label for="account">户口所在地 <small>(如：福建省)</small></label>
+                                <div class="text">
+                                    <input type="text" name="private[account]">
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="age">年龄 <small>(填写数值，如：38)</small></label>
+                                <div class="text">
+                                    <input type="text" name="private[age]">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="marriage">是否已婚</label>
+                                <select name="private[marriage]">
+                                {%selection name='Loan_Type_YesNo'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="company_type">企业类型</label>
+                                <select name="private[company_type]">
+                                {%selection name='Loan_Type_SchoolType'%}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="job_title">职务 <small>(填写字符串，如：校长、学校领导、教师)</small><small>(填写字符串，如：校长、学校领导、教师)</small></label>
+                                <div class="text">
+                                    <input type="text" name="private[job_title]">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="income">年收入范围 <small>(填写字符串，如：10-20万)</small></label>
+                                <div class="text">
+                                    <input type="text" name="private[income]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- FORM FIELDS-->
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">借款企业信息 <small>loan_company</small></h3>
+                            <h3 class="panel-title">学校助业贷 － 借款机构信息(可选，机构借款时必填) <small>loan_company</small></h3>
                             <input type="hidden" name="company[id]" value="0">
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="school">学校</label>
+                                <label for="school">机构名称 <small>(学校名、教育机构名等)</small></label>
                                 <div class="text">
                                     <input type="text" name="company[school]">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="area">所在地</label>
-                                <div class="text">
-                                    <select name="company[area]">
-                                    {%selection name='Loan_Type_Province'%}
-                                    </select>
-                                </div>
+                                <label for="company[area]">所在地 <small>(省、市)</small></label>
+                                <select name="company[area]">
+                                {%selection name='Loan_Type_Province'%}
+                                </select>
                             </div>
+
                             <div class="form-group">
-                                <label for="assets">公司资产</label>
+                                <label for="assets">公司资产<small>(填写字符串，如：8000万)</small></label>
                                 <div class="text">
                                     <input type="text" name="company[assets]">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="employers">员工数</label>
+                                <label for="employers">员工数<small>(填写数值，如：300)，页面显示300+名</small></label>
                                 <div class="text">
                                     <input type="text" name="company[employers]">
                                 </div>
@@ -182,7 +238,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="students">学生数</label>
+                                <label for="students">学生数<small>(填写数值，如：1000)，页面显示1000+名</small></label>
                                 <div class="text">
                                     <input type="text" name="company[students]">
                                 </div>
@@ -198,47 +254,43 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="name">担保人</label>
+                                <label for="name">担保人姓名<small>(手动加星，如：王**, **华)</small></label>
                                 <div class="text">
                                     <input type="text" name="guarantee[name]">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="account">户口所在地</label>
+                                <label for="account">户口所在地 <small>(如：福建省)</small></label>
                                 <div class="text">
                                     <input type="text" name="guarantee[account]">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="age">年龄</label>
+                                <label for="age">年龄 <small>(填写数值，如：38)</small></label>
                                 <div class="text">
                                     <input type="text" name="guarantee[age]">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="marriage">已婚</label>
-                                <div class="text">
+                                <label for="marriage">是否已婚</label>
                                 <select name="guarantee[marriage]">
                                 {%selection name='Loan_Type_YesNo'%}
                                 </select>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="company_type">企业类型</label>
-                                <div class="text">
-                                    <select name="guarantee[company_type]">
-                                    {%selection name='Loan_Type_SchoolType'%}
-                                    </select>
-                                </div>
+                                <select name="guarantee[company_type]">
+                                {%selection name='Loan_Type_SchoolType'%}
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="jobtitle">职务</label>
+                                <label for="jobtitle">职务 <small>(填写字符串，如：校长、学校领导、教师)</small></label>
                                 <div class="text">
                                     <input type="text" name="guarantee[job_title]">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="income">年收入</label>
+                                <label for="income">年收入范围 <small>(填写字符串，如：10-20万)</small></label>
                                 <div class="text">
                                     <input type="text" name="guarantee[income]">
                                 </div>
@@ -254,7 +306,7 @@
                         <div class="panel-body">
                         <table class="table">
                             <thead>
-                                <tr><th>审核类型</th><th>说明</th></tr>
+                                <tr><th>审核类型</th><th>说明<small>(如:实地认证,营业执照,税务登记证,银行开户许可证,组织机构代码证,征信报告,抵押手续,身份证,户口本,结婚证, 房产证,行驶证,登记证书等)</small></th></tr>
                             </thead>
                             {%section name=loop loop=15%}
                             <tr>
@@ -281,7 +333,7 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                            <button type="submit" class="btn btn-success">填写完毕-发布</button>
+                            <button type="submit" class="btn btn-success">填写完毕-保存</button>
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
@@ -396,6 +448,7 @@
             
             loadsub('guarantee', data.guarantee);
             loadsub('company', data.company);
+            loadsub('private', data.private);
             loadaudit(data.audit);
             loadAttach(data.attach);
         });
