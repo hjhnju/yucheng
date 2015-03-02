@@ -450,13 +450,13 @@ class Loan_Logic_Loan {
         
             //TODO 金额需要核对正确
             $interest = $this->getInterestByDay($loan['amount'], $loan['interest'], $loan['duration']);
-            $amount = number_format($loan['amount'] + $interest, 2);
+            $amount = $loan['amount'] + $interest;
             return array(
                 array(
                     'period' => 1,
                     'amount' => $amount,
                     'capital'=> $loan['amount'],
-                    'interest'=> $amount,
+                    'interest'=> $interest,
                     'promise_time'  => $time,
                     'status'  => 1,
                 ),
@@ -479,11 +479,9 @@ class Loan_Logic_Loan {
                 } else {
                     $capital = 0;
                 }
-                $amount = number_format($capital + $interest, 2);
+                $amount = $capital + $interest;
                 if ($period == $periods) {
                     $interest = $amount;
-                } else {
-                    $interest = number_format($interest, 2);
                 }
                 
                 $refund = array(
@@ -522,13 +520,13 @@ class Loan_Logic_Loan {
                 $days = ($promise - $start) / 3600 / 24;
                 $interest = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1)) / (pow(1 + $b, $periods) - 1);
                 $capital = $a * $b * pow(1 + $b, $period - 1) / (pow(1 + $b, $periods) - 1);
-                $amount = number_format($capital + $interest, 2);
+                $amount = $capital + $interest;
                 
                 $refund = array(
                     'period' => $period,
                     'amount' => $amount,
                     'capital'=> $capital,
-                    'interest'=> number_format($interest, 2),
+                    'interest'=> $interest,
                     'promise_time'  => $promise,
                     'status'  => 1,
                 );

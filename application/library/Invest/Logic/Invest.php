@@ -132,7 +132,14 @@ class Invest_Logic_Invest {
      * @return integer
      */
     public function allowInvest($uid, $loanId) {
+    	if (empty($uid) || empty($loanId)) {
+    		return Invest_RetCode::NOT_ALLOWED;
+    	}
+    	
         $loan = Loan_Api::getLoanInfo($loanId);
+        if (empty($loan)) {
+        	return Invest_RetCode::NOT_ALLOWED;
+        }
         // 已满标不允许投标
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
             return Invest_RetCode::NOT_ALLOWED;
@@ -195,6 +202,90 @@ class Invest_Logic_Invest {
             $loan['expend_time'] = $extime;
         }
         return $loan;
+    }
+    
+    /**
+     * 对借款详情输出数据进行格式化
+     * @param array $loan
+     * @return array
+     */
+    public function formatDetail($loan) {
+    	foreach ($loan['refunds'] as $key => $refund) {
+    		$loan['refunds'][$key]['amount'] = Base_Util_Number::tausendStyle($refund['amount']);
+    		$loan['refunds'][$key]['interest'] = Base_Util_Number::tausendStyle($refund['interest']);
+    	}
+    	return $loan;
+    }
+    
+    /**
+     * 获取下一个还款日
+     * @param array $refunds
+     * @return string
+     */
+    public function getNextRefundDate($refunds) {
+    	foreach ($refunds as $refund) {
+    		if ($refund['status'] == Invest_Type_RefundStatus::NORMAL) {
+    			return date("Y-m-d H:i:s", $refund['promise_time']);
+    		}
+    	}
+    	return '已完成';
+    }
+    
+    /**
+     * 获取剩余的还款期数
+     * @param array $refunds
+     * @return number
+     */
+    public function getRestRefundMonths($refunds) {
+		$months = 0;
+    	foreach ($refunds as $refund) {
+    		if ($refund['status'] == Invest_Type_RefundStatus::NORMAL) {
+    			$months ++;
+    		}
+    	}
+    	return $months;
+    }
+    
+    /**
+     * 获取剩余的待还本息
+     * @param array $refunds
+     * @return number
+     */
+    public function getRestRefundsTotal($refunds) {
+		$total = 0;
+    	foreach ($refunds as $refund) {
+    		if ($refund['status'] == Invest_Type_RefundStatus::NORMAL) {
+    			$total += $refund['amount'];
+    		}
+    	}
+    	return $total;
+    }
+    
+    /**
+     * 获取用户的可用余额信息
+     * @param User_Object $objUser
+     * @return array
+     *  array(
+     *		'uid'         => 1,
+     *		'username'    => 'test',
+     *		'amount'      => '100.00',
+     *		'amount_text' => '100.00',
+     * );
+     */
+    public function getUserBalance($objUser) {
+    	if (empty($objUser)) {
+    		return array();
+    	}
+    	
+    	$userid = $objUser->userid;
+    	$amount = Finance_Api::getUserAvlBalance($userid);
+    	$user   = array(
+    		'uid'         => $userid,
+ 			'username'    => $objUser->name,
+    		'amount'      => $amount,
+    		'amount_text' => Base_Util_Number::tausendStyle($amount),
+    	);
+    	return $user;
     }
     
     /**

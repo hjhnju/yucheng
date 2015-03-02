@@ -8,7 +8,7 @@ class DetailController extends Base_Controller_Response {
     const ERROR_KEY = 'invest_error';
     
     public function indexAction() {
-        $id = intval($_GET['id']);
+        $id = $this->getInt('id');
         if (empty($id)) {
             $this->outputError(Base_RetCode::PARAM_ERROR);
         }
@@ -22,33 +22,21 @@ class DetailController extends Base_Controller_Response {
         }
         $loan['allow_invest'] = $logic->allowInvest($this->userid, $loan['id']);
         
+        // 登录用户增加账号余额信息
         if (!empty($this->userid)) {
-            $amount = Finance_Api::getUserAvlBalance($this->userid);
-            $user   = array(
-                'uid'         => $this->userid,
-                'username'    => $this->objUser->name,
-                'amount'      => $amount,
-                'amount_text' => number_format(strval($amount),2,'.',','),
-            );
-
+        	$user = $logic->getUserBalance($this->objUser);
             $this->_view->assign('user', $user);
         }
-        //紧急备用
-        if($id === 100001 && $loan['status'] === Invest_Type_InvestStatus::REFUNDING){
-             $loan['rest_total'] = Base_Util_Number::tausendStyle(10115.07);
-             $loan['left_month'] = 1;
-             $loan['next_date']  = strftime("2015-03-12 10:30:00");
-        }
-        if($id === 100000 && $loan['status'] === Invest_Type_InvestStatus::REFUNDING){
-             $loan['rest_total'] = Base_Util_Number::tausendStyle(100920.55);
-             $loan['left_month'] = 1;
-             $loan['next_date']  = strftime("2015-03-13 10:30:00");
-        }
-        ///待删除
+        
+        // 获取剩余还款本息 还款期数 下次还款日
+        $loan['left_month'] = $logic->getRestRefundMonths($loan['refunds']);
+        $loan['next_date'] = $logic->getNextRefundDate($loan['refunds']);
+        $loan['rest_total'] = $logic->getRestRefundsTotal($loan['refunds']);
+        $loan['rest_total'] = Base_Util_Number::tausendStyle($loan['rest_total']);
 
-
-        $this->_view->assign('data', $loan);
-
+        // 对输出进行格式化
+        $data = $logic->formatDetail($loan);
+        $this->_view->assign('data', $data);
         
         // 增加错误信息
         $sess = Yaf_Session::getInstance();
