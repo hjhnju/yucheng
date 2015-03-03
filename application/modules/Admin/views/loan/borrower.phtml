@@ -43,13 +43,21 @@
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
-                <div class="form-group">
-                    <label for="borrower">平台用户名 <small>(需要开通借款功能的用户)</small></label>
-                    <div class="text">
-                        <input type="text" name="borrower">
-                        <input type="submit" name="openBorrow" value="开通借款">
+                <form role="form" method="post" action="">
+                    {%if $error_msg%}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Warning! </strong> {%$error_msg%}
                     </div>
-                </div>
+                    {%/if%}
+                    <div class="form-group">
+                        <label for="borrower">平台用户名 <small>(需要开通借款功能的用户)</small></label>
+                        <div class="text">
+                            <input type="text" name="borrower">
+                            <input type="submit" value="开通借款">
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="row-fluid">
                 <table class="table table-striped">

@@ -43,6 +43,16 @@ class User_Api{
         return $objUser;
     }
 
+    public static function setBorrower($userName){
+        $objUser = new User_Object_Login(array('name'=>$userName));
+        $ret = false;
+        if($objUser->isLoaded()){
+            $objUser->isborrower = 1;
+            $ret = $objUser->save();
+        }
+        return $ret;
+    }
+
     /**
      * 获取借款用户列表
      * @param   $usertype 用户类型

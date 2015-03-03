@@ -1,0 +1,93 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Modal title</h4>
+						</div>
+						<div class="modal-body">
+							 Widget settings form goes here
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn blue">Save changes</button>
+							<button type="button" class="btn default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE HEADER-->
+			<h3 class="page-title">
+			平台充值 <small></small>
+			</h3>
+			<div class="page-bar">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-home"></i>
+						<a href="/admin">Home</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="#">平台充值</a>
+					</li>
+				</ul>
+			</div>
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN DASHBOARD STATS -->
+			<!-- <div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 xxx
+							</div>
+							<div class="desc">
+								 平台余额
+							</div>
+						</div>
+						<a class="more" href="#">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+			</div> -->
+			<!-- END DASHBOARD STATS -->
+
+			<div class="row-fluid">
+				<form role="form" method="post" action="">
+					{%if $error_msg%}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Warning! </strong> {%$error_msg%}
+                    </div>
+                    {%/if%}
+	                <div class="form-group">
+                        <label for="amount">充值金额<small>(单位元，精确到.00)</small></label>
+                        <input type="text" class="form-control" id="amount" name="amount" placeholder="填写金额">
+                    </div>
+                    <div class="form-group">
+                    	<label for="bankid">选择银行</label>
+	                    <select name="bankid">
+	                    	<option value="CIB" selected>兴业银行</option>
+	                    	<option value="BJRCB">北京农村商业银行</option>
+	                    </select>
+                    </div>
+                    <div class="form-group">
+                    	<button type="submit" class="btn btn-success">充值</button>
+                    </div>
+                </form>
+            </div>
+		</div>
+	</div>
+{%/block%}
