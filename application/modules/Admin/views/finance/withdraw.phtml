@@ -45,6 +45,17 @@
             <div class="row-fluid">
                 <button type="button" class="btn btn-primary" onclick="window.open('/admin/finance/mercash')">代取现</button>
             </div>
+            <form class="form-horizontal" role="form" method="post" action="/admin/finance/withdraw">
+	            <div class="form-group">
+	                 <label for="username" class="col-sm-2 control-label">输入用户名</label>
+	                 <div class="col-sm-4">
+	                      <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+	                 </div>
+	                 <div class="form-group">
+	                       <input type="submit" class="btn btn-default" value="查询"/>
+	                 </div>
+	            </div>
+	         </form>
             <div class="row-fluid">
                 <table class="table table-striped">
                     <thead>
@@ -53,7 +64,10 @@
                             <th>用户名</th>
                             <th>汇付号</th>
                             <th>手机号</th>
-                            <th>操作</th>
+                            <th>提现订单号</th>
+	                        <th>提现金额</th>
+	                        <th>提现日期</th>
+	                        <th>状态</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +77,10 @@
                             <td>{%$user.name%}</td>
                             <td>{%$user.huifuid%}</td>
                             <td>{%$user.phone%}</td>
-                            <td><a href="/admin/loan/request?userid={%$user.userid%}">申请借款</a></td>
+                            <td>{%$user.orderId%}</td>
+	                        <td>{%$user.transAmt%}</td>
+	                        <td>{%$user.orderDate%}</td>
+	                        <td>{%$user.status%}</td>
                         </tr>
                         {%/foreach%}
                     </tbody>

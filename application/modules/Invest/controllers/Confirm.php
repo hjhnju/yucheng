@@ -21,7 +21,7 @@ class ConfirmController extends Base_Controller_Response {
         //TODO:前端优化，等待几秒
         $mixRet = null;
         $i      = 0;
-        while (is_null($mixRet) && $i <= 10) {
+        while (is_null($mixRet) && $i <= 30) {
             //true||false||null
             $mixRet = Invest_Logic_ChkStatus::getInvestStatus($orderId);
             sleep(1);
