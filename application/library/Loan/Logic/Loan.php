@@ -551,6 +551,7 @@ class Loan_Logic_Loan {
         );
         $list->setFilter($filters);
         $list->setPagesize(PHP_INT_MAX);
+        $list->setOrder('id asc');
         $data = $list->toArray();
         
         $refunds = array();
