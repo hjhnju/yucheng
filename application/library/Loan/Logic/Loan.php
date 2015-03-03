@@ -122,9 +122,6 @@ class Loan_Logic_Loan {
             'loanId' => $loanId,
         ));
         $this->addLog($loanId, $content);
-
-        //更新统计
-        Loan_Logic_Counter::caculate($inUserId);
         
         return $objRst;
     }

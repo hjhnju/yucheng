@@ -21,6 +21,10 @@ class LoanAction extends Yaf_Action_Abstract {
                 ));
             }
         }
+
+        //更新信用统计
+        Loan_Logic_Counter::caculateByLoanid($loanId);
+
         Base_Log::notice(array(
             'arrRet' => $arrRet,
             'bolRet' => $bolRet,

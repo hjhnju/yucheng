@@ -1,7 +1,29 @@
 <?php
 class Loan_Logic_Counter {
 
+    /**
+     * 根据loanId更新信用统计
+     * @param $loanId 
+     * @return boolean
+     */
+    public static function caculateByLoanid($loanId){
+
+        $objLoan = new Loan_Object_Loan($loanId);
+        if(!$objLoan->isLoaded()){
+            return false;
+        }
+        $userid = $objLoan->userId;
+        return self::caculate($userid);
+
+    }
+
+    /**
+     * 更新某个userid的信用统计
+     * @param $userid 
+     * @return boolean
+     */
     public static function caculate($userid){
+
         $userid = intval($userid);
         if($userid <= 0){
             return false;
@@ -33,8 +55,9 @@ class Loan_Logic_Counter {
         $counter = new Loan_Object_Counter($arrCnt);
         $ret = $counter->save();
         Base_Log::notice(array(
-            'msg' => '更新借款统计',
-            'ret' => $ret,
+            'msg'    => '更新借款统计',
+            'userid' => $userid,
+            'ret'    => $ret,
         ));
         return $ret;
     }
