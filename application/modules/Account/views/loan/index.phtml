@@ -1,0 +1,60 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/loan/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/invest/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='../../../views/common/nav.phtml' current="7"%}
+        <div class="finish-main">
+            <div class="finish-main-title">我的借款</div>
+            <div class="loaninfo">
+                <div class="loaninfo-refund">
+                    <div class="loaninfo-left">
+                        <div class="loaninfo-text">最近一期待还款金额</div>
+                        <div class="loaninfo-value">¥{%$data.amount%}</div>
+                    </div>
+                    <div class="loaninfo-right">
+                        <div class="loaninfo-text">最近到期还款日</div>
+                        <div class="loaninfo-value">{%$data.last_date%}</div>
+                    </div>
+                </div>
+                <div class="loaninfo-bottom">
+                    <div class="loaninfo-actbal">
+                        <span class="loaninfo-actbal-text">当前账户可用余额：</span>
+                        <span class="loaninfo-actbal-value">¥{%$data.avlbal%}</span>
+                        <a target="_blank" href="{%$webroot%}/account/cash/recharge" class="refund-charge">还款充值</a>
+                    </div>
+                    <div class="loaninfo-hint">提示：当前账户余额低于最近一期待还款金额，请在还款日前酌情充值。
+                    </div>
+                </div>
+                <div class="extract-main-bottom">
+                    <div class="extract-main-bottom-title">温馨提示：</div>
+                    <div class="extract-main-bottom-text">1、系统在还款日会自动从借款人账户可用余额中扣除当期待还金额，以完成还款；</div>
+                    <div class="extract-main-bottom-text">2、还款时当前账户可用余额不小于当期最低还款额才能还款成功，请借款人确保还款日前余额充足；</div>
+                    <div class="extract-main-bottom-text">3、借款人如需要提前还款，可与兴教贷客户经理联系。</div>
+                </div>
+            </div>
+            <!-- <div class="my-loan-tab">
+                <span class="my-loan-tab-item current" data-value="1">还款中</span>
+                <span class="my-loan-tab-item" data-value="2">已结束</span>
+            </div>
+            <div id="my-loan-list" class="my-loan-list">
+                <div class="xjd-loading">&nbsp;</div>
+            </div> 
+            <div id="my-loan-pager" class="my-loan-pager"></div>
+            -->
+        </div>
+    </div>
+</div>
+{%/block%}

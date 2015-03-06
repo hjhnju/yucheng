@@ -90,7 +90,10 @@ class Account_Logic_UserInfo {
             'email'           =>$ret['email']['isopen'],
         );
         $ret['securedegree'] = $this->scoreDegree($param);
-        $ret['securedegree']['up'] = $webroot.'/account/secure';     
+        $ret['securedegree']['up'] = $webroot.'/account/secure';  
+
+        //是否借款人
+        $ret['isborrower'] = $objUser->isborrower;   
         return $ret;
     }
     

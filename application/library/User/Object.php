@@ -26,6 +26,7 @@ class User_Object {
         'phone',
         'email',
         'huifuid',
+        'isborrower',
         'lastip',
         'loginTime',
         'createTime',
