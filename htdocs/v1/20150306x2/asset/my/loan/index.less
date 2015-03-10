@@ -1,0 +1,283 @@
+@import "../../common/css/common.less";
+@import "../common/css/index.less";
+
+.loaninfo-refund {
+  border: 0px solid #eaeaea;
+  margin-bottom: 10px;
+  *zoom: 1;
+}
+
+.loaninfo-refund:before,
+.loaninfo-refund:after {
+    display: table;
+    content: "";
+}
+
+.loaninfo-refund:after {
+    clear: both;
+}
+
+.loaninfo-left {
+    padding: 10px 0px;
+    font-size: 20px;
+    float: left;
+}
+
+.loaninfo-right {
+    padding: 10px 250px;
+    font-size: 20px;
+}
+
+.loaninfo-text {
+    font-size: 14px;
+}
+
+.loaninfo-value {
+    font-size: 32px;
+    color: #f2746a;
+}
+
+.loaninfo-bottom {
+    margin-bottom: 15px;
+}
+
+.loaninfo-actbal {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 25px;
+}
+
+.loaninfo-actbal-text {
+    float: left;
+    width: 130px;
+}
+
+.loaninfo-actbal-value {
+    color: #f2746a;
+    float: left;
+    text-align: left;
+}
+
+.loaninfo-hint {
+    font-size: 12px;
+    color: #9c9c9c;
+}
+
+.refund-charge {
+    display: block;
+    width: 78px;
+    height: 23px;
+    line-height: 21px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    margin-left: 250px;
+    background-color: @color-red;
+    .border-radius(3px);
+    &:hover {
+        background-color: @color-red-hover;
+    }
+}
+
+.extract-main-bottom {
+    padding: 10px 25px;
+    background-color: #f8f8f8;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #9c9c9c;
+}
+.extract-main-bottom-title {
+    height: 24px;
+    line-height: 24px;
+}
+.extract-main-bottom-text {
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+}
+
+.my-loan-tab {
+    padding: 15px 25px;
+    background-color: @color-gray-bg;
+    margin-bottom: 10px;
+    .clearfix;
+
+    .my-loan-tab-item {
+        float: left;
+        padding: 0 10px;
+        height: 26px;
+        line-height: 26px;
+        color: @color-black;
+        .border-radius(3px);
+        margin-right: 15px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &.current {
+            color: @color-white;
+            background-color: @color-red;
+        }
+    }
+}
+
+.my-loan-list {
+    position: relative;
+    min-height: 300px;
+
+    .my-loan-header {
+        border-bottom: 1px solid @color-gray-border;
+        .clearfix;
+    }
+    .my-loan-item {
+        min-height: 60px;
+        line-height: 60px;
+        border-bottom: 1px dashed @color-gray-border;
+
+        &.current .my-loan-detail {
+            display: block;
+        }
+    }
+
+    .my-loan-content {
+        .clearfix;
+    }
+    .my-loan-title {
+        color: #a0a0a0;
+        float: left;
+        height: 34px;
+        line-height: 34px;
+        width: 75px;
+        padding-left: 10px;
+    }
+
+    .my-loan-project {
+        float: left;
+        width: 75px;
+
+        padding-left: 10px;
+    }
+
+    .loan-name {
+        width: 180px;
+        color: @color-black;
+        text-decoration: none;
+    }
+    .loan-time {
+        width: 110px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .loan-op,
+    .view-plan {
+        width: 80px;
+        .clearfix;
+    }
+
+    .view-plan-btn {
+        float: left;
+        background-color: @color-green;
+        color: @color-white;
+        .border-radius(3px);
+        cursor: pointer;
+        height: 26px;
+        line-height: 26px;
+        margin-top: 14px;
+        padding: 0 4px;
+    }
+
+    .loan-em {
+        color: @color-red;
+    }
+    .loan-pass {
+        color: @color-green;
+    }
+
+    .my-loan-detail {
+        display: none;
+        position: relative;
+        border: 1px solid @color-gray-border;
+        margin-bottom: 20px;
+        min-height: 100px;
+
+        .my-loan-plan-title {
+            background-color: @color-gray-bg;
+            margin: 0;
+            padding-left: 20px;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        th,
+        .my-loan-plan-all td {
+            background: @color-gray-bg;
+            border-bottom: 0;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid @color-gray-border;
+        }
+
+        .trangle-border,
+        .trangle-content {
+            position: absolute;
+            width: 0;
+            height: 0;
+            display: block;
+            border: 10px solid;
+            top: -20px;
+            right: 30px;
+        }
+
+        .trangle-border {
+            top: -21px;
+            border-color: transparent transparent @color-gray-border transparent;
+        }
+        .trangle-content {
+            border-color: transparent transparent @color-gray-bg transparent;
+        }
+    }
+}
+
+.my-loan-table {
+    width: 100%;
+    text-align: left;
+
+    th {
+        color: #a0a0a0;
+        border-bottom: 1px solid @color-gray-border;
+        height: 34px;
+        line-height: 34px;
+        padding-left: 10px;
+    }
+
+    td {
+        border-bottom: 1px dashed @color-gray-border;
+        padding-left: 10px;
+        height: 60px;
+        line-height: 60px;
+    }
+}
+.span-box {
+    display: inline-block;
+    width: 70px;
+    height: 8px;
+    background-color: #cccccc;
+
+    .border-radius(20px);
+
+    .within {
+        min-width: 10%;
+        height: 8px;
+        display: block;
+        background-color: @color-red;
+
+        .border-radius(20px);
+    }
+}

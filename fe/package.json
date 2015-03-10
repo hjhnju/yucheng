@@ -10,12 +10,12 @@
         "loaderAutoConfig": "js,htm,html,tpl,vm,phtml",
         "loaderUrl": "http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js",
         "dependencies": {
-            "moment": "2.x",
-            "saber-emitter": "1.x",
-            "est": "1.x",
-            "etpl": "3.x",
-            "echarts": "2.x",
-            "zrender": "2.x",
+            "moment": "2.7.0",
+            "saber-emitter": "1.0.0",
+            "est": "1.3.0",
+            "etpl": "3.0.0",
+            "echarts": "2.1.9",
+            "zrender": "2.0.6",
             "jquery": "~1.9.1"
         }
     },
