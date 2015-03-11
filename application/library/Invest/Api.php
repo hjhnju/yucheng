@@ -83,11 +83,11 @@ class Invest_Api {
      * 获取我的投资收益
      * @param integer $uid
      * @return array <pre>(
-            'all_invest' => $all,
-            'all_income' => $incomes,
-            'wait_capital' => $capital,
-            'wait_interest' => $interest,
-        );
+     *       'all_invest' => $all,
+     *       'all_income' => $incomes,
+     *       'wait_capital' => $capital,
+     *       'wait_interest' => $interest,
+     *   );
      */
     public static function getUserEarnings($uid) {
         $logic = new Invest_Logic_Invest();
@@ -101,10 +101,10 @@ class Invest_Api {
      * @param number $start
      * @param number $end
      * @return array <pre>(
-            '2014-09' => 100,
-            '2014-10' => 200,
-        );
-    */
+     *       '2014-09' => 100,
+     *       '2014-10' => 200,
+     *   );
+     */
     public static function getEarningsMonthly($uid, $start = 0, $end = 0) {
         if ($start == 0) {
             $start = strtotime('-6 months');
@@ -142,6 +142,7 @@ class Invest_Api {
             'invest_id' => $invest_id,
         );
         $refunds->setFilter($filters);
+        $refunds->setOrder('id asc');
         $refunds->setPagesize(PHP_INT_MAX);
         $list = $refunds->toArray();
         
@@ -264,6 +265,23 @@ class Invest_Api {
             $content = "更新投标[{$investId}]状态为" . $type->getTypeName($status);
             Loan_Api::addLog($invest->loanId, $content);
         }
+        return $res;
+    }
+
+    /**
+     * 更新投资回款状态
+     * @param integer $refundId
+     * @param integer $status
+     * @return boolean
+     */
+    public static function updateInvestRefundStatus($refundId, $status) {
+        $refund = new Invest_Object_Refund($refundId);
+        $refund->status = $status;
+        if(Invest_Type_RefundStatus::RETURNED === $status){
+            //已还本金＝待还本金
+            $refund->capitalRefund = $refund->capitalRest;
+        }
+        $res = $refund->save();
         return $res;
     }
     
@@ -401,4 +419,6 @@ class Invest_Api {
         $money = $amount * $interest * $days / 365 / 100;
         return $money;
     }
+
+
 }

@@ -22,6 +22,7 @@ class Finance_RetCode extends Base_RetCode {
     CONST CAN_NOT_REC_AWARD     = 1108;//没有领奖资格
 
     CONST RECEIVE_MULTI         = 1109;//重复领取
+    CONST REQUEST_WRONG         = 1110;//汇付返回操作不成功，非000
 
     /* 消息函数
      * @var array
@@ -36,6 +37,7 @@ class Finance_RetCode extends Base_RetCode {
         self::ADD_BIDINFO_FAIL      => '录入投标信息失败',
     	self::CAN_NOT_REC_AWARD     => '该用户不能领奖',
         self::RECEIVE_MULTI         => '重复领取',
+        self::REQUEST_WRONG         => '汇付返回操作不成功',
     );
     
     /**

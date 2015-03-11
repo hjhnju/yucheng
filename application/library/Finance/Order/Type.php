@@ -18,6 +18,8 @@ class Finance_Order_Type  extends Base_Type{
     CONST MERCASH          = 11; //商户代取现
     CONST USRUNFREEZE      = 12; //投标资金解冻
     CONST UNKNOWN_TYPE     = 13; //未知类型
+    CONST REFUNDED         = 14; //回款本息 vs 还款付息
+    CONST LOANPAYED        = 14; //满标入款 vs 满标打款
 
     public static $names = array(
         self::ALL              => '所有类型',
@@ -33,6 +35,8 @@ class Finance_Order_Type  extends Base_Type{
         self::MONEY_BACK       => '退款',
         self::UNKNOWN_TYPE     => '未知类型', 
         self::USRUNFREEZE      => '投标资金解冻',  
+        self::REFUNDED         => '回款本息', 
+        self::LOANPAYED        => '满标入款', 
     );
 
     protected static $charMap = array(
@@ -42,13 +46,15 @@ class Finance_Order_Type  extends Base_Type{
         self::TENDERFREEZE     => '-',
         self::TENDERCANCEL     => '+',
         self::LOANS            => '-',
-        self::REPAYMENT        => '+', 
+        self::REPAYMENT        => '-', 
         self::TRANSFER         => '',
         self::MERCASH          => '',
         self::RECE_AWD         => '+',
         self::MONEY_BACK       => '+',
         self::UNKNOWN_TYPE     => '', 
         self::USRUNFREEZE      => '+',  
+        self::REFUNDED         => '+',  
+        self::LOANPAYED        => '+',  
     );
 
     public static function getPlusMinusChar($type){

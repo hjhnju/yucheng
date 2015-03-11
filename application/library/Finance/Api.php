@@ -69,7 +69,7 @@ class Finance_Api {
     public static function getUserBalance($userid) {
         $logic  = new Finance_Logic_Query();
         $arrBal = $logic->getUserBalance($userid);
-        Base_Log::notice($arrBal);
+        Base_Log::notice(array_merge(array('userid'=>$userid), $arrBal));
         return $arrBal;        
     }
 
@@ -395,63 +395,52 @@ class Finance_Api {
         return $objRst->format();
     }
      
-     /**
-      * 还款接口Finance_Api::Repayment
-      * @param string outUserId 出账账户号：还款人的uid
-      * @param string inUserId 入账账户号：投资人的uid
-      * @param string subOrdId 关联的投标订单号
-      * @param float transAmt 交易金额
-      * @param int loanId 借款项目ID
-      * @return boolean 还款成功/失败
-      */
-     public static function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
+    /**
+     * 还款接口Finance_Api::Repayment
+     * @param string outUserId 出账账户号：还款人的uid
+     * @param string inUserId 入账账户号：投资人的uid
+     * @param string subOrdId 关联的投标订单号
+     * @param float transAmt 交易金额(包含逾期给投资人的罚息)
+     * @param int loanId
+     * @param float mangFee 逾期需要缴纳的管理费用
+     * @return 接口统一Json格式
+     * 
+     */
+     public static function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee = 0.00) {
         if(!isset($outUserId) || !isset($inUserId) ||!isset($subOrdId) || !isset($transAmt) ||
            !isset($loanId) ) {
             Base_Log::error(array(
-                'msg'       => '请求参数错误',
-                'outUserId' => $outUserId,
-                'inUserId'  => $inUserId,
-                'subOrdId'  => $subOrdId,
-                'transAmt'  => $transAmt,
-                'loanId'    => $loanId,
+                'msg'  => '请求参数错误',
+                'args' => func_get_args(),
             ));
+            $objRst = new Base_Result();
+            $objRst->status = Base_RetCode::PARAM_ERROR;
+            return $objRst->format();
         }
         $transLogic = new Finance_Logic_Transaction();
-        $return = $transLogic->repayment($outUserId, $inUserId, $subOrdId, $transAmt, $loanId);     
-        if($return === false) {
+        $objRst     = $transLogic->repayment($outUserId, $inUserId, $subOrdId, $transAmt, $loanId, $mangFee);     
+        if(Base_RetCode::SUCCESS !== $objRst->status) {
             Base_Log::error(array(
-                'msg'       => '请求参数错误',
+                'msg'       => $objRst->statusInfo,
                 'outUserId' => $outUserId,
                 'inUserId'  => $inUserId,
                 'subOrdId'  => $subOrdId,
                 'transAmt'  => $transAmt,
                 'loanId'    => $loanId,
+                'mangFee'   => $mangFee,
             ));
-            return false;
+            return $objRst->format();
         }
-        if(is_null($return)) {
-            $errCode = Finance_RetCode::REQUEST_API_ERROR;
-            $logParam = array();
-            $logParam['msg']       = Finance_RetCode::getMsg($errCode);
-            $logParam['outUserId'] = $outUserId;
-            $logParam['inUserId']  = $inUserId;
-            $logParam['subOrdId']  = $subOrdId;
-            $logParam['transAmt']  = $transAmt;
-            $logParam['loanId']    = $loanId;
-            Base_Log::error($logParam);
-            return false;
-        }
-        $respCode = $return['RespCode'];
-        $respDesc = $return['RespDesc'];
-        if($respCode !== '000') {
-            $logParam = array();
-            $logParam['msg'] = $respDesc;
-            $logParam = array_merge($logParam,$return);
-            Base_Log::error($logParam);
-            return false;
-        }
-        Base_Log::notice($return);
-        return true;
+        Base_Log::notice(array(
+            'msg'       => '还款接口成功',
+            'outUserId' => $outUserId,
+            'inUserId'  => $inUserId,
+            'subOrdId'  => $subOrdId,
+            'transAmt'  => $transAmt,
+            'loanId'    => $loanId,
+            'mangFee'   => $mangFee,
+        ));
+        return $objRst->format();
      }
      
      /**

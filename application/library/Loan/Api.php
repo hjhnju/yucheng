@@ -18,12 +18,18 @@ class Loan_Api {
         return false;
     }*////不再调用
 
+    public function doRefund($refundId, $loanId){
+        $logic = new Loan_Logic_Refund();
+        $objRst = $logic->doRefund($refundId, $loanId);
+        return $objRst->format();
+    }
+
     /**
      * 发布借款
      * @param integer $loanId 借款ID
      * @return boolean
      */
-public function publish($loanId, $isOpen = 0, $days = 7) {
+    public function publish($loanId, $isOpen = 0, $days = 7) {
         $logic  = new Loan_Logic_Loan();
         $objRst = $logic->publish($loanId, $isOpen, $days);
         return $objRst->format();
@@ -239,7 +245,21 @@ public function publish($loanId, $isOpen = 0, $days = 7) {
         }
         return $res;
     }
-    
+
+    /**
+     * 更新借款回款计划的状态
+     * @param integer $loan_id
+     * @param integer $status
+     * @return boolean
+     */
+    public static function updateLoanRefundStatus($refundId, $status) {
+        $refund = new Loan_Object_Refund($refundId);
+        $refund->status = $status;
+        $res = $refund->save();
+        return $res;
+    }
+
+
     /**
      * 更新借款的投标金额，如果投标总金额小于借款金额则成功，否则失败
      * @param integer $loanId

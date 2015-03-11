@@ -133,7 +133,7 @@ CREATE TABLE `loan_refund` (
   `period` tinyint(4) NOT NULL COMMENT '期数',
   `capital` decimal(10,2) NOT NULL COMMENT '本金',
   `capital_rest` decimal(10,2) NOT NULL COMMENT '剩余本金',
-  `capital_refund` decimal(10,2) NOT NULL COMMENT '已还本金',
+  `capital_refund` decimal(10,2) NOT NULL COMMENT '应还本金',
   `interest` decimal(10,2) NOT NULL COMMENT '利息',
   `amount` decimal(10,2) NOT NULL COMMENT '应还本息',
   `late_charge` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '逾期罚息',

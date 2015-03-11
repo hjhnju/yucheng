@@ -31,32 +31,29 @@ class Account_Logic_Repayplan {
             $list[$key]['repossPrincipal'] = sprintf('%.2f',$value['capital_rest']);        
             //已收本金      
             $list[$key]['recePrincipal']   = sprintf('%.2f',$value['capital_refund']);      
+            //待收收益
+            $list[$key]['repossProfit']    = sprintf('%.2f', $value['interest']);      
             //是否已还款     
-            if($value['transfer'] === 1) {      
-                //待收收益      
-                $list[$key]['repossProfit'] = '0.00';       
+            if($value['status'] === Invest_Type_RefundStatus::RETURNED) {      
                 //已收收益      
                 $list[$key]['receProfit']   = sprintf('%.2f', $value['interest']);      
-            }       
-            if($value['transfer'] === 0) {      
-                //待收收益      
-                $list[$key]['repossProfit'] = sprintf('%.2f', $value['interest']);      
+            }else{
                 //已收收益      
                 $list[$key]['receProfit']   = '0.00';       
-            }       
-            //还款状态      
+            }
+            //还款状态
             switch ($value['status']) {     
-                case 1:     
+                case Invest_Type_RefundStatus::NORMAL:     
                     $list[$key]['paymentStatus'] = 0;       
-                    break;      
-                case 2:     
+                    break;
+                case Invest_Type_RefundStatus::RETURNED:     
                     $list[$key]['paymentStatus'] = 1;       
-                    break;      
-                case 3:     
+                    break;
+                case Invest_Type_RefundStatus::OVER:     
                     $list[$key]['paymentStatus'] = 2;       
-                    break;      
-                default:        
-                    break;      
+                    break;
+                default:
+                    break;
             }       
             //罚息        
             $list[$key]['punitive'] = sprintf('%.2f',$value['late_charge']);        

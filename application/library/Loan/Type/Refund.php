@@ -38,8 +38,8 @@ class Loan_Type_Refund extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::NORMAL => '正常',
-        self::REFUNDED => '已还',
+        self::NORMAL => '待还款',
+        self::REFUNDED => '已还款',
         self::OUTTIME => '逾期',
     );
 }

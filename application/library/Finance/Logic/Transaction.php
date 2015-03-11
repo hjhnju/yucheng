@@ -546,21 +546,24 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param string outUserId 出账账户号：还款人的uid
      * @param string inUserId 入账账户号：投资人的uid
      * @param string subOrdId 关联的投标订单号
-     * @param float transAmt 交易金额
+     * @param float transAmt 交易金额(包含逾期给投资人的罚息)
      * @param int loanId
+     * @param float mangFee, 逾期需要缴纳的管理费用
      * @return array || boolean
      * 
      */
-    public function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId) {
+    public function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee = 0.00) {
+        $objRst = new Base_Result();
         if(!isset($outUserId) || !isset($inUserId) || !isset($subOrdId) ||
            !isset($transAmt) || !isset($loanId)) {
+            $objRst->status = Base_RetCode::PARAM_ERROR;
             Base_Log::error(array(
-                'msg' => '请求参数错误',
+                'objRst' => $objRst->format(),
             ));     
-            return false;
+            return $objRst;
         }
         $transAmt  = sprintf('%.2f',$transAmt);
-        $huifuid   = $this->getHuifuid(intval($inUserId));
+        $inCustId  = $this->getHuifuid(intval($inUserId));
         //还款订单订单记录入表finance_order
         $paramOrder = array(
             'userId'    => intval($outUserId),//还款人的uid
@@ -571,7 +574,11 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
         if(empty($orderInfo)){
-            return false;
+            $objRst->status = Base_RetCode::DB_ERROR;
+            Base_Log::error(array(
+                'objRst' => $objRst->format(),
+            ));     
+            return $objRst;
         }
         $orderDate  = $orderInfo['orderDate'];
         $orderId    = $orderInfo['orderId'];
@@ -581,16 +588,29 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $subOrdDate = strval($arrOrderInfo['orderDate']);
         $outAcctId  = '';
         $transAmt   = $transAmt;
-        $fee        = '0.00';
+        $fee        = sprintf("%.2f", $mangFee);
         $divDetails = '';
+        if($mangFee > 0.00){
+            // TODO:逾期管理费用，需要分账
+            $divDetails = '';
+        } else {
+            $divDetails = '';
+        }
         $feeObjFlag = 'O';//像还款人收取手续费
         $bgRetUrl   = $this->webroot.'/finance/bgcall/repayment';
-        $merPriv    = strval($outUserId);//借款人的uid
+        $merPriv    = implode(',', array($outUserId,$inUserId));//借款人的uid
         $reqExt     = array('ProId'=> strval($loanId));
         $reqExt     = json_encode($reqExt);     
-        $ret        = $this->chinapnr->repayment($this->merCustId, $orderId, $orderDate, $outCustId, 
+        $resp       = $this->chinapnr->repayment($this->merCustId, $orderId, $orderDate, $outCustId, 
             $subOrdId, $subOrdDate, $outAcctId, $transAmt, $fee, $inCustId, $inAcctId,
             $divDetails, $feeObjFlag, $bgRetUrl, $merPriv, $reqExt);
+        if('000' !== $resp['RespCode']){
+            $objRst->status     = Finance_RetCode::REQUEST_WRONG;
+            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_WRONG);
+            return $objRst;
+        }
+        $objRst->status = Base_RetCode::SUCCESS;
+        return $objRst;
         
     }
     

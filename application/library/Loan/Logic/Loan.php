@@ -74,7 +74,7 @@ class Loan_Logic_Loan {
     public function makeLoans($loanId){
         $objRst = new Base_Result();
         if (empty($loanId)) {
-            $objRst->status     = Basele_RetCode::getMsg($objRst->status);
+            $objRst->status     = Base_RetCode::getMsg($objRst->status);
             return $objRst->format();
         }
 

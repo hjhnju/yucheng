@@ -17,7 +17,9 @@ class Base_Result{
 
         $this->data       = $data;
         $this->status     = $status;
-        $this->statusInfo = $statusInfo; 
+        if(!empty($statusInfo)){
+            $this->statusInfo = $statusInfo; 
+        }
     }
    
     public function format(){
@@ -26,6 +28,13 @@ class Base_Result{
             'statusInfo' => $this->statusInfo,
             'data'       => $this->data,
         );
+    }
+
+    public function __set($field, $value){
+        if($field === 'status'){
+            $this->status = intval($value);
+            $this->statusInfo = Base_RetCode::getMsg($this->status);
+        }
     }
 }
 

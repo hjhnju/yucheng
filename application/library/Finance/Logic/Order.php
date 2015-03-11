@@ -169,11 +169,11 @@ class Finance_Logic_Order {
                 'arrExts' => $arrExts,
         ));
 
-        $regOrder          = new Finance_Object_Order(intval($orderId));
-        $status            = intval($status);
+        $regOrder = new Finance_Object_Order(intval($orderId));
+        $status   = intval($status);
         if($status === $regOrder->status){
             Base_Log::warn(array(
-                'msg' => '订单状态一致时不再更新, 防止余额计算非实时不一致',
+                'msg'     => '订单状态一致时不再更新, 防止余额计算非实时不一致',
                 'orderId' => $orderId,
                 'status'  => $status,
             ));

@@ -603,7 +603,9 @@ class BgcallController extends Base_Controller_Page {
         }       
         $retParam = $this->arrUrlDec($_REQUEST);
         //验签处理SDK中验过了
-        $userid    = intval($retParam['MerPriv']);//投标人的uid
+        $arrUid    = explode(',', $retParam['MerPriv']);
+        $outUserid = intval($arrUid[0]);//投资人的uid
+        $inUserId  = intval($arrUid[1]);//借款人的uid
         $orderId   = intval($retParam['OrdId']);
         $orderDate = intval($retParam['OrdDate']);
         $subOrdId  = intval($retParam['SubOrdId']);
@@ -616,7 +618,7 @@ class BgcallController extends Base_Controller_Page {
              Base_Log::error(array(
                 'msg'       => $respDesc,
                 'respCode'  => $respCode,
-                'userid'    => $userid,
+                'outUserid' => $outUserid,
                 'orderId'   => $orderId,
                 'orderDate' => $orderDate,
             ));
@@ -625,11 +627,28 @@ class BgcallController extends Base_Controller_Page {
                 $respCode, $respDesc);
         }
         //将finance_order表状态更新为“处理成功”
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+        $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
             $respCode, $respDesc);
-        //将打款记录插入至表finance_record中
-        Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH,
-            $amount, '财务类满标打款记录');
+
+        if ($bolRet) {
+            //将打款记录插入至表finance_record中
+            Finance_Logic_Order::saveRecord($orderId, $outUserid, Finance_Order_Type::LOANS,
+                $amount, '财务类满标打款记录');
+
+            //借款人入账的资金纪录入表finance_order
+            $paramOrder = array(
+                'userId'      => $inUserId,//借款人的uid
+                'type'        => Finance_Order_Type::LOANPAYED,
+                'amount'      => $amount,
+                'status'      => Finance_Order_Status::SUCCESS,
+                'freezeTrxId' => $orderId,//保存关联的还款订单号
+                'comment'     => '满标入款',
+            );
+            $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+            //插入还款记录至表finance_record
+            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::REFUNDED,
+                $amount, '满标入款记录');
+        }
 
         Base_Log::notice($retParam);
         print('RECV_ORD_ID_'.strval($orderId));
@@ -654,23 +673,21 @@ class BgcallController extends Base_Controller_Page {
         }
         $retParam = $this->arrUrlDec($_REQUEST);
         //验签处理SDK中验过了       
-        $userid    = intval($retParam['MerPriv']);//借款人的uid
+        $arrUid    = explode(',', $retParam['MerPriv']);
+        $outUserid = intval($arrUid[0]);//还款人的uid
+        $inUserId  = intval($arrUid[1]);//收款人的uid
         $orderId   = intval($retParam['OrdId']);
         $orderDate = intval($retParam['OrdDate']);
         $subOrdId  = intval($retParam['SubOrdId']);
         $amount    = floatval($retParam['TransAmt']);
-        $arrBal   = Finance_Api::getUserBalance($userid);
-        $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal'];//用户可用余额
-        $total    = Finance_Api::getPlatformBalance();//系统余额
+        $fee       = floatval($retParam['Fee']);//扣款手续费
         
-        $lastip    = Base_Util_Ip::getClientIp();
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];
         if($respCode !=='000') {
             Base_Log::error(array(
                 'msg'       => $respDesc,
-                'userid'    => $userid,
+                'outUserid' => $outUserid,
                 'orderId'   => $orderId,
                 'orderDate' => $orderDate,
                 'respCode'  => $respCode,               
@@ -681,11 +698,30 @@ class BgcallController extends Base_Controller_Page {
             return;
         }       
         //将finance_order表状态更改为“处理成功”
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
+        $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
             $respCode, $respDesc);
-        //插入还款记录至表finance_record
-        Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::REPAYMENT,
-            $amount, '财务类还款记录');
+        if ($bolRet) {
+            //插入还款记录至表finance_record
+            Finance_Logic_Order::saveRecord($orderId, $outUserid, Finance_Order_Type::REPAYMENT,
+                $amount, '财务类还款记录');
+
+            //收款人的资金纪录入表finance_order
+            $paramOrder = array(
+                'userId'      => $inUserId,//收款人的uid
+                'type'        => Finance_Order_Type::REFUNDED,
+                'amount'      => $amount,
+                'status'      => Finance_Order_Status::SUCCESS,
+                'freezeTrxId' => $orderId,//保存关联的还款订单号
+                'comment'     => '回款入款',
+            );
+            $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+            //插入还款记录至表finance_record
+            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::REFUNDED,
+                $amount, '财务类还款记录');
+
+            //TODO:如有$fee则需要增加手续费记录，finance_order_type增加还款手续费
+        }
+
         Base_Log::notice($retParam);
         print('RECV_ORD_ID_'.strval($orderId));     
     }

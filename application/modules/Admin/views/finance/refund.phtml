@@ -1,0 +1,80 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                             Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+            还款列表
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="/admin">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">还款列表(一周内到期飘红)</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN LIST -->
+            <div class="row-fluid">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>还款编号</th>
+                            <th>借款ID</th>
+                            <th>剩余期数</th>
+                            <th>应还本息</th>
+                            <th>逾期罚息</th>
+                            <th>应还时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%foreach from=$arrRefund key=i item=refund%}
+                        <tr {%if $refund.promise_time < time()+7*24*3600 %} style="color:red" {%/if%}>
+                            <td>{%$refund.id%}</td>
+                            <td>{%$refund.loan_id%}</td>
+                            <td>{%$refund.period%}</td>
+                            <td>{%$refund.amount%}</td>
+                            <td>{%$refund.late_charge%}</td>
+                            <td>{%$refund.promise_time|date_format:"%Y-%m-%d %H:%M"%}</td>
+                            <td>{%$refund.refund_status%}</td>
+                            <td><a href="/admin/loan/refund?id={%$refund.id%}&loanid={%$refund.loan_id%}">手动还款 </a> 
+                            </td>
+                        </tr>
+                        {%/foreach%}
+                    </tbody>
+                </table>
+            </div>
+            <!-- END LIST -->
+        </div>
+    </div>
+{%/block%}
