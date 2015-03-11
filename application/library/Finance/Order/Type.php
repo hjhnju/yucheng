@@ -19,7 +19,7 @@ class Finance_Order_Type  extends Base_Type{
     CONST USRUNFREEZE      = 12; //投标资金解冻
     CONST UNKNOWN_TYPE     = 13; //未知类型
     CONST REFUNDED         = 14; //回款本息 vs 还款付息
-    CONST LOANPAYED        = 14; //满标入款 vs 满标打款
+    CONST LOANPAYED        = 15; //满标入款 vs 满标打款
 
     public static $names = array(
         self::ALL              => '所有类型',

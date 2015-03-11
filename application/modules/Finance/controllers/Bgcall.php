@@ -641,12 +641,12 @@ class BgcallController extends Base_Controller_Page {
                 'type'        => Finance_Order_Type::LOANPAYED,
                 'amount'      => $amount,
                 'status'      => Finance_Order_Status::SUCCESS,
-                'freezeTrxId' => $orderId,//保存关联的还款订单号
+                'freezeTrxId' => $orderId,//保存关联的投资订单号
                 'comment'     => '满标入款',
             );
             $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
             //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::REFUNDED,
+            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::LOANPAYED,
                 $amount, '满标入款记录');
         }
 

@@ -374,10 +374,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $isUnFreeze     = 'Y';
         $unFreezeOrdId  = Finance_Logic_Order::genOrderId();
         $bgRetUrl       = $this->webroot.'/finance/bgcall/loans';
-        $merPriv        = strval($outUserId);//投标人的uid
-        $reqExt         = array(
-        'ProId'         => strval($loanId),
-        );
+        $merPriv        = implode(',', array($outUserId, $inUserId));//投标人的uid
+        $reqExt         = array('ProId' => strval($loanId));
         $reqExt         = json_encode($reqExt);
         
         Base_Log::debug(array(
