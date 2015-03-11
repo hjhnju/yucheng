@@ -25,8 +25,13 @@ class LoanController extends Base_Controller_Page {
 
 		$userBg         = Finance_Api::getUserBalance($this->userid);
         $data['avlbal'] = Base_Util_Number::tausendStyle($userBg['AvlBal']);
-		$data['amount'] = '180,000.00';
-		$data['last_date'] = '2015-04-25';
+
+        $arrLoan        = Loan_Api::getActiveRefunds($this->userid);
+		// 最近一期待还款金额
+		$data['amount'] = isset($arrLoan[0]['amount']) ? $arrLoan[0]['amount'] : 0.00;
+		// 最近到期还款日
+		$data['last_date'] = isset($arrLoan[0]['promise_time']) ? 
+			strftime('%Y-%m-%d', $arrLoan[0]['promise_time']) : '无';
 		$this->getView()->assign('data', $data);
 	}
 }

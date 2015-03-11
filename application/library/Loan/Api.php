@@ -18,6 +18,11 @@ class Loan_Api {
         return false;
     }*////不再调用
 
+    /**
+     * 还款操作
+     * @param $refundId 还款计划id
+     * @param $loanId 借款id
+     */
     public function doRefund($refundId, $loanId){
         $logic = new Loan_Logic_Refund();
         $objRst = $logic->doRefund($refundId, $loanId);
@@ -399,11 +404,21 @@ class Loan_Api {
     }
     
     public static function getRefunds($loan_id) {
-        $logic = new Loan_Logic_Loan();
+        $logic   = new Loan_Logic_Refund();
         $refunds = $logic->getRefunds($loan_id);
         return $refunds;
     }
     
+    /**
+     * 根据用户id获取最近待回款的回款计划
+     * @param $userId
+     */
+    public static function getActiveRefunds($userId){
+        $logic = new Loan_Logic_Refund();
+        $refunds = $logic->getActiveRefunds($userId);
+        return $refunds;
+    }
+
     /**
      * 将数组按照某个字段进行分级
      * @param array $data
