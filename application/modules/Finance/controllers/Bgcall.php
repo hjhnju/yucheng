@@ -683,9 +683,9 @@ class BgcallController extends Base_Controller_Page {
         $subOrdId  = intval($retParam['SubOrdId']);
         $amount    = floatval($retParam['TransAmt']);
         $fee       = floatval($retParam['Fee']);//扣款手续费
-        $reqExt    = json_decode($retParam['ReqExt']);
-        $loanId    = intval($reqExt['ProId']);
-        Base_Log::notice(array('msg'=>'解析字段','reqExt'=>$reqExt));
+        $respExt    = json_decode($retParam['RespExt'], true);
+        $loanId    = intval($respExt['ProId']);
+        Base_Log::notice(array('msg'=>'解析字段','respExt'=>$respExt));
         
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];
@@ -705,6 +705,7 @@ class BgcallController extends Base_Controller_Page {
         //将finance_order表状态更改为“处理成功”
         $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
             $respCode, $respDesc);
+        Base_Log::notice(array('msg'=>'更新表状态', 'bolRet'=>$bolRet));
         if ($bolRet) {
             //插入还款记录至表finance_record
             Finance_Logic_Order::saveRecord($orderId, $outUserId, Finance_Order_Type::REPAYMENT,
@@ -727,7 +728,7 @@ class BgcallController extends Base_Controller_Page {
             //TODO:如有$fee则需要增加手续费记录，finance_order_type增加还款手续费
 
             //单笔还款成功，更新回款计划字段
-            $bolRet        = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
+            $bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
             
             if(!$bolRet){
                 Base_Log::error(array(

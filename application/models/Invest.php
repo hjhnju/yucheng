@@ -31,11 +31,11 @@ class InvestModel extends BaseModel{
             $status = $mixStatus;
             $where .= " and loan.status = '$status'";
         }
-        $sql = "select invest.*, loan.title,loan.start_time,loan.deadline, loan.status as loan_status  from `$this->table` as invest
-                left join `$loan_table` as loan
+        $sql = "select invest.*,loan.title,loan.start_time,loan.deadline,loan.status as loan_status  from `$this->table` as invest left join `$loan_table` as loan
                 on invest.loan_id = loan.id
                 where $where order by invest.$order
                 limit $offset, $pagesize";
+        Base_Log::debug(array('sql'=>$sql));
         $data = $this->db->fetchAll($sql);
    
         $sql = "select count(*) as total from `$this->table` as invest
@@ -53,6 +53,7 @@ class InvestModel extends BaseModel{
             'total' => $total,
             'list' => $data,
         );
+        Base_Log::debug($list);
         return $list;
     }
 }

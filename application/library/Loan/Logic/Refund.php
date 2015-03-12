@@ -60,6 +60,7 @@ class Loan_Logic_Refund {
 
         //设置还款成功状态
         $bolRet = Loan_Api::updateLoanRefundStatus($refundId, Loan_Type_Refund::REFUNDED);
+        Base_Log::notice(array('msg'=>'设置还款成功状态','bolRet'=>$bolRet));
 
         if($bolRet){
             //通知还款人已还款
@@ -74,17 +75,20 @@ class Loan_Logic_Refund {
             $list->setFilter(array('loan_id' => $loanId));
             $list->appendFilterString('status !=' . Loan_Type_Refund::REFUNDED);
             $total = $list->getTotal();
-            Base_Log::debug(array('msg'=>'check是否最后一期还款计划', 'total'=>$total));
+            $total = intval($total);
+            Base_Log::notice(array('msg'=>'check是否最后一期还款计划', 'total'=>$total));
             if($total === 0){
                 $bolRet2 = Loan_Api::updateLoanStatus($loanId, Loan_Type_LoanStatus::FINISHED);
-                if($bolRet2){
-                    $listInvest = new Invest_List_Invest();
-                    $listInvest->setFilter(array('loan_id' => $loanId));
-                    $list = $listInvest->toArray();
-                    foreach ($list['list'] as $arrInfo) {
-                        $investId = $arrInfo['id'];
-                        Invest_Api::updateInvestStatus($investId, Invest_Type_InvestStatus::FINISHED);
-                    }
+                if(!$bolRet2){
+                    Base_Log::error(array('msg'=>'更新借款状态失败',
+                        'loanId'=>$loanId, 'bolRet2'=>$bolRet2));
+                }
+                $listInvest = new Invest_List_Invest();
+                $listInvest->setFilter(array('loan_id' => $loanId));
+                $list = $listInvest->toArray();
+                foreach ($list['list'] as $arrInfo) {
+                    $investId = $arrInfo['id'];
+                    Invest_Api::updateInvestStatus($investId, Invest_Type_InvestStatus::FINISHED);
                 }
             }
         }

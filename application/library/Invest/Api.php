@@ -161,7 +161,8 @@ class Invest_Api {
      */
     public static function getRefundById($refundId) {
         $refund = new Invest_Object_Refund($refundId);
-        return $refunds->toArray();
+        Base_Log::notice(array('msg'=>'refund行记录','row'=>$refund->toArray()));
+        return $refund->toArray();
     }
     
     /**

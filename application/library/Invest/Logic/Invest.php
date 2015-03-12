@@ -444,7 +444,6 @@ class Invest_Logic_Invest {
      */
     public function getUserInvests($uid, $mixStatus, $page = 1, $pagesize = 10) {
         $data = $this->objModel->getUserInvests($uid, $mixStatus, $page, $pagesize);
-        
         return $data;
     }
 

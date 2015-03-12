@@ -203,15 +203,14 @@ class InvestController extends Base_Controller_Page {
 	    foreach ($list as $key => $value) {
 	    	$listRet[$key]['proId'] = $value['loan_id'];
 	    	$loanInfo = Loan_Api::getLoanDetail($listRet[$key]['proId']);
-	    	
 	    	$listRet[$key]['investPro'] = $value['title'];
 	    	$listRet[$key]['annlnterestRate'] = $value['interest'];
-	    	$listRet[$key]['tenderAmt'] = $value['amount'];
-	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
-	    	$listRet[$key]['tenderTime'] = $value['create_time'];
-	    	$listRet[$key]['endTime'] = $value['deadline'];
-	    	$listRet[$key]['totalRetAmt'] = $value['amount_refund'];
-	    	$listRet[$key]['totalProfit'] = $value['amount_refund'] - $value['amount'];
+	    	$listRet[$key]['tenderAmt']   = $value['capital'];
+	    	$listRet[$key]['deadline']    = $loanInfo['duration_name'];
+	    	$listRet[$key]['tenderTime']  = $value['create_time'];
+	    	$listRet[$key]['endTime']     = $value['promise_time'];
+	    	$listRet[$key]['totalRetAmt'] = $value['amount'];
+	    	$listRet[$key]['totalProfit'] = $value['income'];
 	    }
 	    $ret = array(
 	    	'page' => $page,
