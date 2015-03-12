@@ -700,4 +700,37 @@ class Invest_Logic_Invest {
 	    }
 	    return null;
 	}
+
+    public function updateInvestInfo($investId){
+        $list = new Invest_List_Refund();
+        $filter = array('invest_id' => $investId);
+        $list->setFilter($filter);
+        $list = $list->toArray();
+        $arrRet = array(
+            'capital_refund' = 0.00, //以还本金
+            'capital_rest'   = 0.00, //待还本金
+            'amount_refund'  = 0.00, //已回收收益
+            'amount_rest'    = 0.00, //待回收收益
+            'income'         = 0.00, //总收益
+        );
+        foreach ($list as $row) {
+            $arrRet['capital_refund'] += $row['capital_refund'];
+            $arrRet['capital_rest']   += $row['capital_rest'];
+            $arrRet['income']         += $row['interest'];
+            if($row['status'] === Invest_Type_RefundStatus::RETURNED){
+                $arrRet['amount_refund'] += $row['interest'];
+            }else{
+                $arrRet['amount_rest'] += $row['interest'];
+            }
+        }
+
+        $invest                = new Invest_Object_Invest($investId);
+        $invest->capitalRefund = $arrRet['capital_refund'];
+        $invest->capitalRest   = $arrRet['capital_rest'];
+        $invest->amountRefund  = $arrRet['amount_refund'];
+        $invest->amountRest    = $arrRet['amount_rest'];
+        $invest->income        = $arrRet['income'];
+        $bolRet = $invest->save();
+        return $bolRet;
+    }
 }

@@ -293,7 +293,16 @@ class Invest_Api {
             $refund->capitalRefund = $refund->capitalRest;
         }
         $res = $refund->save();
+        if($res){
+            self::updateInvestInfo($refund->investId);
+        }
         return $res;
+    }
+
+    public static function updateInvestInfo($investId){
+        $logic = new Invest_Logic_Invest();
+        $bolRet = $logic->updateInvestInfo($investId);
+        return $bolRet;
     }
     
     /**
