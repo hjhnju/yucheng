@@ -52,12 +52,25 @@ class Base_Sms_Weimi implements Base_Sms_Interface{
         if($ret){ 
             $ret = json_decode($ret, true);
             if($ret['code'] === 0){
-                Base_Log::notice(array('ret'=>$ret, 'phone'=>$mixPhone, 'tplid'=>$strTplid, 'args'=>$arrArgs, 'timing'=>$timing));
+                Base_Log::notice(array(
+                    'msg'    => '短信发送成功',
+                    'ret'    => $ret,
+                    'phone'  => $mixPhone,
+                    'tplid'  => $strTplid,
+                    'args'   => $arrArgs,
+                    'timing' => $timing,
+                ));
                 return $ret;
             }
         }
-        Base_Log::warn(array('ret'=>$ret, 'phone'=>$mixPhone, 
-            'tplid'=>$strTplid, 'args'=>$arrArgs, 'timing'=>$timing));
+        Base_Log::error(array(
+            'msg'    => '短信发送不成功',
+            'ret'    => $ret,
+            'phone'  => $mixPhone, 
+            'tplid'  => $strTplid,
+            'args'   => $arrArgs,
+            'timing' => $timing,
+        ));
         return false;
     }
 

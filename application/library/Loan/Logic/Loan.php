@@ -220,14 +220,13 @@ class Loan_Logic_Loan {
         if (!$res) {
             return false;
         }
-        
-        //创建还款计划
-        $res = $this->buildRefunds($loanId);
+        $logic = new Loan_Logic_Refund();
+        $res   = $logic->buildRefunds($loanId);
         if (empty($res)) {
-	    Base_Log::error(array(
-               'res' => $res,
-               'loanid' => $loanId,
-	    ));
+            Base_Log::error(array(
+                'res' => $res,
+                'loanid' => $loanId,
+            ));
             $this->objModel->rollback();
             return false;
         }

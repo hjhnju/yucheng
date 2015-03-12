@@ -93,7 +93,6 @@ class Loan_Logic_Refund {
 
         Base_Log::notice(array(
             'msg'    => '还款计划还款成功',
-            'msg'    => $content,
             'loanId' => $loanId,
         ));
         

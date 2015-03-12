@@ -672,9 +672,10 @@ class BgcallController extends Base_Controller_Page {
             return;
         }
         $retParam = $this->arrUrlDec($_REQUEST);
+        Base_Log::notice(array('msg'=>'repayment参数','param'=>$retParam));
         //验签处理SDK中验过了       
         $arrUid    = explode(',', $retParam['MerPriv']);
-        $outUserid = intval($arrUid[0]);//还款人的uid
+        $outUserId = intval($arrUid[0]);//还款人的uid
         $inUserId  = intval($arrUid[1]);//收款人的uid
         $refundId  = intval($arrUid[2]);//对应的投资回款计划id
         $orderId   = intval($retParam['OrdId']);
@@ -683,14 +684,15 @@ class BgcallController extends Base_Controller_Page {
         $amount    = floatval($retParam['TransAmt']);
         $fee       = floatval($retParam['Fee']);//扣款手续费
         $reqExt    = json_decode($retParam['ReqExt']);
-        $loanId    = $reqExt['ProId'];
+        $loanId    = intval($reqExt['ProId']);
+        Base_Log::notice(array('msg'=>'解析字段','reqExt'=>$reqExt));
         
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];
         if($respCode !=='000') {
             Base_Log::error(array(
                 'msg'       => $respDesc,
-                'outUserid' => $outUserid,
+                'outUserId' => $outUserId,
                 'orderId'   => $orderId,
                 'orderDate' => $orderDate,
                 'respCode'  => $respCode,               
@@ -705,7 +707,7 @@ class BgcallController extends Base_Controller_Page {
             $respCode, $respDesc);
         if ($bolRet) {
             //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderId, $outUserid, Finance_Order_Type::REPAYMENT,
+            Finance_Logic_Order::saveRecord($orderId, $outUserId, Finance_Order_Type::REPAYMENT,
                 $amount, '财务类还款记录');
 
             //收款人的资金纪录入表finance_order
@@ -715,7 +717,7 @@ class BgcallController extends Base_Controller_Page {
                 'amount'      => $amount,
                 'status'      => Finance_Order_Status::SUCCESS,
                 'freezeTrxId' => $orderId,//保存关联的还款订单号
-                'comment'     => '回款入款',
+                'comment'     => '回款入款成功',
             );
             $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
             //插入还款记录至表finance_record
@@ -726,7 +728,7 @@ class BgcallController extends Base_Controller_Page {
 
             //单笔还款成功，更新回款计划字段
             $bolRet        = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
-            $arrRefundInfo = Invest_Api::getRefundById($refundId);
+            
             if(!$bolRet){
                 Base_Log::error(array(
                     'msg'      => '更新投资回款计划状态失败',
@@ -736,19 +738,22 @@ class BgcallController extends Base_Controller_Page {
                 ));
             }
 
+            $arrRefundInfo = Invest_Api::getRefundById($refundId);
             Base_Log::notice(array(
-                'msg'       => '单笔还款成功',
-                'loanId'    => $loanId,
-                'outUserId' => $outUserId,
-                'refundId'  => $refundId,
-                'bolRet'    => $bolRet,
+                'msg'           => '单笔还款成功',
+                'loanId'        => $loanId,
+                'outUserId'     => $outUserId,
+                'inUserId'      => $inUserId,
+                'refundId'      => $refundId,
+                'arrRefundInfo' => $arrRefundInfo,
+                'bolRet'        => $bolRet,
             ));
-
+            
             //投资人回款短信通知
-            $arrArgs    = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
-            $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-            $objOutUser = User_Api::getUserObject($inUserId);
-            Base_Sms::getInstance()->send($objOutUser->phone, $tplid[6], $arrArgs);
+            $arrArgs = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
+            $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+            $objUser = User_Api::getUserObject($inUserId);
+            Base_Sms::getInstance()->send($objUser->phone, $tplid[6], $arrArgs);
 
         }
 
