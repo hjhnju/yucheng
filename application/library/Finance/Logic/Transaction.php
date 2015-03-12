@@ -586,6 +586,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $arrOrderInfo = Finance_Logic_Order::getOrderInfo(intval($subOrdId));
         $subOrdDate = strval($arrOrderInfo['orderDate']);
         $outAcctId  = '';
+        $inAcctId  = '';
         $transAmt   = $transAmt;
         $fee        = sprintf("%.2f", $mangFee);
         $divDetails = '';
