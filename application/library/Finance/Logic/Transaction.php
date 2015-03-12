@@ -541,6 +541,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
     
     /**
      * 还款Logic层
+     * @param string refundId 单笔投资回款计划id
      * @param string outUserId 出账账户号：还款人的uid
      * @param string inUserId 入账账户号：投资人的uid
      * @param string subOrdId 关联的投标订单号
@@ -550,7 +551,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @return array || boolean
      * 
      */
-    public function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee = 0.00) {
+    public function repayment($refundId,$outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee = 0.00) {
         $objRst = new Base_Result();
         if(!isset($outUserId) || !isset($inUserId) || !isset($subOrdId) ||
            !isset($transAmt) || !isset($loanId)) {
@@ -596,15 +597,15 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         }
         $feeObjFlag = 'O';//像还款人收取手续费
         $bgRetUrl   = $this->webroot.'/finance/bgcall/repayment';
-        $merPriv    = implode(',', array($outUserId,$inUserId));//借款人的uid
+        $merPriv    = implode(',', array($outUserId,$inUserId,$refundId));//借款人的uid
         $reqExt     = array('ProId'=> strval($loanId));
         $reqExt     = json_encode($reqExt);     
         $resp       = $this->chinapnr->repayment($this->merCustId, $orderId, $orderDate, $outCustId, 
             $subOrdId, $subOrdDate, $outAcctId, $transAmt, $fee, $inCustId, $inAcctId,
             $divDetails, $feeObjFlag, $bgRetUrl, $merPriv, $reqExt);
         if('000' !== $resp['RespCode']){
-            $objRst->status     = Finance_RetCode::REQUEST_WRONG;
-            $objRst->statusInfo = Finance_RetCode::getMsg(Finance_RetCode::REQUEST_WRONG);
+            $objRst->status     = $resp['RespCode'];
+            $objRst->statusInfo = $resp['RespDesc'];
             return $objRst;
         }
         $objRst->status = Base_RetCode::SUCCESS;

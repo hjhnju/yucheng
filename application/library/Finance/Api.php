@@ -397,6 +397,7 @@ class Finance_Api {
      
     /**
      * 还款接口Finance_Api::Repayment
+     * @param string refundId 单笔投资回款计划id
      * @param string outUserId 出账账户号：还款人的uid
      * @param string inUserId 入账账户号：投资人的uid
      * @param string subOrdId 关联的投标订单号
@@ -406,7 +407,7 @@ class Finance_Api {
      * @return 接口统一Json格式
      * 
      */
-     public static function repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee = 0.00) {
+     public static function repayment($refundId, $outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee = 0.00) {
         if(!isset($outUserId) || !isset($inUserId) ||!isset($subOrdId) || !isset($transAmt) ||
            !isset($loanId) ) {
             Base_Log::error(array(
@@ -418,10 +419,12 @@ class Finance_Api {
             return $objRst->format();
         }
         $transLogic = new Finance_Logic_Transaction();
-        $objRst     = $transLogic->repayment($outUserId, $inUserId, $subOrdId, $transAmt, $loanId, $mangFee);     
+        $objRst     = $transLogic->repayment($refundId, $outUserId, $inUserId, 
+            $subOrdId, $transAmt, $loanId, $mangFee);     
         if(Base_RetCode::SUCCESS !== $objRst->status) {
             Base_Log::error(array(
                 'msg'       => $objRst->statusInfo,
+                'refundId'  => $refundId,
                 'outUserId' => $outUserId,
                 'inUserId'  => $inUserId,
                 'subOrdId'  => $subOrdId,
@@ -433,6 +436,7 @@ class Finance_Api {
         }
         Base_Log::notice(array(
             'msg'       => '还款接口成功',
+            'refundId'  => $refundId,
             'outUserId' => $outUserId,
             'inUserId'  => $inUserId,
             'subOrdId'  => $subOrdId,

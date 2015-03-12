@@ -127,7 +127,7 @@ class Loan_Logic_Refund {
         $mangFee   = 0.00; //预留还款管理费（一般逾期情况）
 
         //通知财务还款
-        $arrRet = Finance_Api::repayment($outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee);
+        $arrRet = Finance_Api::repayment($refundId,$outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee);
         if(Base_RetCode::SUCCESS !== $arrRet['status']){
             $bolRet = false;
             Base_Log::error(array(
@@ -139,7 +139,7 @@ class Loan_Logic_Refund {
         }
 
         //单笔还款成功，更新回款计划字段
-        $bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
+        /*$bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
         if(!$bolRet){
             Base_Log::error(array(
                 'msg'    => '更新投资回款计划状态失败',
@@ -162,8 +162,9 @@ class Loan_Logic_Refund {
         $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
         $objOutUser = User_Api::getUserObject($inUserId);
         Base_Sms::getInstance()->send($objOutUser->phone, $tplid[6], $arrArgs);
+        */
 
-        return $bolRet;
+        return true;
     }
 
 

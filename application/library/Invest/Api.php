@@ -153,6 +153,16 @@ class Invest_Api {
         ));
         return $data;
     }
+
+   /**
+     * 根据id获取收款计划
+     * @param integer $refundId
+     * @return array
+     */
+    public static function getRefundById($refundId) {
+        $refund = new Invest_Object_Refund($refundId);
+        return $refunds->toArray();
+    }
     
     /**
      * 获取用户的投资总额

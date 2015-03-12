@@ -676,11 +676,14 @@ class BgcallController extends Base_Controller_Page {
         $arrUid    = explode(',', $retParam['MerPriv']);
         $outUserid = intval($arrUid[0]);//还款人的uid
         $inUserId  = intval($arrUid[1]);//收款人的uid
+        $refundId  = intval($arrUid[2]);//对应的投资回款计划id
         $orderId   = intval($retParam['OrdId']);
         $orderDate = intval($retParam['OrdDate']);
         $subOrdId  = intval($retParam['SubOrdId']);
         $amount    = floatval($retParam['TransAmt']);
         $fee       = floatval($retParam['Fee']);//扣款手续费
+        $reqExt    = json_decode($retParam['ReqExt']);
+        $loanId    = $reqExt['ProId'];
         
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];
@@ -720,6 +723,33 @@ class BgcallController extends Base_Controller_Page {
                 $amount, '财务类还款记录');
 
             //TODO:如有$fee则需要增加手续费记录，finance_order_type增加还款手续费
+
+            //单笔还款成功，更新回款计划字段
+            $bolRet        = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
+            $arrRefundInfo = Invest_Api::getRefundById($refundId);
+            if(!$bolRet){
+                Base_Log::error(array(
+                    'msg'      => '更新投资回款计划状态失败',
+                    'refundId' => $refundId,
+                    'info'     => $arrRefundInfo,
+                    'bolRet'   => $bolRet,
+                ));
+            }
+
+            Base_Log::notice(array(
+                'msg'       => '单笔还款成功',
+                'loanId'    => $loanId,
+                'outUserId' => $outUserId,
+                'refundId'  => $refundId,
+                'bolRet'    => $bolRet,
+            ));
+
+            //投资人回款短信通知
+            $arrArgs    = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
+            $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+            $objOutUser = User_Api::getUserObject($inUserId);
+            Base_Sms::getInstance()->send($objOutUser->phone, $tplid[6], $arrArgs);
+
         }
 
         Base_Log::notice($retParam);
