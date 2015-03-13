@@ -36,6 +36,7 @@ class Loan_Logic_Refund {
 
         $listInvestRefund = new Invest_List_Refund();
         $listInvestRefund->setFilter(array('loan_id'=>$loanId, 'promise_time'=>$promiseTime));
+        $listInvestRefund->setPagesize(PHP_INT_MAX);
         $list   = $listInvestRefund->toArray();
         $bolRet = true;
         foreach($list['list'] as $arrInfo){
