@@ -291,6 +291,7 @@ class Invest_Api {
         if(Invest_Type_RefundStatus::RETURNED === $status){
             //已还本金＝待还本金
             $refund->capitalRefund = $refund->capitalRest;
+            $refund->refundTime    = time();
         }
         $res = $refund->save();
         if($res){
