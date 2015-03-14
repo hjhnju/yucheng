@@ -109,7 +109,7 @@ exports.getProcessors = function () {
             'src/my/invest/index.js',
             'src/my/message/index.js',
             'src/my/reward/index.js',
-            'src/my/extract/index.js',
+            // 'src/my/extract/index.js',
             'src/my/operation/index.js',
             'src/my/topup/index.js',
             'src/my/success/index.js',
