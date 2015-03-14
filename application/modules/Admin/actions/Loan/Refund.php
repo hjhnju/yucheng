@@ -24,6 +24,9 @@ class RefundAction extends Yaf_Action_Abstract {
             return;
         }
 
+        //更新信用统计
+        Loan_Logic_Counter::caculateByLoanid($loanId);
+
         $this->getView()->assign('status', true);
         Base_Log::notice(array(
             'msg'      => '手动还款成功',
