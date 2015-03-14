@@ -260,6 +260,9 @@ class Loan_Api {
     public static function updateLoanRefundStatus($refundId, $status) {
         $refund = new Loan_Object_Refund($refundId);
         $refund->status = $status;
+        if($status === Loan_Type_Refund::REFUNDED){
+            $refund->refundTime = time();
+        }
         $res = $refund->save();
         return $res;
     }

@@ -597,7 +597,7 @@ class Invest_Logic_Invest {
         $refunds = new Invest_List_Refund();
         $filters = array(
             'user_id' => $uid,
-            'status' => Invest_Type_InvestStatus::FINISHED,
+            'status' => Invest_Type_RefundStatus::RETURNED,
             'time' => array(
                 'refund_time >= ' . $start,
                 'refund_time < ' . $end,
