@@ -59,7 +59,7 @@
                     </thead>
                     <tbody>
                         {%foreach from=$arrRefund key=i item=refund%}
-                        <tr {%if $refund.promise_time < time()+7*24*3600 %} style="color:red" {%/if%}>
+                        <tr{%if $refund.promise_time lt time()+7*24*3600%} style="color:red" {%/if%}>
                             <td>{%$refund.id%}</td>
                             <td>{%$refund.loan_id%}</td>
                             <td>{%$refund.period%}</td>
