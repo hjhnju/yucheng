@@ -70,7 +70,7 @@ class User_Object {
     protected $thirdLogic;
 
 
-    public function __construct($userid){
+    public function __construct($userid = 0){
         $this->loginObj = new User_Object_Login(intval($userid));
         $usertype       = $this->loginObj->usertype;
         if(self::TYPE_CORP === $usertype){
@@ -127,18 +127,23 @@ class User_Object {
      * @return boolean
      */
     public function save() {
-        if(!$this->loginProps){
+        if(!$this->loginObj){
             return false;
         }
         $bolRet1 = $bolRet2 = $bolRet3 = true;
         $bolRet1 = $this->loginObj->save();
         if($this->infoObj){
+            $this->infoObj->userid = $this->loginObj->userid;
             $bolRet2 = $this->infoObj->save();
         }
         if($this->corpInfoObj){
+            $this->corpInfoObj->userid = $this->loginObj->userid;
             $bolRet3 = $this->corpInfoObj->save();
         }
-        return $bolRet1 && $bolRet2 && $bolRet3;
+        if($bolRet1 && $bolRet2 && $bolRet3){
+            return $this->loginObj->userid;
+        }
+        return false;
     }
 
     /**
