@@ -115,4 +115,15 @@ class LoginController extends Base_Controller_Page{
             $this->redirect('/user/regist');
         }
     }
+
+    /**
+     * 标准退出登录过程
+     * 状态返回0表示登出成功
+     */
+    public function signOutAction(){
+        $logic   = new User_Logic_Login();
+        $ret = $logic->signOut();
+        $redirectUri = '/user/login';
+        $this->redirect($redirectUri);
+    }   
 }

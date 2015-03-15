@@ -106,14 +106,7 @@ class CashController extends Base_Controller_Page {
             $this->getView()->assign('phone',$this->phone);
             
             $transAmt   = floatval($_REQUEST['value']);
-            $captcha    = $_REQUEST['invercode'];                     
-            $openAcctId = strval($_REQUEST['openAcctId']);
-            //验证验证码
-            $type       = 6;
-            $smsRet     = User_Api::checkSmscode($phone,$captcha,$type);
-            if(!$smsRet) {
-            	return ;
-            }
+            $openAcctId = isset($_REQUEST['openAcctId']) ? strval($_REQUEST['openAcctId']) : '';
             $transAmt = sprintf('%.2f',$transAmt);
             $openAcctId = strval($bankNum);
             $this->transLogic->cash($userid,$transAmt,$openAcctId);
