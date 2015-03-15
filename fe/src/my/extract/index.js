@@ -120,8 +120,8 @@ define(function (require) {
         $('#extract').on('submit', function () {
             var ipt = $('#search-ipt');
             var value = ipt.val();
-            var smsid = $('#sms-ipt');
-            var invercode = smsid.val();
+            // var smsid = $('#sms-ipt');
+            // var invercode = smsid.val();
 
             if(!value) {
                 $('#money-error').html('输入金额不能为空');
@@ -136,11 +136,11 @@ define(function (require) {
                 return false;
             }
             $('.ext-ipt.current').trigger('blur');
-            if (!invercode) {
-                $('#smscode-error').html('验证码不能为空');
-                smsid.addClass('current');
-                return false;
-            }
+            // if (!invercode) {
+            //     $('#smscode-error').html('验证码不能为空');
+            //     smsid.addClass('current');
+            //     return false;
+            // }
         });
 
         // withdrawCb
