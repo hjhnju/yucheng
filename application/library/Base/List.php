@@ -30,12 +30,6 @@ class Base_List {
      */
     protected $fields = array();
     
-
-    /**
-     * 计数 （distinct）
-     * @var string
-     */
-    public $distinTotal = 0;
     
     /**
      * 排序方式
@@ -269,14 +263,14 @@ class Base_List {
     }
    
     /**
-     * 统计列表中的所有行数
+     * 统计列表中的所有不重复记录行数
      * @return integer
      */
     public function distinCount($col) {
     	$this->initDB();
     	$sql = "select count(distinct $col) as total from `{$this->dbname}`.`{$this->table}`";
-    	$this->distinTotal = $this->db->fetchOne($sql);
-    	return $this->distinTotal;
+    	$distinTotal = $this->db->fetchOne($sql);
+    	return $distinTotal;
     }
     
     /**
