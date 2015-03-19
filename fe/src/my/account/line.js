@@ -145,17 +145,17 @@ define(function () {
         option.xAxis[0].data = data.x;
         option.series[0].data = data.y;
         //计算Y轴的最大值
-         var maxTem= Math.max.apply(Math, data.y);
-         var max=maxTem;
+         var maxTemp= Math.max.apply(Math, data.y);
+         var max=maxTemp;
         //个位数
-         var dai_ge = maxTem - ((Math.floor(maxTem/10))*10);
+         var geWei = maxTemp - ((Math.floor(maxTemp/10))*10);
          //个位数大于等于5向上进5个数值
-          if(dai_ge>=5){
+          if(geWei>=5){
                  max=Math.ceil((max/10))*10
           }
-        //个位数大于等于5向上进5个数值
+        //个位数小于5  向上补至5
          else{
-               max=(Math.floor(maxTem/10))*10+5;
+               max=(Math.floor(maxTemp/10))*10+5;
          }
         option.yAxis[0].max=max;
         option.yAxis[0].min=0;
