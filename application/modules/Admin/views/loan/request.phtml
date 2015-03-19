@@ -2,7 +2,7 @@
 {%block name='content'%} 
     <div class="page-content-wrapper">
         <div class="page-content">
-            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL -->
             <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -321,6 +321,7 @@
                         </table>
                         </div>
                     </div>
+                  <div id = "response" ></div>
                     <!-- FORM FIELDS-->
                     <!-- FORM FIELDS-->
                     <div class="panel panel-info">
@@ -350,7 +351,7 @@
                             <div class="form-group">
                                 <label for="filename">附件描述</label>
                                 <input type="text" name="attach_title" id="attach_title">
-                                <label for="select">附件类型</label>
+                                <label for="select" >附件类型</label>
                                 <select name="attach_type" id="attach_type">
                                     {%selection name='Loan_Type_Attach'%}
                                 </select>
@@ -421,7 +422,26 @@
         var el = $('<tr><td>' + str + '</tr>').appendTo($('#uploaded tbody'));
         el.find('.del').on({
             click: function(e) {
-                $(this).parents('tr').remove();
+                var xmlhttp;
+                if (window.XMLHttpRequest)
+                  {// code for IE7+, Firefox, Chrome, Opera, Safari
+                  xmlhttp=new XMLHttpRequest();
+                  }
+                else
+                  {// code for IE6, IE5
+                  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                  }
+                xmlhttp.onreadystatechange=function()
+                  {
+                  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                	  document.getElementById("response").innerHTML=xmlhttp.responseText;
+                    }
+                }
+            	$(this).parents('tr').remove();
+                xmlhttp.open("GET","/admin/loan/delpic?id=" + row.id,true);
+                xmlhttp.send();
+                
             }
         });
     }
