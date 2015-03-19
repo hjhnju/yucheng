@@ -298,11 +298,11 @@ class Invest_Logic_Invest {
         $loan = Loan_Api::getLoanInfo($loanId);
         $rest = $loan['amount'] - $loan['invest_amount'];
         // 投标金额超过总额
-        if ($amount > $rest) {
+        if (Base_Util_Number::floatIsGtr($amount, $rest)) {
             return false;
         }
         // 最后一标必须全部投完
-        if ($amount < 100 && $amount != $rest) {
+        if (!Base_Util_Number::floatIsGtre($amount, 100) && !Base_Util_Number::floatIsEqual($amount,$rest)) {
             return false;
         }
         return true;
