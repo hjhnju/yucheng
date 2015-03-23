@@ -1,11 +1,15 @@
 <?php
+/*
+ * TODO:实现省市联动选择框效果
+ * Author:yibing
+ */
 class GetcityAction extends Yaf_Action_Abstract {	
 	public function execute(){
 		
 		
 		$list = new Area_List_Area();
 		$prov = $_REQUEST['prov'];
-		//设置查询条件（where）
+		//设置查询条件（where）省的id
 		$list->setFields(array("name","id"));
 		$list->setFilterString("pid = $prov");
 		$list->setOrder('pinyin asc');

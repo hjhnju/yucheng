@@ -81,21 +81,22 @@
                                 <label for="interest">借款利率<small>(单位%, 精确到.00)</small></label>
                                 <input type="text" class="form-control" id="interest" name="interest" placeholder="填写借款利率">
                             </div>
-                            <div class="form-group">
-                                <label for="area">所在地</label>
-                                <label>&nbsp&nbsp省：</label>
+                                <div class="form-group">
+                                  <label>所在地 <small>(省)</small></label>
                                 <select id = "prov" onchange = areaAjax(this)>
                                     {%selection name='Loan_Type_Province'%}
                                 </select>
                                 <label for="area">&nbsp&nbsp市：</label>
-                                <select name="area" id = "area">
+                                <select name="area" id = "chengshi">
                                 </select>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="type_id">标的类型</label>
-                                <select name="type_id">
-                                {%selection name='Loan_Type_LoanType'%}
-                                </select>
+                                <label for="type_id">标的类型</label>  
+                    			<select id = "loanType" name="type_id" onchange = elementDisp()>
+                    			<option value = "school">学校助业贷</option>
+                    			<option value = "teacher">教师圆梦贷</option>
+                    			</select>
                             </div>
 
                             <div class="form-group">
@@ -132,10 +133,10 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="content">借款详情<small></small></label>
-                                <div class="textarea">
-                                    <input type="text" name="content" class="form-control">
-                                    <textarea name="content" class="form-control" rows="10"></textarea>
+										<legend><label for="content">借款详情<small></small></label>
+										<input type ="text" name="content" class="form-control"></input>
+										<textarea name="content"  id = "content" class="rte1" cols = "350" style="border:1px #bbb solid;]"></textarea>
+                                		</legend>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -147,7 +148,7 @@
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
+                    <div class="panel panel-info" style="display:none" id = "teacher">
                         <div class="panel-heading">
                             <h3 class="panel-title">教师圆梦贷 － 借款人信息(可选，个人借款时必填) <small>loan_private</small></h3>
                             <input type="hidden" name="private[id]" value="0">
@@ -199,7 +200,7 @@
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
+                    <div class="panel panel-info" id = "school">
                         <div class="panel-heading">
                             <h3 class="panel-title">学校助业贷 － 借款机构信息(可选，机构借款时必填) <small>loan_company</small></h3>
                             <input type="hidden" name="company[id]" value="0">
@@ -211,10 +212,14 @@
                                     <input type="text" name="company[school]">
                                 </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="company[area]">所在地 <small>(省、市)</small></label>
-                                <select name="company[area]" id = "area">
+                                <label>所在地 <small>(省、市)</small></label>
+                                <select id = "prov1" onchange = areaAjax1(this)>
                                 {%selection name='Loan_Type_Province'%}
+                                </select>
+                                <label for="company[area]"></label>
+                                <select name="company[area]" id = "location">
                                 </select>
                             </div>
 
@@ -326,7 +331,6 @@
                         </div>
                     </div>
                     <!-- FORM FIELDS-->
-                    <div id = "response"></div>
                     <!-- FORM FIELDS-->
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -375,22 +379,48 @@
 
 {%block name='script'%}
 <script src="{%$feroot%}s/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
-<script src="/fe/src/common/extra/jquery.js" type="text/javascript"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="{%$feroot%}s/global/plugins/jquery.rte/jquery.rte.js"></script>
 
-    function areaAjax(id)
-    {
-      //alert();
-      var obj=document.getElementById('prov');
+<script type="text/javascript">
+
+ $(document).ready(function() {
+    	var arr = $('.rte1').rte()});
+
+    function elementDisp(){
+    	var sel = document.getElementById('loanType');
+		var loanType =  sel.options[sel.selectedIndex].value;
+		if(loanType == "school"){
+		   document.getElementById("school").style.display = "block";
+		   document.getElementById("teacher").style.display = "none";
+        }else{
+           document.getElementById("school").style.display = "none";
+  		   document.getElementById("teacher").style.display = "block";
+            }
+    }
+        
+
+     function areaAjax(id){
+         var obj=document.getElementById('prov');
            for(i=0;i<obj.length;i++) {//下拉框的长度就是他的选项数
                if(obj[i].selected==true) {
                var prov=obj[i].value;//获取省id
            }
        }
-
       htmlobj=$.ajax({url:"/admin/loan/Getcity?prov=" + prov,async:false});
-      $("#area").html(htmlobj.responseText);
+      $("#chengshi").html(htmlobj.responseText);
     }
+
+     function areaAjax1(id){
+         var obj=document.getElementById('prov1');
+           for(i=0;i<obj.length;i++) {//下拉框的长度就是他的选项数
+               if(obj[i].selected==true) {
+               var prov=obj[i].value;//获取省id
+           }
+       }
+      htmlobj=$.ajax({url:"/admin/loan/Getcity?prov=" + prov,async:false});
+      $("#location").html(htmlobj.responseText);
+    }
+
 
 
     
@@ -444,27 +474,28 @@
         var el = $('<tr><td>' + str + '</tr>').appendTo($('#uploaded tbody'));
         el.find('.del').on({
             click: function(e) {
-           	 var xmlhttp;
-        	 if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
-        	  		xmlhttp=new XMLHttpRequest();
-        	  	}
-        	  	else{// code for IE6, IE5
-        	  			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        	  		}
-        	  xmlhttp.onreadystatechange=function(){
-        	 		 if (xmlhttp.readyState==4 && xmlhttp.status==200){
-        	  			document.getElementById("response").innerHTML=xmlhttp.responseText;
-        	  			}
-        	  }
-        	  $(this).parents('tr').remove();
-        	  xmlhttp.open("GET","/admin/loan/delpic?id=" + row.id,true);
-        	  xmlhttp.send(); 
-            }
+                 	 var xmlhttp;
+              	 if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+              	  		xmlhttp=new XMLHttpRequest();
+              	  	}
+              	  	else{// code for IE6, IE5
+              	  			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+              	  		}
+              	  xmlhttp.onreadystatechange=function(){
+              	 		 if (xmlhttp.readyState==4 && xmlhttp.status==200){
+              	  			document.getElementById("response").innerHTML=xmlhttp.responseText;
+              	  			}
+              	  }
+              	  $(this).parents('tr').remove();
+              	  xmlhttp.open("GET","/admin/loan/delpic?id=" + row.id,true);
+              	  xmlhttp.send(); 
+            }        
         });
     }
     
     var loanId = {%$loanId%};
     if (loanId > 0) {
+    	
         $.post('/admin/loan/getdetail', {loanid: loanId}, function(res) {
             var data = res.data;
             for(var key in data) {
@@ -496,7 +527,7 @@
         for(var key in data) {
             var val = data[key];
             $('input[name="'+name+'['+key+']"], select[name="'+name+'['+key+']"]').val(val);
-        }
+            }
     }
 
     function loadAttach(data) {

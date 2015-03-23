@@ -165,7 +165,7 @@ class Loan_Type_Province extends Base_Type {
       
       /**
        * 陕西省
-       * 山西省和陕西省重名 所以将陕西省置为SHANXISHENG1
+       * 山西省和陕西省拼音重名 所以将陕西省置为SHANXISHENG1
        * @var integer
        */
       const SHANXISHENG1 = 3128;
@@ -237,7 +237,7 @@ class Loan_Type_Province extends Base_Type {
       	 self::GUIZHOUSHENG        => '贵州省',
       	 self::YUNNANSHENG         => '云南省', 
       	 self::XIZANGQU            => '西藏区',
-         self::SHANXISHENG1         => '陕西省',
+         self::SHANXISHENG1        => '陕西省',
          self::GANSUSHENG          => '甘肃省',
       	 self::QINGHAISHENG        => '青海省',
       	 self::NINGXIAQU           => '宁夏区', 
