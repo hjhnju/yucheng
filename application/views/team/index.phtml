@@ -13,43 +13,72 @@
 {%/block%}
 
 {%block name="content"%}
-<div class="container company">
-    {%include file="common/menu.phtml" current="2"%}
-    <div class="company-box">
-        <div class="company-part-title">
-            <h2 class="company-part-titlectx">团队介绍</h2>
-        </div>
-<!--        <ul class="team-list">-->
-<!--            <li class="team-item">-->
-<!--                <img src="{%$feroot%}/company/us/img/logo.png" />-->
-<!--                <div class="team-item-intro">-->
-<!--                    <div class="team-name">-->
-<!--                        跟着大哥有鱼吃 <span class="team-name-intro">总裁</span>-->
-<!--                    </div>-->
-<!--                    <p class="team-intro">-->
-<!--                        跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--            </li>-->
-<!--            <li class="team-item">-->
-<!--                <img src="{%$feroot%}/company/us/img/logo.png" />-->
-<!--                <div class="team-item-intro">-->
-<!--                    <div class="team-name">-->
-<!--                        跟着大哥有鱼吃 <span class="team-name-intro">总裁</span>-->
-<!--                    </div>-->
-<!--                    <p class="team-intro">-->
-<!--                        跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃跟着大哥有鱼吃-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--            </li>-->
-<!--        </ul>-->
-        <p class="company-intro">
-            我们的创始团队主要来自金融（知名投行、大型银行）和互联网（百度）的跨界精英，有丰富的教育、金融与互联网经验和资源，团队成员均毕业于北大、清华、复旦等国内顶尖高校。作为国内首家专注于教育行业的互联网P2P投资理财金融服务平台，我们努力为投资人与教育机构等借款人创造透明、安全的平台环境。我们积累了丰富的教育领域投融资经验，建立了完善的教育行业风险评估体系，为投资人提供全方位的投资安全保障措施。
-        </p>
-        <p class="company-intro">
-            我们专注于教育领域的互联网产品创新，相信互联网将在不远的未来将彻底改变教育行业的生态结构。让我们实践自身教育理想，沿着互联网的道路助力教育行业的变革，让国家和世界的未来更加美好。
-        </p>
-    </div>
+<div class="company-nav"> 
+	   <div class="company-navbar">  
+	      <div class="container"> 
+	         {%include file="common/menu.phtml" current="2"%}
+	      </div>
+	   </div>
 </div>
-
+ <div class="container main-container"> 
+	<div class="container container2"> 
+	   <div class="company-box1"> 
+	   </div>
+	   <div class="company-box2">
+	        <ul class="company-team">  
+		        <li>
+					<img alt="联合创始人 CEO 文义" src="{%$feroot%}/company/team/img/member1_s.png">
+				     <br/>
+				     <span>文义<br/>联合创始人 CEO</span>
+				 </li> 
+				 <li>
+					<img alt="联合创始人 COO 邹水发" src="{%$feroot%}/company/team/img/member2_s.png">
+				  <br/>
+				     <span>邹水发<br/>联合创始人 COO</span>
+				 </li>  
+				 <li>
+					<img alt="联合创始人 CTO 何俊华" src="{%$feroot%}/company/team/img/member3_s.png">
+				    <br/>
+				     <span>何俊华<br/>联合创始人 CTO</span>
+				 </li> 
+	        </ul>
+	   </div>
+	   <div class="company-img1"></div>
+	   <div class="company-box3">
+	       <div class="company-box fl"> 
+		        <h3 class="h-title">文义<span>CEO</span></h3>
+		        <div class="company-intro">
+		                            北京大学硕士。曾就职于民生证券投资银行部，期间曾参与的股权融资、债券融资和并购重组项目涉及资金总额累计超百亿元人民币，在资本运作、投融资领域具有丰富的经验。出身教育世家，对教育领域有深刻的理解和认识，曾为多家教育机构提供融资建议和融资解决方案，在教育金融领域亦有丰富实践经历。2014年与合伙人共同创建专注于教育领域的互联网金融平台兴教贷，助力教育行业的发展变革。
+		        </div>  
+		    </div>
+		     <div class="company-member fl">
+		       	<img alt="联合创始人 CEO 文义" src="{%$feroot%}/company/team/img/member1.png">
+		    </div>
+	   </div>
+	   <div class="company-box4">  
+	        <div class="company-member fl">
+	          	 <img alt="联合创始人 COO 邹水发" src="{%$feroot%}/company/team/img/member2.png">
+	        </div>
+		    <div class="company-box fl"> 
+		        <h3 class="h-title">邹水发<span>COO</span></h3>
+		        <div class="company-intro">
+		                               毕业于西南财经大学金融学院，曾就职于民生证券投行部，在资本运作、投融资领域具有丰富的经验。2012年参与创建兴业天富投资，参与运作了比价搜索、在线教育、餐饮O2O、私密社交等多个领域项目的投融资业务，积累了较丰富的互联网运作经验。2013年就职于兴业银行北京分行投行风险管理部，负责分行投行业务数百亿元资产的风险管理。2014年末与合伙人共同创建专注于教育领域的互联网金融平台兴教贷，助力教育行业的发展变革。主要负责公司运营与风险管理业务。
+		        </div>  
+		    </div>
+	    </div>
+	    <div class="company-box5">
+		    <div class="company-box fl"> 
+		        <h3 class="h-title">何俊华<span>CTO</span></h3>
+		        <div class="company-intro">
+		                              复旦大学硕士。曾就职百度商务搜索部和商业基础平台部，百度高级研发工程师。主要负责商业大数据挖掘、高并发系统的设计等。曾参与直达号相关项目、百度商业账户体系、百度个人中心等项目的设计与研发，擅长领域主要有网络安全、高并发系统设计、机器学习大数据挖掘等方向。多年的互联网实战经历也使其对互联网产品有着深入的理解。2014年从百度离职与合伙人共同创建专注于教育领域的互联网金融平台兴教贷，助力教育行业的发展变革。
+		        </div>  
+		    </div> 
+	        <div class="company-member fl">
+	          <img alt="联合创始人 CTO 何俊华" src="{%$feroot%}/company/team/img/member3.png">
+			</div>
+	   </div>
+	   <div class="company-box6">
+	   </div>
+	</div>
+</div>
 {%/block%}

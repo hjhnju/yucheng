@@ -13,36 +13,64 @@
 {%/block%}
 
 {%block name="content"%}
-<div class="container company">
-    {%include file="common/menu.phtml" current="5"%}
-    <div class="company-box">
-        <div class="company-part-title">
-            <h2 class="company-part-titlectx">联系我们</h2>
-        </div>
-        <div class="company-address">
-            <img src="http://api.map.baidu.com/staticimage?center=银丰大厦&markers=银丰大厦&width=740&height=370&zoom=15" />
-        </div>
-        <div class="company-address-intro">
-            <div class="company-address-intro-left">
-                <div class="company-address-title">公司总部</div>
-                <div class="company-address-ctx">
-                    地址：北京市海淀区苏州街20号银丰大厦907
-                </div>
-                <div class="company-address-ctx">
-                    邮编：100080
-                </div>
-            </div>
-            <div class="company-address-intro-left">
-                <div class="company-address-title">客服服务</div>
-                <div class="company-address-ctx">
-                    客服热线：400-016-2526，周一至周五9:00-18:00
-                </div>
-                <div class="company-address-ctx">
-                    客服邮箱：kefu@xingjiaodai.com
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="company-nav"> 
+	   <div class="company-navbar">  
+	      <div class="container"> 
+	         {%include file="common/menu.phtml" current="4"%}
+	      </div>
+	   </div>
 </div>
+<div class="container main-container">
+
+<div class="container container2"> 
+   <div class="company-box1"> 
+   </div>
+   <div class="company-box2">
+       <ul class="company-link">  
+	        <li>
+				<img alt="公司总部" src="{%$feroot%}/company/contact/img/link_add.png">
+				<br/>
+				<strong>公司总部</strong>
+				<span>北京市海淀区苏州街20号银丰大厦907</span>
+			</li>
+			<li>
+				<img alt="客服热线" src="{%$feroot%}/company/contact/img/link_num.png"> 
+				<br/>
+				<strong>客服热线</strong>
+				<span>400-016-2526<br/>周一至周五 9:00-18:00
+				</span>
+			</li>
+			<li>
+				<img alt="联络邮箱" src="{%$feroot%}/company/contact/img/link_mail.png"> 
+				<br/> 
+				<strong>联络邮箱</strong>
+				<span>
+				   kefu@xingjiaodai.com（客服）<br/>
+				   biz@xingjiaodai.com（商务合作） 
+				</span>
+			</li>
+	   </ul>
+       <ul class="company-link2">  
+          <li>
+				<img alt="微信公众号" src="{%$feroot%}/company/contact/img/link_weixin.png">
+				<br/> 
+				<span>关注微信公众号</span>
+			</li>
+			<li>
+				<img alt="兴教贷微博" src="{%$feroot%}/company/contact/img/link_weibo.png"> 
+				<br/>
+				<span>关注兴教贷微博</span>
+			</li>
+       </ul>
+   </div> 
+   <div  class="company-box3"> 
+   </div>
+
+   
+</div>
+</div>
+
+
+
 
 {%/block%}

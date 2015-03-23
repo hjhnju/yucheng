@@ -1,0 +1,355 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/us/join.css" />
+ {%/block%}
+
+{%block name="script"%}
+  
+ <script> 
+    require(['company/common/common',"jquery"], function(main,$) {
+        main.init();
+         $(".company-join-title").click (function (e) {
+              var icon=$(this).find(".company-join-icon");
+              var next= $(this).next(".company-join-content");
+              var allicon= $(".company-join-icon");
+              var all= $(".company-join-content");
+              icon.hasClass("plus-icon")?(allicon.removeClass("minus-icon"),allicon.addClass("plus-icon"),icon.addClass("minus-icon"),icon.removeClass("plus-icon"),all.hide(),next.show()):(icon.addClass("plus-icon"),icon.removeClass("minus-icon"),next.hide());
+        });  
+    });  
+  
+</script>
+{%/block%}
+ 
+{%block name="content"%} 
+  <div class="company-nav"> 
+	   <div class="company-navbar">  
+	      <div class="container"> 
+	         {%include file="common/menu.phtml" current="3"%}
+	      </div>
+	   </div>
+    </div>
+<div class="container main-container">
+
+<div class="container container2"> 
+   <div class="company-box1"> 
+   </div> 
+   <div  class="company-box2">
+                             我们专注于教育领域的互联网产品创新，相信互联网将在不远的未来彻底改变教育行业的生态结构。我们寻找有激情、有梦想的<br/>
+		       年轻人加入我们，认同我们的愿景和抱负，做一份有意义的事业，与我们共同奋斗、共同成长。世界是我们的，也是你们的，但<br/>
+		       终究是我们大家的，让我们一起借势起飞，沿着互联网的道路助力教育行业的变革，让世界的未来更加美好！
+		  <br /><br/>
+		      我们热招如下岗位<br/>
+		      可将简历发送至HR邮箱：hr@xingjiaodai.com
+        <ul class="company-join">  
+	        <li>
+	            <div class="company-join-title">
+	               <span>高级PHP研发工程师</span><em class="hot-icon"></em><em class="company-join-icon minus-icon"></em>  
+				 </div>
+				<div  class="company-join-content" style="display:block;">
+				    <strong>工作职责：</strong><br/>
+					1. 参与平台技术架构，技术规范制定；<br/>
+					2. 深入理解需求，主导模块设计开发；<br/>
+					3. 与各角色配合，参与并推动敏捷开发，带领1-2 名PHP工程师；<br/>
+					4. 关键技术问题及难点的攻关。<br/>
+					<strong>职位要求：</strong><br/>
+					1. 较丰富PHP Web开发经验，良好的系统及接口设计能力；<br/>
+					2. 熟悉MySQL数据库，了解索引及优化；熟悉Redis等NoSQL存储；<br/>
+					3. 熟悉Linux平台和shell脚本；<br/>
+					4. 良好的理解和沟通能力，积极主动思考，具备很强的责任感 ；<br/>
+					5. 热爱技术，务实自驱，追求卓越。<br/>
+					<strong>加分项：</strong><br/>
+					掌握或了解前端技术html/css/js；了解Yaf框架；熟悉git，有Github账号；
+			   </div>
+	       </li> 
+	       <li>
+	            <div class="company-join-title">
+	               <span>PHP研发工程师</span><em class="hot-icon"></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+			     	    1. 参与业务平台需求分析和模块设计；<br/>
+                        2. 与各角色配合，参与敏捷开发，产出高质量代码； <br/>
+					<strong>职位要求：</strong><br/>
+					    1. 基础扎实，精通PHP，能独立完成开发任务；<br/>
+						2. 熟悉Linux；熟悉MySQL；掌握Nginx或Apache；<br/>
+						4. 较好的理解和沟通能力，积极主动思考，具备很强的责任感 ；<br/>
+						5. 热爱技术，务实自驱，追求卓越；<br/>
+						<strong>加分项：</strong><br/>
+						掌握或了解前端技术html/css/js；了解Yaf框架；熟悉git，有Github账号。<br/>
+				 </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>高级web前端工程师</span><em class="hot-icon"></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				        1、参与公司前端框架和技术规范的开发和制定；<br/>
+						2、与后台开发工程师密切配合，完成web前端的开发工作；<br/>
+						3、维护及优化网站前端性能、兼容性；<br/>
+						4、指导1-2名前端工程师； <br/>
+					<strong>职位要求：</strong><br/>
+					    1、精通JavaScript、Ajax等Web技术；<br/>
+						2、熟练使用HTML5/CSS3、HTML/XHTML、CSS等，熟悉页面架构和布局；<br/>
+						3、有一定的前端框架设计经验，熟悉Web标准；<br/>
+						4、对用户体验、交互流程有较好的了解；<br/>
+						5、良好的沟通能力和团队协作能力，具有较好的承压能力；<br/>
+						6、主动性高、较好的学习能力，热爱互联网。 <br/>
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>web前端工程师</span><em class="hot-icon"></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+						1、与后台开发工程师密切配合，完成web前端的开发工作；<br/>
+						2、维护及优化网站前端性能、兼容性； <br/>
+					<strong>职位要求：</strong><br/>
+				     	1、精通JavaScript、Ajax等Web技术；<br/>
+						2、熟练使用HTML5/CSS3、HTML/XHTML、CSS等，熟悉页面架构和布局；<br/>
+						3、对用户体验、交互流程及用户需求有较好了解；<br/>
+						4、良好的沟通能力和团队协作能力，具有较好的承压能力；<br/>
+						5、主动性高、较好的学习能力，热爱互联网。 <br/>
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>新媒体运营专员</span><em class="hot-icon"></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				        1、管理并运营兴教贷微信、微博、知乎、贴吧等社会化媒体平台，负责日常发布内容的素材搜集、内容策划、文案撰写；<br/>
+						2、善于挖据和分析网友使用习惯、情感及体验感受，及时掌握新闻热点，有效完成专题策划活动；<br/>
+						3、配合市场推广计划的执行；<br/>
+						4、新媒体渠道的搭建与维护，合作的开拓与运维，用户的日常维系。 <br/>
+					<strong>职位要求：</strong><br/>
+				    	1、专科及以上学历，新闻、中文、营销学相关专业优先；<br/>
+						2、1年以上微博、微信推广经验；<br/>
+						3、具备良好的文字功底，思维活跃，善于挖掘用户心理，创造热点话题；<br/>
+						4、有良好的沟通协调能力，喜欢社交，自学能力强；<br/>
+						5、了解互联网、移动互联网熟悉口碑营销，有成功微博、微信运营策划经验者优先；有互联网金融运营经验优先；会Photoshop者优先。<br/>
+				</div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>人力资源主管</span><em class="hot-icon"></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				        1、根据公司的业务情况制定公司人力资源发展规划；<br/>
+						2、与合伙人一起研究、制定公司各项人事行政管理制度；负责制订和完善公司岗位编制；负责拟制公司薪酬制度和方案，建立行之有效的激励和约束机制；<br/>
+						3、根据公司对绩效管理的要求，制定科学、合理的绩效考核制度，客观公正地对员工实施考核，负责绩效考核过程进行监督与指导，不断优化绩效管理体系；对员工考核的结果进行分析，为员工薪酬调整、职位调整、培训与发展等提供依据；<br/>
+						4、负责审核并按职责报批员工定级、升职、加薪、奖励及纪律处分及内部调配、调入、调出、辞职、辞退等手续；<br/>
+						5、制定招聘计划和程序，开展招聘工作；<br/>
+						6、受理员工投诉，处理劳动争议、纠纷，进行劳动诉讼；<br/>
+						7、指导规划员工活动，协助推动公司理念及企业文化的形成；<br/>
+						8、负责公司整体企业文化建设以及平时各种活动的策划，实施等。 <br/>
+					 <strong>职位要求：</strong><br/>
+					    1、本科以上学历，人力资源管理，工商管理相关专业；3年以上工作经验；教育、互联网行业优先；<br/>
+						2、文字功底优秀，能独自起草人力资源管理制度、年度工作规划等；<br/>
+						3、熟悉人力资源招聘、薪酬、绩效考核、培训等模块和流程，熟悉国家各项劳动人事法规政策；<br/>
+						4、有较强的组织、协调、沟通、领导能力，具备敏锐的洞察力、判断力、决策力和执行力；<br/>
+						5、具有良好的职业心理素质,能承受较大的工作压力,有亲和力,较强的责任感与敬业精神；有互联网金融工作经验者优先。<br/>
+					 						    
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>市场经理</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				        1.完成对教育行业融资及投资需求的市场调研，开拓教育行业投融资市场，辅助公司高管整合客户资源并跟进合作业务；<br/>
+						2.保持与客户的良好沟通，维护好重点客户的关系，优化长期合作流程；<br/>
+						3.以公司产品和推广资源为基础，开拓思路，谋求新颖的合作模式和推广创意；<br/>
+						4.完成前期与客户的沟通和商务谈判，并协调公司内部的后期合作流程；负责整个商务具体合作的过程和效果；<br/>
+						5.整理公司内外各类相关文件，并协调部门之间及时处理后回复、跟进。<br/>
+				 
+					<strong>职位要求：</strong><br/>
+						1.本科以上学历，211院校优先；<br/>
+						2.35岁以下，3年以上金融相关工作经验，有教育行业资源优先；<br/>
+						3.比较丰富的业务经验；对行业有深刻理解；<br/>
+						4.良好的沟通、协调及执行能力，身心健康、阳光向上、认真严谨，团队协作意识强；<br/>
+						5.熟练应用OFFICE办公软件。<br/>
+					<br/>
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>风险控制总监</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+			       	    1.协助全面管理公司业务的风险控制工作，根据公司风险管理控制体系要求，制定风险管控方案，构建业务风险评价及预警体系；负责企业经营业务范围内的各类合同及法律文书的起草、审核、管理；<br/>
+						2.负责审查项目资料，撰写风控报告，对项目的可行性和风险的可控性进行审核，组织、参与项目评审，根据具体情况提出风险防范建议；<br/>
+						3.负责协助建立、完善风险管理流程，控制项目风险；<br/>
+						4.负责通过评审项目的条件与担保措施的落实监督；负责督促检查已开展项目监管情况，提出风险预警，控制项目风险；<br/>
+						5.负责组织、协调、推进贷后管理和资产保全工作；审核资产保全方案，监控保全过程；<br/>
+						6.负责建立、维护风险管理信息库并建立业务风险追偿机制；<br/>
+						7.其它领导交办的事宜。 <br/>
+					<strong>职位要求：</strong><br/>
+						1.本科及以上学历，法律、数学、金融、审计、会计等经济类专业。具有律师、注册会计师（CPA）、金融分析师 (CFA)执照优先；<br/>
+						2.具有5年以上银行信贷审查或大型担保公司风险控制从业经验，或5年以上法律专业、信托、基金公司工作经验优先。能熟练运用信用风险识别与计量的方法和工具，精通财务分析、项目评估、组合风险管理等理论方法与实务操作；具有较强的分析判断能力、风险识别能力、风险防范方案设计能力，具有较强的综合协调和组织能力；<br/>
+						3.有扎实的经济、金融、投资等领域的相关理论知识，熟悉各类金融产品结构及交易结构设计，对不同种类资产的内在逻辑、运行路径十分熟悉；<br/>
+						4.思维缜密、原则性强、正直，成熟、稳重，具有高度的责任心与敬业精神，良好的团队精神与领导能力。<br/>
+					<br/>
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>信审专员</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				    1.审核贷款申请人资料是否齐全以及真实性；<br/>
+					2.按照要求对贷款申请人进行调查，分析审核贷款人资信条件，撰写调查报告；<br/>
+					3.与其他部门同事合作，完善核审流程，加强信用管理，降低风险及信贷损失；<br/>
+					4.在工作中积极提出自己的意见和建议，优化工作流程；<br/>
+					5.及时响应、解答或协调解决客户遇到的问题，整理、归类客户常见问题；<br/>
+					6.主动发现客户可能遇到的问题，为客户提供在线指导与培训服务；<br/>
+					7.客户资料整理、收编归档；<br/>
+					8.完成上级交办的其他工作； <br/>
+					<strong>职位要求：</strong><br/>
+						1.营销、管理、金融、经济、法律等相关专业本科或以上学历；<br/>
+						2.一年以上工作经验，有客服经验优先，有任职（或者实习）于银行等金融机构经历者优先；<br/>
+						3.有很强的语言表达能力，擅于沟通，积极主动；<br/>
+						4.灵活、细致、耐心、有工作热情，能够独立思考，能很快的学习新事物和新知识，有获取收集信息有价值信息、解决问题的能力，同时具有分析、洞察和判断能力；<br/>
+						5.熟练使用办公软件，具备基本的网络知识。<br/>
+					
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>SEM</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+			    	 1.了解市场环境，结合公司特点，对竞价后台选定并投放关键词，检查匹配情况，做到精准营销；<br/>
+					2.关键词设置分析、着陆页分析，撰写高质量创意，提升关键词排名，提升网站对潜在客户精准展现，精准曝光；<br/>
+					3.搜索引擎营销工作的内部沟通，外部协调，管理预算及实施投放；<br/>
+					4.根据分析报告，对现有的投放工作，提出改进和优化建议并执行，提升转化率<br/>
+					5.分析竞争对手并决策自身投放策略；<br/>
+				 
+					<strong>职位要求：</strong><br/>
+					1.善于数据分析，了解数据分析与跟踪技术，可以及时从数据中发现问题，评估关键词质量，提出关键词优化方案；<br/>
+					2.对百度，360，谷歌，搜狗等主流搜索平台有了解，熟悉SEM账户的搭建，优化，数据分析，有相关账户管理操作经验，对SEM工作有热情，工作积极认真。<br/>
+				  </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>高级文案策划</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				    1.负责公司对外媒体和广告表现文字的撰写，能独立完成策划文案编辑工作；<br/>
+					2.对各类活动、事件进行相关报道，能驾驭各种文风，善于总结提炼；<br/>
+					3.配合营销活动、媒体推广，完成企划案的主题、优势提炼、软文撰写；<br/>
+					4.参与营销中心项目的创意构思及文案, 完成前期提案、创意说明、总结报告等；<br/>
+					5.和平面协作，完成各类手册、内刊、单页等的文字策划、编辑工作；<br/>
+				 
+					<strong>职位要求：</strong><br/>
+				    1.刻苦耐劳，两年以上市场文案工作经验，具有互联网金融行业经验的优先考虑；<br/>
+					2.新闻、中文、广告等相关专业，本科以上学历；<br/>
+					3.有优秀的中文文字功底，具备优秀的文案编辑、润色、组织、整理和撰写的能力；<br/>
+					4.具有一定的领悟和学习能力，以及较强的团队合作精神和责任心，工作细致负责；<br/>
+					
+			   </div>
+	       </li> 
+	         <li>
+	            <div class="company-join-title">
+	               <span>iOS高级工程师</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				    1.承担公司iOS移动产品的开发；<br/>
+					2. 与产品设计师讨论产品需求并进行实现；<br/>
+					3. 参与后台API的开发和调试；<br/>
+					4. 上线发布到App Store及其他各大应用商店，并且对使用数据进行统计和汇总；<br/>
+					5. 承担移动产品的单元测试、自动化测试等；<br/>
+					6. 对iOS移动产品的维护，BUG修改和完善。<br/> 
+					<strong>职位要求：</strong><br/>
+					1.3年以上Object-C开发经验；<br/>
+					2. 2年以上iOS移动开发经验；<br/>
+					3. 熟悉iOS开发、调试上线全流程，有2个以上App独立开发并上线的经验；<br/>
+					4. 有着Java或者.NET后台开发经验者优先；<br/>
+					5. 熟悉iOS自动化测试优先；<br/>
+					6. 同时熟悉Android开发人员优先。<br/> 
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>Android高级工程师</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+			    	1. 承担公司Android移动产品的开发；<br/>
+					2. 与产品设计师讨论产品需求并进行实现；<br/>
+					3. 参与后台API的开发和调试；<br/>
+					4. 上线发布到各大Android应用市场，并且对使用数据进行统计和汇总；<br/>
+					5. 承担移动产品的单元测试、自动化测试等；<br/>
+					6. 对Android移动产品的维护，BUG修改和完善。<br/>
+				 
+					<strong>职位要求：</strong><br/>
+					1.3年以上Java语言开发经验；<br/>
+					2. 2年以上Android开发经验，熟悉各种Android机型的适配和优化；<br/>
+					3. 有着2个以上独立开发并且上线App的经验；<br/>
+					4. 有后台开发经验者优先；<br/>
+					5. 熟悉Android自动化测试优先；<br/>
+					6. 同时熟悉iOS开发人员优先。<br/>
+					<br/>
+			   </div>
+	       </li> 
+	         <li>
+	            <div class="company-join-title">
+	               <span>公关经理</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+				    1.负责公司品牌建设的规划与执行，文案撰写，提升品牌与客户满意度；<br/>
+					2.负责媒体关系的建立、维护和拓展，与媒体保持有效沟通；<br/>
+					3.负责公司媒体宣传相关的公关活动策划、组织与执行、及媒体软性资源整合方案；<br/>
+					4.配合公司进行核心业务的商务谈判；<br/>
+					5.协助其他业务部门完成该部门短期或长期的宣传和公关任务；<br/>
+					6.与活动相关的媒体、机关保持定期交流，获取相关信息；<br/>
+					7.负责相关活动的赞助公司冾谈；<br/>
+					8.其他市场公关服务方面的工作。<br/>
+				 
+					<strong>职位要求：</strong><br/>
+					1.新闻传播、市场营销、公关或相关专业本科以上学历；<br/>
+					2. 三年以上公关活动从业经验，具有媒体资源者优先；<br/>
+					3.具有独立策划与执行公司媒体宣传相关的品牌公关活动事件的能力；<br/>
+					4.优秀的人际沟通能力，具备较强的团队管理与组织协调能力，能承受较强的工作压力；<br/>
+					5.具有互联网金融公司、公关公司相关工作经验者优先。<br/> 
+			   </div>
+	       </li> 
+	        <li>
+	            <div class="company-join-title">
+	               <span>客服代表（可以接受实习岗）</span><em class=""></em><em class="company-join-icon plus-icon"></em>  
+				 </div>
+				<div  class="company-join-content">
+				    <strong>工作职责：</strong><br/>
+			    	1.通过400服务热线、在线客服、微信、及咨询邮箱等方式接受客户咨询，为客户提供完整准确的方案及信息，解决客户问题，提供高质量服务；<br/>
+				 	2.负责用户投诉的处理、传递和跟踪服务；<br/>
+					3.在线客户QQ群的维护和管理；<br/>
+					4.及时发现来电客户的需求及意见，并记录整理及汇报；<br/>
+					5.定期对公司的客户进行电话回访与互动。<br/>
+				 
+					<strong>职位要求：</strong><br/>
+					1.大专及以上学历，男女不限，普通话标准、谈吐清晰、声音甜美、声音浑厚有力，有客服工作经验者优先；<br/>
+					2.良好的计算机操作能力，熟练使用办公软件，打字速度不低于40字/分钟，经济、金融相关专业优先；<br/>
+					3.良好的客户服务意识，职业操守和沟通表达能力；<br/>
+					4.较强的抗压能力，能适应轮班、倒班及加班的工作。<br/>
+					<br/>
+			   </div>
+	       </li> 
+	   </ul>        
+   </div>
+
+   
+   <div  class="company-box3"> 
+   </div>
+</div>
+</div>
+{%/block%}
