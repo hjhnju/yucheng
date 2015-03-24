@@ -15,8 +15,21 @@ class Infos_Api {
         unset($list['list'][0]['content']);
         $ret = isset($list['list'][0]) ? $list['list'][0] : null;
         return $ret;
-    }   
+    }
     
+    /**
+     * Infos_Api::getNewMedia()
+     * 获取媒体新闻
+     * @return $arrPost | null
+     */
+    public static function getNewMedia($strType){
+    	$logic   = new Infos_Logic_Post();
+    	$list    = $logic->getList(2, 1,$strType);
+    	unset($list['list'][0]['content']);
+    	$ret = isset($list['list'][0]) ? $list['list'][0] : null;
+    	return $ret;
+    }
+        
     /**
      * 获取未发布公告列表
      * @param int $page
