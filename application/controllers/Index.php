@@ -16,12 +16,13 @@ class IndexController extends Base_Controller_Page {
         $list = $list['list'];
         //最新公告
         $newpost = Infos_Api::getNewPost('post');
+        //获取新闻
+        $media   = Infos_Api::getNewMedia();
         //assign
         $arrData            = array();
         $arrData['list']    = $list;
         $arrData['newpost'] = $newpost;
-
+        $arrData['media'] = $media;
         $this->getView()->assign('data', $arrData);
-
     }
 }
