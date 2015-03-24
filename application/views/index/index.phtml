@@ -13,8 +13,8 @@
 {%/block%}
 
 {%block name="content"%}
-{%assign var="bannerList" value=[0 => "banner-one", 1 => "banner-two", 2 => "banner-three", 3 => "banner-four"]%}
-{%assign var="bannerHref" value=[0 => "/security", 1 => "/infos/post/detail?id=31", 2 => "/infos/post/detail?id=31", 3 => "/"]%}
+{%assign var="bannerList" value=[0 => "banner-one", 1 => "banner-two", 2 => "banner-three", 3 => "banner-four",4 => "banner-five"]%}
+{%assign var="bannerHref" value=[0 => "/security", 1 => "/", 2 => "/infos/post/detail?id=31", 3 => "/infos/post/detail?id=31", 4 => "/"]%}
 
 <div class="banner-floation">
 
@@ -27,6 +27,7 @@
     </ul>
     <div class="banner-select">
         <a class="banner-select-link current"></a>
+        <a class="banner-select-link"></a>
         <a class="banner-select-link"></a>
         <a class="banner-select-link"></a>
         <a class="banner-select-link"></a>
@@ -97,16 +98,6 @@
 </div>
 <div class="main">
     <div class="container">
-        <div class="newgonggao">
-            <span class="newgonggao-title">最新公告</span>
-
-            <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-                <span class="symbol">•</span>{%$data.newpost.title%}
-            </a>
-
-            <a class="newgonggao-more" href="{%$webroot%}/infos/post">更多 &gt; &gt;</a>
-            <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-        </div>
         <div class="investlist">
             <div class="investlist-title">投资列表</div>
             <div class="investlist-box">
@@ -179,6 +170,78 @@
             </div>
             <a href="{%$webroot%}/invest" class="investlist-more">{%if !empty($data.list)%}查看更多标的>{%/if%}</a>
         </div>
+        
+        <div class="newgonggao fl">
+            <span class="newgonggao-title">最新公告</span>
+            <ul>
+                 <li class="new">
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+	              <li>
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+	               <li>
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+	               <li>
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+            </ul>
+            <a class="newgonggao-more" href="{%$webroot%}/infos/post">查看更多</a>
+         </div>
+         
+          <div class="newgonggao fr">
+            <span class="newgonggao-title">媒体报道</span>
+            <ul>
+                 <li class="new">
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+	              <li>
+                     <a href="{%$webroot%}/infos/media/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+	               <li>
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+	               <li>
+                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
+		                <span class="symbol">•</span>{%$data.newpost.title%}
+		             </a>
+		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
+	              </li>
+            </ul>
+            <a class="newgonggao-more" href="{%$webroot%}/infos/media">查看更多</a>
+         </div> 
+    
+           <div class="cooperation fl"> 
+               <span class="newgonggao-title">合作伙伴</span> 
+               <div class="cooperation-img">
+                   <img alt="" src="{%$feroot%}/home/img/cooperation1.png"/>
+	               <img alt="" src="{%$feroot%}/home/img/cooperation2.png"/>
+	               <img alt="" src="{%$feroot%}/home/img/cooperation3.png"/>
+	               <img alt="" src="{%$feroot%}/home/img/cooperation4.png"/>
+               </div> 
+           </div>
     </div>
 </div>
 
