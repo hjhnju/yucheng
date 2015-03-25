@@ -5,157 +5,181 @@
  *
  */
 class Loan_Type_Province extends Base_Type {
-     
-      /**
-       * 北京
-       * @var integer
-       */
-      const BEIJING = 1;
-      
-
-      /**
-       * 天津
-       * @var integer
-       */
-      const TIANJIN = 21;
-      
-      /**
-       * 上海
-       * @var integer
-       */
-      const SHANGHAI = 40;
-      
-      /**
-       * 重庆
-       * @var integer
-       */
-      const ZHONGQING = 61;
-      
-      /**
-       * 河北省
-       * @var integer
-       */
-      const HEBEISHENG = 102;
-      
-      /**
-       * 山西省
-       * @var integer
-       */
-      const SHANXISHENG = 297;
-      
-      /**
-       * 内蒙古区
-       * @var integer
-       */
-      const NEIMENGGUQU = 439;
-      
-      /**
-       * 辽宁省
-       * @var integer
-       */
-      const LIAONINGSHENG = 561;
-      
-      /**
-       * 吉林省
-       * @var integer
-       */
-      const JILINSHENG = 690;
-      
-      /**
-       * 黑龙江省
-       * @var integer
-       */
-      const HEILONGJIANGSHENG = 768;
-      
-      /**
-       * 江苏省
-       * @var integer
-       */
-      const JIANGSUSHENG = 924;
-      
-      /**
-       * 浙江省
-       * @var integer
-       */
-      const ZHEJIANGSHENG = 1057;
-      
-      /**
-       * 安徽省
-       * @var integer
-       */
-      const ANHUISHENG = 1170;
-      
-      /**
-       * 福建省
-       * @var integer
-       */
-      const FUJIANSHENG = 1310;
-      
-      /**
-       * 江西省
-       * @var integer
-       */
-      const JIANGXISHENG = 1414;
-      
-      /**
-       * 山东省
-       * @var integer
-       */
-      const SHANDONGSHENG = 1536;
-      
-      /**
-       * 河南省
-       * @var integer
-       */
-      const HENANSHENG = 1711;
-      
-      /**
-       * 湖北省
-       * @var integer
-       */
-      const HUBEISHENG = 1905;
-      
-      /**
-       * 湖南省
-       * @var integer
-       */
-      const HUNANSHENG = 2034;
-      
-      /**
-       * 广东省
-       * @var integer
-       */
-      const GUANGDONGSHENG = 2184;
-      
-      /**
-       * 广西区
-       * @var integer
-       */
-      const GUANGXIQU = 2403;
-      
-      /**
-       * 海南省
-       * @var integer
-       */
-      const HAINANSHENG = 2541;
-      
-      /**
-       * 四川省
-       * @var integer
-       */
-      const SICHUANGSHENG = 2570;
-      
-      /**
-       * 贵州省
-       * @var integer
-       */
-      const GUIZHOUSHENG = 2791;
-      
-      /**
-       * 云南省
-       * @var integer
-       */
-      const YUNNANSHENG = 2892;
+	
+	/**
+	 * 北京
+	 * 
+	 * @var integer
+	 */
+	const BEIJING = 1;
+	
+	/**
+	 * 天津
+	 * 
+	 * @var integer
+	 */
+	const TIANJIN = 21;
+	
+	/**
+	 * 上海
+	 * 
+	 * @var integer
+	 */
+	const SHANGHAI = 40;
+	
+	/**
+	 * 重庆
+	 * 
+	 * @var integer
+	 */
+	const ZHONGQING = 61;
+	
+	/**
+	 * 河北省
+	 * 
+	 * @var integer
+	 */
+	const HEBEISHENG = 102;
+	
+	/**
+	 * 山西省
+	 * 
+	 * @var integer
+	 */
+	const SHANXISHENG = 297;
+	
+	/**
+	 * 内蒙古区
+	 * 
+	 * @var integer
+	 */
+	const NEIMENGGUQU = 439;
+	
+	/**
+	 * 辽宁省
+	 * 
+	 * @var integer
+	 */
+	const LIAONINGSHENG = 561;
+	
+	/**
+	 * 吉林省
+	 * 
+	 * @var integer
+	 */
+	const JILINSHENG = 690;
+	
+	/**
+	 * 黑龙江省
+	 * 
+	 * @var integer
+	 */
+	const HEILONGJIANGSHENG = 768;
+	
+	/**
+	 * 江苏省
+	 * 
+	 * @var integer
+	 */
+	const JIANGSUSHENG = 924;
+	
+	/**
+	 * 浙江省
+	 * 
+	 * @var integer
+	 */
+	const ZHEJIANGSHENG = 1057;
+	
+	/**
+	 * 安徽省
+	 * 
+	 * @var integer
+	 */
+	const ANHUISHENG = 1170;
+	
+	/**
+	 * 福建省
+	 * 
+	 * @var integer
+	 */
+	const FUJIANSHENG = 1310;
+	
+	/**
+	 * 江西省
+	 * 
+	 * @var integer
+	 */
+	const JIANGXISHENG = 1414;
+	
+	/**
+	 * 山东省
+	 * 
+	 * @var integer
+	 */
+	const SHANDONGSHENG = 1536;
+	
+	/**
+	 * 河南省
+	 * 
+	 * @var integer
+	 */
+	const HENANSHENG = 1711;
+	
+	/**
+	 * 湖北省
+	 * 
+	 * @var integer
+	 */
+	const HUBEISHENG = 1905;
+	
+	/**
+	 * 湖南省
+	 * 
+	 * @var integer
+	 */
+	const HUNANSHENG = 2034;
+	
+	/**
+	 * 广东省
+	 * 
+	 * @var integer
+	 */
+	const GUANGDONGSHENG = 2184;
+	
+	/**
+	 * 广西区
+	 * 
+	 * @var integer
+	 */
+	const GUANGXIQU = 2403;
+	
+	/**
+	 * 海南省
+	 * 
+	 * @var integer
+	 */
+	const HAINANSHENG = 2541;
+	
+	/**
+	 * 四川省
+	 * 
+	 * @var integer
+	 */
+	const SICHUANGSHENG = 2570;
+	
+	/**
+	 * 贵州省
+	 * 
+	 * @var integer
+	 */
+	const GUIZHOUSHENG = 2791;
+	
+	/**
+	 * 云南省
+	 * 
+	 * @var integer
+	 */
+	const YUNNANSHENG = 2892;
       
       /**
        * 西藏区

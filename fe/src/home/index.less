@@ -10,7 +10,7 @@
 .banner-select {
     .clearfix;
 
-    width: 120px;
+    width: 150px;
     position: absolute;
     z-index: 11115;
     top: 310px;
@@ -121,12 +121,30 @@
 
 }
 .newgonggao {
-    height: 70px;
-    line-height: 70px;
-    border-bottom: 1px solid #dfdfdf;
+    height: 244px;
+    width:452px;
+    line-height: 28px;
     padding-right: 20px;
-
+    padding-top:28px;
     .clearfix;
+    
+     ul { 
+         float:left;
+         width:452px;
+         height:160px; 
+         margin-top: 18px;
+         li { 
+             float:left;
+             width:452px;
+             height:40px; 
+         } 
+         .new {
+             .newgonggao-txt,.newgonggao-time {
+                   color:#75cf64;
+                }
+         }
+     }
+ 
 }
 .newgonggao-title {
     font-size: 20px;
@@ -149,14 +167,16 @@
     margin-left: 10px;
     color: #adadad;
     float: right;
+    font-size:14px;
 
 }
 .newgonggao-more {
-    float: right;
-    line-height: 70px;
+    float: left;
+    font-size:14px;
+    line-height: 28px;
     text-decoration: none;
-    color: #333333;
-    margin-left: 20px;
+    color: #adadad;
+    margin-left: 18px;
 }
 .bottom {
     padding-bottom: 40px;
@@ -245,13 +265,13 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 400%;
+    width: 500%;
     z-index: 2;
     
     .clearfix;
 }
 .banner-item-list {
-    width: 25%;
+    width: 20%;
     float: left;
     height: 300px;
     position: relative;
@@ -276,6 +296,9 @@
 
     &.banner-four {
         background: url(./img/banner_four.jpg) center center no-repeat;
+    }
+     &.banner-five {
+        background: url(./img/banner_five.jpg) center center no-repeat;
     }
 }
 
@@ -401,6 +424,26 @@
 .jiantou-right {
     background: url(./img/banner_jiantou.png) 21px -100px no-repeat;
     margin-left: 540px;
+}
+
+//合作伙伴
+.cooperation {
+      border-top: 1px solid #dfdfdf;
+      padding:29px 0px 0px 0px;
+      height:276px;
+      width:1000px;
+      margin-top:15px;
+      
+      .cooperation-img {
+	      width:840px;
+	      margin:0 auto;
+	      margin-top: 24px;
+	      img { 
+		      border:none;
+		      margin-right:66px;
+	     }
+      
+}
 }
 
 
