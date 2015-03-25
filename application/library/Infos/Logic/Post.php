@@ -26,6 +26,8 @@ class Infos_Logic_Post {
         $list = new Infos_List_Infos();
         $list->setPage($page);
         $list->setPagesize($pagesize);
+        //设置查询字段
+        $list->setFields(array('title','create_time','id','abstract'));
         $filters = array('status'=>$status, 'type'=>$this->getInfoType($strType));
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
