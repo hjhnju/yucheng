@@ -67,8 +67,7 @@
                             <td>{%$refund.late_charge%}</td>
                             <td>{%$refund.promise_time|date_format:"%Y-%m-%d %H:%M"%}</td>
                             <td>{%$refund.refund_status%}</td>
-                            <td><a href="/admin/loan/refund?id={%$refund.id%}&loanid={%$refund.loan_id%}">手动还款 </a> 
-                            </td>
+                            <td><a href="/admin/loan/refund?id={%$refund.id%}&loanid={%$refund.loan_id%}" onclick="con(this);return false">手动还款 </a></td>
                         </tr>
                         {%/foreach%}
                     </tbody>
@@ -77,4 +76,16 @@
             <!-- END LIST -->
         </div>
     </div>
+    <script>
+    function con(sourceobj){
+        if(confirm("您确定要手动还款，此操作不可撤销！")){
+    		var url = $(sourceobj).attr("href");
+    		art.dialog.open(url, {title: 'title',width: 400, height: 300});
+    		return false;
+    		}
+        else{
+			alert("您取消了操作");
+            }
+    }
+    </script>
 {%/block%}

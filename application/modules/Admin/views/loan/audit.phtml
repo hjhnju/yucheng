@@ -58,8 +58,7 @@
                             <th>利率 %</th>
                             <th>期限/天</th>
                             <th>状态</th>
-                            <th>操作
-                            </th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,15 +74,15 @@
                             <td>
                             {%if $loan.status==1%}<!--借款审核-->
                                 <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
-                                <a href="/admin/loan/publish?loanid={%$loan.id%}&isopen=0">发布上线</a>
+                                <a href="/admin/loan/publish?loanid={%$loan.id%}&isopen=0" onclick = "con(this);return false;">发布上线</a>
                             {%elseif $loan.status==10%}<!--即将开启-->
                                 <a href="/admin/loan/request?userid={%$loan.user_id%}&loanid={%$loan.id%}">编辑 </a> 
-                                <a href="/admin/loan/publish?loanid={%$loan.id%}&isopen=-1">下线 </a> 
-                                <a href="/admin/loan/publish?loanid={%$loan.id%}&isopen=1">开启投标</a>
+                                <a href="/admin/loan/publish?loanid={%$loan.id%}&isopen=-1" onclick = "con(this);return false;">下线 </a> 
+                                <a href="/admin/loan/publish?loanid={%$loan.id%}&isopen=1" onclick = "con(this);return false;">开启投标</a>
                             {%elseif $loan.status==3%}<!--满标审核-->
-                                <a href="/admin/loan/audit?loanid={%$loan.id%}">确定通过</a>
+                                <a href="/admin/loan/audit?loanid={%$loan.id%}" onclick = "con(this);return false;">确定通过</a>
                             {%elseif $loan.status==4%}<!--借款放款-->
-                                <a href="/admin/loan/loan?loanid={%$loan.id%}">放款</a>
+                                <a href="/admin/loan/loan?loanid={%$loan.id%}" onclick = "con(this);return false;">放款</a>
                             {%else%}
                                 {%$loan.status%}
                             {%/if%}
@@ -96,4 +95,16 @@
             <!-- END LIST -->
         </div>
     </div>
+    <script>
+    function con(sourceobj){
+        if(confirm("您确定要进行此操作吗?")){
+    		var url = $(sourceobj).attr("href");
+    		art.dialog.open(url, {title: 'title',width: 400, height: 300});
+    		return false;
+    		}
+        else{
+			alert("您取消了操作");
+            }
+    }
+    </script>
 {%/block%}
