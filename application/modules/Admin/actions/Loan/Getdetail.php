@@ -13,6 +13,7 @@ class GetdetailAction extends Base_Controller_Action {
         }
         
         $detail = Loan_Api::getLoanDetail($loanId);
+        $detail['content'] = URLEncode($detail['content']);
         Base_Log::debug(array('detail'=>$detail));
         $this->ajax($detail);
     }
