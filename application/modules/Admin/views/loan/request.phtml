@@ -337,11 +337,7 @@
 								<td><input type="hidden"
 									name="audit[{%$smarty.section.loop.index%}][id]"></td>
 							</tr>
-<<<<<<< HEAD
 							{%/section%}
-=======
-							 {%/section%}
->>>>>>> 5341a9d2cea5ef5bac5ecb3d7c46e596abc924db
 						</table>
 					</div>
 				</div>
@@ -405,14 +401,8 @@
     function copyContent(){
  		var contentObj = document.getElementById('content');
  		var text = contentObj.innerHTML;
-<<<<<<< HEAD
- 		$('#inputcontent').val(encodeURIComponent(text));
-=======
  		$('#inputcontent').val(text);
->>>>>>> 5341a9d2cea5ef5bac5ecb3d7c46e596abc924db
         }
-
-
     function elementDsp(){
     	var sel = document.getElementById('loanType');
 		var loanType =  sel.options[sel.selectedIndex].value;
