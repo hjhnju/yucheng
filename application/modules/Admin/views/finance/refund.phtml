@@ -67,7 +67,7 @@
                             <td>{%$refund.late_charge%}</td>
                             <td>{%$refund.promise_time|date_format:"%Y-%m-%d %H:%M"%}</td>
                             <td>{%$refund.refund_status%}</td>
-                            <td><a href="http://www.baidu.com" onclick="con(this);return false">手动还款 </a></td>
+                            <td><a href="/admin/loan/refund?id={%$refund.id%}&loanid={%$refund.loan_id%}" onclick="con(this);return false">手动还款 </a></td>
                         </tr>
                         {%/foreach%}
                     </tbody>
@@ -75,7 +75,7 @@
             </div>
             <!-- END LIST -->
         </div>
-    </div>/admin/loan/refund?id={%$refund.id%}&loanid={%$refund.loan_id%}
+    </div>
     <script>
     function con(sourceobj){
         if(confirm("您确定要手动还款，此操作不可撤销！")){
