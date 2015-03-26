@@ -337,7 +337,11 @@
 								<td><input type="hidden"
 									name="audit[{%$smarty.section.loop.index%}][id]"></td>
 							</tr>
+<<<<<<< HEAD
 							{%/section%}
+=======
+							 {%/section%}
+>>>>>>> 5341a9d2cea5ef5bac5ecb3d7c46e596abc924db
 						</table>
 					</div>
 				</div>
@@ -401,7 +405,11 @@
     function copyContent(){
  		var contentObj = document.getElementById('content');
  		var text = contentObj.innerHTML;
+<<<<<<< HEAD
  		$('#inputcontent').val(encodeURIComponent(text));
+=======
+ 		$('#inputcontent').val(text);
+>>>>>>> 5341a9d2cea5ef5bac5ecb3d7c46e596abc924db
         }
 
 
@@ -527,7 +535,8 @@
                 }
                 $('input[name='+key+'], select[name='+key+']').val(val); 
                 if (key == 'content') { 
-                	$('#content').html(decodeURIComponent(val)); 
+                    val = decodeURIComponent(val);
+                	$('#content').html(val); 
                 }
                	if ((key == "cat_id") && (val == 1)){
           		   document.getElementById("school").style.display = "block";

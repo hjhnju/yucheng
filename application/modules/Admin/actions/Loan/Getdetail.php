@@ -13,6 +13,10 @@ class GetdetailAction extends Base_Controller_Action {
         }
         
         $detail = Loan_Api::getLoanDetail($loanId);
+        //对信息进行编码
+        $detail['content'] = URLEncode($detail['content']);
+        //将编码信息中的+号变成空格
+        $detail['content'] = str_replace('+', '%20', $detail['content']);
         Base_Log::debug(array('detail'=>$detail));
         $this->ajax($detail);
     }
