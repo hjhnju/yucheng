@@ -10,7 +10,8 @@ class IndexController extends Base_Controller_Page {
     }
     /**
      * param null
-     * @return $arrdata 
+     * @assign array $arrData 
+     * $arrData('list','platPost','refundPost','media')
      * 返回数组中包含最新投资列表（list） 最新平台公告 最新媒体公告（page：1，pagesize：4）
      */
     public function indexAction() {
@@ -45,6 +46,12 @@ class IndexController extends Base_Controller_Page {
         	$title = $val['title'];
         	$titleCut = $this->cutstr($title, 47);
         	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
+        }
+        //添加level_name_upperCase   level_name即将值转化为大写然后添加到数组
+        foreach ($arrData['list'] as $key => $val){
+        	$type = $val['level_name'];
+        	$type = strtoupper($type);
+        	$arrData['list'][$key]['level_name_upperCase'] = $type;
         }
         //assign
         $this->getView()->assign('data', $arrData);
