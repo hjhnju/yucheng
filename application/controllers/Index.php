@@ -3,12 +3,16 @@
  * 首页
  */
 class IndexController extends Base_Controller_Page {
-
+	//初始化
     public function init(){
         $this->setNeedLogin(false);
         parent::init();
     }
-    
+    /**
+     * param null
+     * @return $arrdata 
+     * 返回数组中包含最新投资列表（list） 最新平台公告 最新媒体公告（page：1，pagesize：4）
+     */
     public function indexAction() {
 
         //投资列表
@@ -21,11 +25,11 @@ class IndexController extends Base_Controller_Page {
         //获取新闻
         $media   = Infos_Api::getNewPost(1,4,'media');
         //构建数据
-        $arrData            = array();
-        $arrData['list']    = $list;
-        $arrData['platPost'] = $platPost;
+        $arrData               = array();
+        $arrData['list']       = $list;
+        $arrData['platPost']   = $platPost;
         $arrData['refundPost'] = $refundPost;
-        $arrData['media']   = $media;
+        $arrData['media']      = $media;
         //加入截取后标题放入arryData
         foreach ($arrData['media'] as $key => $val){
         	$title = $val['title'];
@@ -42,7 +46,6 @@ class IndexController extends Base_Controller_Page {
         	$titleCut = $this->cutstr($title, 47);
         	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
         }
-        var_dump($arrData);
         //assign
         $this->getView()->assign('data', $arrData);
     }

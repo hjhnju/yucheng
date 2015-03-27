@@ -119,6 +119,11 @@ class Infos_Logic_Post {
         return $ret;
     }
     
+    /**
+     * 取得公告的类型
+     * @param str $strType
+     * @return string
+     */
     private function getInfoType($strType){
 		switch ($strType){
 			case  platPost:
