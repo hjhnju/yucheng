@@ -14,14 +14,17 @@ class IndexController extends Base_Controller_Page {
         //投资列表
         $list = Invest_Api::getInvestList(1, 5);
         $list = $list['list'];
-        //最新公告
-        $newpost = Infos_Api::getNewPost(1,4,'post');
+        //最新平台公告
+        $platPost = Infos_Api::getNewPost(1,4,'platPost');
+        //最新还款公告
+        $refundPost = Infos_Api::getNewPost(1,4,'refundPost');
         //获取新闻
         $media   = Infos_Api::getNewPost(1,4,'media');
         //构建数据
         $arrData            = array();
         $arrData['list']    = $list;
-        $arrData['newpost'] = $newpost;
+        $arrData['platPost'] = $platPost;
+        $arrData['refundPost'] = $refundPost;
         $arrData['media']   = $media;
         //加入截取后标题放入arryData
         foreach ($arrData['media'] as $key => $val){
@@ -29,11 +32,17 @@ class IndexController extends Base_Controller_Page {
         	$titleCut = $this->cutstr($title, 47);
         	$arrData['media'][$key]['title_cut'] = $titleCut;
         }
-        foreach ($arrData['newpost'] as $key => $val){
+        foreach ($arrData['platPost'] as $key => $val){
         	$title = $val['title'];
         	$titleCut = $this->cutstr($title, 47);
-        	$arrData['newpost'][$key]['title_cut'] = $titleCut;
+        	$arrData['platPost'][$key]['title_cut'] = $titleCut;
         }
+        foreach ($arrData['refundPost'] as $key => $val){
+        	$title = $val['title'];
+        	$titleCut = $this->cutstr($title, 47);
+        	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
+        }
+        var_dump($arrData);
         //assign
         $this->getView()->assign('data', $arrData);
     }

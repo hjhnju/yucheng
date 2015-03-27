@@ -25,11 +25,13 @@ class Infos_Api {
      */
     public static function getAllPost($page, $pagesize){
         $logic   = new Infos_Logic_Post();
-        $list1    = $logic->getList($page, $pagesize, 'post', 1);
-        $list2    = $logic->getList($page, $pagesize, 'post', 2);
+        $list1    = $logic->getList($page, $pagesize, 'platPost', 1);
+        $list2    = $logic->getList($page, $pagesize, 'platPost', 2);
+        $list5    = $logic->getList($page, $pagesize, 'refundPost', 1);
+        $list6    = $logic->getList($page, $pagesize, 'refundPost', 2);
         $list3    = $logic->getList($page, $pagesize, 'media', 1);
         $list4    = $logic->getList($page, $pagesize, 'media', 2);
-        return array_merge($list1['list'],$list2['list'],$list3['list'],$list4['list']);
+        return array_merge($list1['list'],$list2['list'],$list3['list'],$list4['list'],$list5['list'],$list6['list']);
     }
     
     /**

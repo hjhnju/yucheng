@@ -10,9 +10,10 @@ class Infos_Logic_Post {
     const STATUS_PUBLISH = 1;
     const STATUS_NOTPUB  = 2;
 
-    // 资讯类型:1-官方公告，2-媒体报道
-    const TYPE_POST  = 1;
+    // 资讯类型:1-官方公告，2-媒体报道，3-还款公告
+    const TYPE_PLATPOST  = 1;
     const TYPE_MEDIA = 2;
+    const TYPE_REFUNDPOST = 3;
 
     public function __construct() {
     }
@@ -119,11 +120,13 @@ class Infos_Logic_Post {
     }
     
     private function getInfoType($strType){
-        if('post' === $strType){
-            return self::TYPE_POST;
-        }else{
-            return self::TYPE_MEDIA;
-        }
+		switch ($strType){
+			case  platPost:
+			  return self::TYPE_PLATPOST;
+			case  refundPost:
+		      return self::TYPE_REFUNDPOST;
+		    case  media:
+		      return self::TYPE_MEDIA;
+		}	
     }
-
 }

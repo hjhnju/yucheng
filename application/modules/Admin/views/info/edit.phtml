@@ -38,8 +38,14 @@
             <!-- BEGIN PAGE CONTENT-->
             {%if 0 ne count($post)%}
              <form method="post" action="/infos/infoapi/save?id={%$post.id%}"  target="id_iframe">
-              <br>公告标题: <input name="title" value="{%$post.title%}">&nbsp;&nbsp;类型(1:公告，2：媒体报道): <input name="type" value="{%$post.type%}">&nbsp;&nbsp;作者: <input name="author" value="{%$post.author%}"><br>
-              <br>摘要：<input name="abstract" value="{%$post.abstract%}" style="width:1082px;"><br><br>
+              <br>公告标题: <input name="title" value="{%$post.title%}">&nbsp;&nbsp;
+                        类型：<select name="type">
+           		<option value = 1>平台公告</option> 
+           		<option value = 2>媒体报道</option> 
+           		<option value = 3>还款公告</option>   
+              </select> 
+              &nbsp;&nbsp;作者: <input name="author" value="{%$post.author%}"><br>
+              <br>文章摘要：<input name="abstract" value="{%$post.abstract%}" style="width:1082px;"><br><br>
               <div>
               <script id="editor" type="text/plain" style="width:1124px;height:400px;">{%$post.ctx%}</script>
               </div>        
@@ -57,7 +63,7 @@
               <br>摘要：<input name="abstract" value="" style="width:1082px;"><br><br>
           <div>
            <script id="editor" type="text/plain" style="width:1124px;height:400px;"></script>
-          </div>        
+          </div>         
             
              <div id="btns">
              <div>
