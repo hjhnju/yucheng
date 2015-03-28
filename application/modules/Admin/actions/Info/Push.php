@@ -7,7 +7,7 @@
 class PushAction extends Yaf_Action_Abstract {
     public function execute() {
         $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : 10;
+        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : PHP_INT_MAX;
         $arrInfos  = Infos_Api::getAllPost($page, $pagesize);
         foreach ($arrInfos as $key => $val){
 			switch($val['type']){
