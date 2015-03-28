@@ -1,6 +1,48 @@
 <?php
 class Base_Util_Number {
 
+    /**
+     * 浮点数比较是否相等
+     * @param  float  $f1
+     * @param  float  $f2
+     * @param  integer $precision
+     * @return boolean
+     */
+    public static function floatIsEqual($f1,$f2,$precision = 2) { 
+        $e = pow(10, $precision);  
+        $i1 = intval($f1 * $e);  
+        $i2 = intval($f2 * $e);  
+        return ($i1 == $i2);  
+    }
+
+    /**
+     * 浮点数比较是否大于
+     * @param  float  $big
+     * @param  float  $small
+     * @param  integer $precision
+     * @return boolean
+     */
+    public static function floatIsGtr($big,$small,$precision = 2) {   
+        $e      = pow(10,$precision);  
+        $ibig   = intval($big * $e);  
+        $ismall = intval($small * $e);  
+        return ($ibig > $ismall);  
+    }
+
+    /**
+     * 浮点数比较是否大于等于
+     * @param  float  $big
+     * @param  float  $small
+     * @param  integer $precision
+     * @return boolean
+     */
+    public static function floatIsGtre($big,$small,$precision = 2) {
+        $e = pow(10,$precision);  
+        $ibig = intval($big * $e);  
+        $ismall = intval($small * $e);  
+        return ($ibig >= $ismall);  
+    }  
+
    /**
     * 千分位显示金额，默认显示小数点后两位
     * @param $amount

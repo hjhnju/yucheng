@@ -30,6 +30,7 @@ class Base_List {
      */
     protected $fields = array();
     
+    
     /**
      * 排序方式
      * @var string
@@ -72,6 +73,7 @@ class Base_List {
      */
     protected $total = 0;
     
+    
     /**
      * 翻页总数
      * @var integer
@@ -100,6 +102,7 @@ class Base_List {
      * @var Base_TopazDb
      */
     protected $db;
+    
     
     public function __construct($db = null) {
         if (!empty($db)) {
@@ -146,6 +149,7 @@ class Base_List {
         }
         return implode(' and ', $ary);
     }
+    
     
     /**
      * 设置过滤条件
@@ -227,7 +231,6 @@ class Base_List {
         $this->initDB();
         $this->data = $this->db->fetchAll($sql);
         $this->dealIntField();
-        
         $this->countAll();
         
         $this->fetched = 1;
@@ -258,6 +261,17 @@ class Base_List {
         $this->pageall = ceil($this->total / $this->pagesize);
         return $this->total;
     }
+   
+    /**
+     * 统计列表中的所有不重复记录行数
+     * @return integer
+     */
+    public function distinCount($col) {
+    	$this->initDB();
+    	$sql = "select count(distinct $col) as total from `{$this->dbname}`.`{$this->table}`";
+    	$distinTotal = $this->db->fetchOne($sql);
+    	return $distinTotal;
+    }
     
     /**
      * 计算所有行某字段的总和
@@ -271,6 +285,7 @@ class Base_List {
      */
     public function sumField($field) {
         $where = $this->getWhere();
+        $this->initDB();
         if (is_array($field)) {
             $sumary = array();
             foreach ($field as $k) {

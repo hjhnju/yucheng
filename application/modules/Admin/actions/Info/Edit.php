@@ -10,7 +10,8 @@ class EditAction extends Yaf_Action_Abstract {
         if(empty($postid)){
             $this->getView()->assign('post', '');
         }
-        $postInfo  = Infos_Api::getPost($postid);  
+        $postInfo  = Infos_Api::getPost($postid);
+        //var_dump($postInfo);
         $this->getView()->assign('post', $postInfo);
     }
 }

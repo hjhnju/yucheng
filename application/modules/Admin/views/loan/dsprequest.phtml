@@ -26,7 +26,7 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title">
-            公告列表 
+                             借款申请列表<small>&nbsp&nbsp所有申请</small>
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
@@ -35,50 +35,52 @@
                         <a href="/admin">Home</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
+                    <li>
+                        <a href="#">借款申请列表</a>
+                    </li>
                 </ul>
             </div>
             <!-- END PAGE HEADER-->
-            <!-- BEGIN PAGE CONTENT-->
+
+            <!-- BEGIN LIST -->
             <div class="row-fluid">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>资讯类型</th>
-                            <th>标题</th>
-                            <th>摘要</th>
-                            <th>作者</th>
+                            <th>借款编号</th>
+                            <th>借款标题</th>
+                            <th>学校类型</th>
+                            <th>借款用途</th>
+                            <th>金额 ¥</th>
+                            <th>利率 %</th>
+                            <th>借款人</th>
+                            <th>省份</th>
+                            <th>联系方式</th>
                             <th>创建时间</th>
+                            <th>状态</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
-                        {%foreach from=$arrInfo key=i item=info%}
+                        {%foreach from=$arrRequest  key=i item=request%}
                         <tr>
-                            <td>{%$info.id%}</td>
-                            <td>{%$info.type%}</td>
-                            <td>{%$info.title%}</td>
-                            <td>{%$info.abstract%}</td>
-                            <td>{%$info.author%}</td>
-                            <td>{%date("Y-m-d H:i:s",$info.create_time)%}</td>
-                            {%if 1 eq $info.status%}
-                               <td><form action="/admin/info/edit?id={%$info.id%}" method="POST"><input value="修改" type="submit"></form></td>
-                               <td><form action="/infos/infoapi/del?id={%$info.id%}" method="POST"  target="id_iframe"><input value="删除" type="submit" onclick = "refresh()"></form></td>
-                            {%/if%}
-                            {%if 2 eq $info.status%}
-                               <td><form action="/infos/infoapi/publish?id={%$info.id%}" method="POST"  target="id_iframe"><input value="发布" type="submit" onclick = "refresh()"></form></td>
-                            {%/if%}
+                            <td>{%$request.id%}</td>
+                            <td>{%$request.title%}</td>
+                            <td>{%$request.school_typename%}</td>
+                            <td>{%$request.use_typename%}</td>
+                            <td>{%$request.amount%}</td>
+                            <td>{%$request.interest%}</td>
+                            <td>{%$request.name%}</td>
+                            <td>{%$request.level_name%}</td>
+                            <td>{%$request.contact%}</td>
+                            <td>{%$request.create_time|date_format:"%Y-%m-%d %H:%M"%}</td>
+                            <td>{%$request.refund_status%}</td>
                         </tr>
-                        <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
                         {%/foreach%}
                     </tbody>
                 </table>
             </div>
-
+            <!-- END LIST -->
         </div>
     </div>
-    <script>
-     	function refresh(){
-     		window.location.reload();
-            }  
-    </script>
 {%/block%}

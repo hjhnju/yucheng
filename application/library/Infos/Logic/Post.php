@@ -10,9 +10,10 @@ class Infos_Logic_Post {
     const STATUS_PUBLISH = 1;
     const STATUS_NOTPUB  = 2;
 
-    // 资讯类型:1-官方公告，2-媒体报道
-    const TYPE_POST  = 1;
+    // 资讯类型:1-官方公告，2-媒体报道，3-还款公告
+    const TYPE_PLATPOST  = 1;
     const TYPE_MEDIA = 2;
+    const TYPE_REFUNDPOST = 3;
 
     public function __construct() {
     }
@@ -26,12 +27,14 @@ class Infos_Logic_Post {
         $list = new Infos_List_Infos();
         $list->setPage($page);
         $list->setPagesize($pagesize);
+        //设置查询字段
+        $list->setFields(array('title','create_time','id','abstract','author','type','status'));
         $filters = array('status'=>$status, 'type'=>$this->getInfoType($strType));
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
         $arrRet = $list->toArray();
         foreach ($arrRet['list'] as $key => $val){
-            $arrRet['list'][$key]['content'] = $val['abstract'];         
+            $arrRet['list'][$key]['content'] = $val['abstract']; 
         }        
         return $arrRet;
     }
@@ -116,12 +119,19 @@ class Infos_Logic_Post {
         return $ret;
     }
     
+    /**
+     * 取得公告的类型
+     * @param str $strType
+     * @return string
+     */
     private function getInfoType($strType){
-        if('post' === $strType){
-            return self::TYPE_POST;
-        }else{
-            return self::TYPE_MEDIA;
-        }
+		switch ($strType){
+			case  platPost:
+			  return self::TYPE_PLATPOST;
+			case  refundPost:
+		      return self::TYPE_REFUNDPOST;
+		    case  media:
+		      return self::TYPE_MEDIA;
+		}	
     }
-
 }

@@ -1,442 +1,543 @@
-{%extends file='common/layout.phtml'%}
-{%block name='content'%} 
-    <div class="page-content-wrapper">
-        <div class="page-content">
-            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h4 class="modal-title">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                             Widget settings form goes here
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn blue">Save changes</button>
-                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
-            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-            <!-- BEGIN PAGE HEADER-->
-            <h3 class="page-title">
-            申请借款 <small></small>
-            </h3>
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <i class="fa fa-home"></i>
-                        <a href="/admin">Home</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="/admin/loan/borrower">客户列表</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <a href="#">申请借款（{%$user.name%}）</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- END PAGE HEADER-->
-            <!-- BEGIN PAGE CONTENT-->
-            <div class="row-fluid">
-                {%if $error_msg%}
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <strong>Warning! </strong> {%$error_msg%}
-                </div>
-                {%/if%}
+{%extends file='common/layout.phtml'%} {%block name='content'%}
+<div class="page-content-wrapper">
+	<div class="page-content">
+		<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+		<div class="modal fade" id="portlet-config" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h4 class="modal-title">Modal title</h4>
+					</div>
+					<div class="modal-body">Widget settings form goes here</div>
+					<div class="modal-footer">
+						<button type="button" class="btn blue">Save changes</button>
+						<button type="button" class="btn default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+		<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+		<!-- BEGIN PAGE HEADER-->
+		<h3 class="page-title">
+			申请借款 <small></small>
+		</h3>
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><i class="fa fa-home"></i> <a href="/admin">Home</a> <i
+					class="fa fa-angle-right"></i></li>
+				<li><a href="/admin/loan/borrower">客户列表</a> <i
+					class="fa fa-angle-right"></i></li>
+				<li><a href="#">申请借款（{%$user.name%}）</a></li>
+			</ul>
+		</div>
+		<!-- END PAGE HEADER-->
+		<!-- BEGIN PAGE CONTENT-->
+		<div class="row-fluid">
+			{%if $error_msg%}
+			<div class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<strong>Warning! </strong> {%$error_msg%}
+			</div>
+			{%/if%}
 
-                <!-- BEGIN FORM-->
-                <form role="form" method="post" action="">
-                    {%if $sub_error_msg%}
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <strong>Warning! </strong> {%$sub_error_msg%}
-                    </div>
-                    {%/if%}
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">基本借款信息 <small>loan</small></h3>
-                            <input type="hidden" name="loanid" value="{%$loanId%}">
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="title">借款标题<small>(最好控制在8个字及以内，列表中超出部分以...显示)</small></label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="填写借款标题">
-                            </div>
-                            <div class="form-group">
-                                <label for="amount">借款金额<small>(单位元，精确到.00)</small></label>
-                                <input type="text" class="form-control" id="amount" name="amount" placeholder="填写借款金额">
-                            </div>
-                            <div class="form-group">
-                                <label for="interest">借款利率<small>(单位%, 精确到.00)</small></label>
-                                <input type="text" class="form-control" id="interest" name="interest" placeholder="填写借款利率">
-                            </div>
-                            <div class="form-group">
-                                <label for="area">所在地</label>
-                                <select name="area">
-                                    {%selection name='Loan_Type_Province'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="type_id">标的类型</label>
-                                <select name="type_id">
-                                {%selection name='Loan_Type_LoanType'%}
-                                </select>
-                            </div>
+			<!-- BEGIN FORM-->
+			<form role="form" method="post" action="">
+				{%if $sub_error_msg%}
+				<div class="alert alert-danger alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<strong>Warning! </strong> {%$sub_error_msg%}
+				</div>
+				{%/if%}
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							基本借款信息 <small>loan</small>
+						</h3>
+						<input type="hidden" name="loanid" value="{%$loanId%}">
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="title">借款标题<small>(最好控制在8个字及以内，列表中超出部分以...显示)</small></label>
+							<input type="text" class="form-control" id="title" name="title"
+								placeholder="填写借款标题">
+						</div>
+						<div class="form-group">
+							<label for="amount">借款金额<small>(单位元，精确到.00)</small></label> <input
+								type="text" class="form-control" id="amount" name="amount"
+								placeholder="填写借款金额">
+						</div>
+						<div class="form-group">
+							<label for="interest">借款利率<small>(单位%, 精确到.00)</small></label> <input
+								type="text" class="form-control" id="interest" name="interest"
+								placeholder="填写借款利率">
+						</div>
+						<div class="form-group">
+							<label>所在地 <small>(省)</small></label> <select id="prov"
+								onchange=areaAjax(this)> {%selection name='Loan_Type_Province'%}
+							</select> <label for="area">&nbsp&nbsp市：</label> <select
+								name="area" id="chengshi">
+							</select>
+						</div>
 
-                            <div class="form-group">
-                                <label for="cat_id">借款类型</label>
-                                <select name="cat_id">
-                                {%selection name='Loan_Type_LoanCat'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="duration">借款时长</label>
-                                <select name="duration">
-                                {%selection name='Loan_Type_Duration'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="refund_type">还款方式</label>
-                                <select name="refund_type">
-                                {%selection name='Loan_Type_RefundType'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="level">风险等级</label>
-                                <select name="level">
-                                {%selection name='Loan_Type_LevelName'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="level">保障方式</label>
-                                {%checkboxes name='Loan_Type_SafeMode' tag='safes'%}
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="fresh" value="1"> 新手专项标
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="content">借款详情<small></small></label>
-                                <div class="textarea">
-                                    <input type="text" name="content" class="form-control">
-                                    <textarea name="content" class="form-control" rows="10"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="audit_info">审核信息</label>
-                                <div class="text">
-                                    <input type="text" name="audit_info" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">教师圆梦贷 － 借款人信息(可选，个人借款时必填) <small>loan_private</small></h3>
-                            <input type="hidden" name="private[id]" value="0">
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="showname">显示用户名 <small>(手动加星，如：李**)</small></label>
-                                <div class="text">
-                                    <input type="text" name="private[showname]">
-                                </div>
-                            </div>                            
-                            <div class="form-group">
-                                <label for="account">户口所在地 <small>(如：福建省)</small></label>
-                                <div class="text">
-                                    <input type="text" name="private[account]">
-                                </div>
-                            </div> 
-                            <div class="form-group">
-                                <label for="age">年龄 <small>(填写数值，如：38)</small></label>
-                                <div class="text">
-                                    <input type="text" name="private[age]">
-                                </div>
-                            </div>
+						<div class="form-group">
+							<label for="type_id">标的类型</label> <select name="type_id">
+								{%selection name='Loan_Type_LoanType'%}
+							</select>
+						</div>
 
-                            <div class="form-group">
-                                <label for="marriage">是否已婚</label>
-                                <select name="private[marriage]">
-                                {%selection name='Loan_Type_YesNo'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="company_type">企业类型</label>
-                                <select name="private[company_type]">
-                                {%selection name='Loan_Type_SchoolType'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="job_title">职务 <small>(填写字符串，如：校长、学校领导、教师)</small><small>(填写字符串，如：校长、学校领导、教师)</small></label>
-                                <div class="text">
-                                    <input type="text" name="private[job_title]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="income">年收入范围 <small>(填写字符串，如：10-20万)</small></label>
-                                <div class="text">
-                                    <input type="text" name="private[income]">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">学校助业贷 － 借款机构信息(可选，机构借款时必填) <small>loan_company</small></h3>
-                            <input type="hidden" name="company[id]" value="0">
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="school">机构名称 <small>(学校名、教育机构名等)</small></label>
-                                <div class="text">
-                                    <input type="text" name="company[school]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="company[area]">所在地 <small>(省、市)</small></label>
-                                <select name="company[area]">
-                                {%selection name='Loan_Type_Province'%}
-                                </select>
-                            </div>
+						<div class="form-group">
+							<label for="cat_id">借款类型</label> <select name="cat_id"
+								id="loanType" onchange=elementDsp()> {%selection
+								name='Loan_Type_LoanCat'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="duration">借款时长</label> <select name="duration">
+								{%selection name='Loan_Type_Duration'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="refund_type">还款方式</label> <select name="refund_type">
+								{%selection name='Loan_Type_RefundType'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="level">风险等级</label> <select name="level"> {%selection
+								name='Loan_Type_LevelName'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="level">保障方式</label> {%checkboxes
+							name='Loan_Type_SafeMode' tag='safes'%}
+						</div>
+						<div class="checkbox">
+							<label> <input type="checkbox" name="fresh" value="1"> 新手专项标
+							</label>
+						</div>
+						<div class="form-group">
+							<legend>
+								<label for="content">借款详情<small></small></label>
+								<div class="text">
+									<input type='hidden' name="content" id="inputcontent" />
+									<fieldset>
+										<div type="text" id="content" class="form-control"
+											style="width: 700px; min-height: 300px; border: 2px dashed #ccc; overflow-x: hidden; word-break: break-all; overflow-y: scroll;"
+											contenteditable="true" _ onblur=copyContent()></div>
+								</div>
+								<fieldset />
+							</legend>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="audit_info">审核信息</label>
+						<div class="text">
+							<input type="text" name="audit_info" class="form-control">
+						</div>
+					</div>
+				</div>
 
-                            <div class="form-group">
-                                <label for="assets">公司资产<small>(填写字符串，如：8000万)</small></label>
-                                <div class="text">
-                                    <input type="text" name="company[assets]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="employers">员工数<small>(填写数值，如：300)，页面显示300+名</small></label>
-                                <div class="text">
-                                    <input type="text" name="company[employers]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="years">成立时间</label>
-                                <div class="text">
-                                    <input type="text" name="company[years]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="funds">注册资金</label>
-                                <div class="text">
-                                    <input type="text" name="company[funds]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="students">学生数<small>(填写数值，如：1000)，页面显示1000+名</small></label>
-                                <div class="text">
-                                    <input type="text" name="company[students]">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">借款担保信息 <small>loan_guarantee</small></h3>
-                            <input type="hidden" name="guarantee[id]" value="0">
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="name">担保人姓名<small>(手动加星，如：王**, **华)</small></label>
-                                <div class="text">
-                                    <input type="text" name="guarantee[name]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="account">户口所在地 <small>(如：福建省)</small></label>
-                                <div class="text">
-                                    <input type="text" name="guarantee[account]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="age">年龄 <small>(填写数值，如：38)</small></label>
-                                <div class="text">
-                                    <input type="text" name="guarantee[age]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="marriage">是否已婚</label>
-                                <select name="guarantee[marriage]">
-                                {%selection name='Loan_Type_YesNo'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="company_type">企业类型</label>
-                                <select name="guarantee[company_type]">
-                                {%selection name='Loan_Type_SchoolType'%}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="jobtitle">职务 <small>(填写字符串，如：校长、学校领导、教师)</small></label>
-                                <div class="text">
-                                    <input type="text" name="guarantee[job_title]">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="income">年收入范围 <small>(填写字符串，如：10-20万)</small></label>
-                                <div class="text">
-                                    <input type="text" name="guarantee[income]">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">借款审核信息 <small>loan_audit</small></h3>
-                        </div>
-                        <div class="panel-body">
-                        <table class="table">
-                            <thead>
-                                <tr><th>审核类型</th><th>说明<small>(如:实地认证,营业执照,税务登记证,银行开户许可证,组织机构代码证,征信报告,抵押手续,身份证,户口本,结婚证,房产证,行驶证,登记证书等)</small></th></tr>
-                            </thead>
-                            {%section name=loop loop=15%}
-                            <tr>
-                                <td><select name="audit[{%$smarty.section.loop.index%}][type]">
-                                {%selection name='Loan_Type_Audit'%}
-                                </select></td>
-                                <td><input type="text" name="audit[{%$smarty.section.loop.index%}][name]"></td>
-                                <td><input type="hidden" name="audit[{%$smarty.section.loop.index%}][id]"></td>
-                            </tr>
-                            {%/section%}
-                        </table>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">已上传的附件 <small>loan_attach</small></h3>
-                        </div>
-                        <div class="panel-body" id="uploaded">
-                            <table class="table">
-                                <thead>
-                                    <tr id="0"><th>序号</th><th>附件类型</th><th>文件</th><th>描述</th><th></th></tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                            <button type="submit" class="btn btn-success">填写完毕-保存</button>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                </form>
-                <!-- END FORM-->  
-                <form action="/upload/pic" method="post" enctype="multipart/form-data" id="uploadfile">
-                    <!-- FORM FIELDS-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">上传附件</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="filename">附件描述</label>
-                                <input type="text" name="attach_title" id="attach_title">
-                                <label for="select">附件类型</label>
-                                <select name="attach_type" id="attach_type">
-                                    {%selection name='Loan_Type_Attach'%}
-                                </select>
-                                <input type="file" id="file" name="file">
-                            </div>
 
-                            <button type="button" id="upload_btn" class="btn btn-success">添加附件</button>
-                        </div>
-                    </div>
-                    <!-- FORM FIELDS-->
-                </form>
-            </div>
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info" id="teacher">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							教师圆梦贷 － 借款人信息(可选，个人借款时必填) <small>loan_private</small>
+						</h3>
+						<input type="hidden" name="private[id]" value="0">
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="showname">显示用户名 <small>(手动加星，如：李**)</small></label>
+							<div class="text">
+								<input type="text" name="private[showname]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="account">户口所在地 <small>(如：福建省)</small></label>
+							<div class="text">
+								<input type="text" name="private[account]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="age">年龄 <small>(填写数值，如：38)</small></label>
+							<div class="text">
+								<input type="text" name="private[age]">
+							</div>
+						</div>
 
-        </div>
-    </div>
-{%/block%}
+						<div class="form-group">
+							<label for="marriage">是否已婚</label> <select
+								name="private[marriage]"> {%selection name='Loan_Type_YesNo'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="company_type">企业类型</label> <select
+								name="private[company_type]"> {%selection
+								name='Loan_Type_SchoolType'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="job_title">职务 <small>(填写字符串，如：校长、学校领导、教师)</small><small>(填写字符串，如：校长、学校领导、教师)</small></label>
+							<div class="text">
+								<input type="text" name="private[job_title]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="income">年收入范围 <small>(填写字符串，如：10-20万)</small></label>
+							<div class="text">
+								<input type="text" name="private[income]">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info" id="school">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							学校助业贷 － 借款机构信息(可选，机构借款时必填) <small>loan_company</small>
+						</h3>
+						<input type="hidden" name="company[id]" value="0">
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="school">机构名称 <small>(学校名、教育机构名等)</small></label>
+							<div class="text">
+								<input type="text" name="company[school]">
+							</div>
+						</div>
 
-{%block name='script'%}
-<script src="{%$feroot%}s/global/plugins/ajaxfileupload.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    var upindex = 0;
-    $('#upload_btn').on({
-        click: function (e) {
-            var title = $('#attach_title').val();
-            if (!title) {
-                alert('附件描述不能为空');
-                return false;
-            }
-            if (!$('#file').val()) {
-                alert('图片文件不能为空');
-                return false;
-            }
-            $.ajaxFileUpload({
-                url: '/upload/pic',
-                secureuri: false,
-                fileElementId: 'file',
-                dataType: 'json',
-                success: function (res, status) {
-                    var row = {
-                            id: 0,
-                            type: $('#attach_type').val(),
-                            hash: res.data.hash,
-                            title: title,
-                            type_name: $('#attach_type').find('option:selected').text()
-                    };
-                    addAttach(row);
-                },
-                error: function (data, status, e) {
-                    alert(e);
-                }
-            })
+						<div class="form-group">
+							<label>所在地 <small>(省、市)</small></label> <select id="prov1"
+								onchange=areaAjax1(this)> {%selection
+								name='Loan_Type_Province'%}
+							</select> <label for="company[area]"></label> <select
+								name="company[area]" id="location">
+							</select>
+						</div>
 
-            return false;
+						<div class="form-group">
+							<label for="assets">公司资产<small>(填写字符串，如：8000万)</small></label>
+							<div class="text">
+								<input type="text" name="company[assets]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="employers">员工数<small>(填写数值，如：300)，页面显示300+名</small></label>
+							<div class="text">
+								<input type="text" name="company[employers]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="years">成立时间</label>
+							<div class="text">
+								<input type="text" name="company[years]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="funds">注册资金</label>
+							<div class="text">
+								<input type="text" name="company[funds]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="students">学生数<small>(填写数值，如：1000)，页面显示1000+名</small></label>
+							<div class="text">
+								<input type="text" name="company[students]">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- FORM FIELDS-->
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							借款担保信息 <small>loan_guarantee</small>
+						</h3>
+						<input type="hidden" name="guarantee[id]" value="0">
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="name">担保人姓名<small>(手动加星，如：王**, **华)</small></label>
+							<div class="text">
+								<input type="text" name="guarantee[name]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="account">户口所在地 <small>(如：福建省)</small></label>
+							<div class="text">
+								<input type="text" name="guarantee[account]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="age">年龄 <small>(填写数值，如：38)</small></label>
+							<div class="text">
+								<input type="text" name="guarantee[age]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="marriage">是否已婚</label> <select
+								name="guarantee[marriage]"> {%selection name='Loan_Type_YesNo'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="company_type">企业类型</label> <select
+								name="guarantee[company_type]"> {%selection
+								name='Loan_Type_SchoolType'%}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="jobtitle">职务 <small>(填写字符串，如：校长、学校领导、教师)</small></label>
+							<div class="text">
+								<input type="text" name="guarantee[job_title]">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="income">年收入范围 <small>(填写字符串，如：10-20万)</small></label>
+							<div class="text">
+								<input type="text" name="guarantee[income]">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- FORM FIELDS-->
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							借款审核信息 <small>loan_audit</small>
+						</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>审核类型</th>
+									<th>说明<small>(如:实地认证,营业执照,税务登记证,银行开户许可证,组织机构代码证,征信报告,抵押手续,身份证,户口本,结婚证,房产证,行驶证,登记证书等)</small></th>
+								</tr>
+							</thead>
+							{%section name=loop loop=15%}
+							<tr>
+								<td><select name="audit[{%$smarty.section.loop.index%}][type]">
+										{%selection name='Loan_Type_Audit'%}
+								</select></td>
+								<td><input type="text"
+									name="audit[{%$smarty.section.loop.index%}][name]"></td>
+								<td><input type="hidden"
+									name="audit[{%$smarty.section.loop.index%}][id]"></td>
+							</tr>
+							{%/section%}
+						</table>
+					</div>
+				</div>
+				<!-- FORM FIELDS-->
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							已上传的附件 <small>loan_attach</small>
+						</h3>
+					</div>
+					<div class="panel-body" id="uploaded">
+						<table class="table">
+							<thead>
+								<tr id="0">
+									<th>序号</th>
+									<th>附件类型</th>
+									<th>文件</th>
+									<th>描述</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<button type="submit" class="btn btn-success">填写完毕-保存</button>
+					</div>
+				</div>
+			</form>
+			<!-- FORM FIELDS-->
+			<!-- END FORM-->
+			<form action="/upload/pic" method="post"
+				enctype="multipart/form-data" id="uploadfile">
+				<!-- FORM FIELDS-->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">上传附件</h3>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="filename">附件描述</label> <input type="text"
+								name="attach_title" id="attach_title"> <label for="select">附件类型</label>
+							<select name="attach_type" id="attach_type"> {%selection
+								name='Loan_Type_Attach'%}
+							</select> <input type="file" id="file" name="file">
+						</div>
+
+						<button type="button" id="upload_btn" class="btn btn-success">添加附件</button>
+					</div>
+				</div>
+				<!-- FORM FIELDS-->
+			</form>
+		</div>
+
+	</div>
+
+	{%/block%} {%block name='script'%}
+	<script src="{%$feroot%}s/global/plugins/ajaxfileupload.js"
+		type="text/javascript"></script>
+	<script type="text/javascript">
+
+    function copyContent(){
+ 		var contentObj = document.getElementById('content');
+ 		var text = contentObj.innerHTML;
+ 		$('#inputcontent').val(text);
         }
-    });
-
-    function addAttach(row) {
-        upindex ++;
-        var link = '<a class="del" href="javascript:;">删除</a>';
-        var inputs = '<input type="hidden" name="attach[' + upindex + '][type]" value="' + row.type + '">' +
-                    '<input type="hidden" name="attach[' + upindex + '][url]" value="' + row.hash + '">' +
-                    '<input type="hidden" name="attach[' + upindex + '][title]" value="' + row.title + '">' +
-                    '<input type="hidden" name="attach[' + upindex + '][id]" value="' + row.id + '">';
-        link = link + inputs;
-        var pic = '<a href="/pic/' + row.hash + '.jpg" target="_blank">' + row.hash + '</a>';
-        var ary = [upindex, row.type_name, pic, row.title, link];
-        var str = ary.join('</td><td>');
-        var el = $('<tr><td>' + str + '</tr>').appendTo($('#uploaded tbody'));
-        el.find('.del').on({
-            click: function(e) {
-                $(this).parents('tr').remove();
-            }
-        });
+    function elementDsp(){
+    	var sel = document.getElementById('loanType');
+		var loanType =  sel.options[sel.selectedIndex].value;
+		if(loanType == "2"){
+		   document.getElementById("school").style.display = "none";
+		   document.getElementById("teacher").style.display = "block";
+        }
+ 		if(loanType == "1"){
+            document.getElementById("school").style.display = "block";
+   		   document.getElementById("teacher").style.display = "none";
+         }
     }
+        
+
+     function areaAjax(id){
+         var obj=document.getElementById('prov');
+           for(i=0;i<obj.length;i++) {//下拉框的长度就是他的选项数
+               if(obj[i].selected==true) {
+               var prov=obj[i].value;//获取省id
+           }
+       }
+      htmlobj=$.ajax({url:"/admin/loan/Getcity?prov=" + prov,async:false});
+      $("#chengshi").html(htmlobj.responseText);
+    }
+
+     function areaAjax1(id){
+         var obj=document.getElementById('prov1');
+           for(i=0;i<obj.length;i++) {//下拉框的长度就是他的选项数
+               if(obj[i].selected==true) {
+               var prov=obj[i].value;//获取省id
+           }
+       }
+      htmlobj=$.ajax({url:"/admin/loan/Getcity?prov=" + prov,async:false});
+      $("#location").html(htmlobj.responseText);
+    }
+
+     var upindex = 0;
+     $('#upload_btn').on({
+         click: function (e) {
+             var title = $('#attach_title').val();
+             if (!title) {
+                 alert('附件描述不能为空');
+                 return false;
+             }
+             if (!$('#file').val()) {
+                 alert('图片文件不能为空');
+                 return false;
+             }
+             $.ajaxFileUpload({
+                 url: '/upload/pic',
+                 secureuri: false,
+                 fileElementId: 'file',
+                 dataType: 'json',
+                 success: function (res, status) {
+                     var row = {
+                             id: 0,
+                             type: $('#attach_type').val(),
+                             hash: res.data.hash,
+                             title: title,
+                             type_name: $('#attach_type').find('option:selected').text()
+                     };
+                     addAttach(row);
+                 },
+                 error: function (data, status, e) {
+                     alert(e);
+                 }
+             })
+
+             return false;
+         }
+     });
+
+     function addAttach(row) {
+         upindex ++;
+         var link = '<a class="del" href="javascript:;">删除</a>';
+         var inputs = '<input type="hidden" name="attach[' + upindex + '][type]" value="' + row.type + '">' +
+                     '<input type="hidden" name="attach[' + upindex + '][url]" value="' + row.hash + '">' +
+                     '<input type="hidden" name="attach[' + upindex + '][title]" value="' + row.title + '">' +
+                     '<input type="hidden" name="attach[' + upindex + '][id]" value="' + row.id + '">';
+         link = link + inputs;
+         var pic = '<a href="/pic/' + row.hash + '.jpg" target="_blank">' + row.hash + '</a>';
+         var ary = [upindex, row.type_name, pic, row.title, link];
+         var str = ary.join('</td><td>');
+         var el = $('<tr><td>' + str + '</tr>').appendTo($('#uploaded tbody'));
+         el.find('.del').on({
+             click: function(e) {
+            	 if (confirm("您确认要删除此附件吗？")) {
+                  	 var xmlhttp;
+               	 if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+               	  		xmlhttp=new XMLHttpRequest();
+               	  	}
+               	  	else{// code for IE6, IE5
+               	  			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+               	  		}
+               	    xmlhttp.onreadystatechange=function(){
+               	 		 if (xmlhttp.readyState==4 && xmlhttp.status==200){
+             	  			alert("删除成功");
+               	  			}               	 		
+               	  }
+               	  $(this).parents('tr').remove();
+               	  xmlhttp.open("GET","/admin/loan/delpic?id=" + row.id,true);
+               	  xmlhttp.send(); 
+                }  
+            	 else{
+            		 return;
+                }
+             }      
+         });
+     }
     
     var loanId = {%$loanId%};
     if (loanId > 0) {
         $.post('/admin/loan/getdetail', {loanid: loanId}, function(res) {
+             	 
             var data = res.data;
             for(var key in data) {
                 var val = data[key];
                 if (key == 'fresh') {
                     continue;
                 }
-                $('input[name='+key+'], select[name='+key+']').val(val);
+                $('input[name='+key+'], select[name='+key+']').val(val); 
+                if (key == 'content') { 
+                    val = decodeURIComponent(val);
+                	$('#content').html(val); 
+                }
+               	if ((key == "cat_id") && (val == 1)){
+          		   document.getElementById("school").style.display = "block";
+        		   document.getElementById("teacher").style.display = "none";
+                }
+                if ((key == "cat_id") && (val == 2)){
+                	document.getElementById("school").style.display = "none";
+          		    document.getElementById("teacher").style.display = "block";
+                    }
             }
+         
             if (data.fresh == 1) {
                 $('input[name=fresh]').attr('checked', true).parent().addClass('checked');
             }
@@ -459,7 +560,7 @@
         for(var key in data) {
             var val = data[key];
             $('input[name="'+name+'['+key+']"], select[name="'+name+'['+key+']"]').val(val);
-        }
+            }
     }
 
     function loadAttach(data) {
@@ -489,4 +590,4 @@
         }
     }
     </script>
-{%/block%}
+	{%/block%}
