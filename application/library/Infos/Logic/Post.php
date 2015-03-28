@@ -38,6 +38,22 @@ class Infos_Logic_Post {
         }        
         return $arrRet;
     }
+    
+    /**
+     * TODO:获取所有公告列表 包括三种类型所有状态的公告
+     * @param
+     * @return array
+     */
+	public function getAllList($page=1, $pagesize = 10){
+		
+		$list = new Infos_List_Infos();
+		$list->setPage($page);
+		$list->setPagesize($pagesize);
+		$list->setFields(array('title','create_time','id','abstract','author','type','status'));
+// 		$list->setOrder('publish_time aesc');
+		$arrRet = $list->toArray();
+		return $arrRet;	
+	}
 
     /**
      * 获取公告详情
