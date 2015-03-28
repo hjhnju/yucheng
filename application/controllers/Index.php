@@ -34,17 +34,17 @@ class IndexController extends Base_Controller_Page {
         //加入截取后标题放入arryData
         foreach ($arrData['media'] as $key => $val){
         	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 47);
+        	$titleCut = $this->cutstr($title, 30);
         	$arrData['media'][$key]['title_cut'] = $titleCut;
         }
         foreach ($arrData['platPost'] as $key => $val){
         	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 47);
+        	$titleCut = $this->cutstr($title, 30);
         	$arrData['platPost'][$key]['title_cut'] = $titleCut;
         }
         foreach ($arrData['refundPost'] as $key => $val){
         	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 47);
+        	$titleCut = $this->cutstr($title, 30);
         	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
         }
         //添加level_name_upperCase   level_name即将值转化为大写然后添加到数组
@@ -53,6 +53,13 @@ class IndexController extends Base_Controller_Page {
         	$type = strtoupper($type);
         	$arrData['list'][$key]['level_name_upperCase'] = $type;
         }
+        //添加amount_rest格式化 如5000->5,000
+        foreach ($arrData['list'] as $key => $val){
+        	$rest = $val['amount_rest'];
+        	$rest = number_format($rest);
+        	$arrData['list'][$key]['amount_rest'] = $rest;
+        }
+        var_dump($arrData);
         //assign
         $this->getView()->assign('data', $arrData);
     }

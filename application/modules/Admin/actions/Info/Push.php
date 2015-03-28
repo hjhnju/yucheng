@@ -10,11 +10,17 @@ class PushAction extends Yaf_Action_Abstract {
         $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : 10;
         $arrInfos  = Infos_Api::getAllPost($page, $pagesize);
         foreach ($arrInfos as $key => $val){
-            if(1 == $val['type']){
-                $arrInfos[$key]['type'] = '公告';
-            }else{
-                $arrInfos[$key]['type'] = '媒体报道';
-            }
+			switch($val['type']){
+				case 1:
+					$arrInfos[$key]['type'] = '平台公告';
+					break;
+				case 2:
+					$arrInfos[$key]['type'] = '媒体报道';
+					break;
+				case 3:
+					$arrInfos[$key]['type'] = '还款公告';
+					break;	
+			}
         }
         $this->getView()->assign('arrInfo', $arrInfos);
     }

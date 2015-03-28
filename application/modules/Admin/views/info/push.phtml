@@ -62,10 +62,10 @@
                             <td>{%date("Y-m-d H:i:s",$info.create_time)%}</td>
                             {%if 1 eq $info.status%}
                                <td><form action="/admin/info/edit?id={%$info.id%}" method="POST"><input value="修改" type="submit"></form></td>
-                               <td><form action="/infos/infoapi/del?id={%$info.id%}" method="POST"  target="id_iframe"><input value="删除" type="submit"></form></td>
+                               <td><form action="/infos/infoapi/del?id={%$info.id%}" method="POST"  target="id_iframe"><input value="删除" type="submit" onclick = "refresh()"></form></td>
                             {%/if%}
                             {%if 2 eq $info.status%}
-                               <td><form action="/infos/infoapi/publish?id={%$info.id%}" method="POST"  target="id_iframe"><input value="发布" type="submit"></form></td>
+                               <td><form action="/infos/infoapi/publish?id={%$info.id%}" method="POST"  target="id_iframe"><input value="发布" type="submit" onclick = "refresh()"></form></td>
                             {%/if%}
                         </tr>
                         <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
@@ -76,4 +76,9 @@
 
         </div>
     </div>
+    <script>
+     	function refresh(){
+     		window.location.reload();
+            }  
+    </script>
 {%/block%}

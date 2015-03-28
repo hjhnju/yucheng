@@ -8,7 +8,7 @@ class Infos_Api {
      * Infos_Api::getNewPost()
      * 获取最新公告
      * param int $page,int $pageSize, str $strType
-     * 页数 页面大小 公告类型（media，newpost）
+     * 页数 页面大小 公告类型（media，platPost, refundPost ）
      * @return $arrPost | null
      */
     public static function getNewPost($page,$pageSize,$strType){

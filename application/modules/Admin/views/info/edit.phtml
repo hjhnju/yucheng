@@ -38,13 +38,24 @@
             <!-- BEGIN PAGE CONTENT-->
             {%if 0 ne count($post)%}
              <form method="post" action="/infos/infoapi/save?id={%$post.id%}"  target="id_iframe">
-              <br>公告标题: <input name="title" value="{%$post.title%}">&nbsp;&nbsp;
-                        类型：<select name="type">
+              <br>公告标题: <input name="title" value="{%$post.title%}">&nbsp;&nbsp; 
+                   类型：<select name="type" id = "type">
            		<option value = 1>平台公告</option> 
            		<option value = 2>媒体报道</option> 
            		<option value = 3>还款公告</option>   
               </select> 
-              &nbsp;&nbsp;作者: <input name="author" value="{%$post.author%}"><br>
+              <span id = span style="display: none">{%$post.author%}</span>
+              &nbsp;&nbsp;作者：<select name="author" id = "origin">         		
+                <option value = 管理员>管理员</option> 
+           		<option value = souhu>搜狐财经</option> 
+           		<option value = hexun>和讯网</option>
+           		<option value = zjrx>浙江热线</option>
+           		<option value = zhonghua>中华网</option>
+           		<option value = sutu>速途网</option>
+           		<option value = 21cn>21CN生活</option>
+           		<option value = fenghuang>凤凰网</option>             
+              </select>  <br>
+              <br>
               <br>文章摘要：<input name="abstract" value="{%$post.abstract%}" style="width:1082px;"><br><br>
               <div>
               <script id="editor" type="text/plain" style="width:1124px;height:400px;">{%$post.ctx%}</script>
@@ -52,7 +63,7 @@
             
              <div id="btns">
              <div>
-             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="">保存修改</button>&nbsp;&nbsp;
+             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="" onclick = "refresh()">保存修改</button>&nbsp;&nbsp;
              </form>
              <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
              </div>
@@ -67,7 +78,7 @@
             
              <div id="btns">
              <div>
-             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="">保存公告</button>&nbsp;&nbsp;
+             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="" onclick = "refresh()">保存公告</button>&nbsp;&nbsp;
              </form>
              <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
            </div>
@@ -78,7 +89,6 @@
         </div>
     </div>
     <script type="text/javascript">
-
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例 
     var ue = UE.getEditor('editor');
@@ -87,5 +97,19 @@
         arr.push(UE.getEditor('editor').getContent());
         document.getElementById("ctx11").value=arr;
     }
+
+    function refresh(){
+    	window.location.href("/admin/info/push");
+        }
+	
     </script>
+    <script type="text/javascript">
+    	var type = {%$post.type%};
+        var typeSelect = document.getElementById('type');
+        typeSelect.value = type;
+        var author =  document.getElementById('span').innerHTML;
+        var originSelect = document.getElementById('origin');
+        originSelect.value = author;
+    </script> 
+    
 {%/block%}
