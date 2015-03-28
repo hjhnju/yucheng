@@ -16,7 +16,7 @@
 
 {%block name="content"%}
 {%assign var="bannerList" value=[0 => "banner-one", 1 => "banner-two", 2 => "banner-three", 3 => "banner-four",4 => "banner-five"]%}
-{%assign var="bannerHref" value=[0 => "/security", 1 => "/", 2 => "/infos/post/detail?id=31", 3 => "/infos/post/detail?id=31", 4 => "/"]%}
+{%assign var="bannerHref" value=[0 => "/security", 1 => "/security", 2 => "/infos/post/detail?id=31", 3 => "/infos/post/detail?id=31", 4 => "/"]%}
 
 <div class="banner-floation">
 
@@ -74,23 +74,23 @@
         <div class="introduce-left">
             <div class="introduce-left-title"><span>兴教贷</span>是什么?</div>
             <div class="introduce-left-text">兴教贷是国内首家专注教育领域的互联网投融资理财服务平台，通过兴教贷平台，您可以将手中的富余资金出借给由我们认证的教育机构或个人，并获得利息回报。我们希望成为教育事业的新助力，让更多人投资教育，分享收益。
-            <a href="{%$webroot%}/guide">了解更多></a></div>
+            <a href="{%$webroot%}/guide">了解更多&gt;</a></div>
         </div>
         <div class="introduce-right">
             <a href="{%$webroot%}/security" class="introduce-right-list">
-                <div class="introduce-list-logo baozhang"></div>
+                <i class="introduce-list-logo baozhang"></i>
                 <div class="introduce-list-title">全方位投资保障</div>
                 <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
                 <p class="introduce-list-link-text">第三方资金托管</p>
             </a>
             <a href="{%$webroot%}/security/focus" class="introduce-right-list last">
-                <div class="introduce-list-logo teaching"></div>
+                <i class="introduce-list-logo teaching"></i>
                 <div class="introduce-list-title">专注教育行业</div>
                 <p class="introduce-list-link-text">深挖教育行业特性</p>
                 <p class="introduce-list-link-text">最权威教育行业评估体系</p>
             </a>
             <a href="{%$webroot%}/security/profit" class="introduce-right-list">
-                <div class="introduce-list-logo income"></div>
+                <i class="introduce-list-logo income"></i>
                 <div class="introduce-list-title">低门槛高收入</div>
                 <p class="introduce-list-link-text">互联网理财100元起投</p>
                 <p class="introduce-list-link-text">超过银行存款利率30倍</p>
@@ -98,153 +98,219 @@
         </div>
     </div>
 </div>
-<div class="main">
-    <div class="container">
-        <div class="investlist">
-            <div class="investlist-title">投资列表</div>
-            <div class="investlist-box">
-                <div class="investlist-box-title border-bottom">
-                    <div class="investlist-box-title-name name">借款标题</div>
-                    <div class="investlist-box-title-name grade">评估等级</div>
-                    <div class="investlist-box-title-name lilv">年利率</div>
-                    <div class="investlist-box-title-name price">金额</div>
-                    <div class="investlist-box-title-name time">期限</div>
-                    <div class="investlist-box-title-name jindu">进度</div>
-                    <div class="investlist-box-title-name status">状态</div>
-                </div>
-                {%if empty($data.list)%}
+<div class="notice" id="notice">
+    <div class="container"> 
+        
+            <span class="notice-title">最新公告</span>
+            
+            <div class="item-wrap">
+				<div class="item  " data-order="0">
+				<a href="/about/infos?type_id=5#notice_36" target="_blank" title="">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
+				<p class="time">2015-03-26</p>
+				</div>
+				<div class="item clearfix" data-order="1">
+				<a href="/about/infos?type_id=4#notice_33" target="_blank">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
+				<p class="time">2015-03-04</p>
+				</div>
+				<div class="item clearfix" data-order="2">
+				<a href="/about/infos?type_id=2#notice_35" target="_blank">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
+				<p class="time">2015-03-10</p>
+				</div>
+				<div class="item clearfix" data-order="3">
+				<a href="/about/infos?type_id=5#notice_36" target="_blank">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
+				<p class="time">2015-03-26</p>
+				</div></div>
+        
+       <a class="more fr" href="{%$webroot%}/infos/post">查看更多公告&gt;</a>
+    </div>
+</div>
+<div class="newinvestlist">
+   <div class="container"> 
+           <div class="newinvestlist-title">
+                                     投资列表
+            <a href="{%$webroot%}/invest" class="more fr">{%if !empty($data.list)%}查看更多标的&gt;{%/if%}</a>       
+            </div>
+	        <div class="newinvestlist-box">
+	            {%if empty($data.list)%}
                 <div class="xjd-error">
                     <div class="xjd-error-msg">“新标即将上线，敬请期待”</div>
                 </div>
-                {%else%}
-                {%foreach $data.list as $key => $item%}
-                <div class="investlist-box-title">
-
-                    <div class="investlist-box-title-name name text-align-name">
-                        <span class="name-shi">
+                {%else%} 
+                <ul>
+                {%foreach $data.list as $key => $item%} 
+                   <li>
+                       <span class="newinvestlist-box-title">
+                           <span class="name-shi">
                             {%if $item.type_id == 1%}实
                             {%else if $item.type_id == 2%}信
                             {%else%}机
-                            {%/if%}
-                        </span>
-                        <div class="school">
+                            {%/if%} 
+                           </span>
+                           <span class="school">
                             <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
-                        </div>
-                        {%if $item.fresh == 1%}
-                        <span class="school-new">新手专享</span>
-                        {%/if%}
-                    </div>
-                    <div class="investlist-box-title-name grade">
-                        <span class="grade-star level-{%$item.level_name%}"></span>
-                    </div>
-                    <div class="investlist-box-title-name lilv">
-                        <span class="lilv-number">{%$item.interest%}</span>
-                        <span class="lilv-bai">%</span>
-                    </div>
-                    <div class="investlist-box-title-name price">
-                        <span class="lilv-number color-blank">{%$item.amount%}</span>
-                        <span class="lilv-bai">元</span>
-                    </div>
-                    <div class="investlist-box-title-name time">
-                        <span class="lilv-number color-blank">{%$item.duration_day%}</span>
-                        <span class="lilv-bai">{%$item.duration_type%}</span>
-                    </div>
-                    <div class="investlist-box-title-name jindu">
-                        <div class="jindu-box">
-                            <div class="jindu-box-inline" style="width: {%$item.percent%}%;"></div>
-                        </div>
-                        <div class="jindu-number">
-                            <span class="lilv-number">{%$item.percent%}</span>
-                            <span class="lilv-bai">%</span>
-                        </div>
-                    </div>
-                    <div class="investlist-box-title-name status">
-                        {%if $item.status == 2%}
-                        <a class="status-biding" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
-                        {%else%}
-                        <span class="status-biding current">{%$item.status_name%}</span>
-                        {%/if%}
-                    </div>
-
-                </div>
-                {%/foreach%}
+	                        </span>
+	                        {%if $item.fresh == 1%}
+	                        <span class="school-new">新手专享</span>
+	                        {%/if%}
+	                    </span> 
+	                    <span class="newinvestlist-box-lilv">
+	                                                                               年利率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期限
+	                           <span class="lilv">
+	                               <span class="lilv-number">{%$item.interest%}<span class="lilv-bai">%</span></span>
+	                               <span class="lilv-number color-white" style="width: 48px;"><span class="lilv-day fr">{%$item.duration_day%}</span><span class="lilv-bai color-white fr">{%$item.duration_type%}</span></span>
+                                </span>                                                    
+	                    </span>
+	                    <span class="newinvestlist-box-price">
+	                         <span class="total-title fl">总金额</span><span class="total-price fr">{%$item.amount%}</span> 
+	                         <span class="rest-title fl">剩余</span><span class="rest-price color-red fr">{%$item.amount_rest%}</span>
+	                         <span class="rest-title fl">进度</span> 
+		                      <span class="jindu-box fl">
+	                            <span class="jindu-box-inline" style="width: {%$item.percent%}%;"></span>
+	                          </span>
+		                      
+	                          <span class="jindu-number fl">
+	                            <span class="lilv-number fl">{%$item.percent%}</span>
+	                            <span class="lilv-bai fl">%</span>
+	                          </span>     
+                              <span class="rest-title fl">风险评估</span> 
+                              <span class="grade level-{%$item.level_name%} fr tl">{%$item.level_name%}</span>
+	                    </span>
+	                     <span class="status">
+	                        {%if $item.status == 2%}
+	                        <a class="status-biding" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
+	                        {%else%}
+	                        <span class="status-biding current">{%$item.status_name%}</span>
+	                        {%/if%}
+                         </span>
+                   </li>
+                     {%/foreach%}
                 {%/if%}
-            </div>
-            <a href="{%$webroot%}/invest" class="investlist-more">{%if !empty($data.list)%}查看更多标的>{%/if%}</a>
+                </ul>
+	        </div>
+	  </div>
+ </div>
+<div class="media">
+    <div class="container">  
+        <div class="media-title">
+                                     媒体报道 
         </div>
-        
-        <div class="newgonggao fl">
-            <span class="newgonggao-title">最新公告</span>
-            <ul>
-                 <li class="new">
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-	              <li>
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-	               <li>
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-	               <li>
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-            </ul>
-            <a class="newgonggao-more" href="{%$webroot%}/infos/post">查看更多</a>
+        <div class="media-box fl">  
+           <ul class="media-box1 fl">
+               <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a> 
+                   <a href="#" class="media-box-content">
+                       “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
+                   </a>
+               
+               </li>
+               <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a> 
+                   <a href="#" class="media-box-content">
+                       “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
+                   </a>
+               
+               </li>
+               <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a> 
+                   <a href="#" class="media-box-content">
+                       “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
+                   </a>
+               
+               </li>
+           </ul>
+           <a class="more fr" href="{%$webroot%}/infos/media">更多报道</a>       
+           <ul class="media-box2 fl">
+               <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a>
+               </li>
+                <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a>
+               </li>
+                <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a>
+               </li>
+                <li>
+                   <a  href="#" class="media-box-img-link">
+                      <span class="media-box-img souhu"></span>
+                   </a>
+               </li>
+           </ul>   
+        </div>
+  </div>
+ </div>
+ <div class="cooperation">
+    <div class="container">
+       <div class="cooperation-title">
+                                    合作伙伴
+        </div>    
+        <div class="cooperation-box fl">
+             <a class="cooperation-img cooperation1" href="http://www.chinapnr.com/"></a> 
+             <a class="cooperation-img cooperation2" href="http://www.aliyun.com/"></a> 
+             <a class="cooperation-img cooperation3" href="http://www.chenandco.com"></a> 
+             <a class="cooperation-img cooperation4" href="http://www.cib.com.cn"></a> 
+             <a class="cooperation-img cooperation5" href="http://www.p2peye.com/"></a>  
          </div>
-         
-          <div class="newgonggao fr">
-            <span class="newgonggao-title">媒体报道</span>
-            <ul>
-                 <li class="new">
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-	              <li>
-                     <a href="{%$webroot%}/infos/media/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-	               <li>
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-	               <li>
-                     <a href="{%$webroot%}/infos/post/detail?id={%$data.newpost.id%}" class="newgonggao-txt">
-		                <span class="symbol">•</span>{%$data.newpost.title%}
-		             </a>
-		             <span class="newgonggao-time">{%$data.newpost.publish_time|date_format:'%Y-%m-%d'%}</span>
-	              </li>
-            </ul>
-            <a class="newgonggao-more" href="{%$webroot%}/infos/media">查看更多</a>
-         </div> 
-    
-           <div class="cooperation fl"> 
-               <span class="newgonggao-title">合作伙伴</span> 
-               <div class="cooperation-img">
-                   <img alt="" src="{%$feroot%}/home/img/cooperation1.png"/>
-	               <img alt="" src="{%$feroot%}/home/img/cooperation2.png"/>
-	               <img alt="" src="{%$feroot%}/home/img/cooperation3.png"/>
-	               <img alt="" src="{%$feroot%}/home/img/cooperation4.png"/>
-               </div> 
-           </div>
     </div>
 </div>
-
+ <div class="plat-notice">
+    <div class="container">   
+        <div class="plat-notice-box fl">
+               <div class="plat-notice-box-title">还款公告</div> 
+               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
+               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
+               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
+               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
+               <a href="" title="15个字">一二三四五六七八九十一二三四五</a> 
+        </div>
+         <div class="plat-notice-box notice-box-wh fl" style="margin-left:118px;">
+               <div class="plat-notice-box-title">平台公告</div> 
+               <a href="" title="12个字">一二三四五六七八九十一二</a><p class="time">2015-03-26</p>
+               <a href="" title="12个字">一二三四五六七八九十一二...</a><p class="time">2015-03-26</p>
+               <a href="" title="12个字">一二三四五六七八九十一二</a><p class="time">2015-03-26</p>
+               <a href="" title="12个字">一二三四五六七八九十一二</a><p class="time">2015-03-26</p>
+               <a href="" title="12个字">一二三四五六七八九十一二</a> <p class="time">2015-03-26</p>
+        </div>
+        <div class="phone-box fr" style="margin-left:0px;">
+               <span class="phone" >400-016-2526</span>
+               <span class="worktime" >周一至周五9:00-18:00</span> 
+               <span class="attention-box">
+                                                                     关注我们&nbsp;:
+                        <a class="attention-me weixin">
+                            <div class="xinlang-erweima footer-erweima">
+                                <div class="triangle-top footer-erweima-top"></div>
+                                <div class="triangle-bottom footer-erweima-bottom"></div>
+                            </div>
+                        </a>
+                        <a class="attention-me weibo" href="http://www.weibo.com/u/5478735172" target="_blank">
+                            <div class="xinlang-erweima footer-erweima footer-tip">
+                                <div class="triangle-top footer-erweima-top"></div>
+                                <div class="triangle-bottom footer-erweima-bottom"></div>
+                                                                                                点击关注兴教贷微博<br>
+                                <span class="weibo-tip-span">@xingjiaodai</span>
+                            </div>
+                        </a>
+                        <a class="attention-me qq" href="http://jq.qq.com/?_wv=1027&amp;k=TWWLkD" target="_blank">
+                            <div class="xinlang-erweima footer-erweima footer-tip">
+                                <div class="triangle-top footer-erweima-top"></div>
+                                <div class="triangle-bottom footer-erweima-bottom"></div>
+                                加入投资交流群<br>
+                                <span class="weibo-tip-span">389780348</span>
+                            </div>
+                        </a>
+                    </span>
+        </div>
+    </div>
+</div>
 {%/block%}

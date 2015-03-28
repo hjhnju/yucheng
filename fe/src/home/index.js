@@ -14,7 +14,8 @@ define(function (require) {
         var header = require('common/header');
         header.init();
         lunbox($('.banner-floation'), $('.banner-item'), $('.banner-item-list'), $('.banner-select-link'));
-
+        scroll();
+        slider();
     }
 
 
@@ -74,6 +75,54 @@ define(function (require) {
             lunbo(0);
         }, 5000);
 
+    }
+    
+    /*
+     * 滚动公告模块  
+     * 范莹莹
+     * */ 
+    function scroll () {
+    	 var noticeObj1, noticeObj2 = $("#notice");
+    	 var items = noticeObj2.find(".item-wrap");
+    	 var item = items.find(".item");
+    	 var length = item.length;
+    	 var r = 64;
+    	 var m = 0;  
+    	 function t() {
+ 	        items.on("mouseenter", function () {
+ 	            i();
+ 	        }).on("mouseleave", function () {
+ 	            e();
+ 	        });
+ 	    }
+ 	    function e() {
+ 	        i(), noticeObj1 = setTimeout(function () {
+ 	            m = (m + 1) % length, items.animate({ top: 0 == m ? -length * r : -m * r }, 800, function () {
+ 	                0 == m && items.css("top", 0), e();
+ 	            });
+ 	        }, 4e3);
+ 	    }
+ 	    function i() {
+ 	        clearTimeout(noticeObj1);
+ 	    }
+ 	    function o() {
+ 	        var n = item.eq(0).clone();
+ 	        n.attr("data-order", length), items.append(n);
+ 	    } 
+    	 
+    	 length > 1 && (o(), e(), t()); 
+    }
+    
+    /*
+     * banner 效果
+     * */
+    function slider() { 
+    	/*var  slider = require('common/extra/jquery.flexslider'); 
+    	 $('.banner-floation').slider({
+    	        directionNav: true,
+    	        pauseOnAction: false
+    	 });*/
+    	 
     }
     return {
         init: init

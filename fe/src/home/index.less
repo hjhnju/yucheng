@@ -13,7 +13,7 @@
     width: 150px;
     position: absolute;
     z-index: 11115;
-    top: 310px;
+    top: 280px;
     left: 50%;
 
     .banner-select-link {
@@ -35,7 +35,7 @@
 .introduce {
     height: 220px;
     background-color: #f8f8f8;
-    padding-top: 60px;
+    padding-top: 52px;
 }
 .introduce-left {
     float: left;
@@ -46,7 +46,7 @@
         height: 56px;
         line-height: 56px;
         font-size: 26px;
-        font-weight: bold;
+        font-weight: normal;
 
         span {
             color: @color-green;
@@ -56,7 +56,7 @@
         font-size: 14px;
         color: #333333;
         line-height: 28px;
-
+        letter-spacing:-1px;
         a {
             text-decoration: none;
             color: @color-green;
@@ -71,9 +71,9 @@
 }
 .introduce-right-list {
     float: left;
-    margin-right: 20px;
+    margin-left: 20px;
     text-align: center;
-    width: 200px;
+    width: 140px;
     overflow: hidden;
     color: #343434;
     text-decoration: none;
@@ -258,7 +258,7 @@
     overflow: hidden;
     position: relative;
     height: 300px;
-    padding-bottom: 40px;
+    padding-bottom: 0px;
     background-color: #f8f8f8;
 }
 .banner-item {
@@ -426,31 +426,329 @@
     margin-left: 540px;
 }
 
-//合作伙伴
+//媒体报道
+ 
+ 
+.media { 
+     background-color :#fcf9f2;
+     height:440px;
+     margin-top: 85px;
+     
+     .media-title {
+	    width: 1000px;
+	    margin: 0 auto;
+	    line-height: 28px;
+	    font-size: 20px;
+		margin-top: 25px;
+	 }
+	 .more {
+		
+		display: block;
+	    font-size: 16px;
+		line-height:32px;
+		text-align:center;
+		width:1000px;
+	    height: 32px;
+	    color: #616161;
+	    text-decoration: none;
+	}
+	.media-box {
+	    margin-top: 37px;
+	    
+	     .media-box1 {
+		 	border-bottom:1px dashed #000;
+		 }
+		 .media-box1 li { 
+			  float:left;
+			  margin-right:27px;
+		}
+		 .media-box2 {
+		 	border-top:1px dashed #000; 
+			padding-left: 68px;
+			padding-top:40px;
+		 }
+		 .media-box2 li { 
+			  float:left;
+			  margin-right:60px;
+		}
+	}
+ 
+	.media-box-img {
+		display:block;
+		width:170px;
+		height:61px;
+		background:url(img/media_logo.png) no-repeat 0px 0px;
+		
+		&:hover {
+			box-shadow: 3px 3px 3px #888888;  
+			transition: box-shadow 0.4s ease-in-out;
+		    -webkit-transition: -webkit-box-shadow 0.4s ease-in-out;
+		    -moz-transition: -moz-box-shadow 0.4s ease-in-out;
+		    -o-transition: -o-box-shadow 0.4s ease-in-out;
+		}
+	}
+	
+	 .media-box-img-link {
+		display:block;
+		width:173px;
+		margin:0 auto;
+	}
+	 .media-box-content {
+		display:block;
+		margin:0 auto;
+		width:306px;
+		height:138px;
+		font-size:14px;
+		line-height:26px;
+		color:#616161;
+		text-align:center;
+		text-decoration:none;
+	}
+	 .media-box-content:hover { 
+		text-decoration:none;
+	}
+   .sutu{ background-position:0 0; }
+   .zhonghua{background-position: 0px -61px;}
+   .zjrx{background-position: 0px -122px;}
+   .souhu{background-position: 0px -183px;}
+   .cn21{background-position:no-repeat 0px -244px;}
+   .fenghuang{background-position: no-repeat 0px -305px;}
+   .hexun{background-position: no-repeat 0px -366px;}
+ }
+
+
+
+
+
+
+ //媒体报道结束
+ 
+
+//首页合作伙伴
 .cooperation {
-      border-top: 1px solid #dfdfdf;
-      padding:29px 0px 0px 0px;
-      height:276px;
-      width:1000px;
-      margin-top:15px;
+      background-color :#fcf9f2;
+      height:212px; 
       
-      .cooperation-img {
-	      width:840px;
-	      margin:0 auto;
-	      margin-top: 24px;
-	      img { 
-		      border:none;
-		      margin-right:66px;
-	     }
-      
+       .cooperation-title {
+		    width: 1000px;
+		    margin: 0 auto;
+		    line-height: 28px;
+		    font-size: 20px;
+			margin-top: 25px;
+		 }
+		.more {
+		    font-size: 14px;
+		    height: 100%;
+		    color: #adadad;
+		    text-decoration: none;
+		}
+		.cooperation-box{
+		    margin:35px 0px 0px 80px;
+		}
+		.cooperation-img {
+			height:42px;
+			width:180px;
+			display: block;
+		    float:left;  
+		    background:url(img/cooperation.png) no-repeat 0px 0px;
+		    
+		    &:hover{
+			 	 transform:scale(1.2);
+				 -webkit-transform: scale(1.2);	 
+			     -moz-transform: scale(1.2);
+				 -o-transition: scale(1.2);
+			 	 -webkit-transition: all .3s ease-in-out;
+			     -moz-transition: all .3s ease-in-out;
+			     -o-transition: all .3s ease-in-out;
+			     transition: all .3s ease-in-out;
+			 }
+		}
+		.cooperation1 {
+		     background-position: 0px -132px;
+		 }
+		.cooperation2 {
+		     background-position: 0px -176px;
+		 }
+		.cooperation3 {
+		     background-position: 0px -88px;
+		 }
+		.cooperation4 {
+		    background-position: 0px 0px;
+		 }
+		.cooperation5 {
+		    background-position: 0px -44px;
+		 }
 }
+
+
+//新版最新公告开始
+.notice {
+    height:64px;
+    line-height:64px;
+    background-color:#dff1ec;
+    font-size:14px; 
+   
+    .container{
+		overflow:hidden;
+	    height:64px;
+	}
+	.more{
+		height:100%;
+		color:#adadad;
+		text-decoration:none;
+	}
+	.notice-title{
+		 color: #4fc501;
+		 font-size:20px;
+		
+	}
+	.item-wrap {
+	    width: 770px;
+	    position: absolute;
+	    top: 0px;
+	    left: 80px;
+		margin-left:29px;
+		
+		a {
+		    float: left;
+		    color: #000; 
+		    text-decoration: none; 
+		
+		}
+		.item {
+			width:770px;
+			height:64px;
+		}
+	}
+	
+	.time {
+	    height: 100%;
+	    overflow: hidden;
+	    float: left;
+		margin-left:66px;
+	}
+} 
+//新版最新公告结束
+
+//平台公告、还款公告开始
+.plat-notice {
+	background-color :#dff1ec;
+	height:300px; 
+	
+	.plat-notice-box-title {
+		
+		font-size: 20px;
+        color: #75cf64;
+	}
+	.plat-notice-box {
+	    margin-top:66px;
+		width:220px;
+		text-overflow:ellipsis;
+		margin-bottom: 15px;
+		
+		a{
+		     display:block;
+			 width:220px;
+			 font-size:14px;
+			 line-height:30px;
+			 color:#000;
+			 text-decoration:none;
+			 text-overflow:ellipsis;
+		}
+		&:hover{ 
+			 color:#000;
+			 text-decoration:none; 
+		}
+		.time { 
+		    height: 100%;
+		    overflow: hidden;
+		    float: left;
+		    margin-left: 10px; 
+		}
+	}
+	.notice-box-wh {
+	     width:350px;
+		 a {
+			 display:block;
+			 width:220px;
+			 font-size:14px;
+			 line-height:30px;
+			 float:left;
+			 color:#000;
+			 text-decoration:none;
+			 text-overflow:ellipsis;
+		}
+	}
+	.phone-box {
+		 width:282px;
+		 margin-top:66px;
+		 background:url(../common/img/linkphone.png) no-repeat 0px -25px;
+		 
+		 span {
+			 display:block;
+		 }
+		 .phone {
+			font-size:28px;
+			line-height:40px;
+			color:#525252;
+			padding-left: 10px;
+		    margin-top: 55px;
+		}
+		 .worktime {
+			font-size:14px;
+			line-height:22px;
+			color:#b2bfbb;
+			text-align: right; 
+			padding-right: 50px;  
+		}
+		 .attention-box {
+			font-size:18px;
+			line-height:45px;
+			padding-left: 10px;
+			margin-top: 40px;
+			
+			.attention-me {
+			    display: inline-block;
+			    width: 25px;
+			    height: 24px;
+			    background: url(../common/img/header_icon.png) 0 0 no-repeat;
+			    vertical-align: middle;
+			    margin: 0px 5px 0px 5px;
+			    position: relative;
+			    left: 0px;
+			    top: 0px;
+			    cursor: pointer;
+			    font-size: 12px;
+			} 
+			.weibo {
+				background-position: 0px -196px;
+				&:hover {
+			     	background-position: 0px -140px;
+			    }
+			}
+			
+			.weixin {
+				background-position: 0px -168px;
+				&:hover {
+					background-position: 0px -84px;
+				}
+			}
+			
+			.qq {
+				background-position: 0px -224px;
+				
+				&:hover {
+					background-position: 0px -252px;
+				}
+			} 
+			
+		}
+	} 
 }
 
 
 
-
-
-
+//平台公告、还款公告结束
 
 
 

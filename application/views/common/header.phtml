@@ -1,7 +1,9 @@
 <div class="header">
     <div class="container z-index">
         <div class="header-left">
-            <span class="header-left-phone phone-icon">客服：400-016-2526</span>
+            <span class="header-left-phone phone-icon">
+               <!-- <em class="phone-icon"></em> -->  客服：400-016-2526
+             </span>
             <span class="header-left-time">(周一至周五9:00-18:00)</span>
                 <span class="header-left-attention">
                     <span class="attention-span">关注我们：</span>
@@ -36,9 +38,9 @@
                 <a class="default-login" href="/user/login/signout">退出</a>
             </div>
             {%else%}
-            <div class="header-right-default">
-                <a href="{%$webroot%}/user/regist" class="default-fastlogin">快速注册</a>
-                <a class="default-login" href="{%$webroot%}/user/login">登录</a>
+            <div class="login-register register-hover">
+                <a href="{%$webroot%}/user/regist" class="register fl">注册</a>
+                <a class="login fr" href="{%$webroot%}/user/login">登录</a>
             </div>
             {%/if%}
         </div>

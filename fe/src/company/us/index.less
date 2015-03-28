@@ -36,11 +36,7 @@
 
 
 /*关于我们增加的变动 暂时放这*/
-.company-box {
-    float: right;
-    width: 368px;
-    margin-right: 72px;
-}
+
 .main-container {
        position:relative; 
        width:1000px;
@@ -125,6 +121,11 @@
              width:1000px;
              height:455px;
              background-color:#eeeeee;
+             
+             .company-box { 
+			    width: 368px;
+			    margin-right: 72px;
+			}
        }
        .company-box3 { 
              width:962px;
@@ -147,7 +148,8 @@
                 color:#000; 
                 font-size:14px;
                 text-decoration:none;
-                
+                cursor:-webkit-zoom-in;
+                cursor: -moz-zoom-in;
                 &:hover {
                    text-decoration:none;
                 }
@@ -224,7 +226,36 @@
       .company-img2 {
               background: url("img/introduction_bg2.png") no-repeat;
               width:1000px;
-              height:449px; background-color:#eeeeee;
+              height:449px; 
+              background-color:#eeeeee;
+              
+              .company-box {
+                   margin-top: 2px;  
+                   
+                   .h-title {
+                      padding-left: 240px;
+                   }
+              }
+              
+              span {
+                   display:block;
+                   font-size:14px;
+                   line-height:24px;
+              }
+              
+              .company-shiming1 {
+                  text-align: right;
+                  margin-top: 50px; 
+                  margin-left: 10px;
+              }
+               .company-shiming2 {
+                  margin-top: 73px; 
+                  margin-right: 23px;
+              }
+               .company-shiming3 {
+                  padding-right: 358px; 
+                  margin-top: 227px;
+              }
        }
         .company-img3{
               background: url("img/introduction_bg3.png") no-repeat;

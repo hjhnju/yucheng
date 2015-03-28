@@ -17,6 +17,7 @@ define(function (require) {
         etpl.compile(tpl);
         footer();
         easy();
+        loginRegister();
     }
 
     function easy() {
@@ -55,7 +56,16 @@ define(function (require) {
             }, 0);
         });
     }
-
+//登录注册滑块
+    function loginRegister() {
+    	var e = $(".login-register");
+    	   e.on("mouseenter", "a", function () {
+    	        $(this).hasClass("login") ? e.removeClass("register-hover").addClass("login-hover") : e.removeClass("login-hover").addClass("register-hover");
+    	    }).on("mouseleave", "a", function () {
+    	        e.hasClass("register-hover") || e.hasClass("login-hover") || e.addClass("login-hover");
+    	    });
+    	
+    }
 
     return {
         init:init
