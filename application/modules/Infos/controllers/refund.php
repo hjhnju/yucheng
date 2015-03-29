@@ -1,6 +1,6 @@
 <?php
 /**
- * 媒体报道
+ * 还款公告
  */
 class MediaController extends Base_Controller_Page {
 
@@ -10,9 +10,9 @@ class MediaController extends Base_Controller_Page {
     }
     
     /**
-     * 媒体报道列表页
+     * 还款公告列表页
      *
-     * /infos/media
+     * /infos/refund
      * @param   $page, MUST, [1,-), index of page
      * @assign  data=>array('page', 'pagesize', 'pageall', 'list', 'total')
      */
@@ -28,9 +28,9 @@ class MediaController extends Base_Controller_Page {
  
 
     /**
-     * 媒体报道详情页
+     * 还款公告详情页
      *
-     * /infos/media/detail?id=
+     * /infos/refund/detail?id=
      * @param   $id 公告id
      * @assign  data=>array('title','ctx','author','publish_time')
      */
