@@ -63,7 +63,6 @@ class IndexController extends Base_Controller_Page {
         	$rest = number_format($rest);
         	$arrData['list'][$key]['amount_rest'] = $rest;
         }
-        var_dump($arrData); 
         //assign
         $this->getView()->assign('data', $arrData);
     }
@@ -75,7 +74,7 @@ class IndexController extends Base_Controller_Page {
     function cutstr($string, $length) {
     	preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $string, $info);
     	for($i=0; $i<count($info[0]); $i++) {
-    		$wordscut .= $info[0][$i];
+    		$wordscut .= $info[0][$i]; 
     		$j = ord($info[0][$i]) > 127 ? $j + 2 : $j + 1;
     		if ($j > $length - 3) {
     			return $wordscut." ...";
