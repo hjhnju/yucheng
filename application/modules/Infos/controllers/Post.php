@@ -25,7 +25,7 @@ class PostController extends Base_Controller_Page {
         
         foreach ($ret['list'] as $key => $val){
             $title = $val['title'];
-            $titleCut = $this->cutstr($title, 50);
+            $titleCut = $this->cutstr($title, 80);   
             $ret['list'][$key]['title_cut'] = $titleCut;
         }
         $this->getView()->assign('data', $ret);
@@ -53,6 +53,8 @@ class PostController extends Base_Controller_Page {
      * param str $string 要截取的字符串 int $length 截取的长度
      */
     function cutstr($string, $length) {
+        $j = 0;
+        $wordscut = '';
         preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $string, $info);
         for($i=0; $i<count($info[0]); $i++) {
             $wordscut .= $info[0][$i];
