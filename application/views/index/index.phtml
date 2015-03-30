@@ -2,8 +2,6 @@
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/home/index.css" />
-
-
 {%/block%}
 
 {%block name="script"%}
@@ -12,6 +10,7 @@
         main.init();
     });
 </script>
+
 {%/block%}
 
 {%block name="content"%}
@@ -73,7 +72,7 @@
     <div class="container">
         <div class="introduce-left">
             <div class="introduce-left-title"><span>兴教贷</span>是什么?</div>
-            <div class="introduce-left-text">兴教贷是国内首家专注教育领域的互联网投融资理财服务平台，通过兴教贷平台，您可以将手中的富余资金出借给由我们认证的教育机构或个人，并获得利息回报。我们希望成为教育事业的新助力，让更多人投资教育，分享收益。
+            <div class="introduce-left-text"><nobr>兴教贷是国内首家专注教育领域的互联网投融资理财服务平台</nobr><br/>，通过兴教贷平台，您可以将手中的富余资金出借给由我们认证的教育机构或个人，并获得利息回报。我们希望成为教育事业的新助力，让更多人投资教育，分享收益。
             <a href="{%$webroot%}/guide">了解更多&gt;</a></div>
         </div>
         <div class="introduce-right">
@@ -81,7 +80,7 @@
                 <i class="introduce-list-logo baozhang"></i>
                 <div class="introduce-list-title">全方位投资保障</div>
                 <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
-                <p class="introduce-list-link-text">第三方资金托管</p>
+                <p class="introduce-list-link-text"> 第三方资金托管</p>
             </a>
             <a href="{%$webroot%}/security/focus" class="introduce-right-list last">
                 <i class="introduce-list-logo teaching"></i>
@@ -104,22 +103,14 @@
             <span class="notice-title">最新公告</span>
             
             <div class="item-wrap">
-				<div class="item  " data-order="0">
-				<a href="/about/infos?type_id=5#notice_36" target="_blank" title="">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
-				<p class="time">2015-03-26</p>
-				</div>
-				<div class="item clearfix" data-order="1">
-				<a href="/about/infos?type_id=4#notice_33" target="_blank">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
-				<p class="time">2015-03-04</p>
-				</div>
-				<div class="item clearfix" data-order="2">
-				<a href="/about/infos?type_id=2#notice_35" target="_blank">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
-				<p class="time">2015-03-10</p>
-				</div>
-				<div class="item clearfix" data-order="3">
-				<a href="/about/infos?type_id=5#notice_36" target="_blank">一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十</a>
-				<p class="time">2015-03-26</p>
-				</div></div>
+                {%foreach $data.platPost as $key => $item%} 
+                    <div class="item  clearfix" data-order="{%$smarty.foreach.name.index%}">
+					<a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}">{%$item.title_cut_long%}</a>
+					<p class="time">{%$item.create_time|date_format:"%Y-%m-%d"%}</p>
+					</div>
+                {%/foreach%} 
+            
+		</div>
         
        <a class="more fr" href="{%$webroot%}/infos/post">查看更多公告&gt;</a>
     </div>
@@ -173,7 +164,7 @@
 	                            <span class="lilv-bai fl">%</span>
 	                          </span>     
                               <span class="rest-title fl">风险评估</span> 
-                              <span class="grade level-{%$item.level_name%} fr tl">{%$item.level_name%}</span>
+                              <span class="grade level-{%$item.level_name_upperCase%} fr tl">{%$item.level_name_upperCase%}</span>
 	                    </span>
 	                     <span class="status">
 	                        {%if $item.status == 2%}
@@ -197,53 +188,53 @@
         <div class="media-box fl">  
            <ul class="media-box1 fl">
                <li>
-                   <a  href="#" class="media-box-img-link">
+                   <a  href="http://mt.sohu.com/20150211/n408935257.shtml" class="media-box-img-link">
                       <span class="media-box-img souhu"></span>
                    </a> 
-                   <a href="#" class="media-box-content">
+                   <a href="http://mt.sohu.com/20150211/n408935257.shtml" class="media-box-content">
                        “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
                    </a>
                
                </li>
                <li>
-                   <a  href="#" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://www.sootoo.com/content/550811.shtml" class="media-box-img-link">
+                      <span class="media-box-img sutu"></span>
                    </a> 
-                   <a href="#" class="media-box-content">
-                       “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
+                   <a href="http://www.sootoo.com/content/550811.shtml" class="media-box-content">
+                       “教育机构融资是教育市场腾飞，而金融对教育领域的扶持非常少，如果二者结合使金融服务教育，对推动教育产业发展将形成重要助力，最终使教育从业者和受教育者都从中获益。”
                    </a>
                
                </li>
                <li>
-                   <a  href="#" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-img-link">
+                      <span class="media-box-img hexun"></span>
                    </a> 
-                   <a href="#" class="media-box-content">
-                       “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
+                   <a href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-content">
+                       “兴教贷首先是兴教，这个是平台发展的根本，也是保障投资者利益稳定的关键。在推动我国教育事业发展的同时，获得自身的投资利益。”
                    </a>
                
                </li>
            </ul>
-           <a class="more fr" href="{%$webroot%}/infos/media">更多报道</a>       
+           <a class="more fr" href="#">更多报道</a>       
            <ul class="media-box2 fl">
                <li>
-                   <a  href="#" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://www.zhejrx.com/html/2015/02/10/9013.html" class="media-box-img-link">
+                      <span class="media-box-img zjrx"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="#" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://finance.china.com/fin/qy/201502/09/0634419.html" class="media-box-img-link">
+                      <span class="media-box-img zhonghua"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="#" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://life.21cn.com/zaojiao/xiaofei/a/2015/0211/10/29045589.shtml" class="media-box-img-link">
+                      <span class="media-box-img cn21"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="#" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://sn.ifeng.com/gongyi/newswire/detail_2015_02/11/3553569_0.shtml?_from_ralated" class="media-box-img-link">
+                      <span class="media-box-img fenghuang"></span>
                    </a>
                </li>
            </ul>   
@@ -267,21 +258,17 @@
  <div class="plat-notice">
     <div class="container">   
         <div class="plat-notice-box fl">
-               <div class="plat-notice-box-title">还款公告</div> 
-               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
-               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
-               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
-               <a href="" title="15个字">一二三四五六七八九十一二三四五</a>
-               <a href="" title="15个字">一二三四五六七八九十一二三四五</a> 
+               <div class="plat-notice-box-title">还款公告</div>  
+                {%foreach $data.refundPost as $key => $item%} 
+                   <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a>
+                 {%/foreach%}
         </div>
          <div class="plat-notice-box notice-box-wh fl" style="margin-left:118px;">
                <div class="plat-notice-box-title">平台公告</div> 
-               <a href="" title="12个字">一二三四五六七八九十一二</a><p class="time">2015-03-26</p>
-               <a href="" title="12个字">一二三四五六七八九十一二...</a><p class="time">2015-03-26</p>
-               <a href="" title="12个字">一二三四五六七八九十一二</a><p class="time">2015-03-26</p>
-               <a href="" title="12个字">一二三四五六七八九十一二</a><p class="time">2015-03-26</p>
-               <a href="" title="12个字">一二三四五六七八九十一二</a> <p class="time">2015-03-26</p>
-        </div>
+                {%foreach $data.platPost as $key => $item%} 
+                   <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a><p class="time">{%$item.create_time|date_format:'%Y-%m-%d'%}</p>
+                 {%/foreach%}
+               </div>
         <div class="phone-box fr" style="margin-left:0px;">
                <span class="phone" >400-016-2526</span>
                <span class="worktime" >周一至周五9:00-18:00</span> 

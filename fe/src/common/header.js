@@ -18,6 +18,7 @@ define(function (require) {
         footer();
         easy();
         loginRegister();
+        //scrollUp();
     }
 
     function easy() {
@@ -67,6 +68,14 @@ define(function (require) {
     	
     }
 
+    /*
+     * 返回顶部 
+     * 范莹莹
+     * */
+    function scrollUp () {
+   
+    }
+    
     return {
         init:init
     };

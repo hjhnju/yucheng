@@ -1,18 +1,39 @@
 @import "../common/css/common.less";
 
+.company {
+    padding-top: 0px;
+    .clearfix;
+    min-height: 800px;
+    background-color:#f8f8f8;
+}
+ .company-menu .company-menu-item { 
+        &:hover,
+        &.current {
+            border-color: #f8f8f8;
+            background-color: #f8f8f8;
+            color: #4fc501;
+        }
+    }
 #infos-list {
     min-height: 200px;
+    margin-left: 48px;
+    margin-right: 20px;
 }
 
 .infos-list {
     margin: 0;
     padding: 0;
+    
 }
 
 .infos-item {
     .clearfix;
     border-bottom: 1px dashed @color-gray-border;
-    padding: 20px 10px;
+    padding: 15px 0px;
+    
+    &:hover {
+       background-color:#fefefe;
+    }
 }
 .infos-dot {
     float: left;
