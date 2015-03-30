@@ -48,14 +48,13 @@ body{margin:0;font-size:12px;font-family:"Microsoft YaHei"}
 ul{margin:0;padding:0}
 ul li{list-style:none}
 p{margin:0;padding:0}
-#main-wraper{min-height:800px}
 .container{width:1000px;margin:0 auto;position:relative;left:0;top:0;z-index:1;*zoom:1}
 .container.z-index{z-index:15}
 .container:before,.container:after{display:table;content:""}
 .container:after{clear:both}
 .header{height:60px;border-bottom:1px solid #e3e3e3}
 .header-left{float:left;margin-top:17px}
-.header-left-phone{display:inline-block;font-size:14px;line-height:24px;color:#666;margin-right:10px;padding-left:27px;background:url(../../common/img/linkphone.png) 0 3px no-repeat}
+.header-left-phone{display:inline-block;font-size:14px;line-height:24px;color:#666;margin-right:10px;padding-left:33px;background:url(../../common/img/linkphone.png) 0 3px no-repeat}
 .header-left-time{display:inline-block;line-height:24px;color:#666;margin-right:20px}
 .header-left-attention{display:inline-block;line-height:24px;font-size:14px;color:#666}
 .header-left-attention .attention-me{display:inline-block;width:28px;height:18px;font-size:12px;background:url(../../common/img/header_icon.png) 0 0 no-repeat;margin-right:10px;vertical-align:middle;position:relative}
@@ -89,7 +88,7 @@ p{margin:0;padding:0}
 .login-hover .register{color:#4fc501}
 .login-hover .login{color:#fff}
 .default-fastlogin{color:#666;text-decoration:none;line-height:30px;margin-left:10px}
-.default-login{display:inline-block;color:#000;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.default-login{display:inline-block;color:#fff;padding:4px 8px;background-color:#f2736a;text-decoration:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .default-login:hover{background-color:#e33f33}
 .nav{height:86px;border-bottom:2px solid #76cf65;padding-top:22px}
 .logo{float:left;width:280px;height:60px;display:block;margin:-2px 42px 0 0}
@@ -127,7 +126,7 @@ p{margin:0;padding:0}
 .footer-tip .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:70px;top:-6px}
 .footer-tip .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:50px;border-bottom:none;left:62px}
 .footer-bottom{float:left;width:1000px;margin-top:24px;font-size:14px;height:56px;line-height:20px;color:#b1b1b3;border-top:0 dashed #000}
-.footer-bottom .footer-site-left{margin-top:18px}
+.footer-bottom .footer-site-left{margin:18px 0 0 8px}
 .footer-site-num{font-size:18px;margin-top:20px}
 .footer-site-num span{font-size:24px}
 .footer-site-num em{font-size:14px;font-style:normal}
@@ -200,7 +199,7 @@ p{margin:0;padding:0}
 .tl{text-align:left}
 .tr{text-align:right}
 .tc{text-align:center}
-.newinvestlist{margin-top:60px}
+.newinvestlist{margin-top:55px}
 .newinvestlist .container{width:1200px}
 .newinvestlist .newinvestlist-title{width:1000px;margin:0 auto;line-height:28px;font-size:20px}
 .newinvestlist .more{font-size:14px;height:100%;color:#adadad;text-decoration:none}
