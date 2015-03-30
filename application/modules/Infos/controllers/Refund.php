@@ -24,9 +24,7 @@ class RefundController extends Base_Controller_Page {
         Base_Log::notice($ret);
         $this->getView()->assign('data', $ret);
     }
-     
- 
-
+    
     /**
      * 还款公告详情页
      *
