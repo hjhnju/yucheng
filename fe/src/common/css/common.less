@@ -22,7 +22,9 @@ p {
     margin: 0;
     padding: 0;
 }
-
+#main-wraper {
+   min-height: 800px;
+}
 .container {
     width: 1000px;
     margin: 0 auto;
@@ -241,49 +243,7 @@ p {
 
 
 }
-.login-register {
-    border:1px solid @color-green;
-	border-radius:25px;
-	-moz-border-radius:25px; // Old Firefox 
-    width: 122px;
-    height: 29px;
-	background:url(../img/btn_bg1.png) no-repeat left center;
-	transition:background-position .4s cubic-bezier(0.31, -.105, .43, 1.4);
-   -webkit-transition:background-position .4s cubic-bezier(0.31, -.105, .43, 1.4);
-   -moz-transition:background-position .4s cubic-bezier(0.31, -.105, .43, 1.4);
-   -o-transition:background-position .4s cubic-bezier(0.31, -.105, .43, 1.4);
  
-	 a{
-		 color: @color-font-green;
-		 transition:color .4s linear; 
-		 text-decoration: none;
-         line-height: 30px; 
-         display:block;
-		  text-align:center;
-		  width:50px;
-	}
-	 
-	 
-}
-.register-hover {
-        background-position:left center;
-        
-        .register {
-            color: #fff;
-        }
-	   .login {
-		    color: @color-font-green; 
-		}
-}
-.login-hover {
-       background-position: right center;
-        .register {
-            color: @color-font-green;
-        }
-	   .login {
-		    color: #fff; 
-		}
-}
 
 
 //登录注册滑块按钮开始
@@ -311,7 +271,8 @@ p {
 	  text-decoration: none;
 	  line-height: 30px;
 	}
-	
+	  
+} 
 	.register-hover {
 	    background-position: left center;
 	    
@@ -333,9 +294,6 @@ p {
 		      color: #fff;
 		 }
     }
-
-	
-} 
 //登录注册滑块按钮结束
 
 .default-fastlogin {
@@ -384,7 +342,7 @@ p {
 }
 .nav-item {
     float: left;
-    margin-top: 26px;
+    margin-top: 22px;
 
     .clearfix;
 }
@@ -412,7 +370,7 @@ p {
 .nav-myaccount {
     float: right;
     width: 110px;
-    margin: 25px 10px 0 0;
+    margin: 22px 10px 0 0;
     height: 24px;
     line-height: 24px;
     color: #676767;
@@ -430,8 +388,8 @@ p {
 
 //footer开始
 .footer {
-    padding: 26px 0;
-    background-color: #55565f;
+    padding: 25px 0;
+    background-color: #292929;
 }
 .footer-left {
     float: left;
@@ -781,14 +739,10 @@ p {
     background-color: @color-green;
 
     .border-radius(3px);
-
+    
     &:hover {
         background-color: #72e45d;
         color: #FFFFFF;
-        transition: background-color 0.4s ease-in-out;
-	    -webkit-transition: background-color 0.4s ease-in-out;
-	    -moz-transition: background-color 0.4s ease-in-out;
-	    -o-transition: background-color 0.4s ease-in-out;
     }
 
     &.current {
@@ -1024,9 +978,7 @@ p {
       .color-red {
 			color:#f2746a;
 		}
-       .color-white{
-			color:#fff;
-	   }
+       
 	   .newinvestlist-box {
 			width:1000px;
 			margin:0 auto;
@@ -1076,9 +1028,9 @@ p {
 		}
 		
 	   .newinvestlist-box-lilv {
-			  margin-top:10px;
-			  height:110px;
-			  text-align:center;
+			  margin-top:24px;
+			  height:96px;
+			  text-align:center; 
 			  span {
 					  display:block;  float:none;
 				} 
@@ -1088,7 +1040,7 @@ p {
 				 margin: 0px auto;
 				 text-align: left; 
 				 margin-top: 7px;
-				 background:url(../common/img/btn_bg.png) no-repeat 0px -73px; 
+				 background:url(../img/btn_bg.png) no-repeat 0px -73px; 
 			     
 			     .lilv-number  {
 						 font-size:18px;
@@ -1110,7 +1062,9 @@ p {
 					.lilv-day { 
 						  display: inline-block; 
 					}
-			
+			       .color-white{
+						color:#fff;
+				   }
 			 }
 		}
 		.newinvestlist-box-price { 
@@ -1125,6 +1079,12 @@ p {
 					 width:70px;
 					 text-align:right;
 			 }
+			 .total-price { 
+				 font-size:24px; 
+				 line-height:30px; 
+				 width:140px;
+				 text-align:left;
+			}
 			 .rest-title { 
 				     width:70px;
 					 text-align:right; 
@@ -1173,8 +1133,16 @@ p {
 			    -webkit-border-radius: 5px;
 			    -moz-border-radius: 5px;
 			    border-radius: 5px;
+		        transition: background-color 0.4s ease-in-out;
+			    -webkit-transition: background-color 0.4s ease-in-out;
+			    -moz-transition: background-color 0.4s ease-in-out;
+			    -o-transition: background-color 0.4s ease-in-out;
 			    &:hover { 
-				    background-color: #2C9818; 
+				    background-color: #72e45d;  
+			        transition: background-color 0.4s ease-in-out;
+				    -webkit-transition: background-color 0.4s ease-in-out;
+				    -moz-transition: background-color 0.4s ease-in-out;
+				    -o-transition: background-color 0.4s ease-in-out;
 				}  
 				&.current { 
 				    color: #666;

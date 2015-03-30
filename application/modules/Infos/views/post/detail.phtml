@@ -35,12 +35,14 @@
 <div class="container company"> 
     <div class="company-box">
         <div class="company-part-title"> 
-            <a class="company-part-back" href="{%$webroot%}/infos/post">&lt; 返回</a>
+            <!--  <a class="company-part-back-icon fl" href="{%$webroot%}/infos/post"></a> -->
+             <a class="company-part-back fl" href="{%$webroot%}/infos/post">&lt; 返回</a>
+             <span class="infos-detail-time fr">{%$data.publish_time|date_format:'%Y-%m-%d'%}</span>
         </div>
         <div class="infos-detail">
             <h2 class="infos-detail-title">{%$data.title%}</h2>
             <div class="infos-detail-subtitle">
-                <span class="infos-detail-time">{%$data.publish_time|date_format:'%Y-%m-%d'%}</span>
+               
 <!--                <span class="infos-share">-->
 <!--                    <span class="infos-share-box">分享到：</span>-->
 <!--                    <div class="bdsharebuttonbox">-->
