@@ -240,7 +240,7 @@ p{margin:0;padding:0}
 .insurance-type:before,.insurance-type:after{display:table;content:""}
 .insurance-type:after{clear:both}
 .insurance-type-box{float:left;width:138px;text-align:center;text-decoration:none;line-height:49px;color:#070707;font-size:14px;margin-right:0;position:relative}
-.insurance-type-box:hover,.insurance-type-box.current{background-color:#f1f1f1}
+.insurance-type-box:hover,.insurance-type-box.current{background-color:#f1f1f1;color:#4fc501}
 .insurance-type-box.current .insurance-banner-triangle{display:block}
 .insurance-banner-triangle{position:absolute;left:90px;top:50px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:10px solid #e9e0ce;display:none}
 .insurance-banner-triangle.low-color{border-bottom:10px solid #e9e0ce}

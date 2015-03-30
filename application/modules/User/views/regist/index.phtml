@@ -9,6 +9,9 @@
     require(['setting/regist/index'], function (regist) {
         regist.init('{%$type%}');
     });
+    require(['common/header'], function(main) {
+        main.init();
+    }); 
 </script>
 {%/block%}
 

@@ -240,7 +240,7 @@ p{margin:0;padding:0}
 .insurance-type:before,.insurance-type:after{display:table;content:""}
 .insurance-type:after{clear:both}
 .insurance-type-box{float:left;width:138px;text-align:center;text-decoration:none;line-height:49px;color:#070707;font-size:14px;margin-right:0;position:relative}
-.insurance-type-box:hover,.insurance-type-box.current{background-color:#f1f1f1}
+.insurance-type-box:hover,.insurance-type-box.current{background-color:#f1f1f1;color:#4fc501}
 .insurance-type-box.current .insurance-banner-triangle{display:block}
 .insurance-banner-triangle{position:absolute;left:90px;top:50px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:10px solid #e9e0ce;display:none}
 .insurance-banner-triangle.low-color{border-bottom:10px solid #e9e0ce}
@@ -250,7 +250,7 @@ p{margin:0;padding:0}
 .insurance-banner.low-banner{height:321px;background:url(../common/css/img/low.jpg) center center no-repeat;margin-bottom:80px}
 .insurance-banner.allposition{background:url(../common/css/img/allposition-banner.jpg) center center no-repeat}
 .insurance-banner.teach{background:url(../common/css/img/teach-banner.jpg) center center no-repeat}
-.teach-top{*zoom:1;padding:70px 0 140px}
+.teach-top{*zoom:1;padding:70px 0}
 .teach-top:before,.teach-top:after{display:table;content:""}
 .teach-top:after{clear:both}
 .teach-top-left{float:left;width:400px;height:280px;background:url(img/text_first.jpg) center center no-repeat}
