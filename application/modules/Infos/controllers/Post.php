@@ -22,6 +22,12 @@ class PostController extends Base_Controller_Page {
         $logic    = new Infos_Logic_Post();
         $ret      = $logic->getList($page, $pagesize,'platPost');
         Base_Log::notice($ret);
+        
+        foreach ($ret['list'] as $key => $val){
+            $title = $val['title'];
+            $titleCut = $this->cutstr($title, 50);
+            $ret['list'][$key]['title_cut'] = $titleCut;
+        }
         $this->getView()->assign('data', $ret);
     }
     
@@ -40,6 +46,22 @@ class PostController extends Base_Controller_Page {
         Base_Log::notice(array(
             'title' => isset($ret['title'])? $ret['title'] : ''));
         $this->getView()->assign('data', $ret);
+    }
+    
+    /*
+     * TODO：文字截取并加点
+     * param str $string 要截取的字符串 int $length 截取的长度
+     */
+    function cutstr($string, $length) {
+        preg_match_all("/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/", $string, $info);
+        for($i=0; $i<count($info[0]); $i++) {
+            $wordscut .= $info[0][$i];
+            $j = ord($info[0][$i]) > 127 ? $j + 2 : $j + 1;
+            if ($j > $length - 3) {
+                return $wordscut." ...";
+            }
+        }
+        return join('', $info[0]);
     }
 
 }
