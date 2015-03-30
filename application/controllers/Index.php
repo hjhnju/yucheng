@@ -24,19 +24,19 @@ class IndexController extends Base_Controller_Page {
         //最新还款公告
         $refundPost = Infos_Api::getNewPost(1,4,'refundPost');
         //获取新闻
-        $media   = Infos_Api::getNewPost(1,4,'media');
+        //$media   = Infos_Api::getNewPost(1,4,'media');
         //构建数据
         $arrData               = array();
         $arrData['list']       = $list;
         $arrData['platPost']   = $platPost;
         $arrData['refundPost'] = $refundPost;
-        $arrData['media']      = $media;
+        //$arrData['media']      = $media;
         //加入截取后标题放入arryData
-        foreach ($arrData['media'] as $key => $val){
-        	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 30);
-        	$arrData['media'][$key]['title_cut'] = $titleCut;
-        }
+		//foreach ($arrData['media'] as $key => $val){
+		//$title = $val['title'];
+		//$titleCut = $this->cutstr($title, 30);
+		//$arrData['media'][$key]['title_cut'] = $titleCut;
+		//}
         foreach ($arrData['platPost'] as $key => $val){
         	$title = $val['title'];
         	$titleCut = $this->cutstr($title, 30);

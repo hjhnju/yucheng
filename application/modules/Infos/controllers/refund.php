@@ -2,7 +2,7 @@
 /**
  * 还款公告
  */
-class MediaController extends Base_Controller_Page {
+class RefundController extends Base_Controller_Page {
 
     public function init(){
         $this->setNeedLogin(false);
@@ -17,6 +17,7 @@ class MediaController extends Base_Controller_Page {
      * @assign  data=>array('page', 'pagesize', 'pageall', 'list', 'total')
      */
     public function indexAction() {
+    	echo 123;
         $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
         $pagesize = 10;
         $logic    = new Infos_Logic_Post();

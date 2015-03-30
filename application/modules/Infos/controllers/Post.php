@@ -20,7 +20,7 @@ class PostController extends Base_Controller_Page {
         $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 0;
         $pagesize = 10;
         $logic    = new Infos_Logic_Post();
-        $ret      = $logic->getList($page, $pagesize,'post');
+        $ret      = $logic->getList($page, $pagesize,'platPost');
         Base_Log::notice($ret);
         $this->getView()->assign('data', $ret);
     }
