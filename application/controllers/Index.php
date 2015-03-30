@@ -40,6 +40,8 @@ class IndexController extends Base_Controller_Page {
         foreach ($arrData['platPost'] as $key => $val){
         	$title = $val['title'];
         	$titleCut = $this->cutstr($title, 30);
+        	$titleCutLong = $this->cutstr($title, 60);
+        	$arrData['platPost'][$key]['title_cut_long'] = $titleCutLong;
         	$arrData['platPost'][$key]['title_cut'] = $titleCut;
         }
         foreach ($arrData['refundPost'] as $key => $val){
@@ -61,6 +63,7 @@ class IndexController extends Base_Controller_Page {
         	$rest = number_format($rest);
         	$arrData['list'][$key]['amount_rest'] = $rest;
         }
+        var_dump($arrData); 
         //assign
         $this->getView()->assign('data', $arrData);
     }
