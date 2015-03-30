@@ -142,11 +142,11 @@ class Infos_Logic_Post {
      */
     private function getInfoType($strType){
 		switch ($strType){
-			case  platPost:
+			case  'platPost':
 			  return self::TYPE_PLATPOST;
-			case  refundPost:
+			case  'refundPost':
 		      return self::TYPE_REFUNDPOST;
-		    case  media:
+		    case  'media':
 		      return self::TYPE_MEDIA;
 		}	
     }
