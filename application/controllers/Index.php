@@ -45,7 +45,9 @@ class IndexController extends Base_Controller_Page {
         foreach ($arrData['refundPost'] as $key => $val){
         	$title = $val['title'];
         	$titleCut = $this->cutstr($title, 30);
+        	$titleCutLong = $this->cutstr($title, 60);
         	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
+        	$arrData['refundPost'][$key]['title_cut_long'] = $titleCutLong;
         }
         //添加level_name_upperCase   level_name即将值转化为大写然后添加到数组
         foreach ($arrData['list'] as $key => $val){
