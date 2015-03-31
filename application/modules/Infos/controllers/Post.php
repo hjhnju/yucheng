@@ -21,13 +21,12 @@ class PostController extends Base_Controller_Page {
         $pagesize = 10;
         $logic    = new Infos_Logic_Post();
         $ret      = $logic->getList($page, $pagesize,'platPost');
-        Base_Log::notice($ret);
-        
         foreach ($ret['list'] as $key => $val){
             $title = $val['title'];
             $titleCut = $this->cutstr($title, 80);   
             $ret['list'][$key]['title_cut'] = $titleCut;
         }
+        Base_Log::notice($ret);
         $this->getView()->assign('data', $ret);
     }
     
