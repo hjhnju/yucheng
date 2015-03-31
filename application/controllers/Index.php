@@ -20,9 +20,9 @@ class IndexController extends Base_Controller_Page {
         $list = Invest_Api::getInvestList(1, 5);
         $list = $list['list'];
         //最新平台公告
-        $platPost = Infos_Api::getNewPost(1,4,'platPost');
+        $platPost = Infos_Api::getNewPost(1,5,'platPost');
         //最新还款公告
-        $refundPost = Infos_Api::getNewPost(1,4,'refundPost');
+        $refundPost = Infos_Api::getNewPost(1,5,'refundPost');
         //获取新闻
         //$media   = Infos_Api::getNewPost(1,4,'media');
         //构建数据
@@ -46,7 +46,7 @@ class IndexController extends Base_Controller_Page {
         }
         foreach ($arrData['refundPost'] as $key => $val){
         	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 29);
+        	$titleCut = $this->cutstr($title, 38);
         	$titleCutLong = $this->cutstr($title, 60);
         	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
         	$arrData['refundPost'][$key]['title_cut_long'] = $titleCutLong;
