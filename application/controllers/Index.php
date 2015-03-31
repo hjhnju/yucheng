@@ -39,14 +39,14 @@ class IndexController extends Base_Controller_Page {
 		//}
         foreach ($arrData['platPost'] as $key => $val){
         	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 30);
+        	$titleCut = $this->cutstr($title, 29);
         	$titleCutLong = $this->cutstr($title, 60);
         	$arrData['platPost'][$key]['title_cut_long'] = $titleCutLong;
         	$arrData['platPost'][$key]['title_cut'] = $titleCut;
         }
         foreach ($arrData['refundPost'] as $key => $val){
         	$title = $val['title'];
-        	$titleCut = $this->cutstr($title, 30);
+        	$titleCut = $this->cutstr($title, 29);
         	$titleCutLong = $this->cutstr($title, 60);
         	$arrData['refundPost'][$key]['title_cut'] = $titleCut;
         	$arrData['refundPost'][$key]['title_cut_long'] = $titleCutLong;
