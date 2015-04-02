@@ -60,7 +60,6 @@ class User_Logic_Query{
         $list->setOrder('create_time desc');
         $list->setPage($page);
         $list->setPagesize($pagesize);
-        $list->countAll();
         $list = $list->toArray();
         //TODO:增加用户信息
         return $list;

@@ -42,9 +42,9 @@ class CashAction extends Yaf_Action_Abstract {
             $arrUser[$key]['status']    = Finance_Order_Status::getTypeName($value['status']);
         }
         //翻页所需数据 
-        $total = ceil($listData['total']/$pagesize);
+        $pageall = $listData['pageall'];
         $this->getView()->assign('arrUser', $arrUser);
         $this->getView()->assign('page', $page);
-        $this->getView()->assign('total', $total);
+        $this->getView()->assign('pageall', $pageall);
     }
 }

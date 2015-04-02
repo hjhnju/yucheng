@@ -24,11 +24,9 @@ class WithdrawAction extends Yaf_Action_Abstract {
         $list->setPage($page);
         $list->setPagesize($pagesize);
         $list->setOrder("`create_time` desc");
-        //因为返回原始的total值为表中所有的记录分页后的值 所以在有条件后需重新计算
-        $total = $list->countAll();
-        $total = ceil($total/$pagesize);
         $listData = $list->toArray();
         $page = $listData['page']; 
+        $pageAll = $listData['pageall'];
         $data     = $listData['list'];
         $arrUser  = array();
         foreach ($data as $key => $value) {
@@ -45,6 +43,6 @@ class WithdrawAction extends Yaf_Action_Abstract {
         }
         $this->getView()->assign('arrUser', $arrUser);
         $this->getView()->assign('page', $page);
-        $this->getView()->assign('total', $total);
+        $this->getView()->assign('pageall', $pageAll);
     }
 }

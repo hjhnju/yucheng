@@ -30,8 +30,9 @@ class RefundAction extends Yaf_Action_Abstract {
         $total = ceil($total/$pagesize);
         $list = $list->toArray();
         $arrRefund  = $list['list'];
+        $pageAll    = $list['pageall'];
         $this->getView()->assign('arrRefund', $arrRefund);
-        $this->getView()->assign('total', $total);
+        $this->getView()->assign('pageall', $pageAll);
         $this->getView()->assign('page', $page);
     }
 }
