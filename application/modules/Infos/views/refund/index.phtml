@@ -33,11 +33,14 @@
                     <span class="infos-dot">•</span>
                     <div class="infos-box">
                         <div class="infos-title">
-                            <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}">{%$item.title_cut%}</a>
+                            <a href="{%$webroot%}/infos/refund/detail?id={%$item.id%}">{%$item.title_cut%}</a>
                         </div>
                         <div class="infos-ctx">
                             {%$item.content%}
                         </div>
+                    </div>
+                    <div class="infos-time fr">
+                             {%$item.create_time|date_format:'%Y-%m-%d'%} 
                     </div>
                 </li>
                 {%/foreach%}

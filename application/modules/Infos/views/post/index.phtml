@@ -39,6 +39,9 @@
                             {%$item.content%}
                         </div>
                     </div>
+                    <div class="infos-time fr">
+                             {%$item.create_time|date_format:'%Y-%m-%d'%} 
+                    </div>
                 </li>
                 {%/foreach%}
             </ul>

@@ -271,10 +271,19 @@ p{margin:0;padding:0}
 .infos-item:after{clear:both}
 .infos-item:hover{background-color:#fefefe}
 .infos-dot{float:left;margin-right:10px;font-size:14px;width:14px;color:#999;line-height:32px}
-.infos-box{float:left;width:690px;line-height:20px}
+.infos-box{float:left;width:690px;line-height:40px}
 .infos-title{font-size:16px;line-height:32px}
 .infos-title a{color:#000;text-decoration:none}
 .infos-title a:hover{text-decoration:underline}
 .infos-ctx{color:#707070;height:40px;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap}
+.infos-time {
+    line-height: 32px;
+    font-size: 14px;
+    color: #666666;
+    margin-right: 10px;
+}
 .company-nav{height:49px;background-color:none}
 .company-box{float:left;width:1000px}
+#main-wraper {
+    background-color:#f8f8f8;
+}
