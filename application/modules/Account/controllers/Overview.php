@@ -61,6 +61,7 @@ class OverviewController extends Base_Controller_Page {
         $huifuid      = $this->objUser->huifuid;
         $openthirdpay = isset($huifuid) ? 1 : 2;
         $rechargeurl  = $this->webroot.'/account/cash/recharge';
+        $withdrawurl = "$this->webroot".'/account/cash/withdraw';
         $money        = Invest_Api::getUserEarnings($this->userid);
 
         // 累计收益
@@ -74,7 +75,7 @@ class OverviewController extends Base_Controller_Page {
         // 资产总计
         $totalAsset = Base_Util_Number::tausendStyle(floatval($userBg['AvlBal'] + $userBg['FrzBal'] 
             + $money['wait_interest'] + $money['wait_capital']));
-         
+        
         $this->getView()->assign("avlBal",$avlBal);
         $this->getView()->assign("acctBal",$acctBal);
         $this->getView()->assign("totalAsset", $totalAsset);
@@ -86,6 +87,7 @@ class OverviewController extends Base_Controller_Page {
         $this->getView()->assign("openthirdpay",$openthirdpay);         
         $this->getView()->assign('userinfo',$userInfo);  
         $this->getView()->assign('rechargeurl',$rechargeurl);
+        $this->getView()->assign('withdrawurl',$withdrawurl);
     }
     
     /**
