@@ -2,80 +2,146 @@
 
 
 
+ 
+
+
+
 .kaitong {
-    padding: 50px;
-    background-color: #f8f8f8;
-}
-.kaitong-box {
-    width: 700px;
-    margin: 0 auto;
+    padding: 38px 0px 88px 0px;
+    background-color: #f0f0f0; 
+    .container {
+        background-color:#fff;
+        width: 1000px;
+        height: 650px;
+        position: relative;
+        .regist-box-step {
+             width: 200px;   
+             background: url(../common/img/regist_icon.png) right center no-repeat;
+             .regist-box-line {
+             display: block;
+             width: 8px;
+             height: 650px;
+             margin-left: 142px;
+             float: left;
+             background-color: #dbdbdb;
+             border-radius:5px;    
+         }  
+          .regist-box-step-box { 
+            width: 200px;
+            height: 438px;
+            padding: 106px 0px;
+            z-index: 99999;
+            top: 0px;
+            left: 0px;
+            font-size: 14px;
+            color: #4d4d4d; 
+            span {
+                display: block;
+                height: 38px;
+                line-height: 38px;  
+                padding-right:54px;
+                text-align: right;
+            } 
+            .step1 {}
+            .step2 {
+                margin:134px 0px 148px 0px;
+            }
+            .step3 {}
+         }
+       }   
+       .regist-box-step1 {
+             background-position: 135px 0;
+            .current {
+                background-position: 0 0;
+            }
+        }
+        .regist-box-step2 {
+           background-position: 160px -650px; 
+            .current {
+                background-position: 0 0;
+            }
+        }
+        .regist-box-step3 {
+           background-position: 135px -1300px;
+            .current {
+                background-position: 0 0;
+            }
+        }
 
-}
-.kaitong-box-top {
-    padding: 50px 220px;
-    width: 280px;
-    margin: 0 auto;
-    text-align: center;
-    background-color: #FFFFFF;
-}
-.kaitong-box-pic {
-    width: 114px;
-    height: 114px;
-    margin: 0 auto 20px;
-    background: url(./img/logo_icon.png) center center no-repeat;
-}
-.kaitong-title {
-    line-height: 30px;
-    font-size: 22px;
-    margin-bottom: 30px;
-}
-.kaitong-mast {
-    display: block;
-    height: 50px;
-    line-height: 50px;
-    background-color: @color-green;
-    font-size: 22px;
-    color: #FFFFFF;
-    text-align: center;
-    text-decoration: none;
-    margin-bottom: 20px;
+        .kaitong-box {
+            width: 640px;
+            margin: 0 auto;
+            padding-left: 0px;
+            .kaitong-box-top {
+                padding: 50px 200px 30px;
+                width: 280px;
+                margin: 0 auto;
+                text-align: center;
+                background-color: #FFFFFF;
+            }
+            .kaitong-box-pic {
+                width: 280px;
+                height: 60px;
+                margin: 15px auto 48px;
+                background: url(../common/img/regist_icon.png) -2030px 0px  no-repeat;
+            }
+            .kaitong-title {
+                line-height: 30px;
+                font-size: 22px;
+                margin-bottom: 45px;
+            }
+            .kaitong-mast {
+                display: block;
+                height: 50px;
+                line-height: 50px;
+                background-color: @color-green;
+                font-size: 22px;
+                color: #FFFFFF;
+                text-align: center;
+                text-decoration: none;
+                margin-bottom: 0px;
 
-    .border-radius(3px);
+                .border-radius(3px);
 
-    &:hover {
-        background-color: #2c9818;
+                &:hover {
+                    background-color: #72e45d;
+                }
+            }
+            .kaitong-none {
+                color: #969696;
+                font-size: 14px;
+                display: block;
+                height: 40px;
+                line-height: 40px;
+                text-decoration: none;
+            }
+
+            .kaitong-box-bottom {
+                .clearfix;
+
+                margin-top: 0px;
+                background-color: #fff;
+            }
+            .kaitong-box-bottom-textl {
+                float: left;
+                width: 300px;
+
+                &.textr {
+                    float: right;
+                }
+            }
+            .bottom-textl-title {
+                height: 50px;
+                line-height: 50px;
+                font-size: 18px;
+            }
+            .bottom-textl-tx {
+                line-height: 26px;
+                font-size: 12px;
+                color: #777777;
+            }
+
+        }
+
     }
-}
-.kaitong-none {
-    color: #969696;
-    font-size: 14px;
-    display: block;
-    height: 40px;
-    line-height: 40px;
-    text-decoration: none;
-}
-
-.kaitong-box-bottom {
-    .clearfix;
-
-    margin-top: 30px;
-    background-color: #f8f8f8;
-}
-.kaitong-box-bottom-textl {
-    float: left;
-    width: 300px;
-
-    &.textr {
-        float: right;
-    }
-}
-.bottom-textl-title {
-    height: 50px;
-    line-height: 50px;
-    font-size: 20px;
-}
-.bottom-textl-tx {
-    line-height: 24px;
-    font-size: 14px;
-    color: #777777;
 }

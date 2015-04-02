@@ -290,7 +290,7 @@ p{margin:0;padding:0}
 .container2 .company-box3 #links a img{margin-top:10px;border:none}
 .container2 .company-box4{background:url(img/introduction_bg4.png) no-repeat;width:1000px;height:359px;padding:110px 0 0;line-height:30px;font-size:26px;color:#61c920;font-weight:400;text-align:center}
 .container2 .company-box4 .company-licheng{width:878px;height:116px;margin:0 auto;margin-top:72px}
-.container2 .company-box4 .company-licheng li{display:block;width:170px;height:176px;margin-left:5px;float:left;cursor:pointer}
+.container2 .company-box4 .company-licheng li{display:block;width:170px;height:176px;margin-left:5px;float:left;}
 .container2 .company-box4 .company-licheng li span{width:170px;display:block;text-align:center;line-height:20px;font-size:14px;color:#666;float:left;margin:24px 0}
 .container2 .company-box4 .company-licheng li .licheng-icon{width:18px;height:18px;display:block;margin-left:77px;float:left;background:url(img/icon1.png) no-repeat}
 .container2 .company-box4 .company-licheng li:hover .licheng-icon{background:url(img/icon1_hover.png) no-repeat}

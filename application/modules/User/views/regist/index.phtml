@@ -18,11 +18,14 @@
 {%block name="content"%}
 <div class="regist">
     <div class="container">
-      <!--   <div  class="">
-           
-        </div> -->
-    
-        <div class="login-left">
+        <div  class="regist-box-step fl regist-box-step1"> 
+             <div class="regist-box-step-box ">
+                  <span class="step1">填写册信息</span>
+                  <span class="step2"> 开通托管账户</span>
+                  <span class="step3">注册完成</span> 
+             </div>
+       </div> 
+        <div  class="regist-box fr">
             {%if isset($type)%}
             <div class="bound">
                 <p class="bound-text">
@@ -31,91 +34,76 @@
                     请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击
                     <a class="fix-box-register">快速绑定</a>
                 </p>
-            </div>
-            {%/if%}
-            <div class="login-left-box">
-                <div class="login-left-title">账号注册</div>
+            </div> 
+            {%/if%}  
+            <div class="regist-box-title">注册兴教贷</div>
+            <div class="regist-box-content">
                 <div class="login-username">
+                    <label class="login-username-label">*用户名</label> 
                     <input autocomplete="off" class="login-input" id="regist-user" type="text" data-text="用户名" />
-                    <label class="user-lable" for="regist-user">用户名</label>
+                    <label class="user-lable" for="regist-user">输入用户名</label>
                     <div class="username-error" id="regist-user-error"></div>
-                    <div class="username-point">用户名由6～25位字母、数字、下划线或横线组合，首字符必须为字母</div>
+                    <div id="regist-user-point"></div>
+                    <div class="username-point" style="line-height: 18px;">用户名由6～25位字母、数字、下划线或横线组合，首字符必须为字母</div>
                 </div>
                 <div class="login-username">
+                    <label class="login-username-label">*密码</label> 
                     <input autocomplete="off" class="login-input" id="regist-pwd" type="password" data-text="密码" />
-                    <label class="user-lable" for="regist-pwd">密码</label>
+                    <label class="user-lable" for="regist-pwd">输入密码</label>
                     <div class="username-error" id="regist-pwd-error"></div>
+                    <div id="regist-pwd-point"></div>
+                    <div class="username-point" >密码由6～32位字母、数字及常用符号组成</div>
+                </div>
+                <div class="login-username">
+                    <label class="login-username-label">*确认密码</label> 
+                    <input autocomplete="off" class="login-input" id="regist-pwd2" type="password" data-text="确认密码" />
+                    <label class="user-lable" for="regist-pwd2">再次输入密码</label>
+                    <div class="username-error" id="regist-pwd2-error"></div>
+                    <div id="regist-pwd2-point"></div>
                     <div class="username-point">密码由6～32位字母、数字及常用符号组成</div>
                 </div>
-
                 <div class="login-username">
+                    <label class="login-username-label">*手机号</label> 
                     <input autocomplete="off" class="login-input" id="regist-phone" type="text" data-text="手机号" />
-                    <label class="user-lable" for="regist-phone">手机号</label>
+                    <label class="user-lable" for="regist-phone">输入手机号</label>
                     <div class="username-error" id="regist-phone-error"></div>
+                    <div id="regist-phone-point"></div>
                     <div class="username-point">请输入11位手机号</div>
                 </div>
                 <div class="login-username">
+                    <label class="login-username-label">*验证码</label> 
                     <input autocomplete="off" class="login-input testing" id="regist-testing" type="text" data-text="验证码" />
-                    <label class="user-lable" for="regist-testing">验证码</label>
-                    <a href="###" class="login-username-testing disabled">获取验证码</a>
-                    <div class="login-username-testing-box" id="testing-wait"></div>
+                    <label class="user-lable" for="regist-testing">输入验证码</label>
+                    <a href="###" class="login-username-testing disabled"></a>
+                    <span class="testTip">点击获取验证码</span>
+                    <div class="login-username-testing-box" id="testing-wait">60秒后重新获取验证码</div>
                     <div class="username-error yanzma" id="regist-testing-error">
                     </div>
                 </div>
                 <div class="login-username">
+                    <label class="login-username-label">推荐人</label> 
                     <input autocomplete="off" {%if $result.data.inviter%}readonly value="{%$result.data.inviter%}"{%/if%} class="login-input login-tuijian" id="regist-tuijian" type="text" />
-                    <label class="user-lable {%if $result.data.inviter%}hidden{%/if%}" for="regist-tuijian">推荐人手机号(选填)</label>
+                    <label class="user-lable {%if $result.data.inviter%}hidden{%/if%}" for="regist-tuijian">输入推荐人手机号(选填)</label>
                     <div class="username-error" id="regist-tuijian-error"></div>
+                    <div id="regist-tuijian-point"></div>
                     <div class="username-point">请输入推荐人的11位手机号</div>
                 </div>
                 <a href="###" class="login-fastlogin">快速注册</a>
                 <div class="login-tiaoyue">
                     <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />
                     <label class="tiaoyue-lable" for="tiaoyue-itp">同意<a href="/agreements">用户条约</a></label>
-                    <span class="login-tiaoyue-have">已有账号？<a href="{%$webroot%}/user/login">请登录</a></span>
+               
                 </div>
                 <div class="login-thirdlogin">
+                <span class="login-tiaoyue-have">已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/user/login">登录</a>&nbsp;&nbsp;</span>
                     <span class="login-third-tx">您也可以使用第三方账号登录</span>
                     <a href="{%$webroot%}/user/login/auth?type=qq" class="login-third-qq qq"></a>
-
+                    <a href="{%$webroot%}/user/login/auth?type=weixin" class="login-third-weixin weixin"></a>
                 </div>
-
             </div>
         </div>
-        <div class="login-right">
-            <a class="login-right-linkleft left"></a>
-            <div class="login-right-box">
-                <ul class="login-item">
-                    <li class="login-item-list">
-                        <div class="introduce-list-logo baozhang"></div>
-                        <div class="introduce-list-title">全方位投资保障</div>
-                        <div class="introduce-list-title">安全稳健的互联网投机理财</div>
-                        <a class="introduce-list-link" href="###">
-                            <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
-                            <p class="introduce-list-link-text">第三方资金托管</p>
-                        </a>
-                    </li>
-                    <li class="login-item-list">
-                        <div class="introduce-list-logo highincome"></div>
-                        <div class="introduce-list-title">低门槛高收入</div>
-                        <a class="introduce-list-link" href="###">
-                            <p class="introduce-list-link-text">互联网理财100元起投</p>
-                            <p class="introduce-list-link-text">超过银行存款利率30倍</p>
-                        </a>
-                    </li>
-                    <li class="login-item-list">
-                        <div class="introduce-list-logo zhuanzhu"></div>
-                        <div class="introduce-list-title">专注教育行业</div>
-                        <a class="introduce-list-link" href="###">
-                            <p class="introduce-list-link-text">深挖教育行业特性</p>
-                            <p class="introduce-list-link-text">最权威教育行业评估体系</p>
-                        </a>
-                    </li>
+     </div>
+</div>   
+   
 
-                </ul>
-            </div>
-            <a class="login-right-linkleft right last"></a>
-        </div>
-    </div>
-</div>
 {%/block%}

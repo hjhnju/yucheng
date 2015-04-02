@@ -76,7 +76,7 @@
             <a href="{%$webroot%}/guide">了解更多&gt;</a></div>
         </div>
         <div class="introduce-right">
-            <a href="{%$webroot%}/security" class="introduce-right-list">
+            <a href="{%$webroot%}/security" class="introduce-right-list"  style="margin-right: 10px;">
                 <i class="introduce-list-logo baozhang"></i>
                 <div class="introduce-list-title">全方位投资保障</div>
                 <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
@@ -105,21 +105,21 @@
             <div class="item-wrap">
                 {%foreach $data.platPost as $key => $item%} 
                     <div class="item  clearfix" data-order="{%$smarty.foreach.name.index%}">
-					<a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}">{%$item.title_cut_long%}</a>
+					<a  target="_blank"  href="{%$webroot%}/infos/post/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}">{%$item.title_cut_long%}</a>
 					<p class="time">{%$item.create_time|date_format:"%Y-%m-%d"%}</p>
 					</div>
                 {%/foreach%} 
             
 		</div>
         
-       <a class="more fr" href="{%$webroot%}/infos/post">查看更多公告&gt;</a>
+       <a class="more fr" href="{%$webroot%}/infos/post" target="_blank" >查看更多公告&gt;</a>
     </div>
 </div>
 <div class="newinvestlist">
    <div class="container"> 
            <div class="newinvestlist-title">
                                      投资列表
-            <a href="{%$webroot%}/invest" class="more fr">{%if !empty($data.list)%}查看更多标的&gt;{%/if%}</a>       
+            <a href="{%$webroot%}/invest" class="more fr" target="_blank" >{%if !empty($data.list)%}查看更多标的&gt;{%/if%}</a>       
             </div>
 	        <div class="newinvestlist-box">
 	            {%if empty($data.list)%}
@@ -138,14 +138,14 @@
                             {%/if%} 
                            </span>
                            <span class="school">
-                            <a href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
+                            <a target="_blank"  href="{%$webroot%}/invest/detail?id={%$item.id%}" class="school-link">{%$item.title%}</a>
 	                        </span>
-	                        {%if $item.fresh == 1%}
+	                       <!--  {%if $item.fresh == 1%}
 	                        <span class="school-new">新手专享</span>
-	                        {%/if%}
+	                        {%/if%} -->
 	                    </span> 
 	                    <span class="newinvestlist-box-lilv">
-	                                                                               年利率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期限
+	                                     年利率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期限
 	                           <span class="lilv">
 	                               <span class="lilv-number">{%$item.interest%}<span class="lilv-bai">%</span></span>
 	                               <span class="lilv-number color-white" style="width: 48px;"><span class="lilv-day fr">{%$item.duration_day%}</span><span class="lilv-bai color-white fr">{%$item.duration_type%}</span></span>
@@ -168,9 +168,10 @@
 	                    </span>
 	                     <span class="status">
 	                        {%if $item.status == 2%}
-	                        <a class="status-biding" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
+	                        <a class="status-biding" target="_blank" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
 	                        {%else%}
-	                        <span class="status-biding current">{%$item.status_name%}</span>
+                          <a class="status-biding current" target="_blank"  href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
+	                     <!--    <span class="status-biding current">{%$item.status_name%}</span> -->
 	                        {%/if%}
                          </span>
                    </li>
@@ -188,16 +189,16 @@
         <div class="media-box fl">  
            <ul class="media-box1 fl">
                <li>
-                   <a  href="http://mt.sohu.com/20150211/n408935257.shtml" class="media-box-img-link">
-                      <span class="media-box-img souhu"></span>
+                   <a  href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-img-link" target="_blank" >
+                      <span class="media-box-img zhongjingwang"></span>
                    </a> 
-                   <a href="http://mt.sohu.com/20150211/n408935257.shtml" class="media-box-content">
+                   <a href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-content">
                        “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
                    </a>
                
                </li>
                <li>
-                   <a  href="http://www.sootoo.com/content/550811.shtml" class="media-box-img-link">
+                   <a  href="http://www.sootoo.com/content/550811.shtml" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img sutu"></span>
                    </a> 
                    <a href="http://www.sootoo.com/content/550811.shtml" class="media-box-content">
@@ -206,7 +207,7 @@
                
                </li>
                <li>
-                   <a  href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-img-link">
+                   <a  href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img hexun"></span>
                    </a> 
                    <a href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-content">
@@ -218,22 +219,22 @@
            <a class="more fr" href="#">更多报道</a>       
            <ul class="media-box2 fl">
                <li>
-                   <a  href="http://www.zhejrx.com/html/2015/02/10/9013.html" class="media-box-img-link">
+                   <a  href="http://www.zhejrx.com/html/2015/02/10/9013.html" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img zjrx"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="http://finance.china.com/fin/qy/201502/09/0634419.html" class="media-box-img-link">
+                   <a  href="http://finance.china.com/fin/qy/201502/09/0634419.html" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img zhonghua"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="http://life.21cn.com/zaojiao/xiaofei/a/2015/0211/10/29045589.shtml" class="media-box-img-link">
+                   <a  href="http://life.21cn.com/zaojiao/xiaofei/a/2015/0211/10/29045589.shtml" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img cn21"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="http://sn.ifeng.com/gongyi/newswire/detail_2015_02/11/3553569_0.shtml?_from_ralated" class="media-box-img-link">
+                   <a  href="http://sn.ifeng.com/gongyi/newswire/detail_2015_02/11/3553569_0.shtml?_from_ralated" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img fenghuang"></span>
                    </a>
                </li>
@@ -247,24 +248,24 @@
                                     合作伙伴
         </div>    
         <div class="cooperation-box fl">
-             <a class="cooperation-img cooperation1" href="http://www.chinapnr.com/"></a> 
-             <a class="cooperation-img cooperation2" href="http://www.aliyun.com/"></a> 
-             <a class="cooperation-img cooperation3" href="http://www.chenandco.com"></a> 
-             <a class="cooperation-img cooperation4" href="http://www.cib.com.cn"></a> 
-             <a class="cooperation-img cooperation5" href="http://www.p2peye.com/"></a>  
+             <a class="cooperation-img cooperation1" href="http://www.chinapnr.com/" target="_blank" ></a> 
+             <a class="cooperation-img cooperation2" href="http://www.aliyun.com/" target="_blank" ></a> 
+             <a class="cooperation-img cooperation3" href="http://www.chenandco.com" target="_blank" ></a> 
+             <a class="cooperation-img cooperation4" href="http://www.cib.com.cn" target="_blank" ></a> 
+             <a class="cooperation-img cooperation5" href="http://www.p2peye.com/" target="_blank" ></a>  
          </div>
     </div>
 </div>
  <div class="plat-notice">
     <div class="container">   
         <div class="plat-notice-box fl">
-               <div class="plat-notice-box-title">还款公告</div>  
-                {%foreach $data.refundPost as $key => $item%} 
-                   <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a>
+                <div class="plat-notice-box-title"><a target="_blank" href="{%$webroot%}/infos/refund">还款公告</a></div> 
+                 {%foreach $data.refundPost as $key => $item%} 
+                   <a href="{%$webroot%}/infos/refund/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a>
                  {%/foreach%}
         </div>
          <div class="plat-notice-box notice-box-wh fl" style="margin-left:118px;">
-               <div class="plat-notice-box-title">平台公告</div> 
+               <div class="plat-notice-box-title"><a target="_blank" href="{%$webroot%}/infos/post">平台公告</a></div> 
                 {%foreach $data.platPost as $key => $item%} 
                    <a href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a><p class="time">{%$item.create_time|date_format:'%Y-%m-%d'%}</p>
                  {%/foreach%}

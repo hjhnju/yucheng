@@ -35,6 +35,7 @@ define(function (require) {
     var loginInput = {
         loginUser: $('#regist-user'),
         loginPwd: $('#regist-pwd'),
+        loginPwd2: $('#regist-pwd2'),
         loginPhone: $('#regist-phone'),
         loginTest: $('#regist-testing'),
         loginTuiJian: $('#regist-tuijian')
@@ -47,11 +48,30 @@ define(function (require) {
     var error = {
         userError: $('#regist-user-error'),
         phoneError: $('#regist-phone-error'),
+        pwd2Error: $('#regist-pwd2-error'),
         pwdError: $('#regist-pwd-error'),
         testError: $('#regist-testing-error'),
         tuiJianError: $('#regist-tuijian-error')
     };
+     /**
+     * 提示集合
+     * @type {Object}
+     */
+    var point = {
+        userPointIcon: $('#regist-user-point'),
+        phonePointIcon: $('#regist-phone-point'),
+        pwdPointIcon: $('#regist-pwd-point'),
+        pwd2PointIcon: $('#regist-pwd2-point'),
+        testPointIcon: $('#regist-testing-point'),
+        tuiJianPointIcon: $('#regist-tuijian-point'),
 
+        userPointTip: $('#regist-user-point').next(),
+        phonePointTip: $('#regist-phone-point').next(),
+        pwdPointTip: $('#regist-pwd-point').next(),
+        pwd2PointTip: $('#regist-pwd2-point').next(),
+        testPointTip: $('#regist-testing-point').next(),
+        tuiJianPointTip: $('#regist-tuijian-point').next()
+    };
     var allStatus = {
         user: 0,
         phone: 0,
@@ -78,6 +98,7 @@ define(function (require) {
         dialog.init();
         bindEvents();
         callBack();
+        yazma();
     }
 
     function bindEvents() {
@@ -87,8 +108,15 @@ define(function (require) {
                 var parent = $(this).parent();
                 var error = parent.children('.username-error');
 
+                var id = $(this).attr('id');
+                var pointIcon = parent.find("#"+id+"-point");
+                var pointTip=parent.find(".username-point");
+
                 parent.removeClass('current');
                 error.html('');
+                
+                pointIcon.html("");
+                pointTip.show();
                 $(this).next().addClass('hidden');
             },
             blur: function () {
@@ -96,6 +124,7 @@ define(function (require) {
                 var value = $.trim($(this).val());
                 var text = $(this).attr('data-text');
                 var id = $(this).attr('id');
+  
 
                 if (!value) {
                     // 不是推荐
@@ -106,7 +135,7 @@ define(function (require) {
 
                     $(this).next().removeClass('hidden');
                 }
-            }
+            }, 
         });
 
         // 检查用户名
@@ -135,14 +164,39 @@ define(function (require) {
             if (!testPwd.test(value)) {
                 allStatus.pwd = 0;
                 $(this).parent().addClass('current');
-                error.pwdError.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
+                error.pwd2Error.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
                 return;
             }
 
             allStatus.pwd = 1;
-            error.pwdError.html(CORRECT);
+           // error.pwdError.html(CORRECT);
+             point.pwdPointTip.hide();
+             point.pwdPointIcon.html(CORRECT);
         });
+        
+         // 确认密码格式验证
+        loginInput.loginPwd2.blur(function () {
+            var pwd = $.trim($(loginInput.loginPwd).val());
+            var value = $.trim($(this).val());
 
+            if (!value) {
+                allStatus.pwd = 0;
+                return;
+            }
+ 
+            //检测两次密码是否一致
+            if (value!=pwd) {
+                allStatus.pwd = 0;
+                $(this).parent().addClass('current');
+                error.pwd2Error.html('两次输入的密码不一致 ');
+                return;
+            }
+
+            allStatus.pwd = 1;
+           // error.pwdError.html(CORRECT);
+             point.pwd2PointTip.hide();
+             point.pwd2PointIcon.html(CORRECT);
+        });
 
         // 检查手机号
         loginInput.loginPhone.blur(function () {
@@ -255,7 +309,9 @@ define(function (require) {
                 allStatus.user = 0;
             }
             else {
-                error.userError.html(CORRECT);
+               // error.userError.html(CORRECT);
+                point.userPointTip.hide();
+                point.userPointIcon.html(CORRECT);
                 allStatus.user = 1;
             }
         });
@@ -269,7 +325,9 @@ define(function (require) {
                 $('.login-username-testing').addClass('disabled');
             }
             else {
-                error.phoneError.html(CORRECT);
+                //error.phoneError.html(CORRECT);
+                point.phonePointTip.hide();
+                point.phonePointIcon.html(CORRECT);
                 allStatus.phone = 1;
                 $('.login-username-testing').removeClass('disabled');
             }
@@ -283,7 +341,9 @@ define(function (require) {
                 allStatus.tui = 0;
             }
             else {
-                error.tuiJianError.html(CORRECT);
+               // error.tuiJianError.html(CORRECT);
+               point.tuiJianPointTip.hide();
+               point.tuiJianPoint.html(CORRECT);
                 allStatus.tui = 1;
             }
         });
@@ -296,16 +356,25 @@ define(function (require) {
             }
             else {
                 var wait = $('#testing-wait');
+                
+                var testing=$(".login-username-testing");
+                var testTip=$(".testTip");
 
-                wait.text('60秒后重新发送');
+                wait.text('60秒后重新获取验证码');
                 wait.addClass('show');
+                
+                testing.addClass("login-username-testing-wait");
+                testing.addClass("disabled");
+                testTip.hide();
 
                 timer = setInterval(function () {
 
-                    wait.text(--value + '秒后重新发送');
+                    wait.text(--value + '秒后重新获取验证码');
                     if (value < 0) {
                         clearInterval(timer);
                         wait.removeClass('show');
+                        testing.removeClass("disabled"); 
+                        testing.removeClass("login-username-testing-wait");
                     }
 
                 }, 1000);
@@ -319,7 +388,9 @@ define(function (require) {
                 allStatus.vericode = 0;
             }
             else {
-                error.testError.html(CORRECT);
+                //error.testError.html(CORRECT);
+                point.testPointTip.hide();
+                point.testPointIcon.html(CORRECT);
                 allStatus.vericode = 1;
             }
         });
@@ -346,6 +417,22 @@ define(function (require) {
 
             login.init('registBind');
         });
+    }
+
+    /**
+    *验证码效果
+    */
+    function yazma () {
+          var e = $(".login-username-testing").not("disabled");
+           e.on("mouseenter", function () {
+            if(!e.hasClass("disabled")){ 
+                 $(".testTip").show(200); 
+              }
+            }).on("mouseleave", function () { 
+                if(!e.hasClass("disabled")){ 
+                  $(".testTip").hide(200); 
+              }
+            });
     }
     return {
         init: init
