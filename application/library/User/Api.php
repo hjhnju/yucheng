@@ -96,7 +96,7 @@ class User_Api{
         'page'     => $list['page'],
         'pagesize' => $list['pagesize'],
         ));
-        return $list['list'];
+        return $list;
     }
     
     /**

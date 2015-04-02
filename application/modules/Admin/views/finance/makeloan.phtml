@@ -95,6 +95,13 @@
             <!-- END LIST -->
         </div>
     </div>
+     <div id="setpage"></div> 
+    <script src = "http://www.xingjiaodai.com.cn:8988/assets/global/scripts/pageCut.js"></script>
+    <script>
+    cpage = {%$page%}; 
+    totalpage = {%$total%};
+    setpage(cpage,totalpage);
+    </script>
     <script>
     function con(sourceobj){
         if(confirm("您确定要进行此操作吗?")){
