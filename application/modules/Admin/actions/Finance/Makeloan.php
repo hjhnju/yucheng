@@ -16,7 +16,6 @@ class MakeloanAction extends Yaf_Action_Abstract {
         }
 
         $list     = Loan_Api::getLoans($page, $pagesize, $filters);
-        var_dump($list);
         $arrLoan  = $list['list'];
         $this->getView()->assign('arrLoan', $arrLoan);
         $this->getView()->assign('page', $list['page']);

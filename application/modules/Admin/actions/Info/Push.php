@@ -6,9 +6,11 @@
  */
 class PushAction extends Yaf_Action_Abstract {
     public function execute() {
-        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : PHP_INT_MAX;
-        $arrInfos  = Infos_Api::getAllPost($page, $pagesize);
+        $page     = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : 20;
+        $list     = Infos_Api::getAllPost($page, $pagesize);
+        $pageAll  = $list['pageall'];
+        $arrInfos = $list['list'];
         foreach ($arrInfos as $key => $val){
 			switch($val['type']){
 				case 1:
@@ -25,6 +27,8 @@ class PushAction extends Yaf_Action_Abstract {
 			$arrInfos[$key]['title'] = $this->cutstr($val['title'],40);
         }
         $this->getView()->assign('arrInfo', $arrInfos);
+        $this->getView()->assign('pageall', $pageAll);
+        $this->getView()->assign('page', $page);
     }
     
     /*

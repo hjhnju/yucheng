@@ -7,7 +7,7 @@
 class BorrowerAction extends Yaf_Action_Abstract {
     public function execute() {
         $page     = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : 10;
+        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : 20;
         
         if(!empty($_POST)){
         	$borrowerName = $_POST['borrower'];
@@ -17,7 +17,11 @@ class BorrowerAction extends Yaf_Action_Abstract {
         	}
         }
 
-        $arrUser  = User_Api::getBorrowers($page, $pagesize);
+        $list  = User_Api::getBorrowers($page, $pagesize);
+        $arrUser = $list['list'];
+        $pageAll = $list['pageall'];
         $this->getView()->assign('arrUser', $arrUser);
+        $this->getView()->assign('pageall', $pageAll);
+        $this->getView()->assign('page', $page);
     }
 }

@@ -12,7 +12,7 @@ function setpage(capge,totalpage)
               { 
               outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>"; 
               }else{ 
-                  outstr = outstr + "<span class='current' >"+count+"</span>"; 
+                  outstr = outstr + "--" + "<span class='current' >"+count+"</span>"; 
                   } 
           } 
       } 
@@ -22,37 +22,37 @@ function setpage(capge,totalpage)
           for (count=1;count<=10;count++) 
               {    if(count!=cpage) 
                   { 
-                  outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>";
+                  outstr = outstr + "--"+ "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>";
                   }else{ 
-                      outstr = outstr + "<span class='current'>"+count+"</span>"; 
+                      outstr = outstr + "--" + "<span class='current'>"+count+"</span>"; 
                       } 
               } 
-          outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+count+")'> next </a>"; 
+          outstr = outstr + "--" + "<a href='javascript:void(0)' onclick='gotopage("+count+")'> >>> </a>"; 
           } 
           else if(parseInt((cpage-1)/10) == parseInt(totalpage/10)) {     
-          outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+(parseInt((cpage-1)/10)*10)+")'>previous</a>"; 
+          outstr = outstr + "--" +  "<a href='javascript:void(0)' onclick='gotopage("+(parseInt((cpage-1)/10)*10)+")'><<<</a>"; 
           for (count=parseInt(totalpage/10)*10+1;count<=totalpage;count++) 
               {    if(count!=cpage) 
                   { 
-                  outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>"; 
+                  outstr = outstr + "--" + "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>"; 
                   }else{ 
-                      outstr = outstr + "<span class='current'>"+count+"</span>"; 
+                      outstr = outstr + "--" + "<span class='current'>"+count+"</span>"; 
                       } 
               } 
           } 
       else 
           {     
-          outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+(parseInt((cpage-1)/10)*10)+")'>previous</a>"; 
+          outstr = outstr + "--" +  "<a href='javascript:void(0)' onclick='gotopage("+(parseInt((cpage-1)/10)*10)+")'><<<</a>"; 
           for (count=parseInt((cpage-1)/10)*10+1;count<=parseInt((cpage-1)/10)*10+10;count++) 
               {         
               if(count!=cpage) 
                   { 
-                  outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>"; 
+                  outstr = outstr + "--" + "<a href='javascript:void(0)' onclick='gotopage("+count+")'>"+count+"</a>"; 
                   }else{ 
-                      outstr = outstr + "<span class='current'>"+count+"</span>"; 
+                      outstr = outstr + "--" + "<span class='current'>"+count+"</span>"; 
                       } 
               } 
-          outstr = outstr + "<a href='javascript:void(0)' onclick='gotopage("+count+")'> next </a>"; 
+          outstr = outstr + "--" +  "<a href='javascript:void(0)' onclick='gotopage("+count+")'> >>> </a>"; 
           } 
       }     
   document.getElementById("setpage").innerHTML = "<div id='setpage'><span id='info'>共"+totalpage+"页|第"+cpage+"页<\/span>" + outstr + "<\/div>"; 

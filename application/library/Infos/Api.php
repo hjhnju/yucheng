@@ -26,7 +26,7 @@ class Infos_Api {
     public static function getAllPost($page, $pagesize){
     	$logic   = new Infos_Logic_Post();
     	$list = $logic->getAllList($page,$pagesize);
-		return $list['list'];
+		return $list;
     }
     
     /**
