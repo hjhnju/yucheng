@@ -15,6 +15,9 @@ class AuditAction extends Yaf_Action_Abstract {
 
         $list     = Loan_Api::getLoans($page, $pagesize, array(), $strFilter);
         $arrLoan  = $list['list'];
+        $pageAll  = $list['pageall'];  
         $this->getView()->assign('arrLoan', $arrLoan);
+        $this->getView()->assign('pageall', $pageAll);
+        $this->getView()->assign('page', $page);
     }
 }

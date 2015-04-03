@@ -74,8 +74,15 @@
                 </table>
             </div>
             <!-- END LIST -->
+             <div id="setpage"  style = "text-align: center;font-size:17px;margin:0 auto;"></div> 
         </div>
     </div>
+    <script src = "{%$feroot%}s/global/scripts/pageCut.js"></script>
+    <script>
+    cpage = {%$page%}; 
+    totalpage = {%$pageall%};
+    setpage(cpage,totalpage);
+    </script>
     <script>
     function con(sourceobj){
         if(confirm("您确定要手动还款，此操作不可撤销！")){

@@ -5,8 +5,10 @@
  *
  */
 class WithdrawAction extends Yaf_Action_Abstract {
+    
     public function execute() {
-
+        $pagesize = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : 20;
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
         $userName = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
         $list     = new Finance_List_Order();
         $list->setFilter(array('type' => Finance_Order_Type::CASH));
@@ -19,10 +21,12 @@ class WithdrawAction extends Yaf_Action_Abstract {
             $list->appendFilterString("(`userId` = '$userid')");
         }
         $list->appendFilterString("status !=" . Finance_Order_Status::INITIALIZE);
-        $list->setPagesize(100);
+        $list->setPage($page);
+        $list->setPagesize($pagesize);
         $list->setOrder("`create_time` desc");
-
         $listData = $list->toArray();
+        $page = $listData['page']; 
+        $pageAll = $listData['pageall'];
         $data     = $listData['list'];
         $arrUser  = array();
         foreach ($data as $key => $value) {
@@ -38,5 +42,7 @@ class WithdrawAction extends Yaf_Action_Abstract {
             $arrUser[$key]['status']    = Finance_Order_Status::getTypeName($value['status']);
         }
         $this->getView()->assign('arrUser', $arrUser);
+        $this->getView()->assign('page', $page);
+        $this->getView()->assign('pageall', $pageAll);
     }
 }

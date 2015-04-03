@@ -83,7 +83,13 @@
                     </tbody>
                 </table>
             </div>
-
+         <div id="setpage"  style = "text-align: center;font-size:17px;margin:0 auto;"></div> 
         </div>
     </div>
+    <script src = "{%$feroot%}s/global/scripts/pageCut.js"></script>
+    <script>
+    cpage = {%$page%}; 
+    totalpage = {%$pageall%}; 
+    setpage(cpage,totalpage);
+    </script>
 {%/block%}
