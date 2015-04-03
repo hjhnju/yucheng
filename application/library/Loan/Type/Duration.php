@@ -36,6 +36,16 @@ class Loan_Type_Duration extends Base_Type {
      */
     const MONTH_3 = 90;
     /**
+     * 四个月
+     * @var integer
+     */
+    const MONTH_4 = 120;
+    /**
+     * 五个月
+     * @var integer
+     */
+    const MONTH_5 = 150;
+    /**
      * 六个月
      * @var integer
      */
@@ -89,6 +99,8 @@ class Loan_Type_Duration extends Base_Type {
         self::MONTH => '1个月',
         self::MONTH_2 => '2个月',
         self::MONTH_3 => '3个月',
+        self::MONTH_4 => '4个月',
+        self::MONTH_5 => '5个月',
         self::MONTH_6 => '6个月',
         self::MONTH_9 => '9个月',
         self::MONTH_12 => '12个月',
@@ -106,6 +118,8 @@ class Loan_Type_Duration extends Base_Type {
         self::MONTH => '1个月',
         self::MONTH_2 => '2个月',
         self::MONTH_3 => '3个月',
+        self::MONTH_4 => '4个月',
+        self::MONTH_5 => '5个月',
         self::MONTH_6 => '6个月',
         self::MONTH_9 => '9个月',
         self::MONTH_12 => '12个月',
