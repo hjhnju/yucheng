@@ -49,7 +49,7 @@
             </div>
             {%else%}
             <div class="fix-box-title">
-                <p class="fix-title-number">18.0
+                <p class="fix-title-number">15.0
                     <span class="fix-title-number-bai">%</span>
                 </p>
                 <p class="fix-title-text">最高年化收利率</p>
@@ -76,7 +76,7 @@
             <a href="{%$webroot%}/guide">了解更多&gt;</a></div>
         </div>
         <div class="introduce-right">
-            <a href="{%$webroot%}/security" class="introduce-right-list"  style="margin-right: 10px;">
+            <a href="{%$webroot%}/security" class="introduce-right-list"  style="margin-right: 10px;width: 180px;">
                 <i class="introduce-list-logo baozhang"></i>
                 <div class="introduce-list-title">全方位投资保障</div>
                 <p class="introduce-list-link-text">360度实地尽调、本金保障</p>
@@ -169,8 +169,10 @@
 	                     <span class="status">
 	                        {%if $item.status == 2%}
 	                        <a class="status-biding" target="_blank" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
+	                        {%else if $item.status == 1%}
+	                        <a class="status-biding start" target="_blank" href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
 	                        {%else%}
-                          <a class="status-biding current" target="_blank"  href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
+                            <a class="status-biding current" target="_blank"  href="{%$webroot%}/invest/detail?id={%$item.id%}">{%$item.status_name%}</a>
 	                     <!--    <span class="status-biding current">{%$item.status_name%}</span> -->
 	                        {%/if%}
                          </span>
@@ -192,7 +194,7 @@
                    <a  href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img zhongjingwang"></span>
                    </a> 
-                   <a href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-content">
+                   <a target="_blank" href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-content">
                        “作为专注教育领域的互联网金融平台，兴教贷自成立之初就受到业内广泛关注。在众多P2P平台不断涌现的今天，兴教贷首创教育金融收费权质押模式，让P2P投资更加安全，风险更低。”
                    </a>
                
@@ -201,7 +203,7 @@
                    <a  href="http://www.sootoo.com/content/550811.shtml" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img sutu"></span>
                    </a> 
-                   <a href="http://www.sootoo.com/content/550811.shtml" class="media-box-content">
+                   <a target="_blank" href="http://www.sootoo.com/content/550811.shtml" class="media-box-content">
                        “教育机构融资是教育市场腾飞，而金融对教育领域的扶持非常少，如果二者结合使金融服务教育，对推动教育产业发展将形成重要助力，最终使教育从业者和受教育者都从中获益。”
                    </a>
                
@@ -210,7 +212,7 @@
                    <a  href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img hexun"></span>
                    </a> 
-                   <a href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-content">
+                   <a target="_blank" href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-content">
                        “兴教贷首先是兴教，这个是平台发展的根本，也是保障投资者利益稳定的关键。在推动我国教育事业发展的同时，获得自身的投资利益。”
                    </a>
                
@@ -258,13 +260,13 @@
 </div>
  <div class="plat-notice">
     <div class="container">   
-        <div class="plat-notice-box fl">
+        <div class="plat-notice-box refund-notice-box fl">
                 <div class="plat-notice-box-title"><a target="_blank" href="{%$webroot%}/infos/refund">还款公告</a></div> 
                  {%foreach $data.refundPost as $key => $item%} 
                    <a target="_blank" href="{%$webroot%}/infos/refund/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a>
-                 {%/foreach%}
+                 {%/foreach%} 
         </div>
-         <div class="plat-notice-box notice-box-wh fl" style="margin-left:118px;">
+         <div class="plat-notice-box notice-box-wh fl" style="margin-left:80px;">
                <div class="plat-notice-box-title"><a target="_blank" href="{%$webroot%}/infos/post">平台公告</a></div> 
                 {%foreach $data.platPost as $key => $item%} 
                    <a target="_blank" href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a><p class="time">{%$item.create_time|date_format:'%Y-%m-%d'%}</p>

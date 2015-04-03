@@ -384,3 +384,11 @@ p{margin:0;padding:0}
 .plat-notice .phone-box .attention-box .weixin:hover{background-position:0 -84px}
 .plat-notice .phone-box .attention-box .qq{background-position:0 -224px}
 .plat-notice .phone-box .attention-box .qq:hover{background-position:0 -252px}
+
+ #scrollUp {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: url(../common/img/btn_icon.png) 0px -298px no-repeat;
+}

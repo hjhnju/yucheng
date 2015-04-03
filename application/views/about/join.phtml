@@ -14,7 +14,7 @@
               var next= $(this).next(".company-join-content");
               var allicon= $(".company-join-icon");
               var all= $(".company-join-content");
-              icon.hasClass("plus-icon")?(allicon.removeClass("minus-icon"),allicon.addClass("plus-icon"),icon.addClass("minus-icon"),icon.removeClass("plus-icon"),all.hide(),next.show()):(icon.addClass("plus-icon"),icon.removeClass("minus-icon"),next.hide());
+              icon.hasClass("plus-icon")?(allicon.removeClass("minus-icon"),allicon.addClass("plus-icon"),icon.addClass("minus-icon"),icon.removeClass("plus-icon"),all.slideUp(450),next.slideDown(450)):(icon.addClass("plus-icon"),icon.removeClass("minus-icon"),next.slideUp(450));
         });  
     });  
   

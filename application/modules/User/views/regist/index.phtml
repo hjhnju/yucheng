@@ -60,7 +60,7 @@
                     <label class="user-lable" for="regist-pwd2">再次输入密码</label>
                     <div class="username-error" id="regist-pwd2-error"></div>
                     <div id="regist-pwd2-point"></div>
-                    <div class="username-point">密码由6～32位字母、数字及常用符号组成</div>
+                    <div class="username-point">确保两次输入的密码一致</div>
                 </div>
                 <div class="login-username">
                     <label class="login-username-label">*手机号</label> 
@@ -75,7 +75,7 @@
                     <input autocomplete="off" class="login-input testing" id="regist-testing" type="text" data-text="验证码" />
                     <label class="user-lable" for="regist-testing">输入验证码</label>
                     <a href="###" class="login-username-testing disabled"></a>
-                    <span class="testTip">点击获取验证码</span>
+                    <div class="testTip hidden">点击获取验证码</div>
                     <div class="login-username-testing-box" id="testing-wait">60秒后重新获取验证码</div>
                     <div class="username-error yanzma" id="regist-testing-error">
                     </div>
@@ -91,14 +91,14 @@
                 <a href="###" class="login-fastlogin">快速注册</a>
                 <div class="login-tiaoyue">
                     <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />
-                    <label class="tiaoyue-lable" for="tiaoyue-itp">同意<a href="/agreements">用户条约</a></label>
+                    <label class="tiaoyue-lable" for="tiaoyue-itp">同意兴教贷<a href="/agreements">用户协议</a></label>
                
                 </div>
                 <div class="login-thirdlogin">
                 <span class="login-tiaoyue-have">已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/user/login">登录</a>&nbsp;&nbsp;</span>
                     <span class="login-third-tx">您也可以使用第三方账号登录</span>
                     <a href="{%$webroot%}/user/login/auth?type=qq" class="login-third-qq qq"></a>
-                    <a href="{%$webroot%}/user/login/auth?type=weixin" class="login-third-weixin weixin"></a>
+                   <!--  <a href="{%$webroot%}/user/login/auth?type=weixin" class="login-third-weixin weixin"></a> -->
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@
              border-radius:5px;    
          }  
           .regist-box-step-box { 
-            width: 200px;
+            width: 170px;
             height: 398px;
             padding: 126px 0px;
             z-index: 99999;
@@ -47,21 +47,30 @@
          }
        }   
        .regist-box-step1 {
-             background-position: 160px 0;
+             background-position: 130px 0;
             .current {
                 background-position: 0 0;
             }
+            .step1 {
+                color: @color-green;
+            }
         }
         .regist-box-step2 {
-           background-position: 135px -650px; 
+           background-position: 130px -650px; 
             .current {
                 background-position: 0 0;
+            }
+            .step2 {
+                color: @color-green;
             }
         }
         .regist-box-step3 {
            background-position: 135px -1300px;
             .current {
                 background-position: 0 0;
+            }
+            .step3 {
+                color: @color-green;
             }
         }
        
@@ -109,7 +118,10 @@
                         width: 270px;
                         font-size: 14px;
                         line-height: 38px;
-                        .username-error-span {
+                       
+
+                    }
+                     .username-error-span {
                             display: inline-block;
                             width: 20px;
                             height: 20px;
@@ -118,15 +130,13 @@
                             background: url(../common/img/gou.png) 0 -50px no-repeat;
                         }
 
-                    }
-
                     .login-input {
                         width: 280px; 
                         height: 22px;
                     }
                     .testing {
                         width: 107px;
-                        margin-right: 21px;
+                        margin-right: 12px;
                     }
                     .login-username-testing  {
                         float: left;
@@ -142,15 +152,15 @@
                         background-position: 0 -1990px;
                     }
                     .testTip {
-                             display: none;
-                             width: 152px; 
-                             height: 37px; 
+                             float: left; width:152px;
+                             height:37px;
+                             width: 152px;  
                              margin-top: 5px;
                              color: #fff; 
-                             line-height: 24px; 
+                             line-height: 28px; 
                              padding-left: 8px; 
                              font-size: 14px; 
-                             background:url(../common/img/regist_icon.png) -80 -1950px no-repeat;
+                             background:url(../common/img/regist_icon.png) -80px -1950px no-repeat;
                     }
                     .login-username-testing-box {
                             display: none;
@@ -168,12 +178,13 @@
                    .login-fastlogin {
                        width: 180px;
                        margin-left:85px;
-                       float: left;
-                       margin-bottom: :0px;
+                       float: left; 
+                       margin-bottom: 10px;
                    }
                    .login-tiaoyue {
-                       width: 120px;
+                       width: 160px;
                        float: left;
+                       margin-left: 13px;
                        border: none;
                    }
                    .tiaoyue-lable {
@@ -184,10 +195,11 @@
                         margin-left: 85px;
                         line-height: 30px;
                         .login-tiaoyue-have {
-                            float: left;
+                            float: none;
+                            display: inline-block;
                         }
                         .login-third-weixin {
-                             background:url(../common/img/regist_icon.png) -80px 0px no-repeat;
+                             background:url(../common/img/regist_icon.png) -80px 5px no-repeat;
                              vertical-align: middle;
                              display: inline-block;
                              width: 24px;
@@ -200,6 +212,17 @@
                    }  
                    .hidden {
                       display: none;
+                   }
+                   .login-tiaoyue {
+                      height: 50px; 
+                      margin-bottom: 0px;
+                       #tiaoyue-itp {
+                          margin-top: 0px;
+                       }
+                      .tiaoyue-lable {
+                          line-height: 50px;
+                          display: inline-block;
+                      }
                    }
             }
         }   
@@ -293,7 +316,7 @@
     left: 0;
     top: 46px;
     color: #c9c9c9;
-
+    display: none;
 }
 
 //注册样式开始
