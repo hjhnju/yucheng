@@ -14,7 +14,7 @@
     position: absolute;
     z-index: 11115;
     top: 280px;
-    left: 50%;
+    left: 45%;
 
     .banner-select-link {
         display: block;
@@ -480,6 +480,7 @@
 		   .hexun{background-position:  0px -366px;} 
 		   .sutu{ background-position:0 0; }
 		   .souhu{background-position: 0px -183px;}
+           .zhongjingwang{ background: url(img/zhongjingwang.png) no-repeat 0 0;}
 		}
 		 .media-box2 {
 		 	border-top:1px dashed #000; 
@@ -647,19 +648,24 @@
 //平台公告、还款公告开始
 .plat-notice {
 	background-color :#dff1ec;
-	height:300px; 
-	
-	.plat-notice-box-title {
-		margin-bottom: 5px;
-		font-size: 20px;
-        color: #75cf64;
-	}
+	height:300px;  
 	.plat-notice-box {
 	    margin-top:66px;
 		width:220px;
 		text-overflow:ellipsis;
 		margin-bottom: 15px;
 		
+        .plat-notice-box-title {
+                margin-bottom: 5px;
+                font-size: 20px;
+                color: #75cf64;
+
+            a { 
+                   font-size: 20px;
+                   color: #75cf64;
+               }
+            } 
+
 		a{
 		     display:block;
 			 width:220px;
@@ -681,6 +687,12 @@
 		    margin-left: 10px; 
 		}
 	}
+    .refund-notice-box {
+        width:280px;
+        a {
+             width:280px;
+        }
+    }
 	.notice-box-wh {
 	     width:350px;
 		 a {
@@ -720,7 +732,7 @@
 			font-size:18px;
 			line-height:45px;
 			padding-left: 10px;
-			margin-top: 40px;
+			margin-top: 26px;
 			
 			.attention-me {
 			    display: inline-block;

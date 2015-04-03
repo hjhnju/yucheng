@@ -18,7 +18,7 @@ define(function (require) {
         footer();
         easy();
         loginRegister();
-        //scrollUp();
+        scrollUp();
     }
 
     function easy() {
@@ -73,7 +73,8 @@ define(function (require) {
      * 范莹莹
      * */
     function scrollUp () {
-   
+          var scrollUp = require('common/extra/jquery.scrollUp');
+           scrollUp();
     }
     
     return {

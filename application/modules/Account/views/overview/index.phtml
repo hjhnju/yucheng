@@ -18,7 +18,7 @@
         {%include file='../../../views/common/nav.phtml' current="1"%}
         <div class="finish-main">
             <div class="finish-main-title">账户总览</div>
-            <div class="all-account-box">
+            <div class="all-account-box" >
                 <div class="all-box-income">
                     <div class="all-box-income-title">
                         <p class="all-income-title-price">￥{%$totalProfit%}</p>
@@ -38,19 +38,30 @@
                             <p class="all-class-money-price">待收本金</p>
                         </div>
                     </div>
-                </div>
-                <div class="all-box-pay">
-                    <div class="all-box-pay-top">可用余额<span>￥{%$avlBal%}</span></div>
-                    <div class="all-box-pay-top">冻结金额<span>￥{%$frzBal%}</span></div>
-                    <div class="all-box-pay-top">资产总计<span>
-                            <a class="all-pay-help" title="获得帮助">
-                                <div class="all-pay-tip">
-                                    <span class="all-pay-tip-trangle"></span>
-                                    资产总计 = 可用余额 + 冻结金额 + 待收本金 + 待收收益
-                                </div>
-                            </a>￥{%$totalAsset%}</span></div>
-                    <a target="_blank" href="{%$rechargeurl%}" class="all-box-pay-link">充值</a>
-                </div>
+                </div> 
+            </div>
+             <div class="all-account-box">
+	              <div class="all-box-income" style="margin-bottom: 24px;">
+	                    <div class="all-box-income-title">
+	                        <p class="all-income-title-price">￥{%$avlBal%}</p>
+	                        <p class="all-income-title-name">可用余额</p>
+	                    </div>
+	                    <div class="all-box-income-class">
+	                        <a target="_blank" href="{%$rechargeurl%}" class="all-box-pay-link">充值</a>
+	                        <a target="_blank" href="{%$withdrawurl%}" class="all-box-pay-link cash-link">提现</a>
+	                     </div>
+	                     <div class="all-box-pay">
+	                         <div class="all-box-pay-top">冻结金额<span>￥{%$frzBal%}</span></div>
+	                         <div class="all-box-pay-top">资产总计<span>
+	                            <a class="all-pay-help" title="获得帮助">
+	                                <div class="all-pay-tip">
+	                                    <span class="all-pay-tip-trangle"></span>
+	                                                                                                资产总计 = 可用余额 + 冻结金额 + 待收本金 + 待收收益
+	                                </div>
+	                            </a>￥{%$totalAsset%}</span>
+	                          </div>
+	                     </div>
+	                </div> 
             </div>
             {%if $openthirdpay == 2%}
             <div class="all-account-box-dredge">

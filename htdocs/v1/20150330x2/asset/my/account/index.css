@@ -303,19 +303,52 @@ p{margin:0;padding:0}
 .infor-data-box-testing .testing-content.weibo-pic{background-position:30px -23px;padding-left:56px;width:114px}
 .infor-data-box-testing .testing-content.weixin-pic{background-position:30px 26px;padding-left:56px;width:114px}
 .infor-data-box-testing .testing-link{float:right;text-decoration:none;color:#76cf65;display:block}
-.all-account-box{background-color:#f8f8f8;margin-bottom:30px;*zoom:1}
+.all-account-box{background-color:#f8f8f8;margin-bottom:2px;*zoom:1}
 .all-account-box:before,.all-account-box:after{display:table;content:""}
 .all-account-box:after{clear:both}
-.all-box-income{float:left;width:500px;border-right:1px solid #eaeaea;padding-top:50px;height:100px;*zoom:1}
+.all-box-income{float:left;width:740px;border-right:0px solid #eaeaea;padding-top:50px;height:100px;*zoom:1}
 .all-box-income:before,.all-box-income:after{display:table;content:""}
 .all-box-income:after{clear:both}
+.all-box-income .all-box-pay {
+        padding-top: 0px;
+        padding-left: 48px;
+        width: 250px;
+    }
 .all-box-income-title{float:left;width:200px;text-align:center}
 .all-box-income-title .all-income-title-price{font-size:26px;color:#f2736a;height:30px;line-height:30px;margin-bottom:10px}
 .all-box-income-title .all-income-title-name{height:20px;line-height:20px;font-size:16px;color:#323232}
-.all-box-income-class{float:left;margin-top:6px;*zoom:1}
+.all-box-income-class{float:left;margin-top:6px;*zoom:1;padding-left: 43px;}
 .all-box-income-class:before,.all-box-income-class:after{display:table;content:""}
 .all-box-income-class:after{clear:both}
-.all-class-money{float:left;width:100px;text-align:center}
+.all-box-income-class .all-box-pay-link {
+        position: inherit;
+        display: block;
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        font-size: 14px;
+        background-color: #f2736a;
+        margin-top: 4px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        float: left;
+   }
+   .all-box-income-class .all-box-pay-link:hover{ 
+        color: #fff; 
+        background-color: #E33F33; 
+   }
+ .all-box-income-class .cash-link {
+ 	background-color: #75cf64;
+ 	margin-left: 8px;
+ }
+  .all-box-income-class .cash-link:hover {
+ 	background-color: #2B9817;
+ }
+.all-class-money{float:left;width:130px;text-align:center}
 .all-class-money .all-class-money-price{font-size:14px;color:#323232;height:20px;line-height:20px;margin-bottom:10px}
 .all-box-pay{float:left;position:relative;padding:30px 20px 0;width:190px}
 .all-box-pay-top{height:30px;line-height:30px;color:#4d4d4d}
