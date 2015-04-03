@@ -316,7 +316,7 @@ p{margin:0;padding:0}
 .all-account-box{background-color:#f8f8f8;margin-bottom:20px;*zoom:1}
 .all-account-box:before,.all-account-box:after{display:table;content:""}
 .all-account-box:after{clear:both}
-.all-box-income{float:left;width:740px;border-right:0 solid #eaeaea;padding-top:50px;height:100px;*zoom:1}
+.all-box-income{float:left;width:740px;border-right:0 solid #eaeaea;padding-top:40px;height:100px;*zoom:1}
 .all-box-income:before,.all-box-income:after{display:table;content:""}
 .all-box-income:after{clear:both}
 .all-box-income .all-box-pay{padding-top:0;padding-left:48px;width:250px}
@@ -330,7 +330,7 @@ p{margin:0;padding:0}
 .all-box-income-class .all-box-pay-link:hover{color:#fff;background-color:#e33f33}
 .all-box-income-class .cash-link{background-color:#75cf64;margin-left:8px}
 .all-box-income-class .cash-link:hover{background-color:#2b9817}
-.all-class-money{float:left;width:130px;text-align:center}
+.all-class-money{float:left;width:150px;text-align:center}
 .all-class-money .all-class-money-price{font-size:14px;color:#323232;height:20px;line-height:20px;margin-bottom:10px}
 .all-box-pay{float:left;position:relative;padding:30px 20px 0;width:190px}
 .all-box-pay-top{height:30px;line-height:30px;color:#4d4d4d}

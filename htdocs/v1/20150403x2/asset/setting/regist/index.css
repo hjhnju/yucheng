@@ -343,19 +343,19 @@ p{margin:0;padding:0}
 .regist .container .regist-box{width:700px}
 .regist .container .regist-box .regist-box-title{color:#4fc501;font-size:22px;line-height:126px;height:126px;text-align:center;font-weight:400;width:380px}
 .regist .container .regist-box .regist-box-content{width:520px}
-.regist .container .regist-box .regist-box-content .login-username{margin-bottom:20px}
+.regist .container .regist-box .regist-box-content .login-username{margin-bottom:23px}
 .regist .container .regist-box .regist-box-content .login-username-label{width:75px;font-size:16px;float:left;display:block;line-height:42px;padding-right:10px;text-align:right;color:#4c4c4c}
-.regist .container .regist-box .regist-box-content .user-lable{left:90px}
-.regist .container .regist-box .regist-box-content .username-error{left:80px;top:40px}
+.regist .container .regist-box .regist-box-content .user-lable{left:90px;color: #c4c4c4;}
+.regist .container .regist-box .regist-box-content .username-error{left:80px;top:40px;font-size: 12px;line-height: 23px;}
 .regist .container .regist-box .regist-box-content .username-point{position:absolute;top:4px;color:#4c4c4c;left:394px;line-height:14px;width:270px;font-size:14px;line-height:38px}
 .regist .container .regist-box .regist-box-content .username-error-span{display:inline-block;width:20px;height:20px;margin-top:15px;margin-left:6px;background:url(../common/img/gou.png) 0 -50px no-repeat}
-.regist .container .regist-box .regist-box-content .login-input{width:280px;height:22px}
+.regist .container .regist-box .regist-box-content .login-input{width:280px;height:22px;font-size: 14px;line-height: 22px;}
 .regist .container .regist-box .regist-box-content .testing{width:107px;margin-right:12px}
-.regist .container .regist-box .regist-box-content .login-username-testing{float:left;background:url(../common/img/regist_icon.png) 0 -1950px no-repeat;width:30px;border:none;margin-top:5px}
+.regist .container .regist-box .regist-box-content .login-username-testing{float:left;background:url(../common/img/regist_icon.png) 0 -1950px no-repeat;width:27px;border:none;margin-top:7px}
 .regist .container .regist-box .regist-box-content .login-username-testing:hover .testTip{display:block}
 .regist .container .regist-box .regist-box-content .login-username-testing-wait{background-position:0 -1990px}
-.regist .container .regist-box .regist-box-content .testTip{float:left;height:37px;width:152px;margin-top:5px;color:#fff;line-height:28px;padding-left:8px;font-size:14px;background:url(../common/img/regist_icon.png) -80px -1950px no-repeat}
-.regist .container .regist-box .regist-box-content .login-username-testing-box{display:none;width:152px;height:37px;margin-top:5px;color:#fff;line-height:28px;padding-left:5px;font-size:14px;border:none;right:100px;background:url(../common/img/regist_icon.png) -80px -1990px no-repeat}
+.regist .container .regist-box .regist-box-content .testTip{float:left;height:37px;width:152px;margin-top:4px;color:#fff;line-height:35px;padding-left:11px;font-size:14px;background:url(../common/img/regist_icon.png) -80px -1947px no-repeat}
+.regist .container .regist-box .regist-box-content .login-username-testing-box{display:none;width:152px;height:37px;margin-top:5px;color:#fff;line-height:28px;padding-left:5px;font-size:14px;border:none;right:108px;background:url(../common/img/regist_icon.png) -80px -1990px no-repeat}
 .regist .container .regist-box .regist-box-content .login-fastlogin{width:180px;margin-left:85px;float:left;margin-bottom:10px}
 .regist .container .regist-box .regist-box-content .login-tiaoyue{width:160px;float:left;margin-left:13px;border:none}
 .regist .container .regist-box .regist-box-content .tiaoyue-lable{line-height:50px}

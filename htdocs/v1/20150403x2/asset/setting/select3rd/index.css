@@ -260,9 +260,9 @@ p{margin:0;padding:0}
 .kaitong .container .regist-box-step2 .current{background-position:0 0}
 .kaitong .container .regist-box-step3{background-position:130px -1300px}
 .kaitong .container .regist-box-step3 .current{background-position:0 0}
-.kaitong .container .kaitong-box{width:640px;margin:0 auto;padding-left:0}
+.kaitong .container .kaitong-box{margin:0 auto; width: 630px; padding-right: 100px;padding-left: 100px;}
 .kaitong .container .kaitong-box .kaitong-box-top{padding:50px 200px 30px;width:280px;margin:0 auto;text-align:center;background-color:#fff}
-.kaitong .container .kaitong-box .kaitong-box-pic{width:280px;height:60px;margin:15px auto 48px;background:url(../common/img/regist_icon.png) 0 -2030px no-repeat}
+.kaitong .container .kaitong-box .kaitong-box-pic{width:280px;height:60px;margin:15px auto 48px;margin-left: 20px;background:url(../common/img/regist_icon.png) 0 -2030px no-repeat}
 .kaitong .container .kaitong-box .kaitong-title{line-height:30px;font-size:22px;margin-bottom:45px}
 .kaitong .container .kaitong-box .kaitong-mast{display:block;height:50px;line-height:50px;background-color:#76cf65;font-size:22px;color:#fff;text-align:center;text-decoration:none;margin-bottom:0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .kaitong .container .kaitong-box .kaitong-mast:hover{background-color:#72e45d}
