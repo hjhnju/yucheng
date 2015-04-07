@@ -57,7 +57,7 @@ class User_Logic_Query{
             $filters = array('usertype' => self::TYPE_PRIV, $type => $user);
         }
         $list->setFilter($filters);
-        $list->setOrder('create_time desc');
+        $list->setOrder('userid desc');
         $list->setPage($page);
         $list->setPagesize($pagesize);
         $list = $list->toArray();
