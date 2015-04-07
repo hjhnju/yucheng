@@ -10,8 +10,8 @@ class Base_Util_Number {
      */
     public static function floatIsEqual($f1,$f2,$precision = 2) { 
         $e = pow(10, $precision);  
-        $i1 = intval($f1 * $e);  
-        $i2 = intval($f2 * $e);  
+        $i1 = intval(round($f1 * $e));  
+        $i2 = intval(round($f2 * $e));  
         return ($i1 == $i2);  
     }
 
@@ -24,8 +24,12 @@ class Base_Util_Number {
      */
     public static function floatIsGtr($big,$small,$precision = 2) {   
         $e      = pow(10,$precision);  
-        $ibig   = intval($big * $e);  
-        $ismall = intval($small * $e);  
+        $ibig   = intval(round($big * $e));  
+        $ismall = intval(round($small * $e));
+        Base_Log::error(array('msg'=>'check floatIsGtr',
+            'big' => $big, 'small' => $small,
+            'ibig'=>$ibig, 'ismall'=>$ismall));
+
         return ($ibig > $ismall);  
     }
 
@@ -38,8 +42,8 @@ class Base_Util_Number {
      */
     public static function floatIsGtre($big,$small,$precision = 2) {
         $e = pow(10,$precision);  
-        $ibig = intval($big * $e);  
-        $ismall = intval($small * $e);  
+        $ibig   = intval(round($big * $e));  
+        $ismall = intval(round($small * $e));
         return ($ibig >= $ismall);  
     }  
 
