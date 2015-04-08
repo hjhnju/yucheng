@@ -24,7 +24,7 @@ define(function (require) {
 
     function init (type) {
         loginType = type || 'login';
-        header.init();
+       // header.init();
         picScroll.init();
         bindEvents();
         bindCallback();

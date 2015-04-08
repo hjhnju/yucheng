@@ -381,3 +381,7 @@ p{margin:0;padding:0}
 .regist-fix-con-ipt{border:0;outline:0;width:360px;padding-left:10px;font-size:14px}
 .regist-fix-con-name{position:absolute;left:10px;top:10px;color:#adadad;font-size:14px}
 .username-point{position:absolute;left:0;top:46px;color:#c9c9c9;display:none}
+
+.regist .bound{background-color: transparent;padding:0px; height: 40px;line-height: 16px;margin-bottom: 0px;}
+.regist {padding-top: 30px;}
+.regist .bound-text{line-height: 16px;text-align: center;}

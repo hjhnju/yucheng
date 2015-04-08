@@ -78,6 +78,7 @@ define(function (require) {
     }
     
     return {
-        init:init
+        init:init,
+        loginRegister:loginRegister
     };
 });
