@@ -1,0 +1,50 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/company/infos/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['company/infos/index'], function(main) {
+        main.init({
+            pageall: '{%$data.pageall%}',
+            page: '{%$data.page%}',
+            type: 'post'
+        });
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="company-nav"> 
+	   <div class="company-navbar">  
+	      <div class="container"> 
+	          {%include file="../../../views/common/menu2.phtml" current="2"%}
+	      </div>
+	   </div>
+</div>
+<div class="container company"> 
+    <div class="company-box"> 
+        <div id="infos-list">
+            <ul class="infos-list">
+                {%foreach $data.list as $key => $item%}
+                <li class="infos-item">
+                    <span class="infos-dot">•</span>
+                    <div class="infos-box">
+                        <div class="infos-title">
+                            <a href="{%$webroot%}/infos/media/detail?id={%$item.id%}">{%$item.title%}</a>
+                        </div>
+                        <div class="infos-ctx">
+                            {%$item.content%}
+                        </div>
+                    </div>
+                </li>
+                {%/foreach%}
+            </ul>
+        </div>
+        <div id="pager"></div>
+    </div>
+</div>
+
+{%/block%}
