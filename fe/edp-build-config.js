@@ -52,7 +52,8 @@ exports.getProcessors = function () {
             'src/app/index.less',
             'src/help/index.less',
             'src/m/regist/index.less',
-            'src/m/login/index.less'
+            'src/m/login/index.less',
+            'src/m/open/index.less'
 
         ]
     });
@@ -94,7 +95,8 @@ exports.getProcessors = function () {
             'src/app/index.less',
             'src/help/index.less',
             'src/m/regist/index.less',
-            'src/m/login/index.less'
+            'src/m/login/index.less',
+            'src/m/open/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler({
@@ -141,7 +143,8 @@ exports.getProcessors = function () {
             'dep/jquery/1.9.1/src/jquery.min.js',
             'src/help/index.js',
             'src/m/regist/index.js',
-            'src/m/login/index.js'
+            'src/m/login/index.js',
+            'src/m/open/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
