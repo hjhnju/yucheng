@@ -1,0 +1,69 @@
+ {%extends file="../../../views/common/m/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/regist/index.css" />
+{%/block%} 
+
+{%block name="script"%}
+<script>
+	require(['m/regist/index'], function (regist) {
+	    regist.init('{%$type%}');
+	});
+</script>
+
+{%/block%}
+
+{%block name="content"%}
+   <div class="regist">
+      <div class="regist-box-title">
+          <div  class="logo-img">
+             <img alt="兴教贷" src="{%$feroot%}/m/common/img/logo.png">
+           </div>
+      </div>
+      <div class="regist-box-content"> 
+                <div class="inputbg">
+                   <label class="labelbox" for="regist-phone"> 
+                       <input class="input" id="regist-phone" type="text" data-text="手机号" autocomplete="off" placeholder="手机号">
+                   </label>
+                   <label class="labelbox testing-labelbox" for="regist-testing"> 
+                      <input class="input testing" id="regist-testing" type="text" data-text="验证码" autocomplete="off" placeholder="验证码" maxlength="6">
+                         <!--  <em class="phone-icon"></em> -->
+                           <a class="regist-testing-btn disabled" href="###">获取验证码</a> 
+                            <button class="regist-testing-btn-wait" id="testing-wait">60秒后重新获取</button>
+                     </label>  
+                 </div> 
+                 <div class="err_tip regist-phone-error regist-testing" >
+                   &nbsp;
+			     </div>
+                 <div class="inputbg">
+                   <label class="labelbox" for="regist-pwd"> 
+                       <input class="input" id="regist-pwd" type="password" data-text="密码" autocomplete="off" placeholder="设置平台登录密码">
+                   </label>
+                   <label class="labelbox testing-labelbox" for="regist-pwd2"> 
+                      <input class="input testing" id="regist-pwd2" type="password" data-text="确认密码" autocomplete="off" placeholder="确认密码">
+                    </label>  
+                 </div>  
+			     <div class="err_tip regist-pwd-error regist-pwd2-error">  
+			      &nbsp;
+			     </div>
+			     <div class="inputbg" style="height: 40px;">
+                   <label class="labelbox" for="regist-tuijian"> 
+                       <input class="input input-tuijian" id="regist-tuijian" type="text" data-text="推荐人" autocomplete="off" placeholder="推荐人手机号">
+                   </label>  
+                 </div> 
+                 <div class="err_tip regist-tuijian-error"> 
+                  &nbsp;
+			     </div> 
+			       <label class="tiaoyue-lable" for="tiaoyue-itp">
+			       <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />同意兴教贷<a href="/agreements">用户协议</a></label>
+                
+                   <button  class="combtn login-fastlogin">下一步</button>
+                   <span class="login-tiaoyue-have">
+                                                                     已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/m/regist/login">登录</a>&nbsp;&nbsp;
+                   </span> 
+                
+       </div>         
+      
+   </div>
+ 
+{%/block%}

@@ -1,0 +1,21 @@
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/help/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['help/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+  <div class="operate-nav"> 
+      <div class="container">
+            
+      </div>
+  </div>    
+{%/block%}
