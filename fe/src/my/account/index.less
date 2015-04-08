@@ -1,10 +1,7 @@
 @import "../../common/css/common";
-
 @import "../common/css/index.less";
-
 .all-pay-help {
     z-index: 10;
-
     .all-pay-tip {
         position: absolute;
         display: none;
@@ -18,7 +15,6 @@
         padding: 10px;
         background-color: @color-green;
     }
-
     .all-pay-tip-trangle {
         position: absolute;
         width: 10px;
@@ -29,8 +25,182 @@
         bottom: -8px;
         left: 5px;
     }
-
     &:hover .all-pay-tip {
         display: block;
+    }
+}
+ 
+//账户总览开始
+.all-account-box {
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+    .clearfix;
+}
+
+.all-box-income {
+    float: left;
+    width: 740px;
+    border-right: 0px solid #eaeaea;
+    padding-top: 50px; 
+    height: 100px;
+    .clearfix;
+    .all-box-pay {
+         padding-top: 0px;
+         padding-top: 0px;
+         padding-left: 48px;
+         width: 250px;
+    }
+}
+
+.all-box-income-title {
+    float: left;
+    width: 200px;
+    text-align: center;
+    .all-income-title-price {
+        font-size: 26px;
+        color: @color-red;
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 10px;
+    }
+    .all-income-title-name {
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        color: #323232;
+    }
+}
+
+.all-box-income-class {
+    float: left;
+    margin-top: 6px;
+    padding-left: 43px;
+    .clearfix;
+      .all-box-pay-link {
+         position: inherit;
+         display: block;
+         width: 70px;
+         height: 30px;
+         line-height: 30px;
+         text-align: center;
+         text-decoration: none;
+         color: #fff;
+         font-size: 14px;
+         background-color: #f2736a;
+         margin-top: 4px;
+         -webkit-border-radius: 3px;
+         -moz-border-radius: 3px;
+         border-radius: 3px;
+         float: left; 
+         &:hover {
+             color: #fff;
+              background-color: #E33F33;
+         }
+         }
+        
+         .cash-link {
+             background-color: #75cf64;
+             margin-left: 8px;
+             &:hover {
+             background-color: #2B9817;
+          }
+      }
+}
+
+.all-class-money {
+    float: left;
+    width: 130px;
+    text-align: center;
+    .all-class-money-price {
+        font-size: 14px;
+        color: #323232;
+        height: 20px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+}
+
+.all-box-pay {
+    float: left;
+    position: relative;
+    padding: 30px 20px 0 20px;
+    width: 190px;
+}
+
+.all-box-pay-top {
+    height: 30px;
+    line-height: 30px;
+    color: #4d4d4d;
+    // margin-bottom: 10px;
+    span {
+        margin-left: 10px;
+        font-size: 14px;
+        color: #333333;
+        vertical-align: middle;
+        display: inline-block;
+        .all-pay-help {
+            width: 20px;
+            height: 20px;
+            background: url("../img/help.png") 0 0 no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+        }
+    }
+}
+
+.all-box-pay-link {
+    position: absolute;
+    right: 0px;
+    top: 30px;
+    display: block;
+    width: 50px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    background-color: @color-red;
+    margin-top: 4px;
+    .border-radius(3px);
+    &:hover {
+        background-color: @color-red-hover;
+    }
+}
+
+.all-account-box-dredge {
+    padding: 40px 0;
+    border: 1px solid #eaeaea;
+    &.quxian {
+        margin-top: 20px;
+        width: 740px;
+        height: 204px;
+        padding: 0;
+        position: relative;
+    }
+}
+
+.all-box-dredge-name {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.all-box-dredge-link {
+    width: 170px;
+    height: 38px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    line-height: 38px;
+    margin: 0 auto;
+    background-color: @color-red;
+    color: #FFFFFF;
+    .border-radius(3px);
+    &:hover {
+        background-color: @color-red-hover;
     }
 }

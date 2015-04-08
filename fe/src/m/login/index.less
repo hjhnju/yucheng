@@ -1,1 +1,363 @@
 @import "../common/css/index.less";
+
+body {
+  background-color:#e7e7eb;
+}
+.none {display: none;}
+.testing-box {
+    position: relative; 
+    height: 40px;
+}
+.err_tip {
+   height: 20px;
+}
+.login-op {
+    .clearfix;
+}
+
+.login-forget {
+    float: right;
+    color: @color-green;
+    font-size: 14px;
+    text-decoration: none;
+    height: 20px;
+    line-height: 20px;
+    text-align: right; 
+}
+.login-box-title { 
+    padding: 14px 0px 15px 0px;
+}
+//宽度小于640的样式
+
+@media screen and (max-width: 640px) {
+   .layout {
+     padding-bottom: 60px;
+   }
+    .login-box-content,
+    .inputbg,
+    .inputbg input {
+        width: 100%;
+    } 
+    .inputbg-yzm {
+        width: 60%;
+    }
+     .login-username-testing { 
+        text-decoration: none;
+        color: #000;
+        background-color: #ececec;
+        height: 35px;
+        line-height: 36px;
+        text-align: center; 
+        width: 85px;
+        font-size: 14px;
+        cursor: pointer;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .login-username-testing img {
+      border-radius:5px;
+    }
+    #login-testing-error {
+        width: 100%;
+    }
+    .login-fastlogin {
+    margin-top: 15px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+  }
+    .login {
+        min-height: 0;
+        font-size: 1.2rem;
+    }
+    .login-box-content {
+        min-height: 0;
+        font-size: 1.2rem;
+        padding: 0 30px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .login-box-title { 
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex; 
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    .login-box-title  .logo-img{
+        width: 66%; 
+        box-sizing:border-box;
+    }
+     .login-box-title  img{
+        width: 100%;   
+    }
+    .labelbox {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    } 
+    .testing-labelbox {
+        padding-right: 140px;
+    }
+    .btm-radius-none {
+        border-bottom: none;
+          border-bottom-left-radius:0px;
+          border-bottom-right-radius:0px;
+      }
+      .top-radius-none {
+        border-top: none;
+          border-top-left-radius:0px;
+          border-top-right-radius:0px;
+      }
+    .inputbg {
+        border-radius: 8px;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .3);
+    }
+    .inputbg .input {
+      height: 40px;
+      margin-top: 0;
+      line-height: normal;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      font-size: 1.05rem;
+       line-height: 1.5;
+    }
+    .inputbg .testing {
+        width: 100%;
+        float: left;
+    } 
+    .inputbg   .phone-icon{
+        display: block; 
+        width: 21px;
+        height: 29px; 
+        overflow: hidden;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdBAMAAAC3ajrIAAAAGFBMVEUAAADW1tbl5eXY2Njq6ur19fXe3t7t7e38hY5BAAAAAXRSTlMAQObYZgAAAEVJREFUGNNjcBSEAiEGBkE4YGAwTA0FgyAQW4EBDNiR2CzDiA32V5ISGKiB2LBggLJTwxBsB3YEW4EFwgaRIs5gNnJ4AgAAjBNNSxBUYwAAAABJRU5ErkJggg==);
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 5px;
+        right: 128px;
+    }
+    .inputbg  .login-testing-btn {  
+         background-color: #4fc501;
+         border-radius: 5px; 
+         text-align: center;
+         color: #fff;  
+          display: block;  
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          font-size: 16px;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+    }
+     .inputbg  .disabled {  
+         cursor: default;
+         background-color: #e8e9ea;
+         color: #000;
+    }
+    .inputbg .show {
+       display: block;
+    }
+    .inputbg .none,.inputbg .hidden {
+       display: none;
+    } 
+    .inputbg #login-phone{
+            padding-left: 0px;
+            margin-left: 10px;
+            border-bottom: 1px solid #eaeaec;
+    } 
+     .login-tiaoyue-have {
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin-top: 15px;
+        font-size: 0.9rem;
+    }
+    .login-tiaoyue-have a {
+        color: #f2746a;
+    }
+    .err-tip {
+       height: 20px;
+    }
+}
+//宽度小于640的样式结束
+
+
+//宽度大于640的样式开始
+  @media screen and (min-width: 640px) {
+   .layout {
+     padding-bottom: 60px;
+     width: 600px;
+     margin: 0 auto;
+   }
+    .login-box-content,
+    .inputbg,
+    .inputbg input {
+        width: 100%;
+    } 
+    .inputbg-yzm {
+        width: 60%;
+    }
+    .login-username-testing { 
+        text-decoration: none;
+        color: #000;
+        background-color: #ececec;
+        height: 35px;
+        line-height: 36px;
+        text-align: center; 
+        width: 85px;
+        font-size: 14px;
+        cursor: pointer;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .login-username-testing img {
+      border-radius:5px;
+    }
+    #login-testing-error {
+        width: 100%;
+    }
+    .login-fastlogin {
+    margin-top: 15px;
+      width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px; 
+  }
+    .login {
+        min-height: 0;
+        font-size: 1.2rem;
+    }
+    .login-box-content {
+        min-height: 0;
+        font-size: 1.2rem;
+        padding: 0 30px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .login-box-title { 
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex; 
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        margin: 40px 0px 70px 0px;
+    }
+    .login-box-title  .logo-img{
+        width: 66%; 
+        box-sizing:border-box;
+    }
+     .login-box-title  img{
+        width: 100%;   
+    }
+    .labelbox {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    } 
+    .testing-labelbox {
+        padding-right: 140px;
+    }
+    .btm-radius-none {
+        border-bottom: none;
+          border-bottom-left-radius:0px;
+          border-bottom-right-radius:0px;
+      }
+      .top-radius-none {
+        border-top: none;
+          border-top-left-radius:0px;
+          border-top-right-radius:0px;
+      }
+    .inputbg {
+        border-radius: 8px;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .3);
+    }
+    .inputbg .input {
+      height: 40px;
+      margin-top: 0;
+      line-height: normal;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      font-size: 1.05rem;
+       line-height: 1.5;
+    }
+    .inputbg .testing {
+        width: 100%;
+        float: left;
+    } 
+    .inputbg   .phone-icon{
+        display: block; 
+        width: 21px;
+        height: 29px; 
+        overflow: hidden;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdBAMAAAC3ajrIAAAAGFBMVEUAAADW1tbl5eXY2Njq6ur19fXe3t7t7e38hY5BAAAAAXRSTlMAQObYZgAAAEVJREFUGNNjcBSEAiEGBkE4YGAwTA0FgyAQW4EBDNiR2CzDiA32V5ISGKiB2LBggLJTwxBsB3YEW4EFwgaRIs5gNnJ4AgAAjBNNSxBUYwAAAABJRU5ErkJggg==);
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 5px;
+        right: 128px;
+    }
+    .inputbg  .login-testing-btn {  
+         background-color: #4fc501;
+         border-radius: 5px; 
+         text-align: center;
+         color: #fff;  
+          display: block;  
+          width: 100px;
+          height: 30px;
+          line-height: 30px;
+          font-size: 16px;
+          position: absolute;
+          top: 5px;
+          right: 5px;
+    }
+     .inputbg  .disabled {  
+         cursor: default;
+         background-color: #e8e9ea;
+         color: #000;
+    }
+    .inputbg .show {
+       display: block;
+    }
+    .inputbg .none,.inputbg .hidden {
+       display: none;
+    } 
+    .inputbg #login-phone{
+            padding-left: 0px;
+            margin-left: 10px;
+            border-bottom: 1px solid #eaeaec;
+    } 
+     .login-tiaoyue-have {
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin-top: 15px;
+        font-size: 0.9rem;
+    }
+    .login-tiaoyue-have a {
+        color: #f2746a;
+    }
+    .err-tip {
+       height: 20px;
+    }
+}
+//宽度大于640的样式结束

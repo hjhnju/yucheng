@@ -8,8 +8,8 @@
 
 define(function(require) {
 
-    var $ = require('jquery'); 
-    var util = require('common/util'); 
+    var $ = require('jquery');
+    var util = require('common/util');
 
     var Remoter = require('common/Remoter');
     var checkphone = new Remoter('REGIST_CHECKPHONE_CHECK');
@@ -37,17 +37,16 @@ define(function(require) {
      * @type {Object}
      */
     var error = {
-        phoneError: $('#regist-phone-error'),
-        testError: $('#regist-phone-error'),
-        pwdError: $('#regist-pwd-error'),
-        pwd2Error: $('#regist-pwd-error'),
-        tuiJianError: $('#regist-tuijian-error')
+        phoneError: $('.regist-phone-error'),
+        testError: $('.regist-phone-error'),
+        pwdError: $('.regist-pwd-error'),
+        pwd2Error: $('.regist-pwd-error'),
+        tuiJianError: $('.regist-tuijian-error')
     };
 
     var allStatus = {
         phone: 0,
-        pwd: 0,
-        pwd2: 0,
+        pwd: 0, 
         vericode: 0,
         tui: 1
     };
@@ -61,7 +60,7 @@ define(function(require) {
 
     var isthird;
 
-    function init() { 
+    function init(third) {
         isthird = third ? 1 : 0;
         bindEvents();
         callBack();
@@ -69,14 +68,13 @@ define(function(require) {
 
     function bindEvents() {
         // 控制placeHolder
-        $('.regist .login-input').on({
+        $('.regist .input').on({
             focus: function() {
-                var parent = $(this).parent();
-                var error = parent.next();
-                error.html('');
+                var parent = $(this).parent().parent();
+                var error = parent.next();  
+                error.html("\u0020\u0020");                    
             },
-            blur: function() {
-                var parent = $(this).parent();
+            blur: function() { 
                 var value = $.trim($(this).val());
                 var text = $(this).attr('data-text');
                 var id = $(this).attr('id');
@@ -86,7 +84,7 @@ define(function(require) {
                     if (!$(this).hasClass('input-tuijian')) {
                         $('.' + id + '-error').html(text + '不能为空');
                     }
-
+               
                 }
             }
         });
@@ -106,8 +104,7 @@ define(function(require) {
                 return;
             }
 
-            allStatus.pwd = 1;
-            error.pwdError.html(CORRECT);
+            allStatus.pwd = 1; 
         });
         // 确认密码格式验证
         loginInput.loginPwd2.blur(function() {
@@ -126,9 +123,7 @@ define(function(require) {
                 return;
             }
 
-            allStatus.pwd = 1;
-            point.pwd2PointTip.hide();
-            point.pwd2PointIcon.html(CORRECT);
+            allStatus.pwd = 1; 
         });
 
         // 检查手机号
@@ -141,7 +136,7 @@ define(function(require) {
                 });
             } else {
                 allStatus.phone = 0;
-                $('.login-username-testing').addClass('disabled');
+                $('.regist-testing-btn').addClass('disabled');
             }
         });
 
@@ -169,7 +164,7 @@ define(function(require) {
         });
 
         // 检查是否获取验证码
-        $('.login-username-testing').click(util.debounce(function(e) {
+        $('.regist-testing-btn').click(util.debounce(function(e) {
             e.preventDefault();
 
             var value = $.trim(loginInput.loginPhone.val());
@@ -215,8 +210,7 @@ define(function(require) {
                 }
             }
 
-            status && registSubmit.remote({
-                name: loginInput.loginUser.val(),
+            status && registSubmit.remote({ 
                 passwd: loginInput.loginPwd.val(),
                 phone: loginInput.loginPhone.val(),
                 inviter: loginInput.loginTuiJian.val(),
@@ -238,8 +232,7 @@ define(function(require) {
                 error.phoneError.html(data.statusInfo);
                 allStatus.phone = 0;
                 $('.regist-testing-btn').addClass('disabled');
-            } else {
-                // error.phoneError.html(CORRECT);
+            } else { 
                 allStatus.phone = 1;
                 $('.regist-testing-btn').removeClass('disabled');
             }
@@ -250,8 +243,7 @@ define(function(require) {
             if (data && data.bizError) {
                 error.tuiJianError.html(data.statusInfo);
                 allStatus.tui = 0;
-            } else {
-                // error.tuiJianError.html(CORRECT);
+            } else { 
                 allStatus.tui = 1;
             }
         });
@@ -263,7 +255,7 @@ define(function(require) {
                 alert(data.statusInfo);
             } else {
                 var wait = $('#testing-wait');
-
+                var test =$("#");
                 wait.text('60秒后重新获取');
                 wait.addClass('show');
 
@@ -283,8 +275,7 @@ define(function(require) {
             if (data && data.bizError) {
                 error.testError.html(data.statusInfo);
                 allStatus.vericode = 0;
-            } else {
-                //  error.testError.html(CORRECT);
+            } else { 
                 allStatus.vericode = 1;
             }
         });
@@ -293,14 +284,14 @@ define(function(require) {
             if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {
-                window.location.href = '/user/open/index';
+                window.location.href = '/m/open/index';
             }
         });
 
 
-
+    }
         return {
             init: init
         };
-    }
+    
 });
