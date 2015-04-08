@@ -1,0 +1,62 @@
+ {%extends file="../../../views/common/m/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/login/index.css" />
+{%/block%} 
+
+{%block name="script"%}
+<script>
+	require(['m/login/index'], function (login) {
+	    login.init('{%$type%}');
+	});
+</script>
+
+{%/block%}
+
+{%block name="content"%}
+ <div class="login">
+      <div class="login-box-title">
+          <div  class="logo-img">
+             <img alt="兴教贷" src="{%$feroot%}/m/common/img/logo.png">
+           </div>
+      </div>
+      <div class="login-box-content"> 
+                <div class="inputbg">
+                   <label class="labelbox" for="login-phone"> 
+                       <input class="input" id="login-phone" type="text" data-text="手机号" autocomplete="off" placeholder="手机号">
+                   </label>
+                   <label class="labelbox" for="login-pwd"> 
+                       <input class="input" id="login-pwd" type="password" data-text="密码" autocomplete="off" placeholder="设置平台登录密码">
+                   </label>
+                 </div> 
+                 <div class="err_tip"  id="login-error">
+                   &nbsp;
+			     </div> 
+			     {%if isset($url)%}
+                 <div class="testing-box">
+                  {%else%}
+                 <div class="testing-box  none">
+                  {%/if%} 
+				      <div class="inputbg inputbg-yzm fl">
+	                   <label class="labelbox" for="login-testing"> 
+	                       <input class="input" id="login-testing" type="text" data-text="验证码" autocomplete="off" placeholder="验证码">
+	                   </label> 
+	                 </div>  
+	                 <a class="login-username-testing fr" href="###">
+	                     <img width="85" height="40" id="login-img-url" src="{%$url%}">
+	                  </a> 
+                  </div> 
+                  <div class="login-op">
+                    <a href="{%$webroot%}/user/modifypwd" class="login-forget">忘记密码?</a>
+                  </div>
+			       <button  class="combtn login-fastlogin">立即登录</button>
+                   <span class="login-tiaoyue-have">
+                                                                     没有账户？&nbsp;&nbsp;<a href="{%$webroot%}/m/regist">立即注册</a>&nbsp;&nbsp;
+                   </span> 
+                
+       </div>         
+      
+   </div>
+ 
+
+{%/block%}

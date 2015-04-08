@@ -1,0 +1,21 @@
+ {%include file='../../../views/common/m/top.phtml'%}  
+ 
+{%block name="link"%}{%/block%}
+<script>
+    //require(['common/global']);
+</script>
+</head>
+<body class=""> 
+   <div class="container">
+	     {%include file='../../../views/common/m/header.phtml'%}  
+ 
+    <div class="layout">
+        {%block name="content"%}{%/block%}
+    </div> 
+   
+      {%include file='../../../views/common/m/footer.phtml'%} 
+      
+      {%block name="script"%}{%/block%}
+   </div>  
+</body>
+</html>
