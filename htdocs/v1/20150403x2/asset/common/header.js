@@ -59,5 +59,5 @@ define('common/header', [
         var scrollUp = require('common/extra/jquery.scrollUp');
         scrollUp();
     }
-    return { init: init };
+    return { init: init,loginRegister:loginRegister };
 });

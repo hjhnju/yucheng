@@ -8,15 +8,24 @@
 <script>
     require(['setting/regist/index'], function (regist) {
         regist.init('{%$type%}');
+    });  
+    require(['common/header'], function (main) {
+        main.loginRegister();
     });
-    require(['common/header'], function(main) {
-        main.init();
-    }); 
 </script>
 {%/block%}
 
 {%block name="content"%}
 <div class="regist">
+     {%if isset($type)%} 
+            <div class="container bound">
+                 <p class="bound-text">
+                      尊敬的{%$type%}用户:
+                    <span class="bound-name">{%$third%}</span>，
+                    就像以往，请完善您的个人信息，以后就可以直接使用{%$type%}登录兴教贷。已有兴教贷账户的用户，请点击
+                    <a class="fix-box-register">快速绑定</a>
+                </p> 
+            </div> {%/if%}  
     <div class="container">
         <div  class="regist-box-step fl regist-box-step1"> 
              <div class="regist-box-step-box ">
@@ -25,17 +34,7 @@
                   <span class="step3">注册完成</span> 
              </div>
        </div> 
-        <div  class="regist-box fr">
-            {%if isset($type)%}
-            <div class="bound">
-                <p class="bound-text">
-                    {%$type%}用户:
-                    <span class="bound-name">{%$third%}</span>，
-                    请完善您的个人信息，以后就可以直接登录了，已有兴教贷的用户，点击
-                    <a class="fix-box-register">快速绑定</a>
-                </p>
-            </div> 
-            {%/if%}  
+        <div  class="regist-box fr"> 
             <div class="regist-box-title">注册兴教贷</div>
             <div class="regist-box-content">
                 <div class="login-username">
