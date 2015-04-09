@@ -17,7 +17,6 @@ class UsermanageController extends Base_Controller_Page {
         parent::init();
         $this->userManageLogic = new Finance_Logic_UserManage();        
         $this->huifuid         = !empty($this->objUser) ? $this->objUser->huifuid : '';
-        $this->userName        = !empty($this->objUser) ? $this->objUser->name : '';
         $this->phone           = $phone = !empty($this->objUser) ? $this->objUser->phone : '';
     }
 
@@ -27,7 +26,7 @@ class UsermanageController extends Base_Controller_Page {
     public function userregistAction(){
         $objUser  = $this->objUser;
         $userid   = $this->userid;
-        $userName = $this->userName;        
+        $userName = !empty($this->objUser) ? $this->objUser->name : '';
         $phone    = $this->phone;
         Base_Log::notice(array(
             'userid'   => $userid,

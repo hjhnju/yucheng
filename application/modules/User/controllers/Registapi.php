@@ -167,9 +167,14 @@ class RegistApiController extends Base_Controller_Api{
                 ));
             }
         }
+        
         //注册成功后设置用户为登录状态并将登录信息入库
         $logic   = new User_Logic_Login();
-        $logic->login('name', $strName, $strPasswd);
+        if(!empty($strName)){
+            $logic->login('name', $strName, $strPasswd);
+        }elseif(!empty($strPhone)){
+            $logic->login('phone', $strPhone, $strPasswd);
+        }
         Base_Log::notice($_REQUEST);
         
         //注册后的系统消息

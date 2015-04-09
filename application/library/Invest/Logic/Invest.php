@@ -94,7 +94,7 @@ class Invest_Logic_Invest {
         $invest->loanId  = intval($loanId);
         $invest->amount  = floatval($amount);
         $objUser         = User_Api::getUserObject($userid);
-        $invest->name    = $objUser->name;
+        $invest->name    = $objUser->displayname;
         $invest->orderId = intval($orderId);
         //投资的该项目的利率和周期
         $arrData = Loan_Api::getLoanInfo($loanId);
@@ -281,7 +281,7 @@ class Invest_Logic_Invest {
     	$amount = Finance_Api::getUserAvlBalance($userid);
     	$user   = array(
     		'uid'         => $userid,
- 			'username'    => $objUser->name,
+ 			'username'    => $objUser->displayname,
     		'amount'      => $amount,
     		'amount_text' => Base_Util_Number::tausendStyle($amount),
     	);

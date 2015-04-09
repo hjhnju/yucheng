@@ -23,7 +23,7 @@ class Account_Logic_Repayplan {
             return $ret ;
         }
         $objUser  = User_Api::getUserObject($retData[0]['user_id']);
-        $invester = $objUser->name;
+        $invester = $objUser->displayname;
         foreach ($retData as $key=>$value) {
 
             $list[$key]['time']            = $value['promise_time'];     

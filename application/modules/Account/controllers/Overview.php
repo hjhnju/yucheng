@@ -102,7 +102,7 @@ class OverviewController extends Base_Controller_Page {
      *  }
      */
     public function profitcurveAction() {
-        $userName = $this->objUser->name;
+        $userName = $this->objUser->displayname;
         if(!isset($this->huifuid)) {
             $data = array(
             	'name' => $userName,

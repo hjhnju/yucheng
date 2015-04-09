@@ -22,7 +22,7 @@ class InviteController extends Base_Controller_Page {
         $intUserid = $logic->decode($strCode);
         //邀请人用户名/手机号/邀请码
         $objUser = User_Api::getUserObject($intUserid);
-        $name = $objUser->name;
+        $name = $objUser->displayname;
         $phone = $objUser->phone;
         $data = array(
         	'invname' => !empty($name) ? $name : '',

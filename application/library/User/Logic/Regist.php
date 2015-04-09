@@ -88,9 +88,12 @@ class User_Logic_Regist{
     public function regist($usertype, $username, $passwd, $phone, $inviter = ''){
 
         //各字段再验证过一遍
-        $retCode = $this->checkName($username);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));
+        //允许用户名为空
+        if(!empty($username)) {
+            $retCode = $this->checkName($username);
+            if(User_RetCode::SUCCESS !== $retCode){
+                return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));
+            }
         }
 
         //企业用户手机前面加0
@@ -105,7 +108,9 @@ class User_Logic_Regist{
 
         $passwd = Base_Util_Secure::encrypt($passwd);
         $objLogin           = new User_Object_Login();
-        $objLogin->name     = $username;
+        if(!empty($username)){
+            $objLogin->name     = $username;
+        }
         $objLogin->passwd   = $passwd;
         $objLogin->usertype = $usertype;
         $objLogin->phone    = $phone;

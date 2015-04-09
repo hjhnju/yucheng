@@ -22,7 +22,7 @@ class RequestAction extends Yaf_Action_Abstract {
         //获取申请借款人
         $objUser = User_Api::getUserObject($userid);
         $arrUser = array();
-        $arrUser['name'] = $objUser->name;
+        $arrUser['name'] = $objUser->displayname;
         $this->getView()->assign('user', $arrUser);
 
         //申请借款信息
