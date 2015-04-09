@@ -17,12 +17,12 @@ class ListController extends Base_Controller_Api {
         $list = Invest_Api::getLoanInvests($loanId, $page, $pagesize);
 
         //用户名加星
-        $ownUserName = $this->objUser->name;
+        $ownUserid = $this->objUser->userid;
         $retList = array();
         $retList['list'] = array();
         foreach($list['list'] as $arrVal){
             $arrRow = array();
-            if($arrVal['name'] !== $ownUserName){
+            if($arrVal['user_id'] !== $ownUserid){
                 $arrRow['name'] = Base_Util_String::starUserName($arrVal['name']);
             }else{
                 $arrRow['name'] = $arrVal['name'];

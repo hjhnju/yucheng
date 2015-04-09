@@ -57,6 +57,11 @@ class User_Object {
         'years',
     );
 
+    protected $elseProps = array(
+        'displayname',
+    );
+
+
     //封装User_Object_Login
     protected $loginObj;
 
@@ -93,6 +98,11 @@ class User_Object {
         }
         if($this->corpInfoObj && in_array($name, $this->corpInfoProps)){
             return $this->corpInfoObj->$name;
+        }
+
+        if(in_array($name, $this->elseProps)){
+            $method = 'get' . ucwords($name);
+            return $this->$method();
         }
 
         return null;
@@ -168,6 +178,19 @@ class User_Object {
             $this->thirdLogic = new User_Logic_Third($this->userid);
         }
         return $this->thirdLogic->getNickname($authtype);
+    }
+
+    /**
+     * 获取用户显示名
+     * @return string [description]
+     */
+    public function getDisplayname() {
+        $displayName = '匿名用户';
+        if($this->loginObj){
+            $displayName = !empty($this->loginObj->name) ? $this->loginObj->name : 
+                Base_Util_String::starPhone($this->loginObj->phone);
+        }
+        return $displayName;
     }
        
 }

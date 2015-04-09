@@ -65,7 +65,7 @@ class Base_Util_String {
 	}
 	
 	/**
-	 * 手机号加星
+	 * 手机号加星 186***043
 	 * @param string $phone
 	 * @return string
 	 */
@@ -73,6 +73,6 @@ class Base_Util_String {
 		if(empty($phone)) {
 			return '';
 		}
-		return substr_replace($phone,'****',3,4);
+		return substr_replace($phone,'***',3,5);
 	}
 }

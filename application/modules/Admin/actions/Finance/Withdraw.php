@@ -33,7 +33,7 @@ class WithdrawAction extends Yaf_Action_Abstract {
             $userid  = $value['userId'];
             $objUser = User_Api::getUserObject($userid);
             $arrUser[$key]['userid']    = $userid;
-            $arrUser[$key]['name']      = $objUser->name;
+            $arrUser[$key]['name']      = $objUser->displayname;
             $arrUser[$key]['huifuid']   = $objUser->huifuid;
             $arrUser[$key]['phone']     = $objUser->phone;
             $arrUser[$key]['orderId']   = $value['orderId'];

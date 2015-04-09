@@ -14,6 +14,11 @@ class RegistController extends Base_Controller_Page{
      * 若有第三方登陆，则显示绑定提示
      */
     public function indexAction(){
+        $isMobile = Base_Util_Mobile::isMobile();
+        if($isMobile){
+            return $this->redirect('/m/regist');
+        }
+
         //若有第三方登陆，则显示绑定提示
         $referer  = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : false;
         if(preg_match('#/user/login/third#', $referer) === 1){
