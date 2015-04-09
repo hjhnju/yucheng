@@ -3,14 +3,22 @@ body {
   background-color:#e7e7eb;
 }
 .kaitong-box-title { 
-    padding: 14px 0px 15px 0px;
+      padding: 24px 0px 15px 0px;
 }
 @media screen and (max-width: 640px) {
    .layout {
-     padding-bottom: 60px;
+        padding-bottom: 60px;
    }
+   .logo-img {
+        width: 66%; 
+        box-sizing:border-box;
+    }
+    .logo-img   img{
+        width: 100%;   
+    }
    .kaitong-box-content {
        width: 100%;
+       padding: 0px 30px;
    }  
    .login-fastlogin {
         margin-top: 15px;
@@ -18,28 +26,40 @@ body {
         height: 40px;
         line-height: 40px;
         font-size: 20px;
+        display: block;
     }
     .kaitong-box-text {
-      width: 100%;
-      color: #7f7f7f;
-      text-align: center;
+        width: 100%;
+        color: #7f7f7f;
+        text-align: left;
+        line-height: 18px;
+        margin: 30px 0px 0px;
     }
     .kaitong-box-content-title {
-         color: #000000;
+          color: #000000;
           font-size: 18px;
           text-align: center;
+          line-height: 24px;
     }
     //注册成功
      .success-box-content {
-         margin: 20px 0px 0px 0px; 
+         margin: 65px 0px 0px 0px; 
 
          .success-box-content-bg { 
-             background:url("../common/img/success.png");
-         }
-         .begin {
-              color: #4fc501;
+             width: 35%;
+         } 
+         .success-box-content-bg img { 
+             width: 100%;
          } 
      }
+     .begin {
+            color: #4fc501;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+         } 
 }
 @media screen and (min-width: 640px) {
    .layout {
@@ -49,6 +69,7 @@ body {
    }
     .kaitong-box-content {
    	    width: 100%;
+       padding: 0px 30px;
    }
      .login-fastlogin {
         margin-top: 15px;
@@ -56,27 +77,39 @@ body {
         height: 40px;
         line-height: 40px;
         font-size: 20px;
+        display: block;
     }
      .kaitong-box-text {
         width: 100%;
         color: #7f7f7f;
-        text-align: center;
+         text-align: left;
+        line-height: 18px;
+        margin: 30px 0px 0px;
     }
      .kaitong-box-content-title {
           color: #000000;
           font-size: 18px;
           text-align: center;
+          line-height: 24px;
     }
     //注册成功
      .success-box-content {
-         margin: 20px 0px 0px 0px; 
+         margin: 65px 0px 0px 0px; 
 
          .success-box-content-bg { 
-             background:url("../common/img/success.png");
-         }
-         .begin {
-            color: #4fc501;
+            width: 35%;
+          } 
+         .success-box-content-bg img { 
+             width: 100%;
          } 
+         
      }
-
+    .begin {
+            color: #4fc501;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            text-align: center;
+      } 
 }
