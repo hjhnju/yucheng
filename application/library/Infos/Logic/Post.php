@@ -23,12 +23,12 @@ class Infos_Logic_Post {
      * @param
      * @return
      */
-    public function getList($page = 1, $pagesize = 10,$strType, $status = 1) {
+    public function getList($page = 1, $pagesize = 10, $strType, $status = 1) {
         $list = new Infos_List_Infos();
         $list->setPage($page);
         $list->setPagesize($pagesize);
         //设置查询字段
-        $list->setFields(array('title','create_time','id','abstract','author','type','status'));
+        $list->setFields(array('title','publish_time','id','abstract','author','type','status'));
         $filters = array('status'=>$status, 'type'=>$this->getInfoType($strType));
         $list->setFilter($filters);
         $list->setOrder('publish_time desc');
