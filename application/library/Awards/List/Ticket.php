@@ -1,14 +1,14 @@
 <?php
 /**
- * 邀请奖励表 列表类
+ * 奖券表 列表类
  * @author hejunhua
  */
-class Awards_List_Invite extends Base_List {
+class Awards_List_Ticket extends Base_List {
     /**
      * 数据表名
      * @var string
      */
-    protected $table = 'awards_invite';
+    protected $table = 'awards_ticket';
 
     /**
      * 主键
@@ -20,7 +20,7 @@ class Awards_List_Invite extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'userid', 'inviterid', 'status', 'amount', 'memo', 'create_time');
+    protected $fields = array('id', 'type', 'value', 'valid_time', 'activity', 'userid', 'pay_time', 'create_time', 'update_time', 'memo');
 
     /**
      * 整数类型的字段
@@ -28,18 +28,21 @@ class Awards_List_Invite extends Base_List {
      */
     protected $intProps = array(
         'id'          => 1,
+        'type'        => 1,
+        'valid_time'  => 1,
         'userid'      => 1,
-        'inviterid'   => 1,
-        'status'      => 1,
+        'pay_time'    => 1,
+        'create_time' => 1,
+        'update_time' => 1,
     );
 
     /**
      * 获取数据的对象数组
-     * @return array|Awards_Object_Invite[]
+     * @return array|Awards_Object_Ticket[]
      * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
      */
     public function getObjects() {
-        return parent::getObjects('Awards_Object_Invite');
+        return parent::getObjects('Awards_Object_Ticket');
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * 注册奖励表 列表类
- * @author 
+ * @author hejunhua
  */
 class Awards_List_Regist extends Base_List {
     /**
@@ -27,6 +27,17 @@ class Awards_List_Regist extends Base_List {
      * @var array
      */
     protected $intProps = array(
+        'userid'      => 1,
+        'status'      => 1,
     );
+
+    /**
+     * 获取数据的对象数组
+     * @return array|Awards_Object_Regist[]
+     * 返回的是一个数组，每个元素是一个Loan_Object_Attach对象
+     */
+    public function getObjects() {
+        return parent::getObjects('Awards_Object_Regist');
+    }
 
 }

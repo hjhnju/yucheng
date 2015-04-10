@@ -11,7 +11,7 @@ class Msg_Api {
      * 6 提现消息
      */
     public static $_arrMsgMap = array(
-    	1 => array(
+    	Msg_Type::SYSTEM => array(
     	    'type'     => '系统消息',
     	    'content'  => '欢迎您加入兴教贷！兴教贷专注教育领域投融资，为您提供最特色的全方位安全投资保障。我们相信，教育是您最好的投资。',
     	    'linkname' => '新手指南',
@@ -69,17 +69,16 @@ class Msg_Api {
      * 发送系统消息
      * @param integer $fromid
      * @param integer $toid
-     * @param int  $intType：消息类型，定义见上面
-     * @param array   $arrContent
-     * @param string strTitle 消息标题
+     * @param int     $intType：消息类型，定义见 Msg_Type
+     * @param array   $arrParam
      * @return true|false 成功true, 失败 false
      */
-    public static function sendmsg($fromid, $toid, $intType,$strTitle,$arrParam) {
+    public static function sendmsg($toid, $intType, $arrParam = array(), $fromid = 0) {
         $objMsg = new Msg_Object_Msg();
         $objMsg->sender    = $fromid;
         $objMsg->receiver  = $toid;
         $objMsg->type      = self::$_arrMsgMap[$intType]['type'];
-        $objMsg->title     = $strTitle;
+        $objMsg->title     = Msg_Type::getTypeName($intType);
         if(!empty($arrParam)){
             $strContent = vsprintf(self::$_arrMsgMap[$intType]['content'],$arrParam);            
         }else{
