@@ -103,9 +103,9 @@
             <span class="notice-title">最新公告</span>
             
             <div class="item-wrap">
-                {%foreach $data.platPost as $key => $item%} 
+                {%foreach $data.newpost as $key => $item%} 
                     <div class="item  clearfix" data-order="{%$smarty.foreach.name.index%}">
-					<a  target="_blank"  href="{%$webroot%}/infos/post/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}">{%$item.title_cut_long%}</a>
+					<a  target="_blank"  href="{%$webroot%}/infos/post/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}">{%$item.title%}</a>
 					<p class="time">{%$item.create_time|date_format:"%Y-%m-%d"%}</p>
 					</div>
                 {%/foreach%} 
@@ -259,13 +259,13 @@
         <div class="plat-notice-box refund-notice-box fl">
                 <div class="plat-notice-box-title"><a target="_blank" href="{%$webroot%}/infos/refund">还款公告</a></div> 
                  {%foreach $data.refundPost as $key => $item%} 
-                   <a target="_blank" href="{%$webroot%}/infos/refund/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a>
+                   <a target="_blank" href="{%$webroot%}/infos/refund/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title%}</a>
                  {%/foreach%} 
         </div>
          <div class="plat-notice-box notice-box-wh fl" style="margin-left:40px;">
                <div class="plat-notice-box-title"><a target="_blank" href="{%$webroot%}/infos/post">平台公告</a></div> 
                 {%foreach $data.platPost as $key => $item%} 
-                   <a target="_blank" href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title_cut%}</a><p class="time">{%$item.create_time|date_format:'%Y-%m-%d'%}</p>
+                   <a target="_blank" href="{%$webroot%}/infos/post/detail?id={%$item.id%}" title="{%$item.title%}">{%$item.title%}</a><p class="time">{%$item.publish_time|date_format:'%Y-%m-%d'%}</p>
                  {%/foreach%}
                </div>
         <div class="phone-box fr" style="margin-left:0px;">

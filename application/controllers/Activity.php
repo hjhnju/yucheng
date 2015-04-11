@@ -13,7 +13,7 @@ class ActivityController extends Base_Controller_Page {
      * 活动列表页
      */
     public function indexAction() {
-    	
+        
     }
 
     /**

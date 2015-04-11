@@ -122,6 +122,8 @@ class Invest_Logic_Invest {
         }
 
         Invest_Logic_ChkStatus::setInvestStatus($orderId, true);
+
+        Awards_Api::investNotify($userid, $amount);
         return true;
     }
     

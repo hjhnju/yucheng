@@ -1,6 +1,6 @@
 <?php
 /**
- * 邀请模块API接口
+ * 奖励模块API接口
  * @author hejunhua
  *
  */
@@ -11,21 +11,33 @@ class Awards_Api {
      * 用户注册时通知模块
      * 不管是否有邀请者, 注册成功后均通知
      * @param $userid
-     * @param $inviterid, default null
      * @return array || false
      */
-    public static function registNotify($userid, $inviterid = null){    	
-    	if(is_null($userid) || $userid<0 ) {
-    		Base_Log::error("invalid param",array('userid'=>$userid));
-    		return false;
-    	}
-        $logic = new Awards_Logic_Awards();
-        $ret = $logic->awardWhenRegist($userid, $inviterid);
-        if(!$ret){
-            Base_Log::warn(array('userid'=>$userid, 
-                'inviterid'=>$inviterid, 'ret'=>$ret));
+    public static function registNotify($userid){        
+        if(is_null($userid) || $userid <= 0) {
+            Base_Log::error("invalid param", array('userid'=>$userid));
+            return false;
         }
-        return $ret;
+        $logic = new Awards_Logic_Award();
+        //分配注册奖励
+        $logic->giveRegistAward($userid);
+        
+        return true;
+    }
+
+    /**
+     * Awards_Api::investNotify($userid, $amount)
+     * @param $userid
+     * @param $amount 投资金额
+     */
+    public static function investNotify($userid, $amount){
+        $logic = new Awards_Logic_Award();
+        //分配邀请人奖励
+        $logic->giveInviterAward($userid, $amount);
+        //分配个人投资奖励
+        $logic->giveInvestAward($userid, $amount);
+        
+        return true;
     }
 
     /**
@@ -57,14 +69,5 @@ class Awards_Api {
         $logic = new Awards_Logic_Invite();
         return $logic->getInviteUrl($userid);
     }
-    
-    /**
-     * Awards_Api::receiveAwards($userid)
-     * 领取奖励Api
-     * @param integer $userid
-     * 
-     */
-    public static function receiveAwards($userid) {
-    	 
-    }
+
 }

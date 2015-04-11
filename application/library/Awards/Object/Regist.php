@@ -45,6 +45,8 @@ class Awards_Object_Regist extends Base_Object {
      * @var array
      */
     protected $intProps = array(
+        'userid'      => 1,
+        'status'      => 1,
     );
 
     /**
@@ -57,19 +59,19 @@ class Awards_Object_Regist extends Base_Object {
 
     /**
      * 用户id
-     * @var 
+     * @var integer
      */
     public $userid;
 
     /**
      * 领取状态:1-未达到, 2-已达到未领取，3-已领取
-     * @var 
+     * @var integer
      */
     public $status;
 
     /**
      * 奖励金额
-     * @var 
+     * @var number
      */
     public $amount;
 
