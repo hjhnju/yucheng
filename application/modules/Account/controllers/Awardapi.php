@@ -77,5 +77,23 @@ class AwardapiController extends Base_Controller_Api {
         }
         $this->ajax($data);
     }
+
+    /**
+     * /awardapi/exchange
+     * @param ticketid 奖券id
+     * @param token 默认csrftoken
+     */
+    public function exchangeAction() {
+        //错误信息
+        $status = 1085;
+        $msg  = '该奖券不能重复领取。';
+        $this->ajaxError($status, $msg);
+        
+        //正确信息
+        $data = 30.00;
+        $msg = '您已兑换30.00元现金，可进入账户中心查看。';
+        $this->ajax($data, $msg);
+
+    }
   
 }
