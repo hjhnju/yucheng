@@ -22,7 +22,7 @@ class RegistController extends Base_Controller_Page{
             $logic    = new User_Logic_Third();
             $nickname = $logic->getUserNickname($openid, $authtype);
     
-            $this->getView()->assign("type", $authtype);
+            $this->getView()->assign("type", strtoupper($authtype));
             $this->getView()->assign("third", $nickname);
     
             Base_Log::notice(array(
