@@ -1,3 +1,0 @@
-define('my/operation/operation.tpl', [], function () {
-    return '<!--target: typeList--><table border="0" cellspacing="0" cellpadding="0" class="my-invest-table operation-table"><tr><th>\u65F6\u95F4</th><th>\u4EA4\u6613\u7C7B\u578B</th><th>\u4EA4\u6613\u6D41\u6C34\u53F7</th><th>\u91D1\u989D</th><th>\u53EF\u7528\u4F59\u989D</th><th>\u72B6\u6001</th></tr><!-- for: ${list} as ${item} --><tr><td>${item.time}</td><td>${item.typeName}</td><td>${item.serialNo}</td><td>${item.tranAmt}\u5143</td><td>${item.avalBg}\u5143</td><td>${item.status}</td></tr><!--/for--></table>';
-});
