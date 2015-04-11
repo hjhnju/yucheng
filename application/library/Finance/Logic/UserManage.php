@@ -16,13 +16,13 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
     
     /**
      * 用户开户
-     * @param string userName
+     * @param string userName, 可以为空
      * @param string userMp
      * @param string userid
      * autoRedirect || return false
      */
     public function userRegist($userName,$userid,$userMp='') {
-        if(!isset($userName) || !isset($userid) || $userid <= 0) {
+        if(!isset($userid) || $userid <= 0) {
             Base_Log::error(array(
                 'msg'      => '请求参数错误',
                 'userName' => $userName,
@@ -33,7 +33,8 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
         }
         $bgRetUrl = $this->webroot.'/finance/bgcall/userregist';
         $retUrl   = $this->webroot.'/finance/ret';
-        $usrId    = strval($userName);
+        //默认填好汇付账号名
+        $usrId    = empty($userName) ? '' : strval($userName);
         $usrMp    = '';//strval($userMp);
         $usrName  = '';
         $idType   = '';

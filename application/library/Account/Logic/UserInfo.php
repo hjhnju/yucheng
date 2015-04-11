@@ -51,7 +51,7 @@ class Account_Logic_UserInfo {
         	$ret['unreadMsg'] = 1;
         }      
         //用户名
-        $username        = $objUser->name;
+        $username        = $objUser->displayname;
         $username        = isset($username) ? $username : '';
         $ret['username'] = $username;
         

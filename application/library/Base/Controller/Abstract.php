@@ -54,7 +54,7 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
         //为页面统一assign用户信息
         if(!$this->isAjax() && !empty($this->objUser)){
             $user = array(
-                'username' =>  $this->objUser->name,
+                'username' =>  $this->objUser->displayname,
             );
             $this->getView()->assign('user', $user);
         }

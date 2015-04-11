@@ -21,6 +21,13 @@ class LoginController extends Base_Controller_Page{
         if($userid){
             $this->redirect('/account/overview');
         }
+
+        //移动端跳转
+        $isMobile = Base_Util_Mobile::isMobile();
+        if($isMobile){
+            return $this->redirect('/m/login');
+        }
+
         $logic = new User_Logic_Login();
         $u = isset($_REQUEST['u'])?trim($_REQUEST['u']):null;
         if(!empty($u)){
