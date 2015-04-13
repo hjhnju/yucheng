@@ -7,6 +7,7 @@
 class Awards_Api {
 
     /**
+     * 注册时触发奖励
      * Awards_Api::registNotify($userid, $inviterid)
      * 用户注册时通知模块
      * 不管是否有邀请者, 注册成功后均通知
@@ -30,6 +31,7 @@ class Awards_Api {
     }
 
     /**
+     * 投资时投资触发奖励
      * Awards_Api::investNotify($userid, $amount)
      * @param $userid
      * @param $amount 投资金额
@@ -69,6 +71,42 @@ class Awards_Api {
     }
 
     /**
+     * 获取邀请奖励列表
+     * @param  int $userid 
+     * @param  array $arrInvId, 一般不超过10个每页
+     * @return array array($userid => $awardAmt,)
+     */
+    public static function getInviteAwards($userid, $arrInvId) {
+        $list = new Awards_TicketList();
+        $list->setFields(array('extraid', 'value'));
+        $list->setFilter(array(
+            'userid'      => $userid, 
+            'award_type'  => Awards_Type_AwardType::INVITE,
+            'ticket_type' => Awards_Type_TicketType::CASH,
+            'status'      => Awards_Type_TicketStatus::EXCHANGED,
+        ));
+        $list->appendFilterString('extraid IN (' . implode(',', $arrInvId) . ')');
+        $list = $list->toArray();
+        $arrRet = array_fill_keys($arrInvId, 0);
+        foreach ($list['list'] as $row) {
+            $arrRet[$row['extraid']] += floatval($row['value']);
+        }
+        return $arrRet;
+    }
+
+    public function getInviteAwardsSum($userid){
+        $list = new Awards_TicketList();
+        $list->setFilter(array(
+            'userid'      => $userid, 
+            'award_type'  => Awards_Type_AwardType::INVITE,
+            'ticket_type' => Awards_Type_TicketType::CASH,
+            'status'      => Awards_Type_TicketStatus::EXCHANGED,
+        ));
+        $total = $list->sumField('value');
+        return $total;
+    }
+
+    /**
      * Awards_Api::getAwards($userid)
      * 获取奖励列表
      * 1. 获取所有被邀请人的注册状态，投资进度
@@ -81,10 +119,6 @@ class Awards_Api {
     public static function getAwards($inviterid) {
         $logic = new Awards_Logic_Awards();
         return $logic->getAwards($inviterid);
-    }
-
-    public static function getInviteAwards($userid) {
-        
     }
 
     /**

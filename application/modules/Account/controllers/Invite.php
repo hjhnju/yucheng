@@ -25,7 +25,6 @@ class InviteController extends Base_Controller_Page {
         $inviteUrl  = Awards_Api::getInviteUrl($userid);
         $inviteUrl  = ($inviteUrl != false) ? $inviteUrl : ""; //获取该用户的专属邀请链接
         
-        // $inviteInfo = Awards_Api::getInviteAwards($userid);//获取邀请列表
         $inviteInfo = array(
             'invitee_awards'     => '50.00',
             'invitee_cnt'        => 10,

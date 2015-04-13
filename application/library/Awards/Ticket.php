@@ -1,6 +1,12 @@
 <?php
+/**
+ * 奖券类
+ * @author hejunhua
+ * @since  2015-04-12
+ */
 class Awards_Ticket extends Awards_Object_Ticket {
 
+    //活动类
     protected $actObj;
 
     public function setData($data){
