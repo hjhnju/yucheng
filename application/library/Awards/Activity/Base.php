@@ -4,7 +4,7 @@
  * 设计考虑，活动是比较少的，不采用数据库存储；
  * @author hejunhua
  */ 
-class Awards_Activity_Base {
+abstract class Awards_Activity_Base {
 
     //活动名称
     protected $name;
@@ -14,6 +14,17 @@ class Awards_Activity_Base {
 
     //活动截止时间
     protected $endTime;
+
+    //描述
+    protected $desc;
+
+    public function getName(){
+        return $this->name;
+    }
+
+    public function getDesc(){
+        return $this->desc;
+    }
 
     /**
      * 领奖时判断用户$userid是否已完成活动领奖条件
@@ -30,7 +41,27 @@ class Awards_Activity_Base {
      * @param $mixArg [description]
      * @return mix
      */
-    public static function getValue($mixArg = null){
+    public function getValue($mixArg = null){
         return 0;
     }
+
+    /**
+     * 活动是否在有效期
+     * @return  boolean
+     */
+    public function isActive(){
+        $ts = time();
+        if($ts < $this->endTime && $ts > $this->startTime){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 为参与活动的用户发放奖券
+     * @param $userid, 获奖用户id
+     * @param $arrParam, 活动奖励相关参数
+     * @return boolean
+     */
+    public abstract function giveAward($userid, $arrParam = array());
 }

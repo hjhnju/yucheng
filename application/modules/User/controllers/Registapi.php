@@ -141,8 +141,7 @@ class RegistApiController extends Base_Controller_Api{
         $userid = $objRet->data['userid'];
 
         //登记邀请人
-        Base_Log::debug(array('userid'=>$userid, 'inviterid'=>$inviterid));
-        Awards_Api::registNotify($userid, $inviterid);
+        $logic->setInviter($userid, $inviterid);
 
         //进行绑定第三方账户
         if($isThird > 0){
@@ -179,6 +178,8 @@ class RegistApiController extends Base_Controller_Api{
         
         //注册后的系统消息
         Msg_Api::sendmsg($userid, Msg_Type::SYSTEM);
+        //通知注册奖励
+        Awards_Api::registNotify($userid, $inviterid);
         
         return $this->ajaxJump('/user/open');
     }

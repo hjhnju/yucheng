@@ -11,10 +11,10 @@ class Awards_Type_TicketStatus extends Base_Type {
      */
     const NOT_FINISH = 1;
     /**
-     * 2 未领取
+     * 2 未使用
      * @var integer
      */
-    const NOT_FETCHED = 2;
+    const NOT_USED = 2;
     /**
      * 3 已使用 
      * @var integer
@@ -44,7 +44,7 @@ class Awards_Type_TicketStatus extends Base_Type {
      */
     public static $names = array(
         self::NOT_FINISH  => '尚未达成',
-        self::NOT_FETCHED => '未领取',
+        self::NOT_USED    => '未使用',
         self::EXCHANGED   => '已使用',
         self::OVER        => '已过期',
     );

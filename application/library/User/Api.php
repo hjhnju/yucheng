@@ -276,4 +276,12 @@ class User_Api{
         Base_Log::notice(array('status'=>$objRet->status));
         return $objRet->format();
     }
+
+    public static function getInviteridByUserid($userid){
+        $invite = new User_Object_Invite(array('invitee'=>$userid));
+        if($invite->isLoaded()){
+            return $invite->userid;
+        }
+        return null;
+    }
 }
