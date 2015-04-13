@@ -284,4 +284,39 @@ class User_Api{
         }
         return null;
     }
+
+    /**
+     * 获取邀请用户id列表
+     * @param  int $userid   邀请人id
+     * @param  [type] $page     [description]
+     * @param  [type] $pagesize [description]
+     * @return array  
+     */
+    public static function getInvitees($userid, $page, $pagesize){
+        $list = new User_List_Invite();
+        $list->setFields(array('invitee'));
+        $list->setFilter(array('userid'=>$userid));
+        $list->setOrder('invitee desc');
+        $list->setPage($page);
+        $list->setPagesize($pagesize);
+        $list = $list->toArray();
+
+        return $list;
+    }
+
+    public static function getInfos($arrUid){
+        if(empty($arrUid)){
+            return false;
+        }
+        $list = new User_List_Login();
+        $list->setFields(array('userid', 'name', 'phone', 'email', 'huifuid'));
+        $list->setFilterString('userid IN ('. implode(',', $arrUid) . ')');
+        $list->setPagesize(PHP_INT_MAX);
+        $list = $list->toArray();        
+        $arrRet = array_fill_keys($arrUid, null);
+        foreach ($list['list'] as $row) {
+            $arrRet[$row['userid']] = $row;
+        }
+        return $arrRet;
+    }
 }

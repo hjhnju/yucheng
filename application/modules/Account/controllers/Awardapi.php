@@ -5,8 +5,6 @@
  */
 class AwardapiController extends Base_Controller_Api {
     
-    CONST PAGESIZE = 10;    
-
     public function init() {
         parent::init();
     }
