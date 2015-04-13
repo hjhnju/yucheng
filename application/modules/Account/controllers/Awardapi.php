@@ -48,7 +48,7 @@ class AwardapiController extends Base_Controller_Api {
         $list->setPage($page);
         $list->setPagesize($pagesize);
         $arrData = $list->toArray();
-        unset($arrData['list']);
+        $arrData['list'] = array();
         $arrObjs = $list->getObjects();
         foreach ($arrObjs as $ticket) {
             $arrTicket                = array();
@@ -59,6 +59,7 @@ class AwardapiController extends Base_Controller_Api {
             $arrTicket['ticket_type'] = $ticket->ticketType;
             $arrTicket['src']         = $ticket->getSource();
             $arrTicket['enabled']     = intval($ticket->isEnabled());
+            $arrTicket['status']      = $ticket->status;
             if($arrTicket['enabled'] 
                 && $ticket->status === Awards_Type_TicketStatus::NOT_FINISH){
                 $ticket->status = Awards_Type_TicketStatus::NOT_USED;
