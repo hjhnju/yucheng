@@ -28,12 +28,13 @@ class AwardapiController extends Base_Controller_Api {
      *       'enabled' => 1, //是否可兑换
      *       'desc' => '可直接兑换现金',
      *       'pay_time' => 1423589305, //兑换时间
+     *       'status' => 1, //1-未达成，2-未使用，3-已使用，4-已过期
      *   ),
      */
     public function ticketsAction() {
         $status = isset($_REQUEST['status']) ? intval($_REQUEST['status']) : 
             Awards_Type_TicketStatus::NOT_USED;
-        $page = intval($_REQUEST['page']);
+        $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
         $pagesize = isset($_REQUEST['pagesize']) ? intval($_REQUEST['pagesize']) : 10;
 
 
@@ -93,7 +94,7 @@ class AwardapiController extends Base_Controller_Api {
 
         $desc = $ticket->getValueDesc();
         $msg = '您已兑换'.$desc.'成功，可进入账户总览中查看。';
-        return $this->ajax(null, $msg);
+        return $this->ajax(array('msg'=>$msg));
 
     }
   
