@@ -1,22 +1,23 @@
 /**
  * @ignore
  * @file index.js
- * @author fanyy
- * @time 15-4-11
+ * @author yangbinYB(1033371745@qq.com)
+ * @time 14-12-16
  */
 
 define(function (require) {
-    var $ = require('jquery');
-    var etpl = require('etpl');
-    var tpl = require('./list.tpl');
-    
-    var Pager = require('common/ui/Pager/Pager');
-     var moment = require('moment');
-    var commonData = require('common/data');
+
+    var util = require('common/util');
     var header = require('common/header');
-    var Remoter = require('common/Remoter'); 
-    var ticketsList=new Remoter('ACCOUNT_AWARDAPI_TICKETS');
-    var toExchange=new Remoter('ACCOUNT_AWARDAPI_EXCHANGE');
+    var Remoter = require('common/Remoter');
+    var config = require('common/config');
+    var tpl = require('./list.tpl');
+    var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
+
+    var inviteList=new Remoter('ACCOUNT_INVITE_LIST');
+    var item;
+    var codeUrl;
+
 
     // 分页对象
     var pager;
@@ -37,59 +38,86 @@ define(function (require) {
      *
      * @public
      */
-    function init( ) {
-         
+    function init(url) {
         htmlContainer = $('#my-reward-list');
-        header.init();
         etpl.compile(tpl);
-        
-         ticketsList.remote({
+        codeUrl = url;
+        header.init();
+
+        inviteList.remote({
             page: 1
         });
 
         ajaxCallBack();
-        bindEvents(); 
+        bindEvent(); 
 
     }
 
-    function bindEvents() {
+    function bindEvent() {
 
-         // 选择奖券类型
-        $('.my-reward-tab-item').click(function () {
-            if (!$(this).hasClass('current')) {
-                // 改变选中状态
-                $('.my-reward-tab-item').removeClass('current');
-                $(this).addClass('current');
+        //点击领取
+        $('.table-tr-span').click(util.debounce(function (e) {
+            e.preventDefault();
+            item = $(this);
 
-                // 记录当前选中类型
-                status = +$.trim($(this).attr('data-value'));
+            if($(this).hasClass('current')) {
+                return;
+            }
 
-                // 获取数据
-                getRemoteList(1);
+            receiveAwards.remote({
+                id: $(this).attr('data-id')
+            });
+        }, 1000));
+
+        //receiveAwardsCb
+        receiveAwards.on('success', function (data) {
+            if(data && data.bizError) {
+                alert(data.statusInfo);
+            }
+            else {
+                item.addClass('current').html('已领取' + data.amount + '元');
+                alert('领取成功');
+            }
+        });
+        
+        // 邀请奖励
+        $('.reward-type-link-span').zclip({
+            path: config.URL.ROOT + '/static/ZeroClipboard.swf',
+            copy: $.trim($('.reward-type-link-http').html()),
+            afterCopy: function() {
+                alert('复制成功');
             }
         });
 
+        // 生成二维码
+        var qrcode = new QRCode(
+            $('.erweima')[0], {
+                width: 126, //宽度
+                height: 126 //高度
+            }
+        );
 
-        
+        qrcode.makeCode(codeUrl);
     }
+
     
-  /**
+     /**
      * 绑定请求回调
      *
      * @inner
      */
     function ajaxCallBack() {
-        // 奖券列表 成功
-        ticketsList.on('success', function (data) {
+        // 邀请列表 成功
+        inviteList.on('success', function (data) {
             if (data.bizError) {
                 renderError(data);
             }
             else {
                 if (!data.list.length) {
                     pager = null;
-                    $('#my-reward-pager').html('');
+                    $('#my-invite-pager').html('');
                     htmlContainer.html(etpl.render('Error', {
-                        msg: '您当前没有奖券哟'
+                        msg: '您还没有邀请好友哟，赶快去邀请好友参与活动'
                     }));
                     return;
                 }
@@ -154,9 +182,8 @@ define(function (require) {
         htmlContainer.html(etpl.render('Loading'));
         $('#my-reward-pager').html('');
 
-         ticketsList.remote({
-                    page: page,
-                    status:status
+         inviteList.remote({
+             page: page
         }); 
     }
 

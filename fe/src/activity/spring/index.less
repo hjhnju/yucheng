@@ -1,0 +1,391 @@
+@import "../../common/css/common.less";  
+//flex 布局
+.flex-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+//春风化雨活动页面 
+#scrollUp {
+    bottom: 20px;
+    right: 20px;
+    width: 124px;
+    height: 105px;
+    background: url(img/backup_btn.png) 0 0 no-repeat;
+}
+
+.activity {  
+       //颜色渐变
+     background:linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#41a276);
+     background:-ms-linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#41a276);
+     background:-moz-linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#44a478);
+     background:-webkit-gradient(linear, 0 0, 0 100%, from(#fefef5), to(#41a276),color-stop(0.28, #fdf8a6),color-stop(0.83, #72c09c));
+     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fefef5,endColorstr=#41a276,grandientType=1);
+    
+      width: 100%;
+
+    .activity-big_tree{
+        background:url(common/img/big_tree1.png) center center no-repeat;
+        width:100%; 
+     }
+    .container {
+        background-color: #fff;
+        width: 1000px;
+        height: 650px;
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+    .big-leaf {
+        width: 1264px;
+        height: 502px;
+        background: url(img/big_leaf.png) 0 0 no-repeat;
+        .slogan {
+            width: 1000px;
+            height: 480px;
+            background: url(img/activity_bg1.png) 0 0 no-repeat;
+            position: relative;
+            top: -15px;
+            left: 0px;
+
+            span { 
+                 display: block;
+                 position: relative;
+                 left: 115px;
+                 top: 400px; 
+            }
+        }
+    }
+    .big-gift {
+        background: url(img/big_gift.png) 0 0 no-repeat;
+        width: 1124px;
+        height: 438px;
+        z-index: 99;
+    }
+     
+    .activity-btn {
+        display: block;
+        width: 220px;
+        height: 60px;
+        font-size: 26px;
+        line-height: 60px;
+        text-align: center;
+        text-decoration: none; 
+        cursor: pointer;
+        margin-right: 20px;
+   text-decoration: none; 
+   color: #3e3e3e;
+        background:url(img/activity_btn.png)  0 -360px no-repeat;
+
+              transition: background-position 0.4s ease-in-out .1s;
+              -webkit-transition: background-position 0.4s ease-in-out .1s;
+              -moz-transition: background-position 0.4s ease-in-out .1s;
+              -o-transition: background-position 0.4s ease-in-out .1s;
+        &:hover  {
+               text-decoration: none; 
+   color: #3e3e3e;
+              background-position: 0 -480px;
+              transition: background-position 0.4s ease-in-out .1s;
+              -webkit-transition: background-position 0.4s ease-in-out .1s;
+              -moz-transition: background-position 0.4s ease-in-out .1s;
+              -o-transition: background-position 0.4s ease-in-out .1s;
+        }
+    }
+
+    .activity-text {
+        font-size: 20px;
+        line-height: 36px;
+        width: 620px;
+        height: 252px;
+        margin-left: 25px;
+        .rule-btn {
+            display: block;
+            height: 30px;
+            color: #fff;
+            line-height: 30px;
+            font-size: 18px;
+            width: 108px; 
+            cursor: pointer;
+            background-color: #f2746a;
+            text-align: center;
+            margin-top: 55px;
+            text-decoration: none;
+        }
+        .rule-btn-w {
+             width: 242px; 
+             margin-top: 20px;
+        }
+        .rule-box {
+            width: 340px;
+            height: 178px;
+            padding: 11px 13px; 
+            margin-right: 32px;
+            background-color: #f3ba8d;
+            .border-radius(10px);
+            .rule-box-content {
+                  width: 340px;
+                  height: 158px;
+                  margin: 0 auto; 
+                  font-size: 12px;
+                  line-height: 30px; 
+                  background-color: #fff;
+                  padding: 10px 0px;
+                 .border-radius(10px);
+                  overflow: hidden;
+                 .rule-box-left {
+                     display: block; 
+                     border-right: 1px solid #4fc501;
+                      width: 170px;
+                      text-align: center;
+                 }
+                 .rule-box-right {
+                     display: block;
+                      width: 166px;
+                       text-align: center;
+                 }
+            }
+        }
+    }
+    .activity-list {
+        width: 316px;
+        height: 252px;
+        margin-right: 38px;
+        background-color: #f2746a; 
+        color: #fff;
+        overflow: hidden;
+        .border-radius(5px);
+        .activity-list-title {
+             display: block;
+             height: 32px;
+             font-size: 24px;
+             line-height: 32px;  
+             margin: 4px 0px;
+             padding-right: 8px;
+             padding-left: 18px;
+             width: 100%;
+             text-align: center;
+
+        }
+        .more {
+             display: none;
+             height: 20px;
+             font-size: 12px;
+             line-height: 20px;  
+             margin-top: 16px;
+             padding-right: 8px;  
+             text-decoration: none;
+             color: #fff;
+        }
+        .activity-list-content { 
+            width: 276px; 
+            border-top: 1px solid #fdab68;
+            font-size: 12px;
+            line-height: 36px; 
+            padding: 20px 20px;
+            overflow: hidden;
+
+            li {
+                 font-size: 12px;
+                 line-height: 23px; 
+            }
+        }
+         .activity-list-content-scroll {
+               height: 170px;
+            width: 276px;
+            overflow: hidden;
+              li {
+                 font-size: 12px;
+                 line-height: 30px; 
+            }
+        }
+    }
+
+    
+
+
+
+
+
+
+
+    .activity-box1 {
+        height: 340px;
+        width: 1000px;
+        background-color: #fede77;
+        padding-top: 20px;
+        top: -54px;
+        .bg-img1 {
+            background: url(img/activity_box1_bg.png) 0 0 no-repeat;
+        }
+        .activity-text {
+	    	font-size: 24px; 
+            margin-top: 60px;
+         }
+     }
+    .activity-box2 {
+        height: 1333px;
+        width: 1000px;
+        background-color: #ffce30;
+        top: -54px;
+        .bg-img2 {
+            height: 1333px;
+            width: 1000px;
+            background: url(img/activity_box2_bg.png) 0 0 no-repeat;
+        }
+        .activity-text {
+             margin-top: 150px;
+        }
+        .activity-list {
+            margin-top: 150px;
+            .activity-list-content li span{
+                  display: block;
+                 -webkit-flex: 1;
+                  flex: 1;
+                  text-align: center;
+                  width: 92px;
+                  float: left;
+            }
+        }
+    }
+    .activity-box3 {
+        height: 1065px;
+        width: 1000px;
+        background-color: #fdab68;
+        top: -54px;
+        .bg-img3 {
+            height: 1065px;
+            width: 1000px;
+            background: url(img/activity_box3_bg.png) 0 0 no-repeat;
+        }
+        .activity-text {
+             margin-top: 150px;
+
+             .rule-btn {
+                margin-top: 28px;
+             }
+        }
+        .activity-list {
+            margin-top: 150px;
+            height: 292px;
+            .activity-list-content li span{
+                 display: block;
+                    -webkit-flex: 1;
+          flex: 1;
+          text-align: center;
+          width: 92px;
+          float: left;
+            }
+        }
+    }
+    .leaf-line {
+        width: 1000px;
+        height: 84px;
+        background: url(img/leaf_line.png) 0 0 no-repeat;
+        top: -54px;
+    }
+    .leaf-line1 {
+       background-position: 0 0;
+    }
+    .leaf-line2 {
+        background-position: 0 -200px;
+    }
+    .activity-btn1 {
+    	width: 250px;
+        height: 55px;
+        background-position: 0 0;
+        position:relative;
+        top: 10px;
+        left: 25px;
+        &:hover {
+             background-position: 0 0;
+        }
+    }
+    .activity-btn2 {
+    	width: 250px;
+        height: 55px;
+        background-position: 0 -120px;
+         position:relative;
+        top: 10px;
+        left: 25px;
+         &:hover {
+             background-position: 0 -120px;
+        }
+    }
+    .activity-btn3 {
+        width: 250px;
+        height: 55px;
+        background-position: 0 -240px;
+         position:relative;
+        top: 10px;
+        left: 25px;
+         &:hover {
+             background-position: 0 -240px;
+        }
+    } 
+}
+
+ 
+
+
+#mk-dialog .bg {
+   .border-radius(15px); 
+   padding: 35px 0px;
+}
+
+.activity-dialog {
+    width: 700px; 
+
+   .activity-dialog-title {
+       width: 700px;
+       font-size: 33px;
+       line-height: 98px;
+       height: 98px;
+       color: #50c502;
+       text-align: center;
+   }
+
+   .activity-text {
+       font-size: 14px;
+       line-height: 30px;
+       color: #3a3a3a;
+       padding: 0px 80px;
+       span {
+          color: #95c65d;
+       }
+   }
+   .ok_btn {
+       width: 224px;
+       height: 45px;
+       background-color: #59db02;
+       font-size: 25px;
+       line-height: 45px;
+       .border-radius(10px);
+       color: #fff;
+       display: block;
+       margin-left: 250px;
+       border:none;
+       margin-top: 10px;
+       cursor: pointer;
+   }
+   table {
+      width: 100%;
+        th {
+          color: #95c65d;
+          text-align: center;
+       }
+       td {
+          text-align: center;
+
+          &.height {
+             line-height: 20px;
+          }
+       }
+   }
+}
+
+ 

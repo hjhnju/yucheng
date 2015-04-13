@@ -29,6 +29,7 @@ exports.getProcessors = function () {
             'src/my/operation/index.less',
             'src/my/topup/index.less',
             'src/my/success/index.less',
+            'src/my/invite/index.less',
             'src/project/detail/index.less',
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
@@ -53,7 +54,9 @@ exports.getProcessors = function () {
             'src/help/index.less',
             'src/m/regist/index.less',
             'src/m/login/index.less',
-            'src/m/open/index.less'
+            'src/m/open/index.less',
+            'src/activity/index.less',
+            'src/activity/spring/index.less'
 
         ]
     });
@@ -72,6 +75,7 @@ exports.getProcessors = function () {
             'src/my/operation/index.less',
             'src/my/topup/index.less',
             'src/my/success/index.less',
+            'src/my/invite/index.less',
             'src/project/detail/index.less',
             'src/project/list/index.less',
             'src/setting/chpassword/index.less',
@@ -96,7 +100,9 @@ exports.getProcessors = function () {
             'src/help/index.less',
             'src/m/regist/index.less',
             'src/m/login/index.less',
-            'src/m/open/index.less'
+            'src/m/open/index.less',
+            'src/activity/index.less',
+            'src/activity/spring/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler({
@@ -123,6 +129,7 @@ exports.getProcessors = function () {
             'src/my/operation/index.js',
             'src/my/topup/index.js',
             'src/my/success/index.js',
+            'src/my/invite/index.js',
             'src/project/detail/index.js',
             'src/project/list/index.js',
             'src/setting/chpassword/index.js',
@@ -144,7 +151,9 @@ exports.getProcessors = function () {
             'src/help/index.js',
             'src/m/regist/index.js',
             'src/m/login/index.js',
-            'src/m/open/index.js'
+            'src/m/open/index.js',
+            'src/activity/index.js',
+            'src/activity/spring/index.less'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
