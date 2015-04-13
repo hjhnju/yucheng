@@ -171,4 +171,20 @@ class User_Logic_Regist{
         }
         return $type;
     }
+
+    public function setInviter($userid, $inviterid){
+        $invite          = new User_Object_Invite();
+        $invite->userid  = intval($inviterid);
+        $invite->invitee = intval($userid);
+        $bolRet          = $invite->save();
+        if(!$bolRet){
+            Base_Log::error(array(
+                'msg'       => 'set invite error',
+                'userid'    => $userid,
+                'inviterid' => $inviterid,
+            ));
+            return false;
+        }
+        return true;
+    }
 }

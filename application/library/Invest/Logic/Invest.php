@@ -123,7 +123,7 @@ class Invest_Logic_Invest {
 
         Invest_Logic_ChkStatus::setInvestStatus($orderId, true);
 
-        Awards_Api::investNotify($userid, $amount);
+        Awards_Api::investNotify($userid, $invest->id, $amount);
         return true;
     }
     
@@ -551,10 +551,10 @@ class Invest_Logic_Invest {
      * @param number $start
      * @param number $end
      * @return array <pre>(
-            '2014-09' => 100,
-            '2014-10' => 200,
-        );
-    */
+     *       '2014-09' => 100,
+     *       '2014-10' => 200,
+     *   );
+     */
     public function getEarningsMonthly($uid, $start = 0, $end = 0) {
         $date = date("Y-m", $start) . '-01 00:00:00';
         $stime = strtotime($date);

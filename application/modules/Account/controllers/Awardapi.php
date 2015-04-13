@@ -13,86 +13,86 @@ class AwardapiController extends Base_Controller_Api {
     
     /**
      * /awardapi/tickets
-     * @param status 奖券状态 1-未达成，2-未使用，3-已使用，4-已过期
+     * @param $status 奖券状态 1-未达成，2-未使用，3-已使用，4-已过期
+     * @param $page 页码
+     * @param $pagesize 每页大小
      * @param token 默认csrftoken
+     * @return 
+     * $data = array(
+     *   array(
+     *       'id' => 100,
+     *       'value' => '11.32',
+     *       'src' => '4月推荐奖励',
+     *       'valid_time' => 1423589305,
+     *       'ticket_type' => 1, //现金券
+     *       'enabled' => 1, //是否可兑换
+     *       'desc' => '可直接兑换现金',
+     *       'pay_time' => 1423589305, //兑换时间
+     *   ),
      */
     public function ticketsAction() {
         $status = isset($_REQUEST['status']) ? intval($_REQUEST['status']) : 
-            Awards_Type_TicketStatus::NOT_FETCHED;
+            Awards_Type_TicketStatus::NOT_USED;
+        $page = intval($_REQUEST['page']);
+        $pagesize = isset($_REQUEST['pagesize']) ? intval($_REQUEST['pagesize']) : 10;
 
-        if(Awards_Type_TicketStatus::NOT_FETCHED === $status){
-            $data = array(
-                array(
-                    'ticketid' => 100,
-                    'amount' => '11.32',
-                    'src' => '4月推荐奖励',
-                    'valid_time' => 1423589305,
-                    'ticket_type' => 1, //现金券
-                    'enabled' => 1, //是否可兑换
-                    'desc' => '可直接兑换现金',
-                ),
-                array(
-                    'ticketid' => 101,
-                    'amount' => '30.00',
-                    'src' => '新手注册奖励',
-                    'valid_time' => 1423589305,
-                    'ticket_type' => 1, //现金券
-                    'enabled' => 0, //是否可兑换
-                    'desc' => '累计投资满1000元即可兑换',
-                ),
-                array(
-                    'ticketid' => 102,
-                    'amount' => '30.00',
-                    'src' => '新手注册奖励',
-                    'valid_time' => 1423589305,
-                    'ticket_type' => 1, //现金券
-                    'enabled' => 0, //是否可兑换
-                    'desc' => '累计投资满1000元即可兑换',
-                ),
-            );
-        }elseif (Awards_Type_TicketStatus::EXCHANGED === $status) {
-            $data = array(
-                array(
-                    'ticketid' => 103,
-                    'amount' => '11.32',
-                    'src' => '4月推荐奖励',
-                    'valid_time' => 1423589305,
-                    'ticket_type' => 1, //现金券
-                    'enabled' => 1, //是否可兑换
-                    'pay_time' => 1423589305, //兑换时间
-                ),
-            );
-        }elseif (Awards_Type_TicketStatus::OVER === $status) {
-            $data = array(
-                array(
-                    'ticketid' => 104,
-                    'amount' => '11.32',
-                    'src' => '4月推荐奖励',
-                    'valid_time' => 1423589305,
-                    'ticket_type' => 1, //现金券
-                    'enabled' => 1, //是否可兑换
-                    'pass_time' => 1423589305, //过期时间
-                ),
-            );
+
+        if(Awards_Type_TicketStatus::NOT_USED === $status){
+            $status = Awards_Type_TicketStatus::NOT_FINISH . "," . Awards_Type_TicketStatus::NOT_USED;
         }
-        $this->ajax($data);
+
+        $list    = new Awards_TicketList();
+        $filter  = array('userid'=> $this->userid);
+        $list->setFilter($filter);
+        $list->appendFilterString(" status IN ($status)");
+        $list->setPage($page);
+        $list->setPagesize($pagesize);
+        $arrData = $list->toArray();
+        unset($arrData['list']);
+        $arrObjs = $list->getObjects();
+        foreach ($arrObjs as $ticket) {
+            $arrTicket                = array();
+            $arrTicket['ticketid']    = $ticket->id;
+            $arrTicket['amount']      = $ticket->value;
+            $arrTicket['valid_time']  = $ticket->validTime;
+            $arrTicket['pay_time']    = $ticket->payTime;
+            $arrTicket['ticket_type'] = $ticket->ticketType;
+            $arrTicket['src']         = $ticket->getSource();
+            $arrTicket['enabled']     = intval($ticket->isEnabled());
+            if($arrTicket['enabled'] 
+                && $ticket->status === Awards_Type_TicketStatus::NOT_FINISH){
+                $ticket->status = Awards_Type_TicketStatus::NOT_USED;
+                $ticket->save();
+            }
+            $arrTicket['desc'] = $ticket->getDesc();
+            $arrData['list'][] = $arrTicket;
+        }
+        $this->ajax($arrData);
     }
 
     /**
+     * 兑换或使用奖券
      * /awardapi/exchange
      * @param ticketid 奖券id
      * @param token 默认csrftoken
      */
     public function exchangeAction() {
-        //错误信息
-        $status = 1085;
-        $msg  = '该奖券不能重复领取。';
-        $this->ajaxError($status, $msg);
+        $ticketid = isset($_REQUEST['ticketid']) ? intval($_REQUEST['ticketid']) : 0;
+        if($ticketid <=0){
+            return $this->ajaxError(Base_RetCode::PARAM_ERROR);
+        }
+
+        $ticket = new Awards_Ticket($ticketid);
+        $bolRet = $ticket->exchange($this->userid);
         
-        //正确信息
-        $data = 30.00;
-        $msg = '您已兑换30.00元现金，可进入账户中心查看。';
-        $this->ajax($data, $msg);
+        if(!$bolRet){
+            return $this->ajaxError(Awards_RetCode::CANNOT_USE_TICKET, 
+                Awards_RetCode::getMsg(Awards_RetCode::CANNOT_USE_TICKET));
+        }
+
+        $desc = $ticket->getValueDesc();
+        $msg = '您已兑换'.$desc.'成功，可进入账户总览中查看。';
+        return $this->ajax(null, $msg);
 
     }
   

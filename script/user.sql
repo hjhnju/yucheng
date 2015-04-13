@@ -82,3 +82,14 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员信息表';
 
 ALTER TABLE `user_login` ADD COLUMN `isborrower` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '是否借款人' AFTER `huifuid`;
+
+CREATE TABLE `user_invite` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `userid` int(11) unsigned NOT NULL COMMENT '用户id',
+  `invitee` int(11) unsigned NOT NULL COMMENT '被邀请用户',
+  `create_time` int(11) NOT NULL COMMENT '创建时间',
+  `update_time` int(11) NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE(invitee)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户邀请表';
+

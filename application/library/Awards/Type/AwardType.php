@@ -20,7 +20,7 @@ class Awards_Type_AwardType extends Base_Type {
      * 3 投资奖励 
      * @var integer
      */
-    const INVEST = 2;
+    const INVEST = 3;
     
     /**
      * 默认key名

@@ -42,4 +42,14 @@ class Awards_Type_TicketType extends Base_Type {
         self::INSTREST => '利息券',
         self::VOUCHER  => '代金券',
     );
+
+    protected static $units = array(
+        self::CASH     => '元',
+        self::INSTREST => '%',
+        self::VOUCHER  => '元',
+    );
+
+    public static function getUnit($intType){
+        return self::$units[$intType];
+    }
 }

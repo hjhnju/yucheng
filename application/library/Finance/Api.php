@@ -74,12 +74,12 @@ class Finance_Api {
     }
 
     /**
-     * 发放奖励
+     * 系统转账给用户
      * @param $inUserId 入账用户
      * @param $transAmt 金额
      */
-    public static function giveAwards($inUserId, $transAmt){
-        $inUserId   = intval($inUserId);
+    public static function transfer($inUserId, $transAmt){
+        $inUserId = intval($inUserId);
         $transAmt = floatval($transAmt);
         if($inUserId<=0 || $transAmt<=0.00) {
             Base_Log::error(array(

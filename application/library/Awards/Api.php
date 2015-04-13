@@ -13,14 +13,18 @@ class Awards_Api {
      * @param $userid
      * @return array || false
      */
-    public static function registNotify($userid){        
+    public static function registNotify($userid, $inviterid = null){        
         if(is_null($userid) || $userid <= 0) {
             Base_Log::error("invalid param", array('userid'=>$userid));
             return false;
         }
-        $logic = new Awards_Logic_Award();
         //分配注册奖励
-        $logic->giveRegistAward($userid);
+        $activity = new Awards_Activity_Regist201502();
+        $activity->giveAward($userid);
+
+        //分配邀请奖励
+        $activity = new Awards_Activity_Invite201502();
+        $activity->giveAward($inviterid, array('inviteeid'=>$userid));
         
         return true;
     }
@@ -30,13 +34,37 @@ class Awards_Api {
      * @param $userid
      * @param $amount 投资金额
      */
-    public static function investNotify($userid, $amount){
-        $logic = new Awards_Logic_Award();
-        //分配邀请人奖励
-        $logic->giveInviterAward($userid, $amount);
-        //分配个人投资奖励
-        $logic->giveInvestAward($userid, $amount);
+    public static function investNotify($userid, $investid, $amount){
+        if($userid <=0 || $investid <=0 || $amount <=0.00){
+            Base_Log::warn(array(
+                'msg'      => 'wrong params', 
+                'userid'   => $userid,
+                'investid' => $investid,
+                'amount'   => $amount,
+            ));
+        }
         
+        //分配邀请奖励
+        $inviterid = User_Api::getInviteridByUserid($userid);
+        $activity  = new Awards_Activity_Invite201504();
+        $activity->giveAward($inviterid, array(
+            'inviteeid'             => $userid,
+            'invitee_invest_amount' => $amount,
+        ));
+        
+        //分配个人投资奖励
+        $activity  = new Awards_Activity_Invest201504();
+        $activity->giveAward($userid, array(
+            'investid'      => $investid,
+            'invest_amount' => $amount,
+        ));
+
+        Base_Log::notice(array(
+            'msg'      => 'investNotify',
+            'userid'   => $userid,
+            'investid' => $investid,
+            'amount'   => $amount,
+        ));
         return true;
     }
 
@@ -53,6 +81,10 @@ class Awards_Api {
     public static function getAwards($inviterid) {
         $logic = new Awards_Logic_Awards();
         return $logic->getAwards($inviterid);
+    }
+
+    public static function getInviteAwards($userid) {
+        
     }
 
     /**

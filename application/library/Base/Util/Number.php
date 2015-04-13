@@ -26,10 +26,6 @@ class Base_Util_Number {
         $e      = pow(10,$precision);  
         $ibig   = intval(round($big * $e));  
         $ismall = intval(round($small * $e));
-        Base_Log::error(array('msg'=>'check floatIsGtr',
-            'big' => $big, 'small' => $small,
-            'ibig'=>$ibig, 'ismall'=>$ismall));
-
         return ($ibig > $ismall);  
     }
 

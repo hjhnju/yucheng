@@ -366,7 +366,7 @@ class Base_TopazDb {
             return false;
         }
         $strValues = implode(',', $arrValues);
-        $sql = "INSERT INTO {$strTable} {$strFields} VALUES {$strValues}";
+        $sql = "REPLACE INTO {$strTable} {$strFields} VALUES {$strValues}";
         return $this->execute($sql);
     }
 

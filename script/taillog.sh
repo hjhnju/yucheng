@@ -32,7 +32,12 @@ function _taillog(){
 
     logfiles=""
     if [ $logtype = "np" ];then
-        logfiles=$logfiles" "$NGINX_LOG" "$NGINX_ELOG" "$PHP_ELOG" "$PHPFPM_ELOG
+
+        if [ $loglevel = "error" ];then
+            logfiles=$logfiles" "$NGINX_ELOG" "$PHP_ELOG" "$PHPFPM_ELOG
+        else
+            logfiles=$logfiles" "$NGINX_LOG" "$NGINX_ELOG" "$PHP_ELOG" "$PHPFPM_ELOG
+        fi
     else
         if [ $loglevel = "all" ];then
             logfiles=$logfiles" "$BIZ_X_LOG"/*.log"

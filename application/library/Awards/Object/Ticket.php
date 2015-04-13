@@ -26,7 +26,7 @@ class Awards_Object_Ticket extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'type', 'value', 'valid_time', 'activity', 'userid', 'pay_time', 'create_time', 'update_time', 'memo');
+    protected $fields = array('id', 'ticket_type', 'award_type', 'value', 'valid_time', 'activity', 'userid', 'pay_time', 'extraid', 'status', 'create_time', 'update_time', 'memo');
 
     /**
      * 字段与属性隐射关系
@@ -34,12 +34,15 @@ class Awards_Object_Ticket extends Base_Object {
      */
     public $properties = array(
         'id'          => 'id',
-        'type'        => 'type',
+        'ticket_type' => 'ticketType',
+        'award_type'  => 'awardType',
         'value'       => 'value',
         'valid_time'  => 'validTime',
         'activity'    => 'activity',
         'userid'      => 'userid',
         'pay_time'    => 'payTime',
+        'extraid'     => 'extraid',
+        'status'      => 'status',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
         'memo'        => 'memo',
@@ -51,10 +54,13 @@ class Awards_Object_Ticket extends Base_Object {
      */
     protected $intProps = array(
         'id'          => 1,
-        'type'        => 1,
+        'ticket_type' => 1,
+        'award_type'  => 1,
         'valid_time'  => 1,
         'userid'      => 1,
         'pay_time'    => 1,
+        'extraid'     => 1,
+        'status'      => 1,
         'create_time' => 1,
         'update_time' => 1,
     );
@@ -74,10 +80,16 @@ class Awards_Object_Ticket extends Base_Object {
     public $id;
 
     /**
-     * 1:现金券，2:利息券，3:代金券
+     * 奖券类型 1:现金券，2:利息券，3:代金券
      * @var integer
      */
-    public $type;
+    public $ticketType;
+
+    /**
+     * 奖励类型:1-注册奖励 2-邀请奖励 3-投资奖励
+     * @var integer
+     */
+    public $awardType;
 
     /**
      * 价值
@@ -92,7 +104,7 @@ class Awards_Object_Ticket extends Base_Object {
     public $validTime;
 
     /**
-     * 活动类名
+     * 奖励活动的类名,含兑换条件
      * @var string
      */
     public $activity;
@@ -108,6 +120,18 @@ class Awards_Object_Ticket extends Base_Object {
      * @var integer
      */
     public $payTime;
+
+    /**
+     * 额外字段:邀请奖励－被邀请人id, 投资奖励－投资id
+     * @var integer
+     */
+    public $extraid;
+
+    /**
+     * 奖券状态: 1-未达成，2-未使用，3-已使用，4-已过期
+     * @var integer
+     */
+    public $status;
 
     /**
      * 创建时间
