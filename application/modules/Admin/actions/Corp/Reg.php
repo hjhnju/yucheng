@@ -27,7 +27,7 @@ class RegAction extends Yaf_Action_Abstract {
                 'busicode' => $busicode,
             );
 
-            //TODO: User_Api::saveCorpInfo($userid, $arrInfo);
+            User_Api::saveCorpInfo($userid, $arrInfo);
 
             Base_Log::notice(array('msg'=>'To corp reg.',
                 'userid'   => $userid,
