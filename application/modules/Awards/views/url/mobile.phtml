@@ -1,39 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
-    <title>兴教贷 - 专注教育领域的互联网金融投融资理财平台</title>
-    <link rel="stylesheet" type="text/css" href="{%$feroot%}/app/index.css" />
-</head>
+ 
+{%extends file="../../../views/common/m/page.phtml"%}
 
-<body>
-    <main class="app-home">
-        <div class="app-logo-img"><img src="{%$feroot%}/app/img/app_logo_one.jpg" width="100%" /></div>
-        <div class="app-logo-img"><img src="{%$feroot%}/app/img/app_logo_two.jpg" width="100%" /></div>
-        <div class="app-logo-img"><img src="{%$feroot%}/app/img/app_logo_three.jpg" width="100%" /></div>
-        <div class="app-logo-img"><img src="{%$feroot%}/app/img/app_logo_four.jpg" width="100%" /></div>
-        <div class="app-logo-img"><img src="{%$feroot%}/app/img/app_logo_five.jpg" width="100%" /></div>
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/app/index.css" />
+{%/block%}
 
-        <div class="app-home-box six">
-            <h2 class="six-title">好友{%$result.data.invname%}邀请您注册,开启您最好的投资理财</h2>
-            <div class="six-net">
-                <span class="six-net-span">兴教贷官网</span>
-                <a class="six-net-link">www.xingjiaodai.com</a>
-            </div>
-            <div class="six-number">
-                <span class="six-number-left">填写邀请手机号</span>
-                <span class="six-number-right">{%$result.data.inviter%}</span>
-            </div>
+{%block name="script"%}
+<script>
+   
+</script>
+{%/block%}
+
+{%block name="content"%}
+ <div class="invite">
+      <div class="invite-box-title flex-center">
+          <div  class="logo-img logo-img1"> 
+             <img  alt="兴教贷" src="{%$feroot%}/app/img/app_logo11.png" /> 
+          </div>
+      </div>
+     <div class="invite-box-title flex-center">
+          <div  class="logo-img logo-img2"> 
+             <img  alt="兴教贷" src="{%$feroot%}/app/img/app_logo22.png" />
+          </div>
+      </div>
+      <div class="invite-box-title flex-center">
+          <div  class="logo-img logo-img3"> 
+             <img  alt="兴教贷" src="{%$feroot%}/app/img/app_logo33.png" />
+          </div>
+      </div>
+      <div class="invite-box-title flex-center">
+          <div  class="logo-img logo-img4"> 
+             <img  alt="兴教贷" src="{%$feroot%}/app/img/app_logo44.png" />
+          </div>
+      </div>
+      <div class="invite-box-title flex-center">
+          <div  class="logo-img logo-img5"> 
+             <img  alt="兴教贷" src="{%$feroot%}/app/img/app_logo55.png" />
+          </div>
+      </div>    
+
+        <div class="invite-box-content app-home-box six">
+            <span class="six-title">好友{%$data.invname%}邀请您注册,开启您最好的投资理财</span>
+            <a class="regist-btn" href="/m/regist">立即注册</a> 
             <div class="six-bottom">
-                注册即送30元，邀请再送每人20元<br />
-                注册后即可用自己的手机邀请好友噢
+                 填写邀请手机号：{%$data.phone%}
             </div>
         </div>
-    </main>
+   </div>
+ 
 
-
-
-
-</body>
-</html>
+{%/block%}
