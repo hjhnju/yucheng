@@ -91,5 +91,5 @@ CREATE TABLE `user_invite` (
   `update_time` int(11) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE(invitee)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户邀请表';
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户邀请表';
 
