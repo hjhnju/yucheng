@@ -65,6 +65,7 @@ define(function (require) {
                 status = +$.trim($(this).attr('data-value'));
 
                 // 获取数据
+                 pager = null;
                 getRemoteList(1);
             }
         });

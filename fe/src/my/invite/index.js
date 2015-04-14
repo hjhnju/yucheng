@@ -6,27 +6,27 @@
  */
 
 define(function (require) {
+ 
+    var etpl = require('etpl');
+    var tpl = require('./list.tpl');
 
     var util = require('common/util');
     var header = require('common/header');
+
+    var Pager = require('common/ui/Pager/Pager'); 
+ 
+    var commonData = require('common/data');
     var Remoter = require('common/Remoter');
     var config = require('common/config');
-    var tpl = require('./list.tpl');
-    var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS');
+    var receiveAwards = new Remoter('ACCOUNT_AWARD_RECEIVEAWARDS'); 
+    var inviteList=new Remoter('ACCOUNT_INVITEAPI_LIST');
 
-    var inviteList=new Remoter('ACCOUNT_INVITE_LIST');
     var item;
     var codeUrl;
 
 
     // 分页对象
-    var pager;
-
-    // 记录列表状态
-    var status = 1;
-
-    // 用来记录被点击的回款计划按钮
-    var item = null;
+    var pager; 
 
     // 时间格式化
     var FORMATER = 'YYYY.MM.DD';
@@ -39,7 +39,7 @@ define(function (require) {
      * @public
      */
     function init(url) {
-        htmlContainer = $('#my-reward-list');
+        htmlContainer = $('#my-invite-list');
         etpl.compile(tpl);
         codeUrl = url;
         header.init();
@@ -78,9 +78,9 @@ define(function (require) {
                 item.addClass('current').html('已领取' + data.amount + '元');
                 alert('领取成功');
             }
-        });
+        }); 
         
-        // 邀请奖励
+       // 邀请奖励
         $('.reward-type-link-span').zclip({
             path: config.URL.ROOT + '/static/ZeroClipboard.swf',
             copy: $.trim($('.reward-type-link-http').html()),
@@ -96,7 +96,6 @@ define(function (require) {
                 height: 126 //高度
             }
         );
-
         qrcode.makeCode(codeUrl);
     }
 
@@ -123,7 +122,7 @@ define(function (require) {
                 }
                 if (!pager) {
                     pager = new Pager($.extend({}, commonData.pagerOpt, {
-                        main: $('#my-reward-pager'),
+                        main: $('#my-invite-pager'),
                         total: +data.pageall
                     }));
                     
@@ -134,43 +133,11 @@ define(function (require) {
 
                 pager.render(+data.page);
 
-                renderHTML('returnTicketList', data);
-
-                //点击兑换的事件
-                $("#my-reward-list .status2").click(function () { 
-                       toExchange.remote({
-                            ticketid: $(this).attr("ticketid") 
-                        }); 
-                });
-                
-                //滑动提示框
-                $('#my-reward-list .reward-ticket').mouseenter(function () {
-                    $(this).find(".ticket-status-tips").slideDown();
-                }).mouseleave(function () {
-                     $(this).find(".ticket-status-tips").slideUp();
-                });
-
-
-
+                renderHTML('returnInviteList', data);
+ 
             }
         }); 
         
-         toExchange.on('success', function (data) {
-              if (data.bizError) {
-                 //兑换失败
-                 $('.my-reward-tip').addClass('my-reward-tip-error');  
-                 $('.my-reward-tip').html(data.statusInfo); 
-              }
-              else {
-                 //兑换成功
-                 $('.my-reward-tip').addClass('my-reward-tip-success');  
-                  $('.my-reward-tip .statusInfo').html(data.msg); 
-             }  
-              $(".my-reward-tip").slideDown();
-              $(".close-reward-tip").click(function() {
-                     $(".my-reward-tip").slideUp();
-             });
-         });
     }
 
 
@@ -180,7 +147,7 @@ define(function (require) {
      */
     function getRemoteList(page) {
         htmlContainer.html(etpl.render('Loading'));
-        $('#my-reward-pager').html('');
+        $('#my-invite-pager').html('');
 
          inviteList.remote({
              page: page
@@ -195,18 +162,7 @@ define(function (require) {
     function renderHTML(tpl, data) {
 
         pager.setOpt('pageall', +data.pageall);
-        pager.render(+data.page);
-
-        // 格式化时间
-        for (var i = 0, l = data.list.length; i < l; i++) { 
-                data.list[i].valid_time = moment.unix(data.list[i].valid_time).format(FORMATER); 
-                if(data.list[i].pay_time){
-                     data.list[i].pay_time = moment.unix(data.list[i].pay_time).format(FORMATER); 
-                }
-                 if(data.list[i].pass_time){
-                     data.list[i].pass_time = moment.unix(data.list[i].pass_time).format(FORMATER); 
-                }
-        }
+        pager.render(+data.page); 
 
         htmlContainer.html(etpl.render(tpl, {
             list: data.list

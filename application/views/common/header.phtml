@@ -32,13 +32,15 @@
                 </span>
         </div>
         <div class="header-right">
+            <img alt"最新活动" src="{%$feroot%}/activity/common/img/small_leaf1.png" class="activity-img fl"/>
+            <span class="new-activity fl"><a target="_blank" href="{%$webroot%}/activity">最新活动</a></span>
             {%if isset($user)%}
-            <div class="header-right-login">
+            <div class="header-right-login fr">
                 <span class="default-fastlogin" style="margin-right: 10px;">您好，{%$user.username%}</span>
                 <a class="default-login" href="/user/login/signout">退出</a>
             </div>
             {%else%}
-            <div class="login-register register-hover">
+            <div class="login-register register-hover fr">
                 <a href="{%$webroot%}/user/regist" class="register fl">注册</a>
                 <a class="login fr" href="{%$webroot%}/user/login">登录</a>
             </div>

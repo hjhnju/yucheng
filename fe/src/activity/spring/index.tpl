@@ -22,7 +22,7 @@
 		2、本次活动可与推荐等其他活动叠加，用户可享受多重福利。<br/>
 		3、兴教贷拥有本活动的最终解释权。<br/>
       </div>
-      <button class="ok_btn" id="popup-close">好！</button>
+      <button class="ok_btn popup-close">好</button>
 </div> 
 <!-- /target -->
 
@@ -40,7 +40,7 @@
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。
 				
               </div>
-              <button class="ok_btn" id="popup-close">好！</button>
+              <button class="ok_btn popup-close">好</button>
              
          </div> 
   <!-- /target -->
@@ -67,7 +67,7 @@
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。
 				
               </div>
-              <button class="ok_btn" id="popup-close">好！</button> 
+              <button class="ok_btn popup-close">好</button> 
          </div>
 
 <!-- /target -->
@@ -80,7 +80,7 @@
 				<span>备注：</span>平台将实时统计推荐人所推荐的用户投资总额情况，并实时显示获得奖励金额情况，奖励金额将于第二天上午由财务发放。 <br/>
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。 
               </div>
-              <button class="ok_btn" id="popup-close">好！</button> 
+              <button class="ok_btn popup-close">好</button> 
     </div> 
 <!-- /target -->
 
@@ -100,7 +100,7 @@
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。<br/>
 				
               </div>
-              <button class="ok_btn" id="popup-close">好！</button> 
+              <button class="ok_btn popup-close">好</button> 
          </div> 
 <!-- /target -->
 
@@ -122,7 +122,7 @@
 				 <span>奖励发放时间：</span>活动截止日的第二天，公司将联系获奖用户，取得联系地址，并发放奖品，奖品到达时间由快递决定。<br/>
 				 <span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。 
               </div>
-              <button class="ok_btn" id="popup-close">好！</button> 
+              <button class="ok_btn popup-close">好</button> 
          </div> 
 <!-- /target -->
  
