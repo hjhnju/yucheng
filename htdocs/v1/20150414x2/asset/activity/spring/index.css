@@ -79,8 +79,8 @@ p{margin:0;padding:0}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right;margin-top:15px}
-.header-right .activity-img{margin-top:4px;margin-right:5px;float:left}
-.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:10px;text-align:center}
+.header-right .activity-img{margin-top:4px;float:left}
+.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:15px;text-align:center}
 .header-right .new-activity a{color:#4fc501;text-decoration:none}
 .login-register{border:1px solid #76cf65;border-radius:25px;-moz-border-radius:25px;width:100px;height:29px;background:url(../../common/img/btn_bg1.png) no-repeat left center;transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-webkit-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-moz-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-o-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4)}
 .login-register a{color:#4fc501;transition:color .4s linear;-webkit-transition:color .4s linear;-moz-transition:color .4s linear;-o-transition:color .4s linear;display:block;text-align:center;width:50px;text-decoration:none;line-height:30px}
@@ -251,9 +251,10 @@ p{margin:0;padding:0}
 #scrollUp{bottom:20px;right:20px;width:60px;height:60px;background:url(../../common/img/btn_icon.png) 0 -298px no-repeat}
 .flex-center{display:-webkit-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center}
 #mk-dialog .bg{background:linear-gradient(bottom,#fff 0,#f1f1f1 2%,#fff 27%,#fff);background:-ms-linear-gradient(bottom,#fff 0,#f1f1f1 2%,#fff 27%,#fff);background:-moz-linear-gradient(bottom,#fff 0,#f1f1f1 2%,#fff 27%,#fff);background:-webkit-gradient(linear,0 0,0 100%,from(#fff),to(#fff),color-stop(.02,#f1f1f1),color-stop(.27,#fff));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fff, endColorstr=#fff, grandientType=1)}
+#mk-dialog .close {  top: -5px;right: -5px; }
 #scrollUp{bottom:20px;right:20px;width:124px;height:105px;background:url(img/backup_btn.png) 0 0 no-repeat}
-.activity{width:100%}
-.activity .activity-big_tree{background:url(img/big_tree.png);width:100%}
+.activity{width:100%;background-color: #42a377;}
+.activity .activity-big_tree{background:url(img/big_tree.png);width:100%;background-repeat: repeat-x;padding-bottom: 56px;}
 .activity .container{background-color:#fff;width:1000px;height:650px;position:relative;top:0;left:0}
 .activity .big-leaf{width:1264px;height:502px;background:url(img/big_leaf.png) 0 0 no-repeat}
 .activity .big-leaf .slogan{width:1000px;height:480px;background:url(img/activity_bg1.png) 0 0 no-repeat;position:relative;top:-15px;left:0}
@@ -261,6 +262,14 @@ p{margin:0;padding:0}
 .activity .big-gift{background:url(img/big_gift.png) 0 0 no-repeat;width:1124px;height:438px;z-index:99}
 .activity .activity-btn{display:block;width:220px;height:60px;font-size:26px;line-height:60px;text-align:center;cursor:pointer;margin-right:20px;text-decoration:none;color:#3e3e3e;background:url(img/activity_btn.png) 0 -360px no-repeat;transition:background-position .4s ease-in-out .1s;-webkit-transition:background-position .4s ease-in-out .1s;-moz-transition:background-position .4s ease-in-out .1s;-o-transition:background-position .4s ease-in-out .1s}
 .activity .activity-btn:hover{text-decoration:none;color:#3e3e3e;background-position:0 -480px;transition:background-position .4s ease-in-out .1s;-webkit-transition:background-position .4s ease-in-out .1s;-moz-transition:background-position .4s ease-in-out .1s;-o-transition:background-position .4s ease-in-out .1s}
+.activity .regist-btn {width: 148px;height: 74px;display: block;margin: 0 auto; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;
+ font-size: 24px;line-height: 74px;color: #636363;text-align: center; text-decoration: none;
+background:linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
+        background:-ms-linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
+        background:-moz-linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
+        background:-webkit-gradient(linear, 0 0, 0 100%, from(#f7de8e), to(#ffce30),color-stop(0.32, #ffd756),color-stop(0.86, #ffce30));
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#f7de8e,endColorstr=#ffce30,grandientType=1);
+}
 .activity .activity-text{font-size:20px;line-height:36px;width:620px;height:252px;margin-left:25px}
 .activity .activity-text .rule-btn{display:block;height:30px;color:#fff;line-height:30px;font-size:18px;width:108px;cursor:pointer;background-color:#f2746a;text-align:center;margin-top:55px;text-decoration:none}
 .activity .activity-text .rule-btn-w{display:block;height:30px;color:#fff;line-height:30px;font-size:18px;width:108px;cursor:pointer;background-color:#f2746a;text-align:center;margin-top:55px;text-decoration:none;width:242px;margin-top:20px}
@@ -277,7 +286,7 @@ p{margin:0;padding:0}
 .activity .activity-list .activity-list-content-scroll li{font-size:12px;line-height:30px}
 .activity .activity-box1{height:340px;width:1000px;background-color:#fede77;padding-top:20px;top:-54px}
 .activity .activity-box1 .bg-img1{background:url(img/activity_box1_bg.png) 0 0 no-repeat}
-.activity .activity-box1 .activity-text{font-size:24px;margin-top:60px}
+.activity .activity-box1 .activity-text{font-size:20px;margin-top:60px}
 .activity .activity-box2{height:1333px;width:1000px;background-color:#ffce30;top:-54px}
 .activity .activity-box2 .bg-img2{height:1333px;width:1000px;background:url(img/activity_box2_bg.png) 0 0 no-repeat}
 .activity .activity-box2 .activity-text{margin-top:150px}
@@ -303,7 +312,7 @@ p{margin:0;padding:0}
 .activity-dialog .activity-dialog-title{width:700px;font-size:33px;line-height:98px;height:98px;color:#50c502;text-align:center}
 .activity-dialog .activity-text{font-size:14px;line-height:30px;color:#3a3a3a;padding:0 80px}
 .activity-dialog .activity-text span{color:#95c65d}
-.activity-dialog .ok_btn{width:224px;height:45px;background-color:#59db02;font-size:25px;line-height:45px;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;color:#fff;display:block;margin-left:250px;border:none;margin-top:30px;cursor:pointer;background:linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-ms-linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-moz-linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-webkit-gradient(linear,0 0,0 100%,from(#50c502),to(#5de602),color-stop(.1,#50c502));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fff, endColorstr=#5de602, grandientType=1)}
+.activity-dialog .ok_btn{width:224px;height:45px;text-align: center;text-decoration: none; background-color:#59db02;font-size:25px;line-height:45px;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;color:#fff;display:block;margin-left:250px;border:none;margin-top:30px;cursor:pointer;background:linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-ms-linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-moz-linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-webkit-gradient(linear,0 0,0 100%,from(#50c502),to(#5de602),color-stop(.1,#50c502));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fff, endColorstr=#5de602, grandientType=1)}
 .activity-dialog table{width:100%}
 .activity-dialog table th{color:#95c65d;text-align:center}
 .activity-dialog table td{text-align:center}
