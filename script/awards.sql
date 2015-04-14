@@ -20,7 +20,7 @@ CREATE TABLE `awards_ticket` (
   `memo` varchar(255) NOT NULL COMMENT '说明',
   PRIMARY KEY (`id`),
   INDEX idx_userid(`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='奖券表';
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='奖券表';
 
 DROP TABLE IF EXISTS  `awards_entity`;
 CREATE TABLE `awards_entity`(
