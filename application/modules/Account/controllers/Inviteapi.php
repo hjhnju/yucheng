@@ -36,17 +36,13 @@ class InviteapiController extends Base_Controller_Api {
      */
     public function listAction() {
         $page     = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $pagesize = isset($_REQUEST['pagesize']) ? intval($_REQUEST['pagesize']) : 10;
+        $pagesize = isset($_REQUEST['pagesize']) ? intval($_REQUEST['pagesize']) : 6;
 
         $list     = User_Api::getInvitees($this->userid, $page, $pagesize);
         $arrInvId = array();
         foreach ($list['list'] as $row) {
             $arrInvId[] = $row['invitee'];
         }
-
-        $list['invitee_awards']     = Awards_Api::getInviteAwardsSum($this->userid);
-        $list['invitee_cnt']        = $list['total'];
-        //$list['invitee_invest_cnt'] = 5;
 
         $arrAwards   = Awards_Api::getInviteAwards($this->userid, $arrInvId);//获取邀请奖励列表
         $arrUinfos   = User_Api::getInfos($arrInvId);

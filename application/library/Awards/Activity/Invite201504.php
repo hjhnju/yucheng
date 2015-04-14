@@ -10,7 +10,7 @@ class Awards_Activity_Invite201504 extends Awards_Activity_Base {
 
     public function __construct(){
         $this->name      = "邀请好友单笔投资奖励";
-        $this->startTime = strtotime("2015-03-15 00:00:00");
+        $this->startTime = strtotime("2015-04-14 00:00:00");
         $this->endTime   = strtotime("2015-05-15 23:59:59");
         $this->desc      = '好友投资得0.1%现金奖励';
     }
@@ -27,6 +27,15 @@ class Awards_Activity_Invite201504 extends Awards_Activity_Base {
         //根据单笔投资额判断奖励额度
         $invest  = floatval($mixArg);
         return round($invest * self::PERCENT, 2);
+    }
+
+    /**
+     * 根据奖励计算原投资额
+     */
+    public function getOriginValue($value){
+        $value = floatval($value);
+        $origin = $value / self::PERCENT;
+        return intval($origin);
     }
 
     /**

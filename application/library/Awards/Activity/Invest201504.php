@@ -14,7 +14,7 @@ class Awards_Activity_Invest201504 extends Awards_Activity_Base {
 
     public function __construct(){
         $this->name      = "单笔投资奖励";
-        $this->startTime = strtotime("2015-03-15 00:00:00");
+        $this->startTime = strtotime("2015-04-14 00:00:00");
         $this->endTime   = strtotime("2015-05-15 23:59:59");
         $this->desc      = '单笔投资满足限额即可领取';
     }
@@ -40,6 +40,24 @@ class Awards_Activity_Invest201504 extends Awards_Activity_Base {
         }
         return round(floatval($mixArg) * $percent, 2);
         
+    }
+
+    /**
+     * 根据奖励计算原投资额
+     */
+    public function getOriginValue($value){
+        $value = floatval($value);
+        $origin = 0.00;
+        if($value <= 10000 * 0.005){
+            $origin = $value / 0.005;
+        }elseif ($value <= 50000 * 0.006) {
+            $origin = $value / 0.006;
+        }elseif ($value <= 100000 * 0.007) {
+            $origin = $value / 0.007;
+        }else {
+            $origin = $value / 0.008;
+        }
+        return intval($origin);
     }
 
     /**

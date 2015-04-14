@@ -304,6 +304,21 @@ class User_Api{
         return $list;
     }
 
+    public static function getInviteeCnt($userid){
+        $list = new User_List_Invite();
+        $list->setFields(array('invitee'));
+        $list->setFilter(array('userid'=>$userid));
+        $list->setPage(1);
+        $list->setPagesize(1);
+        $list = $list->toArray();
+        return $list['total'];
+    }
+
+    /**
+     * 批量获取用户信息
+     * @param  array $arrUid 
+     * @return array
+     */
     public static function getInfos($arrUid){
         if(empty($arrUid)){
             return false;
@@ -315,6 +330,8 @@ class User_Api{
         $list = $list->toArray();        
         $arrRet = array_fill_keys($arrUid, null);
         foreach ($list['list'] as $row) {
+            $row['displayname'] = !empty($row['name']) ? Base_Util_String::starUsername($row['name']) : 
+                Base_Util_String::starPhone($row['phone']);
             $arrRet[$row['userid']] = $row;
         }
         return $arrRet;

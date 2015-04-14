@@ -50,8 +50,8 @@
             <div class="reward-white-bg">
                   <div class="reward-my">
                       <div class="reward-my-left fl">
-                         <span class="reward-my-account">我的奖励：100.00&nbsp;元</span><br/>
-                            好友总数：10 人   
+                         <span class="reward-my-account">我的奖励：{%if isset($data.invitee_awards)%} {%$data.invitee_awards%}&nbsp;元 {%else%} 暂无奖励 {%/if%}</span><br/>
+                            好友总数：{%$data.invitee_cnt%} 人   
                       </div>
                       <div class="reward-my-right fr">
                          温馨提示：<br/>
