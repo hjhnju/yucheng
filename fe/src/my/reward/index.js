@@ -22,7 +22,7 @@ define(function (require) {
     var pager;
 
     // 记录列表状态
-    var status = 1;
+    var status = 2;
 
     // 用来记录被点击的回款计划按钮
     var item = null;
@@ -44,7 +44,8 @@ define(function (require) {
         etpl.compile(tpl);
         
          ticketsList.remote({
-            page: 1
+            page: 1,
+             status:2
         });
 
         ajaxCallBack();
@@ -65,6 +66,7 @@ define(function (require) {
                 status = +$.trim($(this).attr('data-value'));
 
                 // 获取数据
+                 pager = null;
                 getRemoteList(1);
             }
         });
@@ -109,7 +111,9 @@ define(function (require) {
                 renderHTML('returnTicketList', data);
 
                 //点击兑换的事件
-                $("#my-reward-list .status2").click(function () { 
+                $("#my-reward-list .status2").click(function (e) {  
+                      $(this).unbind("click"); //移除click
+                      $(this).find(".ticket-status2-tips").show();
                        toExchange.remote({
                             ticketid: $(this).attr("ticketid") 
                         }); 
@@ -132,16 +136,22 @@ define(function (require) {
                  //兑换失败
                  $('.my-reward-tip').addClass('my-reward-tip-error');  
                  $('.my-reward-tip').html(data.statusInfo); 
+                 $(".my-reward-tip").slideDown();  
               }
               else {
-                 //兑换成功
-                 $('.my-reward-tip').addClass('my-reward-tip-success');  
-                  $('.my-reward-tip .statusInfo').html(data.msg); 
+                 //兑换成功  
+                  $(".my-reward-tip").slideDown();
+                  $('.my-reward-tip').addClass('my-reward-tip-success');  
+                  $('.my-reward-tip .statusInfo').html(data.msg);  
              }  
-              $(".my-reward-tip").slideDown();
               $(".close-reward-tip").click(function() {
-                     $(".my-reward-tip").slideUp();
-             });
+                    $(".my-reward-tip").slideUp(); 
+              });
+              //刷新列表
+              //当前页码
+              var currentPage=$("#my-reward-pager .ui-pager-box .current").attr("data-value");
+                  getRemoteList(currentPage?currentPage:1);
+              
          });
     }
 

@@ -43,11 +43,7 @@
 		            <ul class="">   
 		            	  {%foreach $data.broad_regist as $key => $item%} 
 		                   <li>
-		                  	{%if $item.tpl == 1%}
-		            	  		{%$item.displayname%} 成功注册，账户{%$item.word%}{%$item.amount%}元现金券
-		            	  	{%else%}
-		            	  		{%$item.displayname%} 累计投资满1000元，{%$item.word%}领走{%$item.amount%}元现金
-	            	  		{%/if%}
+		            	  	{%$item.displayname%} 累计投资 ¥{%$item.invest%}，{%$item.word%}领走{%$item.amount%}元现金
 		            	  </li>
 		                 {%/foreach%}
 		            </ul>
@@ -65,7 +61,7 @@
                                                     推荐6人注册兴教贷账户，就可获得推荐奖励，奖励<br/>
                                                     为价值79元的小米充电宝或小米手环，任选一个。<br/>
 	            <a class="rule-btn"  for="activity2">活动细则&gt;</a>
-	            <a class="rule-btn rule-btn-w"  href="#">邀请方式（登录后查看）&gt;</a>
+	            <a class="rule-btn-w" target="_blank"  href="{%$webroot%}/account/invite">邀请方式（登录后查看）&gt;</a>
 	        </div>
 	        <div class="activity-list fr">
 	            <span  class="activity-list-title fl">实时播报</span>
@@ -75,24 +71,20 @@
 		            <ul class="">  
 		                  {%foreach $data.broad_invite as $key => $item%} 
 		                   <li>
-		                  	{%if $item.tpl == 1%}
-			            	  	{%$item.displayname%} 完成邀请任务，成功领走 {%$item.entity%}1个
-		            	  	{%else%}
-		            	  		{%$item.displayname%} 愉快地接受好友 {%$item.inviter%} 的邀请，加入兴教贷。
-	            	  		{%/if%}
+		            	  	{%$item.displayname%} 完成邀请任务，领走 {%$item.entity%}个
 		            	  </li>
 		                 {%/foreach%}  
 		            </ul>
 		            </div>
 		         </div>
 	        </div>
-	         <div class="activity-text fl" style="margin-top: 166px;">
+	         <div class="activity-text fl" style="margin-top: 150px;">
 				         成功推荐有效注册达到10人（含）以上的用户根据推<br/>
 				         荐人数进行排名，将有机会获得小米note手机、小米<br/>
 				         平板等各类奖励。 <br/>
 	            <a class="rule-btn" for="activity3">活动细则&gt;</a> 
 	        </div>
-	        <div class="activity-list fr" style="margin-top: 166px;height:280px;">
+	        <div class="activity-list fr" style="margin-top: 150px;height:280px;">
 	            <span  class="activity-list-title fl">邀请实时排行榜</span>
 	            <a class="more fr" href="#">more</a> 
 	            <div class="activity-list-content"> 
@@ -110,7 +102,7 @@
 	        </div>
 	         <div class="activity-text fl" style="margin-top: 185px;">
 	                                活动期间有在平台投资的，推荐人可获得所有被推荐<br/>
-	                                用户每笔投资金额的0.1%的现金奖励。<br/>
+	                                用户投资金额总额的0.1%的现金奖励。<br/>
 	            <a class="rule-btn" for="activity4">活动细则&gt;</a> 
 	        </div>
 	        <div class="activity-list fr" style="margin-top: 158px;">
@@ -118,15 +110,11 @@
 	            <a class="more fr" href="#">more</a> 
 	            <div class="activity-list-content fr"> 
 		            <ul class=""> 
-		            	<li class="flex-center"><span>排名</span><span>用户名</span><span>朋友投资</span><span>累计提成</span></li>
 		                {%foreach $data.top_invite_invest as $key => $item%} 
-		                    <li class="flex-center">
-		                    <span>{%$key+1%}</span>
-		                    <span>{%$item.displayname%}</span>
-		                    <span>{%$item.invest%}</span> 
-		                    <span>{%$item.amount%}</span> 
-	            	    </li>
-		                {%/foreach%}
+		                    <li class="">
+		                    {%$key+1%}.{%$item.displayname%}的土豪朋友 {%$item.word%}投资了{%$item.invest%}
+		                    </li>
+		                 {%/foreach%}  
 		            </ul>
 		         </div>
 	        </div>

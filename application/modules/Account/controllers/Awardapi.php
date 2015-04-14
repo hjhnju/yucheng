@@ -33,7 +33,7 @@ class AwardapiController extends Base_Controller_Api {
         $status = isset($_REQUEST['status']) ? intval($_REQUEST['status']) : 
             Awards_Type_TicketStatus::NOT_USED;
         $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
-        $pagesize = isset($_REQUEST['pagesize']) ? intval($_REQUEST['pagesize']) : 9;
+        $pagesize = isset($_REQUEST['pagesize']) ? intval($_REQUEST['pagesize']) : 10;
 
 
         if(Awards_Type_TicketStatus::NOT_USED === $status){

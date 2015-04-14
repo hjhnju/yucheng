@@ -304,11 +304,6 @@ class User_Api{
         return $list;
     }
 
-    /**
-     * 批量获取用户信息
-     * @param  array $arrUid 
-     * @return array
-     */
     public static function getInfos($arrUid){
         if(empty($arrUid)){
             return false;
@@ -320,8 +315,6 @@ class User_Api{
         $list = $list->toArray();        
         $arrRet = array_fill_keys($arrUid, null);
         foreach ($list['list'] as $row) {
-            $row['displayname'] = !empty($row['name']) ? Base_Util_String::starUsername($row['name']) : 
-                Base_Util_String::starPhone($row['phone']);
             $arrRet[$row['userid']] = $row;
         }
         return $arrRet;

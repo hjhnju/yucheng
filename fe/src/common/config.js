@@ -124,9 +124,13 @@ define(function () {
         ACCOUNT_AWARDAPI_TICKETS:rootUrl
             +'/account/awardapi/tickets',
              //+ '/test/account/awardapi/tickets.json'
-       ACCOUNT_AWARDAPI_EXCHANGE:rootUrl
-            +'/account/awardapi/exchange'
+        ACCOUNT_AWARDAPI_EXCHANGE:rootUrl
+            +'/account/awardapi/exchange',
              //+ '/test/account/awardapi/exchange.json' 
+        ACCOUNT_INVITEAPI_LIST:rootUrl
+            +'/account/Inviteapi/list'
+             //+ '/test/account/Inviteapi/list.json' 
+ 
         };
 
     return {

@@ -10,6 +10,15 @@
     -webkit-justify-content: center;
     justify-content: center;
 }
+//弹窗背景
+#mk-dialog .bg  {
+      background:linear-gradient(bottom, #ffffff 0%,#f1f1f1 2%,#ffffff 27%,#ffffff);
+     background:-ms-linear-gradient(bottom, #ffffff 0%,#f1f1f1 2%,#ffffff 27%,#ffffff);
+     background:-moz-linear-gradient(bottom, #ffffff 0%,#f1f1f1 2%,#ffffff 27%,#ffffff);
+     background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff),color-stop(0.02, #f1f1f1),color-stop(0.27, #ffffff));
+     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#ffffff,grandientType=1);
+}
+
 //春风化雨活动页面 
 #scrollUp {
     bottom: 20px;
@@ -21,16 +30,16 @@
 
 .activity {  
        //颜色渐变
-     background:linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#41a276);
+    /* background:linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#41a276);
      background:-ms-linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#41a276);
      background:-moz-linear-gradient(top, #fefef5 0%,#fdf8a6 28%,#72c09c 72%,#44a478);
      background:-webkit-gradient(linear, 0 0, 0 100%, from(#fefef5), to(#41a276),color-stop(0.28, #fdf8a6),color-stop(0.83, #72c09c));
      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fefef5,endColorstr=#41a276,grandientType=1);
-    
+    */
       width: 100%;
 
     .activity-big_tree{
-        background:url(common/img/big_tree1.png) center center no-repeat;
+        background:url(img/big_tree.png) ;
         width:100%; 
      }
     .container {
@@ -56,7 +65,7 @@
             span { 
                  display: block;
                  position: relative;
-                 left: 115px;
+                 left: 155px;
                  top: 400px; 
             }
         }
@@ -117,6 +126,17 @@
             text-decoration: none;
         }
         .rule-btn-w {
+            display: block;
+            height: 30px;
+            color: #fff;
+            line-height: 30px;
+            font-size: 18px;
+            width: 108px; 
+            cursor: pointer;
+            background-color: #f2746a;
+            text-align: center;
+            margin-top: 55px;
+            text-decoration: none;
              width: 242px; 
              margin-top: 20px;
         }
@@ -142,10 +162,11 @@
                      border-right: 1px solid #4fc501;
                       width: 170px;
                       text-align: center;
+                      padding-right: 20px;
                  }
                  .rule-box-right {
                      display: block;
-                      width: 166px;
+                      width: 146px;
                        text-align: center;
                  }
             }
@@ -158,15 +179,20 @@
         background-color: #f2746a; 
         color: #fff;
         overflow: hidden;
+        box-shadow: 1px 1px 10px #797979;
+        background:linear-gradient(bottom, #fb9c95 0.1%,#ea5e53 2%,#ec877f);
+        background:-ms-linear-gradient(bottom, #fb9c95 0.1%,#ea5e53 2%,#ec877f);
+        background:-moz-linear-gradient(bottom, #fb9c95 0.1%,#ea5e53 2%,#ec877f);
+        background:-webkit-gradient(linear, left bottom, left top, from(#fb9c95), to(#ec877f),color-stop(0.01, #fb9c95),color-stop(0.02, #ea5e53));
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fb9c95,endColorstr=#ec877f,grandientType=1);
+   
         .border-radius(5px);
         .activity-list-title {
              display: block;
              height: 32px;
              font-size: 24px;
              line-height: 32px;  
-             margin: 4px 0px;
-             padding-right: 8px;
-             padding-left: 18px;
+             margin: 4px 0px; 
              width: 100%;
              text-align: center;
 
@@ -253,7 +279,7 @@
         }
     }
     .activity-box3 {
-        height: 1065px;
+        height: 1085px;
         width: 1000px;
         background-color: #fdab68;
         top: -54px;
@@ -369,8 +395,15 @@
        display: block;
        margin-left: 250px;
        border:none;
-       margin-top: 10px;
+       margin-top: 30px;
        cursor: pointer;
+       background:linear-gradient(bottom, #50c502 10%,#5de602 100%);
+       background:-ms-linear-gradient(bottom, #50c502 10%,#5de602 100%);
+       background:-moz-linear-gradient(bottom, #50c502 10%,#5de602 100%);
+       background:-webkit-gradient(linear, 0 0, 0 100%, from(#50c502), to(#5de602),color-stop(0.10, #50c502));
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#5de602,grandientType=1);
+   
+
    }
    table {
       width: 100%;

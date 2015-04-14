@@ -30,15 +30,6 @@ class Awards_Activity_Invite201504 extends Awards_Activity_Base {
     }
 
     /**
-     * 根据奖励计算原投资额
-     */
-    public function getOriginValue($value){
-        $value = floatval($value);
-        $origin = $value / self::PERCENT;
-        return intval($origin);
-    }
-
-    /**
      * 为参与活动的用户发放奖券
      */
     public function giveAward($inviterid, $arrParam = array()){

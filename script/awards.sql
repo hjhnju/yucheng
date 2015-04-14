@@ -20,23 +20,36 @@ CREATE TABLE `awards_ticket` (
   `memo` varchar(255) NOT NULL COMMENT '说明',
   PRIMARY KEY (`id`),
   INDEX idx_userid(`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='奖券表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='奖券表';
 
-DROP TABLE IF EXISTS  `awards_entity`;
-CREATE TABLE `awards_entity`(
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '奖励id',
-  `userid` int(11) DEFAULT NULL COMMENT '拥有用户',
-  `name` varchar(255) NOT NULL COMMENT '实物名',
-  `type` tinyint(3) DEFAULT NULL COMMENT '奖励类型 1:注册奖励 2:邀请奖励 3:投资奖励',
+CREATE TABLE `awards_entity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `type` tinyint(3) NOT NULL COMMENT '',
   `value` decimal(10,2) NOT NULL COMMENT '价值',
+  `valid_time` int(11) NOT NULL COMMENT '有效截止时间',
   `activity` varchar(32) DEFAULT NULL COMMENT '奖励活动的类名,含兑换条件',
-  `pay_time` int(11) NOT NULL COMMENT '发放时间',
-  `status` tinyint(3) NOT NULL COMMENT '发放状态 1:未发放，2:已发放，3:已收货',
+  `userid` int(11) DEFAULT NULL COMMENT '拥有用户',
+  `pay_time` int(11) NOT NULL COMMENT '兑换时间',
   `create_time` int(11) NOT NULL COMMENT '创建时间',
   `update_time` int(11) NOT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  INDEX idx_userid(`userid`)
+  `memo` varchar(255) NOT NULL COMMENT '说明',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='实物奖励表';
+
+
+-- DROP TABLE IF EXISTS  `awards_invites`;
+-- CREATE TABLE `awards_invite` (
+--   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
+--   `userid` int(11) unsigned NOT NULL COMMENT '邀请人id',
+--   `inviteeid` int(11) unsigned NOT NULL COMMENT '被邀请人id',
+--   `amount` decimal(10,2) unsigned NOT NULL COMMENT '奖励金额',
+--   `status` int(11) unsigned NOT NULL COMMENT '领取状态:1-未发放, 2-已发放',
+--   `memo` varchar(255) DEFAULT NULL COMMENT '备注',
+--   `create_time` int(11) NOT NULL COMMENT '创建时间',
+--   `update_time` int(11) NOT NULL COMMENT '更新时间',
+--   PRIMARY KEY (`id`),
+--   KEY `idx_userid` (`userid`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='已发放的邀请奖励表';
 
 
 DROP TABLE IF EXISTS  `awards_invite`;

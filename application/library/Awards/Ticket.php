@@ -105,8 +105,7 @@ class Awards_Ticket extends Awards_Object_Ticket {
         }
 
         if($bolRet){
-            $this->status  = Awards_Type_TicketStatus::EXCHANGED;
-            $this->payTime = time();
+            $this->status = Awards_Type_TicketStatus::EXCHANGED;
             $bolRet = $this->save();
         }
 
