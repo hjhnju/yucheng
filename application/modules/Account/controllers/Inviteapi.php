@@ -55,8 +55,8 @@ class InviteapiController extends Base_Controller_Api {
         foreach ($arrInvId as $invId) {
             $invInfo = array();
             $invInfo['userid']          = $arrUinfos[$invId]['userid'];
-            $invInfo['username']        = $arrUinfos[$invId]['name'];
-            $invInfo['phone']           = $arrUinfos[$invId]['phone'];
+            $invInfo['username']        = $arrUinfos[$invId]['displayname'];
+            $invInfo['phone']           = Base_Util_String::starPhone($arrUinfos[$invId]['phone']);
             $invInfo['regist_progress'] = isset($arrUinfos[$invId]['huifuid'])? 1:0;
             $invInfo['invested']        = $arrIsInvest[$invId];
             $invInfo['amount']          = $arrAwards[$invId];

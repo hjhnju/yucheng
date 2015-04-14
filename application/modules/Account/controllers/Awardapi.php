@@ -46,6 +46,7 @@ class AwardapiController extends Base_Controller_Api {
         $list->appendFilterString(" status IN ($status)");
         $list->setPage($page);
         $list->setPagesize($pagesize);
+        $list->setOrder('status desc, update_time desc');
         $arrData = $list->toArray();
         $arrData['list'] = array();
         $arrObjs = $list->getObjects();
@@ -58,14 +59,14 @@ class AwardapiController extends Base_Controller_Api {
             $arrTicket['ticket_type'] = $ticket->ticketType;
             $arrTicket['src']         = $ticket->getSource();
             $arrTicket['enabled']     = intval($ticket->isEnabled());
-            $arrTicket['status']      = $ticket->status;
             if($arrTicket['enabled'] 
                 && $ticket->status === Awards_Type_TicketStatus::NOT_FINISH){
                 $ticket->status = Awards_Type_TicketStatus::NOT_USED;
                 $ticket->save();
             }
-            $arrTicket['desc'] = $ticket->getDesc();
-            $arrData['list'][] = $arrTicket;
+            $arrTicket['status'] = $ticket->status;
+            $arrTicket['desc']   = $ticket->getDesc();
+            $arrData['list'][]   = $arrTicket;
         }
         $this->ajax($arrData);
     }
