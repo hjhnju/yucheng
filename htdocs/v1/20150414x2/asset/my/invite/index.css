@@ -79,8 +79,8 @@ p{margin:0;padding:0}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right;margin-top:15px}
-.header-right .activity-img{margin-top:4px;float:left}
-.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:15px;text-align:center}
+.header-right .activity-img{margin-top:4px;margin-right:5px;float:left}
+.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:10px;text-align:center}
 .header-right .new-activity a{color:#4fc501;text-decoration:none}
 .login-register{border:1px solid #76cf65;border-radius:25px;-moz-border-radius:25px;width:100px;height:29px;background:url(../../common/img/btn_bg1.png) no-repeat left center;transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-webkit-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-moz-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-o-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4)}
 .login-register a{color:#4fc501;transition:color .4s linear;-webkit-transition:color .4s linear;-moz-transition:color .4s linear;-o-transition:color .4s linear;display:block;text-align:center;width:50px;text-decoration:none;line-height:30px}
@@ -348,7 +348,7 @@ p{margin:0;padding:0}
 .fen{font-size:20px;color:#76cf65}
 .flex-center{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center}
 .justify{-webkit-justify-content:center;justify-content:center}
-.finish-main-title{margin-bottom:10px;border-bottom:0 solid #eaeaea}
+.finish-main-title{margin-bottom:15px;border-bottom:0 solid #eaeaea}
 .leaf-btn{display:block;width:180px;height:50px;position:absolute;right:0;top:0;text-decoration:none;cursor:pointer;background:url(img/button.png) 0 -100px no-repeat}
 .reward{background-color:#f8f8f8;height:565px;margin-bottom:15px}
 .reward-white-bg{background-color:#fff;margin-bottom:15px}
@@ -357,10 +357,11 @@ p{margin:0;padding:0}
 .reward-type-box{height:150px;width:385px;padding-left:30px;margin-top:100px}
 .reward-type-box .regist-bg{margin-right:28px}
 .reward-type-box-title{height:32px;line-height:32px;font-size:18px}
-.reward-type-box-text{font-size:14px;height:28px;line-height:35px}
+.reward-type-box-text{font-size:14px;height:28px;line-height:30px}
 .reward-type-box-text .reward-type-link-http{color:#f2736a;text-decoration:none;margin-right:10px}
 .reward-type-box-text .reward-type-link-span{padding:7px 10px;background-color:#76cf65;color:#fff;cursor:pointer;text-decoration:none;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .reward-type-box-text .reward-type-link-span:hover{background-color:#2b9817}
+.reward-type-two-text{line-height:26px}
 .erweima{width:126px;height:126px;margin:20px 0 0 65px;margin-left:100px}
 .reward-my{border:1px solid #626262;height:108px;font-size:14px;color:#070707}
 .reward-my .reward-my-left{width:265px;height:86px;padding:20px 0 0 25px}

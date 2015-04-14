@@ -113,7 +113,7 @@ define(function (require) {
                 //点击兑换的事件
                 $("#my-reward-list .status2").click(function (e) {  
                       $(this).unbind("click"); //移除click
-                      $(this).find("ticket-status2-tips").show();
+                      $(this).find(".ticket-status2-tips").show();
                        toExchange.remote({
                             ticketid: $(this).attr("ticketid") 
                         }); 

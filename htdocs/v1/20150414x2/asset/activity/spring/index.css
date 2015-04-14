@@ -79,8 +79,8 @@ p{margin:0;padding:0}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right;margin-top:15px}
-.header-right .activity-img{margin-top:4px;float:left}
-.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:15px;text-align:center}
+.header-right .activity-img{margin-top:4px;margin-right:5px;float:left}
+.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:10px;text-align:center}
 .header-right .new-activity a{color:#4fc501;text-decoration:none}
 .login-register{border:1px solid #76cf65;border-radius:25px;-moz-border-radius:25px;width:100px;height:29px;background:url(../../common/img/btn_bg1.png) no-repeat left center;transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-webkit-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-moz-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-o-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4)}
 .login-register a{color:#4fc501;transition:color .4s linear;-webkit-transition:color .4s linear;-moz-transition:color .4s linear;-o-transition:color .4s linear;display:block;text-align:center;width:50px;text-decoration:none;line-height:30px}
@@ -263,7 +263,7 @@ p{margin:0;padding:0}
 .activity .activity-btn:hover{text-decoration:none;color:#3e3e3e;background-position:0 -480px;transition:background-position .4s ease-in-out .1s;-webkit-transition:background-position .4s ease-in-out .1s;-moz-transition:background-position .4s ease-in-out .1s;-o-transition:background-position .4s ease-in-out .1s}
 .activity .activity-text{font-size:20px;line-height:36px;width:620px;height:252px;margin-left:25px}
 .activity .activity-text .rule-btn{display:block;height:30px;color:#fff;line-height:30px;font-size:18px;width:108px;cursor:pointer;background-color:#f2746a;text-align:center;margin-top:55px;text-decoration:none}
-.activity .activity-text .rule-btn-w{width:242px;margin-top:20px}
+.activity .activity-text .rule-btn-w{display:block;height:30px;color:#fff;line-height:30px;font-size:18px;width:108px;cursor:pointer;background-color:#f2746a;text-align:center;margin-top:55px;text-decoration:none;width:242px;margin-top:20px}
 .activity .activity-text .rule-box{width:340px;height:178px;padding:11px 13px;margin-right:32px;background-color:#f3ba8d;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px}
 .activity .activity-text .rule-box .rule-box-content{width:340px;height:158px;margin:0 auto;font-size:12px;line-height:30px;background-color:#fff;padding:10px 0;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;overflow:hidden}
 .activity .activity-text .rule-box .rule-box-content .rule-box-left{display:block;border-right:1px solid #4fc501;width:170px;text-align:center;padding-right:20px}
