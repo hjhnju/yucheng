@@ -43,6 +43,24 @@ class Awards_Activity_Invest201504 extends Awards_Activity_Base {
     }
 
     /**
+     * 根据奖励计算原投资额
+     */
+    public function getOriginValue($value){
+        $value = floatval($value);
+        $origin = 0.00;
+        if($value <= 10000 * 0.005){
+            $origin = $value / 0.005;
+        }elseif ($value <= 50000 * 0.006) {
+            $origin = $value / 0.006;
+        }elseif ($value <= 100000 * 0.007) {
+            $origin = $value / 0.007;
+        }else {
+            $origin = $value / 0.008;
+        }
+        return intval($origin);
+    }
+
+    /**
      * 为参与活动的用户发放奖券
      */
     public function giveAward($userid, $arrParam = array()){
