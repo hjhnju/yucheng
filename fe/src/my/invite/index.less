@@ -1,0 +1,369 @@
+@import "../../common/css/common.less";
+@import "../common/css/index.less";
+
+
+//flex 布局
+.flex-center {
+      display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center; 
+}
+.justify {
+    -webkit-justify-content:center;
+    justify-content:center
+}
+
+//好友邀请奖励改版  2015-4-11
+
+.finish-main-title { 
+    margin-bottom: 15px;
+    border-bottom: 0px solid #eaeaea; 
+
+}
+.leaf-btn {
+     display: block;
+     width: 180px;
+      height: 50px;
+     position: absolute;
+     right: 0px;
+     top: 0px;
+     text-decoration: none;
+     cursor: pointer; 
+     background:url(img/button.png) 0px -100px no-repeat;
+}
+.reward {
+       background-color: #f8f8f8;
+       height: 565px;
+       margin-bottom: 15px;
+}
+.reward-white-bg {
+    background-color: #fff;
+    margin-bottom: 15px;
+}
+.reward-type {
+  
+   color: #070707; 
+   font-size: 14px;  
+
+}
+.reward-type1{
+    height: 365px;
+    border-bottom: 1px solid #fff;
+    padding-top: 15px; 
+
+}
+.reward-type-box {
+    height: 150px;
+    width: 385px;
+    padding-left: 30px;
+    margin-top: 100px;
+    .regist-bg {
+        margin-right: 28px; 
+    }
+}
+.reward-type-box-title {
+    height: 32px;
+    line-height: 32px;  
+    font-size: 18px; 
+}
+.reward-type-box-text {
+    font-size: 14px; 
+    height: 28px;
+    line-height: 30px; 
+
+    .reward-type-link-http {
+        color: @color-red;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+    .reward-type-link-span {
+        padding: 7px 10px;
+        background-color: @color-green;
+        color: #FFFFFF;
+        cursor: pointer;
+        text-decoration: none;
+
+        .border-radius(5px);
+
+        &:hover {
+            background-color: @color-green-hover;
+        }
+    }
+}
+.reward-type-two-text { 
+    line-height: 26px; 
+}
+.erweima {
+    width: 126px;
+    height: 126px; 
+    margin: 20px 0 0 65px;
+    margin-left: 100px;
+}
+.reward-my { 
+     border: 1px solid #626262;
+     height: 108px; 
+     font-size: 14px;
+     color: #070707;
+     .reward-my-left {
+            width: 265px;
+            height: 86px; 
+           padding: 20px 0px 0px 25px;  
+          .reward-my-account {
+                color:@color-red;
+                font-size: 18px;
+                line-height: 36px;
+          }
+     }
+     .reward-my-right {
+          background-color: #eeeeee;
+          line-height: 20px;
+          height: 93px;
+          padding:15px 10px 0px 10px; 
+     }
+
+}
+
+.reward-item { 
+    padding-bottom: 30px;
+}
+.reward-item-table {
+    width: 100%;
+    text-align: center;
+    tr {
+
+        th {
+            border-bottom: 1px solid #dedede;
+            height: 40px;
+            padding-left: 20px;
+            color: #a0a0a0;
+        }
+        td {
+            height: 60px;
+            border-bottom: 1px dashed #dedede;
+            padding-left: 20px;
+            color: #333333;
+        }
+    }
+    .jindu {
+        width: 70px;
+        height: 8px;
+        background-color: #cccccc;
+        margin: 0 auto;
+
+        .border-radius(20px);
+
+        .within {
+            min-width: 10px;
+            background-color: @color-green;
+            height: 8px;
+
+
+            .border-radius(20px);
+        }
+    }
+    .text-align {
+        text-align: left;
+    }
+    .table-tr-span {
+        padding: 7px 10px;
+        background-color: @color-green;
+        color: #FFFFFF;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            background-color: @color-green-hover;
+        }
+
+        .border-radius(3px);
+
+        &.current {
+            cursor: default;
+            background-color: #cccccc;
+        }
+
+    }
+    .reward-count {
+        color: #75cf64;
+    }
+    .no-reward {
+        color: #d6d6d6;
+    }
+    .invest-icon-yes {
+          display: block;
+          height: 32px;
+          width: 32px;
+          margin: 0 auto;
+          background:url(img/button.png) 0px -300px no-repeat;
+    }
+     .invest-icon-no {
+          display: block;
+          height: 32px;
+          width: 32px;
+          margin: 0 auto;
+          background:url(img/button.png) 0px -400px no-repeat;
+    }
+}
+
+
+
+
+/*
+
+.reward {
+
+}
+.reward-rule {
+    padding: 20px;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+}
+.reward-rule-title {
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #333333;
+}
+.reward-rule-main {
+
+}
+.reward-main-list {
+    height: 26px;
+    line-height: 26px;
+    color: #333333;
+    padding-left: 10px;
+
+    .round-span {
+        color: #333333;
+        margin-right: 5px;
+    }
+    .rule-spam {
+        font-size: 14px;
+        color: @color-red;
+        font-weight: bold;
+    }
+}
+.reward-type {
+
+}
+.reward-type-box {
+    margin-bottom: 20px;
+}
+.reward-type-box-title {
+    height: 32px;
+    line-height: 32px;
+    background: url(../common/img/number_icon.png) 0 0 no-repeat;
+    padding-left: 35px;
+    font-size: 14px;
+    color: #333333;
+
+    &.number-one {
+        background-position: 0 5px;
+    }
+    &.number-two {
+        background-position: 0 -45px;
+    }
+}
+.reward-type-box-text {
+    padding-left: 35px;
+    height: 28px;
+    line-height: 28px;
+    color: #333333;
+
+    .reward-type-link-http {
+        color: @color-red;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+    .reward-type-link-span {
+        padding: 7px 10px;
+        background-color: @color-green;
+        color: #FFFFFF;
+        cursor: pointer;
+        text-decoration: none;
+
+        .border-radius(5px);
+
+        &:hover {
+            background-color: @color-green-hover;
+        }
+    }
+}
+.erweima {
+    width: 126px;
+    height: 126px;
+//    background-color: @color-green;
+    margin: 20px 0 0 65px; 
+}
+.reward-type-two-text {
+    width: 260px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #333333;
+}
+.reward-item {
+    border-top: 1px dashed #dedede;
+    padding-bottom: 30px;
+}
+.reward-item-table {
+    width: 100%;
+    text-align: center;
+    tr {
+
+        th {
+            border-bottom: 1px solid #dedede;
+            height: 40px;
+            padding-left: 20px;
+            color: #a0a0a0;
+        }
+        td {
+            height: 60px;
+            border-bottom: 1px dashed #dedede;
+            padding-left: 20px;
+            color: #333333;
+        }
+    }
+    .jindu {
+        width: 70px;
+        height: 8px;
+        background-color: #cccccc;
+        margin: 0 auto;
+
+        .border-radius(20px);
+
+        .within {
+            min-width: 10px;
+            background-color: @color-green;
+            height: 8px;
+
+
+            .border-radius(20px);
+        }
+    }
+    .text-align {
+        text-align: left;
+    }
+    .table-tr-span {
+        padding: 7px 10px;
+        background-color: @color-green;
+        color: #FFFFFF;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            background-color: @color-green-hover;
+        }
+
+        .border-radius(3px);
+
+        &.current {
+            cursor: default;
+            background-color: #cccccc;
+        }
+
+    }
+}*/

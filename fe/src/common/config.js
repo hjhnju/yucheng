@@ -119,8 +119,18 @@ define(function () {
             + '/user/registapi/modifypwd',
             //+ '/test/user/registapi/modifypwd.json'
         LOAN_REQUEST: rootUrl
-            + '/loan/request'
+            + '/loan/request',
             //+ '/test/loan/request.json'
+        ACCOUNT_AWARDAPI_TICKETS:rootUrl
+            +'/account/awardapi/tickets',
+             //+ '/test/account/awardapi/tickets.json'
+        ACCOUNT_AWARDAPI_EXCHANGE:rootUrl
+            +'/account/awardapi/exchange',
+             //+ '/test/account/awardapi/exchange.json' 
+        ACCOUNT_INVITEAPI_LIST:rootUrl
+            +'/account/Inviteapi/list'
+             //+ '/test/account/Inviteapi/list.json' 
+ 
         };
 
     return {

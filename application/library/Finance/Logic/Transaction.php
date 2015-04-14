@@ -7,7 +7,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 
     public function __construct(){
         parent::__construct();
-        $this->webroot = Base_Config::getConfig('web')->root;
+        $this->webroot = Base_Config::getConfig('web')->fnroot;
     }
 
     /**

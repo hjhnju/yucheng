@@ -27,7 +27,7 @@ class RegAction extends Yaf_Action_Abstract {
                 'busicode' => $busicode,
             );
 
-            //TODO: User_Api::saveCorpInfo($userid, $arrInfo);
+            User_Api::saveCorpInfo($userid, $arrInfo);
 
             Base_Log::notice(array('msg'=>'To corp reg.',
                 'userid'   => $userid,
@@ -38,7 +38,7 @@ class RegAction extends Yaf_Action_Abstract {
                 'corpname' => $corpname,
             ));
             //跳转至汇付开企业户
-            Finance_Api::corpRegist($userid, $username, $busicode, $corpname);
+            Finance_Api::corpRegist($userid, $username, $busicode);
         }
 
 

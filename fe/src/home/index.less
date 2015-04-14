@@ -10,7 +10,7 @@
 .banner-select {
     .clearfix;
 
-    width: 150px;
+    width: 180px;
     position: absolute;
     z-index: 11115;
     top: 280px;
@@ -300,6 +300,9 @@
      &.banner-five {
         background: url(./img/banner_five.jpg) center center no-repeat;
     }
+    &.banner-six {
+        background: url(./img/banner_six.png) center center no-repeat;
+    }
 }
 
 // home页面的banner的fix-box
@@ -480,7 +483,6 @@
 		   .hexun{background-position:  0px -366px;} 
 		   .sutu{ background-position:0 0; }
 		   .souhu{background-position: 0px -183px;}
-           .zhongjingwang{ background: url(img/zhongjingwang.png) no-repeat 0 0;}
 		}
 		 .media-box2 {
 		 	border-top:1px dashed #000; 
@@ -648,27 +650,17 @@
 //平台公告、还款公告开始
 .plat-notice {
 	background-color :#dff1ec;
-	height:300px;  
+	height:300px; 
+	
 	.plat-notice-box {
 	    margin-top:66px;
-		width:220px;
+		width:300px;
 		text-overflow:ellipsis;
 		margin-bottom: 15px;
 		
-        .plat-notice-box-title {
-                margin-bottom: 5px;
-                font-size: 20px;
-                color: #75cf64;
-
-            a { 
-                   font-size: 20px;
-                   color: #75cf64;
-               }
-            } 
-
 		a{
 		     display:block;
-			 width:220px;
+			 width:300px;
 			 font-size:14px;
 			 line-height:30px;
 			 color:#000;
@@ -686,13 +678,18 @@
 		    float: left;
 		    margin-left: 10px; 
 		}
-	}
-    .refund-notice-box {
-        width:280px;
-        a {
-             width:280px;
+
+        .plat-notice-box-title {
+            margin-bottom: 5px;
+            padding-left: 6px;
+            font-size: 20px;
+            color: #75cf64;
         }
-    }
+        .plat-notice-box-title  a { 
+            font-size: 20px;
+            color: #75cf64;
+        }
+	}
 	.notice-box-wh {
 	     width:350px;
 		 a {
@@ -732,7 +729,7 @@
 			font-size:18px;
 			line-height:45px;
 			padding-left: 10px;
-			margin-top: 26px;
+			margin-top: 40px;
 			
 			.attention-me {
 			    display: inline-block;

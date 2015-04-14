@@ -20,8 +20,8 @@ class RegistController extends Base_Controller_Page{
         }
 
         //若有第三方登陆，则显示绑定提示
-        $referer  = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : false;
-        if(preg_match('#/user/login/third#', $referer) === 1){
+        $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
+        if($openid > 0){
             $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
             $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
             $logic    = new User_Logic_Third();

@@ -276,4 +276,75 @@ class User_Api{
         Base_Log::notice(array('status'=>$objRet->status));
         return $objRet->format();
     }
+
+    public static function getInviteridByUserid($userid){
+        $invite = new User_Object_Invite(array('invitee'=>$userid));
+        if($invite->isLoaded()){
+            return $invite->userid;
+        }
+        return null;
+    }
+
+    /**
+     * 获取邀请用户id列表
+     * @param  int $userid   邀请人id
+     * @param  [type] $page     [description]
+     * @param  [type] $pagesize [description]
+     * @return array  
+     */
+    public static function getInvitees($userid, $page, $pagesize){
+        $list = new User_List_Invite();
+        $list->setFields(array('invitee'));
+        $list->setFilter(array('userid'=>$userid));
+        $list->setOrder('invitee desc');
+        $list->setPage($page);
+        $list->setPagesize($pagesize);
+        $list = $list->toArray();
+
+        return $list;
+    }
+
+    public static function getInviteeCnt($userid){
+        $list = new User_List_Invite();
+        $list->setFields(array('invitee'));
+        $list->setFilter(array('userid'=>$userid));
+        $list->setPage(1);
+        $list->setPagesize(1);
+        $list = $list->toArray();
+        return $list['total'];
+    }
+
+    /**
+     * 批量获取用户信息
+     * @param  array $arrUid 
+     * @return array
+     */
+    public static function getInfos($arrUid){
+        if(empty($arrUid)){
+            return false;
+        }
+        $list = new User_List_Login();
+        $list->setFields(array('userid', 'name', 'phone', 'email', 'huifuid'));
+        $list->setFilterString('userid IN ('. implode(',', $arrUid) . ')');
+        $list->setPagesize(PHP_INT_MAX);
+        $list = $list->toArray();        
+        $arrRet = array_fill_keys($arrUid, null);
+        foreach ($list['list'] as $row) {
+            $row['displayname'] = !empty($row['name']) ? Base_Util_String::starUsername($row['name']) : 
+                Base_Util_String::starPhone($row['phone']);
+            $arrRet[$row['userid']] = $row;
+        }
+        return $arrRet;
+    }
+
+    public static function saveCorpInfo($userid, $arrInfo){
+        $user = new User_Object($userid);
+        if($user->userid <= 0){
+            return false;
+        }
+        foreach ($arrInfo as $field => $value) {
+            $user->$field = $value;
+        }
+        return $user->save();
+    }
 }

@@ -50,18 +50,17 @@ class LoginapiController extends Base_Controller_Api{
        
         //登陆
         $logic   = new User_Logic_Login();
-        $retCode = $logic->login($strType,$strName, $strPasswd);
+        $retCode = $logic->login($strType, $strName, $strPasswd);
         if(User_RetCode::SUCCESS !== $retCode) {
             $intFails = intval($intFails) + 1;
             Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), $intFails);
-
             return $this->ajaxError($retCode, User_RetCode::getMsg($retCode));
         }
         Yaf_Session::getInstance()->set(User_Keys::getFailTimesKey(), 0);
         
         if($isThird>0){
-            $openid   = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
-            $authtype = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
+            $openid     = Yaf_Session::getInstance()->get(User_Keys::getOpenidKey());
+            $authtype   = Yaf_Session::getInstance()->get(User_Keys::getAuthTypeKey());
             $logicThird = new User_Logic_Third();
             $logicThird->binding($logic->checkLogin(), $openid, $authtype);
             Base_Log::notice(array(
@@ -71,15 +70,17 @@ class LoginapiController extends Base_Controller_Api{
             ));
         }
         
-        Base_Log::notice(array(
-            'msg'   => 'login success',
-            'name'  => $strName,
-            'useid' => $logic->checkLogin(),
-        ));
         $redirectUri = Yaf_Session::getInstance()->get(User_Keys::LOGIN_REFER);
+        Base_Log::notice(array(
+            'msg'      => 'login success',
+            'name'     => $strName,
+            'redirect' => $redirectUri,
+        ));
+
         if(!empty($redirectUri)){
             return $this->ajaxJump($redirectUri);
         }
+        
         $this->ajax();
     }
      

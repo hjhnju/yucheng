@@ -4,8 +4,10 @@
  */
 class OpenController extends Base_Controller_Page {
 
+    protected $loginUrl = '/m/login';
+
     public function init(){
-        $this->setNeedLogin(false);
+        $this->setNeedLogin(true);
         parent::init();
     }
     

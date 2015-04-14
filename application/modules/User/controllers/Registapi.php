@@ -141,8 +141,7 @@ class RegistApiController extends Base_Controller_Api{
         $userid = $objRet->data['userid'];
 
         //登记邀请人
-        Base_Log::debug(array('userid'=>$userid, 'inviterid'=>$inviterid));
-        Awards_Api::registNotify($userid, $inviterid);
+        $logic->setInviter($userid, $inviterid);
 
         //进行绑定第三方账户
         if($isThird > 0){
@@ -167,14 +166,21 @@ class RegistApiController extends Base_Controller_Api{
                 ));
             }
         }
+        
         //注册成功后设置用户为登录状态并将登录信息入库
         $logic   = new User_Logic_Login();
-        $logic->login('name', $strName, $strPasswd);
+        if(!empty($strName)){
+            $logic->login('name', $strName, $strPasswd);
+        }elseif(!empty($strPhone)){
+            $logic->login('phone', $strPhone, $strPasswd);
+        }
         Base_Log::notice($_REQUEST);
         
         //注册后的系统消息
-        Msg_Api::sendmsg(0, $userid, 1, '系统消息', array());
-        Msg_Api::sendmsg(0, $userid, 2, '奖励发放', array('data'=>30));
+        Msg_Api::sendmsg($userid, Msg_Type::SYSTEM);
+        //通知注册奖励
+        Awards_Api::registNotify($userid, $inviterid);
+        
         return $this->ajaxJump('/user/open');
     }
     

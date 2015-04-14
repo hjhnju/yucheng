@@ -441,5 +441,24 @@ class Invest_Api {
         return $money;
     }
 
+    /**
+     * 判断用户是否已投资
+     * @param  array $arrUid 用户列表
+     * @return array array('userid'=>0|1)
+     */
+    public static function checkIsInvested($arrUid){
+        $list = new Invest_List_Invest();
+        $list->setFields(array('user_id'));
+        $list->setFilterString('user_id IN (' . implode(',', $arrUid) . ')');
+        $list->setPagesize(PHP_INT_MAX);
+        $list = $list->toArray();
+        $arrRet = array_fill_keys($arrUid, 0);
+        foreach ($list['list'] as $row) {
+            $arrRet[$row['extraid']] = 1;
+        }
+        return $arrRet;
+
+    }
+
 
 }

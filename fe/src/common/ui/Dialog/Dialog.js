@@ -141,7 +141,7 @@ define(function (require) {
         $(window).on('resize', function () {
             fixPosition();
         });
-        $('#popup-close').on('click', closePopup);
+        $('#popup-close,.popup-close').on('click', closePopup);
     }
 
     return {

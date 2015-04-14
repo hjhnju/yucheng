@@ -47,6 +47,10 @@ class Awards_Object_Invite extends Base_Object {
      * @var array
      */
     protected $intProps = array(
+        'id'          => 1,
+        'userid'      => 1,
+        'inviterid'   => 1,
+        'status'      => 1,
     );
 
     /**
@@ -59,31 +63,31 @@ class Awards_Object_Invite extends Base_Object {
 
     /**
      * 自增id
-     * @var 
+     * @var integer
      */
     public $id;
 
     /**
      * 用户id
-     * @var 
+     * @var integer
      */
     public $userid;
 
     /**
      * 邀请人id
-     * @var 
+     * @var integer
      */
     public $inviterid;
 
     /**
      * 领取状态:1-未达到, 2-已达到未领取，3-已领取
-     * @var 
+     * @var integer
      */
     public $status;
 
     /**
      * 奖励金额
-     * @var 
+     * @var number
      */
     public $amount;
 

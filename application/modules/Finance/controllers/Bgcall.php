@@ -281,13 +281,9 @@ class BgcallController extends Base_Controller_Page {
         //充值财务记录入库
         Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::NETSAVE,
             $transAmt, '充值记录');
-        /* if(!Msg_Api::sendmsg(0,$userid,3,"充值消息")) {
-            Base_Log::error(array(
-                'msg' => "充值消息发送失败",
-                'from' => 0,
-                'to' => $userid,
-            ));
-        }  */       
+        
+        Msg_Api::sendmsg($userid, Msg_Type::CASH, array(time(), $transAmt));
+        
         Base_Log::notice($retParam);
         //页面打印
         $trxId = strval($trxId);

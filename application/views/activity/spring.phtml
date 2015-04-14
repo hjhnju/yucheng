@@ -1,5 +1,208 @@
-<html>
-    <body>
-        <h1>20150415正式上线活动</h1>
-    </body>
-</html>
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/activity/spring/index.css" />
+ {%/block%}
+
+{%block name="script"%}
+  
+ <script> 
+   require(['activity/spring/index'],function (main){
+        main.init();
+   });  
+</script> 
+{%/block%}
+ 
+{%block name="content"%} 
+<div class="activity">
+<div class="activity-big_tree"> 
+    <div class="container big-leaf flex-center">
+        <div class="slogan"> 
+            <span> 
+             <a class="activity-btn fl"  href="#activity1">注册送30现金券</a>
+             <a class="activity-btn fl"  href="#activity2">邀请好友三重礼</a>
+             <a class="activity-btn fl"  href="#activity3">投资再送两重礼</a>
+            </span>
+        </div> 
+    </div>
+    <div class="container big-gift ">
+        
+    </div>
+    <div id="activity1" class="container activity-box1 "> 
+        <a class="activity-btn activity-btn1"></a>
+        <div class="activity-text fl">
+		        活动期间，平台原注册活动继续，累计投资满1000元<br/>
+		        即可领取30元现金，可下次投资或直接提现！<br/>
+            <a class="rule-btn" for="activity1" >活动细则&gt;</a>
+        </div>
+        <div class="activity-list fr">
+            <span  class="activity-list-title fl">实时播报</span>
+            <a class="more fr" href="#">more</a> 
+            <div class="activity-list-content"> 
+		      <div class="activity-list-content-scroll"> 
+		            <ul class="">   
+		            	  {%foreach $data.broad_regist as $key => $item%} 
+		                   <li>
+		                  	{%if $item.tpl == 1%}
+		            	  		{%$item.displayname%} 成功注册，账户{%$item.word%}{%$item.amount%}元现金券
+		            	  	{%else%}
+		            	  		{%$item.displayname%} 累计投资满1000元，{%$item.word%}领走{%$item.amount%}元现金
+	            	  		{%/if%}
+		            	  </li>
+		                 {%/foreach%}
+		            </ul>
+	            </div>
+	         </div>
+        </div>
+    </div>
+    <div class="container leaf-line  leaf-line1">
+        
+    </div>
+    <div id="activity2" class="container activity-box2 ">
+        <div class="bg-img2">
+           <a class="activity-btn activity-btn2"></a>
+            <div class="activity-text fl">
+                                                    推荐6人注册兴教贷账户，就可获得推荐奖励，奖励<br/>
+                                                    为价值79元的小米充电宝或小米手环，任选一个。<br/>
+	            <a class="rule-btn"  for="activity2">活动细则&gt;</a>
+	            <a class="rule-btn-w" target="_blank"  href="{%$webroot%}/account/invite">邀请方式（登录后查看）&gt;</a>
+	        </div>
+	        <div class="activity-list fr">
+	            <span  class="activity-list-title fl">实时播报</span>
+	            <a class="more fr" href="#">more</a> 
+	            <div class="activity-list-content"> 
+		           <div class="activity-list-content-scroll"> 
+		            <ul class="">  
+		                  {%foreach $data.broad_invite as $key => $item%} 
+		                   <li>
+		                  	{%if $item.tpl == 1%}
+			            	  	{%$item.displayname%} 完成邀请任务，成功领走 {%$item.entity%}1个
+		            	  	{%else%}
+		            	  		{%$item.displayname%} 愉快地接受好友 {%$item.inviter%} 的邀请，加入兴教贷。
+	            	  		{%/if%}
+		            	  </li>
+		                 {%/foreach%}  
+		            </ul>
+		            </div>
+		         </div>
+	        </div>
+	         <div class="activity-text fl" style="margin-top: 150px;">
+				         成功推荐有效注册达到10人（含）以上的用户根据推<br/>
+				         荐人数进行排名，将有机会获得小米note手机、小米<br/>
+				         平板等各类奖励。 <br/>
+	            <a class="rule-btn" for="activity3">活动细则&gt;</a> 
+	        </div>
+	        <div class="activity-list fr" style="margin-top: 150px;height:280px;">
+	            <span  class="activity-list-title fl">邀请实时排行榜</span>
+	            <a class="more fr" href="#">more</a> 
+	            <div class="activity-list-content"> 
+		            <ul> 
+		                <li class="flex-center"><span>排名</span><span>用户名</span><span>邀请人数</span></li>
+		                 {%foreach $data.top_inviter as $key => $item%} 
+		                    <li class="flex-center">
+		                    <span>{%$key+1%}</span>
+		                    <span>{%$item.displayname%}</span>
+		                    <span>{%$item.count%}</span> 
+		            	   </li>
+		                 {%/foreach%}  
+		            </ul>
+		         </div>
+	        </div>
+	         <div class="activity-text fl" style="margin-top: 185px;">
+	                                活动期间有在平台投资的，推荐人可获得所有被推荐<br/>
+	                                用户每笔投资金额的0.1%的现金奖励。<br/>
+	            <a class="rule-btn" for="activity4">活动细则&gt;</a> 
+	        </div>
+	        <div class="activity-list fr" style="margin-top: 158px;">
+	            <span  class="activity-list-title fl">有土壕朋友幸福榜</span>
+	            <a class="more fr" href="#">more</a> 
+	            <div class="activity-list-content fr"> 
+		            <ul class=""> 
+		            	<li class="flex-center"><span>排名</span><span>用户名</span><span>朋友投资</span><span>累计提成</span></li>
+		                {%foreach $data.top_invite_invest as $key => $item%} 
+		                    <li class="flex-center">
+		                    <span>{%$key+1%}</span>
+		                    <span>{%$item.displayname%}</span>
+		                    <span>{%$item.invest%}</span> 
+		                    <span>{%$item.amount%}</span> 
+	            	    </li>
+		                {%/foreach%}
+		            </ul>
+		         </div>
+	        </div>
+        </div>
+    </div>
+    <div class="container leaf-line  leaf-line2">
+        
+    </div>
+    <div id="activity3" class="container activity-box3 ">
+         <div class="bg-img3">
+             <a class="activity-btn activity-btn3"></a>
+             
+            <div class="activity-text fl" style="">
+				       单笔投资金额满足如下限额要求的，可领取相应的现金奖励。 <br/>
+	            <a class="rule-btn"  for="activity5">活动细则&gt;</a> 
+	            
+	            <div class="rule-box fr">
+	               <div class="rule-box-content">
+	                    <span class="rule-box-left fl">
+	                                                                               单笔投资额   <br/>  
+	                          2000元（含）~1万元（含）<br/>
+	                          1万元~5万元（含）<br/>
+	                          5万~10万元（含）<br/>
+	                          10万元以上<br/>
+	                    </span>
+	                    <span class="rule-box-right fr">
+	                                                                                奖励 <br/>
+	                                                                                投资金额的5‰<br/>
+	                                                                                投资金额的6‰<br/>
+	                                                                                投资金额的7‰<br/>
+	                                                                                 投资金额的8‰<br/>
+	                    </span>
+	               </div>
+	            </div>
+	        </div>
+	        <div class="activity-list fr" style="">
+	            <span  class="activity-list-title fl">实时单笔投资排行榜</span>
+	            <a class="more fr" href="#">more</a> 
+	            <div class="activity-list-content"> 
+		            <ul> 
+		             
+		                <li class="flex-center"><span>排名</span><span>用户名</span><span>单笔投资额</span></li>
+		                  {%foreach $data.top_per_invest as $key => $item%} 
+		                    <li class="flex-center">
+		                    <span>{%$key+1%}</span>
+		                    <span>{%$item.displayname%}</span>
+		                    <span>{%$item.amount%}</span> 
+		            	   </li>
+		                 {%/foreach%}  
+		               </ul>
+		         </div>
+	        </div>
+	         <div class="activity-text fl" style="margin-top: 162px;">
+				       注册用户，在活动期间累计投资额达20万以上的，可参与累计<br/>
+				       投资送大礼活动，累计投资额前6名用户将获得以下超值奖励。 <br/>
+	            <a class="rule-btn"  for="activity6">活动细则&gt;</a> 
+	        </div>
+	        <div class="activity-list fr" style="margin-top: 130px;">
+	            <span  class="activity-list-title fl">4月累计投资排行榜</span>
+	            <a class="more fr" href="#">more</a> 
+	            <div class="activity-list-content"> 
+		            <ul> 
+		                <li class="flex-center"><span>排名</span><span>用户名</span><span>单笔投资额</span></li>
+		                  {%foreach $data.top_invest as $key => $item%} 
+		                    <li class="flex-center">
+		                    <span>{%$key+1%}</span>
+		                    <span>{%$item.displayname%}</span>
+		                    <span>{%$item.amount%}</span> 
+		            	   </li>
+		                 {%/foreach%}  
+		              </ul>
+		         </div>
+	        </div>
+         </div>
+       
+    </div>
+    </div> 
+</div> 
+ {%/block%}
