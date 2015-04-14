@@ -11,7 +11,6 @@ class OpenController extends Base_Controller_Page {
         parent::init();
     }
     
-    
     /**
      * 开通第三方
      *
@@ -38,6 +37,10 @@ class OpenController extends Base_Controller_Page {
         }else{
             Base_Redis::getInstance()->hSet('reg_success_hset', $this->userid, 1);
         }
+    }
+
+    public function activityAction(){
+        return $this->redirect('http://mp.weixin.qq.com/s?__biz=MzAxODE3MDk0OA==&mid=205028488&idx=1&sn=724a23c2f985950021340f19b16be11f&scene=18&key=2e5b2e802b7041cfbbc500639e60e0af49de4313cc0515a3f4370b62ee4247876e28261e32b1337c802d8764e0fb12e4');
     }
  
 
