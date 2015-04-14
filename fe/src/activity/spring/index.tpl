@@ -21,8 +21,8 @@
 		1、奖励将于用户点击兑换30元现金券后直接充入用户现金账户。<br/>
 		2、本次活动可与推荐等其他活动叠加，用户可享受多重福利。<br/>
 		3、兴教贷拥有本活动的最终解释权。<br/>
-      </div>
-      <button class="ok_btn popup-close">好</button>
+      </div> 
+      <a class="ok_btn" target="_blank" href="/user/regist">立即注册</a>
 </div> 
 <!-- /target -->
 
@@ -40,7 +40,7 @@
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。
 				
               </div>
-              <button class="ok_btn popup-close">好</button>
+              <a class="ok_btn" target="_blank" href="/user/regist">立即注册</a>
              
          </div> 
   <!-- /target -->
@@ -67,7 +67,7 @@
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。
 				
               </div>
-              <button class="ok_btn popup-close">好</button> 
+              <a class="ok_btn" target="_blank" href="/user/regist">立即注册</a> 
          </div>
 
 <!-- /target -->
@@ -77,10 +77,10 @@
               <div class="activity-dialog-title">推荐还能提成哦！有土壕朋友就是幸福！</div>
               <div class="activity-text">  
 			    <span>活动规则：</span>推荐人所推荐的用户，活动期间有在平台投资的，推荐人可获得所有被推荐用户投资金额总额的0.1%的现金奖励。被推荐人投的越多，奖励越多，多多推荐大家投资哦！<br/>
-				<span>备注：</span>平台将实时统计推荐人所推荐的用户投资总额情况，并实时显示获得奖励金额情况，奖励金额将于第二天上午由财务发放。 <br/>
+				<span>备注：</span>平台将实时统计推荐人所推荐的用户投资总额情况，并实时显示获得奖励金额情况，奖励金额由系统实时发放。 <br/>
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。 
               </div>
-              <button class="ok_btn popup-close">好</button> 
+              <a class="ok_btn" target="_blank" href="/user/regist">立即注册</a> 
     </div> 
 <!-- /target -->
 
@@ -91,16 +91,16 @@
 			    <span>活动规则：</span>注册用户，在活动期间，单笔投资金额满足以下要求的，可领取相应的现金奖励，奖励规则如下：<br/>
 				<table>
 				    <tr><th>序号</th><th>投资金额范围</th><th>奖励</th></tr>
-				    <tr><td>1</td><td>一次性投资1000元（含）~1万元（含）</td><td>投资金额的5‰；</td></tr>
-					<tr><td>2</td><td>一次性投资1万元~5万元（含）</td><td>	投资金额的6‰；</td></tr>
-					<tr><td>3</td><td>一次性投资5万~10万元（含</td><td>	投资金额的7‰；</td></tr>
-					<tr><td>4</td><td>一次性投资10万元以上</td><td>	投资金额的8‰；</td></tr>
+				    <tr><td>1</td><td>单笔投资2000元（含）~1万元（含）</td><td>投资金额的5‰；</td></tr>
+					<tr><td>2</td><td>单笔性投资1万元~5万元（含）</td><td>	投资金额的6‰；</td></tr>
+					<tr><td>3</td><td>单笔性投资5万~10万元（含</td><td>	投资金额的7‰；</td></tr>
+					<tr><td>4</td><td>单笔性投资10万元以上</td><td>	投资金额的8‰；</td></tr>
 				</table> 
-				<span>备注：</span>活动期间，用户当天截止24:00前投资金额达到单笔投资奖励要求的，相关奖励将于第二天由公司财务发放。<br/>
+				<span>备注：</span>活动期间，用户当天截止24:00前投资金额达到单笔投资奖励要求的，相关奖励将将由系统实时发放。<br/>
 				<span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。<br/>
 				
               </div>
-              <button class="ok_btn popup-close">好</button> 
+              <a class="ok_btn" target="_blank" href="/user/regist">立即注册</a> 
          </div> 
 <!-- /target -->
 
@@ -122,7 +122,7 @@
 				 <span>奖励发放时间：</span>活动截止日的第二天，公司将联系获奖用户，取得联系地址，并发放奖品，奖品到达时间由快递决定。<br/>
 				 <span>活动时间：</span>2015年4月15日—2015年5月15日24:00止。 
               </div>
-              <button class="ok_btn popup-close">好</button> 
+              <a class="ok_btn" target="_blank" href="/user/regist">立即注册</a> 
          </div> 
 <!-- /target -->
  

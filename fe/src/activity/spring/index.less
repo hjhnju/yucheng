@@ -18,6 +18,11 @@
      background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#ffffff),color-stop(0.02, #f1f1f1),color-stop(0.27, #ffffff));
      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#ffffff,grandientType=1);
 }
+#mk-dialog .close { 
+    top: -5px;
+    right: -5px; 
+}
+
 
 //春风化雨活动页面 
 #scrollUp {
@@ -37,10 +42,12 @@
      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fefef5,endColorstr=#41a276,grandientType=1);
     */
       width: 100%;
-
+     background-color: #42a377;
     .activity-big_tree{
         background:url(img/big_tree.png) ;
         width:100%; 
+        background-repeat: repeat-x;
+        padding-bottom: 56px;
      }
     .container {
         background-color: #fff;
@@ -87,8 +94,8 @@
         text-decoration: none; 
         cursor: pointer;
         margin-right: 20px;
-   text-decoration: none; 
-   color: #3e3e3e;
+        text-decoration: none; 
+        color: #3e3e3e;
         background:url(img/activity_btn.png)  0 -360px no-repeat;
 
               transition: background-position 0.4s ease-in-out .1s;
@@ -105,7 +112,23 @@
               -o-transition: background-position 0.4s ease-in-out .1s;
         }
     }
-
+    .regist-btn {
+        display: block;
+        width: 148px;
+        height: 74px; 
+        margin: 0 auto;
+        .border-radius(5px);
+        background:linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
+        background:-ms-linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
+        background:-moz-linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
+        background:-webkit-gradient(linear, 0 0, 0 100%, from(#f7de8e), to(#ffce30),color-stop(0.32, #ffd756),color-stop(0.86, #ffce30));
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#f7de8e,endColorstr=#ffce30,grandientType=1);
+        font-size: 24px;
+        line-height: 74px;
+        color: #636363;
+        text-align: center;
+        text-decoration: none;
+    }
     .activity-text {
         font-size: 20px;
         line-height: 36px;
@@ -249,7 +272,7 @@
             background: url(img/activity_box1_bg.png) 0 0 no-repeat;
         }
         .activity-text {
-	    	font-size: 24px; 
+	    	font-size: 20px; 
             margin-top: 60px;
          }
      }
@@ -397,6 +420,8 @@
        border:none;
        margin-top: 30px;
        cursor: pointer;
+       text-align: center;
+       text-decoration: none;
        background:linear-gradient(bottom, #50c502 10%,#5de602 100%);
        background:-ms-linear-gradient(bottom, #50c502 10%,#5de602 100%);
        background:-moz-linear-gradient(bottom, #50c502 10%,#5de602 100%);
