@@ -16,11 +16,14 @@ class OpenController extends Base_Controller_Page{
         //是否开通汇付
         $huifuId = $this->objUser->huifuid;
         
-        Base_Log::notice(array('huifuId' => $huifuId));
-
         if(!empty($huifuId)){
-            $this->redirect('/account/overview');
+            return $this->redirect('/account/overview');
         }
-        
+
+        //移动端跳转
+        $isMobile = Base_Util_Mobile::isMobile();
+        if($isMobile){
+            return $this->redirect('/m/open');
+        }
     }
 }
