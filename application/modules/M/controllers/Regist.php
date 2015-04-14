@@ -1,6 +1,6 @@
 <?php
 /**
- * 媒体报道
+ * 注册
  */
 class RegistController extends Base_Controller_Page {
     
@@ -20,5 +20,9 @@ class RegistController extends Base_Controller_Page {
      */
     public function indexAction() {
     	$this->getView()->assign('title', "注册兴教贷");
+	if(isset($_REQUEST['inviter'])){
+	    $inviter = $_REQUEST['inviter'];
+	    $this->getView()->assign('inviter', $inviter);
+	}
     } 
 }
