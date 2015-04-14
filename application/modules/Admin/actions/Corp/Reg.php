@@ -38,7 +38,7 @@ class RegAction extends Yaf_Action_Abstract {
                 'corpname' => $corpname,
             ));
             //跳转至汇付开企业户
-            Finance_Api::corpRegist($userid, $username, $busicode, $corpname);
+            Finance_Api::corpRegist($userid, $username, $busicode);
         }
 
 
