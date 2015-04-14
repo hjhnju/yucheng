@@ -17,13 +17,16 @@ class InviteController extends Base_Controller_Page {
      * @assign   
      */
     public function indexAction() {
-        $name  = $this->objUser->displayname;
-        $phone = $this->objUser->phone;
-        $data  = array(
-            'invname' => !empty($name) ? $name : '',
-            'inviter' => !empty($phone) ? $phone : '',
-        );
-        $this->getView()->assign(array('data'=>$data));
+        // $name  = $this->objUser->displayname;
+        // $phone = $this->objUser->phone;
+        // $data  = array(
+        //     'invname' => !empty($name) ? $name : '',
+        //     'inviter' => !empty($phone) ? $phone : '',
+        // );
+        // $this->getView()->assign(array('data'=>$data));
+        $logic = new Awards_Logic_Invite();
+        $url   = $logic->getInviteUrl($this->userid);
+        header("Location:".$url);
     }
 
 }
