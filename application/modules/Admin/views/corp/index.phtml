@@ -63,7 +63,13 @@
                             <td>{%$user.name%}</td>
                             <td>{%$user.huifuid%}</td>
                             <td>{%$user.phone%}</td>
-                            <td><a href="/admin/loan/request?userid={%$user.userid%}">申请借款</a></td>
+                            <td>
+                            {%if isset($user.huifuid)%}
+                            <a href="/admin/loan/request?userid={%$user.userid%}">申请借款</a>
+                            {%else%}
+                            <a href="/admin/corp/open?userid={%$user.userid%}">开通资金账户</a>
+                            {%/if%}
+                            </td>
                         </tr>
                         {%/foreach%}
                     </tbody>

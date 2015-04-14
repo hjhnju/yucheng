@@ -319,4 +319,15 @@ class User_Api{
         }
         return $arrRet;
     }
+
+    public static function saveCorpInfo($userid, $arrInfo){
+        $user = new User_Object($userid);
+        if($user->userid <= 0){
+            return false;
+        }
+        foreach ($arrInfo as $field => $value) {
+            $user->$field = $value;
+        }
+        return $user->save();
+    }
 }

@@ -28,7 +28,6 @@ class LoginController extends Base_Controller_Page{
             return $this->redirect('/m/login');
         }
 
-        $logic = new User_Logic_Login();
         $u = isset($_REQUEST['u'])?trim($_REQUEST['u']):null;
         if(!empty($u)){
             $strRedirect = $u;

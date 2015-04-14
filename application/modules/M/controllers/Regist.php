@@ -3,7 +3,9 @@
  * 媒体报道
  */
 class RegistController extends Base_Controller_Page {
-
+    
+    protected $loginUrl = '/m/login';
+    
     public function init(){
         $this->setNeedLogin(false);
         parent::init();
