@@ -43,6 +43,17 @@
          </table>
          </div> 
           <!-- /if -->
+          <!-- if: ${item.status} == 2 --> 
+           <div class="ticket-status2-tips fl">
+            <table >
+             <tr>
+                <td>
+                   兑换中...
+               </td>
+            </tr>
+         </table>
+         </div> 
+          <!-- /if -->
 </div>
 <!-- /for -->
 <!-- /target -->
