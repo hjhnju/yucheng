@@ -1,7 +1,7 @@
 {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/reward/index.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/invite/index.css" />
 {%/block%}
 
 {%block name="script"%}
@@ -9,8 +9,8 @@
 <script src="{%$feroot%}/common/extra/jquery.zclip.js"></script>
 <script src="{%$feroot%}/common/extra/jquery.qrcode.js"></script>
 <script>
-    require(['my/reward/index'], function (main) {
-        main.init('{%$inviteUrl%}');
+    require(['my/invite/index'], function (main) {
+        main.init('{%$inviteurl%}');
     });
 </script>
 {%/block%}
@@ -20,82 +20,90 @@
     <div class="container finish-bg-color">
         {%include file='../../../views/common/nav.phtml' current="5"%}
         <div class="finish-main">
-            <div class="finish-main-title">好友邀请奖励计划</div>
+            <div class="finish-main-title">邀请好友<a class="leaf-btn" href="{%$webroot%}/activity" target="_blank"></a></div>
             <div class="reward">
-                <div class="reward-rule">
-                    <div class="reward-rule-title">奖励规则:</div>
-                    <div class="reward-rule-main">
-                        <div class="reward-main-list">
-                            <span class="round-span">•</span>
-                            新注册兴教贷的用户，累计投资1000元即可获得
-                            <span class="rule-spam">30元</span> 现金奖励
-                        </div>
-                        <div class="reward-main-list">
-                            <span class="round-span">•</span>
-                            邀请一位好友注册成功，好友累计投资满1000元，邀请人即可获得
-                            <span class="rule-spam">20元</span> 现金奖励
-                        </div>
-                        <div class="reward-main-list">
-                            <span class="round-span">•</span>
-                            邀请好友人数不设上限，获得奖励可以累加
-                        </div>
-                        <div class="reward-main-list">
-                            <span class="round-span">•</span>
-                            活动时间：2015年02月01日～2015年04月01日
-                        </div>
-                        <div class="reward-main-list">
-                            <span class="round-span">•</span>
-                            本活动最终解释权归兴教贷所有，活动如有修改，请以当前页面显示的内容为准
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="reward-type">
-                    <div class="reward-type-box">
+                <div class="reward-type reward-type1">
+                    <div class="reward-type-box fl">
                         <div class="reward-type-box-title number-one">邀请方式一：(手机就是您的邀请号)</div>
                         <div class="reward-type-box-text">让好友注册时填入您的手机号：{%$userinfo.phone.value%}</div>
-                        <div class="reward-type-box-text">或使用您的专属注册链接:
-                            <a class="reward-type-link-http" href="{%$inviteUrl%}">{%$inviteUrl%}</a>
+                        <div class="reward-type-box-text" style="margin-top: 20px;">或使用您的专属注册链接:<br/>
+                            <a class="reward-type-link-http" href="{%$inviteurl%}">{%$inviteurl%}</a>
                             <span class="reward-type-link-span">复制给好友</span>
                         </div>
-                    </div>
-                    <div class="reward-type-box">
+                     </div> 
+                      <img class="regist-bg fl" alt="注册" src="{%$feroot%}/my/invite/img/regist_bg.png">
+                 </div>
+                <div class="reward-type ">
+                    <div class="reward-type-box fl" style="height: 50px; margin-top: 50px;">
                         <div class="reward-type-box-title number-two">邀请方式二：(微信朋友圈分享)</div>
-                        <div class="erweima"></div>
-                        <div class="reward-type-two-text">打开微信扫一扫~~</div>
+                        <div class="reward-type-two-text" style="margin-top: 20px;">打开微信扫一扫~~</div>
                         <div class="reward-type-two-text">快乐分享，与好友一起赚钱去~~</div>
                     </div>
+                     <div class="erweima fl"></div>
                 </div>
-                <div class="reward-item">
+                <div class="reward-type">
+                </div>
+              
+            </div>
+        
+            <div class="finish-main-title">邀请结果</div>
+            <div class="reward white-bg">
+                  <div class="reward-my">
+                      <div class="reward-my-left fl">
+                         <span class="reward-my-account">我的奖励：100.00&nbsp;元</span><br/>
+                                                                            好友总数：10 人  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   好友投资：5 人
+                      </div>
+                      <div class="reward-my-right fr">
+                         温馨提示：<br/>
+                        1. 电子奖励以现金券等形式发送至您的账户中，请在“我的账户”—<br/>
+                        “我的奖券”中领取。<br/>
+                        2. 实物奖励以活动结果为准，不在本栏显示。<br/>
+                      </div>
+                        
+                  </div>
+                  <div class="reward-item">
                     <table class="reward-item-table" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
+                        <thead>
+                          <tr>
                             <th class="text-align">好友</th>
                             <th>注册进度</th>
-                            <th>投资满额</th>
-                            <th>领取奖励</th>
-                        </tr>
-                        {%foreach $inviterinfo as $key => $item%}
+                            <th>是否已投资</th>
+                            <th>我得到的奖励</th>
+                          </tr>
+                        </thead> 
+                        <tbody id="my-invite-list">
+                          
+                        </tbody>
+                       <!--  {%foreach $inviterinfo.invitee_list as $key => $item%}
                         <tr>
-                            <td class="text-align">{%$item.name%}({%$item.phone%})</td>
+                            <td class="text-align">{%$item.username%}({%$item.phone%})</td>
                             <td>
-                                {%if $item.registProgress == 1%}已开通资金托管
+                                {%if $item.regist_progress == 1%}已开通资金托管
                                 {%else%}未开通资金托管
                                 {%/if%}
                             </td>
-                            <td><div class="jindu"><div class="within" style="width: {%$item.tenderAmount%}%;"></div></div></td>
-                            <td>
-                                {%if $item.canBeAwarded%}
-                                <span class="table-tr-span" data-id="{%$item.id%}">{%$item.awardAmt%}</span>
-                                {%else%}
-                                <span class="table-tr-span current">{%$item.awardAmt%}</span>
-                                {%/if%}
+                            <td  class="text-align"> 
+                                 {%if $item.invested == 1%} 
+                                   <span class="invest-icon-yes"></span>
+                                 {%else%}
+                                  <span class="invest-icon-no"></span>
+                                 {%/if%} 
+                                
+                            </td>
+                            <td> 
+                                {%if $item.amount > 0%} 
+                                   <span class="reward-count">￥&nbsp;{%$item.amount%}</span>
+                                 {%else%}
+                                  <span class="no-reward"> 暂无奖励</span>
+                                 {%/if%}                              
                             </td>
                         </tr>
-                        {%/foreach%}
+                        {%/foreach%} -->
                     </table>
+                    <div id="my-invite-pager" class="my-invest-pager"></div>
                 </div>
             </div>
+           
         </div>
     </div>
 </div>

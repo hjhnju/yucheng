@@ -33,7 +33,7 @@ define(function (require) {
     function bindEvents() {
 
         // 控制placeHolder
-        $('.login .login-input').on({
+        $('.login-username .login-input').on({
             focus: function () {
                 var parent = $(this).parent();
                 var error = parent.children('.username-error');

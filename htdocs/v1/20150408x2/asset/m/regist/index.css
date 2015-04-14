@@ -78,10 +78,10 @@ body{background-color:#e7e7eb}
 .inputbg .testing{width:100%;float:left}
 .inputbg .phone-icon{display:block;width:21px;height:29px;overflow:hidden;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdBAMAAAC3ajrIAAAAGFBMVEUAAADW1tbl5eXY2Njq6ur19fXe3t7t7e38hY5BAAAAAXRSTlMAQObYZgAAAEVJREFUGNNjcBSEAiEGBkE4YGAwTA0FgyAQW4EBDNiR2CzDiA32V5ISGKiB2LBggLJTwxBsB3YEW4EFwgaRIs5gNnJ4AgAAjBNNSxBUYwAAAABJRU5ErkJggg==);background-repeat:no-repeat;position:absolute;top:5px;right:128px}
 .inputbg .regist-testing-btn{background-color:#4fc501;border-radius:5px;text-align:center;color:#fff;display:block;width:100px;height:30px;line-height:30px;font-size:16px;position:absolute;top:5px;right:5px}
-.inputbg .show{display:block}
-.inputbg .none,.inputbg but.hidden{display:none}
 .inputbg .regist-testing-btn-wait{background-color:#e8e9ea;border-radius:5px;text-align:center;color:#fff;display:none;width:130px;height:30px;line-height:30px;font-size:16px;position:absolute;top:5px;right:5px}
 .inputbg #regist-phone,.inputbg #regist-pwd{padding-left:0;margin-left:10px;border-bottom:1px solid #eaeaec}
+.inputbg .show{display:block}
+.inputbg .none,.inputbg .hidden{display:none}
 .dis_bot35{padding:23px 0 20px}
 .tiaoyue-lable{width:100%;text-align:center;display:block;margin-top:15px;font-size:.7rem}
 .tiaoyue-lable a{color:#f2746a}
@@ -106,10 +106,10 @@ body{background-color:#e7e7eb}
 .inputbg .testing{width:100%;float:left}
 .inputbg .phone-icon{display:block;width:21px;height:29px;overflow:hidden;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAdBAMAAAC3ajrIAAAAGFBMVEUAAADW1tbl5eXY2Njq6ur19fXe3t7t7e38hY5BAAAAAXRSTlMAQObYZgAAAEVJREFUGNNjcBSEAiEGBkE4YGAwTA0FgyAQW4EBDNiR2CzDiA32V5ISGKiB2LBggLJTwxBsB3YEW4EFwgaRIs5gNnJ4AgAAjBNNSxBUYwAAAABJRU5ErkJggg==);background-repeat:no-repeat;position:absolute;top:5px;right:128px}
 .inputbg .regist-testing-btn{background-color:#4fc501;border-radius:5px;text-align:center;color:#fff;display:block;width:100px;height:30px;line-height:30px;font-size:16px;position:absolute;top:5px;right:5px}
-.inputbg .show{display:block}
-.inputbg .none,.inputbg but.hidden{display:none}
 .inputbg .regist-testing-btn-wait{background-color:#e8e9ea;border-radius:5px;text-align:center;color:#fff;display:none;width:130px;height:30px;line-height:30px;font-size:16px;position:absolute;top:5px;right:5px}
 .inputbg #regist-phone,.inputbg #regist-pwd{padding-left:0;margin-left:10px;border-bottom:1px solid #eaeaec}
+.inputbg .show{display:block}
+.inputbg .none,.inputbg .hidden{display:none}
 .dis_bot35{padding:23px 0 20px}
 .tiaoyue-lable{width:100%;text-align:center;display:block;margin-top:15px;font-size:.7rem}
 .tiaoyue-lable a{color:#f2746a}
@@ -118,3 +118,10 @@ body{background-color:#e7e7eb}
 .login-tiaoyue-have a{color:#f2746a}
 .err-tip{height:20px}
 }
+
+
+.flex-equal,.flex-center,.justify{display:-webkit-box;display:-ms-flexbox;display:-webkit-flex;display:flex;
+	-webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;}

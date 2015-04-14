@@ -255,16 +255,17 @@ define(function(require) {
                 alert(data.statusInfo);
             } else {
                 var wait = $('#testing-wait');
-                var test =$("#");
+                var test =$(".regist-testing-btn");
                 wait.text('60秒后重新获取');
                 wait.addClass('show');
-
+                test.addClass("hidden");
                 timer = setInterval(function() {
 
                     wait.text(--value + '秒后重新获取');
                     if (value < 0) {
                         clearInterval(timer);
                         wait.removeClass('show');
+                        test.removeClass("hidden");
                     }
 
                 }, 1000);

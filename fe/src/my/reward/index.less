@@ -2,159 +2,194 @@
 @import "../common/css/index.less";
 
 
+//flex 布局
+.flex-center {
+      display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center; 
+}
+.justify {
+    -webkit-justify-content:center;
+    justify-content:center
+}
+.white-bg {
+    background-color: #fff;
+}
+//我的奖券  2015-4-11
 
-.reward {
+.finish-main-title { 
+    margin-bottom: 10px;
+    border-bottom: 0px solid #eaeaea; 
 
 }
-.reward-rule {
-    padding: 20px;
-    background-color: #f8f8f8;
-    margin-bottom: 20px;
-}
-.reward-rule-title {
-    height: 30px;
-    line-height: 30px;
+ 
+.my-reward-tab { 
     font-size: 14px;
-    color: #333333;
-}
-.reward-rule-main {
-
-}
-.reward-main-list {
-    height: 26px;
-    line-height: 26px;
-    color: #333333;
-    padding-left: 10px;
-
-    .round-span {
-        color: #333333;
-        margin-right: 5px;
-    }
-    .rule-spam {
-        font-size: 14px;
-        color: @color-red;
-        font-weight: bold;
-    }
-}
-.reward-type {
-
-}
-.reward-type-box {
-    margin-bottom: 20px;
-}
-.reward-type-box-title {
-    height: 32px;
-    line-height: 32px;
-    background: url(../common/img/number_icon.png) 0 0 no-repeat;
-    padding-left: 35px;
-    font-size: 14px;
-    color: #333333;
-
-    &.number-one {
-        background-position: 0 5px;
-    }
-    &.number-two {
-        background-position: 0 -45px;
-    }
-}
-.reward-type-box-text {
-    padding-left: 35px;
-    height: 28px;
-    line-height: 28px;
-    color: #333333;
-
-    .reward-type-link-http {
-        color: @color-red;
-        text-decoration: none;
-        margin-right: 10px;
-    }
-
-    .reward-type-link-span {
-        padding: 7px 10px;
-        background-color: @color-green;
-        color: #FFFFFF;
-        cursor: pointer;
-        text-decoration: none;
-
-        .border-radius(5px);
-
-        &:hover {
-            background-color: @color-green-hover;
-        }
-    }
-}
-.erweima {
-    width: 126px;
-    height: 126px;
-//    background-color: @color-green;
-    margin: 20px 0 0 65px;
-}
-.reward-type-two-text {
-    width: 260px;
     text-align: center;
-    height: 30px;
-    line-height: 30px;
-    color: #333333;
-}
-.reward-item {
-    border-top: 1px dashed #dedede;
-    padding-bottom: 30px;
-}
-.reward-item-table {
-    width: 100%;
-    text-align: center;
-    tr {
+    .clearfix;
 
-        th {
-            border-bottom: 1px solid #dedede;
-            height: 40px;
-            padding-left: 20px;
-            color: #a0a0a0;
-        }
-        td {
-            height: 60px;
-            border-bottom: 1px dashed #dedede;
-            padding-left: 20px;
-            color: #333333;
-        }
-    }
-    .jindu {
-        width: 70px;
-        height: 8px;
-        background-color: #cccccc;
-        margin: 0 auto;
-
-        .border-radius(20px);
-
-        .within {
-            min-width: 10px;
-            background-color: @color-green;
-            height: 8px;
-
-
-            .border-radius(20px);
-        }
-    }
-    .text-align {
-        text-align: left;
-    }
-    .table-tr-span {
-        padding: 7px 10px;
-        background-color: @color-green;
-        color: #FFFFFF;
-        cursor: pointer;
-        text-decoration: none;
-
-        &:hover {
-            background-color: @color-green-hover;
-        }
-
-        .border-radius(3px);
-
+    .my-reward-tab-item {
+           height: 45px;
+           width: 120px;
+           float: left;
+           color: #333333; 
+           border:none;
+           border-bottom: 1px solid #dedede; 
+           cursor: pointer;
+           line-height: 45px;
+           cursor: pointer;
         &.current {
-            cursor: default;
-            background-color: #cccccc;
+          height: 42px;
+              color: #75cf64;
+              border:none;
+              border-top: 3px solid #75cf64;
+              border-left: 1px solid #dedede;
+              border-right: 1px solid #dedede;
         }
-
+    }
+       .my-reward-tab-item-no {
+           height: 45px;
+           width: 320px;
+           float: left;
+           color: #333333; 
+           border:none;
+           border-bottom: 1px solid #dedede; 
+           cursor: pointer;
+           line-height: 45px; 
     }
 }
+ .my-reward-tip {
+      display: none;
+      height: 38px;
+      line-height: 38px;
+      font-size: 12px;
+      padding-left: 20px;
+      margin-bottom:10px;
+      width: 700px;
+      position: relative;
+
+    .close-reward-tip{ 
+        display: block;
+        width: 20px;
+        height: 20px;
+        right: 0px;
+        top: 0px;
+        position: absolute;
+        font-size: 20px; 
+        line-height: 20px;
+        text-align: center;
+        color: #f2746a;
+        cursor: pointer;
+    }
+
+  }
+  .my-reward-tip-success {
+      color: #000;
+      background-color: #d3facc;
+  }
+  .my-reward-tip-error {
+      color: #f2746a;
+      background-color: #ffecea;
+  }
+.my-reward-list { 
+       height: 565px;
+       margin-bottom: 15px;
+       position: relative;
+       margin-top: 10px;
+       .reward-ticket {
+           background-color: #f2746a;
+           width: 230px;
+           height: 100px;
+           margin-right: 15px;
+           position: relative;
+           cursor: pointer;
+
+           .ticket-name {
+                  width: 45px;
+                  height: 84px;
+                  margin-top: 8px;
+                  margin-left: 12px;
+                  background-color: #fff;
+                  color: #f2746a;text-align: center; line-height: 24px; font-size: 24px;
+           }
+           .ticket-amount{
+                display: block;
+                font-size: 18px;
+                color: #fff;
+                width: 160px;
+                margin-left: 10px;
+                label { 
+                    font-size: 30px;
+                    font-weight: 700px;
+                }
+           }
+           .ticket-src {
+                font-size: 12px; display: block;
+           }
+           .ticket-status {
+               display: block;
+               position: absolute;
+               bottom: 0px;
+               right: 0px;
+               width: 75px; 
+               height: 44px;
+               background:url(img/ticket_status.png) 0 0 no-repeat;
+           }
+            .ticket-status1 {
+              background-position: 0 0;
+           }
+            .ticket-status2 {
+                background-position: 0px -100px;
+           }
+            .ticket-status3 {
+               background-position: 0px -200px;
+           }
+            .ticket-status4 {
+               background-position: 0px  -300px;
+           }
+       }
+       .no-exchange { 
+        display:  none;
+           width: 230px;
+           height: 100px; 
+           line-height: 100px;
+           cursor: pointer;
+           background-color: rgba(255, 255, 255, 0.5); 
+           text-align: center;
+           line-height: 24px;
+           font-size: 14px;
+           position: absolute;
+       }
+       .exchange-date { 
+           display: none;
+           width: 230px;
+           height: 100px; 
+           line-height: 100px;
+           cursor: pointer;
+           background-color: rgba(255, 255, 255, 0.5); 
+           text-align: center;
+           line-height: 24px;
+           font-size: 14px;
+           position: absolute;
+       }
+       .ticket-status-tips {
+           display: none;
+           width: 230px;
+           height: 100px; 
+           line-height: 100px;
+           cursor: pointer;
+           background-color: rgba(255, 255, 255, 0.85); 
+           text-align: center;
+           line-height: 24px;
+           font-size: 14px;
+           position: absolute;
+           
+           td{
+              width: 230px;
+              height: 100px;
+              vertical-align: middle;
+          }
+
+       } 
+} 

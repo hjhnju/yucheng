@@ -1,0 +1,98 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/reward/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script src="{%$feroot%}/common/extra/jquery.js"></script>
+<script src="{%$feroot%}/common/extra/jquery.zclip.js"></script>
+<script src="{%$feroot%}/common/extra/jquery.qrcode.js"></script>
+<script>
+    require(['my/reward/index'], function (main) {
+        main.init('{%$inviteUrl%}');
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='../../../views/common/nav.phtml' current="5"%}
+        <div class="finish-main">
+            <div class="finish-main-title">邀请好友<a class="leaf-btn" href="{%$webroot%}/activity" target="_blank"></a></div>
+            <div class="reward">
+                <div class="reward-type reward-type1 flex-center">
+                    <div class="reward-type-box fl">
+                        <div class="reward-type-box-title number-one">邀请方式一：(手机就是您的邀请号)</div>
+                        <div class="reward-type-box-text">让好友注册时填入您的手机号：{%$userinfo.phone.value%}</div>
+                        <div class="reward-type-box-text">或使用您的专属注册链接:<br/>
+                            <a class="reward-type-link-http" href="{%$inviteUrl%}">{%$inviteUrl%}</a>
+                            <span class="reward-type-link-span">复制给好友</span>
+                        </div>
+                     </div> 
+                      <img class="regist-bg fl" alt="注册" src="{%$feroot%}/my/reward/img/regist_bg.png">
+                 </div>
+                <div class="reward-type flex-center">
+                    <div class="reward-type-box fl" style="height: 50px; margin-top: 50px;">
+                        <div class="reward-type-box-title number-two">邀请方式二：(微信朋友圈分享)</div>
+                        <div class="reward-type-two-text">打开微信扫一扫~~</div>
+                        <div class="reward-type-two-text">快乐分享，与好友一起赚钱去~~</div>
+                    </div>
+                     <div class="erweima fl"></div>
+                </div>
+                <div class="reward-type">
+                </div>
+              
+            </div>
+        
+            <div class="finish-main-title">邀请结果</div>
+            <div class="reward white-bg">
+                  <div class="reward-my">
+                      <div class="reward-my-left fl">
+                         <span class="reward-my-account">我的奖励：100.00&nbsp;元</span><br/>
+                                                                            好友总数：10 人  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   好友投资：5 人
+                      </div>
+                      <div class="reward-my-right fr">
+						 温馨提示：<br/>
+						1. 电子奖励以现金券等形式发送至您的账户中，请在“我的账户”—<br/>
+						“我的奖券”中领取。<br/>
+						2. 实物奖励以活动结果为准，不在本栏显示。<br/>
+                      </div>
+                        
+                  </div>
+                  <div class="reward-item">
+                    <table class="reward-item-table" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th class="text-align">好友</th>
+                            <th>注册进度</th>
+                            <th>是否已投资</th>
+                            <th>我得到的奖励</th>
+                        </tr>
+                        {%foreach $inviterinfo as $key => $item%}
+                        <tr>
+                            <td class="text-align">{%$item.name%}({%$item.phone%})</td>
+                            <td>
+                                {%if $item.registProgress == 1%}已开通资金托管
+                                {%else%}未开通资金托管
+                                {%/if%}
+                            </td>
+                            <td  class="text-align">
+                               <!-- <span class="invest-icon-yes"></span> -->
+                                <span class="invest-icon-no"></span>
+                            </td>
+                            <td>
+                                <span class="reward-count">￥&nbsp;30.00</span>
+                                <!-- <span class="no-reward"> 暂无奖励</span>   -->                               
+                            </td>
+                        </tr>
+                        {%/foreach%}
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+{%/block%}

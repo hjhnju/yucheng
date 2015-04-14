@@ -1,5 +1,69 @@
-<html>
-    <body>
-        <h1>活动列表页面</h1>
-    </body>
-</html>
+{%extends file="common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/activity/index.css" />
+ {%/block%}
+
+{%block name="script"%}
+  
+ <script> 
+   require(['activity/spring/index'],function (main){
+        main.init();
+   });  
+</script> 
+{%/block%}
+ 
+{%block name="content"%} 
+ <div class="activity banner">
+    <div class="container big-leaf flex-center">
+        <div class="slogan"> 
+            <span> 
+             <a class="activity-btn fl"  href="{%$webroot%}/activity/spring#activity1">注册送30现金券</a>
+             <a class="activity-btn fl"  href="{%$webroot%}/activity/spring#activity2">邀请好友三重礼</a>
+             <a class="activity-btn fl"  href="{%$webroot%}/activity/spring#activity3">投资再送两重礼</a>
+            </span>
+        </div> 
+    </div> 
+  </div>
+<div class="activity"> 
+  <div class="activity-big_tree"> 
+    <div id="activity1" class="container activity-box1 "> 
+        <div class="bg-img1">
+        <div class="activity-box1-content1 fl">
+            <a class="activity-img fl"  target="_blank" href="{%$webroot%}/activity/spring">
+                <img alt="正式上线活动月" src="{%$feroot%}/activity/common/img/activity-img-zs.png">
+		        </a>
+		        <div class="activity-text fr" style=""> 
+	        <a class="title"  target="_blank" href="{%$webroot%}/activity/spring">正式上线活动月<span class="status fr"></span></a> 
+			                     活动期间，注册邀请三重大礼等你拿，投资再送两重礼。<br/>
+			       iphone 6plus、小米手机、500个米环米宝，想不得奖都难！<br/>
+	                                             活动时间：2015年4月15日—2015年5月15日24:00止。 
+	        </div>
+        </div>
+        <div class="activity-box1-content2 fl"> 
+	        <div class="activity-text fl" style=""> 
+	           <a class="title title2"  target="_blank" href="{%$webroot%}/activity/spring">注册送30元现金券<span class="status fr"></span></a> 
+			                      活动规则：活动期间在平台注册的用户，累计投资满1000元<br/>
+					人民币均可领取30元现金券。<br/>
+					活动时间：2015年2月1日—2015年4月1日24:00止。
+	        </div>
+	        <a class="activity-img fr" target="_blank"  href="{%$webroot%}/activity/spring">
+	             <img alt="注册送30元现金券" src="{%$feroot%}/activity/common/img/activity-img-new.png">
+	        </a>
+        </div>
+        <div class="activity-box1-content3 fl">
+	        <a class="activity-img fl" style="cursor: default;">
+	             <img alt="邀请送20元现金" src="{%$feroot%}/activity/common/img/activity-img-yao.png">
+	        </a>
+	          <div class="activity-text fr" style=""> 
+	           <a class="title title3">邀请送20元现金<span class=" status status2  fr">已结束</span></a> 
+			                    活动规则：活动期间通过平台指定方式推荐好友注册的用户，<br/>
+			                    好友累计投资满1000元，推荐人即可获得20元现金券。<br/>
+	                                            活动时间：2015年2月1日—2015年4月1日24:00止。 
+	        </div>
+        </div>
+    </div>
+    </div>  
+    </div> 
+ </div>
+ {%/block%}
