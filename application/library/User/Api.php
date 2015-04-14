@@ -304,6 +304,16 @@ class User_Api{
         return $list;
     }
 
+    public static function getInviteeCnt($userid){
+        $list = new User_List_Invite();
+        $list->setFields(array('invitee'));
+        $list->setFilter(array('userid'=>$userid));
+        $list->setPage(1);
+        $list->setPagesize(1);
+        $list = $list->toArray();
+        return $list['total'];
+    }
+
     /**
      * 批量获取用户信息
      * @param  array $arrUid 

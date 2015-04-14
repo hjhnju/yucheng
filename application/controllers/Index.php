@@ -34,7 +34,7 @@ class IndexController extends Base_Controller_Page {
         foreach ($arrData['platPost'] as $key => $val){
             $title = $val['title'];
             $arrData['platPost'][$key]['title'] = $this->cutstr($title, 29);
-            if($val['public_time'] < time() + 7*24*3600){
+            if($val['public_time'] > time() - 7*24*3600){
                 $val['title'] = $this->cutstr($title, 60);
                 $arrData['newpost'][] = $val; 
             }
@@ -42,7 +42,7 @@ class IndexController extends Base_Controller_Page {
         foreach ($arrData['refundPost'] as $key => $val){
             $title = $val['title'];
             $arrData['refundPost'][$key]['title'] = $this->cutstr($title, 40);
-            if($val['public_time'] < time() + 7*24*3600){
+            if($val['public_time'] > time() + 7*24*3600){
                 $val['title'] = $this->cutstr($title, 60);
                 $arrData['newpost'][] = $val; 
             }
