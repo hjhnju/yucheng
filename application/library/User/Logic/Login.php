@@ -15,7 +15,9 @@ class User_Logic_Login {
     protected static $arrUrl = array(
         '/user/regist',
         '/user/login',
-        '/user/modifypwd', 
+        '/user/modifypwd',
+        '/m/regist',
+        '/m/login',
     );
 
     public function __construct(){
