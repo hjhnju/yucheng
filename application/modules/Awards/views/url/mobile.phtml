@@ -40,10 +40,10 @@
       </div>    
 
         <div class="invite-box-content app-home-box six">
-            <span class="six-title">好友{%$data.invname%}邀请您注册,开启您最好的投资理财</span>
-            <a class="regist-btn" href="/m/regist">立即注册</a> 
+            <span class="six-title">好友{%$result.data.invname%}邀请您注册,<br />开启您最好的投资理财</span>
+            <a class="regist-btn" href="/m/regist?inviter={%$result.data.inviter%}">立即注册</a> 
             <div class="six-bottom">
-                 填写邀请手机号：{%$data.phone%}
+                 填写邀请手机号：{%$result.data.inviter%}
             </div>
         </div>
    </div>

@@ -17,11 +17,12 @@ foreach ($arrRow as $key => $row) {
 	//1-未达到, 2-已达到未领取，3-已领取'
 	$payTime = 0;
 	$status  = Awards_Type_TicketStatus::NOT_FINISH;
-	if($row['status'] == 1){
+	$intSt = intval($row['status']);
+	if($intSt === 1){
 		$status  = Awards_Type_TicketStatus::NOT_FINISH;
-	}elseif (2 === $row['status']) {
+	}elseif (2 === $intSt) {
 		$status  = Awards_Type_TicketStatus::NOT_USED;
-	}elseif(3 === $row['status']){
+	}elseif(3 === $intSt){
 		$status  = Awards_Type_TicketStatus::EXCHANGED;
 		$payTime = $row['create_time'];
 	}
@@ -62,11 +63,12 @@ foreach ($arrRow as $key => $row) {
 	//1-未达到, 2-已达到未领取，3-已领取'
 	$payTime = 0;
 	$status  = Awards_Type_TicketStatus::NOT_FINISH;
-	if($row['status'] == 1){
+	$intSt = intval($row['status']);
+	if($intSt === 1){
 		$status  = Awards_Type_TicketStatus::NOT_FINISH;
-	}elseif (2 === $row['status']) {
+	}elseif (2 === $intSt) {
 		$status  = Awards_Type_TicketStatus::NOT_USED;
-	}elseif(3 === $row['status']){
+	}elseif(3 === $intSt){
 		$status  = Awards_Type_TicketStatus::EXCHANGED;
 		$payTime = $row['create_time'];
 	}

@@ -33,7 +33,7 @@ class OpenController extends Base_Controller_Page {
         $this->getView()->assign('title', "注册成功");
         $sucHit = (int)Base_Redis::getInstance()->hGet('reg_success_hset', $this->userid);
         if($sucHit === 1){
-            $this->getView()->assign('hit', 1);
+            $this->getView()->assign('hint', 1);
         }else{
             Base_Redis::getInstance()->hSet('reg_success_hset', $this->userid, 1);
         }

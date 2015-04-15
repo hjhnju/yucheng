@@ -17,7 +17,7 @@ class Loan_Type_SafeMode extends Base_Type {
      */
     const SHAREHOLDER = 2;
     /**
-     * 本金保障计划
+     * 本息保障计划
      * @var integer
      */
     const CAPITAL = 1;
@@ -39,7 +39,7 @@ class Loan_Type_SafeMode extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::CAPITAL => '本金保障计划',
+        self::CAPITAL => '本息保障计划',
         self::SHAREHOLDER => '大股东担保',
         self::PLEDGE => '收费权质押',
     );

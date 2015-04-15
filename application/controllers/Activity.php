@@ -63,7 +63,7 @@ class ActivityController extends Base_Controller_Page {
 
         //收集用户id
         $arrUid    = array();
-        $startTime = strtotime("2015-01-15 00:00:00");
+        $startTime = strtotime("2015-04-15 00:00:00");
         $endTime   = strtotime("2015-05-15 00:00:00");
 
         //1.实时注册播报

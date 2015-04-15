@@ -454,7 +454,7 @@ class Invest_Api {
         $list = $list->toArray();
         $arrRet = array_fill_keys($arrUid, 0);
         foreach ($list['list'] as $row) {
-            $arrRet[$row['extraid']] = 1;
+            $arrRet[$row['user_id']] = 1;
         }
         return $arrRet;
 

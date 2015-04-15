@@ -316,7 +316,7 @@ p{margin:0;padding:0}
 .fix-container{position:absolute;z-index:5;top:25px;left:50%;margin-left:220px;width:280px}
 .fix-box{background-color:transparent;width:280px;float:right}
 .fix-box-title{height:108px;background:url(../common/img/fix_title.png) 0 0 no-repeat;padding-top:40px;-webkit-border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0}
-.fix-title-number{color:#fff;font-size:42px;height:50px;line-height:50px;text-align:center;letter-spacing: -5px;}
+.fix-title-number{color:#fff;font-size:42px;height:50px;line-height:50px;text-align:center; letter-spacing: -5px;}
 .fix-title-number.logining{font-size:30px}
 .fix-title-number .fix-title-number-bai{font-size:14px}
 .fix-title-text{font-size:20px;color:#fff;text-align:center}
@@ -390,6 +390,4 @@ p{margin:0;padding:0}
 .plat-notice .phone-box .attention-box .weixin:hover{background-position:0 -84px}
 .plat-notice .phone-box .attention-box .qq{background-position:0 -224px}
 .plat-notice .phone-box .attention-box .qq:hover{background-position:0 -252px}
-
-
 .newinvestlist .container{width:1000px}
