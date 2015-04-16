@@ -79,6 +79,9 @@ p{margin:0;padding:0}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right;margin-top:15px}
+.header-right .activity-img{margin-top:4px;margin-right:5px;float:left}
+.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:10px;text-align:center}
+.header-right .new-activity a{color:#4fc501;text-decoration:none}
 .login-register{border:1px solid #76cf65;border-radius:25px;-moz-border-radius:25px;width:100px;height:29px;background:url(../common/img/btn_bg1.png) no-repeat left center;transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-webkit-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-moz-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-o-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4)}
 .login-register a{color:#4fc501;transition:color .4s linear;-webkit-transition:color .4s linear;-moz-transition:color .4s linear;-o-transition:color .4s linear;display:block;text-align:center;width:50px;text-decoration:none;line-height:30px}
 .register-hover{background-position:left center}
@@ -247,7 +250,7 @@ p{margin:0;padding:0}
 .level-HR{color:#f2746a}
 #scrollUp{bottom:20px;right:20px;width:60px;height:60px;background:url(../common/img/btn_icon.png) 0 -298px no-repeat}
 .banner{height:300px}
-.banner-select{*zoom:1;width:150px;position:absolute;z-index:11115;top:280px;left:50%}
+.banner-select{*zoom:1;width:180px;position:absolute;z-index:11115;top:280px;left:45%}
 .banner-select:before,.banner-select:after{display:table;content:""}
 .banner-select:after{clear:both}
 .banner-select .banner-select-link{display:block;float:left;margin-right:10px;width:20px;height:20px;text-decoration:none;background:url(img/banner_select.png) 0 4px no-repeat;cursor:pointer}
@@ -310,6 +313,7 @@ p{margin:0;padding:0}
 .banner-item-list-link.banner-three{background:url(img/banner_three.jpg) center center no-repeat}
 .banner-item-list-link.banner-four{background:url(img/banner_four.jpg) center center no-repeat}
 .banner-item-list-link.banner-five{background:url(img/banner_five.jpg) center center no-repeat}
+.banner-item-list-link.banner-six{background:url(img/banner_six.png) center center no-repeat}
 .banner-container{width:1000px;margin:0 auto;*zoom:1;height:250px;padding:25px 0;position:relative}
 .banner-container:before,.banner-container:after{display:table;content:""}
 .banner-container:after{clear:both}
