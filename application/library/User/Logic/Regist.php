@@ -173,6 +173,9 @@ class User_Logic_Regist{
     }
 
     public function setInviter($userid, $inviterid){
+	if($inviterid <= 0){
+	    return false;
+	}
         $invite          = new User_Object_Invite();
         $invite->userid  = intval($inviterid);
         $invite->invitee = intval($userid);
