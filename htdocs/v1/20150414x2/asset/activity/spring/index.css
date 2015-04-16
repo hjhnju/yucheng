@@ -275,8 +275,8 @@ background:linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
 .activity .activity-text .rule-btn-w{display:block;height:30px;color:#fff;line-height:30px;font-size:18px;width:108px;cursor:pointer;background-color:#f2746a;text-align:center;margin-top:55px;text-decoration:none;width:242px;margin-top:20px}
 .activity .activity-text .rule-box{width:340px;height:178px;padding:11px 13px;margin-right:32px;background-color:#f3ba8d;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px}
 .activity .activity-text .rule-box .rule-box-content{width:340px;height:158px;margin:0 auto;font-size:12px;line-height:30px;background-color:#fff;padding:10px 0;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;overflow:hidden}
-.activity .activity-text .rule-box .rule-box-content .rule-box-left{display:block;border-right:1px solid #4fc501;width:170px;text-align:center;padding-right:20px}
-.activity .activity-text .rule-box .rule-box-content .rule-box-right{display:block;width:146px;text-align:center}
+.activity .activity-text .rule-box .rule-box-content .rule-box-left{display:block;border-right:1px solid #4fc501;width:170px;text-align:center;padding-right: 15px;padding-left: 10px;}
+.activity .activity-text .rule-box .rule-box-content .rule-box-right{display:block;width:136px;text-align:center}
 .activity .activity-list{width:316px;height:252px;margin-right:38px;background-color:#f2746a;color:#fff;overflow:hidden;box-shadow:1px 1px 10px #797979;background:linear-gradient(bottom,#fb9c95 .1%,#ea5e53 2%,#ec877f);background:-ms-linear-gradient(bottom,#fb9c95 .1%,#ea5e53 2%,#ec877f);background:-moz-linear-gradient(bottom,#fb9c95 .1%,#ea5e53 2%,#ec877f);background:-webkit-gradient(linear,left bottom,left top,from(#fb9c95),to(#ec877f),color-stop(.01,#fb9c95),color-stop(.02,#ea5e53));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fb9c95, endColorstr=#ec877f, grandientType=1);-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px}
 .activity .activity-list .activity-list-title{display:block;height:32px;font-size:24px;line-height:32px;margin:4px 0;width:100%;text-align:center}
 .activity .activity-list .more{display:none;height:20px;font-size:12px;line-height:20px;margin-top:16px;padding-right:8px;text-decoration:none;color:#fff}
@@ -290,7 +290,7 @@ background:linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
 .activity .activity-box2{height:1333px;width:1000px;background-color:#ffce30;top:-54px}
 .activity .activity-box2 .bg-img2{height:1333px;width:1000px;background:url(img/activity_box2_bg.png) 0 0 no-repeat}
 .activity .activity-box2 .activity-text{margin-top:150px}
-.activity .activity-box2 .activity-list{margin-top:150px;height: 292px;}
+.activity .activity-box2 .activity-list{margin-top:150px;}
 .activity .activity-box2 .activity-list .activity-list-content li span{display:block;-webkit-flex:1;flex:1;text-align:center;width:92px;float:left}
 .activity .activity-box3{height:1085px;width:1000px;background-color:#fdab68;top:-54px}
 .activity .activity-box3 .bg-img3{height:1065px;width:1000px;background:url(img/activity_box3_bg.png) 0 0 no-repeat}
@@ -312,9 +312,10 @@ background:linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
 .activity-dialog .activity-dialog-title{width:700px;font-size:33px;line-height:98px;height:98px;color:#50c502;text-align:center}
 .activity-dialog .activity-text{font-size:14px;line-height:30px;color:#3a3a3a;padding:0 80px}
 .activity-dialog .activity-text span{color:#95c65d}
+.activity-dialog .activity-text label {color: #fb2929;display: block;text-align: center;line-height: 40px;}
 .activity-dialog .ok_btn{width:224px;height:45px;text-align: center;text-decoration: none; background-color:#59db02;font-size:25px;line-height:45px;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;color:#fff;display:block;margin-left:250px;border:none;margin-top:30px;cursor:pointer;background:linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-ms-linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-moz-linear-gradient(bottom,#50c502 10%,#5de602 100%);background:-webkit-gradient(linear,0 0,0 100%,from(#50c502),to(#5de602),color-stop(.1,#50c502));filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fff, endColorstr=#5de602, grandientType=1)}
 .activity-dialog table{width:100%}
 .activity-dialog table th{color:#95c65d;text-align:center}
 .activity-dialog table td{text-align:center}
 .activity-dialog table td.height{line-height:20px}
-.activity .activity-box2 .activity-list{margin-top:150px;height: 292px;}
+.activity .activity-box2 .activity-list{margin-top:150px;}
