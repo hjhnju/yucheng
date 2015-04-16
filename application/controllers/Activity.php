@@ -78,10 +78,8 @@ class ActivityController extends Base_Controller_Page {
         $list->setPageSize(10);
         $list = $list->toArray();
         $data['broad_regist'] = $list['list'];
-        foreach ($data['broad_regist'] as &$row) {
+        foreach ($data['broad_regist'] as $row) {
             $arrUid[$row['userid']] = 1;
-            $row['amount'] = $row['value'];
-            $row['word']   = array_rand(array('从天而降'=>1, '飞来'=>1));
         }
 
         //2.实时邀请播报
@@ -148,6 +146,12 @@ class ActivityController extends Base_Controller_Page {
         foreach ($data['broad_regist'] as &$row) {
             $row['displayname'] = $arrUinfo[$row['userid']]['displayname'];
             $row['tpl'] = ($row['status'] === 3) ? 2 : 1;
+            $row['amount'] = $row['value'];
+            if($row['tpl'] === 1){
+                $row['word'] = array_rand(array('从天而降'=>1, '飞来'=>1));
+            }else{
+                $row['word'] = array_rand(array('兴高采烈'=>1, '屁颠屁颠'=>1));
+            }
         }
 
         //2.实时邀请播报

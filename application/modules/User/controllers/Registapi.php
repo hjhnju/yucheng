@@ -131,7 +131,7 @@ class RegistApiController extends Base_Controller_Api{
         if(User_RetCode::SUCCESS !== $objRet->status){
             return $this->ajaxError($objRet->status, $objRet->statusInfo); 
         }
-        $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : false;
+        $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : 0;
         
         //进行注册
         $objRet  = $logic->regist('priv', $strName, $strPasswd, $strPhone);
@@ -141,7 +141,9 @@ class RegistApiController extends Base_Controller_Api{
         $userid = $objRet->data['userid'];
 
         //登记邀请人
-        $logic->setInviter($userid, $inviterid);
+        if($inviterid > 0){
+            $logic->setInviter($userid, $inviterid);
+        }
 
         //进行绑定第三方账户
         if($isThird > 0){

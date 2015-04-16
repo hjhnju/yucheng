@@ -10,7 +10,7 @@ class Awards_Activity_Invite201502 extends Awards_Activity_Base {
     public function __construct(){
         $this->name      = "邀请好友投资奖励";
         $this->startTime = strtotime("2015-02-01 00:00:00");
-        $this->endTime   = strtotime("2015-04-15 23:59:59");
+        $this->endTime   = strtotime("2015-04-14 23:59:59");
         //累计投资达成底限
         $this->investAmtLimit = 1000;
         $this->desc      = '好友累计投资满1000元可领取';
