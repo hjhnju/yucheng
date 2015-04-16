@@ -28,9 +28,9 @@
 
 <!-- target: activity2 -->
   <div class="activity-dialog">
-              <div class="activity-dialog-title">邀请好友送小米手环、小米充电宝</div>
+              <div class="activity-dialog-title" style="height: 70px; line-height: 80px;">邀请好友送小米手环、小米充电宝</div>
               <div class="activity-text"> 
-              	<label>首批500米环米宝奖陆续发放，小伙伴们耐心等待，欢迎继续参与其他活动！</label>
+              	<label>首批500米环米宝将陆续发放，小伙伴们耐心等待，欢迎继续参与其他活动！</label>
 				<span>活动规则：</span>活动期间，推荐人自己注册兴教贷账户，并推荐6人注册兴教贷账户，就可获得推荐奖励，奖励为价值79元的小米充电宝或小米手环，任选一个。 
 				备注：奖品共计500个，先到先得。已经是兴教贷用户，可直接参与推荐活动。<br/>
 				<br/>
