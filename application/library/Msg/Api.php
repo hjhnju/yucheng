@@ -9,6 +9,7 @@ class Msg_Api {
      * 4 投标放款
      * 5 项目回款
      * 6 提现消息
+     * 7 活动奖励
      */
     public static $_arrMsgMap = array(
     	Msg_Type::SYSTEM => array(
@@ -46,6 +47,12 @@ class Msg_Api {
             'content'  => '您的 %s元提现申请已通过审核，预计将于1-2个工作日到达您的账户。',
             'linkname' => '我的账户－充值提现',
             'link'     => '/account/cash/',
+        ),
+        7 => array(
+            'type'     => '活动奖励',
+            'content'  => '恭喜您获得活动奖励：%s，欢迎您继续参与活动关注兴教贷。',
+            'linkname' => '查看活动',
+            'link'     => '/activity/spring',
         ),
     );
     

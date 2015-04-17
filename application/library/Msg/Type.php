@@ -31,10 +31,16 @@ class Msg_Type extends Base_Type {
      */
     const INVEST_BACK = 5;
     /**
-     * 5 提现消息
+     * 6 提现消息
      * @var integer
      */
     const WITHDRAW = 6;
+    
+    /**
+     * 7 活动奖励
+     * @var integer
+     */
+    const ACTIVE_AWARD = 7;
 
     /**
      * 默认key名
@@ -59,5 +65,6 @@ class Msg_Type extends Base_Type {
         self::INVEST_MAKE_LOAN => '投标放款',
         self::INVEST_BACK      => '项目回款',
         self::WITHDRAW         => '提现消息',
+        self::ACTIVE_AWARD     => '活动奖励',
     );
 }

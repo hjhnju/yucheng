@@ -34,7 +34,7 @@ abstract class Awards_Activity_Invite20150415 extends Awards_Activity_Base {
             $entity = new Awards_Object_Entity();
             $entity->id       = $arrParam['id'];
             $entity->userid   = $userid;
-            $entity->name     = $name; //小米手环
+            $entity->name     = $arrParam['name']; //小米手环
             $entity->type     = Awards_Type_AwardType::INVITE;
             $entity->value    = $value;
             $entity->activity = get_class();
@@ -49,7 +49,7 @@ abstract class Awards_Activity_Invite20150415 extends Awards_Activity_Base {
                 return false;
             }
             //给个系统通知
-            Msg_Api::sendmsg($userid, Msg_Type::AWARDS_ENTITY,
+            Msg_Api::sendmsg($userid, Msg_Type::ACTIVE_AWARD,
                  array('name'=> $entity->name, 'address'=> $address));
             return true;
         }
