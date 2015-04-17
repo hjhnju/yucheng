@@ -81,7 +81,6 @@ class ActivityController extends Base_Controller_Page {
         foreach ($data['broad_regist'] as $row) {
             $arrUid[$row['userid']] = 1;
         }
-
         //2.实时邀请播报
         $sql = "SELECT `userid`, `name` as entity 
                  FROM `awards_entity` WHERE type=2 and userid>0 and create_time>=$startTime and create_time<=$endTime 
@@ -98,10 +97,11 @@ class ActivityController extends Base_Controller_Page {
         }
         $data['broad_invite'] = array_merge($list1, $list2);
         foreach ($data['broad_invite'] as $row) {
-            $arrUid[$row['inviter']] = 1;
+            if(isset($row['inviter'])){
+                $arrUid[$row['inviter']] = 1;
+            }
             $arrUid[$row['userid']] = 1;
         }
-
         //3.邀请排行
         $sql = "SELECT `userid`, count(`invitee`) as count 
             FROM `user_invite` WHERE create_time>=$startTime and create_time<=$endTime group by userid order by count desc LIMIT 0,8";

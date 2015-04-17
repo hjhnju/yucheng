@@ -282,7 +282,8 @@ class BgcallController extends Base_Controller_Page {
         Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::NETSAVE,
             $transAmt, '充值记录');
         
-        Msg_Api::sendmsg($userid, Msg_Type::CASH, array(time(), $transAmt));
+        Msg_Api::sendmsg($userid, Msg_Type::CASH, 
+            array(strftime("%Y-%m-%d %H:%M", time()), $transAmt));
         
         Base_Log::notice($retParam);
         //页面打印
