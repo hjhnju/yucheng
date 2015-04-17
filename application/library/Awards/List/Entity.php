@@ -1,6 +1,6 @@
 <?php
 /**
- * 奖券表 列表类
+ * 实物奖励表 列表类
  * @author hejunhua
  */
 class Awards_List_Entity extends Base_List {
@@ -20,7 +20,7 @@ class Awards_List_Entity extends Base_List {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'type', 'value', 'valid_time', 'claim', 'userid', 'pay_time', 'create_time', 'update_time', 'memo');
+    protected $fields = array('id', 'userid', 'name', 'type', 'value', 'activity', 'pay_time', 'status', 'create_time', 'update_time');
 
     /**
      * 整数类型的字段
@@ -28,10 +28,10 @@ class Awards_List_Entity extends Base_List {
      */
     protected $intProps = array(
         'id'          => 1,
-        'type'        => 1,
-        'valid_time'  => 1,
         'userid'      => 1,
+        'type'        => 1,
         'pay_time'    => 1,
+        'status'      => 1,
         'create_time' => 1,
         'update_time' => 1,
     );
