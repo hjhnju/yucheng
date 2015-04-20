@@ -291,3 +291,13 @@ p{margin:0;padding:0}
 .company-nav{height:49px;background-color:none}
 .company-box{float:left;width:1000px}
 #main-wraper{background-color:#f8f8f8}
+
+
+.mi-awardlist {
+	text-align: center;
+	width: 800px;
+	margin: 0 auto;
+
+}
+.mi-awardlist th {text-align: center;word-break: break-all;font-size: 18px;font-weight: normal;}
+.mi-awardlist td {text-align: center;word-break: break-all;line-height:30px;width: 256px;}
