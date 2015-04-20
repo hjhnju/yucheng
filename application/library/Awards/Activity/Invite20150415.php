@@ -19,7 +19,7 @@ abstract class Awards_Activity_Invite20150415 extends Awards_Activity_Base {
     /**
      * 根据单笔投资额获取奖励（单位元）
      */
-    public function getValue($mixArg){
+    public function getValue($mixArg = null){
         return 79.00;
     }
 

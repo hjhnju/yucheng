@@ -30,6 +30,16 @@ class Base_Sms_Weimi implements Base_Sms_Interface{
 	 * @return string | false
 	 */
     public function send($mixPhone, $strTplid, Array $arrArgs = null, $timing = null) {
+        if(empty($mixPhone)){
+            Base_Log::warn(array(
+                'msg'    => '手机号为空',
+                'phone'  => $mixPhone, 
+                'tplid'  => $strTplid,
+                'args'   => $arrArgs,
+                'timing' => $timing,
+            ));
+            return false;
+        }
         $arrPost = array();
         $arrPost['uid'] = $this->uid;
         $arrPost['pas'] = $this->pas;

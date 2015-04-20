@@ -4,6 +4,8 @@
  * 页面打印以下两种字符串
  * RECV_ORD_ID_TrxId
  * RECV_ORD_ID_OrderId
+ * 
+ * 对多次回调，仅处理一次；汇付的多次回调是为了防止网络故障
  * @author lilu
  * 
  */
@@ -101,6 +103,7 @@ class BgcallController extends Base_Controller_Page {
      * 
      */
     public function userregistAction() {
+
         if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) ||
            !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['UsrId']) || !isset($_REQUEST['UsrCustId']) ||
            !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
@@ -235,7 +238,8 @@ class BgcallController extends Base_Controller_Page {
      * 打印RECV_ORD_ID_OrderId
      */
     public function netsaveAction() {
-           if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
+        
+        if(!isset($_REQUEST['CmdId']) || !isset($_REQUEST['RespCode']) || !isset($_REQUEST['RespDesc']) || 
            !isset($_REQUEST['MerCustId']) || !isset($_REQUEST['UsrCustId']) || !isset($_REQUEST['OrdId']) || 
            !isset($_REQUEST['OrdDate']) || !isset($_REQUEST['TransAmt']) || !isset($_REQUEST['BgRetUrl']) ||
            !isset($_REQUEST['ChkValue']) || !isset($_REQUEST['FeeAmt']) || !isset($_REQUEST['FeeCustId']) ||
@@ -256,7 +260,8 @@ class BgcallController extends Base_Controller_Page {
             ));
             return;
         }
-        
+
+        $cmdId     = $retParam['CmdId'];
         $trxId     = $retParam['TrxId'];
         $orderId   = intval($retParam['OrdId']);
         $orderDate = intval($retParam['OrdDate']);
@@ -265,6 +270,12 @@ class BgcallController extends Base_Controller_Page {
         $transAmt  = floatval($retParam['TransAmt']);
         $respCode = $retParam['RespCode'];
         $respDesc = $retParam['RespDesc'];
+
+        // //$key = RespCode + CmdId + OrdId
+        // $cckey = Finance_Keys::getBgCallKey($cmdId, $orderId, $respCode);
+        // $lock = Base_Concurr::lock($cckey);
+        // if($lock){}
+
         if($respCode !== '000') {           
             $logParam = $retParam;
             $logParam['msg'] = $respDesc;

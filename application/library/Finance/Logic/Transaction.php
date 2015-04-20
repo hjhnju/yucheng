@@ -7,7 +7,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
 
     public function __construct(){
         parent::__construct();
-        $this->webroot = Base_Config::getConfig('web')->fnroot;
+        $this->webroot = Base_Config::getConfig('web')->root;
+        $this->fnroot = Base_Config::getConfig('web')->fnroot;
     }
 
     /**
@@ -55,7 +56,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = $orderInfo['orderId'];
         $merCustId = $this->merCustId;
         $retUrl    = strval($retUrl);
-        $bgRetUrl  = $this->webroot.'/finance/bgcall/unfreezeOrder';
+        $bgRetUrl  = $this->fnroot.'/finance/bgcall/unfreezeOrder';
         $merPriv   = strval($userId).'_'.strval($transAmt).'_'.strval($orderId);
         //调用汇付API进行解冻处理
         $ret       = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,
@@ -117,7 +118,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $gateBusiId = strval($gateBusiId);
         $dcFlag     = strval($dcFlag);
         $transAmt   = sprintf('%.2f',$transAmt);
-        $bgRetUrl   = $this->webroot.'/finance/bgcall/netsave';
+        $bgRetUrl   = $this->fnroot.'/finance/bgcall/netsave';
         $retUrl     = $this->webroot.'/finance/ret';
         $merPriv    = strval($userid);              
         //调用汇付API进行充值处理
@@ -173,7 +174,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $guarCompId   = strval($guarCompId);
         $guarAmt      = strval($guarAmt);
         $proArea      = str_pad($proArea, 4, '0', STR_PAD_RIGHT);//4位显示，不足前面补零。如福建省：0035
-        $bgRetUrl     = $this->webroot . '/finance/bgcall/addBidInfo';
+        $bgRetUrl     = $this->fnroot . '/finance/bgcall/addBidInfo';
         $merPriv      = '';
         $reqExt       = '';       
         $mixRet       = $this->chinapnr->addBidInfo($this->merCustId, $proId, $borrCustId, $borrTotAmt, 
@@ -277,7 +278,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $freezeOrdId   = Finance_Logic_Order::genOrderId();
         $freezeOrdId   = strval($freezeOrdId);
         $retUrl        = strval($retUrl);
-        $bgRetUrl      = $this->webroot.'/finance/bgcall/initiativeTender';
+        $bgRetUrl      = $this->fnroot.'/finance/bgcall/initiativeTender';
         $userid        = strval($userid);
         $proId         = $loanId;
         $merPriv       = $userid.'_'.$proId; //将userid与proid作为私有域传入
@@ -373,7 +374,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $isDefault      = 'N';
         $isUnFreeze     = 'Y';
         $unFreezeOrdId  = Finance_Logic_Order::genOrderId();
-        $bgRetUrl       = $this->webroot.'/finance/bgcall/loans';
+        $bgRetUrl       = $this->fnroot.'/finance/bgcall/loans';
         $merPriv        = implode(',', array($outUserId, $inUserId));//投标人的uid
         $reqExt         = array('ProId' => strval($loanId));
         $reqExt         = json_encode($reqExt);
@@ -483,7 +484,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $unFreezeOrderId = strval($unFreezeOrdId);
         $freezeTrxId     = strval($freezeTrxId);
         $retUrl          = strval($retUrl);
-        $bgRetUrl        = $this->webroot.'/finance/bgcall/tendercancel';
+        $bgRetUrl        = $this->fnroot.'/finance/bgcall/tendercancel';
         $merPriv         = strval($userid);     
 
         $this->chinapnr->tenderCancel($this->merCustId, $usrCustId, $orderId, $orderDate, $transAmt, $usrCustId,
@@ -527,7 +528,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $servFee    = '';
         $openAcctId = '';
         $retUrl     = '';
-        $bgRetUrl   = $this->webroot.'/finance/bgcall/tixian';
+        $bgRetUrl   = $this->fnroot.'/finance/bgcall/tixian';
 
         $merPriv    = strval($userid);
         $reqExt     = array(array(
@@ -569,6 +570,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'type'      => Finance_Order_Type::REPAYMENT,
             'amount'    => floatval($transAmt),
             'status'    => Finance_Order_Status::INITIALIZE,
+            'freezeTrxId' => $subOrdId,//保存关联的投标订单号
             'comment'   => '订单还款',
         );
         $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
@@ -597,7 +599,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $divDetails = '';
         }
         $feeObjFlag = 'O';//像还款人收取手续费
-        $bgRetUrl   = $this->webroot.'/finance/bgcall/repayment';
+        $bgRetUrl   = $this->fnroot.'/finance/bgcall/repayment';
         $merPriv    = implode(',', array($outUserId,$inUserId,$refundId));//借款人的uid
         $reqExt     = array('ProId'=> strval($loanId));
         $reqExt     = json_encode($reqExt);     
@@ -650,7 +652,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $inCustId  = strval($huifuid);
         $inAcctId  = '';
         $retUrl    = '';
-        $bgRetUrl  = $this->webroot.'/finance/bgcall/transfer';
+        $bgRetUrl  = $this->fnroot.'/finance/bgcall/transfer';
         $type      = strval($type);
         $merPriv   = strval($orderDate).'_'.strval($inUserId).'_'.$type;    
         $ret       = $this->chinapnr->transfer($orderId, $outCustId, $outAcctId, 
@@ -693,7 +695,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $servFee       = '';
         $servFeeAcctId = '';
         $retUrl        = '';
-        $bgRetUrl      = $this->webroot.'/finance/bgcall/merTixian';
+        $bgRetUrl      = $this->fnroot.'/finance/bgcall/merTixian';
         $remark        = '';
         $charSet       = '';
         $merPriv       = strval($userid).'_'.strval($orderDate);
