@@ -49,6 +49,8 @@
                         <tr>
                             <th>还款编号</th>
                             <th>借款ID</th>
+                            <th>借款人</th>
+                            <th>账号余额</th>
                             <th>剩余期数</th>
                             <th>应还本息</th>
                             <th>逾期罚息</th>
@@ -61,7 +63,9 @@
                         {%foreach from=$arrRefund key=i item=refund%}
                         <tr{%if $refund.promise_time lt time()+7*24*3600%} style="color:red" {%/if%}>
                             <td>{%$refund.id%}</td>
-                            <td>{%$refund.loan_id%}</td>
+                            <td>{%$refund.loan_id%}</td>                            
+                            <td>{%$refund.name%}</td>
+                            <td>{%$refund.money%}</td>
                             <td>{%$refund.period%}</td>
                             <td>{%$refund.amount%}</td>
                             <td>{%$refund.late_charge%}</td>

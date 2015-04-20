@@ -1,6 +1,6 @@
 <?php
 /**
- * 奖券表
+ * 实物奖励表
  * @author hejunhua
  */
 class Awards_Object_Entity extends Base_Object {
@@ -26,7 +26,7 @@ class Awards_Object_Entity extends Base_Object {
      * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'type', 'value', 'valid_time', 'claim', 'userid', 'pay_time', 'create_time', 'update_time', 'memo');
+    protected $fields = array('id', 'userid', 'name', 'type', 'value', 'activity', 'pay_time', 'status', 'create_time', 'update_time');
 
     /**
      * 字段与属性隐射关系
@@ -34,15 +34,15 @@ class Awards_Object_Entity extends Base_Object {
      */
     public $properties = array(
         'id'          => 'id',
+        'userid'      => 'userid',
+        'name'        => 'name',
         'type'        => 'type',
         'value'       => 'value',
-        'valid_time'  => 'validTime',
-        'claim'       => 'claim',
-        'userid'      => 'userid',
+        'activity'    => 'activity',
         'pay_time'    => 'payTime',
+        'status'      => 'status',
         'create_time' => 'createTime',
         'update_time' => 'updateTime',
-        'memo'        => 'memo',
     );
 
     /**
@@ -51,10 +51,10 @@ class Awards_Object_Entity extends Base_Object {
      */
     protected $intProps = array(
         'id'          => 1,
-        'type'        => 1,
-        'valid_time'  => 1,
         'userid'      => 1,
+        'type'        => 1,
         'pay_time'    => 1,
+        'status'      => 1,
         'create_time' => 1,
         'update_time' => 1,
     );
@@ -68,13 +68,25 @@ class Awards_Object_Entity extends Base_Object {
     }
 
     /**
-     * 奖券id
+     * 奖励id
      * @var integer
      */
     public $id;
 
     /**
-     * 1:现金券，2:利息券，3:代金券
+     * 拥有用户
+     * @var integer
+     */
+    public $userid;
+
+    /**
+     * 说明
+     * @var string
+     */
+    public $name;
+
+    /**
+     * 奖励类型 1:注册奖励 2:邀请奖励 3:投资奖励
      * @var integer
      */
     public $type;
@@ -86,28 +98,22 @@ class Awards_Object_Entity extends Base_Object {
     public $value;
 
     /**
-     * 有效截止时间
-     * @var integer
-     */
-    public $validTime;
-
-    /**
-     * 要求达成的条件
+     * 奖励活动的类名,含兑换条件
      * @var string
      */
-    public $claim;
+    public $activity;
 
     /**
-     * 拥有用户
-     * @var integer
-     */
-    public $userid;
-
-    /**
-     * 兑换时间
+     * 发放时间
      * @var integer
      */
     public $payTime;
+
+    /**
+     * 发放状态 1:未发放，2:已发放，3:已收货
+     * @var integer
+     */
+    public $status;
 
     /**
      * 创建时间
@@ -120,11 +126,5 @@ class Awards_Object_Entity extends Base_Object {
      * @var integer
      */
     public $updateTime;
-
-    /**
-     * 说明
-     * @var string
-     */
-    public $memo;
 
 }
