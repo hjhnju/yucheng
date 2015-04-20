@@ -63,9 +63,9 @@
             
              <div id="btns">
              <div>
-             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="" onclick = "refresh()">保存修改</button>&nbsp;&nbsp;
+             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="">保存修改</button>&nbsp;&nbsp;
              </form>
-             <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
+             <iframe id="id_iframe" name="id_iframe" style="display:none;" onload="refresh()"></iframe>
              </div>
              </div>
             {%else%}
@@ -78,9 +78,9 @@
             
              <div id="btns">
              <div>
-             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="" onclick = "refresh()">保存公告</button>&nbsp;&nbsp;
+             <button onclick="getContent()" type="submit" name="ctx"  id="ctx11" value="">保存公告</button>&nbsp;&nbsp;
              </form>
-             <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
+             <iframe id="id_iframe" name="id_iframe" style="display:none;" onload="refresh()"></iframe>
            </div>
          </div>
          {%/if%}
@@ -99,8 +99,8 @@
     }
 
     function refresh(){
-    	window.location.href("/admin/info/push");
-        }
+    	window.location.href="/admin/info/push";
+    }
 	
     </script>
     <script type="text/javascript">

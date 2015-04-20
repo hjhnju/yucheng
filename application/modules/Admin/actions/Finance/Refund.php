@@ -30,6 +30,12 @@ class RefundAction extends Yaf_Action_Abstract {
         $total = ceil($total/$pagesize);
         $list = $list->toArray();
         $arrRefund  = $list['list'];
+        foreach ($arrRefund as $key => $val){
+            $objUser = new User_Object_Login();
+            $objUser->fetch(array('userid' => $val['user_id']));
+            $arrRefund[$key]['name'] = $objUser->name;
+            $arrRefund[$key]['money'] = Finance_Api::getUserAvlBalance($val['user_id']);
+        }
         $pageAll    = $list['pageall'];
         $this->getView()->assign('arrRefund', $arrRefund);
         $this->getView()->assign('pageall', $pageAll);
