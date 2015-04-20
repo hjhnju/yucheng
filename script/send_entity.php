@@ -13,7 +13,7 @@ foreach ($arrData as $val){
     $user->fetch(array('phone'=>$arrTemp[3]));
     if(!empty($user->userid)){
         $arrParam = array(
-        	'id'      => $arrTemp[0],
+            'id'      => $arrTemp[0],
             'name'    => $arrTemp[7],
             'address' => $arrTemp[6],
         );
