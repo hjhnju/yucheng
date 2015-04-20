@@ -15,7 +15,7 @@ class Awards_Ticket extends Awards_Object_Ticket {
         if(!empty($actName) && class_exists($actName)){
             $this->actObj = new $actName();
         }else{
-            Base_Log::error(array('msg'=>'activity not exists', 'activity'=>$actName));
+            Base_Log::error(array('msg'=>'activity not exists', 'activity'=>$actName, 'data'=>$data));
         }
     }
 
@@ -24,8 +24,6 @@ class Awards_Ticket extends Awards_Object_Ticket {
         $actName = $this->activity;
         if(!empty($actName) && class_exists($actName)){
             $this->actObj = new $actName();
-        }else{
-            Base_Log::error(array('msg'=>'activity not exists', 'activity'=>$actName));
         }
     }
 
