@@ -84,7 +84,7 @@ class ActivityController extends Base_Controller_Page {
         //2.实时邀请播报
         $sql = "SELECT `userid`, `name` as entity 
                  FROM `awards_entity` WHERE type=2 and userid>0 and create_time>=$startTime and create_time<=$endTime 
-                 order by update_time desc limit 0, 10";
+                 order by update_time desc limit 0, 20";
         $list1 = Base_Db::getInstance('xjd')->fetchAll($sql);
 
         $leftCnt = 10 - count($list1);
