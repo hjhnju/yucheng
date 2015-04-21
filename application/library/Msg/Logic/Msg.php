@@ -17,13 +17,16 @@ class Msg_Logic_Msg {
     public function getUnread($uid){
         $objsMsg = new Msg_List_Msg();
         $num = 0;
+        $arrObj = array();
         $objsMsg->setFilter(array('receiver'=>$uid));
-        $arrObj = $objsMsg->getObjects();
+        $objsMsg->setPagesize(PHP_INT_MAX);
+        $arrObj = $objsMsg->toArray();
+        $arrObj = $arrObj['list'];
         if(empty($arrObj)){
             return $num;
         }
         foreach ($arrObj as $obj){
-            if(Msg_RetCode::MSG_UNREAD == $obj->status){
+            if(Msg_RetCode::MSG_UNREAD == $obj['status']){
                 $num += 1;
             }
         }
