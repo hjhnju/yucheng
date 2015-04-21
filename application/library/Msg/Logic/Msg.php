@@ -17,8 +17,12 @@ class Msg_Logic_Msg {
     public function getUnread($uid){
         $objsMsg = new Msg_List_Msg();
         $num = 0;
+        $arrObj = array();
         $objsMsg->setFilter(array('receiver'=>$uid));
-        $arrObj = $objsMsg->getObjects();
+        for( $i=1; $i <= $objsMsg->getPageTotal(); $i++ ){
+            $objsMsg->setPage($i);
+            $arrObj = array_merge($arrObj,$objsMsg->getObjects());
+        }
         if(empty($arrObj)){
             return $num;
         }
