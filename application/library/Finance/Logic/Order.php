@@ -126,6 +126,7 @@ class Finance_Logic_Order {
         if(!$ret){
             $param['msg'] = '快照记录入库失败';
             Base_Log::error($param);
+            throw new Exception("订单状态保存失败");
             return false;
         }
         return true;        
@@ -177,6 +178,7 @@ class Finance_Logic_Order {
                 'orderId' => $orderId,
                 'status'  => $status,
             ));
+            throw new Exception("订单状态更新失败");
             return false;
         }
 
@@ -207,6 +209,7 @@ class Finance_Logic_Order {
                 'failDesc'=> $failDesc,
                 'arrExts' => $arrExts,
             ));
+            throw new Exception("订单状态更新失败！");
             return false;
         }
         return true;

@@ -270,36 +270,44 @@ class BgcallController extends Base_Controller_Page {
         $transAmt  = floatval($retParam['TransAmt']);
         $respCode = $retParam['RespCode'];
         $respDesc = $retParam['RespDesc'];
-
-        // //$key = RespCode + CmdId + OrdId
-        // $cckey = Finance_Keys::getBgCallKey($cmdId, $orderId, $respCode);
-        // $lock = Base_Concurr::lock($cckey);
-        // if($lock){}
-
-        if($respCode !== '000') {           
-            $logParam = $retParam;
-            $logParam['msg'] = $respDesc;
-            Base_Log::error($logParam);         
-            //充值财务订单状态更新为处理失败           
-            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED, 
-                $respCode, $respDesc);
-            return ;
-        }        
-        
-        //充值财务订单状态更新为处理成功
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-            $respCode, $respDesc);      
-        //充值财务记录入库
-        Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::NETSAVE,
-            $transAmt, '充值记录');
-        
-        Msg_Api::sendmsg($userid, Msg_Type::CASH, 
-            array(strftime("%Y-%m-%d %H:%M", time()), $transAmt));
-        
-        Base_Log::notice($retParam);
-        //页面打印
         $trxId = strval($trxId);
-        print('RECV_ORD_ID_'.$trxId);
+        
+        $cckey = Finance_Keys::getBgCallKey($cmdId, $orderId, $respCode);
+        $bolLocked = Base_Concurr::lock($cckey);
+        if($bolLocked){
+            print('RECV_ORD_ID_'.$trxId);
+        	return;
+        }
+        try{
+            if($respCode !== '000') {
+                $logParam = $retParam;
+                $logParam['msg'] = $respDesc;
+                Base_Log::error($logParam);
+                //充值财务订单状态更新为处理失败
+                Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                $respCode, $respDesc);
+                print('RECV_ORD_ID_'.$trxId);
+                return ;
+            }
+            $key = $orderId;
+            //充值财务订单状态更新为处理成功
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+            $respCode, $respDesc);
+            //充值财务记录入库
+            Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::NETSAVE,
+            $transAmt, '充值记录');
+            
+            Msg_Api::sendmsg($userid, Msg_Type::CASH,
+            array(strftime("%Y-%m-%d %H:%M", time()), $transAmt));
+
+            //页面打印
+            print('RECV_ORD_ID_'.$trxId);
+        }catch(Exception $e){
+            Base_Concurr::unlock($cckey);
+            Base_Log::error($retParam);
+            return;
+        } 
+        Base_Log::notice($retParam);
     }
     
     /**
