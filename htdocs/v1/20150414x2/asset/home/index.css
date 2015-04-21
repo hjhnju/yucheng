@@ -208,14 +208,14 @@ p{margin:0;padding:0}
 .tr{text-align:right}
 .tc{text-align:center}
 .newinvestlist{margin-top:55px}
-.newinvestlist .container{width:1200px}
+.newinvestlist .container{width:1200px;overflow: hidden;}
 .newinvestlist .newinvestlist-title{width:1000px;margin:0 auto;line-height:28px;font-size:20px}
-.newinvestlist .more{font-size:14px;height:100%;color:#adadad;text-decoration:none}
+.newinvestlist .more{font-size:14px;height:100%;color:#adadad;text-decoration:none;width: 120px;text-align: right;}
 .newinvestlist .color-red{color:#f2746a}
-.newinvestlist .newinvestlist-box{width:1000px;margin:0 auto;margin-top:23px;min-height:358px;position:relative;overflow:hidden}
-.newinvestlist .newinvestlist-box ul{width:2000px;float:left}
-.newinvestlist .newinvestlist-box ul li{width:230px;height:358px;float:left;margin-right:27px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;background-color:#f8f8f8}
-.newinvestlist .newinvestlist-box ul li span{display:block}
+.newinvestlist .newinvestlist-box{width:1000px;margin:0 auto;margin-top:23px;min-height:358px;position:relative;}
+.newinvestlist .newinvestlist-box .newinvestlist-box-list{width:2000px;float:left}
+.newinvestlist .newinvestlist-box .newinvestlist-box-list li{width:230px;height:358px;float:left;margin-right:27px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;background-color:#f8f8f8}
+.newinvestlist .newinvestlist-box .newinvestlist-box-list li span{display:block}
 .newinvestlist .newinvestlist-box-title{width:230px;height:55px;border-bottom:1px solid #fff;text-align:center;*zoom:1:;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap}
 .newinvestlist .newinvestlist-box-title .school{margin-top:18px;line-height:30px;font-size:18px;width:174px}
 .newinvestlist .newinvestlist-box-lilv{margin-top:26px;height:96px;text-align:center}
@@ -226,9 +226,9 @@ p{margin:0;padding:0}
 .newinvestlist .newinvestlist-box-lilv .lilv .lilv-day{display:inline-block}
 .newinvestlist .newinvestlist-box-lilv .lilv .color-white{color:#fff}
 .newinvestlist .newinvestlist-box-price{height:136px;margin:0 auto;text-align:center;line-height:25px}
-.newinvestlist .newinvestlist-box-price .total-title{font-size:18px;line-height:25px;width:80px;text-align:right}
-.newinvestlist .newinvestlist-box-price .total-price{font-size:24px;line-height:25px;width:140px;text-align:left}
-.newinvestlist .newinvestlist-box-price .rest-title{width:80px;text-align:right}
+.newinvestlist .newinvestlist-box-price .total-title{font-size:18px;line-height:25px;width:76px;text-align:right}
+.newinvestlist .newinvestlist-box-price .total-price{font-size:24px;line-height:25px;width:144px;text-align:left;margin-left: 4px;}
+.newinvestlist .newinvestlist-box-price .rest-title{width:76px;text-align:right}
 .newinvestlist .newinvestlist-box-price .rest-price{font-size:14px;width:140px;text-align:left}
 .newinvestlist .jindu-box{width:74px;margin:10px 0 0 10px}
 .newinvestlist .jindu-number{width:60px;margin-right:0;margin-left:5px}
@@ -367,7 +367,7 @@ p{margin:0;padding:0}
 .cooperation .cooperation5{background-position:0 -44px}
 .notice{height:64px;line-height:64px;background-color:#dff1ec;font-size:14px}
 .notice .container{overflow:hidden;height:64px}
-.notice .more{height:100%;color:#adadad;text-decoration:none}
+.notice .more{height:100%;color:#adadad;text-decoration:none;width: 120px;text-align: right;}
 .notice .notice-title{color:#4fc501;font-size:20px}
 .notice .item-wrap{width:770px;position:absolute;top:0;left:80px;margin-left:29px}
 .notice .item-wrap a{float:left;color:#000;text-decoration:none}
@@ -394,4 +394,55 @@ p{margin:0;padding:0}
 .plat-notice .phone-box .attention-box .weixin:hover{background-position:0 -84px}
 .plat-notice .phone-box .attention-box .qq{background-position:0 -224px}
 .plat-notice .phone-box .attention-box .qq:hover{background-position:0 -252px}
-.newinvestlist .container{width:1000px}
+ 
+.newinvestlist-box {
+    height: 358px;
+}
+.newinvestlist .newinvestlist-box ul li {
+
+}
+.newinvestlist .newinvestlist-box .flex-direction-nav a {
+      text-decoration: none;
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: -20px 0 0;
+      position: absolute;
+      top: 50%;
+      z-index: 100;
+      overflow: hidden;
+      opacity: 1; 
+    }
+.newinvestlist .newinvestlist-box .flex-direction-nav .flex-prev {
+  opacity: 0.7;
+  left: -30px;
+}
+.newinvestlist .newinvestlist-box .flex-direction-nav .flex-prev:hover {
+  opacity: 1;
+}
+.newinvestlist .newinvestlist-box .flex-direction-nav .flex-next {
+  opacity: 0.7;
+  right: -30px;
+}
+.newinvestlist .newinvestlist-box .flex-direction-nav .flex-next:hover {
+  opacity: 1;
+}
+
+
+@media screen and (min-width:320px) and (max-width:1024px){
+    .newinvestlist .container {width:1000px;}
+    .newinvestlist .newinvestlist-box .flex-direction-nav .flex-prev { 
+	  left: 0px;
+	} 
+	.newinvestlist .newinvestlist-box .flex-direction-nav .flex-next { 
+	  right: 0px;
+	} 
+	.notice .more, .newinvestlist .more{
+	   text-align: left;
+	}
+
+	 .footer-item-list {
+        margin-right: 10px;
+    }
+    
+}

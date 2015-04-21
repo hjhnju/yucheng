@@ -2,12 +2,28 @@
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/home/index.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/common/extra/FlexSlider/flexslider.css" />
 {%/block%}
 
 {%block name="script"%}
 <script>
     require(['home/index'], function (main) {
         main.init();
+    });
+    require(['jquery','common/extra/FlexSlider/jquery.flexslider'], function (main) {
+      var $=require('jquery');
+       $(".flexslider").flexslider();
+
+       $(".newinvestlist-box").flexslider(
+        { 
+          animation:"slide",
+          itemWidth:230,
+          itemMargin:27,
+          controlNav: false,
+          minItems: 4, //{NEW} Integer: 一次最少展示滑动内容的单元个数
+          maxItems: 4, //{NEW} Integer: 一次最多展示滑动内容的单元个数
+          move: 1 
+        });
     });
 </script>
 
@@ -17,22 +33,22 @@
 {%assign var="bannerList" value=[5 => "banner-six", 0 => "banner-one", 1 => "banner-two", 2 => "banner-three",4 => "banner-five"]%}
 {%assign var="bannerHref" value=[5 => "/activity/spring",0 => "/security", 1 => "/security", 2 => "/infos/post/detail?id=31",  4 => "/"]%}
 
-<div class="banner-floation">
+<div class="banner-floation flexslider">
 
-    <ul class="banner-item">
+    <ul class="slides">
         {%foreach $bannerList as $key => $item%}
-        <li class="banner-item-list">
+        <li class="banner-item-list1">
             <a href="{%$bannerHref[$key]%}" class="banner-item-list-link {%$item%}"></a>
         </li>
         {%/foreach%}
     </ul>
-    <div class="banner-select">
+  <!--   <div class="banner-select">
         <a class="banner-select-link current"></a>
         <a class="banner-select-link"></a>
         <a class="banner-select-link"></a>
         <a class="banner-select-link"></a>
         <a class="banner-select-link"></a> 
-    </div>
+    </div> -->
     <div class="fix-container">
         <div class="fix-box">
             {%if isset($user)%}
@@ -68,8 +84,8 @@
         </div>
     </div>
 
-    <div class="jiantou jiantou-left"></div>
-    <div class="jiantou jiantou-right"></div>
+    <!-- <div class="jiantou jiantou-left"></div>
+    <div class="jiantou jiantou-right"></div> -->
 </div>
 <div class="introduce">
     <div class="container">
@@ -130,7 +146,7 @@
                     <div class="xjd-error-msg">“新标即将上线，敬请期待”</div>
                 </div>
                 {%else%} 
-                <ul>
+                <ul class="slides newinvestlist-box-list">
                 {%foreach $data.list as $key => $item%} 
                    <li>
                        <span class="newinvestlist-box-title">

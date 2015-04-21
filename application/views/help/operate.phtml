@@ -9,13 +9,183 @@
     require(['help/index'], function (main) {
         main.init();
     });
+ /*   require(['common/extra/jquery.stellar','jquery'], function (main) {
+         var $=require('jquery'); 
+         $.stellar({
+          horizontalScrolling: false,
+          verticalOffset: 40
+        });
+    });*/
 </script>
 {%/block%}
 
 {%block name="content"%}
-  <div class="container"> 
-      <div class="operate-nav">
-            
+  <div class="operate-nav"> 
+      <div class="container">
+             <a href="{%$webroot%}/guide" target="_blank" class="guide-btn">新手指引</a>
+             <div class="guide-btn-shine" ></div>
       </div>
-  </div>    
+  </div> 
+    <div class="operate-menu operate-demo-menu"> 
+      <div class="container">
+          <span class="menu-title">
+              <a class="backup" href="{%$webroot%}/help"></a>
+          	 <span class="people"></span>
+          </span>
+          <div class="menu-box"> 
+          	   <div class="menu-list">
+          	   	   <a class="to-regist" href="#to-regist" target-id="to-regist">
+                        如何注册 
+          	   	   </a>
+          	   	   <a class="recharge-invest" href="#recharge-invest" target-id="recharge-invest">
+                        充值投资
+          	   	   </a>
+          	   	    <a class="withdraw" href="#withdraw" target-id="withdraw">
+                        绑卡和提现
+          	   	   </a> 
+          	   </div>
+          </div>
+      </div>
+  </div> 
+   <div class="operate-content operate-demo-content" id="to-regist">
+  	  <div class="container">
+  	     <div class="content-title to-regist"><span class="img-bg"></span></div>
+  	     <div class="content-list to-regist current">
+  	     	<ul>
+  	     		<li class="">
+  	     			<span class="list-step to-regist">Step.1&nbsp;&nbsp;
+  	     				<label>点击首页页面右上方的【注册】，进入注册页面，填写相关信息后点击【立即注册】</label></span> 
+  	     			<div class="step-img regist step1"></div> 
+  	     		</li>
+  	     		<li class="">
+  	     			<span class="list-step to-regist">Step.2&nbsp;&nbsp;
+  	     				<label>进入注册页面，正确填写注册信息</label></span>
+  	     			<div class="step-img regist step2"></div> 
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-step to-regist">Step.3&nbsp;&nbsp;
+  	     				<label>跳转至开通汇付天下托管账户的页面，点击【立即开通】并填写相关信息</label></span>
+  	     			<div class="step-img regist  step3"></div> 
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-step to-regist">Step.4&nbsp;&nbsp;
+  	     				<label>注册成功，跳转至兴教贷个人账户</label></span> 
+  	     	    </li> 
+  	     	</ul>
+  	     </div>
+  	  </div>
+  </div> 
+     <div class="operate-content operate-demo-content" id="recharge-invest">
+  	  <div class="container">
+  	     <div class="content-title recharge-invest"><span class="img-bg"></span></div>
+  	     <div class="content-list recharge-invest">
+  	     	<ul>
+  	     		<li><span class="step-title recharge-invest">充值步骤</span></li>
+  	     		<li class="">
+  	     			<span class="list-step recharge-invest">Step.1&nbsp;&nbsp;
+  	     				<label>登录兴教贷账户，进入【我的账户】的【账户总览】，点击充值</label></span>
+  	     			 
+  	     		    <div class="step-img recharge step1"></div> 
+  	     		</li>
+  	     		<li class="">
+  	     			<span class="list-step recharge-invest">Step.2&nbsp;&nbsp;
+  	     				<label>选择银行卡</label></span> 
+  	     				 <div class="step-img recharge step2"></div>  
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-step recharge-invest">Step.3&nbsp;&nbsp;
+  	     				<label>输入金额，点击【充值】</label></span> 
+                       <div class="step-img recharge step3"></div> 
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-step recharge-invest">Step.4&nbsp;&nbsp;
+  	     				<label>跳转至汇付天下登录页面，输入汇付天下登录密码和校验码</label></span>
+  	     		      <div class="step-img recharge step4"></div> 
+  	     	    </li> 
+  	     	    <li>
+  	     			<span class="list-step recharge-invest">Step.5&nbsp;&nbsp;
+  	     				<label>点击【登录到网上银行充值】</label></span> 
+                       <div class="step-img recharge step5"></div> 
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-step recharge-invest">Step.6&nbsp;&nbsp;
+  	     				<label>请根据银行网银的提示完成操作（不同银行网银的具体操作方式可能不同）</label></span> 
+  	     	    </li> 
+  	     	    
+  	     	    <li><span class="step-title recharge-invest">投资步骤</span></li>
+  	     		<li class="">
+  	     			<span class="list-step recharge-invest">Step.1&nbsp;&nbsp;
+  	     				<label>在首页点击【我来投资】</label></span>
+  	     			 
+  	     		    <div class="step-img invest step1"></div> 
+  	     		</li>
+  	     		<li class="">
+  	     			<span class="list-step recharge-invest">Step.2&nbsp;&nbsp;
+  	     				<label>点击要投资的产品</label></span> 
+  	     				 <div class="step-img invest step2"></div>  
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-step recharge-invest">Step.3&nbsp;&nbsp;
+  	     				<label>输入投标金额，点击【立即投标】</label></span> 
+                       <div class="step-img invest step3"></div> 
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-step recharge-invest">Step.4&nbsp;&nbsp;
+  	     				<label>输入汇付天下的交易密码，完成投标</label></span>
+  	     		      <div class="step-img invest step4"></div> 
+  	     	    </li>  
+  	     	</ul>
+  	     </div>
+  	  </div>
+  </div> 
+     <div class="operate-content operate-demo-content" id="withdraw" style="margin-bottom: 60px;">
+  	  <div class="container">
+  	     <div class="content-title withdraw"><span class="img-bg"></span></div>
+  	     <div class="content-list withdraw">
+  	     	<ul>
+  	     		<li><span class="step-title withdraw">绑卡步骤</span></li>
+  	     		<li class="">
+  	     			<span class="list-step withdraw">Step.1&nbsp;&nbsp;
+  	     				<label>登录兴教贷账户，选择【交易记录】, 点击【提现】</label></span>
+  	     			  <div class="step-img bindcard step1"></div> 
+  	     		</li>
+  	     		<li class="">
+  	     			<span class="list-step withdraw">Step.2&nbsp;&nbsp;
+  	     				<label>选择【绑定银行卡】</label></span>
+  	     			  <div class="step-img bindcard step2"></div> 
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-step withdraw">Step.3&nbsp;&nbsp;
+  	     				<label>登录汇付天下账户</label></span>
+  	     			  <div class="step-img bindcard step3"></div> 
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-step withdraw">Step.4&nbsp;&nbsp;
+  	     				<label>输入银行卡号、选择银行卡开户城市、输入汇付天下的交易密码</label></span>
+  	     			  <div class="step-img bindcard step4"></div> 
+  	     	    </li> 
+                <li>
+  	     			<span class="list-step withdraw">Step.5&nbsp;&nbsp;
+  	     				<label>点击【确定】绑卡成功（绑卡成功后，汇付天下会转入0.01元至您绑定的银行卡中以作验证，请勿担心账户安全）</label></span> 
+  	     	    </li> 
+
+  	     	    <li><span class="step-title withdraw" >提现步骤</span></li>
+  	     		<li class="">
+  	     			<span class="list-step withdraw">Step.1&nbsp;&nbsp;
+  	     				<label>登录兴教贷账户，选择【交易记录】，点击提现</label></span>
+  	     			  <div class="step-img withdraw step1"></div> 
+  	     		</li>
+  	     		<li class="">
+  	     			<span class="list-step withdraw">Step.2&nbsp;&nbsp;
+  	     				<label>输入提现金额，点击【确定】</label></span>
+  	     			  <div class="step-img withdraw step2"></div> 
+  	     	    </li> 
+  	     	     <li>
+  	     			<span class="list-step withdraw">Step.3&nbsp;&nbsp;
+  	     				<label>输入交易密码后点击确定，即完成提现</label></span> 
+  	     	    </li> 
+  	     	</ul>
+  	     </div>
+  	  </div>
+  </div> 
 {%/block%}

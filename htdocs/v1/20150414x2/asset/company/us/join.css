@@ -293,3 +293,16 @@ p{margin:0;padding:0}
 .container2 .company-box2 .company-join li .plus-icon{width:26px;height:26px;display:block;float:right;margin:19px 34px 0 0;background:url(img/plus.png) no-repeat}
 .container2 .company-box2 .company-join li .minus-icon{width:26px;height:26px;display:block;float:right;margin:19px 34px 0 0;background:url(img/minus.png) no-repeat}
 .container2 .company-box3{background:url(img/join_bg2.png) no-repeat;width:1000px;height:458px}
+
+ @media screen and (min-width:320px) and (max-width:1000px){ 
+   .container2 .company-box1{
+   	 width: 100%;
+   }
+
+ 	.footer{
+ 		 width: 1000px;
+ 	}
+   .footer-item-list {
+        margin-right: 10px; 
+    }
+}

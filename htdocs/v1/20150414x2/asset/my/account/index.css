@@ -372,7 +372,7 @@ p{margin:0;padding:0}
 .all-box-pay{float:left;position:relative;padding:30px 20px 0;width:190px}
 .all-box-pay-top{height:30px;line-height:30px;color:#4d4d4d}
 .all-box-pay-top span{margin-left:10px;font-size:14px;color:#333;vertical-align:middle;display:inline-block}
-.all-box-pay-top span .all-pay-help{width:20px;height:20px;background:url(../img/help.png) 0 0 no-repeat;display:inline-block;vertical-align:middle;cursor:pointer;position:relative}
+.all-box-pay-top span .all-pay-help{width:20px;height:20px;background:url(../common/img/help.png) 0 0 no-repeat;display:inline-block;vertical-align:middle;cursor:pointer;position:relative}
 .all-box-pay-link{position:absolute;right:0;top:30px;display:block;width:50px;height:24px;line-height:24px;text-align:center;text-decoration:none;color:#fff;font-size:14px;background-color:#f2736a;margin-top:4px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
 .all-box-pay-link:hover{background-color:#e33f33}
 .all-account-box-dredge{padding:40px 0;border:1px solid #eaeaea}

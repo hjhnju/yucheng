@@ -2,6 +2,7 @@
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/help/index.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/common/extra/Gallery/css/blueimp-gallery.css" />
 {%/block%}
 
 {%block name="script"%}
@@ -15,7 +16,583 @@
 {%block name="content"%}
   <div class="operate-nav"> 
       <div class="container">
-            
+            <a href="{%$webroot%}/guide" target="_blank" class="guide-btn">新手指引</a>
+            <div class="guide-btn-shine" ></div>
       </div>
-  </div>    
+  </div> 
+  <div class="operate-menu"> 
+      <div class="container">
+          <span class="phone">找不到答案？来问问我们的客服吧！咨询电话：400-016-2526</span>
+          <div class="menu-box"> 
+          	   <div class="menu-list">
+          	   	   <a class="login" href="#login" target-id="login">
+                        登录注册 
+          	   	   </a>
+          	   	   <a class="recharge" href="#recharge" target-id="recharge">
+                        充值
+          	   	   </a>
+          	   	    <a class="invest" href="#invest" target-id="invest">
+                        我来投资
+          	   	   </a>
+          	   	    <a class="account" href="#account" target-id="account">
+                        账户管理
+          	   	   </a>
+          	   	    <a class="security" href="#security" target-id="security">
+                        安全保障
+          	   	   </a>
+          	   	    <a class="withdraw" href="#withdraw" target-id="withdraw">
+                        提现
+          	   	   </a>
+          	   	    <a class="loan" href="#loan" target-id="loan">
+                        我要借款
+          	   	   </a>
+          	   	   <a class="operate" href="{%$webroot%}/help/operate" target="_blank">
+                        操作演示
+          	   	   </a>
+          	   </div>
+          </div>
+      </div>
+  </div> 
+  <div class="operate-content" id="login">
+  	  <div class="container">
+  	     <div class="content-title login"><span class="img-bg"></span></div>
+  	     <div class="content-list login">
+  	     	<ul>
+  	     		<li class="">
+  	     			<span class="list-title login">1、如何注册兴教贷？</span>
+  	     			<p class="list-text ">
+  	     				<i>（1）</i><span>进入兴教贷首页，点击右上角“注册”按钮。</span> 
+						<i>（2）</i><span>根据提示信息，填写您的用户名、密码、手机号码、验证码等信息，点击“快速注册”。</span> 
+						<i>（3）</i><span>进入托管账户开通页面，点击“立即开启”，跳转至汇付天下开通页面，设置汇付天下的     汇付登入密码、汇付交 易密码， 并填写真实姓名、身份证、常用邮箱、手机号等信息，点击“确定”。完成注册。</span> 
+						<i>（4）</i><span>用户名为用户的展示昵称，一经注册后不可修改。</span> 
+  	     			</p>
+  	     		</li>
+  	     		<li class="">
+  	     			<span class="list-title login">2、如何开通第三方登录？</span>
+  	     			<p class="list-text">
+  	     				 <i>（1）</i><span>注册完账户后，进入兴教贷首页，点击右上角“注册”按钮，跳转至注册页面。</span>
+						<i>（2）</i><span>点击注册页面腾讯企鹅标志，跳转至“QQ登录”页面，点击头像并授权登录。</span>
+						<i>（3）</i><span>点击“快速绑定”，输入您需要绑定的账户名、密码，点击确定，第三方登录绑定成功。</span>
+
+  	     			</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title login">3、注册收不到验证码？</span>
+  	     			<p class="list-text">
+                        <i>（1）</i><span>请确认手机是否安装短信拦截或过滤软件；</span>
+						<i>（2）</i><span>请确认手机是否能够正常接收短信（信号问题、欠费、停机等）</span>；
+						<i>（3）</i><span>短信收发过程中可能会存在延迟，请耐心等待，短信在15分钟内均有效；</span>
+						<i>（4）</i><span>您还可以联系客服，寻求帮助（400-016-2526）</span>。
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title login">4、为什么开通汇付天下的托管账户？</span>
+  	     			<p class="list-text">
+						<i>（1）</i><span>汇付天下是为兴教贷的用户提供资金托管的第三方支付公司，开通汇付天下账户，是为了保障用户的资金独立于平台，保障资金安全。</span>
+						<i>（2）</i><span>汇付天下成立于2006年7月，投资额近10亿元人民币，是首批获得央行发放牌照的第三方支付机构，受银监会监管。汇付天下建立了国内首个第三方P2P账户系统托管体系，国内近500家P2P网贷公司接入汇付天下P2P账户系统托管，其托管模式得到央行的肯定。</span>
+
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title login">5、忘记登录密码怎么办？</span>
+  	     			<p class="list-text">
+					 <i>（1）</i><span>进入登录页面，点击“忘记密码”。</span>
+					<i>（2）</i><span>输入用户名和绑定的手机号码。</span>
+					<i>（3）</i><span>发送验证码成功。</span>
+					<i>（4）</i><span>输入发送给您的验证码。</span>
+					<i>（5）</i><span>根据提示，输入新密码，点击确认后，重置密码成功，可使用新密码登录兴教贷帐号。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title login">6、如何修改密码？</span>
+  	     			<p class="list-text">
+					    <i>（1）</i><span>登录兴教贷账户，在我的账户页面点击“安全中心”，在安全中心页面的右下角账户信息中点击登录密码的“修改”。</span>
+					   <i>（2）</i><span>进入密码修改页面，输入原始密码、设置新密码、确认新密码，点击“确定修改”。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title login">7、如何修改手机号码？</span>
+  	     			<p class="list-text">
+						<i>（1）</i><span>登录兴教贷账户，在我的账户页面点击“安全中心”，在安全中心页面的个人资料中点击手机号码的“修改”。</span>
+						<i>（2）</i><span>进入修改手机页面，输入原手机号码、验证码，点击确认。</span>
+						<i>（3）</i><span>在绑定新手机号码页面，输入新手机号码、验证码，点击确认即可。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title login">8、一个人可以注册多个账号吗？</span>
+  	     			<p class="list-text">
+                       为确保投资者在平台的账户安全性和身份唯一识别性，一个身份证号码和一个手机号码都只可在平台注册一个账号。
+                    </p>
+  	     	    </li>
+  	     	</ul>
+  	     </div>
+  	  </div>
+  </div>
+  <div class="operate-content" id="recharge">
+  	  <div class="container">
+  	     <div class="content-title recharge"><span class="img-bg"></span></div>
+  	      <div class="content-list recharge">
+  	     	<ul>
+  	     		 <li>
+  	     			<span class="list-title recharge">1、汇付天下支持哪些银行卡充值，充值限额是多少？</span>
+  	     			<p class="list-text">
+					   各银行的限额都不一样，具体限额请登录兴教贷平台账户，点击“我的账户”跳转至账户总览，点击“充值”选项，选择您要充值的对应银行之后，页面下方会弹出该银行相关充值方式和对应限额说明。目前汇付天下只提供了12家银行卡充值。
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title recharge">2、充值需要注意的问题</span>
+  	     			<p class="list-text">
+                         <i>（1）</i><span>充值的银行卡需开通网银支付功能；</span>
+						<i>（2）</i><span>选择充值银行后，请注意页面下方显示的对应银行充值方式的限额；</span>
+						<i>（3）</i><span>充值跳转到银行页面后，需安装该银行网银安全证书，安装过程中可能需要刷新或重启浏览器（注：经常在本机使用的对应银行网银无须再次安装安全证书）</span>；
+						<i>（4）</i><span>建议使用IE8以上的浏览器充值；</span>
+						<i>（5）</i><span>苹果系统暂不支持网银证书，暂时无法充值。 <br/>
+						若没有违反以上的操作，充值仍然不成功，请拨打客服热线400-016-2526。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title recharge">3、如何开通网上银行？</span>
+  	     			<p class="list-text">
+                        目前所有商业银行都支持个人网银业务，您只需要携带有效身份证件，到当地您所持银行卡的发卡行任意营业网点，即可申请开通网上银行业务。您还可以到商业银行官网查看个人网上银行详细信息。
+
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">4、充值需要手续费吗？</span>
+  	     			<p class="list-text">充值无任何手续费。 </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">5、充值的银行卡是否必须是本人的？</span>
+  	     			<p class="list-text">不是，使用开通了网银的储蓄卡即可充值，不限于本人的储蓄卡。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">6、充值成功何时到账？</span>
+  	     			<p class="list-text">充值都是立刻到账的，充值完成后刷新页面，点击“我的账户”即可查看。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">7、平台投资理财需要什么门槛？</span>
+  	     			<p class="list-text">基本没什么门槛，100元起步，资金在100元以上就可以参与投资。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">8、产品计算利息的时间</span>
+  	     			<p class="list-text">投资项目在当天晚上十点之前满标（产品投标进度100%）则会在次日开始计息，如在晚上十点之后满标，计算利息时间则需要延迟一日。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">9、投资后资金为什么会显示冻结？</span>
+  	     			<p class="list-text">投资的项目在没有满标之前，都是冻结在自己的独立托管账户中，满标审核通过之后，汇付天下统一将资金划转给到借款人。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">10、投资成功在哪里可以看到回款时间等信息？</span>
+  	     			<p class="list-text">登录兴教贷平台账户，点击“我的账户”的“我的投资”选项，可以看到“回款中”、“投标中”、“已结束”、“投标失败”等投资项目的具体情况。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">11、投资产品到期后，还本付息的方式</span>
+  	     			<p class="list-text">
+						不同的项目还款方式也会有所不同，主要有按月付息，到期还本；到期一次性还本付息和等额本息三种还本付息方式。三种付息方式利息计算如下：<br/>
+						<i>（1）</i><span>按月付息，到期还本<br/>
+						实际收益=投资额*年化收益率*实际项目发生天数/365</span>
+						<i>（2）</i><span>到期一次性还本付息<br/>
+						实际收益=投资额*年化收益率*实际项目发生天数/365</span>
+						<i>（3）</i><span>等额本息<br/>
+						在还款期内，每月偿还同等数额的借款(包括本金和利息)。借款人每月还款额中的>本金比重逐月递增、利息比重逐月递减。具体计算公式如下：<br/>
+						P=A*b%*(1+b%)^n/((1+b%)^n-1)<br/>
+						P:每月还款额<br/>
+						A:借款本金<br/>
+						b:月利率<br/>
+						n:还款总期数<br/>
+						因计算中存在四舍五入，最后一期还款金额与之前略有不同。</span>
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">12、平台投资需要缴纳什么费用？</span>
+  	     			<p class="list-text">平台充值费用和服务费用都是免费，只需在提现时缴纳每笔2元的提现费用，该提现费用由汇付天下收取。
+  	     			</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title recharge">13、产品项目回款的时间</span>
+  	     			<p class="list-text">项目资金在产品到期的当天24点前回款，回款有短信通知。 </p>
+  	     	    </li>
+  	     	</ul>
+  	     </div>
+  	  </div>
+  </div> 
+    <div class="operate-content" id="withdraw">
+  	  <div class="container">
+  	     <div class="content-title withdraw"><span class="img-bg"></span></div>
+  	     <div class="content-list withdraw">
+  	     	<ul>
+  	     		 <li>
+  	     			<span class="list-title withdraw">1、如何绑定银行卡？</span>
+  	     			<p class="list-text">
+					   <i>（1）</i><span>登入兴教贷账户，在我的账户页面点击“提现”，跳转至提现页面。</span>
+						<i>（2）</i><span>点击“立刻绑定银行卡”，跳转至汇付天下登录页面，输入汇付天下的登录密码、校验码，点击“登录”，跳转至汇付天下绑定银行卡页面。</span>
+						<i>（3）</i><span>输入你需要绑定的银行卡号、银行卡所属地和汇付天下的交易密码，点击“确定”，绑定成功。</span>
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw">2、为什么要绑定银行卡？</span>
+  	     			<p class="list-text"> 
+						绑定提现银行卡可以保证资金安全，在提现时，资金会从托管账户转入到本人指定的绑定银行卡中，绑卡有一个验卡的环节，只有本人身份信息开户的银行卡才能绑定成功，避免了资金被他人提走的风险。
+
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw">3、绑定银行卡需要注意的问题</span>
+  	     			<p class="list-text"> 
+					<i>（1）</i><span>必须绑定本人开户的储蓄卡，信用卡不可绑定；</span>
+					<i>（2）</i><span>一个账号可以绑定多张自己本人名下的银行卡；</span>
+					<i>（3）</i><span>如出现绑卡错误和长期显示验证中，请拨打客服热线400-016-2526。</span>
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw">  4、如何提现？</span>
+  	     			<p class="list-text"> 
+					<i>（1）</i><span>登入兴教贷账户，在我的账户页面点击“提现”，跳转至提现页面。</span>
+					<i>（2）</i><span>输入你要提现的金额，点击“确定”，跳转至汇付天下取现页面，输入你的账户交易密码，点击“确定”。</span>
+					<i>（3）</i><span>取现金额将于取现当天的第二个工作日到账。</span>
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw"> 5、已绑定的银行卡是否可以删除？</span>
+  	     			<p class="list-text"> 
+ 						汇付天下暂没开通删卡功能，如果需要更换银行卡，直接绑定新的银行卡并设置为默认提现卡即可。
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw">  6、提现金额有要求吗？</span>
+  	     			<p class="list-text">提现金额没有限制，可以全额提现。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw"> 7、提现需要费用吗？</span>
+  	     			<p class="list-text">提现由汇付天下收取每笔2元的提现手续费。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw"> 8、提现到账时间</span>
+  	     			<p class="list-text"> 
+						提现到账时间是在申请提现成功之后的第二个工作日（如遇双休日或法定节假日顺延，到帐的具体时间点以银行的处理为准。如果用户迟迟未收到提现资金，可能为银行卡信息填写有误，银行做正在退票操作，预计会在7个工作日内完成退票，请用户耐心等候。用户还可以联系客服400-016-2526），寻求帮助。
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw"> 9、提现需要注意的问题</span>
+  	     			<p class="list-text"> 						<i>（1）</i><span>提现金额不得大于账户的可用余额；</span>
+						<i>（2）</i><span>提现申请成功之后，需耐心等待银行到账信息，最好以银行账户流水为准。</span> 
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title withdraw">10、提现到账有短信提醒吗？</span>
+  	     			<p class="list-text">  
+						从平台提现申请成功，平台会以邮件和短信的方式通知客户，到账短信由银行决定，以自己是否开通银行短信通知服务为准。
+                    </p>
+  	     	    </li>
+  	        </ul>
+  	     </div>
+  	  </div>
+  </div>  
+  <div class="operate-content" id="account">
+  	  <div class="container">
+  	     <div class="content-title account"><span class="img-bg"></span></div>
+  	     <div class="content-list account">
+  	     	<ul>
+  	     		 <li>
+  	     			<span class="list-title account"> 1、哪里查询账户余额及收益情况？</span>
+  	     			<p class="list-text">
+					   登录兴教贷账户，在“我的账户”的“账户总览”中，可查看“累计投资”、“待收收益”、“待收本金”、“资产总计”等资金情况。
+                    </p>
+  	     	    </li>
+                <li>
+  	     			<span class="list-title account"> 2、哪里查询已投资情况？</span>
+  	     			<p class="list-text"> 
+						登录兴教贷账户，在“我的账户”的“我的投资”中，可查看“回款中”项目、“投标中”项目、“已结束”项目、“投标失败”项目等具体投资情况。
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title account"> 3、哪里可以查看资金流动情况？</span>
+  	     			<p class="list-text">
+					   登录兴教贷账户，在“我的账户”的“交易记录”中，可查询今天、最近一周、1个月、3个月、半年的交易记录。
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title account"> 4、哪里可以领取注册和邀请赠送的奖励？</span>
+  	     			<p class="list-text">
+					   登录兴教贷账户，在“我的账户”的“邀请奖励”中，可查看是否可领取奖励，如果已经可以领取奖励，点击“领取奖励”，奖励资金将汇入你的账户，并从“交易记录”页面中可查询奖励资金是否到账。
+                    </p>
+  	     	    </li>  
+  	        </ul>
+  	     </div>
+  	  </div>
+  </div>  
+  <div class="operate-content" id="security">
+  	  <div class="container">
+  	     <div class="content-title security"><span class="img-bg"></span></div>
+  	     <div class="content-list security">
+  	     	<ul>
+  	     		 <li>
+  	     			<span class="list-title security">1、兴教贷是什么类型网站？</span>
+  	     			<p class="list-text">
+					   兴教贷是北京百年兴教网络科技有限公司旗下互联网投融资理财服务平台，是合法设立的互联网金融中介平台。创始团队主要来自金融（知名投行、大型银行）和互联网（百度）的跨界精英，有丰富的教育、金融与互联网经验和资源。 
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title security">2、兴教贷是合法的运营网站吗？</span>
+  	     			<p class="list-text" id="zhengjian" style="padding: 10px 0px 0px 32px; margin-bottom: 0px;">
+    					   兴教贷是合法运营的纯信息中介平台，您可点击以下链接查看公司相关证件：<br/>
+    						 
+                <i>（1）</i><span><a href="{%$feroot%}/company/us/img/quality1.jpg" title="营业执照">营业执照</a></span>
+    						<i>（2）</i><span><a href="{%$feroot%}/company/us/img/quality2.jpg" title="税务登记证">税务登记证</a></span>
+    						<i>（3）</i><span><a href="{%$feroot%}/company/us/img/quality3.jpg" title="组织机构代码证">组织机构代码证</a></span> 
+                <p class="list-text" style="padding: 0px 0px 10px 32px;">
+      						<i>（4）</i><span>汇付天下官网P2P企业托管查询（链接：<a target="_blank" href="http://www.chinapnr.com/p2p-search/index.html">http://www.chinapnr.com/p2p-search/index.html</a>，查询网站名称“兴教贷”）</span>
+      						<i>（5）</i><span>ICP备案查询（链接：<a target="_blank" href="http://www.miibeian.gov.cn/publish/query/indexFirst.action">http://www.miibeian.gov.cn/publish/query/indexFirst.action</a> 查询网站名称“兴教贷”）</span>
+      						<i>（6）</i><span>工商企业信用信息查询：北京企业信用信息网（链接：<a target="_blank" href="http://qyxy.baic.gov.cn/">http://qyxy.baic.gov.cn/</a> 查询公司名“百年兴教”）</span> 
+               </p> 
+  	     	    </li>
+
+             <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+                <div class="slides"></div>
+                <h3 class="title"></h3>
+                <a class="prev">‹</a>
+                <a class="next">›</a>
+                <a class="close">×</a>
+                <a class="play-pause"></a>
+                <ol class="indicator"></ol>
+            </div>
+  	     	     <li>
+  	     			<span class="list-title security">3、兴教贷的资金托管方</span>
+  	     			<p class="list-text">
+					   兴教贷的资金托管方为汇付天下。汇付天下成立于2006年7月，投资额近10亿元人民币，是首批获得央行发放牌照的第三方支付机构，受银监会监管。汇付天下建立了国内首个第三方P2P账户系统托管体系，国内近500家P2P网贷公司接入汇付天下P2P账户系统托管，其托管模式得到央行的肯定。
+
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title security">4、与汇付天下合作的资金托管的优势</span>
+  	     			<p class="list-text">
+					   托管账户是针对每一个借款人和投资人都需要在汇付天下开立一个独立的资金托管账户，需要在汇付天下设置独立密码，客户在投资、提现过程中都必须输入自己设定的交易密码才可以操作成功，当客户发出立即投标的指令，就会由汇付天下将资金冻结，待投标完成时，平台发送满标信息给汇付天下，汇付天下将冻结资金从投资者账户统一划拨到借款人的托管账户，平台完全接触不到资金，做到真正的投融资信息中介平台。
+
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title security">5、安全保障是怎么做的？</span>
+  	     			<p class="list-text">
+					   <i>（1）</i><span>资金托管，保障资金流动安全：引入汇付天下托管体系，做到专款专用。针对每个投资人、融资人都有独立的账户，所有资金划转均通过汇付天下进行，资金流转可全程监控，随时查询，资金安全，信息透明，账户安全有保障。</span>
+						<i>（2）</i><span>实地尽调项目，专注教育产业链的风控体系，保障项目安全：基于对教育机构的了解定制的学校评价模型作为风控模式的核心要素，根据学校的舆论口碑、人员情况、运营情况、招生情况综合判断学校素质；根据学校经营规模、负责情况、资金使用情况等综合判断授信金额。</span>
+						<i>（3）</i><span>资源整合，以社会资源共同监督学校经营情况，控制项目风险：围绕教育机构，利用社群金融绑定教育机构，全面渗透教育机构的组织内部的各类人群；组建教育圈融资协作机制，建立信用档案机制降低违约风险；与各地民办教育协会等行业组织合作，充分利用行业监管机构职能降低风险；积极和互联网征信机构合作、充分利用大数据信息实施风控。</span>
+						<i>（4）</i><span>收费权质押、大股东个人连带责任担保、本息保障计划等多种手段，保障项目安全：
+						收费权质押，是指以借款学校的来年学生的收费权作为本次借款的质押，用以保障本次借款的还款资金来源。
+						大股东个人连带责任担保，是指对于机构借款项目，大股东必须签订个人连带责任担保，以增强机构借款的安全性。
+						本息保障计划，是指借款人出现逾期时，兴教贷将通过风险备用金垫付本期本息，从而为理财人营造一个安全的投资环境，保证投资人的本息安全，平台将按借款人的评级情况提取0.5%-2.5%不等的风险准备金作为本息保障计划的备用金。</span>
+						<i>（5）</i><span>运营多种金融工具，降低项目风险，保障资金安全：平台将通过保理、融租、担保、应收账款抵押等多种金融工具和手段，确保风险控制程序完善。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title security">6、法律与政策保障</span>
+  	     			<p class="list-text">
+					   <i>（1）</i><span>兴教贷平台提供居间撮合服务的合法性
+						《合同法》第23章专门对“居间合同”作出规定，其第424条明确定义为：“居间合同是居间人向委托人报告订立合同的机会或者提供订立合同的媒介服务，委托人支付报酬的合同”。兴教贷平台是合法设立的居间服务机构，致力于为民间借贷业务提供优质高效的撮合服务，以促成借贷双方形成借贷关系，然后收取相关报酬。此种居间服务有着明确的法律依据。</span>
+						<i>（2）</i><span>理财人及借款人之间的借贷关系的合法性
+						《合同法》第196条规定：“借款合同是借款人向贷款人借款，到期返还借款并支付利息的合同”；根据《合同法》第十二章“借款合同”和最高人民法院《关于人民法院审理借贷案件的若干意见》，我国法律允许自然人等普通民事主体之间发生借贷关系，并允许出借方到期可以收回本金和符合法律规定的利息。理财人作为出借人，与借款人之间形成的借贷关系受到法律保护。</span>
+						<i>（3）</i><span>理财人通过兴教贷平台获得的出借理财收益的合法性
+						根据最高人民法院《关于人民法院审理借贷案件的若干意见》第6条：“民间借贷的利率可以适当高于银行的利率，各地人民法院可以根据本地区的实际情况具体掌握，但最高不得超过银行同类贷款利率的四倍（包含利率本数）。超出此限度的，超出部分的利息不予保护。”兴教贷平台上理财人向借款人出借资金并按照约定利率收取利息，该利率未超过银行同类贷款利率的四倍，为合法利息收益，受到法律保护。</span>
+						<i>（4）</i><span>电子合同的合法性
+						根据《合同法》第11条的规定，当事人可以采用合同书、信件和数据电文（包括电报、电传、传真、电子数据交换和电子邮件）等形式订立合同。电子合同是法律认可的书面合同形式之一。兴教贷采取用户网上点击确认的方式签署电子合同。点击确认后的电子合同符合《中华人民共和国合同法》规定的合同成立、生效的要件，其有效性也被人民法院的司法实践所接受。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title security">7、借款人逾期了怎么办？</span>
+  	     			<p class="list-text">
+					   <i>（1）</i><span>如果用户逾期未归还借款，贷后管理部门将第一时间通过短信、电话等方式提醒用户进行还款。如果用户在1-3天内还未归还当期借款，兴教贷将会联系该用户的紧急联系人、直系亲属、单位等督促用户尽快还款；</span>
+						<i>（2）</i><span>对于机构借款：如果用户在3-5天内还未归还当期借款，兴教贷将处置借款机构质押的收费权，或者由第三方合作机构例如担保公司、融资租赁公司、保理公司、第三方担保人等承担连带还款责任。一旦合作机构无法代偿，兴教贷将会启动保证金与风险准备金进行代偿保证投资者本息；</span>
+						<i>（3）</i><span>对于个人借款：当理财人投资的某笔受保障借款出现严重逾期时（即逾期超过30天），兴教贷将以风险准备金向理财人偿付此笔借款的剩余出借本金或剩余出借本金和逾期当期利息（具体情况视投资标的类型的具体偿付规则为准）。</span>
+						<i>（4）</i><span>若保证金也不能覆盖风险，借款合同仍然有效，兴教贷会协助投资人通过法律程序解决违约问题。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title security">8、如何保障投资者个人信息安全？</span>
+  	     			<p class="list-text">
+					   公司主要技术团队来自百度，拥有深厚的技术实力保证系统研发及信息安全。系统采用全站HTTPS／SSL协议保障用户网络信息安全。系统重要隐私数据采用先进的安全加密技术，防止用户信息泄露。此外专业的数据多重备份机制，确保用户信息的高稳定性。兴教贷后台管理设置了严格的权限审查机制，严防公司内部人员道德风险。资金安全方面，兴教贷与国内最大资金托管第三方支付机构汇付天下合作，提供银行系统安全级别的资金安全保障。
+                    </p>
+  	     	    </li>
+  	        </ul>
+  	     </div>
+  	  </div>
+  </div> 
+  <div class="operate-content" id="invest">
+  	  <div class="container">
+  	     <div class="content-title invest"><span class="img-bg"></span></div>
+  	     <div class="content-list invest">
+  	     	<ul>
+  	     		 <li>
+  	     			<span class="list-title invest"> 1、投资门槛</span>
+  	     			<p class="list-text"> 
+					只要年满18周岁，具有完全民事权利能力和民事行为能力，可以在兴教贷网站上进行注册、开通汇付天下账户，就能成为兴教贷平台的投资人。投资门槛低，最低100元起投。
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title invest">2、实地认证标</span>
+  	     			<p class="list-text"> 
+  	     				实地认证标是兴教贷目前主推的一款产品。该产品主要特点是，兴教贷对借款项目进行实地尽职调查，审核借款人的经营情况、财务情况、以往借贷偿还情况等，以控制借贷风险级，并在后续的贷中、贷后服务环节，进一步由前端员工进行实地跟踪，加强风险管理控制，达到双重保障的效果。<br/>
+                        实地认证标相对信用认证标增添了实地认证审核，进一步保障了投资用户资金安全；同时采用本息保障的赔付方式，使得您的投资更加省心、放心。
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title invest">  3、信用认证标</span>
+  	     			<p class="list-text"> 
+信用认证标是兴教贷通过对借款用户的个人信用资质进行全面审核后，允许用户发布的借款标。
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title invest">  4、机构担保标</span>
+  	     			<p class="list-text"> 
+机构担保标是指兴教贷的合作伙伴为相应的借款承担连带保证责任的借款标的。所谓连带保证责任即连带保证人对债务人负连带责任，无论主债务人的财产是否能够清偿债务，债权人均有权要求保证人履行保证义务。<br/>
+针对机构担保标借款申请人，兴教贷会通过严格的审核系统进行双重审核，严控风险。此外，一旦合作伙伴违背其应承担的连带保证责任，根据合作协议人人贷有权通过法律手段进行追偿。
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title invest"> 5、利息计算</span>
+  	     			<p class="list-text"> 
+  	     				<i>（1）</i><span>按月付息，到期还本<br/>
+						实际收益=投资额*年化收益率*实际项目发生天数/365</span>
+
+						<i>（2）</i><span>到期一次性还本付息<br/>
+						实际收益=投资额*年化收益率*实际项目发生天数/365</span>
+
+						<i>（3）</i><span>等额本息<br/>
+						在还款期内，每月偿还同等数额的借款(包括本金和利息)。借款人每月还款额中的>本金比重逐月递增、利息比重逐月递减。具体计算公式如下：<br/>
+						P=A*b%*(1+b%)^n/((1+b%)^n-1)
+						P:每月还款额<br/>
+						A:借款本金<br/>
+						b:月利率<br/>
+						n:还款总期数<br/>
+						因计算中存在四舍五入，最后一期还款金额与之前略有不同。</span>
+                    </p>
+  	     	    </li>
+  	     	     <li>
+  	     			<span class="list-title invest">   6、投资费用</span>
+  	     			<p class="list-text">目前投资无费用</p>
+  	     	    </li>
+  	        </ul>
+  	     </div>
+  	  </div>
+  </div>  
+  <div class="operate-content" id="loan">
+  	  <div class="container">
+  	     <div class="content-title loan"><span class="img-bg"></span></div>
+  	     <div class="content-list loan">
+  	     	<ul>
+  	     		 <li>
+  	     			<span class="list-title loan">1、借款产品介绍</span>
+  	     			<p class="list-text">
+					    <i>（1）</i><span>学校助业贷<br/>
+						贷款用途：学校流动资金、学校设备更新、学校改扩建等<br/>
+						额度范围：10-500万元<br/>
+						申请对象：学前教育、基础教育、职业教育、高等教育、教育培训等各类教育机构<br/> 
+						如何申请：登录兴教贷，点击“我要借款”跳转至贷款种类页面，点击学校助业贷“我要申请”，填写相关信息，点击“提交”。兴教贷商务人员将尽快与你联系。</span>
+
+						<i>（2）</i><span>教师圆梦贷<br/>
+						贷款用途：房子装修、家电消费、教育培训、婚姻大事、旅游休闲等<br/>
+						额度范围：1-30万元<br/>
+						申请对象：当前在职满6个月的学校员工<br/>
+						如何申请：目前尚未开通该项功能。</span>
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan">2、机构借款费用</span>
+  	     			<div class="list-text">
+					   <i>（1）</i><span>融资服务费<br/>
+						兴教贷对借款机构每笔借款收取一定的融资服务费，融资服务费按每笔借款金额的0.5%收取。</span>
+						<i>（2）</i><span>风险准备金<br/>
+						兴教贷收取的风险准备金将全部存于风险备用金账户用于兴教贷的本金保障计划。<br/>
+						风险准备金将按照借款人的信用等级来收取：
+                        <table style="width:500px" border="1" cellpadding="0"  cellspacing="0" style="table-layout:fixed;" >  
+                        		<tr>
+                        			<td  width="150">信用等级：</td>
+                              <td >C</td><td >B</td>
+                              <td >A</td><td >AA</td>
+                              <td >AAA</td>
+                        		</tr> 
+                        		<tr>
+                        		<td  width="150">风险准备金（年化）：</td><td>2.50%</td><td>2.00%</td><td>1.50%</td><td>1.00%</td><td>0.50%</td>
+                        		</tr> 
+                        </table> 
+						 </span>  
+					 	<i>（3）</i><span>账户管理费<br/>
+						兴教贷对借款机构每笔借款收取一定的账户管理费，账户管理费将按借款人的信用等级来收取：<br/> 
+						 <table style="width:500px" border="1" cellpadding="0"  cellspacing="0">  
+                    		<tr>
+                    			<td width="150">信用等级：</td><td>C</td><td>B</td><td>A</td><td>AA</td><td>AAA</td>
+                    		</tr> 
+                    		<tr>
+                    		<td width="150">账户管理费（每月）：</td><td>0.45%</td><td>0.40%</td><td>0.35%</td><td>0.30%</td><td>0.25%</td>
+                    		</tr> 
+                        </table> 
+                        </span>  
+                    </div>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan"> 3、如何还款？</span>
+  	     			<p class="list-text"> 
+					<i>（1）</i><span>当账户余额不足支付当期还款时，您可先通过网银为账户充值；</span>
+					<i>（2）</i><span>充值完成后，系统自动扣款，无需自行点击还款。</span>
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan">  4、会受到哪些形式的还款提醒？</span>
+  	     			<p class="list-text"> 
+                     兴教贷会在每月还款日的前三天以电子邮件、站内信的方式向您发送还款提醒，并在还款日的前一天电话提醒。 
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan">5、是否可以提前还款？</span>
+  	     			<p class="list-text"> 
+可以申请一次性偿还全部剩余本金及正常使用借款期间的利息。
+提前还款你需分别向投资人及平台各支付借款初始本金0.5%的费用作为提前还款手续费。 
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan"> 6、是否可以申请延期还款？</span>
+  	     			<p class="list-text"> 
+                      您不可以申请延期还款。您需每月按时还款，以免影响您的信用记录。 
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan">7、审核成功后如何进行筹款？筹款时间多久？</span>
+  	     			<p class="list-text">
+					   审核成功后，您可得到相应的信用等级和信用额度，同时客户经理将致电您沟通借款金额、期限和利率，确认后帮助您进入筹款。<br/>
+                      您的借款金额将于1-7天内为您筹集完成。 
+                    </p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan">8、筹款成功后如何进行提现？到账时间多久？</span>
+  	     			<p class="list-text">资金将在申请提现后1-2个工作日内到达您指定的银行账户。</p>
+  	     	    </li>
+  	     	    <li>
+  	     			<span class="list-title loan">9、如果逾期还款，会有什么惩罚？</span>
+  	     			<div class="list-text">
+					   如果逾期还款，您要承担罚息与逾期后的管理费用，并会被扣去相应的信用分数。兴教贷强烈建议您避免逾期还款，一旦发生逾期请尽快还清借款。<br/>
+						若您未按规定按时足额偿付当期借款本金及利息的即为逾期。自逾期之日起，逾期期间的借款利率不再按原合同借款利率计算，而改为按下述条款向投资人支付罚息：<br/>
+						罚息总额=该笔逾期款项总额×对应罚息利率×逾期天数<br/> 
+						<table width="500" border="1" cellpadding="0"  cellspacing="0">  
+								<tr>
+									<td>逾期天数</td><td>1-30天</td><td>31天及以上</td>
+								</tr> 
+								<tr>
+									<td>罚息利率</td><td>0.05%</td><td>0.1%</td>
+								</tr> 
+						</table>
+						还应该按照下述条款就其逾期的每笔款项向平台支付逾期管理费：<br/>
+						逾期管理费用=该笔逾期款项总额×对应逾期管理费率×逾期天数<br/>
+						<table width="500" border="1" cellpadding="0"  cellspacing="0">  
+								<tr>
+									<td>逾期天数</td><td>1-30天</td><td>31天及以上</td>
+								</tr> 
+								<tr>
+									<td>逾期管理费费率</td><td>0.1%</td><td>0.5%</td>
+								</tr> 
+						</table>
+
+                    </div>
+  	     	    </li>
+  	        </ul>
+  	     </div>
+  	  </div>
+  </div>  
 {%/block%}

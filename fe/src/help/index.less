@@ -1,15 +1,497 @@
 @import '../common/css/common';
-
 //帮助中心
 .nav {
-	border:none;
+    border: none;
 }
-.operate-nav {
-    background-color: #5bacc6; 
 
+.operate-nav {
+    background: url(img/operate_nav_bg.png);
     .container {
-        background:url(img/help_bg1.png) 0 0 no-repeat; 
+        background: url(img/help_bg1.png) 0 0 no-repeat;
         height: 300px;
     }
 }
- 
+
+.operate-menu {
+    .phone {
+        height: 36px;
+        line-height: 36px;
+        font-size: 12px;
+        color: #585858;
+        text-align: right;
+        padding-right: 10px;
+        display: block;
+        background-color: #f7f7f7;
+    }
+    .menu-box {
+        height: 188px;
+        margin: 0px 0px 34px 0px;
+        .menu-list {
+            font-size: 18px;
+            line-height: 94px;
+            float: left;
+            a {
+                float: left;
+                width: 250px;
+                text-decoration: none;
+                display: block;
+                text-align: center;
+                color: #585858;
+                &:visited {
+                    text-decoration: none;
+                    color: #585858;
+                }
+                &:hover {
+                    text-decoration: none;
+                    color: #585858;
+                    /* box-shadow: inset 0px 0px 8px #68b9d3;*/
+                    
+                    opacity: 0.7;
+                    transition: all .2s ease-in-out;
+                    -webkit-transition: all .2s ease-in-out;
+                    -moz-transition: all .2s ease-in-out;
+                    -o-transition: all .2s ease-in-out;
+                }
+                &.login {
+                    background-color: #bae5f8;
+                    &:hover {
+                        background-color: #bae5f8;
+                    }
+                }
+                &.recharge {
+                    background-color: #e5e6ea;
+                    &:hover {
+                        background-color: #e5e6ea;
+                    }
+                }
+                &.invest {
+                    background-color: #fcdb8c;
+                    &:hover {
+                        background-color: #fcdb8c;
+                    }
+                }
+                &.account {
+                    background-color: #d5ece6;
+                    &:hover {
+                        background-color: #d5ece6;
+                    }
+                }
+                &.security {
+                    background-color: #fbd0ba;
+                    &:hover {
+                        background-color: #fbd0ba;
+                    }
+                }
+                &.withdraw {
+                    background-color: #d6cee1;
+                    &:hover {
+                        background-color: #d6cee1;
+                    }
+                }
+                &.loan {
+                    background-color: #d6e79f;
+                    &:hover {
+                        background-color: #d6e79f;
+                    }
+                }
+                &.operate {
+                    background-color: #cfcfcf;
+                    &:hover {
+                        background-color: #cfcfcf;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.operate-content {
+    .container {
+        background-color: #f7f7f7;
+    }
+    .content-title {
+        height: 36px;
+        margin-bottom: 8px;
+        .img-bg {
+            display: block;
+            height: 36px;
+            width: 150px;
+        }
+        &.login {
+            background-color: #bae5f8;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 0 no-repeat;
+            }
+        }
+        &.recharge {
+            background-color: #e5e6ea;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -100px no-repeat;
+            }
+        }
+        &.invest {
+            background-color: #fcdb8c;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -500px no-repeat;
+            }
+        }
+        &.account {
+            background-color: #d5ece6;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -300px no-repeat;
+            }
+        }
+        &.security {
+            background-color: #fbd0ba;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -400px no-repeat;
+            }
+        }
+        &.withdraw {
+            background-color: #d6cee1;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -200px no-repeat;
+            }
+        }
+        &.loan {
+            background-color: #d6e79f;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -600px no-repeat;
+            }
+        }
+        &.operate {
+            background-color: #cfcfcf;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -700px no-repeat;
+            }
+        }
+    }
+    .content-list {
+        width: 832px;
+        margin: 0 auto;
+        margin-bottom: 12px;
+        li {
+            margin-top: 4px;
+        }
+        .list-title {
+            display: block;
+            height: 38px;
+            line-height: 38px;
+            background-color: #fff;
+            font-size: 14px;
+            padding: 0px 0px 0px 14px;
+            margin-bottom: 3px;
+            box-shadow: 3px 2px 5px #dddddd;
+            cursor: pointer;
+            transition: all 0.4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            &:hover {
+                transition: all 0.4s ease-in-out;
+                -webkit-transition: all .4s ease-in-out;
+                -moz-transition: all .4s ease-in-out;
+                -o-transition: all .4s ease-in-out;
+            }
+            &.login:hover {
+                background-color: #e3f5fc;
+                box-shadow: inset 0px 0px 8px #68b9d3;
+            }
+            &.recharge:hover {
+                background-color: #f5f5f7;
+                box-shadow: inset 0px 0px 8px #e5e6ea;
+            }
+            &.invest:hover {
+                background-color: #fef1d1;
+                box-shadow: inset 0px 0px 8px #fcdb8c;
+            }
+            &.account:hover {
+                background-color: #eef7f5;
+                box-shadow: inset 0px 0px 8px #d5ece6;
+            }
+            &.security:hover {
+                background-color: #fdece3;
+                box-shadow: inset 0px 0px 8px #fbd0ba;
+            }
+            &.withdraw:hover {
+                background-color: #efebf3;
+                box-shadow: inset 0px 0px 8px #d6cee1;
+            }
+            &.loan:hover {
+                background-color: #eff5d9;
+                box-shadow: inset 0px 0px 8px #d6e79f;
+            }
+            &.operate:hover {
+                background-color: #cfcfcf;
+                box-shadow: inset 0px 0px 8px #cfcfcf;
+            }
+        }
+        .list-text {
+            display: none;
+            line-height: 28px;
+            background-color: #fff;
+            font-size: 14px;
+            padding: 10px 0px 10px 32px;
+            margin-bottom: 3px;
+            i {
+                display: inline-block;
+                width: 40px;
+                font-style: normal;
+                vertical-align: top;
+            }
+            span {
+                display: inline-block;
+                width: 724px;
+                vertical-align: top;
+            }
+            table {
+                border: solid #cfcfd0;
+                border-width: 0px 0px 0px 0px;
+                td {
+                    text-align: center;
+                    border: solid #cfcfd0;
+                    border-width: 0px 0px 0px 0px;
+                }
+            }
+            a {
+                color: #4fc501;
+                text-decoration: none;
+                &:hover {
+                    color: #4fc501;
+                    text-decoration: none;
+                }
+            }
+        }
+        .show {
+            display: block;
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+        }
+        .hide,
+        .hidden {
+            display: none;
+            -webkit-transition: all .4s ease-in-out;
+            -moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+        }
+    }
+}
+
+//操作演示 部分特殊样式
+.operate-demo-menu {
+    .menu-title {
+        background: url(img/help_menu_icon.png) 420px -965px no-repeat;
+        .people {
+            display: block;
+            position: absolute;
+            right: 0px;
+            top: 28px;
+            width: 80px;
+            height: 70px;
+            background: url(img/people1.png) 0 0 no-repeat;
+        }
+        .backup {
+            display: block;
+            position: absolute;
+            right: 84px;
+            top: 16px;
+            width: 126px;
+            height: 46px;
+            background: url(img/help_menu_icon.png) 0 -1100px no-repeat;
+        }
+    }
+    .menu-box {
+        height: 98px;
+        margin: 0px 0px 12px 0px;
+        .menu-list {
+            font-size: 18px;
+            line-height: 94px;
+            float: left;
+            a {
+                width: 332px;
+                &.to-regist {
+                    background-color: #fad3b3;
+                    margin-right: 2px;
+                }
+                &.recharge-invest {
+                    background-color: #9ee4eb;
+                    margin-right: 2px;
+                }
+                &.withdraw {
+                    background-color: #aee282;
+                }
+            }
+        }
+    }
+}
+
+.operate-demo-content {
+    .content-title {
+        cursor: pointer;
+        &.to-regist {
+            background-color: #fad3b3;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -700px no-repeat;
+            }
+        }
+        &.recharge-invest {
+            background-color: #9ee4eb;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -800px no-repeat;
+            }
+        }
+        &.withdraw {
+            background-color: #aee282;
+            .img-bg {
+                background: url(img/help_menu_icon.png) 0 -900px no-repeat;
+            }
+        }
+    }
+    .content-list {
+        width: 906px;
+        .list-step {
+            font-family: "Arial";
+            font-size: 14px;
+            &.to-regist {
+                color: #fad3b3;
+            }
+            &.recharge-invest {
+                color: #9ee4eb;
+            }
+            &.withdraw {
+                color: #aee282;
+                margin-bottom: 55px;
+            }
+            label {
+                font-family: "Microsoft YaHei";
+                color: #000;
+            }
+        }
+        .step-title {
+            color: #fff;
+            font-size: 18px;
+            line-height: 28px;
+            padding: 0px 5px;
+            margin: 33px 0px 25px 0px;
+            display: block;
+            width: 80px;
+            &.to-regist {
+                background-color: #fad3b3;
+            }
+            &.recharge-invest {
+                background-color: #9ee4eb;
+            }
+            &.withdraw {
+                background-color: #aee282;
+            }
+        }
+        .step-img {
+            display: block;
+            width: 800px;
+            min-height: 100px;
+            margin: 10px 0px 10px 20px;
+            border-left: 1px dashed #959595;
+            &.regist {
+                background: url(img/step_regist.png) 0 0 no-repeat;
+                &.step1 {
+                    background-position: 30px 0;
+                    height: 127px;
+                }
+                &.step2 {
+                    background-position: 30px -200px;
+                    height: 311px;
+                }
+                &.step3 {
+                    background-position: 30px -600px;
+                    height: 259px;
+                }
+            }
+            &.recharge {
+                background: url(img/step_recharge.png) 30px 0 no-repeat;
+                &.step1 {
+                    background-position: 30px 0;
+                    height: 270px;
+                }
+                &.step2 {
+                    background-position: 30px -300px;
+                    height: 271px;
+                }
+                &.step3 {
+                    background-position: 30px -600px;
+                    height: 114px;
+                }
+                &.step4 {
+                    background-position: 30px -750px;
+                    height: 320px;
+                }
+                &.step5 {
+                    background-position: 30px -1100px;
+                    height: 129px;
+                }
+            }
+            &.invest {
+                background: url(img/step_invest.png) 0 0 no-repeat;
+                &.step1 {
+                    background-position: 30px 0;
+                    height: 109px;
+                }
+                &.step2 {
+                    background-position: 30px -200px;
+                    height: 161px;
+                }
+                &.step3 {
+                    background-position: 30px -400px;
+                    height: 297px;
+                }
+                &.step4 {
+                    background-position: 30px -750px;
+                    height: 394px;
+                }
+            }
+            &.bindcard {
+                background: url(img/step_bindcard.png) 0 0 no-repeat;
+                &.step1 {
+                    background-position: 30px 0;
+                    height: 462px;
+                }
+                &.step2 {
+                    background-position: 30px -500px;
+                    height: 273px;
+                }
+                &.step3 {
+                    background-position: 30px -800px;
+                    height: 306px;
+                }
+                &.step4 {
+                    background-position: 30px -1150px;
+                    height: 443px;
+                }
+            }
+            &.withdraw {
+                background: url(img/step_withdraw.png) 0 0 no-repeat;
+                &.step1 {
+                    background-position: 30px 0;
+                    height: 476px;
+                }
+                &.step2 {
+                    background-position: 30px -600px;
+                    height: 396px;
+                }
+            }
+        }
+        &.withdraw {
+            margin-bottom: 55px;
+        }
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+    .operate-nav {
+        min-width: 1000px;
+        .container {
+            min-width: 1000px;
+            width: 100%;
+        }
+    }
+}

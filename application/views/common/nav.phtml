@@ -49,10 +49,7 @@
             <a href="{%$webroot%}/account/award" class="finish-nav-item-link jiangquan {%if $current == '8'%}current{%/if%}">我的奖券</a>
         </li>
         <li class="finish-nav-item-list">
-            <a href="{%$webroot%}/account/message" class="finish-nav-item-link mynews {%if $current == '6'%}current{%/if%}">我的消息</a>
-            {%if $userinfo.unreadMsg%}
-            <div class="mynews-symbol"></div>
-            {%/if%}
+            <a href="{%$webroot%}/account/message" class="finish-nav-item-link mynews {%if $current == '6'%}current{%/if%}">我的消息 {%if $user.unreadMsg%}<span class="mynews-count" style="color: #f2746a;font-size: 12px;width: 20px;height: 12px;">({%$user.unreadMsg%})</span> {%/if%}</a> 
         </li>
     </ul>
 </div>
