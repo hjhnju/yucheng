@@ -258,13 +258,33 @@ p{margin:0;padding:0}
 	height:300px;
 	width: 1045px;
 } 
-@media screen and (max-width:1000px){
-   .operate-nav .container{ 
-	width: 100%;
-   }
+.operate-nav .container .guide-btn{
+  font-size: 20px;
+  line-height: 32px;
+  color: #fff;
+  display: block;
+  height: 32px;
+  width: 130px;
+  border:1px solid #fff;
+  text-decoration: none;
+  text-align: center;
+  position: absolute;
+  bottom: 64px;
+  left: 158px;
+  z-index: 99;
 }
-
-
+.operate-nav .container .guide-btn-shine{
+	width: 130px;
+    height: 32px;
+    background: url('img/shine.png');
+    position: absolute;
+    background-position: -150px 0;
+    bottom: 64px;
+    left: 158px;
+    background-repeat: no-repeat; 
+}
+ 
+ 
 
 
 
@@ -302,7 +322,8 @@ p{margin:0;padding:0}
 .operate-menu .menu-box .menu-list a:hover {
   text-decoration: none;
   color: #585858;
-  box-shadow: inset 0px 0px 8px #68b9d3;
+ /* box-shadow: inset 0px 0px 8px #68b9d3;*/
+  opacity: 0.7;
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -374,6 +395,7 @@ p{margin:0;padding:0}
 .operate-content .container {
   background-color: #f7f7f7;
 }
+
 .operate-content .content-title {
   height: 36px;
   margin-bottom: 8px;
@@ -452,7 +474,7 @@ p{margin:0;padding:0}
   transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out; 
 }
 .operate-content .content-list .list-title:hover {
   transition: all 0.4s ease-in-out;
@@ -497,7 +519,7 @@ p{margin:0;padding:0}
   line-height: 28px;
   background-color: #fff;
   font-size: 14px;
-  padding: 0px 0px 0px 32px;
+  padding: 10px 0px 10px 32px;
   margin-bottom: 3px;
 }
 .operate-content .content-list .list-text i {
@@ -512,10 +534,20 @@ p{margin:0;padding:0}
   vertical-align: top;
 }
 .operate-content .content-list .list-text table{ 
-	border:solid #cfcfd0; border-width:1px 0px 0px 1px;
+	border:solid #cfcfd0; border-width:0px 0px 0px 0px;
+	background-color:#eff5d9;
 }
 .operate-content .content-list .list-text table td {
-  text-align: center;border:solid #cfcfd0; border-width:0px 1px 1px 0px;
+  text-align: center;border:solid #cfcfd0; border-width:0px 0px 0px 0px;
+}
+
+.operate-content .content-list .list-text a{
+                color: #4fc501;
+                text-decoration: none;
+}
+.operate-content .content-list .list-text a:hover{
+                color: #4fc501;
+                text-decoration: none;
 }
  
 .operate-content .content-list .show {
@@ -555,6 +587,15 @@ p{margin:0;padding:0}
 	height: 70px;
 	background:url(img/people1.png) 0 0 no-repeat;
 }
+.operate-demo-menu .menu-title .backup{
+	display: block;
+	position: absolute;
+	right: 84px;
+	top: 16px;
+	width: 126px;
+	height: 46px;
+	background:url(img/help_menu_icon.png) 0 -1100px no-repeat;
+}
 .operate-demo-menu .menu-box {
   height: 98px;
   margin: 0px 0px 12px 0px;
@@ -588,7 +629,9 @@ p{margin:0;padding:0}
 
 
 
-
+.operate-demo-content .content-title{
+   cursor: pointer;
+}
 .operate-demo-content .content-title.to-regist {
   background-color: #fad3b3;
 }
@@ -609,6 +652,10 @@ p{margin:0;padding:0}
 }
 .operate-demo-content .content-list {
   width: 906px;
+  display: none;
+}
+.operate-demo-content .content-list.current {
+  display: block;
 }
 .operate-demo-content .content-list.withdraw{
             margin-bottom: 55px;
@@ -635,6 +682,9 @@ p{margin:0;padding:0}
   font-size: 18px;
   line-height: 28px;
   padding: 0px 5px;
+  margin: 33px 0px 25px 0px;
+  display: block;
+  width: 80px;
 }
 .operate-demo-content .content-list .step-title.to-regist {
   background-color: #fad3b3;
@@ -739,3 +789,22 @@ p{margin:0;padding:0}
   background-position: 30px -600px;
   height: 396px;
 }
+
+
+@media screen and (min-width:320px) and (max-width:1024px){
+	.operate-nav{min-width: 1000px;}
+     .operate-nav .container{
+     	width: 100%;
+     	min-width: 1000px;
+     }
+      .footer{
+         min-width: 1000px;
+         width: 100%;
+    }
+	 .footer-item-list {
+        margin-right: 10px;
+    }
+    
+}
+
+

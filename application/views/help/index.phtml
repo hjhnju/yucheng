@@ -2,6 +2,7 @@
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/help/index.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/common/extra/Gallery/css/blueimp-gallery.css" />
 {%/block%}
 
 {%block name="script"%}
@@ -15,7 +16,8 @@
 {%block name="content"%}
   <div class="operate-nav"> 
       <div class="container">
-            
+            <a href="{%$webroot%}/guide" target="_blank" class="guide-btn">新手指引</a>
+            <div class="guide-btn-shine" ></div>
       </div>
   </div> 
   <div class="operate-menu"> 
@@ -332,16 +334,28 @@
   	     	    </li>
   	     	     <li>
   	     			<span class="list-title security">2、兴教贷是合法的运营网站吗？</span>
-  	     			<p class="list-text">
-					   兴教贷是合法运营的纯信息中介平台，您可点击以下链接查看公司相关证件：<br/>
-						<i>（1）</i><span>营业执照</span>
-						<i>（2）</i><span>税务登记证</span>
-						<i>（3）</i><span>组织机构代码证</span>
-						<i>（4）</i><span>汇付天下官网P2P企业托管查询（链接：http://www.chinapnr.com/p2p-search/index.html，查询网站名称“兴教贷”）</span>
-						<i>（5）</i><span>ICP备案查询（链接：http://www.miibeian.gov.cn/publish/query/indexFirst.action 查询网站名称“兴教贷”）</span>
-						<i>（6）</i><span>工商企业信用信息查询：北京企业信用信息网（链接：http://qyxy.baic.gov.cn/ 查询公司名“百年兴教”）</span>
-                    </p>
+  	     			<p class="list-text" id="zhengjian" style="padding: 10px 0px 0px 32px; margin-bottom: 0px;">
+    					   兴教贷是合法运营的纯信息中介平台，您可点击以下链接查看公司相关证件：<br/>
+    						 
+                <i>（1）</i><span><a href="{%$feroot%}/company/us/img/quality1.jpg" title="营业执照">营业执照</a></span>
+    						<i>（2）</i><span><a href="{%$feroot%}/company/us/img/quality2.jpg" title="税务登记证">税务登记证</a></span>
+    						<i>（3）</i><span><a href="{%$feroot%}/company/us/img/quality3.jpg" title="组织机构代码证">组织机构代码证</a></span> 
+                <p class="list-text" style="padding: 0px 0px 10px 32px;">
+      						<i>（4）</i><span>汇付天下官网P2P企业托管查询（链接：<a target="_blank" href="http://www.chinapnr.com/p2p-search/index.html">http://www.chinapnr.com/p2p-search/index.html</a>，查询网站名称“兴教贷”）</span>
+      						<i>（5）</i><span>ICP备案查询（链接：<a target="_blank" href="http://www.miibeian.gov.cn/publish/query/indexFirst.action">http://www.miibeian.gov.cn/publish/query/indexFirst.action</a> 查询网站名称“兴教贷”）</span>
+      						<i>（6）</i><span>工商企业信用信息查询：北京企业信用信息网（链接：<a target="_blank" href="http://qyxy.baic.gov.cn/">http://qyxy.baic.gov.cn/</a> 查询公司名“百年兴教”）</span> 
+               </p> 
   	     	    </li>
+
+             <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+                <div class="slides"></div>
+                <h3 class="title"></h3>
+                <a class="prev">‹</a>
+                <a class="next">›</a>
+                <a class="close">×</a>
+                <a class="play-pause"></a>
+                <ol class="indicator"></ol>
+            </div>
   	     	     <li>
   	     			<span class="list-title security">3、兴教贷的资金托管方</span>
   	     			<p class="list-text">
@@ -488,12 +502,15 @@
 						<i>（2）</i><span>风险准备金<br/>
 						兴教贷收取的风险准备金将全部存于风险备用金账户用于兴教贷的本金保障计划。<br/>
 						风险准备金将按照借款人的信用等级来收取：
-                        <table style="width:500px" border="1" cellpadding="0"  cellspacing="0">  
+                        <table style="width:500px" border="1" cellpadding="0"  cellspacing="0" style="table-layout:fixed;" >  
                         		<tr>
-                        			<td style="">信用等级：</td><td>C</td><td>B</td><td>A</td><td>AA</td><td>AAA</td>
+                        			<td  width="150">信用等级：</td>
+                              <td >C</td><td >B</td>
+                              <td >A</td><td >AA</td>
+                              <td >AAA</td>
                         		</tr> 
                         		<tr>
-                        		<td style="">风险准备金（年化）：</td><td>2.50%</td><td>2.00%</td><td>1.50%</td><td>1.00%</td><td>0.50%</td>
+                        		<td  width="150">风险准备金（年化）：</td><td>2.50%</td><td>2.00%</td><td>1.50%</td><td>1.00%</td><td>0.50%</td>
                         		</tr> 
                         </table> 
 						 </span>  
@@ -501,10 +518,10 @@
 						兴教贷对借款机构每笔借款收取一定的账户管理费，账户管理费将按借款人的信用等级来收取：<br/> 
 						 <table style="width:500px" border="1" cellpadding="0"  cellspacing="0">  
                     		<tr>
-                    			<td style="">信用等级：</td><td>C</td><td>B</td><td>A</td><td>AA</td><td>AAA</td>
+                    			<td width="150">信用等级：</td><td>C</td><td>B</td><td>A</td><td>AA</td><td>AAA</td>
                     		</tr> 
                     		<tr>
-                    		<td style="">账户管理费（每月）：</td><td>0.45%</td><td>0.40%</td><td>0.35%</td><td>0.30%</td><td>0.25%</td>
+                    		<td width="150">账户管理费（每月）：</td><td>0.45%</td><td>0.40%</td><td>0.35%</td><td>0.30%</td><td>0.25%</td>
                     		</tr> 
                         </table> 
                         </span>  

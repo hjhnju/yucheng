@@ -36,7 +36,10 @@
             <span class="new-activity fl"><a target="_blank" href="{%$webroot%}/activity/spring">最新活动</a></span>
             {%if isset($user)%}
             <div class="header-right-login fr">
-                <span class="default-fastlogin" style="margin-right: 10px;">您好，{%$user.username%}</span>
+                <span class="default-fastlogin" style="">您好，{%$user.username%} 
+                     {%if $user.unreadMsg%}<span style=" color: #f2746a;font-size: 10px; ">（{%$user.unreadMsg%}条未读）</span> {%/if%}
+                </span>
+               
                 <a class="default-login" href="/user/login/signout">退出</a>
             </div>
             {%else%}
@@ -62,7 +65,7 @@
                 <a href="{%$webroot%}/security" class="nav-item-link">安全保障</a>
             </li>
             <li class="nav-item-list">
-                <a href="{%$webroot%}/guide" class="nav-item-link">新手指引</a>
+                <a href="{%$webroot%}/help" class="nav-item-link">帮助中心</a>
             </li>
             <li class="nav-item-list last">
                 <a href="{%$webroot%}/about" class="nav-item-link">关于我们</a>

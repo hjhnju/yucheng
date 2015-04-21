@@ -5,20 +5,7 @@
 }
 
 //投资列表
-@media screen and (min-width:320px) and (max-width:1200px){
-    .newinvestlist .container {width:1000px;}
-    .newinvestlist-box {
-        .flex-direction-nav {
-            .flex-prev { 
-             left: 0px;
-           } 
-           .flex-next { 
-              right: 0px;
-            }
-        }
-    }
-     
-}
+
 .newinvestlist-box {
     height: 358px;
     overflow:visible;
@@ -615,6 +602,8 @@
         height: 100%;
         color: #adadad;
         text-decoration: none;
+        width: 120px;
+        text-align: right;
     }
     .notice-title {
         color: #4fc501;
@@ -760,3 +749,25 @@
 }
 
 //平台公告、还款公告结束
+
+
+//移动端兼容
+@media screen and (min-width:320px) and (max-width:1000px){
+    .newinvestlist .container {width:1000px;}
+    .newinvestlist-box {
+        .flex-direction-nav {
+            .flex-prev { 
+             left: 0px;
+           } 
+           .flex-next { 
+              right: 0px;
+            }
+        }
+    }
+
+    .notice .more, .newinvestlist .more{
+       text-align: left;
+    }
+    
+     
+}

@@ -322,3 +322,12 @@ p{margin:0;padding:0}
     .container2 .company-box1 {width:1000px;}
 
 }
+
+ @media screen and (min-width:320px) and (max-width:1000px){ 
+ 	.footer{
+ 		 width: 1000px;
+ 	}
+   .footer-item-list {
+        margin-right: 10px; 
+    }
+}

@@ -319,3 +319,39 @@ background:linear-gradient(top, #f7de8e 0%,#ffd756 32%,#ffce30 86%,#ffce30);
 .activity-dialog table td{text-align:center}
 .activity-dialog table td.height{line-height:20px}
 .activity .activity-box2 .activity-list{margin-top:150px;}
+
+
+@media screen and (min-width:320px) and (max-width:1200px){
+
+	.activity .big-leaf {
+		width: 100%;
+    min-width: 1000px;
+		background-size: contain;  
+	}
+    .activity .big-gift {
+    	width: 100%;
+    	background-size: contain; 
+    }
+    .activity .big-leaf .slogan span {
+    	margin-left: 120px;
+    	left: 0px;
+    }
+
+
+
+  /*  body{
+    	position: relative;
+    	padding-bottom: 150px; 
+    }
+    .footer{
+    	  position: absolute;
+        bottom: 0px;
+    } */ 
+     .footer{
+    	width: 100%;
+    	min-width: 1000px;
+    }
+    .footer-item-list {
+    	margin-right: 10px;
+    }
+}

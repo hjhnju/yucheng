@@ -1013,6 +1013,8 @@ p {
 			height:100%;
 			color:#adadad;
 			text-decoration:none;
+            width: 120px;
+            text-align: right;
 		}
       .color-red {
 			color:#f2746a;
@@ -1237,3 +1239,17 @@ p {
 }
 
  //返回顶部按钮样式结束
+
+
+
+ //移动端兼容样式
+ @media screen and (min-width:320px) and (max-width:1024px){ 
+    .footer{
+         min-width: 1000px;
+         width: 100%;
+    }
+   .footer-item-list {
+        margin-right: 10px;
+    }
+}
+ //移动端兼容样式

@@ -9,18 +9,27 @@
     require(['help/index'], function (main) {
         main.init();
     });
+ /*   require(['common/extra/jquery.stellar','jquery'], function (main) {
+         var $=require('jquery'); 
+         $.stellar({
+          horizontalScrolling: false,
+          verticalOffset: 40
+        });
+    });*/
 </script>
 {%/block%}
 
 {%block name="content"%}
   <div class="operate-nav"> 
       <div class="container">
-            
+             <a href="{%$webroot%}/guide" target="_blank" class="guide-btn">新手指引</a>
+             <div class="guide-btn-shine" ></div>
       </div>
   </div> 
     <div class="operate-menu operate-demo-menu"> 
       <div class="container">
           <span class="menu-title">
+              <a class="backup" href="{%$webroot%}/help"></a>
           	 <span class="people"></span>
           </span>
           <div class="menu-box"> 
@@ -41,7 +50,7 @@
    <div class="operate-content operate-demo-content" id="to-regist">
   	  <div class="container">
   	     <div class="content-title to-regist"><span class="img-bg"></span></div>
-  	     <div class="content-list to-regist">
+  	     <div class="content-list to-regist current">
   	     	<ul>
   	     		<li class="">
   	     			<span class="list-step to-regist">Step.1&nbsp;&nbsp;
@@ -147,7 +156,7 @@
   	     	    </li>
   	     	    <li>
   	     			<span class="list-step withdraw">Step.3&nbsp;&nbsp;
-  	     				<label>登陆汇付天下账户</label></span>
+  	     				<label>登录汇付天下账户</label></span>
   	     			  <div class="step-img bindcard step3"></div> 
   	     	    </li>
   	     	     <li>
