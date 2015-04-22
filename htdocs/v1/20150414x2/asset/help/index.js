@@ -4471,7 +4471,7 @@
                  shine.css("background-position","-99px -20px"); 
   
                  shine.animate({ 
-                      backgroundPositionX: "132px",
+                      backgroundPositionX: "200px",
                       backgroundPositionY: "-20px"}
                       ,400);
               }).mouseleave(function () {
@@ -4483,7 +4483,7 @@
                  shine.css("background-position","-99px -20px"); 
   
                  shine.animate({ 
-                      backgroundPositionX: "132px",
+                      backgroundPositionX: "200px",
                       backgroundPositionY: "-20px"}
                       ,400);
 
