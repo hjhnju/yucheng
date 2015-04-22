@@ -19,11 +19,11 @@ class Base_Concurr {
 	 */
 	public static function lock($key, $intTimeOut = 60){ 
 	    $redis = Base_Redis::getInstance();
-	    if(self::LOCKED == $redis->get($key)){
+	    if(TRUE == $redis->setnx($key,self::LOCKED)){
+	        $redis->expire($key, $intTimeOut);
 	        return true;
 	    }
-        $redis->set($key,self::LOCKED, $intTimeOut);
-        return false;
+	    return false;
 	}
     
 	/**
@@ -32,8 +32,6 @@ class Base_Concurr {
 	 */
 	public static function unlock($key){
 	    $redis = Base_Redis::getInstance();
-	    if(false !== $redis->get($key)){
-	        $redis->delete($key);
-	    }
+	    return $redis->delete($key);
 	}
 }
