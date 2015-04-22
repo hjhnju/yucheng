@@ -6,7 +6,7 @@
 
 {%block name="script"%}
 <script>
-   
+
 </script>
 {%/block%}
 
@@ -17,23 +17,25 @@
              <img alt="兴教贷" src="{%$feroot%}/m/common/img/huifu.png">
            </div>
       </div>
-      <div class="kaitong-box-content"> 
-           <div class="kaitong-box-content-title"> 
+      <div class="kaitong-box-content">
+           <div class="kaitong-box-content-title">
 				开通第三方资金托管账户<br/>
-				保障您的资金安全 
-           </div>   
-           <a class="combtn login-fastlogin" href="/finance/usermanage/userregist">开通资金托管</a> 
-           <div class="kaitong-box-text"> 
+				保障您的资金安全
+           </div>
+           <a class="combtn login-fastlogin" href="/finance/usermanage/userregist">开通资金托管</a>
+           <div class="kaitong-box-text">
                                         什么是第三方资金托管？<br/>
                                         兴教贷平台不直接接触资金, 资金流统一由首批获得第三方支付牌照的汇付天下托管，确保投资人的资金安全。
            </div>
-            <div class="kaitong-box-text"> 
+            <div class="kaitong-box-text">
                                                 汇付天下简介<br/>
-                 2011年5月汇付天下首批获得央行颁发的《支付业务许可证》，2013年10月首批获得国家外汇管理局跨境支付业务试点牌照，是中国支付清算协会常务理事单位。                      
+                 2011年5月汇付天下首批获得央行颁发的《支付业务许可证》，2013年10月首批获得国家外汇管理局跨境支付业务试点牌照，是中国支付清算协会常务理事单位。
            </div>
-       </div>         
-      
+       </div>
+      {%if isset($hint)%}
+      <span class="welcome">建议您尽快开通资金托管</span>
+      {%/if%}
    </div>
- 
+
 
 {%/block%}

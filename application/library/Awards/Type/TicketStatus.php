@@ -6,6 +6,11 @@
  */
 class Awards_Type_TicketStatus extends Base_Type {
     /**
+     * 0 未激活
+     * @var integer
+     */
+    const NOT_ACTIVE = 0;
+    /**
      * 1 未达成
      * @var integer
      */
@@ -43,6 +48,7 @@ class Awards_Type_TicketStatus extends Base_Type {
      * @var array
      */
     public static $names = array(
+        self::NOT_ACTIVE  => '未激活',
         self::NOT_FINISH  => '尚未达成',
         self::NOT_USED    => '未使用',
         self::EXCHANGED   => '已使用',
