@@ -409,13 +409,14 @@ p{margin:0;padding:0}
        border-radius: 10px; 
        -webkit-border-radius:10px;
        -moz-border-radius:10px;
-       background-color: #d6d6d6;
+       /*background-color: #d6d6d6;*/
        position: absolute;
        top: 22px;
        right: 0px;
        text-align: center;
        cursor: pointer;
        color: #878787;
+       font-size: 16px;
 }
 .my-invest-tab .set-readAll-btn{ 
          color: #76cf65;

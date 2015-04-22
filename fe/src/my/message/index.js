@@ -68,6 +68,7 @@ define(function(require) {
                 setRead.remote({
                     mid: id
                 });
+
             }
 
 
@@ -110,9 +111,9 @@ define(function(require) {
         $('.set-readAll-btn').click(function() {
 
             if (confirm("您确定要把所有消息设置为已读么？")) {
-                var userid=$(this).attr('data-userid'); 
+                var userid = $(this).attr('data-userid');
                 setReadAll.remote({
-                    uid : userid
+                    uid: userid
                 });
             }
 
@@ -176,6 +177,13 @@ define(function(require) {
                     status: status,
                     page: 1
                 });
+                if (data.unreadMsg > 0) {
+                    $('.mynews-count').html('(' + data.unreadMsg + ')');
+                    $('.default-fastlogin .unreadmsg').html('(' + data.unreadMsg + '条未读)');
+                } else {
+                    $('.mynews-count').hide();
+                    $('.default-fastlogin .unreadmsg').hide();
+                }
             }
 
 
@@ -189,11 +197,34 @@ define(function(require) {
                     status: status,
                     page: 1
                 });
+                if (data.unreadMsg > 0) {
+                    $('.mynews-count').html('(' + data.unreadMsg + ')');
+                    $('.default-fastlogin .unreadmsg').html('(' + data.unreadMsg + '条未读)');
+                } else {
+                    $('.mynews-count').hide();
+                    $('.default-fastlogin .unreadmsg').hide();
+                }
             }
 
         });
         //删除全部消息
         delAllMsg.on('success', function(data) {
+
+        });
+
+        //已读
+        setRead.on('success', function(data) {
+            if (data.bizError) {
+                alert(data.statusInfo);
+            } else { 
+                if (data.unreadMsg > 0) {
+                    $('.mynews-count').html('(' + data.unreadMsg + ')');
+                    $('.default-fastlogin .unreadmsg').html('(' + data.unreadMsg + '条未读)');
+                } else {
+                    $('.mynews-count').hide();
+                    $('.default-fastlogin .unreadmsg').hide();
+                }
+            }
 
         });
     }

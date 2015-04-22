@@ -19,6 +19,7 @@ class ReadController extends Base_Controller_Response {
         if(!$ret){
             $this->ajaxError($ret,Msg_RetCode::getMsg($ret));
         }
-        $this->ajax();
+        $num = Msg_Api::getUnreadMsgNum($this->userid);
+        $this->ajax(array('unreadMsg'=>$num));
 	}
 }

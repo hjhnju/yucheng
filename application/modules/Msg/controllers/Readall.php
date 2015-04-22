@@ -13,7 +13,8 @@ class ReadallController extends Base_Controller_Api {
         $this->msgLogic = new Msg_Logic_Msg();
         $ret = $this->msgLogic->setReadAll($uid);
         if($ret){
-            return $this->ajax();
+            $num = Msg_Api::getUnreadMsgNum($this->userid);
+            return $this->ajax(array('unreadMsg'=>$num));
         }
         return $this->ajaxError();
 	}
