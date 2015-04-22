@@ -6068,9 +6068,10 @@
                     if (n.removeClass("unread"), n.hasClass("current")) {
                         n.removeClass("current");
                         detail.slideUp();
-                    } else n.addClass("current"), detail.slideDown(), u.remote({
+                    } else{ n.addClass("current"), detail.slideDown(), u.remote({
                         mid: e
                     })
+                }
                 }), a.delegate(".close-detail", "click", function() {
                     t(this).closest(".my-invest-item").removeClass("current"), t(this).closest(".my-msg-detail").slideUp();
                 }), t(".my-invest-tab-item").click(function() {
@@ -6108,6 +6109,15 @@
                             status: c,
                             page: 1
                         });
+                        if(data.unreadMsg>0){
+                            t('.mynews-count').html('('+data.unreadMsg+')');
+                            t('.default-fastlogin .unreadmsg').html('('+data.unreadMsg+'条未读)');
+                        }
+                        else{
+                            t('.mynews-count').hide();
+                            t('.default-fastlogin .unreadmsg').hide();
+                        }
+                        
                     }
                 }),
                 //全部标记为已读 
@@ -6129,6 +6139,7 @@
                     setReadAll.remote({
                           uid : userid
                     });
+
                 }
 
                 }),
@@ -6141,6 +6152,28 @@
                             status: status,
                             page: 1
                         });
+                        if(data.unreadMsg>0){
+                        t('.mynews-count').html('('+data.unreadMsg+')');
+                        t('.default-fastlogin .unreadmsg').html('('+data.unreadMsg+'条未读)');
+                        } else{
+                            t('.mynews-count').hide();
+                            t('.default-fastlogin .unreadmsg').hide();
+                        }
+                    }
+
+                }),
+                 //已读
+                u.on('success', function(data) {
+                    if (data.bizError) {
+                        alert(data.statusInfo);
+                    } else { 
+                        if (data.unreadMsg > 0) {
+                            t('.mynews-count').html('(' + data.unreadMsg + ')');
+                            t('.default-fastlogin .unreadmsg').html('(' + data.unreadMsg + '条未读)');
+                        } else {
+                            t('.mynews-count').hide();
+                            t('.default-fastlogin .unreadmsg').hide();
+                        }
                     }
 
                 })
