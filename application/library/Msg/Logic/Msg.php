@@ -54,7 +54,9 @@ class Msg_Logic_Msg {
         $objsMsg->setFilter(array('receiver'=>$uid));
         $arrObj = $objsMsg->getObjects();
         foreach ($arrObj as $obj){
-            $obj->status = Msg_RetCode::MSG_READ;
+            if(Msg_RetCode::MSG_REMOVE !== $obj->status){
+                $obj->status = Msg_RetCode::MSG_READ;
+            }
             $ret = $obj->save();
             if(!$ret){
                 return $ret;
