@@ -22,7 +22,7 @@
         <div class="my-invest-content">
             <span class="my-invest-project msg-type">${item.type}</span>
             <span class="my-invest-project msg-content"><span class="msg-content-text" data-id="${item.mid}">${item.content}</span></span>
-            <span class="my-invest-project msg-time">${item.timeInfo}</span>
+            <span class="my-invest-project msg-time">${item.timeInfo} <span class="del-msg">╳</span></span>
         </div>
         <div class="my-invest-detail my-msg-detail">
             <span class="close-detail">收起</span>

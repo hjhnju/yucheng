@@ -37,7 +37,9 @@
             {%if isset($user)%}
             <div class="header-right-login fr">
                 <span class="default-fastlogin" style="">您好，{%$user.username%} 
-                     {%if $user.unreadMsg%}<span style=" color: #f2746a;font-size: 10px; ">（{%$user.unreadMsg%}条未读）</span> {%/if%}
+                     {%if $user.unreadMsg%}
+                     <a class="unreadmsg" style="color: #f2746a;font-size: 10px;text-decoration: none;" href="{%$webroot%}/account/message"> （{%$user.unreadMsg%}条未读）</a> 
+                     {%/if%}
                 </span>
                
                 <a class="default-login" href="/user/login/signout">退出</a>

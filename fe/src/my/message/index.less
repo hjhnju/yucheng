@@ -1,11 +1,9 @@
 @import "../invest/index.less";
-
 .my-invest-list .my-invest-project {
     min-height: 1px;
 }
 
 .my-invest-list {
-
     .msg-type {
         width: 100px;
     }
@@ -19,10 +17,24 @@
     .msg-content-text {
         cursor: pointer;
     }
+    .current {
+        &.my-invest-item {
+            .my-msg-detail {
+                display: none;
+            }
+        }
+    }
 }
-
+.my-invest-tab {
+    .set-readAll-btn {
+         color: @color-green;
+         font-size: 12px;
+         line-height: 26px;
+         cursor: pointer;
+         float: right;
+    }
+}
 .my-invest-item {
-
     &.unread {
         color: @color-green;
     }
@@ -32,25 +44,44 @@
         line-height: 24px;
         min-height: 0;
         position: relative;
+        &.current {
+            display: inherit;
+        }
     }
-
     p {
         margin: 0;
         padding: 0;
     }
-    
     a {
         color: @color-green;
         text-decoration: none;
         cursor: pointer;
     }
-
     .close-detail {
         color: @color-green;
         cursor: pointer;
         position: absolute;
         top: 10px;
         right: 20px;
+    }
+    .del-msg {
+        display: block;
+        height: 16px;
+        width: 16px;
+        line-height: 16px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        background-color: #d6d6d6;
+        position: absolute;
+        top: 22px;
+        right: 0px;
+        text-align: center;
+        cursor: pointer;
+        color: #878787;
+    }
+    .my-invest-content {
+        position: relative;
     }
 }
 

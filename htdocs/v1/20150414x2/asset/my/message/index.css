@@ -356,7 +356,7 @@ p{margin:0;padding:0}
 .my-invest-list .my-invest-header:before,.my-invest-list .my-invest-header:after{display:table;content:""}
 .my-invest-list .my-invest-header:after{clear:both}
 .my-invest-list .my-invest-item{min-height:60px;line-height:60px;border-bottom:1px dashed #e3e3e3}
-.my-invest-list .my-invest-item.current .my-invest-detail{display:block}
+.my-invest-list .my-invest-item.current .my-invest-detail{ display: block;}
 .my-invest-list .my-invest-content{*zoom:1}
 .my-invest-list .my-invest-content:before,.my-invest-list .my-invest-content:after{display:table;content:""}
 .my-invest-list .my-invest-content:after{clear:both}
@@ -383,14 +383,52 @@ p{margin:0;padding:0}
 .my-invest-table td{border-bottom:1px dashed #e3e3e3;padding-left:10px;height:60px;line-height:60px}
 .span-box{display:inline-block;width:70px;height:8px;background-color:#ccc;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
 .span-box .within{min-width:10%;height:8px;display:block;background-color:#f2736a;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px}
+
 .my-invest-list .my-invest-project{min-height:1px}
 .my-invest-list .msg-type{width:100px}
 .my-invest-list .msg-content{width:450px;overflow:hidden;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap}
-.my-invest-list .msg-time{width:150px}
+.my-invest-list .msg-time{width:150px; }
 .my-invest-list .msg-content-text{cursor:pointer}
 .my-invest-item.unread{color:#76cf65}
 .my-invest-item .my-msg-detail{padding:30px;background-color:#f8f8f8;line-height:24px;min-height:0;position:relative}
+.my-invest-item .my-msg-detail.current{display: none;}
 .my-invest-item p{margin:0;padding:0}
 .my-invest-item a{color:#76cf65;text-decoration:none;cursor:pointer}
 .my-invest-item .close-detail{color:#76cf65;cursor:pointer;position:absolute;top:10px;right:20px}
 .min-height{min-height:100px;position:relative}
+.my-invest-item .my-invest-content { position: relative;}
+
+.my-invest-list .current.my-invest-item .my-msg-detail {
+  display: none;
+}
+.my-invest-item .del-msg{
+       display: block;
+       height: 16px;
+       width: 16px;
+       line-height: 16px;
+       border-radius: 10px; 
+       -webkit-border-radius:10px;
+       -moz-border-radius:10px;
+       background-color: #d6d6d6;
+       position: absolute;
+       top: 22px;
+       right: 0px;
+       text-align: center;
+       cursor: pointer;
+       color: #878787;
+}
+.my-invest-tab .set-readAll-btn{ 
+         color: #76cf65;
+         font-size: 12px;
+         float: right;
+         line-height: 26px;
+         cursor: pointer;
+} 
+
+.dialog-content {
+	min-height: 200px;
+	color: #000;
+	font-size: 14px;
+	display: block;
+	padding: 10px 20px;
+}
