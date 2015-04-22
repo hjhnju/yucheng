@@ -71,7 +71,7 @@ class TenderController extends Base_Controller_Page {
             'post' => $_REQUEST,
         ));
 	    // 主动投标（会跳转至汇付）
-	    $vocherAmt = 200.00;
+	    $vocherAmt = 0.00;
 	    $interest  = 0.00;
 	    return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt);
 	}
