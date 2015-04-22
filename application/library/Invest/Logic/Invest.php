@@ -284,7 +284,6 @@ class Invest_Logic_Invest {
     	$user   = array(
     		'uid'         => $userid,
  			'username'    => $objUser->displayname,
-    	    'unreadMsg'   => Msg_Api::getUnreadMsgNum($userid),
     		'amount'      => $amount,
     		'amount_text' => Base_Util_Number::tausendStyle($amount),
     	);

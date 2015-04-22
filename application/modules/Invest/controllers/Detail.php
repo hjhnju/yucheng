@@ -25,7 +25,7 @@ class DetailController extends Base_Controller_Response {
         // 登录用户增加账号余额信息
         if (!empty($this->userid)) {
         	$user = $logic->getUserBalance($this->objUser);
-            $this->_view->assign('user', $user);
+            $this->_view->assign('userBalance', $user);
         }
         
         // 获取剩余还款本息 还款期数 下次还款日
