@@ -2,7 +2,7 @@
 include_once "SecureTool.php";
 /**
   * 汇付接口最终实现类
-  * 
+  *
   */
 class Finance_Chinapnr_Client {
     private static $self=null;
@@ -148,9 +148,9 @@ class Finance_Chinapnr_Client {
      * @return array or null
      */
     private function reactResponse($res= "", $signKeys=array()){
-        
-        $res = json_decode($res,true);      
-        $ret = array(); 
+
+        $res = json_decode($res,true);
+        $ret = array();
         $ret = $this->arrUrlDec($res);
         // 指定的signKeys 拼接字符串进行验签
         if($ret){
@@ -167,7 +167,7 @@ class Finance_Chinapnr_Client {
         }
         return null;
     }
-    
+
     /**
      * @desc 对于数组进行递归解码
      * @param array
@@ -287,7 +287,7 @@ HTML;
 
         return $this->reactResponse($this->request($reqData));
     }
-    
+
     /**
      * 标信息录入
      */
@@ -303,7 +303,7 @@ HTML;
             "YearRate"     => $yearRate,
             "RetType"      => $retType,
             "BidStartDate" => $bidStartDate,
-            "BidEndDate"   => $bidEndDate,  
+            "BidEndDate"   => $bidEndDate,
             "RetAmt"       => $retAmt,
             "RetDate"      => $retDate,
             "GuarCompId"   => $guarCompId,
@@ -312,7 +312,7 @@ HTML;
             "BgRetUrl"     => $bgRetUrl,
             "MerPriv"      => $merPriv,
             "ReqExt"       => $reqExt,
-            "ChkValue"     => $checkValue,              
+            "ChkValue"     => $checkValue,
         );
         $ret = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","ProId","BorrCustId","BorrTotAmt","GuarCompId","GuarAmt","ProArea","BgRetUrl","MerPriv","RespExt"));
         Base_Log::debug(array('req' => $reqData, 'ret' => $ret));
@@ -735,7 +735,7 @@ HTML;
                 "CardId" => $cardId,
                 "ChkValue"  =>  $checkValue,
         );
-        
+
         return $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","UsrCustId","CardId"));
     }
     /**
@@ -910,7 +910,7 @@ HTML;
                 "MerPriv"    => $merPriv,
                 "ChkValue"   => $checkValue,
         );
-        $this->autoRedirect($reqData);      
+        $this->autoRedirect($reqData);
     }
     /**
      * @desc initiativeTender 主动投标
@@ -929,6 +929,8 @@ HTML;
      * @param  $bgRetUrl
      * @param  $merPriv
      * @param  $reqExt
+     * @param  $acctId 代金券出账子账户
+     * @param  $vocherAmt 代金券金额
      *
      * @return 无返回，使用autoRedirect方式重定向用户浏览器页面
      */
@@ -936,25 +938,27 @@ HTML;
     {
 
         $borrowerDetails = $this->arrayToJsonStr($borrowerDetails);
-        $reqExt = $this->arrayToJsonStr($reqExt);
-        $checkValue= $this->sign($this::VERSION_20.$this::CMDID_INITIATIVE_TENDER.$merCustId.$ordId.$ordDate.$transAmt.$usrCustId.$maxTenderRate.$borrowerDetails.$isFreeze.$freezeOrdId.$retUrl.$bgRetUrl.$merPriv.$reqExt);
-        $reqData=array(
-                "Version"   =>  $this::VERSION_20,
-                "CmdId"     =>  $this::CMDID_INITIATIVE_TENDER,
-                "MerCustId" =>  $merCustId,
-                "OrdId" =>  $ordId,
-                "OrdDate"   =>  $ordDate,
-                "TransAmt"  =>  $transAmt,
-                "UsrCustId" =>  $usrCustId,
-                "MaxTenderRate" =>  $maxTenderRate,
-                "BorrowerDetails"   =>  $borrowerDetails,
-                "IsFreeze"  =>  $isFreeze,
-                "FreezeOrdId"   =>  $freezeOrdId,
-                "RetUrl"    =>  $retUrl,
-                "BgRetUrl"  =>  $bgRetUrl,
-                "MerPriv"   =>  $merPriv,
-                "ReqExt"    =>  $reqExt,
-                "ChkValue"  =>  $checkValue,
+        $reqExt          = $this->arrayToJsonStr($reqExt);
+        $checkValue      = $this->sign($this::VERSION_20.$this::CMDID_INITIATIVE_TENDER.$merCustId.$ordId.$ordDate.
+            $transAmt.$usrCustId.$maxTenderRate.$borrowerDetails.$isFreeze.$freezeOrdId.$retUrl.
+            $bgRetUrl.$merPriv.$reqExt);
+        $reqData         = array(
+                "Version"         =>  $this::VERSION_20,
+                "CmdId"           =>  $this::CMDID_INITIATIVE_TENDER,
+                "MerCustId"       =>  $merCustId,
+                "OrdId"           =>  $ordId,
+                "OrdDate"         =>  $ordDate,
+                "TransAmt"        =>  $transAmt,
+                "UsrCustId"       =>  $usrCustId,
+                "MaxTenderRate"   =>  $maxTenderRate,
+                "BorrowerDetails" =>  $borrowerDetails,
+                "IsFreeze"        =>  $isFreeze,
+                "FreezeOrdId"     =>  $freezeOrdId,
+                "RetUrl"          =>  $retUrl,
+                "BgRetUrl"        =>  $bgRetUrl,
+                "MerPriv"         =>  $merPriv,
+                "ReqExt"          =>  $reqExt,
+                "ChkValue"        =>  $checkValue,
         );
         $this->autoRedirect($reqData);
     }
@@ -1485,7 +1489,7 @@ HTML;
                 "ChkValue"  =>  $checkValue,
         );
         Base_Log::debug($reqData);
-        
+
         $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","OrdDate","OutCustId","OutAcctId","TransAmt","Fee","InCustId","InAcctId","SubOrdId","SubOrdDate","FeeObjFlag","IsDefault","IsUnFreeze","UnFreezeOrdId","FreezeTrxId","BgRetUrl","MerPriv","RespExt"));
         return $response;
     }
@@ -1570,8 +1574,8 @@ HTML;
                 "ChkValue"  =>  $checkValue,
         );
         //var_dump($reqData);die;
-        $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","OrdId","OutCustId","OutAcctId","TransAmt","InCustId","InAcctId","RetUrl","BgRetUrl","MerPriv"));        
-        
+        $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","OrdId","OutCustId","OutAcctId","TransAmt","InCustId","InAcctId","RetUrl","BgRetUrl","MerPriv"));
+
         return $response;
     }
     /**
@@ -1603,7 +1607,7 @@ HTML;
                 "MerPriv"   =>  $merPriv,
                 "ChkValue"  =>  $checkValue,
         );
-        
+
         $response = $this->reactResponse($this->request($reqData),array("CmdId","RespCode","MerCustId","OrdId","UsrCustId","TransAmt","OpenAcctId","OpenBankId","AuditFlag","RetUrl","BgRetUrl","MerPriv"));
         return $response;
     }
@@ -1713,4 +1717,3 @@ HTML;
         }
     }
 }
-?>

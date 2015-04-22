@@ -10,12 +10,12 @@ class Invest_Logic_Invest {
      * @var integer
      */
     const MIN_INVEST = 100;
-    
+
     /**
      * @var InvestModel
      */
     private $objModel = null;
-    
+
     public function __construct() {
         $this->objModel = new InvestModel();
     }
@@ -28,13 +28,13 @@ class Invest_Logic_Invest {
      * @param number $interest
      * @return boolean|string
      */
-    public function invest($userid, $loan_id, $amount, $interest = 0) {
+    public function invest($userid, $loan_id, $amount, $interest=0, $vocherAmt=0.00) {
         $loan = Loan_Api::getLoanInfo($loan_id);
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
             Base_Log::notice('loan status is finished');
             return false; //投标已结束
         }
-        
+
         //调用财务接口进行投标扣款 扣款成功后通过回调进行投标
         $amount = $this->formatNumber($amount);
         //detail支持投资给多个借款人，BorrowerAmt总和要等于总投资额度
@@ -46,9 +46,9 @@ class Invest_Logic_Invest {
             ),
         );
         $returl = Base_Config::getConfig('web')->root . '/invest/confirm';
-        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $returl);
+        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $returl, $vocherAmt);
     }
-    
+
     /**
      * 格式化数字为金额
      * @param number $num
@@ -57,7 +57,7 @@ class Invest_Logic_Invest {
     private function formatNumber($num) {
         return sprintf('%.2f', $num);
     }
-    
+
     /**
      * 确认进行投标
      * @param integer $orderId 订单号
@@ -126,7 +126,7 @@ class Invest_Logic_Invest {
         Awards_Api::investNotify($userid, $invest->id, $amount);
         return true;
     }
-    
+
     /**
      * 是否允许投标 如果命中某个限制策略 则不允许投标
      * @param integer $uid
@@ -137,7 +137,7 @@ class Invest_Logic_Invest {
     	if (empty($uid) || empty($loanId)) {
     		return Invest_RetCode::NOT_ALLOWED;
     	}
-    	
+
         $loan = Loan_Api::getLoanInfo($loanId);
         if (empty($loan)) {
         	return Invest_RetCode::NOT_ALLOWED;
@@ -150,21 +150,21 @@ class Invest_Logic_Invest {
         if ($loan['deadline'] < time()) {
             return Invest_RetCode::NOT_ALLOWED;
         }
-        
+
         // 新手标不允许重复投标
         if (!empty($loan['fresh'])) {
             $fresh = new Invest_Object_Fresh();
             $fresh->userId = $uid;
             $fresh->fetch();
-            
+
             if (!empty($fresh->id)) {
                 return Invest_RetCode::FRESH_ONLY;
             }
         }
-        
+
         return Invest_RetCode::SUCCESS;
     }
-    
+
     /**
      * 获取借款的详情信息
      * @param integer $loanId
@@ -205,7 +205,7 @@ class Invest_Logic_Invest {
         }
         return $loan;
     }
-    
+
     /**
      * 对借款详情输出数据进行格式化
      * @param array $loan
@@ -218,7 +218,7 @@ class Invest_Logic_Invest {
     	}
     	return $loan;
     }
-    
+
     /**
      * 获取下一个还款日
      * @param array $refunds
@@ -232,7 +232,7 @@ class Invest_Logic_Invest {
     	}
     	return '已完成';
     }
-    
+
     /**
      * 获取剩余的还款期数
      * @param array $refunds
@@ -247,7 +247,7 @@ class Invest_Logic_Invest {
     	}
     	return $months;
     }
-    
+
     /**
      * 获取剩余的待还本息
      * @param array $refunds
@@ -262,7 +262,7 @@ class Invest_Logic_Invest {
     	}
     	return $total;
     }
-    
+
     /**
      * 获取用户的可用余额信息
      * @param User_Object $objUser
@@ -278,7 +278,7 @@ class Invest_Logic_Invest {
     	if (empty($objUser)) {
     		return array();
     	}
-    	
+
     	$userid = $objUser->userid;
     	$amount = Finance_Api::getUserAvlBalance($userid);
     	$user   = array(
@@ -289,7 +289,7 @@ class Invest_Logic_Invest {
     	);
     	return $user;
     }
-    
+
     /**
      * 所投标金额是否合法
      * @param integer $loanId
@@ -309,7 +309,7 @@ class Invest_Logic_Invest {
         }
         return true;
     }
-    
+
     /**
      * 撤销投标
      * @param integer $orderId
@@ -320,7 +320,7 @@ class Invest_Logic_Invest {
     public function cancelInvest($orderId, $userid, $amount) {
         return Finance_Api::tenderCancel($amount, $userid, $orderId);
     }
-    
+
     /**
      * 获取用户的总投资金额
      * @param integer $uid
@@ -340,7 +340,7 @@ class Invest_Logic_Invest {
         $all = $list->sumField('amount');
         return $all;
     }
-    
+
     /**
      * 获取用户的正在回收的资产总额
      * @param integer $uid
@@ -360,7 +360,7 @@ class Invest_Logic_Invest {
         $waiting = $refunds->sumField($fields);
         return array_sum($waiting);
     }
-    
+
     /**
      * 获取用户在当前借款可以投资的最大金额 会校验当前用户的余额
      * @param integer $uid
@@ -371,21 +371,21 @@ class Invest_Logic_Invest {
     public function getUserCanInvest($uid, $loan_id, $amount) {
         $loan = Loan_Api::getLoanInfo($loan_id);
         $rest = $loan['amount'] - $loan['invest_amount'];
-        
+
         // 如果本次投标小于100元，则不允许投资
         // 但是如果一次性投满则允许
         if (($amount < $rest) && ($amount < self::MIN_INVEST)) {
             return 0;
         }
-        
+
         $user_amount = $this->getAccountAvlBal($uid);
         if ($user_amount < $amount) {
             Base_Log::notice('user balance smaller then amount');
             return 0;
         }
-        
+
         $can = min($rest, $amount);
-        
+
         // $rest = 200
         // $can = $user_amount = 150
         // $amount = 120 则只允许 $can = 100;
@@ -394,16 +394,16 @@ class Invest_Logic_Invest {
         if (($loanRest > 0) && ($loanRest < self::MIN_INVEST)) {
             $can -= self::MIN_INVEST;
         }
-        
+
         //如果本次投标小于100元，则不允许投资
         if ($can < self::MIN_INVEST) {
             Base_Log::notice('can smaller then min invest');
             $can = 0;
         }
-        
+
         return $can;
     }
-    
+
     /**
      * 获取借款的投资列表
      * @param integer $loan_id
@@ -419,7 +419,7 @@ class Invest_Logic_Invest {
 
         return $invest->toArray();
     }
-    
+
     /**
      * 获取我的投资列表
      * @param integer $uid
@@ -434,10 +434,10 @@ class Invest_Logic_Invest {
         );
         $invest->setFilter($filters);
         $invest->setPagesize(PHP_INT_MAX);
-        
+
         return $invest->toArray();
     }
-    
+
     /**
      * 获取我的投资列表 借款维度
      * @param integer $uid
@@ -463,14 +463,14 @@ class Invest_Logic_Invest {
         $filters = array(
             'status' => array('(status = 5 or status = 6)'),
             'time' => array(
-                "create_time >= $startTime and create_time <= $endTime", 
+                "create_time >= $startTime and create_time <= $endTime",
             ),
         );
         $list->setFilter($filters);
         $total = $list->sumField('amount');
         return $total;
     }
-    
+
     /**
      * 获取单笔投资信息
      * @param integer $invest_id
@@ -480,7 +480,7 @@ class Invest_Logic_Invest {
         $invest = new Invest_Object_Invest($invest_id);
         return $invest->toArray();
     }
-    
+
     /**
      * 获取用户累计投资收益情况
      * @param integer $uid
@@ -504,7 +504,7 @@ class Invest_Logic_Invest {
         $list->setFilter($filters);
         $all = $list->sumField('amount');
 
-        
+
         //2.累计收益
         $refunds = new Invest_List_Refund();
         $filters = array(
@@ -518,7 +518,7 @@ class Invest_Logic_Invest {
         );
         $income = $refunds->sumField($fields);
         $incomes = $income['interest'] + $income['late_charge'];
-        
+
         //3.待收计算
         $filters = array(
             'user_id' => $uid,
@@ -534,7 +534,7 @@ class Invest_Logic_Invest {
         $capital = $waiting['capital'];
         //待收收益
         $interest = $waiting['interest'];
-        
+
         //4.返回值
         $data = array(
             'all_invest' => $all,
@@ -544,7 +544,7 @@ class Invest_Logic_Invest {
         );
         return $data;
     }
-    
+
     /**
      * 获取用户一定时期的投资收益情况 按月区分
      * @param number $uid
@@ -559,7 +559,7 @@ class Invest_Logic_Invest {
         $date = date("Y-m", $start) . '-01 00:00:00';
         $stime = strtotime($date);
         $month = -1;
-        
+
         $earns = array();
         while (true) {
             $month ++;
@@ -573,7 +573,7 @@ class Invest_Logic_Invest {
         }
         return $earns;
     }
-    
+
     /**
      * 获取下几个月的时间戳
      * @param number $stime
@@ -587,7 +587,7 @@ class Invest_Logic_Invest {
         $time = strtotime("+{$month} month", $stime);
         return $time;
     }
-    
+
     /**
      * 指定时间段的总收益
      * @param number $uid
@@ -615,7 +615,7 @@ class Invest_Logic_Invest {
         $incomes = $income['interest'] + $income['late_charge'];
         return $incomes;
     }
-    
+
     /**
      * 获取投资列表，通过filter过滤列表数据
      * @param integer $page
@@ -629,13 +629,13 @@ class Invest_Logic_Invest {
      *      'pageall' => 100,
      *      'list' => array(),
      * )
-     */    
+     */
     public function getInvestList($page, $pagesize, $filter) {
         $filter = $this->getInvestFilters($filter);
         $list = Loan_Api::getLoans($page, $pagesize, $filter);
         return $list;
     }
-	
+
 	/**
 	 * 获取投资列表的过滤器
 	 * @param array $data
@@ -657,7 +657,7 @@ class Invest_Logic_Invest {
 	    $filters['status'][] = 'status > 1';
 	    return $filters;
 	}
-	
+
 	/**
 	 * 根据时间参数获取时间周期的过滤器
 	 * @param array $data

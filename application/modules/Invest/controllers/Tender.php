@@ -3,7 +3,7 @@
  * 投标
  */
 class TenderController extends Base_Controller_Page {
-    
+
     protected $outputView = 'tender/index.phtml';
 
     /**
@@ -14,13 +14,13 @@ class TenderController extends Base_Controller_Page {
         'id' => '借款ID错误',
         'amount' => '借款金额错误',
     );
-	
+
 	public function indexAction() {
 		$loanId = intval($_REQUEST['id']);
 		$amount = floatval($_REQUEST['amount']);
 		$uid    = $this->userid;
 		$sess   = Yaf_Session::getInstance();
-		
+
 	    if (empty($loanId) || empty($amount) || empty($uid)) {
 	        Base_Log::notice(array(
                 'msg'  => '投标参数错误',
@@ -32,7 +32,7 @@ class TenderController extends Base_Controller_Page {
 	        }
 	        return $this->redirect('/invest/fail');
 	    }
-	    
+
         // 检查是否允许投标
 	    $logic = new Invest_Logic_Invest();
 	    $retCode = $logic->allowInvest($uid, $loanId);
@@ -55,7 +55,7 @@ class TenderController extends Base_Controller_Page {
 	        $sess->set('invest_error', Invest_RetCode::AMOUNT_NOTENOUGH);
 	        return $this->redirect('/invest/detail?id=' . $loanId);
 	    }
-	    
+
 	    // 检查金额是否满足投标要求
 	    if (!$logic->isAmountLegal($loanId, $amount)) {
 	        Base_Log::notice(array(
@@ -65,12 +65,21 @@ class TenderController extends Base_Controller_Page {
 	        $sess->set('invest_error', Invest_RetCode::AMOUNT_ERROR);
 	        return $this->redirect('/invest/detail?id=' . $loanId);
         }
-	    
+
         Base_Log::notice(array(
             'msg'  => '主动投标',
             'post' => $_REQUEST,
         ));
 	    // 主动投标（会跳转至汇付）
-	    return $logic->invest($uid, $loanId, $amount);
+	    $vocherAmt = 200.00;
+	    $interest  = 0.00;
+	    return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt);
+	}
+
+	/**
+	 * 确认投标页，选择代金券、利息券
+	 */
+	public function preAction(){
+
 	}
 }
