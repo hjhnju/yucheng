@@ -14,7 +14,7 @@ class Base_RetCode {
 
     //前端跳转
     const NEED_REDIRECT     = 302;
-    
+
      //默认错误
     const UNKNOWN_ERROR     = 999; //未知错误
 
@@ -30,6 +30,7 @@ class Base_RetCode {
     const DATA_NULL         = 504; //数据为空
     const SERVICE_DEGRADED  = 505; //服务降级
     const CONFIG_FAIL       = 506; //配置错误
+    const LOCK_ERROR        = 507; //并发加锁失败
 
     /* 消息函数
      * @var array
@@ -51,6 +52,7 @@ class Base_RetCode {
         self::CSRFTOKEN_INVALID => '会话token实效，请重新刷新页面',
 
         self::NEED_REDIRECT     => '前端跳转',
+        self::LOCK_ERROR        => '加锁失败',
     );
 
     /**

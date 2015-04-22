@@ -10,16 +10,22 @@ class OpenController extends Base_Controller_Page {
         $this->setNeedLogin(true);
         parent::init();
     }
-    
+
     /**
      * 开通第三方
      *
      * /m/open
-     * @param     
-     * @return    
+     * @param
+     * @return
      */
     public function indexAction() {
        $this->getView()->assign('title', "开通汇付天下");
+        $sucHit = (int)Base_Redis::getInstance()->hGet('reg_success_hset', $this->userid);
+        if($sucHit === 1){
+            $this->getView()->assign('hint', 1);
+        }else{
+            Base_Redis::getInstance()->hSet('reg_success_hset', $this->userid, 1);
+        }
     }
 
     /**
@@ -31,11 +37,11 @@ class OpenController extends Base_Controller_Page {
      */
     public function successAction() {
         $this->getView()->assign('title', "注册成功");
-        $sucHit = (int)Base_Redis::getInstance()->hGet('reg_success_hset', $this->userid);
+        $sucHit = (int)Base_Redis::getInstance()->hGet('open_success_hset', $this->userid);
         if($sucHit === 1){
             $this->getView()->assign('hint', 1);
         }else{
-            Base_Redis::getInstance()->hSet('reg_success_hset', $this->userid, 1);
+            Base_Redis::getInstance()->hSet('open_success_hset', $this->userid, 1);
         }
     }
 
