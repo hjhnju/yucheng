@@ -10,7 +10,7 @@
         main.init({
             id: '{%$data.id%}',
             amountRest: '{%$data.amount_rest%}',
-            userAmount: '{%if isset($user.amount)%}{%$user.amount%}{%else%}0.00{%/if%}',
+            userAmount: '{%if isset($userBalance.amount)%}{%$userBalance.amount%}{%else%}0.00{%/if%}',
             interest: +'{%$data.interest%}',
             days: +'{%$data.days%}',
             sTime: +'{%$data.create_time%}',
@@ -124,7 +124,7 @@
                         <div class="main-title-box showrecord">投资记录</div>
                     </div>
                     <div class="main-box-details showproject-main">
-                        {%if isset($user.amount)%}
+                        {%if isset($userBalance.amount)%}
                         {%if !empty($data.private)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">借款人信息</div>
@@ -327,7 +327,7 @@
                         {%/if%}
                     </div>
                     <div class="main-box-details showfile-main">
-                        {%if isset($user.amount)%}
+                        {%if isset($userBalance.amount)%}
                         {%if !empty($data.attach['认证材料'])%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">认证材料</div>
@@ -380,7 +380,7 @@
                         {%/if%}
                     </div>
                     <div class="main-box-details showrecord-main">
-                        {%if isset($user.amount)%}
+                        {%if isset($userBalance.amount)%}
                         <div class="details-main-box">
                             <div class="main-box-detail-title">投资记录</div>
                             <div class="main-detail-content" id="toulist">
@@ -450,7 +450,7 @@
                 </div>
                 <div id="chongzhi-error" class="chongzhi-error"></div>
                 <div class="right-top-chongzhi">
-                    <div class="chongzhi-left">可用金额：{%if isset($user.amount)%}<span id="my-money">{%$user.amount_text%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a target="_blank" href="{%$webroot%}/account/cash/recharge" class="chongzhi-link"> [充值]</a></div>
+                    <div class="chongzhi-left">可用金额：{%if isset($userBalance.amount)%}<span id="my-money">{%$userBalance.amount_text%}</span>元{%else%}<a href="/user/login" class="account-a-link">立即登录</a>{%/if%}<a target="_blank" href="{%$webroot%}/account/cash/recharge" class="chongzhi-link"> [充值]</a></div>
                 </div>
                 <div class="right-top-btn">
                     <a class="right-top-btn-confirm confirm-submit">确定投资</a>
