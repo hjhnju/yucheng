@@ -274,7 +274,7 @@ class BgcallController extends Base_Controller_Page {
         
         $cckey = Finance_Keys::getBgCallKey($cmdId, $orderId, $respCode);
         $bolLocked = Base_Concurr::lock($cckey);
-        if($bolLocked){
+        if(!$bolLocked){
             print('RECV_ORD_ID_'.$trxId);
         	return;
         }
