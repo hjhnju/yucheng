@@ -79,6 +79,9 @@ p{margin:0;padding:0}
 .triangle-bottom{position:absolute;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid #fff;left:119px;top:-6px}
 .triangle-bottom.footer-erweima-bottom{border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #fff;top:258px;border-bottom:none;left:116px}
 .header-right{float:right;margin-top:15px}
+.header-right .activity-img{margin-top:4px;margin-right:5px;float:left}
+.header-right .new-activity{display:block;height:30px;float:left;line-height:30px;color:#4fc501;margin-right:10px;text-align:center}
+.header-right .new-activity a{color:#4fc501;text-decoration:none}
 .login-register{border:1px solid #76cf65;border-radius:25px;-moz-border-radius:25px;width:100px;height:29px;background:url(../../common/img/btn_bg1.png) no-repeat left center;transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-webkit-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-moz-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4);-o-transition:background-position .4s cubic-bezier(.31,-.105,.43,1.4)}
 .login-register a{color:#4fc501;transition:color .4s linear;-webkit-transition:color .4s linear;-moz-transition:color .4s linear;-o-transition:color .4s linear;display:block;text-align:center;width:50px;text-decoration:none;line-height:30px}
 .register-hover{background-position:left center}
@@ -271,3 +274,13 @@ p{margin:0;padding:0}
 .loan-start-main-box-link.current{cursor:default;border-color:#dedede;background-color:#ececec;color:#333}
 .loan-start-main-box-link.current:hover{background-color:#ececec}
 .loan-start-main-box-link:hover{background-color:#2b9817}
+@media screen and (min-width:320px) and (max-width:1024px){
+ 
+     .footer{
+    	width: 100%;
+    	min-width: 1000px;
+    }
+    .footer-item-list {
+    	margin-right: 10px;
+    }
+}

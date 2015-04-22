@@ -113,6 +113,13 @@ define(function () {
         MY_MSG_SETREAD_ADD: rootUrl
             + '/msg/read',
             //+ '/test/account/message/setread.json',
+        MY_MSG_EDL:rootUrl
+            +"/msg/del",
+        MY_MSG_EDLALL:rootUrl
+            +"/msg/delall",
+        MY_MSG_SETREADALL:rootUrl
+            +"/msg/readall",
+            
         COMPANY_INFOS_LIST: rootUrl
             + '/infos/infoapi',
         USER_REGISTAPI_MODIFYPWD: rootUrl

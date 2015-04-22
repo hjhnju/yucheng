@@ -88,7 +88,7 @@ class Msg_Logic_Msg {
     public function getList($uid,$intType,$intPage,$intPageSize){
         $objsMsg = new Msg_List_Msg();
         if(Msg_RetCode::MSG_ALL == $intType){
-            $objsMsg->setFilter(array('receiver' => $uid));
+            $objsMsg->setFilterString("receiver = $uid and status != -1");
             $objsMsg->setPage($intPage);
             $objsMsg->setPagesize($intPageSize);
         }else{

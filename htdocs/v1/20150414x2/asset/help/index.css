@@ -456,7 +456,8 @@ p{margin:0;padding:0}
 .operate-content .content-list {
   width: 832px;
   margin: 0 auto;
-  margin-bottom: 12px;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 .operate-content .content-list li {
   margin-top: 4px;
