@@ -346,6 +346,17 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
             return $objRst;
         }
+
+        $cckey   = Finance_Keys::getTransKey($subOrdId, $loanId);
+        $bolSucc = Base_Lock::lock($cckey);
+        if(!$bolSucc){
+            $objRst->status = Base_RetCode::LOCK_ERROR;
+            Base_Log::error(array(
+                'objRst' => $objRst->format(),
+            ));
+            return $objRst;
+        }
+
         $inCustId  = $this->getHuifuid(intval($inUserId));
         $outCustId = $this->getHuifuid(intval($outUserId));
 
@@ -584,6 +595,17 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             ));
             return $objRst;
         }
+
+        $cckey   = Finance_Keys::getTransKey($subOrdId, $refundId);
+        $bolSucc = Base_Lock::lock($cckey);
+        if(!$bolSucc){
+            $objRst->status = Base_RetCode::LOCK_ERROR;
+            Base_Log::error(array(
+                'objRst' => $objRst->format(),
+            ));
+            return $objRst;
+        }
+
         $transAmt  = sprintf('%.2f',$transAmt);
         $inCustId  = $this->getHuifuid(intval($inUserId));
         //还款订单订单记录入表finance_order
