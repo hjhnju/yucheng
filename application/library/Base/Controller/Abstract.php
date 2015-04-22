@@ -54,6 +54,7 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
         //为页面统一assign用户信息
         if(!$this->isAjax() && !empty($this->objUser)){
             $user = array(
+                'userid'    => $this->userid,
                 'username'  => $this->objUser->displayname,
                 'unreadMsg' => Msg_Api::getUnreadMsgNum($this->userid),
             );
