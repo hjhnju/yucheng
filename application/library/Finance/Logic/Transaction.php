@@ -16,7 +16,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param int orinOrderId, 需要解冻的订单（注意区别解冻订单号）
      * @return bool
      */
-    public function unfreezeOrder($orinOrderId, $retUrl='') {
+    public function unfreezeOrder($orinOrderId, $loanid='', $retUrl='') {
         Base_Log::debug(array(
             'msg' => '发起资金解冻',
             'orinOrderId' => $orinOrderId,
@@ -57,7 +57,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $merCustId = $this->merCustId;
         $retUrl    = strval($retUrl);
         $bgRetUrl  = $this->fnroot.'/finance/bgcall/unfreezeOrder';
-        $merPriv   = strval($userId).'_'.strval($transAmt).'_'.strval($orderId);
+        $merPriv   = strval($userId).'_'.strval($transAmt).'_'.strval($orderId).'_'.strval($loanid);
         //调用汇付API进行解冻处理
         $ret       = $this->chinapnr->usrUnFreeze($merCustId,$orderId,$orderDate,
             $freezeTrxId,$retUrl,$bgRetUrl,$merPriv);
@@ -408,7 +408,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $isUnFreeze     = 'Y';
         $unFreezeOrdId  = Finance_Logic_Order::genOrderId();
         $bgRetUrl       = $this->fnroot.'/finance/bgcall/loans';
-        $merPriv        = implode(',', array($outUserId, $inUserId));//投标人的uid
+        $merPriv        = implode(',', array($outUserId, $inUserId, $loanId));//投标人的uid
         $reqExt         = array('ProId' => strval($loanId));
         $reqExt         = json_encode($reqExt);
 

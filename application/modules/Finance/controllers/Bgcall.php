@@ -57,7 +57,7 @@ class BgcallController extends Base_Controller_Page {
     	   !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
     		$logParam        = $_REQUEST;
     		$logParam['msg'] = '汇付返回参数错误';
-    	   	Base_Log($logParam);
+    	   	Base_Log::error($logParam);
     		return;
     	}
     	//SDK中已经验签，此处不再验签了
@@ -71,25 +71,48 @@ class BgcallController extends Base_Controller_Page {
         $trxId         = $_REQUEST['TrxId'];
         $respCode      = $_REQUEST['RespCode'];
         $respDesc      = $_REQUEST['RespDesc'];
-    	if($respCode !== '000') {
-    		Base_Log::error(array(
-    			'msg' => $respDesc,
-    			'ret' => $_REQUEST,
-    		));
-    		//资金解冻订单状态更新为“处理失败”
-    		Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
-                $respCode, $respDesc);
+        
+        //加锁一次处理
+        $cckey   = Finance_Keys::getBgCallKey($_REQUEST['CmdId'], $orderId, $respCode);
+        $bolSucc = Base_Lock::lock($cckey);
+        if(!$bolSucc){
+            print('RECV_ORD_ID_'.strval($orderId));
             return;
+        }
+        
+        try{
+        	if($respCode !== '000') {
+        		Base_Log::error(array(
+        			'msg' => $respDesc,
+        			'ret' => $_REQUEST,
+        		));
+        		//资金解冻订单状态更新为“处理失败”
+        		Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                    $respCode, $respDesc);
+                return;
+        	}
+    
+        	//资金解冻订单状态更新为“处理成功”
+            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+                $respCode, $respDesc, array('freezeTrxId' => $trxId));
+    
+        	//快照
+        	Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::USRUNFREEZE,
+                $transAmt, '资金解冻记录');
+            
+        	//发送短信
+        	$objUser = User_Api::getUserObject($userid);
+        	$arrArgs = array('JK_'.$merPriv[3], $transAmt);
+        	$tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+        	$bResult  = Base_Sms::getInstance()->send($objUser->phone, $tplid[5], $arrArgs);
+    	}catch(Exception $ex){
+    	    Base_Log::error(array(
+    	    'msg' => $ex->getMessage(),
+    	    'ret' => $_REQUEST,
+    	    ));
+    	    Base_Lock::unlock($cckey);
+    	    return;
     	}
-
-    	//资金解冻订单状态更新为“处理成功”
-        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
-            $respCode, $respDesc, array('freezeTrxId' => $trxId));
-
-    	//快照
-    	Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::USRUNFREEZE,
-            $transAmt, '资金解冻记录');
-
     	Base_Log::notice($_REQUEST);
     	//页面打印
     	$orderId = strval($orderId);
@@ -109,7 +132,7 @@ class BgcallController extends Base_Controller_Page {
            !isset($_REQUEST['BgRetUrl']) || !isset($_REQUEST['ChkValue']) ) {
             $logParam        = $_REQUEST;
             $logParam['msg'] = '汇付返回参数错误';
-            Base_Log($logParam);
+            Base_Log::error($logParam);
             return;
         }
         $retParam = $this->arrUrlDec($_REQUEST);
@@ -293,9 +316,19 @@ class BgcallController extends Base_Controller_Page {
                 //充值财务记录入库
                 Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::NETSAVE,
                 $transAmt, '充值记录');
-
+                
+                //消息
                 Msg_Api::sendmsg($userid, Msg_Type::CASH,
                 array(strftime("%Y-%m-%d %H:%M", time()), $transAmt));
+                //短信
+                $arrBal   = Finance_Api::getUserBalance($userid);
+                $balance  = $arrBal['AcctBal'];//用户余额
+                $avlBal   = $arrBal['AvlBal'];//用户可用余额
+                $arrArgs    = array(strftime("%Y-%m-%d %H:%M", time()),$transAmt, $balance);
+                $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                $objOutUser = User_Api::getUserObject($userid);
+                $bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[2], $arrArgs);
+                Base_Log::error($arrArgs);
             }
         }catch(Exception $e){
             Base_Lock::unlock($cckey);
@@ -350,7 +383,7 @@ class BgcallController extends Base_Controller_Page {
         $respDesc    = $retParam['RespDesc'];
 
         //加锁一次处理
-        $cckey   = Finance_Keys::getBgCallKey($cmdId, $orderId, $respCode);
+        $cckey   = Finance_Keys::getBgCallKey($retParam['CmdId'], $orderId, $respCode);
         $bolSucc = Base_Lock::lock($cckey);
         if(!$bolSucc){
             print('RECV_ORD_ID_'.strval($orderId));
@@ -383,7 +416,13 @@ class BgcallController extends Base_Controller_Page {
                     ));
                     //不做解冻失败的错误处理
                     $logic   = new Finance_Logic_Transaction();
-                    $bolRet2 = $logic->unfreezeOrder($orderId);
+                    $bolRet2 = $logic->unfreezeOrder($orderId, $proId);
+                }else{
+                //发送短信通知
+                $objUser = User_Api::getUserObject($userId);;
+                $arrArgs = array('JK_'.$proId, $transAmt);
+                $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                $bResult  = Base_Sms::getInstance()->send($objUser->phone, $tplid[3], $arrArgs);
                 }
             }
         }catch(Exception $ex){
@@ -524,85 +563,123 @@ class BgcallController extends Base_Controller_Page {
         $orderDate = intval($retParam['OrdDate']);
         $transAmt  = floatval($retParam['TransAmt']);
 
-        $arrBal   = Finance_Api::getUserBalance($userid);
-        $balance  = $arrBal['AcctBal'];//用户余额
-        $avlBal   = $arrBal['AvlBal'];//用户可用余额
-        $total    = Finance_Api::getPlatformBalance();//系统余额
+        //$arrBal   = Finance_Api::getUserBalance($userId);
+        //$balance  = $arrBal['AcctBal'];//用户余额
+        //$avlBal   = $arrBal['AvlBal'];//用户可用余额
+        //$total    = Finance_Api::getPlatformBalance();//系统余额
 
         $lastip    = Base_Util_Ip::getClientIp();
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];
         $respType  = $retParam['RespType'];
-        //同步异步返回
-        if(!isset($_REQUEST['RespType'])) {
-            //验签处理
-            $signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "FeeAmt",
-                "FeeCustId","FeeAcctId","ServFee","ServFeeAcctId","RetUrl","BgRetUrl","MerPriv","RespExt");
-            $bolVerify = $this->verify($signKeys, $retParam, $retParam['ChkValue']);
-            if(!$bolVerify) {
-                Base_Log::error(array(
-                    'msg'    => '验签错误',
-                    'params' => $retParam,
-                ));
-                return;
-            }
-            //同步异步返回处理中
-            if($respCode === '999') {
-                //finance_order状态更改为“处理中”
-                Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::PROCESSING,
-                    $respCode, $respDesc);
-            }
-            if($respCode === '000') {
-                //对finance_order表进行状态更新，更新为“处理成功”
-                Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
-                    $respCode, $respDesc);
-                //插入记录至finance_record表
-                Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH,
-                    $transAmt, '充值记录');
-            }
+        
+        //加锁一次处理
+        $cckey   = Finance_Keys::getBgCallKey($retParam['CmdId'], $orderId, $respCode);
+        $bolSucc = Base_Lock::lock($cckey);
+        if(!$bolSucc){
+            print('RECV_ORD_ID_'.strval($orderId));
+            return;
         }
-        //存在异步对账
-        if(isset($_REQUEST['RespType'])) {
-            //验签处理
-            $signKeys = array("RespType", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "RetUrl", "BgRetUrl","MerPriv","RespExt");
-            $bolVerify = $this->verify($signKeys, $retParam, $retParam['ChkValue']);
-            if(!$bolVerify) {
-                Base_Log::error(array(
-                    'msg'   => '验签错误',
-                    'CmdId' => $retParam['CmdId'],
-                ));
-                return;
-            }
-            $refunds = new Finance_List_Order();
-            $filters = array('orderId' => $orderId);
-            $refunds->setFilter($filters);
-            $list   = $refunds->toArray();
-            $status = $list['list'][0]['status'];//finance_order表中状态
-            //异步对账显示取现成功
-            if($respType === '000') {
-                if($status === '999') {
-                    //更新finance_order表状态为“处理成功”
+        
+        try{
+            //同步异步返回
+            if(!isset($_REQUEST['RespType'])) {
+                //验签处理
+                $signKeys = array("CmdId", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "FeeAmt",
+                    "FeeCustId","FeeAcctId","ServFee","ServFeeAcctId","RetUrl","BgRetUrl","MerPriv","RespExt");
+                $bolVerify = $this->verify($signKeys, $retParam, $retParam['ChkValue']);
+                if(!$bolVerify) {
+                    Base_Log::error(array(
+                        'msg'    => '验签错误',
+                        'params' => $retParam,
+                    ));
+                    return;
+                }
+                //同步异步返回处理中
+                if($respCode === '999') {
+                    //finance_order状态更改为“处理中”
+                    Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::PROCESSING,
+                        $respCode, $respDesc);
+                }
+                if($respCode === '000') {
+                    //对finance_order表进行状态更新，更新为“处理成功”
                     Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
                         $respCode, $respDesc);
-                    //插入提现记录到finance_record表
-                    Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH,
+                    //插入记录至finance_record表
+                    Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::CASH,
                         $transAmt, '充值记录');
+                    
+                    //发送消息
+                    Msg_Api::sendmsg($userId, Msg_Type::WITHDRAW,array($transAmt));
+                    
+                    //发送短信
+                    $arrArgs    = array($transAmt);
+                    $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                    $objOutUser = User_Api::getUserObject($userId);
+                    $bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[7], $arrArgs);
+                    
                 }
             }
-            if($respType === '400') {
-                if($status === '999') {
-                    //更改finance_order表状态为“处理失败”
-                    Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
-                        $respCode, $respDesc);
+            //存在异步对账
+            if(isset($_REQUEST['RespType'])) {
+                //验签处理
+                $signKeys = array("RespType", "RespCode", "MerCustId", "OrdId", "UsrCustId", "TransAmt", "OpenAcctId", "OpenBankId", "RetUrl", "BgRetUrl","MerPriv","RespExt");
+                $bolVerify = $this->verify($signKeys, $retParam, $retParam['ChkValue']);
+                if(!$bolVerify) {
+                    Base_Log::error(array(
+                        'msg'   => '验签错误',
+                        'CmdId' => $retParam['CmdId'],
+                    ));
+                    return;
                 }
-                if($status === '000') {
-                    //首先将finance_order表状态更改为“处理失败”
-                    Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
-                        $respCode, $respDesc);
-                    //再将finance_record中对应的成功记录进行删除
-                    Finance_Logic_Order::payRecordDelete($orderId);
+                $refunds = new Finance_List_Order();
+                $filters = array('orderId' => $orderId);
+                $refunds->setFilter($filters);
+                $list   = $refunds->toArray();
+                $status = $list['list'][0]['status'];//finance_order表中状态
+                //异步对账显示取现成功
+                if($respType === '000') {
+                    if($status === '999') {
+                        //更新finance_order表状态为“处理成功”
+                        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+                            $respCode, $respDesc);
+                        //插入提现记录到finance_record表
+                        Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::CASH,
+                            $transAmt, '充值记录');
+                        
+                        //发送消息
+                        Msg_Api::sendmsg($userId, Msg_Type::WITHDRAW,array($transAmt));
+                        
+                       //发送短信    
+                        $arrArgs    = array($transAmt);
+                        $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                        $objOutUser = User_Api::getUserObject($userId);
+                        $bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[7], $arrArgs);
+                        
+                    }
+                }
+                if($respType === '400') {
+                    if($status === '999') {
+                        //更改finance_order表状态为“处理失败”
+                        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                            $respCode, $respDesc);
+                    }
+                    if($status === '000') {
+                        //首先将finance_order表状态更改为“处理失败”
+                        Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                            $respCode, $respDesc);
+                        //再将finance_record中对应的成功记录进行删除
+                        Finance_Logic_Order::payRecordDelete($orderId);
+                    }
                 }
             }
+        }catch(Exception $ex){
+            Base_Log::error(array(
+            'msg' => $ex->getMessage(),
+            'req' => $retParam,
+            ));
+            Base_Lock::unlock($cckey);
+            return;
         }
         Base_Log::notice($retParam);
         print('RECV_ORD_ID_'.strval($orderId));
@@ -639,41 +716,65 @@ class BgcallController extends Base_Controller_Page {
         $respCode  = strval($retParam['RespCode']);
         $respDesc  = strval($retParam['RespDesc']);
 
-        //汇付返回错误
-        if($respCode !== '000') {
-             Base_Log::error(array(
-                'msg'       => $respDesc,
-                'respCode'  => $respCode,
-                'outUserid' => $outUserid,
-                'orderId'   => $orderId,
-                'orderDate' => $orderDate,
-            ));
-            //将finance_order表状态更改为“处理失败”
-            return Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
-                $respCode, $respDesc);
+        //加锁一次处理
+        $cckey   = Finance_Keys::getBgCallKey($retParam['CmdId'], $orderId, $respCode);
+        $bolSucc = Base_Lock::lock($cckey);
+        if(!$bolSucc){
+            print('RECV_ORD_ID_'.strval($orderId));
+            return;
         }
-        //将finance_order表状态更新为“处理成功”
-        $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
-            $respCode, $respDesc);
-
-        if ($bolRet) {
-            //将打款记录插入至表finance_record中
-            Finance_Logic_Order::saveRecord($orderId, $outUserid, Finance_Order_Type::LOANS,
-                $amount, '财务类满标打款记录');
-
-            //借款人入账的资金纪录入表finance_order
-            $paramOrder = array(
-                'userId'      => $inUserId,//借款人的uid
-                'type'        => Finance_Order_Type::LOANPAYED,
-                'amount'      => $amount,
-                'status'      => Finance_Order_Status::SUCCESS,
-                'freezeTrxId' => $orderId,//保存关联的投资订单号
-                'comment'     => '满标入款',
-            );
-            $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
-            //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::LOANPAYED,
-                $amount, '满标入款记录');
+        
+        try{
+            //汇付返回错误
+            if($respCode !== '000') {
+                 Base_Log::error(array(
+                    'msg'       => $respDesc,
+                    'respCode'  => $respCode,
+                    'outUserid' => $outUserid,
+                    'orderId'   => $orderId,
+                    'orderDate' => $orderDate,
+                ));
+                //将finance_order表状态更改为“处理失败”
+                return Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                    $respCode, $respDesc);
+            }
+            //将finance_order表状态更新为“处理成功”
+            $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+                $respCode, $respDesc);
+    
+            if ($bolRet) {
+                //将打款记录插入至表finance_record中
+                Finance_Logic_Order::saveRecord($orderId, $outUserid, Finance_Order_Type::LOANS,
+                    $amount, '财务类满标打款记录');
+    
+                //借款人入账的资金纪录入表finance_order
+                $paramOrder = array(
+                    'userId'      => $inUserId,//借款人的uid
+                    'type'        => Finance_Order_Type::LOANPAYED,
+                    'amount'      => $amount,
+                    'status'      => Finance_Order_Status::SUCCESS,
+                    'freezeTrxId' => $orderId,//保存关联的投资订单号
+                    'comment'     => '满标入款',
+                );
+                $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+                //插入还款记录至表finance_record
+                Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::LOANPAYED,
+                    $amount, '满标入款记录');
+                //发送消息
+                Msg_Api::sendmsg($outUserid, Msg_Type::INVEST_MAKE_LOAN,array('JK_'.$arrUid[2], $amount));
+                //发送短信
+                $arrArgs    = array('JK_'.$arrUid[2], $amount);
+                $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                $objOutUser = User_Api::getUserObject($outUserid);
+                $bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[4], $arrArgs);
+            }
+        }catch(Exception $ex){
+            Base_Log::error(array(
+            'msg' => $ex->getMessage(),
+            'req' => $retParam,
+            ));
+            Base_Lock::unlock($cckey);
+            return;
         }
 
         Base_Log::notice($retParam);
@@ -715,75 +816,92 @@ class BgcallController extends Base_Controller_Page {
 
         $respCode  = $retParam['RespCode'];
         $respDesc  = $retParam['RespDesc'];
-        if($respCode !=='000') {
-            Base_Log::error(array(
-                'msg'       => $respDesc,
-                'outUserId' => $outUserId,
-                'orderId'   => $orderId,
-                'orderDate' => $orderDate,
-                'respCode'  => $respCode,
-            ));
-            //将finance_order表状态更改为“处理失败”
-            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
-                 $respCode, $respDesc);
+        
+        //加锁一次处理
+        $cckey   = Finance_Keys::getBgCallKey($retParam['CmdId'], $orderId, $respCode);
+        $bolSucc = Base_Lock::lock($cckey);
+        if(!$bolSucc){
+            print('RECV_ORD_ID_'.strval($orderId));
             return;
         }
-        //将finance_order表状态更改为“处理成功”
-        $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
-            $respCode, $respDesc);
-        Base_Log::notice(array('msg'=>'更新表状态', 'bolRet'=>$bolRet));
-        if ($bolRet) {
-            //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderId, $outUserId, Finance_Order_Type::REPAYMENT,
-                $amount, '财务类还款记录');
-
-            //收款人的资金纪录入表finance_order
-            $paramOrder = array(
-                'userId'      => $inUserId,//收款人的uid
-                'type'        => Finance_Order_Type::REFUNDED,
-                'amount'      => $amount,
-                'status'      => Finance_Order_Status::SUCCESS,
-                'freezeTrxId' => $orderId,//保存关联的还款订单号
-                'comment'     => '回款入款成功',
-            );
-            $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
-            //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::REFUNDED,
-                $amount, '财务类还款记录');
-
-            //TODO:如有$fee则需要增加手续费记录，finance_order_type增加还款手续费
-
-            //单笔还款成功，更新回款计划字段
-            $bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
-
-            if(!$bolRet){
+        
+        try{
+            if($respCode !=='000') {
                 Base_Log::error(array(
-                    'msg'      => '更新投资回款计划状态失败',
-                    'refundId' => $refundId,
-                    'info'     => $arrRefundInfo,
-                    'bolRet'   => $bolRet,
+                    'msg'       => $respDesc,
+                    'outUserId' => $outUserId,
+                    'orderId'   => $orderId,
+                    'orderDate' => $orderDate,
+                    'respCode'  => $respCode,
                 ));
+                //将finance_order表状态更改为“处理失败”
+                Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                     $respCode, $respDesc);
+                return;
             }
-
-            $arrRefundInfo = Invest_Api::getRefundById($refundId);
-            Base_Log::notice(array(
-                'msg'           => '单笔还款成功',
-                'loanId'        => $loanId,
-                'outUserId'     => $outUserId,
-                'inUserId'      => $inUserId,
-                'refundId'      => $refundId,
-                'arrRefundInfo' => $arrRefundInfo,
-                'bolRet'        => $bolRet,
-            ));
-
-            //投资人回款短信通知
-            $arrArgs = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
-            $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-            $objUser = User_Api::getUserObject($inUserId);
-            Base_Sms::getInstance()->send($objUser->phone, $tplid[6], $arrArgs);
-
+            //将finance_order表状态更改为“处理成功”
+            $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+                $respCode, $respDesc);
+            Base_Log::notice(array('msg'=>'更新表状态', 'bolRet'=>$bolRet));
+            if ($bolRet) {
+                //插入还款记录至表finance_record
+                Finance_Logic_Order::saveRecord($orderId, $outUserId, Finance_Order_Type::REPAYMENT,
+                    $amount, '财务类还款记录');
+    
+                //收款人的资金纪录入表finance_order
+                $paramOrder = array(
+                    'userId'      => $inUserId,//收款人的uid
+                    'type'        => Finance_Order_Type::REFUNDED,
+                    'amount'      => $amount,
+                    'status'      => Finance_Order_Status::SUCCESS,
+                    'freezeTrxId' => $orderId,//保存关联的还款订单号
+                    'comment'     => '回款入款成功',
+                );
+                $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
+                //插入还款记录至表finance_record
+                Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::REFUNDED,
+                    $amount, '财务类还款记录');
+    
+                //TODO:如有$fee则需要增加手续费记录，finance_order_type增加还款手续费
+    
+                //单笔还款成功，更新回款计划字段
+                $bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
+    
+                if(!$bolRet){
+                    Base_Log::error(array(
+                        'msg'      => '更新投资回款计划状态失败',
+                        'refundId' => $refundId,
+                        'info'     => $arrRefundInfo,
+                        'bolRet'   => $bolRet,
+                    ));
+                }
+    
+                $arrRefundInfo = Invest_Api::getRefundById($refundId);
+                Base_Log::notice(array(
+                    'msg'           => '单笔还款成功',
+                    'loanId'        => $loanId,
+                    'outUserId'     => $outUserId,
+                    'inUserId'      => $inUserId,
+                    'refundId'      => $refundId,
+                    'arrRefundInfo' => $arrRefundInfo,
+                    'bolRet'        => $bolRet,
+                ));
+                
+                //发送消息
+                Msg_Api::sendmsg($inUserId, Msg_Type::INVEST_BACK,array($amount));
+                
+                //投资人回款短信通知
+                $arrArgs = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
+                $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                $objUser = User_Api::getUserObject($inUserId);
+                Base_Sms::getInstance()->send($objUser->phone, $tplid[6], $arrArgs);
+    
+            }
+        }catch(Exception $e){
+            Base_Lock::unlock($cckey);
+            Base_Log::error($retParam);
+            return;
         }
-
         Base_Log::notice($retParam);
         print('RECV_ORD_ID_'.strval($orderId));
     }

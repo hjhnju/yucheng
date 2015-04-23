@@ -176,11 +176,11 @@ class Loan_Logic_Loan {
             'info'   => $arrInvestInfo,
             'bolRet' => $bolRet,
         ));
-        //短信通知
-        $arrArgs    = array('JK_'.$loanId, $transAmt);
-        $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-        $objOutUser = User_Api::getUserObject($outUserId);
-        $bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[4], $arrArgs);
+        //短信通知,都统一放到回调函数中发送
+        //$arrArgs    = array('JK_'.$loanId, $transAmt);
+        //$tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+        //$objOutUser = User_Api::getUserObject($outUserId);
+        //$bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[4], $arrArgs);
 
         return $bolRet;
     }
