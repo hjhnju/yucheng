@@ -605,6 +605,15 @@ class BgcallController extends Base_Controller_Page {
                     //插入记录至finance_record表
                     Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH, 
                         $transAmt, '充值记录');
+                    
+                    //发送消息
+                    Msg_Api::sendmsg($userId, Msg_Type::WITHDRAW,array($transAmt));
+                    
+                    //发送短信
+                    $arrArgs    = array($transAmt);
+                    $tplid      = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                    $objOutUser = User_Api::getUserObject($userId);
+                    $bResult    = Base_Sms::getInstance()->send($objOutUser->phone, $tplid[7], $arrArgs);
                 }               
         }                   
         //存在异步对账
