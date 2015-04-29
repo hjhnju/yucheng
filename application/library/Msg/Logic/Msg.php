@@ -52,6 +52,7 @@ class Msg_Logic_Msg {
     public function setReadAll($uid){
         $objsMsg = new Msg_List_Msg();
         $objsMsg->setFilter(array('receiver'=>$uid));
+        $objsMsg->setPagesize(PHP_INT_MAX);
         $arrObj = $objsMsg->getObjects();
         foreach ($arrObj as $obj){
             if(Msg_RetCode::MSG_REMOVE !== $obj->status){
