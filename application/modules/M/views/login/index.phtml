@@ -7,7 +7,7 @@
 {%block name="script"%}
 <script>
 	require(['m/login/index'], function (login) {
-	    login.init('{%$type%}');
+	    login.init('{%$smarty.get.type%}');
 	});
 </script>
 
@@ -49,7 +49,11 @@
                   <div class="login-op">
                     <a href="{%$webroot%}/user/modifypwd" class="login-forget">忘记密码?</a>
                   </div>
-			       <button  class="combtn login-fastlogin">立即登录</button>
+                  {%if $smarty.get.type eq weixin%}
+                         <button  class="combtn login-fastlogin">立即绑定</button>
+                   {%else%}
+                         <button  class="combtn login-fastlogin">立即登录</button>
+                   {%/if%}
                    <span class="login-tiaoyue-have">
                                                                      没有账户？&nbsp;&nbsp;<a href="{%$webroot%}/m/regist">立即注册</a>&nbsp;&nbsp;
                    </span> 

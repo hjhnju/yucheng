@@ -7,7 +7,7 @@
 {%block name="script"%}
 <script>
 	require(['m/regist/index'], function (regist) {
-	    regist.init('{%$type%}');
+	    regist.init('{%$smarty.get.type%}');
 	});
 </script>
 
@@ -59,7 +59,11 @@
                 
                    <button  class="combtn login-fastlogin">下一步</button>
                    <span class="login-tiaoyue-have">
-                                                                     已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/m/login">登录</a>&nbsp;&nbsp;
+                   {%if $smarty.get.type eq weixin%}
+                                                                     已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/m/login?">立即绑定</a>&nbsp;&nbsp;
+                   {%else%}
+                                                                    已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/m/login?">登录</a>&nbsp;&nbsp;
+                   {%/if%}
                    </span> 
                 
        </div>         
