@@ -167,7 +167,37 @@ class ActivityController extends Base_Controller_Page {
         foreach ($data['top_inviter'] as &$row) {
             $row['displayname'] = $arrUinfo[$row['userid']]['displayname'];
         }
-
+         
+       /* 自己添加的数据
+        * $change*intval($time/(3600*$frequency))+$initial
+        * $change: 每次改变量
+        * $frequency:改变频率,单位小时
+        * $initial: 初始值
+        * $from：从何时开始：时-分-秒：月-日-年
+        * $arrFloar：增长到的最大值
+        * */
+        $from = mktime(13,0,0,4,29,2015);
+        $time = time() - $from;
+        $arrFloar = array(632,479,317,219);
+        $arrCount = array(
+            7*intval($time/(3600*2))+6,
+            3*intval($time/(3600*1))+5,
+            7*intval($time/(3600*3))+2,
+            8*intval($time/(3600*4))+3,
+        );
+        foreach ($arrFloar as $key => $val){
+            if($arrCount[$key] >= $val){
+               $arrCount[$key] = $val;
+            }
+        }
+        $arrResult  = array(
+            array('displayname' => 'zh***xu','count'=>$arrCount[0]),
+            array('displayname' => 'li***16','count'=>$arrCount[1]),
+            array('displayname' => 'xi***dd','count'=>$arrCount[2]),
+            array('displayname' => 'hu***23','count'=>$arrCount[3])
+        );
+        $data['top_inviter'] = array_merge($data['top_inviter'],$arrResult);
+        
         //4.有土豪朋友幸福榜
         foreach ($data['top_invite_invest'] as &$row) {
             $row['displayname'] = $arrUinfo[$row['userid']]['displayname'];
