@@ -139,21 +139,6 @@ class User_Logic_Third {
             'openid' => $openId,
         );
     }
-    
-    /**
-     * 获取微信用户信息
-     * @param string $token
-     * @param string $openid
-     * @return array
-     */
-    public function getWeixinUserInfo($token, $openid){
-        $host     = self::$arrConfig['weixin']['host'];
-        $url      = sprintf(self::$arrConfig['weixin']['getinfo_url'],$token,$openid);
-        $post     = Base_Network_Http::instance()->url($host, $url);
-        $response = $post->exec();
-        $arrRet   = json_decode($response,true);
-        return $arrRet;
-    }
 
     /**
      * 获取绑定的userid
@@ -223,13 +208,7 @@ class User_Logic_Third {
                 'userid'=>$userid, 'openid'=>$openid, 'authtype'=>$authtype));
             return false;
         }
-        if('weixin' != $authtype){
-            $thirdUser   = $this->getUserInfo($accessToken, $openid, $authtype);
-            $objThird->nickname = $thirdUser->nickname;
-        }else{
-            $thirdUser   = $this->getWeixinUserInfo($accessToken, $openid);
-            $objThird->nickname = $thirdUser['nickname'];
-        }
+        $thirdUser   = $this->getUserInfo($accessToken, $openid, $authtype);
         $ret = $objThird->save();
         if(!$ret){
             Base_Log::warn(array('msg'=>'save objThrid failed',
@@ -294,16 +273,26 @@ class User_Logic_Third {
      * 获取第三方站点信息, 如果为空返回NULL,否则返回user的json对象
      * 失败返回空串
      */
-    private function getUserInfo($accessToken, $openid, $authtype){
-
+    public function getUserInfo($accessToken, $openid, $authtype){
         //redis先取，否则api取
         $arrData = self::$arrConfig[$authtype];
-        $host    = $arrData['host'];
-        $infoUrl = $arrData['getinfo_url'] . '?' . http_build_query(array(
-            'oauth_consumer_key' => $arrData['appid'],
-            'access_token' => $accessToken,
-            'openid' => $openid, 
-        ));
+        switch ($authtype){
+            case self::STR_TYPE_QQ:                
+                $host    = $arrData['host'];
+                $infoUrl = $arrData['getinfo_url'] . '?' . http_build_query(array(
+                    'oauth_consumer_key' => $arrData['appid'],
+                    'access_token'       => $accessToken,
+                    'openid'             => $openid,
+                ));
+                break;
+            case self::STR_TYPE_WEIXIN:
+                $host     = $arrData['host'];
+                $infoUrl  = sprintf($arrData['getinfo_url'],$accessToken,$openid);
+                break;
+            default:
+                break;
+        }
+
         $post     = Base_Network_Http::instance()->url($host, $infoUrl);
         $response = $post->exec();
         $resp     = json_decode($response);
