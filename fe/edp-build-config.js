@@ -52,11 +52,15 @@ exports.getProcessors = function () {
             'src/guide/index.less',
             'src/app/index.less',
             'src/help/index.less',
+            'src/activity/index.less',
+            'src/activity/spring/index.less',
+
+
             'src/m/regist/index.less',
             'src/m/login/index.less',
             'src/m/open/index.less',
-            'src/activity/index.less',
-            'src/activity/spring/index.less'
+            'src/m/project/list/index.less',
+            'src/m/project/detail/index.less'
 
         ]
     });
@@ -98,11 +102,16 @@ exports.getProcessors = function () {
             'src/guide/index.less',
             'src/app/index.less',
             'src/help/index.less',
+            'src/activity/index.less',
+            'src/activity/spring/index.less',
+
+
+
             'src/m/regist/index.less',
             'src/m/login/index.less',
             'src/m/open/index.less',
-            'src/activity/index.less',
-            'src/activity/spring/index.less'
+            'src/m/project/list/index.less',
+            'src/m/project/detail/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler({
@@ -149,11 +158,15 @@ exports.getProcessors = function () {
             'src/guide/index.js',
             'dep/jquery/1.9.1/src/jquery.min.js',
             'src/help/index.js',
+            'src/activity/index.js',
+            'src/activity/spring/index.js',
+
+
             'src/m/regist/index.js',
             'src/m/login/index.js',
             'src/m/open/index.js',
-            'src/activity/index.js',
-            'src/activity/spring/index.less'
+            'src/m/project/list/index.js',
+            'src/m/project/detail/index.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
