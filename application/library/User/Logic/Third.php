@@ -209,6 +209,7 @@ class User_Logic_Third {
             return false;
         }
         $thirdUser   = $this->getUserInfo($accessToken, $openid, $authtype);
+        $objThird->nickname = $thirdUser->nickname;
         $ret = $objThird->save();
         if(!$ret){
             Base_Log::warn(array('msg'=>'save objThrid failed',
