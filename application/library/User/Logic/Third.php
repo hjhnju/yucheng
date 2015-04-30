@@ -28,7 +28,13 @@ class User_Logic_Third {
             'getinfo_url'  => '/user/get_user_info',
         ),
         'weibo'   => array(),
-        'weixin'  => array(),
+        'weixin'  => array(
+        	'host'         => 'https://api.weixin.qq.com',
+            'appid'        => 'wx8caa620ee9e4503a',
+            'appkey'       => 'cb9adc61f9ef91f313dc3c69efaf0587',
+            'gettoken_url' => '/sns/oauth2/access_token?appid=wx8caa620ee9e4503a&secret=cb9adc61f9ef91f313dc3c69efaf0587&code=%s&grant_type=authorization_code',
+            'getinfo_url'  => '/sns/userinfo?access_token=%s&openid=%s',
+        ),
     );
     
     private $userid;
@@ -107,6 +113,47 @@ class User_Logic_Third {
 
         return $openid;
     }
+    
+    /**
+     * 由于微信登录与QQ登录URL及返回值类型都不相同，故新加一个接口
+     * @param unknown $strAuthCode
+     * @return boolean|mixed
+     */
+    public function WeixinLogin($strAuthCode){
+        if(empty($strAuthCode)){
+            return false;
+        }
+        $host  = self::$arrConfig['weixin']['host'];
+        $url   = sprintf(self::$arrConfig['weixin']['gettoken_url'],$strAuthCode);
+        $post  = Base_Network_Http::instance()->url($host, $url);     
+        try{
+            $response = $post->exec();
+            $arrRet = json_decode($response,true);
+            $accessToken = isset($arrRet['access_token'])?$arrRet['access_token']:'';
+            $openId      = isset($arrRet['openid'])?$arrRet['openid']:'';
+        } catch (Exception $ex){
+            Base_Log::warn($ex->getMessage());
+        }
+        return array(
+            'token'  => $accessToken,
+            'openid' => $openId,
+        );
+    }
+    
+    /**
+     * 获取微信用户信息
+     * @param string $token
+     * @param string $openid
+     * @return array
+     */
+    public function getWeixinUserInfo($token, $openid){
+        $host     = self::$arrConfig['weixin']['host'];
+        $url      = sprintf(self::$arrConfig['weixin']['getinfo_url'],$token,$openid);
+        $post     = Base_Network_Http::instance()->url($host, $url);
+        $response = $post->exec();
+        $arrRet   = json_decode($response,true);
+        return $arrRet;
+    }
 
     /**
      * 获取绑定的userid
@@ -176,8 +223,13 @@ class User_Logic_Third {
                 'userid'=>$userid, 'openid'=>$openid, 'authtype'=>$authtype));
             return false;
         }
-        $thirdUser   = $this->getUserInfo($accessToken, $openid, $authtype);
-        $objThird->nickname = $thirdUser->nickname;
+        if('weixin' != $authtype){
+            $thirdUser   = $this->getUserInfo($accessToken, $openid, $authtype);
+            $objThird->nickname = $thirdUser->nickname;
+        }else{
+            $thirdUser   = $this->getWeixinUserInfo($accessToken, $openid);
+            $objThird->nickname = $thirdUser['nickname'];
+        }
         $ret = $objThird->save();
         if(!$ret){
             Base_Log::warn(array('msg'=>'save objThrid failed',
