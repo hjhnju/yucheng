@@ -51,10 +51,15 @@ define(function (require) {
      */
     var defaultOpts = {
         mask: true,             //是否有遮罩层
-        width: 200,             //浮层的宽度
+        width: 200,             //浮层的宽度 
         defaultTitle: true,     //是否有title
         title: '',              //title内容
-        content: ''             //浮层内容
+        bgClass:'',             //bg 的样式
+        content: '',            //浮层内容
+        contentClass:'',        //内容样式
+        data:{},                //传递的数据
+        confirmBack:function(){}//点击确定的回掉函数
+
     };
 
     var view = {
@@ -142,11 +147,37 @@ define(function (require) {
             fixPosition();
         });
         $('#popup-close,.popup-close').on('click', closePopup);
+
+
+    }
+
+   /**
+    * 显示 (确定-取消)选择 浮层
+    *
+    * @inner
+    */
+    function confirmPopup(conf, cb) {
+        var options = $.extend({}, defaultOpts, conf);
+        options.width = (options.width + '').replace(/px$/, '');
+        view.options = options;
+
+        $('body').append(etpl.render('dialogConfirm', options));
+
+        fixPosition();
+        bindEvents();
+
+        cb && cb();
+
+        //确定回调函数
+        $('.popup-confirm').click(function(){
+            options.confirmBack(options.data);
+        });
     }
 
     return {
         init: init,
         show: showPopup,
-        closePopup: closePopup
+        closePopup: closePopup,
+        confirm: confirmPopup
     };
 });
