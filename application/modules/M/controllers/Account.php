@@ -31,6 +31,11 @@ class AccountController extends Base_Controller_Page{
         $rechargeurl  = $this->webroot.'/account/cash/recharge';
         $withdrawurl = "$this->webroot".'/account/cash/withdraw';
         $money        = Invest_Api::getUserEarnings($this->userid);
+        
+        $thismoth     = strtotime(date("Y-m"));
+        $monthMoney   = Invest_Api::getEarningsMonthly($this->userid,$thismoth);
+        $monthProfit  = $monthMoney[date("Y-m")];
+        $monthProfit = Base_Util_Number::tausendStyle(floatval($monthProfit));// 本月收益
 
         // 累计收益
         $totalProfit = Base_Util_Number::tausendStyle(floatval($money['all_income']));// 累计收益
@@ -49,6 +54,7 @@ class AccountController extends Base_Controller_Page{
         $this->getView()->assign("totalAsset", $totalAsset);
         $this->getView()->assign("frzBal",$frzBal);
         $this->getView()->assign("totalProfit",$totalProfit);
+        $this->getView()->assign("monthProfit",$monthProfit);
         $this->getView()->assign("totalInvest",$totalInvest);
         $this->getView()->assign("reposPrifit",$reposPrifit);
         $this->getView()->assign("reposPrincipal",$reposPrincipal); 
