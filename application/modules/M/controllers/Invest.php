@@ -29,6 +29,7 @@ class InvestController extends Base_Controller_Page {
      * /m/invest/detail 
      */
     public function detailAction() {
+       
         $this->getView()->assign('title', "项目详情");
 
          $id = $this->getInt('id');
@@ -77,8 +78,12 @@ class InvestController extends Base_Controller_Page {
      * @return [type] [description]
      */
     public function bidAction() {
-        $this->getView()->assign('title', "立即投资");   
-         $id = $this->getInt('id');
+        $this->getView()->assign('title', "立即投资");
+        $id = $this->getInt('id');
+        $user = User_Api::checkLogin();   
+        if(empty($user)){
+            $this->redirect("/m/login?u=/m/invest/bid?id=$id");
+        }        
         if (empty($id)) {
             $this->outputError(Base_RetCode::PARAM_ERROR);
         }
