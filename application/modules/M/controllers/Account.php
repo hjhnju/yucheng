@@ -9,7 +9,7 @@ class AccountController extends Base_Controller_Page{
     
     public function init(){
         //未登录跳转
-        $this->setNeedLogin(false);       
+        $this->setNeedLogin(true);       
         parent::init();
         $this->huifuid       = !empty($this->objUser) ? $this->objUser->huifuid : '';
         $this->userInfoLogic = new Account_Logic_UserInfo();
