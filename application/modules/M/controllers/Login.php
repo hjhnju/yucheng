@@ -24,7 +24,7 @@ class LoginController extends Base_Controller_Page {
         $logic  = new User_Logic_Login();
         $userid = $logic->checkLogin();
         if($userid){
-            $this->redirect('/account/overview');
+            $this->redirect('/m/account/overview');
         }
         $u = isset($_REQUEST['u'])?trim($_REQUEST['u']):null;
         if(!empty($u)){
@@ -72,7 +72,7 @@ class LoginController extends Base_Controller_Page {
             'code' => $strAuthCode,
             'openid' => $openid,
             ));
-            $this->redirect('/account/overview');
+            $this->redirect('/m/account/overview');
         }else{
             //用户未绑定账号
             //session 中已存openid

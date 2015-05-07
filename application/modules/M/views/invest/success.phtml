@@ -1,0 +1,40 @@
+{%extends file="../../../views/common/m/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/open/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+var value = 3;
+/* var timer = setInterval(function() {
+       var time = document.querySelector(".countdown");
+          time.innerText = --value+"秒后返回";
+          if (value < 0) {
+              clearInterval(timer);
+              window.location.href='/m/account';
+          }
+
+   }, 1000);*/
+</script>
+{%/block%}
+
+{%block name="content"%}
+ <div class="kaitong">
+      <div class="kaitong-box-title flex-center">
+          <div  class="logo-img">
+             <img alt="兴教贷" src="{%$feroot%}/m/common/img/logo.png">
+           </div>
+      </div>
+      <div class="success-box-content flex-center"> 
+           <div class="success-box-content-bg"> 
+                <img alt="兴教贷" src="{%$feroot%}/m/common/img/success_bg.png"> 
+                <div class="title">投资成功</div> 
+           </div>   
+       </div>  
+       <div class="color-green t_c"><labe class="countdown">3秒后返回</labe><a class="color-green" href="/">我的账户</a></div>
+          
+   </div>
+ 
+
+{%/block%}

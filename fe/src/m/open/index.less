@@ -1,26 +1,28 @@
 @import "../common/css/index.less";
 body {
-  background-color:#e7e7eb;
+    background-color: #e7e7eb;
 }
-.kaitong-box-title { 
-      padding: 24px 0px 15px 0px;
+
+.kaitong-box-title {
+    padding: 24px 0px 15px 0px;
 }
+
 @media screen and (max-width: 640px) {
-   .layout {
+    .layout {
         padding-bottom: 60px;
-   }
-   .logo-img {
-        width: 66%; 
-        box-sizing:border-box;
     }
-    .logo-img   img{
-        width: 100%;   
+    .logo-img {
+        width: 66%;
+        box-sizing: border-box;
     }
-   .kaitong-box-content {
-       width: 100%;
-       padding: 0px 30px;
-   }  
-   .login-fastlogin {
+    .logo-img img {
+        width: 100%;
+    }
+    .kaitong-box-content {
+        width: 100%;
+        padding: 0px 30px;
+    }
+    .login-fastlogin {
         margin-top: 15px;
         width: 100%;
         height: 40px;
@@ -36,31 +38,40 @@ body {
         margin: 30px 0px 0px;
     }
     .kaitong-box-content-title {
-          color: #000000;
-          font-size: 18px;
-          text-align: center;
-          line-height: 24px;
+        color: #000000;
+        font-size: 18px;
+        text-align: center;
+        line-height: 24px;
     }
     //注册成功
-     .success-box-content {
-         margin: 65px 0px 0px 0px; 
-
-         .success-box-content-bg { 
-             width: 35%;
-         } 
-         .success-box-content-bg img { 
-             width: 100%;
-         } 
-     }
-     .begin {
-            color: #4fc501;
-            display: block;
-            height: 40px;
-            line-height: 40px;
-            font-size: 14px;
-            text-align: center;
-         } 
-    .welcome{
+    .success-box-content {
+        margin: 65px 0px 0px 0px;
+        .success-box-content-bg {
+            width: 35%;
+            position: relative;
+            img {
+                width: 100%;
+            }
+            .title {
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                color: #fff;
+                font-size: 18px;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+    .begin {
+        color: #4fc501;
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        text-align: center;
+    }
+    .welcome {
         position: absolute;
         bottom: 50px;
         text-align: center;
@@ -68,19 +79,20 @@ body {
         width: 100%;
         color: #fd6d6d;
         font-size: 15px;
-      }
+    }
 }
+
 @media screen and (min-width: 640px) {
-   .layout {
-     padding-bottom: 60px;
-     width: 500px;
-     margin: 0 auto;
-   }
+    .layout {
+        padding-bottom: 60px;
+        width: 500px;
+        margin: 0 auto;
+    }
     .kaitong-box-content {
-   	    width: 100%;
-       padding: 0px 30px;
-   }
-     .login-fastlogin {
+        width: 100%;
+        padding: 0px 30px;
+    }
+    .login-fastlogin {
         margin-top: 15px;
         width: 100%;
         height: 40px;
@@ -88,40 +100,48 @@ body {
         font-size: 20px;
         display: block;
     }
-     .kaitong-box-text {
+    .kaitong-box-text {
         width: 100%;
         color: #7f7f7f;
-         text-align: left;
+        text-align: left;
         line-height: 18px;
         margin: 30px 0px 0px;
     }
-     .kaitong-box-content-title {
-          color: #000000;
-          font-size: 18px;
-          text-align: center;
-          line-height: 24px;
+    .kaitong-box-content-title {
+        color: #000000;
+        font-size: 18px;
+        text-align: center;
+        line-height: 24px;
     }
     //注册成功
-     .success-box-content {
-         margin: 65px 0px 0px 0px; 
-
-         .success-box-content-bg { 
+    .success-box-content {
+        margin: 65px 0px 0px 0px;
+        .success-box-content-bg {
             width: 35%;
-          } 
-         .success-box-content-bg img { 
-             width: 100%;
-         } 
-         
-     }
+            position: relative;
+            img {
+                width: 100%;
+            }
+            .title {
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                color: #fff;
+                font-size: 18px;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
     .begin {
-            color: #4fc501;
-            display: block;
-            height: 40px;
-            line-height: 40px;
-            font-size: 14px;
-            text-align: center;
-      } 
-      .welcome{
+        color: #4fc501;
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        text-align: center;
+    }
+    .welcome {
         position: absolute;
         bottom: 50px;
         text-align: center;
@@ -129,5 +149,5 @@ body {
         width: 100%;
         color: #fd6d6d;
         font-size: 15px;
-      }
+    }
 }

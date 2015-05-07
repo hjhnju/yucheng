@@ -113,9 +113,9 @@ define(function () {
         MY_MSG_SETREAD_ADD: rootUrl
             + '/msg/read',
             //+ '/test/account/message/setread.json',
-        MY_MSG_EDL:rootUrl
+        MY_MSG_DEL:rootUrl
             +"/msg/del",
-        MY_MSG_EDLALL:rootUrl
+        MY_MSG_DELALL:rootUrl
             +"/msg/delall",
         MY_MSG_SETREADALL:rootUrl
             +"/msg/readall",

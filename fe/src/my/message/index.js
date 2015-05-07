@@ -27,12 +27,12 @@ define(function(require) {
     var tpl = require('./list.tpl');
 
     var status = 0;
+    var container = $('#my-msg-list');
+    var pager;
 
     function init() {
         header.init();
         dialog.init();
-        var container = $('#my-msg-list');
-        var pager;
 
         etpl.compile(tpl);
 
@@ -92,30 +92,50 @@ define(function(require) {
 
         //删除选定消息事件
         container.delegate('.del-msg', 'click', function() {
-
-            /*  dialog.show({
-                 width: 500,
-                 defaultTitle: false,
-                 content: etpl.render('fixBox')
-             });*/
-            if (confirm("您确定要删除此条消息么？")) {
-                var id = $(this).parent().prev().find('.msg-content-text').attr('data-id');
-                delMsg.remote({
-                    mid: id
-                });
-            }
+            var id = $(this).parent().prev().find('.msg-content-text').attr('data-id');
+            var data = {
+                mid: id
+            };
+            dialog.confirm({
+                width: 440,
+                content: '您确定删除该条消息么？',
+                data: data,
+                confirmBack: function(data) {
+                    var id = $(this).parent().prev().find('.msg-content-text').attr('data-id');
+                    delMsg.remote(data);
+                     dialog.closePopup();
+                }
+            });
+            /*    if (confirm("您确定要删除此条消息么？")) {
+                    var id = $(this).parent().prev().find('.msg-content-text').attr('data-id');
+                    delMsg.remote({
+                        mid: id
+                    });
+                }*/
 
         });
 
         //全部标记为已读 
         $('.set-readAll-btn').click(function() {
-
-            if (confirm("您确定要把所有消息设置为已读么？")) {
+            var userid = $(this).attr('data-userid');
+            var data = {
+                uid: userid
+            };
+            dialog.confirm({
+                width: 440,
+                content: '您确定要把所有消息设置为已读么？',
+                data: data,
+                confirmBack: function(data) {
+                    setReadAll.remote(data);
+                    dialog.closePopup();
+                }
+            });
+            /*if (confirm("您确定要把所有消息设置为已读么？")) {
                 var userid = $(this).attr('data-userid');
                 setReadAll.remote({
                     uid: userid
                 });
-            }
+            }*/
 
         });
     }
@@ -216,7 +236,7 @@ define(function(require) {
         setRead.on('success', function(data) {
             if (data.bizError) {
                 alert(data.statusInfo);
-            } else { 
+            } else {
                 if (data.unreadMsg > 0) {
                     $('.mynews-count').html('(' + data.unreadMsg + ')');
                     $('.default-fastlogin .unreadmsg').html('(' + data.unreadMsg + '条未读)');
