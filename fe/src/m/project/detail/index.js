@@ -15,7 +15,7 @@ define(function(require) {
     var etpl = require('etpl');
     var tpl = require('./index.tpl');
     var Pager = require('common/ui/Pager/Pager');
-    var iScroll = require('m/common/iscroll'); 
+    var iScroll = require('m/common/iscroll');
     var moment = require('moment');
     var pager;
     var model = {};
@@ -24,7 +24,7 @@ define(function(require) {
 
     var myScroll;
 
-
+    var flexsliderCount = 0;
     /**
      * 初始化方法
      * @param {Object} initData
@@ -54,34 +54,21 @@ define(function(require) {
      *绑定事件
      */
     function bindEvent() {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(loaded, 200);
-        }, false);
         //点击标题滑出详情
-        $(".operate-content .list-title").click(function() {
+        $(".box-content .pro-title").click(function() {
+
+
             var current = $(this).next();
-            var all = $(".operate-content .list-text");
-            current.slideToggle();
+            var all = $(".box-content .pro-content");
+            current.slideToggle(1000, function() {flexSlider()});
             current.hasClass("current") ? current.removeClass("current") : (all.removeClass("current"), current.addClass("current"));
 
-            var others = $(".operate-content .list-text").not(".current");
+            var others = all.not(".current");
             others.slideUp();
+
+
         });
-
-
-        //图片左右滚动 
-        var picScroll = $("#files");
-        if (picScroll) {
-            myScroll = new iScroll(picScroll, {
-                scrollX: true,
-                scrollY: false,
-                mouseWheel: false
-            });
-            document.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-            }, false);
-        }
-
+        slide();
     }
 
 
@@ -134,7 +121,42 @@ define(function(require) {
 
     }
 
+    /*
+     * 幻灯片效果
+     * */
+    function slide() {
+        var blueimp = require('common/extra/Gallery/js/blueimp-gallery');
+        $("#files .slides").click(function(event) {
+            event = event || window.event;
+            var target = event.target || event.srcElement;
+            var link = target.src ? target.parentNode : target;
+            var options = {
+                index: link,
+                event: event,
+                onclosed: function() {}
+            };
+            var links = this.getElementsByTagName('a');
+            blueimp(links, options);
+        });
+    }
 
+    /*
+      图片轮播效果
+     */
+    function flexSlider() {
+        if (flexsliderCount == 0) {
+            require('common/extra/FlexSlider/jquery.flexslider');
+            $("#files").flexslider({
+                animation: "slide",
+                controlNav: false,
+                minItems: 1, //{NEW} Integer: 一次最少展示滑动内容的单元个数
+                maxItems: 1, //{NEW} Integer: 一次最多展示滑动内容的单元个数
+                move: 1
+            });
+            flexsliderCount=1;
+        }
+
+    }
     return {
         init: init
     };

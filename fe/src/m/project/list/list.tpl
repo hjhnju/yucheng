@@ -9,7 +9,7 @@
 <!-- target: returnInvestList -->
 
 <!-- for: ${list} as ${item} -->
-<li>
+<li onclick="window.location.href='/m/invest/detail?id=${item.id}'">
 	<div class="title">
 		<span class="name-shi fl">
 			 <!-- if: ${item.type_id} == 1 -->
@@ -21,7 +21,7 @@
             <!-- /if -->  
 		</span>
 	    <span class="invest-title fl">${item.title}</span> 
-       <span class="grade-star level-{%$data.level_name%}" ></span>  
+       <span class="grade-star level-${item.level_name}" ></span>  
 	</div>
 	<div class="content align-center flex-x f-hl" style="">
 		<span class="lilv" >

@@ -19,15 +19,15 @@
 
 {%block name="content"%} 
 <style type="text/css" media="screen">
-
+ 
  
 </style>
 <div class="invest">
 <div class="box-title {%if isset($user)%}login{%/if%}" id="header">
    	   {%if isset($user)%}
          <img src="{%$feroot%}/m/project/list/img/head_pic.jpg" alt="头像" class="head-pic">
-           <span class="head-username">{%$user.username%} fanyy</span>
-           <span class="balance">可用余额 <span class="balance-count">￥242,223,234.00</span></span>
+           <span class="head-username">{%$user.username%}</span>
+           <span class="balance">可用余额 <span class="balance-count">￥{%$userBalance.amount_text%}</span></span>
        {%else%} 
          <a class="common-a-btn btn-login fl" href="{%$webroot%}/m//login" >登录</a>
          <a class="common-a-btn btn-regist fl" href="{%$webroot%}/m/regist">注册</a>
@@ -40,11 +40,11 @@
 			   <span class="pullDownIcon"></span><span class="pullDownLabel">加载最新</span>
 		    </div>
 		    <ul class="investlist" id="investlist-box">
-		    	 
+		    	   <div class="loading"></div>
 		    </ul>
 		    <div id="pullUp">
-				<span class="pullUpIcon"></span><span class="pullUpLabel">加载更多</span>
-			</div>
+          <span class="pullUpIcon"></span><span class="pullUpLabel">加载更多</span>
+        </div>
 		</div>			
 </div>
  </div>

@@ -1,0 +1,102 @@
+ {%extends file="../../../views/common/m/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/project/detail/index.css" /> 
+{%/block%} 
+
+{%block name="script"%}
+<script>
+  require(['m/project/detail/bid'], function (main) {
+        main.init({
+            id: '{%$data.id%}',
+            amountRest: '{%$data.amount_rest%}',
+            userAmount: '{%if isset($userBalance.amount)%}{%$userBalance.amount%}{%else%}0.00{%/if%}',
+            interest: +'{%$data.interest%}',
+            days: +'{%$data.days%}',
+            sTime: +'{%$data.create_time%}',
+            eTime: +'{%$data.deadline%}',
+            fullTime: +'{%$data.full_time%}'
+        });
+  }); 
+</script>
+
+{%/block%}
+
+{%block name="content"%}   
+<div class="invest bid">
+   <div class="box-title">
+   	  <div style="margin:0 auto;width:65%;min-width:236px;" class="flex-center">
+   	  	<span class="name-shi">
+	    {%if $item.type_id == 1%}实
+        {%else if $item.type_id == 2%}信
+        {%else%}机
+        {%/if%}
+	  </span>
+	  <span class="project-title" >
+	  	 {%$data.title%}
+	  </span> 
+	  {%if isset({%$data.level_name%})%}
+            <span class="grade-star level-{%$data.level_name%}" ></span>
+      {%/if%}
+  </div>
+   </div>
+	<div class="box-content">
+	    <ul class="investlist">
+	    	<li class="item"> 
+	    		<div class="content align-center"> 
+	    			<span class="price" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;">
+	    				<span class="price-title flex-center">
+	    					<span class="total">可投金额<label class="count color-6">&nbsp;￥{%$data.amount_rest%}</label></span>
+	    				   
+	    				</span>
+	    				 <span class="price-title" style="display: block;z-index: 100;position:relative;">
+	    					<span class="total">可用余额<label class="count color-red" >&nbsp;￥{%$userBalance.amount_text%}</label>
+                                <a class="common-a-btn recharge-btn" href="/m/recharge">充值</a>
+                         </span>
+	    				</span> 
+	    				<span class="price-content">  
+		                     <span class="jindu-number">
+		                            80%
+		                     </span> 
+		    				<span class="jindu">
+		    					 <span class="jindu-box">
+		                            <span class="jindu-box-inline" style="width: 80%;"></span>
+			                     </span>
+	    					</span> 
+	    				</span> 
+	    		    </span>  
+	    		</div>
+	    	</li>  
+	    </ul>
+        <form class="right-top" id="invest-form" action="/invest/tender" method="post"> 
+	     <div class="pro-action" style="margin-top: 20px;position:relative;">
+		    <div class="pro-title">
+                投资金额:
+                <input name="amount" maxlength="10" type="text" autocomplete="off" class="input right-top-ipt-input"   placeholder="输入投资金额" max="{%$data.amount_rest%}" />元
+                <a class="common-a-btn recharge-btn confirm-all fr">全投</a>
+            </div>  
+		 </div>
+         <div class="chongzhi-right">预期收益：<span class="chongzhi-span  color-red">0.00</span>
+            <div class="color-red fr show" id="chongzhi-error"> </div>
+         </div> 
+		  <div class="pro-action">
+		    <div class="pro-title">使用优惠券：
+                <select name="bonus" id="bonus">
+                    <option value="" selected="selected">请选择使用的红包</option>
+                    <option value="196303">满4000减20 （剩 16 天）</option>
+                    <option value="196301">满1000减10 （剩 16 天）</option>
+                    <option value="196307">满20000减50 （剩 46 天）</option>
+                    <option value="196305">满8000减20 （剩 46 天）</option>
+                </select>
+            </div>
+		    
+		 </div>	 
+        <div class="status">
+        	<a class="combtn status-biding confirm-submit" >确定投资</a>	  
+        </div>
+	    <label class="tiaoyue-lable" for="tiaoyue-itp">
+                   <input autocomplete="off" type="checkbox" checked="" id="tiaoyue-itp">同意兴教贷<a href="/agreements">用户协议</a></label>
+         </form>          
+	</div>
+</div>
+{%/block%}

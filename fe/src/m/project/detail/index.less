@@ -6,6 +6,7 @@
       min-width: 320px;
       max-width: 640px;
       .box-title {
+          background-image:none;
           border-bottom: 3px solid #6ec076;
           background-size: 100% 100%;
           width: 100%;
@@ -44,6 +45,7 @@
           width: 100%;
           margin: 0 auto;
           .investlist {
+              width: 100%;
               li {
                   border-bottom: 1px solid #fff;
               }
@@ -83,10 +85,9 @@
                           font-size: 18px;
                       }
                   }
-                  .price {
-                      /*  max-width: 400px; */
-                      
+                  .price { 
                       min-width: 200px;
+                      max-width: none;
                       display: block;
                       line-height: 25px;
                       .order(2);
@@ -120,8 +121,7 @@
                               .flex(1);
                           }
                           .count {
-                              font-size: 15px;
-                              color: #666666;
+                              font-size: 13px;
                           }
                           .time {
                               font-size: 10px;
@@ -133,7 +133,7 @@
                           color: #666666;
                           position: absolute;
                           right: 0px;
-                          top: 28px;
+                          top: 34px;
                           text-align: center;
                           .jindu {
                               width: 45%;
@@ -145,7 +145,7 @@
                           .jindu-box {
                               width: 100%;
                               height: 8px;
-                              background-color: #cccccc;
+                              background-color: #fff;
                               text-align: left;
                               border-radius: 20px;
                               margin: -4px 4px 0px 0px;
@@ -162,7 +162,7 @@
                               color: @color-red;
                               display: block;
                               text-align: right;
-                              line-height: 18px;
+                              line-height: 22px;
                               .lilv-bai {
                                   font-size: 10px;
                               }
@@ -201,6 +201,7 @@
                   padding: 10px 0;
                   border-bottom: 1px solid #dfdfdf;
                   border-top: 1px solid #dfdfdf;
+                  cursor: pointer;
               }
               .pro-content {
                   display: none;
@@ -327,6 +328,37 @@
       top: 40%;
   }
   
+  .detail-unlogin {
+      text-align: center;
+      a {
+          color: @color-green;
+          text-decoration: none;
+          &:hover {
+              color: @color-green;
+          }
+          &:visited {
+              color: @color-green;
+          }
+      }
+  }
+  
+  .color-hui {
+      background-color: #e7e7ec;
+      color: #666;
+  }
+  
+  .main-detail-content {
+      text-align: center;
+      td {
+          padding: 4px 0px;
+      }
+      .color-hui {
+          td {
+              padding: 10px;
+          }
+      }
+  }
+  
   .flex-direction-nav .flex-prev {
       opacity: 1;
       left: 0px;
@@ -335,6 +367,53 @@
   .flex-direction-nav .flex-next {
       opacity: 1;
       right: 0px;
+  }
+  
+  .bid {
+      .box-content {
+          .investlist {
+              .content {
+                  .price {
+                      padding-left: 0px;
+                      .price-title {
+                          line-height: 30px;
+                      }
+                      .price-content {
+                          top: 35px;
+                          z-index: 1;
+                      }
+                  }
+              }
+          }
+          .pro-action .pro-title {
+              text-align: left;
+              line-height: 40px;
+              padding: 0px 10px;
+              input {
+                  line-height: 40px;
+                  font-size: 14px;
+                  max-width: 140px;
+                  height: 40px;
+              }
+          }
+      }
+      .recharge-btn {
+          display: inline-block;
+          width: 50px;
+          margin-left: 10px;
+          &:hover {}
+      }
+      .chongzhi-right {
+          line-height: 40px;
+          color: #acacac;
+          padding: 0px 10px;
+      }
+      .confirm-all {
+          position: absolute;
+          line-height: 24px;
+          top: 10px;
+          right: 10px;
+      }
   }
   
   @media screen and (max-width: 640px) {}
@@ -352,30 +431,7 @@
                       .name-shi {}
                       .invest-title {
                           margin-left: 10px;
-                      }
-                      .grade-star {
-                          &.level-aaa {
-                              background-position: 7px 0;
-                          }
-                          &.level-aa {
-                              background-position: 7px -100px;
-                          }
-                          &.level-a {
-                              background-position: 7px -200px;
-                          }
-                          &.level-b {
-                              background-position: 7px -300px;
-                          }
-                          &.level-c {
-                              background-position: 7px -400px;
-                          }
-                          &.level-d {
-                              background-position: 7px -500px;
-                          }
-                          &.level-hr {
-                              background-position: 7px -600px;
-                          }
-                      }
+                      } 
                   }
                   .content {
                       height: 120px;
@@ -383,11 +439,11 @@
                           width: 80px;
                           height: 80px;
                           min-width: 80px;
-                          line-height: 30px;
+                          line-height: 28px;
                           font-size: 18px;
                           padding: 10px 0px;
                           .lilv-number {
-                              font-size: 28px;
+                              font-size: 20px;
                           }
                       }
                       .price {

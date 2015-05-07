@@ -1,48 +1,50 @@
   @import "../../common/css/index.less";
-html {
-    -ms-touch-action: none;
-}
-body { 
-    overflow: hidden; /* this is important to prevent the whole page to bounce */
-}
-#wrapper {
-    position: absolute;
-    z-index: 1;
-    top: 26px;
-    bottom: 50px;
-    left: 0;
-    width: 100%; 
-    overflow: hidden;
-    padding: 0px;
-}
-
-#scroller {
-    position: absolute;
-    z-index: 1;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    width: 100%;
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    -o-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-text-size-adjust: none;
-    -moz-text-size-adjust: none;
-    -ms-text-size-adjust: none;
-    -o-text-size-adjust: none;
-    text-size-adjust: none;
-}
-
-
+  html {
+      -ms-touch-action: none;
+  }
+  
+  body {
+      overflow: hidden;
+      /* this is important to prevent the whole page to bounce */
+  }
+  
+  #wrapper {
+      position: absolute;
+      z-index: 1;
+      top: 26px;
+      bottom: 50px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      padding: 0px;
+  }
+  
+  #scroller {
+      position: absolute;
+      z-index: 1;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      width: 100%;
+      -webkit-transform: translateZ(0);
+      -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      -o-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+      -o-text-size-adjust: none;
+      text-size-adjust: none;
+  }
+  
   .invest {
       background-color: #e7e7ec;
       min-width: 320px;
-      .box-title {
+      /* .box-title {
           background: url(img/title_bg.png) right center no-repeat #6ec076;
           background-size: 100% 100%;
           width: 100%;
@@ -106,12 +108,32 @@ body {
               font-size: 20px;
               line-height: 30px;
           }
-      }
+      } */
+      
       .box-content {
           padding: 25px 0 0px 0;
           width: 93.75%;
           margin: 0 auto;
           .investlist {
+              .loadding {
+                  height: 40px;
+                  width: 40px;
+                  margin: 0 auto;
+                  background-position: 0 100%;
+                  -webkit-transform: rotate(0deg) translateZ(0);
+                  -webkit-transition-duration: 0ms;
+                  -webkit-animation-name: loading;
+                  -webkit-animation-duration: 2s;
+                  -webkit-animation-iteration-count: infinite;
+                  -webkit-animation-timing-function: linear;
+                  background: url(../../common/img/pull-icon@2x.png) 0 0 no-repeat;
+                  -webkit-background-size: 40px 80px;
+                  background-size: 40px 80px;
+                  -webkit-transition-property: -webkit-transform;
+                  -webkit-transition-duration: 250ms;
+              }
+          }
+          /* .investlist {
               width: 93.75%;
               margin: 0 auto;
               li {
@@ -194,8 +216,7 @@ body {
                       }
                   }
                   .price {
-                      max-width: 400px;
-                      min-width: 200px;
+                      max-width: 400px; 
                       display: block;
                       .order(2);
                       .flex(1);
@@ -345,7 +366,7 @@ body {
                       }
                   }
               }
-          }
+          } */
       }
   }
   
@@ -354,7 +375,6 @@ body {
   @media screen and (min-width: 640px) {
       .invest {
           .box-title {
-             
               .btn-login {}
               .btn-regist {}
               .head-pic {}

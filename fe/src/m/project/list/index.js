@@ -75,7 +75,7 @@ define(function(require) {
                     msg: data.statusInfo
                 });
             } else {
-
+                 var  pullUpEl = document.getElementById('pullUp'); 
                 if (!data.list.length&& data.page==1) {
                     htmlContainer.html(etpl.render('Error', {
                         msg: '当前没有数据呦'
@@ -85,7 +85,6 @@ define(function(require) {
                 if (data.page > data.pageall) {
 
                     //下拉没有更多啦
-                    var  pullUpEl = document.getElementById('pullUp'); 
                         pullUpEl.className = '';
                         pullUpEl.querySelector('.pullUpLabel').innerHTML = '全部加载完毕'; 
 
@@ -98,6 +97,7 @@ define(function(require) {
                         htmlContainer.html(etpl.render("returnInvestList", {
                             list: data.list
                         }));
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '正在加载...';
                     } else {
                         htmlContainer.append(etpl.render("returnInvestList", {
                             list: data.list

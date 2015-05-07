@@ -60,7 +60,8 @@ exports.getProcessors = function () {
             'src/m/login/index.less',
             'src/m/open/index.less',
             'src/m/project/list/index.less',
-            'src/m/project/detail/index.less'
+            'src/m/project/detail/index.less',
+            'src/m/account/index.less'
 
         ]
     });
@@ -111,7 +112,8 @@ exports.getProcessors = function () {
             'src/m/login/index.less',
             'src/m/open/index.less',
             'src/m/project/list/index.less',
-            'src/m/project/detail/index.less'
+            'src/m/project/detail/index.less',
+            'src/m/account/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler({
@@ -166,7 +168,8 @@ exports.getProcessors = function () {
             'src/m/login/index.js',
             'src/m/open/index.js',
             'src/m/project/list/index.js',
-            'src/m/project/detail/index.js'
+            'src/m/project/detail/index.js',
+            'src/m/project/detail/bid.js'
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({

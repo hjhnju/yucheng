@@ -1,8 +1,10 @@
  {%extends file="../../../views/common/m/page.phtml"%}
 
 {%block name="link"%}
-<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/project/detail/index.css" />
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/common/extra/FlexSlider/flexslider.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/common/extra/Gallery/css/blueimp-gallery.css" />
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/project/detail/index.css" />
+
 {%/block%} 
 
 {%block name="script"%}
@@ -18,23 +20,17 @@
             eTime: +'{%$data.deadline%}',
             fullTime: +'{%$data.full_time%}'
         });
-  });
- require(['jquery','common/extra/FlexSlider/jquery.flexslider'], function (main) {
-      var $=require('jquery'); 
-       $("#files").flexslider(
-        { 
-          animation:"slide", 
-          controlNav: false,
-          minItems: 1, //{NEW} Integer: 一次最少展示滑动内容的单元个数
-          maxItems: 1, //{NEW} Integer: 一次最多展示滑动内容的单元个数
-          move: 1 
-        });
-    });
+  }); 
 </script>
 
 {%/block%}
 
-{%block name="content"%}  
+{%block name="content"%} 
+ <style>
+   #files{
+    width: 100%;
+   }
+ </style>
 <div class="invest">
    <div class="box-title">
    	  <div style="margin:0 auto;width:65%;min-width:236px;" class="flex-center">
@@ -54,7 +50,7 @@
    </div>
 	<div class="box-content">
 	    <ul class="investlist">
-	    	<li class="item"> 
+	    	<li class="item" style=""> 
 	    		<div class="content align-center">
 	    			<span class="lilv">
 	    				年利率<br/>
@@ -62,7 +58,7 @@
 	    			</span>
 	    			<span class="price" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;">
 	    				<span class="price-title flex-center">
-	    					<span class="total">借款总额<label class="count">&nbsp;￥11,500,000.00</label></span>
+	    					<span class="total">借款总额<label class="count">&nbsp;￥{%$data.amount%}</label></span>
 	    				    <span class="lilv-day">期限<label class="count">&nbsp;{%$data.duration_day%}{%$data.duration_type%}</label></span>
 	    				</span>
 	    				 <span class="price-title">
@@ -94,7 +90,7 @@
 	    </ul>
 	    <div class="pro-action" style="margin-top: 20px;">
 		    <div class="pro-title">项目介绍</div>
-		    <div class="pro-content" style="display: block;">
+		    <div class="pro-content" >
                      {%if isset($userBalance.amount)%}
                         {%if !empty($data.private)%}
                         <div class="details-main-box">
@@ -275,22 +271,23 @@
                         {%/if%}
                         {%else%}
                         <div class="detail-unlogin">
-                            请 <a href="/m/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                            请 <a href="/m/login">登录</a> 或 <a href="/m/regist">注册</a> 后查看
                         </div>
                         {%/if%}
 		    </div>
 		</div>
 		<div class="pro-action">
 		    <div class="pro-title">文件资料</div>
-		    <div class="pro-content" style="display: block;">
+		    <div class="pro-content" >
 		    	 {%if isset($userBalance.amount)%} 
                     <div class="details-main-box"> 
                          <div class="main-detail-content" id="files">
-                             <ul class="detail-item slides">
+                             <ul class="detail-item slides" >
                               {%if !empty($data.attach['认证材料'])%}
                                     {%foreach $data.attach['认证材料'] as $key => $item%}
                                     <li class="detail-item-list img-city">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.thumb%}" />
+                                        <a href="{%$item.thumb%}" title="{%$item.title%}">
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.thumb%}" /></a>
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%} 
@@ -298,7 +295,8 @@
                                {%if !empty($data.attach['合同协议'])%} 
                                     {%foreach $data.attach['合同协议'] as $key => $item%}
                                     <li class="detail-item-list">
-                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.thumb%}" style="width: 100px;height:150px;"/>
+                                         <a href="{%$item.thumb%}" title="{%$item.title%}">
+                                        <img alt="{%$item.title%}" class="detail-item-list-img" src="{%$item.thumb%}" style="width: 100px;height:150px;"/></a>
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%} 
@@ -306,41 +304,56 @@
                                 {%if !empty($data.attach['实地照片'])%} 
                                     {%foreach $data.attach['实地照片'] as $key => $item%}
                                     <li class="detail-item-list img-city" >
-                                        <img alt="{%$item.title%}" style="" class="detail-item-list-img" src="{%$item.thumb%}" />
+                                         <a href="{%$item.thumb%}" title="{%$item.title%}">
+                                        <img alt="{%$item.title%}" style="" class="detail-item-list-img" src="{%$item.thumb%}" /></a>
                                         <p class="detail-item-p">{%$item.title%}</p>
                                     </li>
                                     {%/foreach%} 
                                  {%/if%}
                               </ul>
                             </div>
-                        </div>
+                    </div>
+                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls"> 
+                       <div class="slides"></div>
+                        <h3 class="title"></h3>
+                        <a class="prev">‹</a>
+                        <a class="next">›</a>
+                        <a class="close">×</a>
+                        <a class="play-pause"></a>
+                        <ol class="indicator"></ol>
+                    </div>
                   {%else%}
                 <div class="detail-unlogin">
-                    请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                    请 <a href="/m/login">登录</a> 或 <a href="/m/regist">注册</a> 后查看
                 </div>
                {%/if%}
 		    </div>
 		</div>	
 		<div class="pro-action">
 		    <div class="pro-title">投资记录</div>
-		    <div class="pro-content" style="display: block;">
+		    <div class="pro-content" >
 		    	  {%if isset($userBalance.amount)%}
-                        <div class="details-main-box">
-                            <div class="main-box-detail-title">投资记录</div>
+                        <div class="details-main-box"> 
                             <div class="main-detail-content" id="toulist">
                             </div>
                         </div>
                         <div id="page"></div>
                         {%else%}
                         <div class="detail-unlogin">
-                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                            请 <a href="/m/login">登录</a> 或 <a href="/m/regist">注册</a> 后查看
                         </div>
                   {%/if%}
 		    </div>
 		</div>	
         <div class="status">
-        	<button class="combtn status-biding">立即投资</button>	
-        	<span class="reset-count">可用余额<label class="count">￥500,000,.00</label></span>
+        	<a class="combtn status-biding"  href="/m/invest/bid?id={%$data.id%}">立即投资</a>	 
+        	{%if isset($userBalance.amount)%}
+        	  <span class="reset-count">可用余额
+        		 <label class="count">￥{%$userBalance.amount_text%}</label>
+              </span> 
+        	{%else%}
+        	      <a href="/m/login" class="color-green">立即登录</a>
+        	{%/if%}
         	<span class="recharge fr">余额不足？<a href="" class="to-recharge">立即充值</a></span>	
         </div>
 			
