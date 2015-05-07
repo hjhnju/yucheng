@@ -21,8 +21,12 @@ class InvestController extends Base_Controller_Page {
      */
     public function indexAction() {
     	$this->getView()->assign('title', "投资列表");
-
-        
+    	$logic = new Invest_Logic_Invest();
+        // 登录用户增加账号余额信息
+        if (!empty($this->userid)) {
+            $user = $logic->getUserBalance($this->objUser);
+            $this->_view->assign('userBalance', $user);
+        }
     }
     /*
      * 投资项目详情页面  
@@ -32,7 +36,7 @@ class InvestController extends Base_Controller_Page {
        
         $this->getView()->assign('title', "项目详情");
 
-         $id = $this->getInt('id');
+        $id = $this->getInt('id');
         if (empty($id)) {
             $this->outputError(Base_RetCode::PARAM_ERROR);
         }
@@ -79,9 +83,8 @@ class InvestController extends Base_Controller_Page {
      */
     public function bidAction() {
         $this->getView()->assign('title', "立即投资");
-        $id = $this->getInt('id');
-        $user = User_Api::checkLogin();   
-        if(empty($user)){
+        $id = $this->getInt('id');  
+        if(empty($this->userid)){
             $this->redirect("/m/login?u=/m/invest/bid?id=$id");
         }        
         if (empty($id)) {

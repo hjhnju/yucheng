@@ -20,7 +20,11 @@ class TenderController extends Base_Controller_Page {
 		$amount = floatval($_REQUEST['amount']);
 		$uid    = $this->userid;
 		$sess   = Yaf_Session::getInstance();
-
+		$isMobile = Base_Util_Mobile::isMobile();
+		$investUrl = '/invest';
+		if($isMobile){
+		    $investUrl = '/m/invest';
+		}
 	    if (empty($loanId) || empty($amount) || empty($uid)) {
 	        Base_Log::notice(array(
                 'msg'  => '投标参数错误',
@@ -28,9 +32,9 @@ class TenderController extends Base_Controller_Page {
             ));
 	        if (!empty($loanId)) {
     	        $sess->set('invest_error', Invest_RetCode::PARAM_ERROR);
-    	        return $this->redirect('/invest/detail?id=' . $loanId);
+    	        return $this->redirect("$investUrl/detail?id=" . $loanId);
 	        }
-	        return $this->redirect('/invest/fail');
+	        return $this->redirect("$investUrl/fail");
 	    }
 
         // 检查是否允许投标
@@ -43,7 +47,7 @@ class TenderController extends Base_Controller_Page {
                 'post' => $_REQUEST,
             ));
 	        $sess->set('invest_error', $retCode);
-	        return $this->redirect('/invest/detail?id=' . $loanId);
+	        return $this->redirect("$investUrl/detail?id=" . $loanId);
 	    }
 	    // 检查用户余额是否满足
 	    $userAmount = Finance_Api::getUserAvlBalance($uid);
@@ -53,9 +57,11 @@ class TenderController extends Base_Controller_Page {
                 'post' => $_REQUEST,
             ));
 	        $sess->set('invest_error', Invest_RetCode::AMOUNT_NOTENOUGH);
-	        return $this->redirect('/invest/detail?id=' . $loanId);
+	        return $this->redirect("$investUrl/detail?id=" . $loanId);
 	    }
-
+	    //使用代金券时，则此金额包含代金券的金额，为投资人实际投资金额
+	    $vocherAmt = 0.00;
+	    $amount += $vocherAmt;
 	    // 检查金额是否满足投标要求
 	    if (!$logic->isAmountLegal($loanId, $amount)) {
 	        Base_Log::notice(array(
@@ -63,7 +69,7 @@ class TenderController extends Base_Controller_Page {
                 'post' => $_REQUEST,
             ));
 	        $sess->set('invest_error', Invest_RetCode::AMOUNT_ERROR);
-	        return $this->redirect('/invest/detail?id=' . $loanId);
+	        return $this->redirect("$investUrl/detail?id=" . $loanId);
         }
 
         Base_Log::notice(array(
@@ -71,8 +77,8 @@ class TenderController extends Base_Controller_Page {
             'post' => $_REQUEST,
         ));
 	    // 主动投标（会跳转至汇付）
-	    $vocherAmt = 0.00;
 	    $interest  = 0.00;
+
 	    return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt);
 	}
 
