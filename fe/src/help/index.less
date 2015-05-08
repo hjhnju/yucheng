@@ -9,6 +9,32 @@
     .container {
         background: url(img/help_bg1.png) 0 0 no-repeat;
         height: 300px;
+        width: 1045px;
+        .guide-btn {
+            font-size: 20px;
+            line-height: 32px;
+            color: #fff;
+            display: block;
+            height: 32px;
+            width: 130px;
+            border: 1px solid #fff;
+            text-decoration: none;
+            text-align: center;
+            position: absolute;
+            bottom: 64px;
+            left: 158px;
+            z-index: 99;
+        }
+        .guide-btn-shine {
+            width: 130px;
+            height: 32px;
+            background: url('img/shine.png');
+            position: absolute;
+            background-position: -150px 0;
+            bottom: 64px;
+            left: 158px;
+            background-repeat: no-repeat;
+        }
     }
 }
 
@@ -169,8 +195,7 @@
     .content-list {
         width: 832px;
         margin: 0 auto;
-        margin-bottom: 40px;
-        margin-top: 40px;
+        margin-bottom: 12px; 
         li {
             margin-top: 4px;
         }
@@ -248,6 +273,7 @@
             table {
                 border: solid #cfcfd0;
                 border-width: 0px 0px 0px 0px;
+                background-color: #eff5d9;
                 td {
                     text-align: center;
                     border: solid #cfcfd0;
@@ -282,26 +308,29 @@
 //操作演示 部分特殊样式
 .operate-demo-menu {
     .menu-title {
+        display: block;
+        height: 98px;
         background: url(img/help_menu_icon.png) 420px -965px no-repeat;
+        position: relative;
         .people {
-            display: block;
-            position: absolute;
-            right: 0px;
-            top: 28px;
-            width: 80px;
-            height: 70px;
-            background: url(img/people1.png) 0 0 no-repeat;
+           display: block;
+        position: absolute;
+        right: 0px;
+        top: 28px;
+        width: 80px;
+        height: 70px;
+        background: url(img/people1.png) 0 0 no-repeat;
         }
         .backup {
-            display: block;
-            position: absolute;
-            right: 84px;
-            top: 16px;
-            width: 126px;
-            height: 46px;
-            background: url(img/help_menu_icon.png) 0 -1100px no-repeat;
+           display: block;
+        position: absolute;
+        right: 84px;
+        top: 16px;
+        width: 126px;
+        height: 46px;
+        background: url(img/help_menu_icon.png) 0 -1100px no-repeat;
         }
-    }
+    } 
     .menu-box {
         height: 98px;
         margin: 0px 0px 12px 0px;
@@ -319,7 +348,7 @@
                     background-color: #9ee4eb;
                     margin-right: 2px;
                 }
-                &.withdraw {
+                &.bindcard-withdraw {
                     background-color: #aee282;
                 }
             }
@@ -351,6 +380,8 @@
     }
     .content-list {
         width: 906px;
+        margin-bottom: 40px;
+        margin-top: 40px;
         .list-step {
             font-family: "Arial";
             font-size: 14px;

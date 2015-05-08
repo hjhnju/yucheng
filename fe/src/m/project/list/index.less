@@ -1,0 +1,467 @@
+  @import "../../common/css/index.less";
+  html {
+      -ms-touch-action: none;
+  }
+  
+  body {
+      overflow: hidden;
+      /* this is important to prevent the whole page to bounce */
+  }
+  
+  #wrapper {
+      position: absolute;
+      z-index: 1;
+      top: 26px;
+      bottom: 50px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      padding: 0px;
+  }
+  
+  #scroller {
+      position: absolute;
+      z-index: 1;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      width: 100%;
+      -webkit-transform: translateZ(0);
+      -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      -o-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-text-size-adjust: none;
+      -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+      -o-text-size-adjust: none;
+      text-size-adjust: none;
+  }
+  
+  .invest {
+      background-color: #e7e7ec;
+      min-width: 320px;
+      /* .box-title {
+          background: url(img/title_bg.png) right center no-repeat #6ec076;
+          background-size: 100% 100%;
+          width: 100%;
+          min-height: 65px;
+          max-width: 640px;
+          top: 0;
+          position: fixed;
+          z-index: 10;
+          &.login {
+              background: url(img/title_bg2.png) right center no-repeat #6ec076;
+          }
+          .btn-login {
+              border-radius: 5px;
+              border: 1px solid #fff;
+              color: #fff;
+              width: 54px;
+              height: 38px;
+              line-height: 38px;
+              font-size: 15px;
+              position: absolute;
+              top: 25%;
+              left: 10px;
+          }
+          .btn-regist {
+              border-radius: 5px;
+              border: 1px solid #fff;
+              color: #fff;
+              width: 54px;
+              height: 38px;
+              line-height: 38px;
+              font-size: 15px;
+              position: absolute;
+              top: 25%;
+              left: 70px;
+          }
+          .head-pic {
+              width: 50px;
+              height: 50px;
+              margin: 0px 5px 0px 10px;
+              border-radius: 5px;
+          }
+          .head-username {
+              color: #fff;
+              font-size: 15px;
+              margin: 0px 0px 0px 0px;
+              line-height: 70px;
+              display: inline-block;
+              height: 70px;
+          }
+          .balance {
+              color: #fff;
+              position: absolute;
+              top: 20px;
+              text-align: right;
+              right: 10px;
+              line-height: 20px;
+          }
+          .balance-count {
+              display: block;
+              color: #f2746a;
+              font-size: 20px;
+              line-height: 30px;
+          }
+      } */
+      
+      .box-content {
+          padding: 25px 0 0px 0;
+          width: 93.75%;
+          margin: 0 auto;
+          .investlist {
+              .loadding {
+                  height: 40px;
+                  width: 40px;
+                  margin: 0 auto;
+                  background-position: 0 100%;
+                  -webkit-transform: rotate(0deg) translateZ(0);
+                  -webkit-transition-duration: 0ms;
+                  -webkit-animation-name: loading;
+                  -webkit-animation-duration: 2s;
+                  -webkit-animation-iteration-count: infinite;
+                  -webkit-animation-timing-function: linear;
+                  background: url(../../common/img/pull-icon@2x.png) 0 0 no-repeat;
+                  -webkit-background-size: 40px 80px;
+                  background-size: 40px 80px;
+                  -webkit-transition-property: -webkit-transform;
+                  -webkit-transition-duration: 250ms;
+              }
+          }
+          /* .investlist {
+              width: 93.75%;
+              margin: 0 auto;
+              li {
+                  border-bottom: 1px solid #fff;
+              }
+              .title {
+                  height: 40px;
+                  margin: 12px 0px 0px 0px;
+                  .name-shi {
+                      display: block;
+                      height: 20px;
+                      line-height: 20px;
+                      width: 20px;
+                      text-align: center;
+                      color: #fff;
+                      font-size: 10px;
+                      background-color: #76cf65;
+                      margin: 10px 0px 0px 0px;
+                      -webkit-border-radius: 3px;
+                      -moz-border-radius: 3px;
+                      border-radius: 3px;
+                  }
+                  .invest-title {
+                      display: block;
+                      font-size: 20px;
+                      line-height: 40px;
+                      color: #2f2e2e;
+                      margin-left: 5px;
+                  }
+                  .grade-star {
+                      display: block;
+                      width: 47px;
+                      height: 40px;
+                      background: url("../../common/img/grade_icon.png") 0 0 no-repeat;
+                      &.level-aaa {
+                          background-position: 7px 0;
+                      }
+                      &.level-aa {
+                          background-position: 7px -100px;
+                      }
+                      &.level-a {
+                          background-position: 7px -200px;
+                      }
+                      &.level-b {
+                          background-position: 7px -300px;
+                      }
+                      &.level-c {
+                          background-position: 7px -400px;
+                      }
+                      &.level-d {
+                          background-position: 7px -500px;
+                      }
+                      &.level-hr {
+                          background-position: 7px -600px;
+                      }
+                  }
+              }
+              .content {
+                  height: 80px;
+                  width: 100%;
+                  -webkit-box-pack: center;
+                  -moz-box-pack: center;
+                  -webkit-box-align: center;
+                  -moz-box-align: center;
+                  .lilv {
+                      display: block;
+                      color: #fff;
+                      width: 60px;
+                      height: 60px;
+                      min-width: 60px;
+                      background-color: #f2746a;
+                      border-radius: 50px;
+                      text-align: center;
+                      line-height: 18px;
+                      font-size: 11px;
+                      padding: 10px 0px;
+                      .order(1);
+                      .lilv-number {
+                          font-size: 18px;
+                      }
+                  }
+                  .price {
+                      max-width: 400px; 
+                      display: block;
+                      .order(2);
+                      .flex(1);
+                      width: 68%;
+                      .price-title {
+                          width: 100%;
+                          font-size: 10px;
+                          color: #acacac;
+                          span {
+                              display: block;
+                              width: 60px;
+                              min-width: 60px;
+                              line-height: 25px;
+                              text-align: center;
+                          }
+                          .total {
+                              width: 37%;
+                              min-width: 74px;
+                              .order(1);
+                              .flex(1);
+                          }
+                          .lilv-day {
+                              width: 18%;
+                              min-width: 40px;
+                              .order(2);
+                              .flex(1);
+                          }
+                          .jindu {
+                              width: 25%;
+                              .order(3);
+                              .flex(1);
+                              -webkit-box-pack: center;
+                              -moz-box-pack: center;
+                              -webkit-box-align: center;
+                              -moz-box-align: center;
+                          }
+                      }
+                      .price-content {
+                          width: 100%;
+                          font-size: 10px;
+                          color: #666666;
+                          span {
+                              line-height: 25px;
+                              text-align: center;
+                          }
+                          .total {
+                              display: block;
+                              width: 37%;
+                              min-width: 74px;
+                              .order(1);
+                              .flex(1);
+                          }
+                          .lilv-day {
+                              display: block;
+                              width: 18%;
+                              min-width: 40px;
+                              .order(2);
+                              .flex(1);
+                          }
+                          .jindu {
+                              width: 25%;
+                              .order(3);
+                              .flex(1);
+                              -webkit-box-pack: center;
+                              -moz-box-pack: center;
+                              -webkit-box-align: center;
+                              -moz-box-align: center;
+                          }
+                          .jindu-box {
+                              width: 50%;
+                              height: 8px;
+                              background-color: #cccccc;
+                              text-align: left;
+                              border-radius: 20px;
+                              .order(1);
+                              display: block;
+                              .jindu-box-inline {
+                                  display: block;
+                                  min-width: 10px;
+                                  background-color: @color-red;
+                                  height: 8px;
+                                  border-radius: 20px;
+                              }
+                          }
+                          .jindu-number {
+                              .order(2);
+                              color: @color-red;
+                              .lilv-bai {
+                                  font-size: 10px;
+                              }
+                          }
+                      }
+                  }
+                  .status {
+                      width: 50px;
+                      min-width: 50px;
+                      height: 30px;
+                      line-height: 30px;
+                      font-size: 12px;
+                      padding: 0px 2px;
+                      order: 3;
+                      .status-biding {
+                          display: inline-block;
+                          width: 50px;
+                          height: 30px;
+                          line-height: 30px;
+                          text-align: center;
+                          text-decoration: none;
+                          color: #fff;
+                          margin-top: 0px;
+                          background-color: #76cf65;
+                          border-radius: 8px;
+                          -webkit-border-radius: 8px;
+                          -moz-border-radius: 8px;
+                          transition: background-color 0.4s ease-in-out;
+                          -webkit-transition: background-color 0.4s ease-in-out;
+                          -moz-transition: background-color 0.4s ease-in-out;
+                          -o-transition: background-color 0.4s ease-in-out;
+                          &:hover {
+                              background-color: #72e45d;
+                              transition: background-color 0.4s ease-in-out;
+                              -webkit-transition: background-color 0.4s ease-in-out;
+                              -moz-transition: background-color 0.4s ease-in-out;
+                              -o-transition: background-color 0.4s ease-in-out;
+                          }
+                          &.current {
+                              color: #666;
+                              background-color: #b2b2b2;
+                          }
+                          &.current:hover {
+                              background-color: #b2b2b2;
+                          }
+                          &.start {
+                              color: #fff;
+                              background-color: #f2746a;
+                          }
+                          &.start:hover {
+                              background-color: #f2746a;
+                          }
+                          &.finshed {
+                              color: #666;
+                              background-color: #b2b2b2;
+                          }
+                          &.finshed:hover {
+                              background-color: #b2b2b2;
+                          }
+                      }
+                  }
+              }
+          } */
+      }
+  }
+  
+  @media screen and (max-width: 640px) {}
+  
+  @media screen and (min-width: 640px) {
+      .invest {
+          .box-title {
+              .btn-login {}
+              .btn-regist {}
+              .head-pic {}
+              .head-username {
+                  color: #fff;
+              }
+              .balance {
+                  right: 20px;
+              }
+              .balance-count {}
+          }
+          .box-content {
+              padding: 25px 0px 0px 0px;
+              .investlist {
+                  .title {
+                      margin: 12px 0px 0px 0px;
+                      .name-shi {}
+                      .invest-title {
+                          margin-left: 10px;
+                      }
+                      .grade-star {
+                          &.level-aaa {
+                              background-position: 7px 0;
+                          }
+                          &.level-aa {
+                              background-position: 7px -100px;
+                          }
+                          &.level-a {
+                              background-position: 7px -200px;
+                          }
+                          &.level-b {
+                              background-position: 7px -300px;
+                          }
+                          &.level-c {
+                              background-position: 7px -400px;
+                          }
+                          &.level-d {
+                              background-position: 7px -500px;
+                          }
+                          &.level-hr {
+                              background-position: 7px -600px;
+                          }
+                      }
+                  }
+                  .content {
+                      height: 120px;
+                      .lilv {
+                          width: 80px;
+                          height: 80px;
+                          min-width: 80px;
+                          line-height: 28px;
+                          font-size: 18px;
+                          padding: 10px 0px;
+                          .lilv-number {
+                              font-size: 22px;
+                          }
+                      }
+                      .price {
+                          .price-title {
+                              &.total {}
+                              &.lilv-day {}
+                              &.jindu {}
+                          }
+                          .price-content {
+                              &.total {}
+                              &.lilv-day {}
+                              &.jindu {}
+                              .jindu-box {
+                                  .jindu-box-inline {}
+                              }
+                              .jindu-number {}
+                          }
+                      }
+                      .status {
+                          width: 120px;
+                          min-width: 120px;
+                          height: 44px;
+                          font-size: 24px;
+                          line-height: 44px;
+                          .status-biding {
+                              width: 120px;
+                              height: 44px;
+                              line-height: 44px;
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  }

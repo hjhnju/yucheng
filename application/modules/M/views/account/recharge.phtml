@@ -1,0 +1,36 @@
+{%extends file="../../../views/common/m/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/m/open/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+  require(['m/open/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%} 
+   <div class="kaitong">
+      <div class="kaitong-box-title flex-center">
+          <div  class="logo-img">
+             <img alt="兴教贷" src="{%$feroot%}/m/common/img/logo.png">
+           </div>
+      </div> 
+     <div class="box-content">
+        <div class="reset-count">
+            可用余额 <span class="count">￥{%$avlBal%}</span>
+        </div>
+        <div class="pro-action" style="">
+            <div class="pro-title">
+                充值金额:
+                <input name="amount" maxlength="10" type="text" autocomplete="off" class="input right-top-ipt-input"   placeholder="输入充值金额" max="{%$data.amount_rest%}" />元 
+            </div>  
+         </div>
+     </div>
+    
+
+   </div>  
+{%/block%}
