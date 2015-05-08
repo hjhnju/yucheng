@@ -170,16 +170,16 @@ class ActivityController extends Base_Controller_Page {
         
         //加入的数据
         $arrResult  = array(
-            array('displayname' => Base_Util_String::starUsername('fengzhong'),'count'=>234),
-            array('displayname' => Base_Util_String::starUsername('aiqinghai'),'count'=>107),
-            array('displayname' => Base_Util_String::starUsername('shijidahe'),'count'=>211),
-            array('displayname' => Base_Util_String::starUsername('guoshen'),'count'=>99),
-            array('displayname' => Base_Util_String::starUsername('zhonglian'),'count'=>87),
-            array('displayname' => Base_Util_String::starUsername('chongming'),'count'=>66),
-            array('displayname' => Base_Util_String::starUsername('wuzetianxia'),'count'=>59),
-            array('displayname' => Base_Util_String::starUsername('haowangjiao'),'count'=>47),
-            array('displayname' => Base_Util_String::starUsername('yongsheng'),'count'=>32),
-            array('displayname' => Base_Util_String::starUsername('baihuajifang'),'count'=>11)
+            array('displayname' => Base_Util_String::starUsername('fengzhong'),'count'=>525),
+            array('displayname' => Base_Util_String::starUsername('shijidahe'),'count'=>498),
+            array('displayname' => Base_Util_String::starUsername('aiqinghai'),'count'=>471),
+            array('displayname' => Base_Util_String::starUsername('guoshen1'),'count'=>432),
+            array('displayname' => Base_Util_String::starUsername('zhonglian88'),'count'=>591),
+            array('displayname' => Base_Util_String::starUsername('chongming'),'count'=>466),
+            array('displayname' => Base_Util_String::starUsername('wuzetianxia'),'count'=>359),
+            array('displayname' => Base_Util_String::starUsername('haowangjiao'),'count'=>347),
+            array('displayname' => Base_Util_String::starUsername('yongsheng'),'count'=>332),
+            array('displayname' => Base_Util_String::starUsername('baihuajifang'),'count'=>311)
         );
         
         $data['top_inviter'] = array_merge($data['top_inviter'], $arrResult);  
