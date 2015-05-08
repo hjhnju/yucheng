@@ -95,22 +95,18 @@ define(function(require) {
     /*
      * 幻灯片效果
      * */
-    function slide() {
-        var blueimp = require('common/extra/Gallery/js/blueimp-gallery');
-        event = event || window.event;
-        var target = event.target || event.srcElement;
-        var link = target.src ? target.parentNode : target;
-        var options = {
-            index: link,
-            event: event,
-            onclosed: function() {
-                $("#scrollUp").show();
-            }
-        };
-        var links = this.getElementsByTagName('a');
-        blueimp(links, options);
-        //隐藏返回顶部按钮
-        $("#scrollUp").hide();
+    function slide() { 
+         var  blueimp = require('common/extra/Gallery/js/blueimp-gallery');
+         $("#zhengjian").click(function (event) {
+            event = event || window.event;
+             var target = event.target || event.srcElement;
+            var link = target.src ? target.parentNode : target;
+            var options = {index: link, event: event,onclosed:function(){$("#scrollUp").show();}};
+            var links = this.getElementsByTagName('a'); 
+            blueimp(links, options);
+            //隐藏返回顶部按钮
+            $("#scrollUp").hide();
+        }); 
     }
 
     return {

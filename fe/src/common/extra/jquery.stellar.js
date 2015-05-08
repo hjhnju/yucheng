@@ -6,8 +6,7 @@
  * This content is released under the MIT license
  * http://markdalgleish.mit-license.org
  */
-define('common / extra / jquery.stellar
-        ', [
+define('common/extra/jquery.stellar', [
         'require',
         'jquery'
     ],
