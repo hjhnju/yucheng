@@ -25,7 +25,10 @@
 <div class="invest">
 <div class="box-title {%if isset($user)%}login{%/if%}" id="header">
    	   {%if isset($user)%}
+       <a href="{%$webroot%}/m/account/overview">
          <img src="{%$feroot%}/m/common/img/head_pic.jpg" alt="头像" class="head-pic">
+       </a>
+         
            <span class="head-username">{%$user.username%}</span>
            <span class="balance">可用余额 <span class="balance-count">￥{%$userBalance.amount_text%}</span></span>
        {%else%} 
