@@ -40,14 +40,16 @@ define(function(require) {
         // 全部投资
         $('.confirm-all').click(function() {
             var ipt = $('.right-top-ipt-input');
+            var tip = $('.chongzhi-span');
 
             investError.hasClass('show') && investError.removeClass('show');
 
             if (ipt[0].disabled) {
                 return;
-            }
-
-            ipt.val(Math.min(model.userAmount, model.amountRest));
+            } 
+            var value=Math.min(model.userAmount, model.amountRest);
+            ipt.val(value); 
+            tip.html(caculateIncome(value || 0));
         });
 
         // 点差消失error
@@ -61,6 +63,11 @@ define(function(require) {
 
             // 已经提示error或者不可投资
             if (ipt[0].disabled) {
+                return false;
+            }
+            //未同意协议不可投资
+            if (!$('#tiaoyue-itp')[0].checked) {
+                alert('请同意用户协议');
                 return false;
             }
 

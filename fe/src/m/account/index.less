@@ -1,23 +1,19 @@
   @import "../common/css/index.less";
   /*字体图标开始*/
-  
-/* @font-face {font-family: "accountfont";
+  /* @font-face {font-family: "accountfont";
   src: url('iconfont.eot'); IE9
   src: url('iconfont.eot?#iefix') format('embedded-opentype'), IE6-IE8
   url('iconfont.woff') format('woff'), chrome、firefox
   url('iconfont.ttf') format('truetype'), chrome、firefox、opera、Safari, Android, iOS 4.2+
   url('iconfont.svg#accountfont') format('svg'); iOS 4.1-
 } */
-
-  @font-face {
-      font-family: "accountfont";
-      src: url('font/iconfont.eot'); 
-      src: url('font/iconfont.eot?#iefix') format('embedded-opentype'), 
-      url('font/iconfont.woff') format('woff'), 
-      url('font/iconfont.ttf') format('truetype'), 
-      url('font/iconfont.svg#accountfont') format('svg'); 
-  }
   
+  @font-face {
+      font-family: 'accountfont';
+      src: url('font/accountfont-icon.eot');
+      src: url('font/accountfont-icon.eot?#iefix') format('embedded-opentype'), url('font/accountfont-icon.woff') format('woff'), url('font/accountfont-icon.ttf') format('truetype'), url('font/accountfont-icon.svg#accountfont') format('svg');
+  }
+ 
   .accountfont {
       font-family: "accountfont" !important;
       font-size: 16px;
@@ -51,13 +47,19 @@
       content: "\e605";
   }
   /*字体图标结束*/
+  
   .box-title {
-    min-height: 130px;
-     background: url(../common/img/title_bg3.png) right center no-repeat #6ec076;
-     background-size: 100% 130px;
+      min-height: 130px;
+      background: url(../common/img/title_bg3.png) right center no-repeat #6ec076;
+      background-size: 100% 130px;
+      .head-username {
+          line-height: 130px;
+      }
+      .balance {
+          top: 70px;
+      }
   }
-
-
+  
   .box-content {
       color: #666;
       padding: 130px 0px 0px 0px;
@@ -67,9 +69,10 @@
           line-height: 25px;
           background-color: #fff;
           li {
+              width: 50%;
               border: 0px solid #e7e7ec;
               line-height: 20px;
-                padding: 10px 0px;
+              padding: 10px 0px;
               .flex(1);
           }
           .title {
@@ -115,5 +118,16 @@
           width: 80%;
           margin: 0 auto;
           margin-top: 30px;
+      }
+      .pro-action .pro-title {
+          text-align: left;
+          line-height: 40px;
+          padding: 0px 10px;
+          input {
+              line-height: 40px;
+              font-size: 14px;
+              max-width: 140px;
+              height: 40px;
+          }
       }
   }

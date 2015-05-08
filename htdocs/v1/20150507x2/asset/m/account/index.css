@@ -159,7 +159,7 @@ input::-ms-reveal{display:none}
 @-webkit-keyframes loading{from{-webkit-transform:rotate(0deg) translateZ(0)}
 to{-webkit-transform:rotate(360deg) translateZ(0)}
 }
-@font-face{font-family:grade-star;src:url(../common/font/grade-star.eot);src:url(../common/font/grade-star.eot?#iefix) format('embedded-opentype'),url(../common/font/grade-star.woff) format('woff'),url(../common/font/grade-star.ttf) format('truetype'),url(../common/font/grade-star.svg#grade-star) format('svg')}
+@font-face{font-family:grade-star;src:url(../common/font/grade-star-icon.eot);src:url(../common/font/grade-star-icon.eot?#iefix) format('embedded-opentype'),url(../common/font/grade-star-icon.woff) format('woff'),url(../common/font/grade-star-icon.ttf) format('truetype'),url(../common/font/grade-star-icon.svg#grade-star) format('svg')}
 .grade-star{font-family:grade-star!important;font-size:30px;line-height:40px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}
 .grade-star.level-aaa{color:#75cf64}
 .grade-star.level-aa{color:#75cf64}
@@ -220,7 +220,7 @@ to{-webkit-transform:rotate(360deg) translateZ(0)}
 }
 @media screen and (max-width:320px){.container{overflow-x:scroll}
 }
-@font-face{font-family:accountfont;src:url(font/iconfont.eot);src:url(font/iconfont.eot?#iefix) format('embedded-opentype'),url(font/iconfont.woff) format('woff'),url(font/iconfont.ttf) format('truetype'),url(font/iconfont.svg#accountfont) format('svg')}
+@font-face{font-family:accountfont;src:url(font/account-icon.eot);src:url(font/account-icon.eot?#iefix) format('embedded-opentype'),url(font/account-icon.woff) format('woff'),url(font/account-icon.ttf) format('truetype'),url(font/account-icon.svg#accountfont) format('svg')}
 .accountfont{font-family:accountfont!important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}
 .icon-withdraw:before{content:"\e600"}
 .icon-recharge:before{content:"\e601"}
@@ -229,6 +229,8 @@ to{-webkit-transform:rotate(360deg) translateZ(0)}
 .icon-directionleft:before{content:"\e604"}
 .icon-directionright:before{content:"\e605"}
 .box-title{min-height:130px;background:url(../common/img/title_bg3.png) right center no-repeat #6ec076;background-size:100% 130px}
+.box-title .head-username{line-height:130px}
+.box-title .balance{top:70px}
 .box-content{color:#666;padding:130px 0 0}
 .box-content .income{width:100%;text-align:center;line-height:25px;background-color:#fff}
 .box-content .income li{border:0 solid #e7e7ec;line-height:20px;padding:10px 0;-moz-box-flex:1;-webkit-box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}

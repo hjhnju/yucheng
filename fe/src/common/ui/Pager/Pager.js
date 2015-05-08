@@ -5,7 +5,7 @@
  * @time 14-11-18
  */
 
-define(function (require) {
+define(function(require) {
 
     var XEmitter = require('common/XEmitter');
     var $ = require('jquery');
@@ -25,12 +25,12 @@ define(function (require) {
     Pager.prototype = {
         constructor: Pager,
 
-        init: function () {
+        init: function() {
             var me = this;
             this.opt.main = $(this.opt.main);
             this.render(0);
 
-            this.opt.main.delegate('.ui-pager-item', 'click', function (e) {
+            this.opt.main.delegate('.ui-pager-item', 'click', function(e) {
                 e.preventDefault();
                 var value = +$.trim($(this).attr('data-value'));
                 me.emit('change', {
@@ -45,7 +45,7 @@ define(function (require) {
          * 渲染页面
          * @param {number} page 页码value值
          */
-        render: function (page) {
+        render: function(page) {
             // 总数为1时不显示分页
             if (this.opt.total === 1) {
                 this.opt.main.html('');
@@ -66,7 +66,7 @@ define(function (require) {
          * @param {number} page 实际页码数
          * @returns {Object}
          */
-        calculateItem: function (page) {
+        calculateItem: function(page) {
             page = page || 1;
             var result = {
                 hasprev: 1,
@@ -112,23 +112,25 @@ define(function (require) {
                 start = this.opt.total - showCount + 1;
                 end = this.opt.total;
             }
-
-            var i = 0;
-            for (var j = start; j <= end; j++) {
-                result.pages.push({
-                    value: j,
-                    index: this.opt.startPage ? j : j - 1
-                });
-                if (j === page) {
-                    result.currentPage = i;
+            if (this.opt.isPageNum) {
+                var i = 0;
+                for (var j = start; j <= end; j++) {
+                    result.pages.push({
+                        value: j,
+                        index: this.opt.startPage ? j : j - 1
+                    });
+                    if (j === page) {
+                        result.currentPage = i;
+                    }
+                    i++;
                 }
-                i++;
             }
+
 
             return result;
         },
 
-        setOpt: function (key, value) {
+        setOpt: function(key, value) {
             if (this.opt.hasOwnProperty(key)) {
                 this.opt[key] = value;
             }
@@ -143,7 +145,8 @@ define(function (require) {
         prevText: '上一页',
         nextText: '下一页',
         front: 4,
-        end: 5
+        end: 5,
+        isPageNum: true //是否显示页码
     };
 
     XEmitter.mixin(Pager);

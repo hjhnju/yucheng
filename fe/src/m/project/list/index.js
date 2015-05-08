@@ -97,7 +97,7 @@ define(function(require) {
                         htmlContainer.html(etpl.render("returnInvestList", {
                             list: data.list
                         }));
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '正在加载...';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多';
                     } else {
                         htmlContainer.append(etpl.render("returnInvestList", {
                             list: data.list

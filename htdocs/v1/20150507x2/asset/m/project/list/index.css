@@ -159,7 +159,7 @@ input::-ms-reveal{display:none}
 @-webkit-keyframes loading{from{-webkit-transform:rotate(0deg) translateZ(0)}
 to{-webkit-transform:rotate(360deg) translateZ(0)}
 }
-@font-face{font-family:grade-star;src:url(../../common/font/grade-star.eot);src:url(../../common/font/grade-star.eot?#iefix) format('embedded-opentype'),url(../../common/font/grade-star.woff) format('woff'),url(../../common/font/grade-star.ttf) format('truetype'),url(../../common/font/grade-star.svg#grade-star) format('svg')}
+@font-face{font-family:grade-star;src:url(../../common/font/grade-star-icon.eot);src:url(../../common/font/grade-star-icon.eot?#iefix) format('embedded-opentype'),url(../../common/font/grade-star-icon.woff) format('woff'),url(../../common/font/grade-star-icon.ttf) format('truetype'),url(../../common/font/grade-star-icon.svg#grade-star) format('svg')}
 .grade-star{font-family:grade-star!important;font-size:30px;line-height:40px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}
 .grade-star.level-aaa{color:#75cf64}
 .grade-star.level-aa{color:#75cf64}

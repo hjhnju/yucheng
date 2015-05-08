@@ -18,32 +18,33 @@
 </style> 
 <div class="box-title" id="header"> 
          <img src="{%$feroot%}/m/common/img/head_pic.jpg" alt="头像" class="head-pic">
-           <span class="head-username">{%$user.username%}</span>
-           <span class="balance">可用余额 <span class="balance-count">￥{%$user.username%}</span></span> 
+           <span class="head-username">{%$userinfo.username%}</span>
+           <span class="balance">本月累计收益 <span class="balance-count">￥{%$monthProfit%}</span></span> 
 </div>
   
 <div class="box-content">
-		<ul class="income flex-x">
-          <li style="border-width: 0px 1px 1px 0px"><span class="title">待收收益</span><span class="count">￥1500</span></li>
-          <li><span class="title">累计收益</span><span class="count">￥1500</span></li>
+		<ul class="income flex-x" style="border-bottom:1px solid #e7e7ec;">
+          <li style="border-width:0px 1px 0px 0px;"><span class="title">待收收益</span><span class="count">￥{%$reposPrifit%}</span></li>
+          <li><span class="title">累计收益</span><span class="count">￥{%$totalProfit%}</span></li>
     </ul>	
     <ul class="income flex-x">
-          <li><span class="title">待收本金</span><span class="count">￥1500</span></li>
-          <li  style="border-width: 1px 0px 0px 1px"><span class="title">累计投资</span><span class="count">￥1500</span></li>
+          <li style="border-width: 0px 1px 0px 0px;"><span class="title">待收本金</span><span class="count">￥{%$reposPrincipal%}</span></li>
+          <li><span class="title">累计投资</span><span class="count">￥{%$totalInvest%}</span></li>
     </ul> 
     <div class="reset-count">
-      可用余额 <span class="count">￥200.00</span>
+      可用余额 <span class="count">￥{%$avlBal%}</span>
     </div>
     <ul class="menus">
       <li> 
-        <a href="" class="account-link">
+        <!-- <a href="/m/account/recharge" class="account-link"> -->
+        <a href="/account/cash/recharge" class="account-link">
            <i class="icon accountfont icon-recharge"></i>
           充值
           <i class="icon accountfont icon-directionright fr"></i>
         </a>
       </li>
       <li style="border-top: 1px solid #e2e1e4;">
-        <a href="" class="account-link">
+        <a href="/m/invest" class="account-link">
         <i class="icon accountfont icon-invest"></i>
           投资
           <i class="icon accountfont icon-directionright fr"></i>
@@ -52,14 +53,16 @@
     </ul>
     <ul class="menus" style="margin-top: 10px;">
          <li>
-        <a href="" class="account-link">
+       <!--  <a href="/m/account/withdraw" class="account-link"> -->
+       <a href="/account/cash/withdraw" class="account-link">
         <i class="icon accountfont icon-withdraw"></i>
           提现
           <i class="icon accountfont icon-directionright fr"></i>
         </a>
       </li>
       <li style="border-top: 1px solid #e2e1e4;">
-        <a href="" class="account-link">
+     <!--    <a href="/m/account/cash" class="account-link"> -->
+       <a href="/account/invest" class="account-link"> 
         <i class="icon accountfont icon-investlist"></i>
           投资记录
           <i class="icon accountfont icon-directionright fr"></i>

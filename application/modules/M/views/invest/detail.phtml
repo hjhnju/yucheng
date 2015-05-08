@@ -33,8 +33,8 @@
  </style>
 <div class="invest">
    <div class="box-title">
-   	  <div style="margin:0 auto;width:65%;min-width:236px;" class="flex-center">
-   	  	<span class="name-shi">
+   	  <div style="margin:0 auto;min-width:236px;" class="flex-center align-center">
+   	  	<span class="name-shi" style="margin:0px;">
 	    {%if $item.type_id == 1%}实
         {%else if $item.type_id == 2%}信
         {%else%}机
@@ -331,7 +331,7 @@
 		</div>	
 		<div class="pro-action">
 		    <div class="pro-title">投资记录</div>
-		    <div class="pro-content" >
+		    <div class="pro-content">
 		    	  {%if isset($userBalance.amount)%}
                         <div class="details-main-box"> 
                             <div class="main-detail-content" id="toulist">
@@ -354,7 +354,10 @@
         	{%else%}
         	      <a href="/m/login" class="color-green">立即登录</a>
         	{%/if%}
-        	<span class="recharge fr">余额不足？<a href="" class="to-recharge">立即充值</a></span>	
+        	<span class="recharge fr">余额不足？
+                 <!--  <a href="/m/account/recharge" class="to-recharge">立即充值</a> -->
+                <a href="/account/cash/recharge" class="to-recharge">立即充值</a> 
+            </span>	
         </div>
 			
 	</div>
