@@ -198,7 +198,7 @@ to{-webkit-transform:rotate(360deg) translateZ(0)}
 .investlist .content .price .price-content .jindu-box .jindu-box-inline{display:block;min-width:10px;background-color:#f2736a;height:8px;border-radius:20px}
 .investlist .content .price .price-content .jindu-number{-webkit-flex-order:2;-moz-flex-order:2;-ms-flex-order:2;-webkit-order:2;-moz-order:2;-ms-order:2;order:2;color:#f2736a}
 .investlist .content .price .price-content .jindu-number .lilv-bai{font-size:10px}
-.investlist .content .status{width:50px;min-width:50px;height:30px;line-height:30px;font-size:12px;padding:0 2px;order:3}
+.investlist .content .status{ display: block;width:50px;min-width:50px;height:30px;line-height:30px;font-size:12px;padding:0 2px;order:3}
 .investlist .content .status .status-biding{display:inline-block;width:50px;height:30px;line-height:30px;text-align:center;text-decoration:none;color:#fff;margin-top:0;background-color:#76cf65;border-radius:8px;-webkit-border-radius:8px;-moz-border-radius:8px;transition:background-color .4s ease-in-out;-webkit-transition:background-color .4s ease-in-out;-moz-transition:background-color .4s ease-in-out;-o-transition:background-color .4s ease-in-out}
 .investlist .content .status .status-biding:hover{background-color:#72e45d;transition:background-color .4s ease-in-out;-webkit-transition:background-color .4s ease-in-out;-moz-transition:background-color .4s ease-in-out;-o-transition:background-color .4s ease-in-out}
 .investlist .content .status .status-biding.current{color:#666;background-color:#b2b2b2}
