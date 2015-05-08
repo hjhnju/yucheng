@@ -57,11 +57,11 @@
 	    				</span> 
 	    				<span class="price-content">  
 		                     <span class="jindu-number">
-		                            80%
+		                            {%$data.percent%}%
 		                     </span> 
 		    				<span class="jindu">
 		    					 <span class="jindu-box">
-		                            <span class="jindu-box-inline" style="width: 80%;"></span>
+		                            <span class="jindu-box-inline" style="width: {%$data.percent%}%;"></span>
 			                     </span>
 	    					</span> 
 	    				</span> 
@@ -73,7 +73,7 @@
 	     <div class="pro-action" style="margin-top: 20px;position:relative;">
 		    <div class="pro-title">
                 投资金额:
-                <input name="amount" maxlength="10" type="text" autocomplete="off" class="input right-top-ipt-input"   placeholder="输入投资金额" max="{%$data.amount_rest%}" />元
+                <input name="amount" maxlength="10" type="number" autocomplete="off" class="input right-top-ipt-input"   placeholder="输入投资金额" max="{%$data.amount_rest%}" />元
                 <input name="id" type="hidden" value="{%$data.id%}">
                 <a class="common-a-btn recharge-btn confirm-all fr">全投</a>
             </div>  
