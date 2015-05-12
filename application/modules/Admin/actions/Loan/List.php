@@ -16,6 +16,11 @@ class ListAction extends Yaf_Action_Abstract {
         }
 
         $list     = Loan_Api::getLoans($page, $pagesize, $filters);
+        foreach ($list['list'] as $key => $val){
+            $user = User_Api::getUserObject($val['user_id']);
+            $list['list'][$key]['user_name'] = $user->name;
+            $list['list'][$key]['val'] = "'用户ID：".$user->userid.",手机号：".$user->phone.",邮箱：$user->email'";
+        }
         $arrLoan  = $list['list'];
         $pageAll  = $list['pageall']; 
         $this->getView()->assign('arrLoan', $arrLoan);

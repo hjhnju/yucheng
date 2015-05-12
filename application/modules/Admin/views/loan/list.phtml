@@ -65,7 +65,7 @@
                         {%foreach from=$arrLoan key=i item=loan%}
                         <tr>
                             <td><a href="/admin/loan/request?loanid={%$loan.id%}&userid={%$loan.user_id%}">{%$loan.id%}</a></td>
-                            <td><a href="/admin/corp/detail?userid={%$loan.user_id%}">{%$loan.user_id%}</a></td>
+                            <td><a onclick="userInfo({%$loan.val%})">{%$loan.user_name%}</a></td>
                             <td>{%$loan.title%}</td>
                             <td>{%$loan.amount%}</td>
                             <td>{%$loan.interest%}</td>
@@ -88,4 +88,11 @@
     totalpage = {%$pageall%}; 
     setpage(cpage,totalpage);
     </script>
+    
+    <script  type="text/javascript">
+    function userInfo(val){ 
+    	alert(String(val));     
+    }
+    </script>
+    
 {%/block%}
