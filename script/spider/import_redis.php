@@ -18,16 +18,20 @@ class ImportRedis{
      * @return null
      * 获得需要入到redis中的数据
      */
-    public function getSchoolList($province, $type, $delete=false){
+    public function getSchoolList($province, $type, $index, $delete=false){
         $collect = Spider_Collect_Base::getInstance();
         $list = $collect->readAllFiles($province, $type);
-        foreach ($list[$province][$type] as $key=>$item){
-            if ($delete){
-                $this->deleteFromRedis($item, $key+1000);
-            }else {
-                $this->writeIntoRedis($item, $key+1000);
-            }
+        if(empty($index)){
+            $index = 1000;
         }
+        if($delete){
+            $this->deleteFromRedis();
+            return ;
+        }
+        foreach ($list[$province][$type] as $key=>$item){
+            $this->writeIntoRedis($item, $index+$key);
+        }        
+        return $index+$key;
     }
 
     /**
@@ -51,19 +55,13 @@ class ImportRedis{
         $redis->exec();
     }
 
-    public function deleteFromRedis($school, $school_id) {
-        $school_basic_key = Spider_Keys::getSchoolBasicKey($school_id);
-        $redis = Base_Redis::getInstance();
-        $redis->multi();
-        $redis->watch(array($this->_school_name_key, $school_basic_key));
-        //添加学校hash set
-        $redis->hDel($this->_school_name_key, $school['name']);
-
-        //添加学校基本信息
-        foreach ($school as $key=>$value){
-            $redis->hDel($school_basic_key, $key);
+    public function deleteFromRedis() {
+        $redis     = Base_Redis::getInstance();
+        $redis->delete("hset_school_names");
+        $arrSchool = $redis->keys("hset_school_*");
+        foreach ($arrSchool as $school){
+            $redis->delete($school);        
         }
-        $redis->exec();
     }
 }
 
@@ -72,9 +70,10 @@ $list = array(
     'beijing' => array('kindergarten', 'middle'),
     'guangxi' => array('kindergarten', 'middle'),
 );
+$index = 0;
 foreach ($list as $province=>$item){
     foreach ($item as $value){
-        $obj->getSchoolList($province, $value);
+        $index = $obj->getSchoolList($province, $value, $index, false);
     }
 }
 

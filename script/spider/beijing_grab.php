@@ -8,6 +8,7 @@ require(dirname(dirname(__FILE__)) . '/env.inc.php');
 class BeijingGrab  {
     public function execute() {
         $this->executeEducation();
+        $this->executeNewadd();
         $this->executeSouXue();
         $this->executeDaquan();
     }
@@ -55,6 +56,12 @@ class BeijingGrab  {
         $url = 'http://xuexiao.chazidian.com/beijing_chuzhong/';
         $spider = new Spider_Grab_Daquan($url, 'middle', 'beijing');
         $spider->run();
+    }
+    
+    public function executeNewadd(){
+        $spider = new Spider_Grab_Newadd();
+        $spider->run();
+    
     }
 }
 
