@@ -13,22 +13,29 @@ class ListAction extends Yaf_Action_Abstract {
         $nature  = isset($_REQUEST['nature']) ? $_REQUEST['nature'] : 'private';
         
         $redis     = Base_Redis::getInstance();
-        $arrSchool = $redis->keys("hset_school_*");
-        foreach ($arrSchool as $school){
-            if("names" == $school){
-                continue;
+
+        $key = Spider_Keys::getSchoolReferKey($place, $type, $nature);
+        $count = $redis->sCard($key);
+        $pageAll = ceil($count/$intPageSize);
+        
+        
+        $arrSchool = $redis->sMembers($key);        
+        $arrInfos = array();
+        foreach ($arrSchool as $id){
+            $info = $redis->hGetAll("hset_school_".$id);
+            $info['id'] = $id;
+            if(empty($info['tag'])){
+                $info['tag'] = '待跟进';
             }
-            $info = $redis->hGetAll($school);
-            if(($type  == $info['type_en'])&&
-                ($place == $info['province'])&&
-                (empty($info['nature'])||($nature == $this->getNature($info['nature'])))){
-                sscanf($school,"hset_school_%d",$id);                
-                $info['id'] = $id;               
+            if(empty($info['phone'])||(strstr($info['phone'],'暂无'))){
                 $arrInfos[] = $info;
+            }else{
+                array_unshift($arrInfos,$info);
             }
-        } 
-        $pageAll = ceil(count($arrInfos)/$intPageSize);
+        }
+        
         $arrInfos = array_slice($arrInfos,($page-1)*$intPageSize,$intPageSize);
+       
         $this->getView()->assign('arrInfo', $arrInfos);
         $this->getView()->assign('pageall', $pageAll);
         $this->getView()->assign('page', $page);
@@ -39,12 +46,14 @@ class ListAction extends Yaf_Action_Abstract {
     
     /**
      * 返回公立或私立状态
-     * @param string $str
+     * @param array $arr
      * @return string:publi|private|both
      */
-    public function getNature($str){
-        $arrPublic = array('公立','国立');
-        if(strstr($str,'公立')||str){
+    public function getNature($arr){
+        $arrPublic = array('公立','国立','公办');
+        if(!isset($arr['nature']) || (empty($arr['nature']))){
+            return 'unknow';
+        }elseif(in_array($arr['nature'],$arrPublic)){
             return 'public';
         }else{
             return 'private';
