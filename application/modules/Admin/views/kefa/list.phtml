@@ -10,6 +10,7 @@ function refresh(){
 
 	arr2["private"] = 0;
 	arr2["public"]  = 1;
+	arr2["unknow"]  = 2;
 	
 	arr3["kindergarten"] = 0;
 	arr3["middle"] = 1;	
@@ -65,7 +66,8 @@ function refresh(){
               </select> 
               &nbsp;&nbsp;学校性质：<select name="jumpMenu" id="jumpMenu2" onchange="MM_jumpMenu()">         		
                 <option value = "private">私立</option> 
-           		<option value = "public">公立</option>           
+           		<option value = "public">公立</option>
+           		<option value = "unknow">未知的</option>          
               </select>  
               &nbsp;&nbsp;学校类型：<select name="jumpMenu" id="jumpMenu3" onchange="MM_jumpMenu()">         		
                 <option value = "kindergarten">幼儿园</option> 
@@ -94,7 +96,9 @@ function refresh(){
                             <th>学校名称</th>
                             <th>地址</th>
                             <th>电话</th>
-                            <th>官网</th>
+                            <th>学校性质</th>
+                            <th>标记</th>
+                            <th>开办年份 </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,7 +108,9 @@ function refresh(){
                             <td>{%$info.name%}</td>
                             <td>{%$info.address%}</td>
                             <td>{%$info.phone%}</td>
-                            <td>{%$info.website%}</td>
+                            <td>{%$info.nature%}</td>
+                            <td>{%$info.tag%}</td>
+                            <td>{%$info.foundation_time%}</td>
                             <td><form action="/admin/kefa/detail?id={%$info.id%}&type=detail" method="POST"><input value="详情" type="submit"></form></td>
                             <td><form action="/admin/kefa/detail?id={%$info.id%}&type=edit" method="POST" ><input value="编辑" type="submit" ></form></td>                           
                         </tr>
