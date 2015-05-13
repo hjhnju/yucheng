@@ -16,6 +16,9 @@ class DetailAction extends Yaf_Action_Abstract
         $info['id'] = $id;
       
         $this->strFilter($info);
+        if((' '==$info['tag']) ||(empty($info['tag']))){
+            $info['tag'] = '待跟进';
+        }
         $this->getView()->assign('info', $info);
         $this->getView()->assign('type', $type);
         
@@ -39,11 +42,13 @@ class DetailAction extends Yaf_Action_Abstract
     }
     
     public function strFilter(&$info){
-        $arrFields = array('president','regulation','weight','website','phone','zip_code','address');
+        $arrFields = array('president','regulation','weight','website','phone','zip_code','address',
+            'foundation_time','nature','tag','foundation_time',
+        );
         $arrFilters = array('<br />','<p>','</p>');
         foreach ($arrFields as $field){
-            if(!isset($info[$field]) ||empty($info[$field])){
-                $info[$field] = '暂无信息';
+            if(!isset($info[$field])){
+                $info[$field] = ' ';
             }
         }
         foreach ($arrFilters as $filter){

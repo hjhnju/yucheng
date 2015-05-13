@@ -29,7 +29,7 @@ class ImportRedis{
             return ;
         }
         foreach ($list[$province][$type] as $key=>$item){
-            $this->writeIntoRedis($item, $index+$key);
+            $this->writeIntoRedis($province, $type, $item, $index+$key);
         }        
         return $index+$key;
     }
@@ -40,18 +40,21 @@ class ImportRedis{
      * @return null
      * 将一个学校数据写入redis
      */
-    public function writeIntoRedis($school, $school_id) {
+    public function writeIntoRedis($province, $type, $school, $school_id) {
         $school_basic_key = Spider_Keys::getSchoolBasicKey($school_id);
         $redis = Base_Redis::getInstance();
         $redis->multi();
         $redis->watch(array($this->_school_name_key, $school_basic_key));
         //添加学校hash set
         $redis->hset($this->_school_name_key, $school['name'], $school_id);
-
         //添加学校基本信息
+        $school['province'] = $province;
+        $school['type_en']  = $type;
         foreach ($school as $key=>$value){
             $redis->hset($school_basic_key, $key , $value);
         }
+        $key = Spider_Keys::getSchoolReferKey($province, $type, $this->getNature($school));
+        $redis->sAdd($key,$school_id);
         $redis->exec();
     }
 
@@ -61,6 +64,27 @@ class ImportRedis{
         $arrSchool = $redis->keys("hset_school_*");
         foreach ($arrSchool as $school){
             $redis->delete($school);        
+        }
+        
+        $arrKeys = $redis->keys("set_school_*");
+        foreach($arrKeys as $val){
+            $redis->delete($val);
+        }
+    }
+    
+    /**
+     * 返回公立或私立状态
+     * @param string $arr
+     * @return string:publi|private|both
+     */
+    public function getNature($arr){
+        $arrPublic = array('公立','国立','公办');
+        if(!isset($arr['nature']) || (empty($arr['nature']))){
+            return 'unknow';
+        }elseif(in_array($arr['nature'],$arrPublic)){
+            return 'public';
+        }else{
+            return 'private';
         }
     }
 }
@@ -73,8 +97,9 @@ $list = array(
 $index = 0;
 foreach ($list as $province=>$item){
     foreach ($item as $value){
-        $index = $obj->getSchoolList($province, $value, $index, false);
+        $index = $obj->getSchoolList($province, $value, $index,false);
     }
 }
-
-
+/*$redis = Base_Redis::getInstance();
+$keys = $redis->keys("*");
+var_dump($keys);*/
