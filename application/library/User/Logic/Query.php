@@ -3,12 +3,6 @@
  * 注册Logic层
  */
 class User_Logic_Query{
-
-    //用户类型－个人用户
-    const TYPE_PRIV = 1;
-    //用户类型－企业用户
-    const TYPE_CORP = 2;
-
     /**
      * 查询用户
      */
@@ -29,7 +23,7 @@ class User_Logic_Query{
     public function queryCorpUsers($page, $pagesize){
         //TODO:User_List
         $list    = new User_List_Login();
-        $filters = array('usertype' => self::TYPE_CORP);
+        $filters = array('usertype' => User_Type_Roles::TYPE_CORP);
         $list->setFilter($filters);
         $list->setOrder('create_time desc');
         $list->setPage($page);
@@ -48,13 +42,13 @@ class User_Logic_Query{
     public function queryPrivUsers($page, $pagesize, $user){
         //TODO:User_List
         $list    = new User_List_Login();
-        $filters = array('usertype' => self::TYPE_PRIV);
+        $filters = array('usertype' => User_Type_Roles::TYPE_PRIV);
         if(!empty($user)){
             $type = User_Logic_Validate::getType($user);
             if(empty($type)){
                 $type = 'name';
             }
-            $filters = array('usertype' => self::TYPE_PRIV, $type => $user);
+            $filters = array('usertype' => User_Type_Roles::TYPE_PRIV, $type => $user);
         }
         $list->setFilter($filters);
         $list->setOrder('userid desc');

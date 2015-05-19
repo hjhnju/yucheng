@@ -6,4 +6,6 @@ class FinishController extends Base_Controller_Page{
     public function indexAction() {
         
     }
+
+    
 }
