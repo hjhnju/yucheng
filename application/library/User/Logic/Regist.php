@@ -3,11 +3,6 @@
  * 注册Logic层
  */
 class User_Logic_Regist{
-
-    //用户类型－个人用户
-    const TYPE_PRIV = 1;
-    //用户类型－企业用户
-    const TYPE_CORP = 2;
     
     public function __construct(){
     }
@@ -86,34 +81,40 @@ class User_Logic_Regist{
      * @return $userid | false
      */
     public function regist($usertype, $username, $passwd, $phone, $inviter = ''){
-
-        //各字段再验证过一遍
-        //允许用户名为空
-        if(!empty($username)) {
-            $retCode = $this->checkName($username);
-            if(User_RetCode::SUCCESS !== $retCode){
-                return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));
-            }
-        }
-
         //企业用户手机前面加0
         $usertype = $this->getUserType($usertype);
-        if($usertype === self::TYPE_CORP){
-            $phone = '0' . $phone;
-        }
-        $retCode = $this->checkPhone($phone);
-        if(User_RetCode::SUCCESS !== $retCode){
-            return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));     
+        //如果新注册用户不是融资用户，要进行用户名和电话的认证
+        if($usertype == User_Type_Roles::TYPE_FINA) {
+            //各字段再验证过一遍
+            //允许用户名为空
+            if(!empty($username)) {
+                $retCode = $this->checkName($username);
+                if(User_RetCode::SUCCESS !== $retCode){
+                    return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));
+                }
+            }
+            
+            if($usertype === User_Type_Roles::TYPE_CORP){
+                $phone = '0' . $phone;
+            }
+            $retCode = $this->checkPhone($phone);
+            if(User_RetCode::SUCCESS !== $retCode){
+                return new Base_Result($retCode, null, User_RetCode::getMsg($retCode));     
+            }
         }
 
         $passwd = Base_Util_Secure::encrypt($passwd);
         $objLogin           = new User_Object_Login();
         if(!empty($username)){
-            $objLogin->name     = $username;
+            if($usertype == User_Type_Roles::TYPE_FINA) {
+                $objLogin->email = $username;
+            }else {
+                $objLogin->name  = $username;
+                $objLogin->phone    = $phone;
+            }  
         }
         $objLogin->passwd   = $passwd;
         $objLogin->usertype = $usertype;
-        $objLogin->phone    = $phone;
         
         $ret = $objLogin->save();
         if(!$ret){
@@ -160,13 +161,16 @@ class User_Logic_Regist{
         $type     = null;
         switch ($usertype) {
             case 'priv':
-                $type = self::TYPE_PRIV;
+                $type = User_Type_Roles::TYPE_PRIV;
                 break;
             case 'corp':
-                $type = self::TYPE_CORP;
+                $type = User_Type_Roles::TYPE_CORP;
+                break;
+            case 'fina':
+                $type = User_Type_Roles::TYPE_FINA;
                 break;
             default:
-                $type = self::TYPE_CORP;
+                $type = User_Type_Roles::TYPE_CORP;
                 break;
         }
         return $type;

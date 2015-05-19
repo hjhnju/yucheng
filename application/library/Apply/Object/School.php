@@ -1,6 +1,6 @@
 <?php
 /**
- * @file 融资申请企业信息表 
+ * 申请信息学校表
  * @author guojinli
  */
 class Apply_Object_School extends Base_Object {
@@ -17,58 +17,67 @@ class Apply_Object_School extends Base_Object {
     protected $prikey = 'id';
 
     /**
-     * 字段列表
+     * 类名
+     * @var string
+     */
+    const CLASSNAME = 'Apply_Object_School';
+
+    /**
+     * 对象包含的所有字段
      * @var array
      */
-    protected $fields = array('id', 'name', 'type', 'nature', 'province', 'city', 'school_source', 'year', 'income_year', 'profit', 'other_business', 'address', 'total_student', 'staff', 'purpose', 'guarantee_count', 'branch_school', 'apply_id', 'create_time', 'update_time');
-    
+    protected $fields = array('id', 'name', 'type', 'nature', 'province', 'city', 'school_source', 'year', 'is_annual_income', 'is_profit', 'is_other_business', 'address', 'total_student', 'staff', 'purpose', 'guarantee_count', 'branch_school', 'apply_id', 'create_time', 'update_time');
+
     /**
      * 字段与属性隐射关系
      * @var array
      */
     public $properties = array(
-        'id'             => 'id',
-        'name'           => 'name',
-        'type'           => 'type',
-        'nature'         => 'nature',
-        'province'       => 'province',
-        'city'           => 'city',
-        'school_source'  => 'schoolSource',
-        'year'           => 'year',
-        'income_year'    => 'incomeYear',
-        'profit'         => 'profit',
-        'other_business' => 'otherBusiness',
-        'address'        => 'address',
-        'total_student'  => 'totalStudent',
-        'staff'          => 'staff',
-        'purpose'        => 'purpose',
-        'guarantee_count'=> 'guaranteeCount',
-        'branch_school'  => 'branchSchool',
-        'apply_id'       => 'applyId',
-        'create_time'    => 'createTime',
-        'update_time'    => 'updateTime',
+        'id'                  => 'id',
+        'name'                => 'name',
+        'type'                => 'type',
+        'nature'              => 'nature',
+        'province'            => 'province',
+        'city'                => 'city',
+        'school_source'       => 'schoolSource',
+        'year'                => 'year',
+        'is_annual_income'    => 'isAnnualIncome',
+        'is_profit'           => 'isProfit',
+        'is_other_business'   => 'isOtherBusiness',
+        'address'             => 'address',
+        'total_student'       => 'totalStudent',
+        'staff'               => 'staff',
+        'purpose'             => 'purpose',
+        'guarantee_count'     => 'guaranteeCount',
+        'branch_school'       => 'branchSchool',
+        'apply_id'            => 'applyId',
+        'create_time'         => 'createTime',
+        'update_time'         => 'updateTime',
     );
-     
+
     /**
      * 整数类型的字段
      * @var array
      */
     protected $intProps = array(
-        'id'              => 1,
-        'type'            => 1,
-        'school_source'   => 1,
-        'year'            => 1,
-        'income_year'     => 1,
-        'profit'          => 1,
-        'other_business'  => 1,
-        'total_student'   => 1,
-        'staff'           => 1,
-        'purpose'         => 1,
-        'guarantee_count' => 1,
-        'branch_school'   => 1,
-        'apply_id'        => 1,
-        'create_time'     => 1,
-        'update_time'     => 1,
+        'id'                  => 1,
+        'type'                => 1,
+        'nature'              => 1,
+        'province'            => 1,
+        'city'                => 1,
+        'school_source'       => 1,
+        'year'                => 1,
+        'is_annual_income'    => 1,
+        'is_profit'           => 1,
+        'is_other_business'   => 1,
+        'total_student'       => 1,
+        'staff'               => 1,
+        'purpose'             => 1,
+        'guarantee_count'     => 1,
+        'branch_school'       => 1,
+        'apply_id'            => 1,
+        'create_time'         => 1,
+        'update_time'         => 1,
     );
 
     /**
@@ -76,134 +85,127 @@ class Apply_Object_School extends Base_Object {
      * @return Apply_Object_School
      */
     public static function init($data) {
-        return parent::initObject(self::getClassName(), $data);
+        return parent::initObject(self::CLASSNAME, $data);
     }
 
     /**
-     * @param  null
-     * @return 返回当前类的名字
-     */
-    public static function getClassName(){
-        return __CLASS__;
-    }
-
-    /**
-     * 自增长的id
-     * @var [int]
+     * 
+     * @var integer
      */
     public $id;
 
     /**
      * 学校的名字
-     * @var [string]
+     * @var string
      */
     public $name;
 
     /**
      * 学校的类型
-     * @var [int]
+     * @var integer
      */
     public $type;
 
     /**
-     * 学校的主体性质
-     * @var [int]
+     * 学校主体性质
+     * @var integer
      */
     public $nature;
 
     /**
      * 学校所在的省份
-     * @var [string]
+     * @var integer
      */
     public $province;
 
     /**
-     * 学校所在的城市
-     * @var [string]
+     * 学校所在城市
+     * @var integer
      */
     public $city;
 
     /**
-     * 学校从哪里知道我们
-     * @var [int]
+     * 该学校是从哪里了解到我们的，也就是学校对我们来将来源是哪
+     * @var integer
      */
     public $schoolSource;
 
     /**
-     * 学校创建的年份
-     * @var [int]
+     * 学校创建的时间，具体到年份
+     * @var integer
      */
     public $year;
 
     /**
-     * 学校的年收入
-     * @var [int]
+     * 年收入
+     * @var integer
      */
-    public $incomeYear;
+    public $isAnnualIncome;
 
     /**
      * 最近一年是否盈利
-     * @var [int]
+     * @var integer
      */
-    public $profit;
+    public $isProfit;
 
     /**
-     * 学校是否还有其他业务
-     * @var [int]
+     * 该学校是否还有其他的业务
+     * @var integer
      */
-    public $otherBusiness;
+    public $isOtherBusiness;
 
     /**
-     * 学校的详细地址
-     * @var [string]
+     * 学校的具体地址
+     * @var string
      */
     public $address;
 
     /**
-     * 学校有多少学生
-     * @var [int]
+     * 学校的学生总数
+     * @var integer
      */
     public $totalStudent;
 
     /**
-     * 学校的职工数量
-     * @var [int]
+     * 学校的教职工数量
+     * @var integer
      */
     public $staff;
 
     /**
-     * 贷款的目的
-     * @var [int]
+     * 贷款用途
+     * @var integer
      */
     public $purpose;
 
     /**
      * 担保人数量
-     * @var [int]
+     * @var integer
      */
     public $guaranteeCount;
 
     /**
-     * 学校有几所分校
-     * @var [int]
+     * 分校的数量
+     * @var integer
      */
     public $branchSchool;
 
     /**
-     * 申请的id
-     * @var [int]
+     * 与apply表中对应的申请id
+     * @var integer
      */
     public $applyId;
 
     /**
-     * 创建时间
-     * @var [int]
+     * 
+     * @var integer
      */
     public $createTime;
 
     /**
-     * 更新时间
-     * @var [int]
+     * 
+     * @var integer
      */
     public $updateTime;
+
 }

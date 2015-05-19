@@ -20,7 +20,7 @@ class Apply_Object_Person extends Base_Object {
      * 字段列表
      * @var array
      */
-    protected $fields = array('id', 'realname', 'certificate', 'house_type', 'detail_address', 'cellphone', 'telephone', 'cash', 'stock', 'criminal', 'lawsuit', 'apply_id', 'create_time', 'update_time');
+    protected $fields = array('id', 'realname', 'certificate', 'house_type', 'detail_address', 'cellphone', 'telephone', 'cash', 'stock', 'is_criminal', 'is_lawsuit', 'apply_id', 'create_time', 'update_time');
     
     /**
      * 字段与属性隐射关系
@@ -36,8 +36,8 @@ class Apply_Object_Person extends Base_Object {
         'telephone'      => 'telephone',
         'cash'           => 'cash',
         'stock'          => 'stock',
-        'criminal'       => 'criminal',
-        'lawsuit'        => 'lawsuit',
+        'criminal'       => 'isCriminal',
+        'lawsuit'        => 'isLawsuit',
         'apply_id'       => 'applyId',
         'create_time'    => 'createTime',
         'update_time'    => 'updateTime',
@@ -133,13 +133,13 @@ class Apply_Object_Person extends Base_Object {
      * 是否有犯罪记录
      * @var [int]
      */
-    public $criminal;
+    public $isCriminal;
 
     /**
      * 是否有未决诉讼
      * @var [int]
      */
-    public $lawsuit;
+    public $isLawsuit;
 
     /**
      * 申请的id

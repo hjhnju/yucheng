@@ -4,7 +4,8 @@ class IndexController extends Base_Controller_Page{
     protected $needLogin = false;
 
     public function indexAction() {
-        
+        $obj = new Apply_Logic_Apply();
+        $obj->saveApply();
     }
     /**
      * @param null
