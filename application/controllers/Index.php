@@ -14,7 +14,7 @@ class IndexController extends Base_Controller_Page {
      * $arrData('list','platPost','refundPost','media')
      * 返回数组中包含最新投资列表（list） 最新平台公告 最新媒体公告（page：1，pagesize：4）
      */
-    public function indexAction() {
+    public function index_v1Action() {
 
         //投资列表
         $list = Invest_Api::getInvestList(1, 5);
@@ -67,6 +67,14 @@ class IndexController extends Base_Controller_Page {
         $this->getView()->assign('data', $arrData);
     }
     
+     /**
+     * 融资首页
+     */
+    public function indexAction() {
+
+        
+    }
+
     /*
      * TODO：文字截取并加点
      * param str $string 要截取的字符串 int $length 截取的长度

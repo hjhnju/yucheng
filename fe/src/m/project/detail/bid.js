@@ -66,8 +66,8 @@ define(function(require) {
                 return false;
             }
             //未同意协议不可投资
-            if (!$('#tiaoyue-itp')[0].checked) {
-                alert('请同意用户协议');
+            if (!$('#tiaoyue-itp')[0].checked) { 
+                investError.addClass('show').html('请同意用户协议');
                 return false;
             }
 

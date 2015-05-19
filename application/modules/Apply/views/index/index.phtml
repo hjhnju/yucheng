@@ -1,1 +1,130 @@
-this is index
+ {%extends file="../../../views/common/page.phtml"%}
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/index/index.css" /> 
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['apply/index/index'], function (main) {
+        main.init();
+    }); 
+</script>
+
+{%/block%}
+{%block name="content"%}
+<div class="box1">
+    <div class="container "> 
+       <div class="navbar">
+        <div class="container "> 
+             已为教育机构累计贷款超过 <label class="color-font-green">¥10,000,000 </label>
+             <i class="navbar-icon tenmin fl"></i>
+             <a href="{%$webroot%}/apply/verify" class="navbar-btn" style="">贷款申请</a> 
+        </div>     
+    </div>  
+    </div>
+   
+</div>
+<div class="box2">
+    <div class="container "> 
+       <div class="content fl">
+           <div class="content-title color-font-black  tl">
+              <span class="f18 color-font-green dis-block">
+                 什么是<span class="f24">兴教贷？</span> 
+               </span>
+               <span class="f18 dis-block">
+                   我们提供最<span class="color-font-green">优惠</span>、最<span class="color-font-green">便捷</span>、最<span class="color-font-green">灵活</span>的教育贷款
+              </span>
+              <span class="f14  dis-block">
+                  兴教贷是国内首家专注教育领域投融资的平台，通过兴教贷在<br/>线平台，我们撮合投资人与需要融资借款的优质教育机构，我<br/>们希望成为教育事业新推力，让更多人投资教育，分享收益。<br/>
+                   <a href="" class="color-red">了解更多&gt;</a>
+              </span> 
+            </div> 
+       </div>
+       <div class="content content2 fr">
+            <div class="content-title f18">
+              最高<label class="color-font-green f24">300</label>万教育贷款 
+            </div>
+              <ul class="content-text">
+              <li>
+                 <span class="left-text">低成本</span>
+                 <span class="icon icon1 fl"></span> 
+                 <span class="icon-text"> 
+                   融资年化13%起，收费透明
+                </span>
+              </li>
+               <li>
+                <span class="left-text">极速放款</span>
+                 <span class="icon icon2 fl"></span> 
+                 <span class="icon-text"> 
+                     10分钟申请，24小时审核，1周内放款
+                 </span>
+              </li>
+              <li>
+                <span class="left-text">简单便捷</span>
+                 <span class="icon icon3 fl"></span> 
+                 <span class="icon-text"> 
+                    在线申请在线申请在线放款，周期灵活
+                </span>
+              </li>
+            </ul>
+       </div>
+    </div> 
+</div>
+<div class="box3">
+   <div class="container">
+        <div class="title f16">
+           <label class="f30">简易申请流程</label><br/>
+            兴教贷不需要学校固定资产抵押，因为运转良好的学校有更好的还款能力，值得兴教贷助力其加速发展。
+        </div>
+        <ul class="content">
+             <li class="icon">
+                <span class="circle">
+                  <i class="iconfont icon-time"></i>
+                </span> 
+                <span class="text">
+                  30秒完成学校的资质审查<br/>
+                 10分钟完成提交申请
+                </span>
+             </li>
+             <li class="dire">
+                <i class="iconfont icon-directionright"></i>
+                <i class="iconfont icon-directionright"></i>
+             </li>  
+             <li class="icon">
+                <span class="circle">
+                  <i class="iconfont icon-phone3"></i>
+                </span> 
+                <span class="text">
+                  24小时内完成审核<br/>
+                  并电话通知贷款客户
+                </span>
+             </li>
+             <li class="dire">
+                <i class="iconfont icon-directionright"></i>
+                <i class="iconfont icon-directionright"></i>
+             </li> 
+             <li class="icon">
+                <span class="circle">
+                  <i class="iconfont icon-invest"></i>
+                </span> 
+                <span class="text">
+                  完成贷款发放
+                </span>
+             </li>    
+        </ul>
+   </div>
+</div>
+<div class="box4">
+   <div class="container">
+       <div class="img-bg"></div>
+       <ul class="content">
+         <li class="list">聘用更多教职工</li>
+         <li class="list">投资或更新您的教学设备</li>
+         <li class="list">扩大学校规模</li>
+         <li class="list">任何提升教学质量的投入</li>
+         <li></li>
+         <li>其他需求，您可以在申请时告诉我们 </li>
+       </ul>
+   </div>
+</div>
+{%/block%}

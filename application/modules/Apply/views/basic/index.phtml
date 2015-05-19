@@ -1,15 +1,238 @@
-this is basic page step2
+<!-- this is basic page step2
 
 <?php
-	array(
+        array(
         'type'           => '2',  //学校类型
         'nature'         => '4',  //学校主体性质
-        'province'       => '1',	//省
+        'province'       => '1',        //省
         'city'           => '2400', //市
         'schoolSource'   => '2',   //从哪里了解到我们
         'year'           => '2013', //建校时间
         'incomeYear'     => '1', //年收入是否超过¥5,000,000
         'profit'         => '1', //最近一年是否盈利
         'otherBusiness'  => '1', //除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务
-	);
-?>
+        );
+?> -->
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/basic/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['apply/basic/index'], function (main) {
+        main.init(0.13,0.18);  
+    });   
+</script>
+{%/block%}
+
+{%block name="content"%}
+<style type="text/css" media="all">
+    
+</style>
+<div class="box1" >
+    <div class="container container2">
+     <div class="container">
+        <ul class="step-box">
+            <li class="btn">
+                <i class="iconfont icon-step1"></i>
+                <span>确认贷款额度</span>
+            </li>
+            <li class="iconfont icon-directionright dire"></li>
+            <li class="btn current">
+                <i class="iconfont icon-step2"></i>
+                <span>贷款资格评估</span>
+            </li>
+            <li class="iconfont icon-directionright dire"></li>
+            <li class="btn">
+                <i class="iconfont icon-step3"></i>
+                <span>学校评估</span>
+            </li>
+            <li class="iconfont icon-directionright dire"></li>
+            <li class="btn">
+                <i class="iconfont icon-step4"></i>
+                <span>个人评估</span>
+            </li>
+        </ul>
+        <div class="title">
+             <i class="iconfont icon-step2"></i>
+             <span>贷款资格评估</span>
+        </div>
+    </div>
+    </div> 
+</div>
+<div class="box2 loan">
+    <div class="container">
+        <div class="left"> 
+                <div class="title"> 
+                    您申请的学校信息已被兴教贷收录，可快速审核；<br/>
+                    请您仔细填写后续信息。  
+                </div>
+              <div class="line"></div>
+
+              <div class="form-default_element form-inpt">
+                  <div class="loan-label fl">＊学校地区</div>
+                  <div class="loan-input fl">  
+                    <input autocomplete="off" type="text" name="name" data-text="学校名称" placeholder="与营业执照或登记证书一致"/>  
+                  </div>
+                  <div class="input-icon fl" id="name-icon"></div>
+                  <div class="input-error fl" id="name-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt">
+                  <div class="loan-label fl">＊学校类型</div>
+                  <div class="loan-input fl">  
+                        <select class="" id="select-type">
+                          <option value="选择一项">选择一项</option>
+                          <option value="基础教育">基础教育</option>
+                          <option value="幼儿园">幼儿园</option>
+                          <option value="职业教育">职业教育</option>
+                          <option value="高等教育">高等教育</option>
+                          <option value="培训机构">培训机构</option>
+                        </select>
+                        <div class="selectpick_div selectpick_div_select-type" id="selectpick_select-type" style="left: 328.5px; top: 997.5px; width: 150px; height: 30px;"><span id="selectpick_span_select-type" style="float: left;">选择一项</span><span class="selectpick_icon" id="selectpick_icon_select-type"></span></div>
+                  </div>
+                  <div class="input-icon fl" id="realname-icon"></div>
+                  <div class="input-error fl" id="realname-error"></div>
+              </div>
+              
+               {%if !isset($user)%} 
+                <div class="form-default_element form-inpt">
+                   <div class="loan-label fl">＊邮箱地址</div>
+                   <div class="loan-input fl">  
+                        <select id="select-time" size="2" class="text_sketch">
+                                  <option value="选择一项">选择一项</option>
+                                  <option value="2015">2015</option>
+                        </select>
+                   </div>
+                   <div class="input-icon fl" id="email-icon"></div>
+                   <div class="input-error fl" id="email-error"></div>
+                 </div> 
+                 <div class="form-default_element form-inpt">
+                      <div class="loan-label fl">＊密码</div>
+                      <div class="loan-input fl">  
+                            <input autocomplete="off" type="password" name="password"  data-text="密码"/ placeholder="密码由6-32位数字，字母及常用符号组成">  
+                      </div>
+                      <div class="input-icon fl" id="password-icon"></div>
+                      <div class="input-error fl" id="password-error"></div>
+                  </div>
+                  <div class="form-default_element form-inpt">
+                      <div class="loan-label fl">＊确认密码</div>
+                      <div class="loan-input fl">  
+                            <input autocomplete="off"  type="password" name="password2"  data-text="确认密码" placeholder="两次密码必须一致"/>  
+                      </div>
+                      <div class="input-icon fl" id="password2-icon"></div>
+                      <div class="input-error fl" id="password2-error"></div>
+                  </div>
+                  <div class="form-default_element form-inpt">
+                      <div class="loan-label fl">＊验证码</div>
+                      <a href="###" class="testing fl">
+                          <img id="login-img-url" src="{%$url%}" width="128" height="40" />
+                      </a> 
+                      <div class="loan-input testing fl">  
+                         <input autocomplete="off"  id="loan-testing" name="imagecode" type="text" maxlength="4"  data-text="验证码"/> 
+                            <label class="user-lable" for="imagecode-user"></label>
+                      </div>
+                      <div class="input-icon fl" id="imagecode-icon" style="margin:12px 10px 0px 4px"></div> 
+                      <a class="loan-submit fl">快速验证</a>
+                  </div>
+                {%else%} 
+                <input type="hidden" value="{%$user.id%}" name="userid"/> 
+                 <div class="form-default_element form-inpt">
+                   <div class="loan-label fl">＊邮箱地址</div>
+                   <div class="loan-input fl">  
+                        <input autocomplete="off" type="text" name="email" class="" value="{%$user.username%}"  data-text=""/>  
+                   </div>
+                 </div> 
+                  <div class="form-default_element form-inpt">
+                   <div class="loan-label fl"> </div>
+                    
+                        <a class="loan-submit login fl">快速验证</a>
+                    
+                 </div> 
+                {%/if%} 
+                <div class="form-default_element">
+                   <div class="loan-label fl"> </div>
+                   <div class="color-red fl" id="error-box">  
+                        
+                   </div>
+                </div>   
+        </div>
+        <div class="right">
+             <div class="title">贷款信息</div>
+              <form action="" method="post" accept-charset="utf-8" name="loan-form" id="loan-form">  <div class="loan-input loan-input-w fl"> 
+                    <span class="dis-block fl">
+                        ￥
+                    </span>
+                    <input autocomplete="off" type="text" name="amount" class="loan-num" value="5000" />
+                    <i class="icon up"></i>
+                    <i class="icon down"></i>
+                </div>  
+              <fieldset class="form-radio-group cl--ra fl">
+                    <div class="form-default_element form-radio form-radio--top">
+                        <input type="radio" id="calc-loan-1" name="duration" value="15" durationType="1">
+                         <label for="calc-loan-1"><span class="ui-radio"></span>15天</label>
+                    </div>
+                    <div class="form-default_element form-radio form-radio--top">
+                        <input type="radio" id="calc-loan-2" name="duration" value="1" durationType="2">
+                         <label for="calc-loan-2"><span class="ui-radio"></span>1个月</label>
+                     </div>
+                     <div class="form-default_element form-radio form-radio--top">
+                        <input type="radio" id="calc-loan-3" name="duration" value="2" checked=""durationType="2"> 
+                        <label for="calc-loan-3"><span class="ui-radio"></span>2个月</label>
+                     </div>
+                     <div class="form-default_element form-radio form-radio--top">
+                        <input type="radio" id="calc-loan-4" name="duration" value="3" durationType="2"> 
+                        <label for="calc-loan-4"><span class="ui-radio"></span>3个月</label>
+                     </div>
+                     <div class="form-default_element form-radio form-radio--top">
+                        <input type="radio" id="calc-loan-5" name="duration" value="6" durationType="2"> 
+                        <label for="calc-loan-5"><span class="ui-radio"></span>6个月</label>
+                     </div> 
+              </fieldset>
+              <div class="title2 fl" style="padding: 10px 0px 10px 0px;line-height: 20px;">
+                按月付息，到期还本;<br/>
+                <span class="f14">共<span class="color-font-green">2</span>期</span>
+              </div>
+              <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+                  <tr>
+                      <td class="th-one">贷款总额</td>
+                      <td class="td-one" amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">服务费用</td>
+                      <td class="td-two" serviceCharge></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">实际到账</td>
+                      <td class="td-one" real_amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">贷款利率</td>
+                      <td class="td-two" rate></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">月平均利息</td>
+                      <td class="td-one" interest_month></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">贷款周期</td>
+                      <td class="td-two" duration></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">总还款额</td>
+                      <td class="td-one" total></td>
+                  </tr> 
+                  <tr>
+                      <td colspan="2" class="tl">
+                          <span class="f12 lh20">注：最终贷款利率由兴教贷对借款人信用评估后确定。 
+                        <a class="color-font-green f12" href="{%$webroot%}/help#loan">了解详细服务费率</a></span>
+                      </td>
+                  </tr>
+              </table>
+            </form>
+        </div>
+       
+    </div>
+</div> 
+{%/block%}

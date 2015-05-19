@@ -1,0 +1,59 @@
+  @import "../common/css/index.less";
+ //投标记录开始
+ .invest{
+     .my-invest-tab{
+         height: 60px;
+         .my-invest-tab-item{
+            border-bottom: 5px solid #b2b2b2;
+            background-color: #b2b2b2;
+            color: #fff;
+            &.current{
+               background-color: #fff;
+               border-bottom: 5px solid @color-font-green;
+               color: #666;
+            }
+         } 
+     }
+ }
+ //投标记录结束
+
+
+  //还款计划开始
+  .pay-paln {
+  	  .box-title{
+  	  	  background-image: none;
+          border-bottom: 3px solid #6ec076; 
+          width: 100%;
+          min-height: 40px;
+          max-width: 640px;
+          top: 0;
+          position: fixed;
+          z-index: 10;
+          background-color: #fff;
+  	  }
+      .box-content {
+          .my-payplan-list {
+          	  text-align: center;
+          	  line-height: 40px;
+          	  width: 100%;
+              tr {
+                  border-bottom: 1px solid #fff;
+              }
+              td{
+              	padding: 10px 0px;
+              }
+              label{
+              	display: block;
+              }
+              .num {
+                  font-size: 16px;
+              }
+              .my-invest-plan-all{
+              	  margin-top: 40px;
+              	  background-color: #fff;
+              }
+          }
+      }
+  }
+  
+  //还款计划结束
