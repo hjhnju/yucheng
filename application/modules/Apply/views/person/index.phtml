@@ -1,4 +1,4 @@
-this is person page step 4
+<!-- this is person page step 4
 
 array(
     'certificate'    => '身份证号码', //您的身份证号码
@@ -10,4 +10,167 @@ array(
     'stock'          => '1',		//您的股票、债券等其他有价证券资产
     'criminal'       => '1',		//您是否有犯罪记录？
     'lawsuit'        => '1',		//您是否有未决诉讼
-);
+); --> 
+
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/person/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['apply/person/index'], function (main) {
+        main.init(0.13,0.18);  
+    });   
+</script>
+{%/block%}
+
+{%block name="content"%}
+<style type="text/css" media="all">
+    
+</style>
+<div class="box1" >
+    <div class="container container2 step">
+     <div class="container">
+       {%include file='../../../views/common/loaninfo.phtml' type="1" current="4"%}
+        <div class="title">
+             <i class="iconfont icon-step3"></i>
+             <span>个人评估</span>
+        </div>
+    </div>
+    </div> 
+</div>
+<div class="box2 loan">
+    <div class="container">
+        <div class="left">  
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您的身份证号码</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="text" name="certificate" data-text="身份证号码" placeholder="请输入身份证号码"/> 
+                  </div> 
+                  <div class="input-icon fl" id="certificate-icon"></div>
+                  <div class="input-error fl" id="certificate-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您目前的住房类型</div> 
+                  <div class="loan-radio fl">
+                        <div class="form-default_element form-radio form-radio--top">
+                            <input type="radio" id="house_type-1" name="house_type" value="1" checked=""/>
+                             <label for="house_type-1"><span class="ui-radio"></span>自有住房</label>
+                        </div>
+                        <div class="form-default_element form-radio form-radio--top">
+                            <input type="radio" id="house_type-2" name="house_type" value="0" />
+                             <label for="house_type-2"><span class="ui-radio"></span>租房</label>
+                         </div> 
+                  </div>
+                  <div class="input-icon fl" id="house_type-icon"></div>
+                  <div class="input-error fl" id="house_type-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您的住房详细地址</div>
+                  <div class="loan-input fl">  
+                       <input autocomplete="off" type="text" name="detail_address" data-text="住房详细地址" placeholder="请输入住房详细地址"/> 
+                  </div> 
+                  <div class="input-icon fl" id="detail_address-icon"></div>
+                  <div class="input-error fl" id="detail_address-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您的手机号码</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="text" name="cellphone" data-text="手机号码" placeholder="请输入手机号码"/> 
+                  </div> 
+                  <div class="input-icon fl" id="cellphone-icon"></div>
+                  <div class="input-error fl" id="cellphone-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您的固定电话</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="text" name="telephone" data-text="固定电话" placeholder="请输入固定电话"/> 
+                  </div> 
+                  <div class="input-icon fl" id="telephone-icon"></div>
+                  <div class="input-error fl" id="telephone-error"></div>
+               </div> 
+                <div class="line"></div>
+                <div class="title color-green fl"> 
+                   个人财务状况 
+                     <div class="f16 color-6" style="margin-left: 40px;line-height:50px;">以下内容将影响您的贷款审核</div>
+                </div>  
+                <div class="form-default_element form-inpt">
+                  <div class="loan-label fl" >
+                        您的现金存款账户余额
+                 </div>
+                  <div class="loan-select fl">  
+                        <select class="select_hide" id="select-scope_cash">
+                          <option value="">选择一项</option>
+                          <option value="1">是</option>
+                          <option value="0">否</option> 
+                        </select> 
+                  </div>
+                  <div class="input-icon fl" id="scope_cash-icon"></div>
+                  <div class="input-error fl" id="scope_cash-error"></div>
+              </div>
+               <div class="form-default_element form-inpt">
+                   <div class="loan-label fl" style="line-height:20px;">
+                   	您的股票、债券等其他<br/>有价证券资产</div>
+                   <div class="loan-select fl">  
+                        <select class="select_hide" id="select-scope_stock" >
+                              <option value="">选择一项</option>
+                              <option value="2015">2015</option>
+                              <option value="2014">2014</option>
+                        </select>
+                   </div>
+                   <div class="input-icon fl" id="purpose-icon"></div>
+                   <div class="input-error fl" id="purpose-error"></div>
+                </div>  
+                <div class="title color-green fl"> 
+                    个人信誉   
+                </div> 
+                <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">您是否有犯罪记录</div> 
+                  <div class="loan-radio fl">
+                        <div class="form-default_element form-radio form-radio--top">
+                            <input type="radio" id="is_criminal-1" name="is_criminal" value="1" />
+                             <label for="is_criminal-1"><span class="ui-radio"></span>是</label>
+                        </div>
+                        <div class="form-default_element form-radio form-radio--top">
+                            <input type="radio" id="is_criminal-2" name="is_criminal" value="0" />
+                             <label for="is_criminal-2"><span class="ui-radio"></span>否</label>
+                         </div> 
+                  </div>
+                  <div class="input-icon fl" id="is_criminal-icon"></div>
+                  <div class="input-error fl" id="is_criminal-error"></div>
+               </div> 
+               <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">是否有未决诉讼</div> 
+                  <div class="loan-radio fl">
+                        <div class="form-default_element form-radio form-radio--top">
+                            <input type="radio" id="is_lawsuit-1" name="is_lawsuit" value="1" />
+                             <label for="is_lawsuit-1"><span class="ui-radio"></span>是</label>
+                        </div>
+                        <div class="form-default_element form-radio form-radio--top">
+                            <input type="radio" id="is_lawsuit-2" name="is_lawsuit" value="0" />
+                             <label for="is_lawsuit-2"><span class="ui-radio"></span>否</label>
+                         </div> 
+                  </div>
+                  <div class="input-icon fl" id="is_lawsuit-icon"></div>
+                  <div class="input-error fl" id="is_lawsuit-error"></div>
+               </div>    
+                <div class="form-default_element form-inpt">
+                   <div class="loan-label fl"  style="width: 200px;"> </div> 
+                   <a class="loan-btn loan-submit fl">提交</a> 
+                </div> 
+                <div class="form-default_element">
+                   <div class="loan-label fl"> </div>
+                   <div class="color-red fl" id="error-box">  
+                        
+                   </div>
+                </div>   
+        </div>
+        <div class="right">
+             {%include file='../../../views/common/loaninfo.phtml' type="2"%}
+        </div>
+       
+    </div>
+</div> 
+{%/block%}

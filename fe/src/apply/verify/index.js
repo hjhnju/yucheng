@@ -167,9 +167,14 @@ define(function(require) {
         //快速验证 
         $('.loan .loan-submit').click(util.debounce(function(e) {
             e.preventDefault();
-            for (var item in inputArray) {
-                item.trigger('blur');
-            }
+        
+             for (var item in inputArray) {
+                if (!inputArray[item].val()) {
+                    iconArray[item+"Icon"].addClass('error');
+                    errorArray[item+"Error"].html('不能为空');
+                    return;
+                }
+            } 
 
             verifySubmit.remote({
                 amount: formParams.amount,

@@ -1,0 +1,97 @@
+{%if $type == '1'%}
+ <ul class="step-box">
+      <li class="btn {%if $current == '1'%}current{%/if%}">
+          <i class="iconfont icon-step1"></i>
+          <span>确认贷款额度</span>
+      </li>
+      <li class="iconfont icon-directionright dire"></li>
+      <li class="btn {%if $current == '2'%}current{%/if%}">
+          <i class="iconfont icon-step2"></i>
+          <span>贷款资格评估</span>
+      </li>
+      <li class="iconfont icon-directionright dire"></li>
+      <li class="btn {%if $current == '3'%}current{%/if%}">
+          <i class="iconfont icon-step3"></i>
+          <span>学校评估</span>
+      </li>
+      <li class="iconfont icon-directionright dire"></li>
+      <li class="btn {%if $current == '4'%}current{%/if%}">
+          <i class="iconfont icon-step4"></i>
+          <span>个人评估</span>
+      </li>
+  </ul>
+{%elseif $type == '2'%}
+    <div class="title">贷款信息</div>
+    <form action="" method="post" accept-charset="utf-8" name="loan-form" id="loan-form">  <div class="loan-input loan-input-w fl"> 
+          <span class="dis-block fl">
+              ￥
+          </span>
+          <input autocomplete="off" type="text" name="amount" class="loan-num" value="5000" />
+          <i class="icon up"></i>
+          <i class="icon down"></i>
+      </div>  
+    <fieldset class="form-radio-group cl--ra fl">
+          <div class="form-default_element form-radio form-radio--top">
+              <input type="radio" id="calc-loan-1" name="duration" value="15" durationType="1">
+               <label for="calc-loan-1"><span class="ui-radio"></span>15天</label>
+          </div>
+          <div class="form-default_element form-radio form-radio--top">
+              <input type="radio" id="calc-loan-2" name="duration" value="1" durationType="2">
+               <label for="calc-loan-2"><span class="ui-radio"></span>1个月</label>
+           </div>
+           <div class="form-default_element form-radio form-radio--top">
+              <input type="radio" id="calc-loan-3" name="duration" value="2" checked=""durationType="2"> 
+              <label for="calc-loan-3"><span class="ui-radio"></span>2个月</label>
+           </div>
+           <div class="form-default_element form-radio form-radio--top">
+              <input type="radio" id="calc-loan-4" name="duration" value="3" durationType="2"> 
+              <label for="calc-loan-4"><span class="ui-radio"></span>3个月</label>
+           </div>
+           <div class="form-default_element form-radio form-radio--top">
+              <input type="radio" id="calc-loan-5" name="duration" value="6" durationType="2"> 
+              <label for="calc-loan-5"><span class="ui-radio"></span>6个月</label>
+           </div> 
+    </fieldset>
+    <div class="title2 fl" style="padding: 10px 0px 10px 0px;line-height: 20px;">
+      按月付息，到期还本;<br/>
+      <span class="f14">共<span class="color-font-green">2</span>期</span>
+    </div>
+    <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+        <tr>
+            <td class="th-one">贷款总额</td>
+            <td class="td-one" amount></td>
+        </tr>
+        <tr>
+            <td class="th-two">服务费用</td>
+            <td class="td-two" serviceCharge></td>
+        </tr>
+        <tr>
+            <td class="th-one">实际到账</td>
+            <td class="td-one" real_amount></td>
+        </tr>
+        <tr>
+            <td class="th-two">贷款利率</td>
+            <td class="td-two" rate></td>
+        </tr>
+        <tr>
+            <td class="th-one">月平均利息</td>
+            <td class="td-one" interest_month></td>
+        </tr>
+        <tr>
+            <td class="th-two">贷款周期</td>
+            <td class="td-two" duration></td>
+        </tr>
+        <tr>
+            <td class="th-one">总还款额</td>
+            <td class="td-one" total></td>
+        </tr> 
+        <tr>
+            <td colspan="2" class="tl">
+                <span class="f12 lh20 dis-block">注：最终贷款利率由兴教贷对借款人信用评估后确定。 
+              <a class="color-font-green f12" href="{%$webroot%}/help#loan">了解详细服务费率</a></span>
+            </td>
+        </tr>
+    </table>
+  </form>
+{%else%}
+{%/if%}

@@ -1,1 +1,183 @@
-this is review page
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/review/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['apply/review/index'], function (main) {
+        main.init(0.13,0.18);  
+    });   
+</script>
+{%/block%}
+
+{%block name="content"%}
+<style type="text/css" media="all">
+    
+</style>
+<div class="box1" >
+    <div class="container container2 step">
+     <div class="container"> 
+        <div class="title"> 
+             <span>贷款申请信息确认</span>
+        </div>
+    </div>
+    </div> 
+</div>
+<div class="box2 loan">
+    <div class="container">
+        <div class="left">
+              <div class="title color-green fl">贷款信息</div> 
+              <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+                  <tr>
+                      <td class="th-one">贷款总额</td>
+                      <td class="td-one" amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">服务费用</td>
+                      <td class="td-two" serviceCharge></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">实际到账</td>
+                      <td class="td-one" real_amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">贷款利率</td>
+                      <td class="td-two" rate></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">月平均利息</td>
+                      <td class="td-one" interest_month></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">贷款周期</td>
+                      <td class="td-two" duration></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">总还款额</td>
+                      <td class="td-one" total></td>
+                  </tr>  
+              </table>
+              <div class="title color-green fl">资质评估</div>
+              <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+                  <tr>
+                      <td class="th-one">学校地区</td>
+                      <td class="td-one" amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">学校类型</td>
+                      <td class="td-two" serviceCharge></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">建校时间</td>
+                      <td class="td-one" real_amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">年收入是否超¥5,000,000</td>
+                      <td class="td-two" rate></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">最近一年是否盈利</td>
+                      <td class="td-one" interest_month></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务</td>
+                      <td class="td-two" duration></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">学校主体性质</td>
+                      <td class="td-one" total></td>
+                  </tr>  
+              </table>
+              <div class="title color-green fl">学校评估</div>
+              <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+                  <tr>
+                      <td class="th-one">学校地址</td>
+                      <td class="td-one" amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">学生数量</td>
+                      <td class="td-two" serviceCharge></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">教职工数量</td>
+                      <td class="td-one" real_amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">已开几所分校</td>
+                      <td class="td-two" rate></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">最近一年是否盈利</td>
+                      <td class="td-one" interest_month></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">除本人外可提供无限连带责任担保人数量</td>
+                      <td class="td-two" duration></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">借款用途</td>
+                      <td class="td-one" total></td>
+                  </tr>  
+              </table>
+              <div class="title color-green fl">个人评估</div>
+              <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+                  <tr>
+                      <td class="th-one">您的身份证号</td>
+                      <td class="td-one" amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">您目前的住房类型</td>
+                      <td class="td-two" serviceCharge></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">住房详细地址</td>
+                      <td class="td-one" real_amount></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">您的手机号</td>
+                      <td class="td-two" rate></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">您的固话联系方式</td>
+                      <td class="td-one" interest_month></td>
+                  </tr>
+                  <tr>
+                      <td class="th-two">您的储蓄账户存款余额</td>
+                      <td class="td-two" duration></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">您的股票、债券等其他有价证券资产</td>
+                      <td class="td-one" total></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">您是否有犯罪记录</td>
+                      <td class="td-one" total></td>
+                  </tr>
+                  <tr>
+                      <td class="th-one">您是否有未决诉讼</td>
+                      <td class="td-one" total></td>
+                  </tr>
+                    
+              </table>
+              <div class="form-default_element">
+                   <div class="loan-label fl"> </div>
+                   <div class="color-red fl" id="error-box">  
+                        
+                   </div>
+              </div>   
+        </div>
+        <div class="right"> 
+        	 {%include file='../../../views/common/loaninfo.phtml' type="2"%}
+        </div>  
+          <div class="xieyi fl">
+           <input type="checkbox"/> 
+           我同意电子签章协议，并确定如上所填信息无误 
+        </div>
+    </div>
+</div>
+ 
+
+
+{%/block%}
