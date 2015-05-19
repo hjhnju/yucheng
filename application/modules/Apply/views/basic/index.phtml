@@ -54,8 +54,9 @@
                   <div class="loan-select loan-select-addr fl">  
                         <select class="select_hide" id="select-province">
                           <option value="">选择省份</option>
-                          <option value="基础教育">北京</option>
-                          <option value="幼儿园">广西</option> 
+                          {%foreach $data.province as $key=>$item%}
+                          <option value="{%$key%}">{%$item%}</option>
+                          {%/foreach%} 
                         </select> 
                   </div>
                   <div class="loan-select loan-select-addr fl" style="margin-left: 6px;">  
@@ -64,6 +65,13 @@
                           <option value="基础教育">海淀</option>
                           <option value="幼儿园">朝阳</option> 
                         </select> 
+                        {%foreach $data.city as $key=>$item%}
+                        <div data-id="{%$key%}" style="display:none">
+                          {%foreach $item as $k=>$v%}
+                          <div data-id="{%$v['id']%}">{%$v['name']%}</div>
+                          {%/foreach%}
+                        </div>
+                        {%/foreach%}
                   </div>
                   <div class="input-icon fl" id="city-icon"></div>
                   <div class="input-error fl" id="city-error">目前仅开通北京、广西地区</div>
@@ -73,11 +81,9 @@
                   <div class="loan-select fl">  
                         <select class="select_hide" id="select-type">
                           <option value="">选择一项</option>
-                          <option value="基础教育">基础教育</option>
-                          <option value="幼儿园">幼儿园</option>
-                          <option value="职业教育">职业教育</option>
-                          <option value="高等教育">高等教育</option>
-                          <option value="培训机构">培训机构</option>
+                          {%foreach $data.school_type as $key=>$item%}
+                          <option value="{%$key%}">{%$item%}</option>
+                          {%/foreach%}
                         </select> 
                   </div>
                   <div class="input-icon fl" id="type-icon"></div>
@@ -88,8 +94,9 @@
                    <div class="loan-select fl">  
                         <select class="select_hide" id="select-year" >
                               <option value="">选择一项</option>
-                              <option value="2015">2015</option>
-                              <option value="2014">2014</option>
+                              {%foreach $data.year as $key=>$item%}
+                              <option value="{%$item%}">{%$item%}</option>
+                              {%/foreach%}
                         </select>
                    </div>
                    <div class="input-icon fl" id="year-icon"></div>
@@ -153,8 +160,9 @@
                       <div class="loan-select fl">  
                          <select class="select_hide" id="select-nature" >
                               <option value="">选择一项</option>
-                              <option value="2015">2015</option>
-                              <option value="2014">2014</option>
+                              {%foreach $data.nature as $key=>$item%}
+                              <option value="{%$key%}">{%$item%}</option>
+                              {%/foreach%}
                          </select>
                       </div>
                       <div class="input-icon fl" id="nature-icon"></div>
@@ -168,8 +176,9 @@
                       <div class="loan-select fl">  
                          <select class="select_hide" id="select-schoolSource" >
                               <option value="">选择一项</option>
-                              <option value="2015">广告</option>
-                              <option value="2014">朋友</option>
+                              {%foreach $data.school_source as $key=>$item%}
+                              <option value="{%$key%}">{%$item%}</option>
+                              {%/foreach%}
                          </select>
                       </div>
                       <div class="input-icon fl" id="schoolSource-icon"></div>

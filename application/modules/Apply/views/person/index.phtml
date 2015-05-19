@@ -103,8 +103,9 @@ array(
                   <div class="loan-select fl">  
                         <select class="select_hide" id="select-scope_cash">
                           <option value="">选择一项</option>
-                          <option value="1">是</option>
-                          <option value="0">否</option> 
+                          {%foreach $data.scope_cash as $key=>$value%}
+                          <option value="{%$key%}">{%$value%}</option>
+                          {%/foreach%}
                         </select> 
                   </div>
                   <div class="input-icon fl" id="scope_cash-icon"></div>
@@ -116,8 +117,9 @@ array(
                    <div class="loan-select fl">  
                         <select class="select_hide" id="select-scope_stock" >
                               <option value="">选择一项</option>
-                              <option value="2015">2015</option>
-                              <option value="2014">2014</option>
+                              {%foreach $data.scope_stock as $key=>$value%}
+                              <option value="{%$key%}">{%$value%}</option>
+                              {%/foreach%}
                         </select>
                    </div>
                    <div class="input-icon fl" id="purpose-icon"></div>

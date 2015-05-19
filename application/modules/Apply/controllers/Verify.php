@@ -22,7 +22,7 @@ class VerifyController extends Base_Controller_Page{
         //获取当前用户身份
         $objUser = User_Api::checkLogin();
         $usertype = 0;
-        if($objUser->usertype){
+        if(isset($objUser->usertype)){
             $usertype = $objUser->usertype;
         }
         $data = array(
