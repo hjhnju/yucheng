@@ -150,7 +150,7 @@ define(function(require) {
     }
 
     /**
-     * 渲染 from-table 
+     * 渲染 fromTable 
      * @param {json} e 表单参数 
      */
     function renderHTML(e) {

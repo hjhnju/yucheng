@@ -166,35 +166,44 @@
 //配合selectpic 开始
 /*外面边框的样式*/
 
-.selectpick_div {
+.selectBox_div {
     background-color: #FFFFFF;
     font-size: 12px;
-    font-weight: 500; 
-   /*  border: solid 1px #CFCFCF; */
+    font-weight: 500;
+    border: solid 1px #CFCFCF;
     line-height: 30px;
     position: absolute;
-    padding-left: 5px;
     overflow: hidden;
     cursor: pointer;
     overflow: hidden;
-    z-index: 9060;
+    z-index: 9050;
 }
 
-.selectpick_icon {
+.selectBox_icon {
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
     float: right;
-    background: url(../images/icon.png) no-repeat center;
-    margin-right: 5px;
     height: 30px;
-    width: 9px;
+    width: 15px;
     cursor: pointer;
+    color: #4fc501;
+    font-size: 18px;
+    margin-right: 5px;
+    &:before {
+        content: "\e610";
+    }
 }
 
-.selectpick_div:hover {
-    background-color: #F5F5F5;
-   /*  border: solid 1px #ccc; */
+.selectBox_div:hover {
+    /*   background-color: #F5F5F5; */
+    
+    border: solid 1px #ccc;
 }
 
-.selectpick_div:active {
+.selectBox_div:active {
     -moz-box-shadow: 0 0 3px #0099CC;
     -webkit-box-shadow: 0 0 3px #0099CC;
     box-shadow: 0 0 3px #0099CC;
@@ -202,7 +211,7 @@
 }
 /*下拉框的主体*/
 
-.selectpick_options {
+.selectBox_options {
     border: solid 1px #CFCFCF;
     border-bottom: none;
     position: absolute;
@@ -210,7 +219,7 @@
     font-size: 13.5px;
 }
 
-.selectpick_options ul {
+.selectBox_options ul {
     list-style: none;
     height: auto;
     margin: 0px;
@@ -219,16 +228,20 @@
     font-size: 13.5px;
 }
 
-.selectpick_options ul li {
+.selectBox_options ul li {
     border-bottom: solid 1px #CFCFCF;
     padding-left: 5px;
     display: block;
     font-size: 13.5px;
     z-index: 9060;
     background-color: #fff;
+
+    &:hover{
+        .transition(all 150ms ease-in-out 0s);
+    }
 }
 
-.selectpick_options_selected {
+.selectBox_options_selected {
     font-size: 13.5px;
     z-index: 9060;
 }
@@ -239,10 +252,11 @@
     opacity: 0;
     -webkit-opacity: 0;
     filter: alpha(opacity=0);
+    display: none;
 }
 /*设置为disabled的时候*/
 
-.selectpick_no_select {
+.selectBox_no_select {
     cursor: default;
     color: #9a9898;
     background-color: #F5F5F5;

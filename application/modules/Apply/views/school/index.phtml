@@ -1,9 +1,6 @@
-this is school page step3
-
-
-
+<!-- this is school page step3 
 <?php
-	array(
+        array(
         'address'        => '...', //学校地址
         'totalStudent'  => '345', //您的学校有多少学生？
         'staff'          => '32', //您的学校有多少教职工？
@@ -11,14 +8,149 @@ this is school page step3
         'guaranteeCount'=> '1', //兴教贷需要您的个人无限连带责任担保，除了您以外是否可以提供更多的担保人
         'branch_school'  => '2',  //您已开了几所分校？
         'school_stock'   => array(   //股权分配是个多值字段
-        	array(
-        		'name'   => 'guojinli',
-        		'weight' => '40.5',
-        	),
-        	array(
-        		'name'   => 'another',
-        		'weight' => '20.5',
-        	)
+                array(
+                        'name'   => 'guojinli',
+                        'weight' => '40.5',
+                ),
+                array(
+                        'name'   => 'another',
+                        'weight' => '20.5',
+                )
         )
-	);
-?>
+        );
+?> -->
+
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/school/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['apply/school/index'], function (main) {
+        main.init(0.13,0.18);  
+    });   
+</script>
+{%/block%}
+
+{%block name="content"%}
+<style type="text/css" media="all">
+    
+</style>
+<div class="box1" >
+    <div class="container container2  step">
+     <div class="container">
+       {%include file='../../../views/common/loaninfo.phtml' type="1" current="3"%}
+        <div class="title">
+             <i class="iconfont icon-step3"></i>
+             <span>学校评估</span>
+        </div>
+    </div>
+    </div> 
+</div>
+<div class="box2 loan">
+    <div class="container">
+        <div class="left">  
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊学校地址</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="text" name="address" data-text="学校地址" placeholder="请输入学校地址"/> 
+                  </div> 
+                  <div class="input-icon fl" id="address-icon"></div>
+                  <div class="input-error fl" id="address-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您的学校有多少学生</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="number" name="total_student" data-text="学生人数" placeholder="请输入学生人数"/> 
+                  </div> 
+                  <div class="input-icon fl" id="total_student-icon"></div>
+                  <div class="input-error fl" id="total_student-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您的学校有多少教职工</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="number" name="staff" data-text="教职工人数" placeholder="请输入教职工人数"/> 
+                  </div> 
+                  <div class="input-icon fl" id="staff-icon"></div>
+                  <div class="input-error fl" id="staff-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt"> 
+                  <div class="loan-label fl">＊您已开了几所分校</div>
+                  <div class="loan-input fl">  
+                         <input autocomplete="off" type="text" name="branch_school" data-text="分校数量" placeholder=""/> 
+                  </div> 
+                  <div class="input-icon fl" id="branch_school-icon"></div>
+                  <div class="input-error fl" id="branch_school-error"></div>
+              </div> 
+              <div class="form-default_element form-inpt">
+                  <div class="loan-label fl" style="line-height: 20px;    height: 60px;">
+                        ＊兴教贷需要您的个人无限<br/>
+                        连带责任担保，除了您以外<br/>
+                       是否可以提供更多的担保人<br/>
+                 </div>
+                  <div class="loan-select fl">  
+                        <select class="select_hide" id="select-ismoreguarantee">
+                          <option value="0">否</option>
+                          <option value="1">是</option>
+                          <option value="0">否</option> 
+                        </select> 
+                  </div>
+                  <div class="input-icon fl" id="ismoreguarantee-icon"></div>
+                  <div class="input-error fl" id="ismoreguarantee-error"></div>
+              </div>
+               <div class="form-default_element form-inpt">
+                   <div class="loan-label fl">＊您的贷款使用用途是</div>
+                   <div class="loan-select fl">  
+                        <select class="select_hide" id="select-purpose" >
+                              <option value="">选择一项</option>
+                              <option value="2015">2015</option>
+                              <option value="2014">2014</option>
+                        </select>
+                   </div>
+                   <div class="input-icon fl" id="purpose-icon"></div>
+                   <div class="input-error fl" id="purpose-error"></div>
+                </div> 
+                 <div class="line"></div>
+                <div class="title color-green fl"> 
+                    学校股权结构  
+                     <div class="f16 color-6" style="  margin-left: 40px;line-height:50px;">您及所有占20%以上股份的股东</div>
+                </div> 
+                <table cellspacing="0" cellpadding="0"  class="apply-stock fl">
+                    <tbody class="stock-list">
+                       <tr>
+                          <td>张三</td><td class="tr">20%</td> 
+                       </tr>    
+                    </tbody>  
+                </table> 
+               <div class="form-default_element form-inpt" style="margin-bottom: 5px;">
+                      <div class="loan-label fl" style="width: 30px;"> </div>
+                      <div class="loan-input stock-input fl">
+                          <input autocomplete="off" type="text" name="name" data-text="股东姓名" placeholder=""/>  
+                      </div> 
+                     <div class="loan-input stock-input stock-bai fl">
+                        <input autocomplete="off" type="text" name="weight" data-text="百分比" class=""/>  
+                         <span class="dis-block fr">%</span>
+                     </div> 
+                      <a class="loan-btn add-stock fl">再添加一位股东</a>
+                      <span class="stock-total">共30%</span>  
+                </div>
+                <div class="form-default_element">
+                   <div class="loan-label fl" style="width: 30px;"> </div>
+                   <div class="color-red fl" id="error-box">  
+                        ddddd
+                   </div>
+                </div>  
+                <div class="form-default_element form-inpt">
+                   <div class="loan-label fl"  style="width: 200px;"> </div> 
+                   <a class="loan-btn loan-submit fl">下一步</a> 
+                </div>    
+        </div>
+        <div class="right">
+             {%include file='../../../views/common/loaninfo.phtml' type="2"%}
+        </div>
+       
+    </div>
+</div> 
+{%/block%}
