@@ -31,11 +31,10 @@ class Apply_Logic_Personal extends Apply_Logic_Base {
 		$apply = Apply_Object_Personal::init($cookies);
 
 		if ($apply->save()) {
-			$objRet = new Base_Result(Apply_RetCode::SUCCESS, Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
+			$objRet = new Base_Result(Apply_RetCode::SUCCESS, array('id'=>$apply->id), Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
             $objRet->format();
         } else {
-            $objRet = new Base_Result(Apply_RetCode::PARAM_ERROR, Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
-            $objRet->format();
+            return $this->errorFormat();
 	    }
 	}
 

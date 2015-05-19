@@ -11,7 +11,7 @@ class Apply_Cookie {
 		if(!empty($param)) {
 			foreach($param as $field=>$value) {
 				if(array_key_exists($field, $fields)) {
-					var_dump($cookie->write($field, $value, $expire, '', '', '', ''));
+					$cookie->write($field, $value, $expire, '', '', '', '');
 				}
 			}
 		}	
@@ -26,14 +26,15 @@ class Apply_Cookie {
 		$values = array();
 		if(!empty($fields)) {
 			foreach($fields as $field=>$item) {
-				$values[$field] = $cookie->read($field);
+				$value = $cookie->read($field);
+				$values[$field] = $value;
 			}
 		}
 
 		return $values;
 	}
 	/**
-	 * @param $type apply|school|personal|cookie，根据不同名字获得不同的类
+	 * @param $type apply|school|personal|stock，根据不同名字获得不同的类
 	 * @return 解析所有的cookie
 	 */
 	public static function parseCookie($type){
@@ -49,11 +50,10 @@ class Apply_Cookie {
 		        break;
 		    default:
 		    	$obj = new Apply_Object_Apply();
-		    	
-
 		}
 		$properties = $obj->properties;
 		$cookies = self::read($properties);
+
 		return $cookies;   
 	}
 }

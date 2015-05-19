@@ -4,21 +4,20 @@
  */
 class Apply_Logic_Apply extends Apply_Logic_Base {
 	/**
+	 * 可以为空的字段
+	 */
+	protected $_except = array('id', 'create_time', 'update_time', 'start_time', 'end_time', 'status');
+	/**
 	 * @param  null
 	 * @return 
 	 */
 	public function saveApply() {
 		//得到所有的cookie
 		$cookies = Apply_Cookie::parseCookie('apply');
-
-		// $cookies = array(
-		// 	'amount' => '100000',
-		// 	'duration' => '200',
-		// 	'duration_type' => '1',
-		// 	'service_charge' => '200',
-		// 	'rate' => '0.12',
-		// 	'status' => 1,
-		// );
+		$objUser = User_Api::checkLogin();
+		if($objUser) {
+			$cookies['userid'] = $objUser->userid;
+		}
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
@@ -29,8 +28,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 			$objRet = new Base_Result(Apply_RetCode::SUCCESS, array('id'=>$apply->id), Apply_RetCode::getMsg(Apply_RetCode::SUCCESS));
             return $objRet->format();
         }else {
-            $objRet = new Base_Result(Apply_RetCode::PARAM_ERROR, '', Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
-            return $objRet->format();
+            return $this->errorFormat();
 	    }
 	}
 

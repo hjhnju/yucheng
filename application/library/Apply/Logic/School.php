@@ -8,29 +8,11 @@ class Apply_Logic_School extends Apply_Logic_Base{
 	 * @return 
 	 */
 	
-	public function saveSchool() {
+	public function saveSchool($apply_id) {
 		//得到所有的cookie
 		$cookies = Apply_Cookie::parseCookie('school');
-
-		// $cookies = array(
-		// 		'name'                => 'yale univeristy',
-		//        'type'                => '2',
-		//        'nature'              => '1',
-		//        'province'            => '1',
-	 	//        'city'                => '1',
-	 	//        'school_source'       => '2',
-	 	//        'year'                => '2014',
-	 	//        'is_annual_income'    => '1',
-	 	//        'is_profit'           => '1',
-	 	//        'is_other_business'   => '0',
-	 	//        'address'             => 'usa',
-	 	//        'total_student'       => '3450',
-	 	//        'staff'               => '450',
-	 	//        'purpose'             => '1',
-	 	//        'guarantee_count'     => '2',
-	 	//        'branch_school'       => '2',
-	 	//        'apply_id'            => '1',
-		// );
+        $stock = Apply_Cookie::read(array('stock'=>'stock'));
+        $stock = json_decode($cookies['stock']['stock']);
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
@@ -39,11 +21,10 @@ class Apply_Logic_School extends Apply_Logic_Base{
 		$apply = Apply_Object_School::init($cookies);
 
 		if ($apply->save()) {
-			$objRet = new Base_Result(Apply_RetCode::SUCCESS, Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
+			$objRet = new Base_Result(Apply_RetCode::SUCCESS, array('stock'=>$stock), Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
             return $objRet->format();
         } else {
-            $objRet = new Base_Result(Apply_RetCode::PARAM_ERROR, Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
-            return $objRet->format();
+            return $this->errorFormat();
 	    }
 	}
 
@@ -57,6 +38,7 @@ class Apply_Logic_School extends Apply_Logic_Base{
 			return false;
 		}
 		$fields = $this->getProperties();
+		$fields['stock'] = '';
 		Apply_Cookie::save($param, $fields);
 
 		return true;	
@@ -72,4 +54,19 @@ class Apply_Logic_School extends Apply_Logic_Base{
 		
 		return $fields;
 	}
+	/**
+     * 检验字符串是否合法
+     * @param  [type] $param [需要检验的字段数组]
+     * @param  [type] $data  [检验字段值的数组]
+     * @return [type]        [如果成功返回true,否则返回相应的header包含code和文本信息]
+     */
+    protected function checkParam($param, $data) {
+        foreach ($param as $key => $msg) {
+            if (empty($data[$key])) {
+                $this->ajaxError(Apply_RetCode::PARAM_ERROR, $msg);
+                return false;
+            }
+        }
+        return true;
+    }
 }

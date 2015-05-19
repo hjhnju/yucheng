@@ -25,8 +25,13 @@ class VerifyController extends Base_Controller_Page{
         if($objUser->usertype){
             $usertype = $objUser->usertype;
         }
-        $this->getView()->assign('url',$this->webroot . '/user/imagecode/getimage?type='.self::IMAGECODE.'&timestmp='.time());
-        $this->getView()->assign('usertype', $usertype);
+        $data = array(
+            'url' => $this->webroot . '/user/imagecode/getimage?type='.self::IMAGECODE.'&timestmp='.time(),
+            'usertype' => $usertype,
+            'duration' => Apply_Type_Duration::$names,
+        );
+        
+        $this->getView()->assign('data', $data);
     }
 
     /**
@@ -51,8 +56,8 @@ class VerifyController extends Base_Controller_Page{
         //如果还是登录状态说明该用户是一个申请贷款用户，不需要对其进行注册
         if(!$objUser) {
             //用户是一个未登录的用户,这就需要对用户的注册信息进行验证
-            $strName   = trim($_POST['name']);
-            $strPasswd = trim($_POST['passwd']);
+            $strName   = trim($_POST['email']);
+            $strPasswd = trim($_POST['password']);
             $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
             //检查验证码
             $bolRet = User_Logic_ImageCode::checkCode(self::IMAGECODE, $strCode);
@@ -62,8 +67,9 @@ class VerifyController extends Base_Controller_Page{
             }
             //注册成一个新的账户，注册里面会验证用户名和密码是否合法，返回状态已经转化成数组格式
             $objRet = User_Api::regist('fina', $strName, $strPasswd);
+
             if(User_RetCode::SUCCESS !== $objRet['status']){
-                return $this->ajaxError($objRet->status, $objRet->statusInfo); 
+                return $this->ajaxError($objRet['status'], $objRet['statusInfo']); 
             }
             //注册成功后设置用户为登录状态并将登录信息入库
             $logic   = new User_Logic_Login();
@@ -80,17 +86,21 @@ class VerifyController extends Base_Controller_Page{
 
     	//检查值是否合法，合法后记录到cookie，并且跳转到下一步
 		if (!empty($_POST) && $this->checkParam($this->param, $_POST)) {
-            $school_name = $_POST['name'];
-            unset($_POST['name']);
-			//记录cookie
+			//记录apply cookie
 	    	$logic = new Apply_Logic_Apply();
             if(!$logic->saveCookie($_POST)) {
                 $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
                     Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
             }
-
+            //记录school cookie
             $logic = new Apply_Logic_School();
-            if($logic->saveCookie(array('name', $school_name))) {
+            if(!$logic->saveCookie(array('name'=>$_POST['name']))) {
+                $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
+                    Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
+            }
+            //记录personal cookie
+            $logic = new Apply_Logic_Personal();
+            if(!$logic->saveCookie(array('realname'=>$_POST['realname']))) {
                 $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
                     Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
             }
@@ -100,5 +110,34 @@ class VerifyController extends Base_Controller_Page{
 
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
                     Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
+    }
+
+    /**
+     * 检验邮箱
+     */
+    public function checkEmailAction() {
+        $email = $_POST['email'];
+        $code = Apply_Api::checkEmail($email);
+
+        if($code != Apply_RetCode::SUCCESS) {
+            $this->ajaxError($code, Apply_RetCode::getMsg($code));
+        }
+        $this->ajax('', '', $code);  
+    }
+
+    /**
+     * 检验字符串是否合法
+     * @param  [type] $param [需要检验的字段数组]
+     * @param  [type] $data  [检验字段值的数组]
+     * @return [type]        [如果成功返回true,否则返回相应的header包含code和文本信息]
+     */
+    protected function checkParam($param, $data) {
+        foreach ($param as $key => $msg) {
+            if (empty($data[$key])) {
+                $this->ajaxError(Apply_RetCode::PARAM_ERROR, $msg);
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -76,7 +76,7 @@ class User_Logic_Regist{
     
     /**
      * 注册的同时要添加信息进`user_info`表
-     * @param  usertype $usertype 用户类型 'priv' | 'corp'
+     * @param  usertype $usertype 用户类型 'priv' | 'corp' | 'fina'
      * @param  username $username 用户名
      * @return $userid | false
      */
@@ -84,7 +84,7 @@ class User_Logic_Regist{
         //企业用户手机前面加0
         $usertype = $this->getUserType($usertype);
         //如果新注册用户不是融资用户，要进行用户名和电话的认证
-        if($usertype == User_Type_Roles::TYPE_FINA) {
+        if($usertype != User_Type_Roles::TYPE_FINA) {
             //各字段再验证过一遍
             //允许用户名为空
             if(!empty($username)) {

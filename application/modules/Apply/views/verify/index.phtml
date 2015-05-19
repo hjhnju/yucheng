@@ -29,6 +29,8 @@
 <style type="text/css" media="all">
     
 </style>
+
+{%$smarty.debugging_ctrl = 'URL'%}
 <div class="box1" >
     <div class="container container2">
      <div class="container">
@@ -76,26 +78,18 @@
 
               <div class="title" style="margin-top: 46px;">请选择您需要的贷款期限</div>
               <fieldset class="form-radio-group cl--ra">
+                  {%foreach $data.duration as $key=>$item%}
+                  {%assign var="col" value=$key+1%}
                     <div class="form-default_element form-radio form-radio--top">
-                        <input type="radio" id="calc-loan-1" name="duration" value="15" durationType="1">
-                         <label for="calc-loan-1"><span class="ui-radio"></span>15天</label>
-                    </div>
-                    <div class="form-default_element form-radio form-radio--top">
-                        <input type="radio" id="calc-loan-2" name="duration" value="1" durationType="2">
-                         <label for="calc-loan-2"><span class="ui-radio"></span>1个月</label>
-                     </div>
-                     <div class="form-default_element form-radio form-radio--top">
-                        <input type="radio" id="calc-loan-3" name="duration" value="2" checked=""durationType="2"> 
-                        <label for="calc-loan-3"><span class="ui-radio"></span>2个月</label>
-                     </div>
-                     <div class="form-default_element form-radio form-radio--top">
-                        <input type="radio" id="calc-loan-4" name="duration" value="3" durationType="2"> 
-                        <label for="calc-loan-4"><span class="ui-radio"></span>3个月</label>
-                     </div>
-                     <div class="form-default_element form-radio form-radio--top">
-                        <input type="radio" id="calc-loan-5" name="duration" value="6" durationType="2"> 
-                        <label for="calc-loan-5"><span class="ui-radio"></span>6个月</label>
-                     </div> 
+                      {%if $col == 3%}
+                        {%assign var="check" value="checked='true'"%}
+                      {%else%}
+                        {%assign var="check" value=""%}
+                      {%/if%}
+                      <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" durationType="{%$item.type%}">
+                      <label for="calc-loan-{%$col%}"><span class="ui-radio"></span>{%$item.label%}</label>
+                    </div>  
+                  {%/foreach%}
               </fieldset>
               <div class="title" style="padding: 18px 0px 10px 0px;line-height: 20px;">
                 按月付息，到期还本;<br/>
@@ -156,8 +150,7 @@
                   <div class="input-icon fl" id="realname-icon"></div>
                   <div class="input-error fl" id="realname-error"></div>
               </div>
-              
-               {%if !isset($user)%} 
+               {%if ($data.usertype != 3)%} 
                 <div class="form-default_element form-inpt">
                    <div class="loan-label fl">＊邮箱地址</div>
                    <div class="loan-input fl">  
@@ -185,7 +178,7 @@
                   <div class="form-default_element form-inpt">
                       <div class="loan-label fl">＊验证码</div>
                       <a href="###" class="testing fl">
-                          <img id="login-img-url" src="{%$url%}" width="128" height="40" />
+                          <img id="login-img-url" src="{%$data.url%}" width="128" height="40" />
                       </a> 
                       <div class="loan-input testing fl">  
                          <input autocomplete="off"  id="loan-testing" name="imagecode" type="text" maxlength="4"  data-text="验证码"/> 
