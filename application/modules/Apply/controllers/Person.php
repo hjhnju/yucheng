@@ -25,6 +25,7 @@ class PersonController extends Base_Controller_Page{
 			'scope_stock'	=> Apply_Type_Stock::$names,
             'edit'          => $cookies,
             'duration' => Apply_Type_Duration::$names,
+            'minmax'   => Apply_Type_MinMax::$values,
 		);
 
 		$this->getView()->assign('data', $data);

@@ -29,6 +29,7 @@ class VerifyController extends Base_Controller_Page{
             'url' => $this->webroot . '/user/imagecode/getimage?type='.self::IMAGECODE.'&timestmp='.time(),
             'usertype' => $usertype,
             'duration' => Apply_Type_Duration::$names,
+            'minmax'   => Apply_Type_MinMax::$values,
         );
         
         $this->getView()->assign('data', $data);
@@ -45,7 +46,7 @@ class VerifyController extends Base_Controller_Page{
         //如果是一个已经登录的用户
         if($objUser) {
             //如果该登录用户不是一个申请贷款用户
-            if($objUser->usertype != Apply_Type_Roles::TYPE_FINA){
+            if($objUser->usertype != User_Type_Roles::TYPE_FINA){
                 //将该用户的登录状态设置成false
                 $logic = new User_Logic_Login();
                 $ret   = $logic->signOut();
@@ -81,6 +82,9 @@ class VerifyController extends Base_Controller_Page{
 
     	//检查值是否合法，合法后记录到cookie，并且跳转到下一步
 		if (!empty($_POST) && $this->checkParam($this->param, $_POST)) {
+            unset($_POST['email']);
+            unset($_POST['password']);
+            unset($_POST['imagecode']);
 			//记录apply cookie
 	    	$logic = new Apply_Logic_Apply();
             if(!$logic->saveCookie($_POST)) {
@@ -117,7 +121,20 @@ class VerifyController extends Base_Controller_Page{
         if($code != Apply_RetCode::SUCCESS) {
             $this->ajaxError($code, Apply_RetCode::getMsg($code));
         }
-        $this->ajax('', '', $code);  
+        $this->ajax();    
+    }
+
+    /**
+     * 检验身份证号
+     */
+    public function checkIdCardAction() {
+        $id = $_POST['idcard'];
+        $code = Apply_Api::checkIdCard($id);
+
+        if($code != Apply_RetCode::SUCCESS) {
+            $this->ajaxError($code, Apply_RetCode::getMsg($code));
+        }
+        $this->ajax();  
     }
 
     /**

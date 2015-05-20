@@ -24,6 +24,7 @@ class BasicController extends Base_Controller_Page{
 			'nature'   	  => Apply_Type_Nature::$names,
 			'school_source'  => Apply_Type_Source::$names,
             'duration' => Apply_Type_Duration::$names,
+            'minmax'   => Apply_Type_MinMax::$values,
 		);
 		$this->getView()->assign('data', $data);
     }

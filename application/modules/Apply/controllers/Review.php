@@ -7,6 +7,7 @@ class ReviewController extends Base_Controller_Page{
         //读出所有的cookie，用来显示
         $data = Apply_Cookie::showCookieValue();
         $data['duration'] = Apply_Type_Duration::$names;
+        $data['minmax']   = Apply_Type_MinMax::$values;
         $this->getView()->assign('data', $data);
     }
     /**

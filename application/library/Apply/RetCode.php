@@ -24,6 +24,9 @@ class Apply_RetCode extends Base_RetCode{
     //个人数据格式错误
     const PERSONAL_PARAM_ERROR= 1005;
 
+    //身份证号错误
+    const ID_CARD_WRONG = 1006;
+
     /* 消息函数
      * @var array
      */
@@ -34,5 +37,6 @@ class Apply_RetCode extends Base_RetCode{
         self::SCHOOL_PARAM_ERROR    => '邮箱已存在!',     
         self::STOCK_PARAM_ERROR     => '邮箱格式错误!',
         self::PERSONAL_PARAM_ERROR  => '邮箱不能为空!',
+        self::ID_CARD_WRONG         => '身份证号格式错误!',
     );
 }

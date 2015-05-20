@@ -6,7 +6,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 	/**
 	 * 可以为空的字段
 	 */
-	protected $_except = array('id', 'create_time', 'update_time', 'start_time', 'end_time', 'status', 'rate');
+	protected $_except = array('id', 'create_time', 'update_time', 'start_time', 'end_time', 'rate');
 	/**
 	 * @param  null
 	 * @return 
@@ -18,6 +18,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 		if($objUser) {
 			$cookies['userid'] = $objUser->userid;
 		}
+		$cookies['status'] = Apply_Type_Status::AUDIT;
 
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {

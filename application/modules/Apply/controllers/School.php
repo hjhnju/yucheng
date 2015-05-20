@@ -23,6 +23,7 @@ class SchoolController extends Base_Controller_Page{
 			'purpose'		=> Apply_Type_Purpose::$names,
             'edit'          => $cookies,
             'duration' => Apply_Type_Duration::$names,
+            'minmax'   => Apply_Type_MinMax::$values,
 		);
 
 		$this->getView()->assign('data', $data);
