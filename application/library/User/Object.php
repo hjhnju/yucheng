@@ -184,6 +184,9 @@ class User_Object {
         if($this->loginObj){
             $displayName = !empty($this->loginObj->name) ? $this->loginObj->name : 
                 Base_Util_String::starPhone($this->loginObj->phone);
+            if($displayName == '') {
+                $displayName = Base_Util_String::starEmail($this->loginObj->email);
+            }
         }
         return $displayName;
     }
