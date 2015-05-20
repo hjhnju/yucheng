@@ -1,7 +1,7 @@
 <?php
 class BasicController extends Base_Controller_Page{
 
-    protected $needLogin = false;
+    protected $needLogin = true;
     /**
      * 需要验证的参数值
      * @var array
@@ -33,7 +33,7 @@ class BasicController extends Base_Controller_Page{
 			//记录cookie
 	    	$logic = new Apply_Logic_School();
 	    	$logic->saveCookie($_POST);
-            $this->ajax(array('url' => 'apply/school'), '', Apply_RetCode::NEED_REDIRECT);
+            $this->ajax(array('url' => '/apply/school'), '', Apply_RetCode::NEED_REDIRECT);
 		}
         
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
@@ -47,7 +47,7 @@ class BasicController extends Base_Controller_Page{
      */
     protected function checkParam($param, $data) {
         foreach ($param as $key => $msg) {
-            if (empty($data[$key])) {
+            if ($data[$key] == '') {
                 $this->ajaxError(Apply_RetCode::PARAM_ERROR, $msg);
                 return false;
             }

@@ -17,10 +17,13 @@ class PersonController extends Base_Controller_Page{
     );
 
     public function indexAction() {
+        Apply_Cookie::erasureCookie();
+        $cookies = Apply_Cookie::parseCookie('personal');
         $data = array(
 			'yesno'	   	  	=> Apply_Type_YesNo::$names,
 			'scope_cash'   	=> Apply_Type_Cash::$names,
 			'scope_stock'	=> Apply_Type_Stock::$names,
+            'edit'          => $cookies,
 		);
 
 		$this->getView()->assign('data', $data);
@@ -32,7 +35,7 @@ class PersonController extends Base_Controller_Page{
 			//记录cookie
 	    	$logic = new Apply_Logic_Personal();
 	    	$logic->saveCookie($_POST);
-            $this->ajax(array('url' => 'apply/review'), '', Apply_RetCode::NEED_REDIRECT);
+            $this->ajax(array('url' => '/apply/review'), '', Apply_RetCode::NEED_REDIRECT);
 		}
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
                     Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
@@ -45,8 +48,7 @@ class PersonController extends Base_Controller_Page{
      */
     protected function checkParam($param, $data) {
         foreach ($param as $key => $msg) {
-            if (empty($data[$key])) {
-                print_r($msg);die();
+            if ($data[$key] == '') {
                 $this->ajaxError(Apply_RetCode::PARAM_ERROR, $msg);
                 return false;
             }

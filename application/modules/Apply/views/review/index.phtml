@@ -63,101 +63,101 @@
               <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
                   <tr>
                       <td class="th-one">学校地区</td>
-                      <td class="td-one" amount></td>
+                      <td class="td-one">{%$data.school.province%} {%$data.school.city%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">学校类型</td>
-                      <td class="td-two" serviceCharge></td>
+                      <td class="td-two">{%$data.school.type%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">建校时间</td>
-                      <td class="td-one" real_amount></td>
+                      <td class="td-one">{%$data.school.year%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">年收入是否超¥5,000,000</td>
-                      <td class="td-two" rate></td>
+                      <td class="td-two">{%$data.school.is_annual_income%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">最近一年是否盈利</td>
-                      <td class="td-one" interest_month></td>
+                      <td class="td-one">{%$data.school.is_profit%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务</td>
-                      <td class="td-two" duration></td>
+                      <td class="td-two">{%$data.school.is_other_business%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">学校主体性质</td>
-                      <td class="td-one" total></td>
+                      <td class="td-one">{%$data.school.nature%}</td>
                   </tr>  
               </table>
               <div class="title color-green fl">学校评估</div>
               <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
                   <tr>
                       <td class="th-one">学校地址</td>
-                      <td class="td-one" amount></td>
+                      <td class="td-one">{%$data.school.address%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">学生数量</td>
-                      <td class="td-two" serviceCharge></td>
+                      <td class="td-two">{%$data.school.total_student%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">教职工数量</td>
-                      <td class="td-one" real_amount></td>
+                      <td class="td-one">{%$data.school.staff%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">已开几所分校</td>
-                      <td class="td-two" rate></td>
+                      <td class="td-two">{%$data.school.branch_school%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">最近一年是否盈利</td>
-                      <td class="td-one" interest_month></td>
+                      <td class="td-one">{%$data.school.is_profit%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">除本人外可提供无限连带责任担保人数量</td>
-                      <td class="td-two" duration></td>
+                      <td class="td-two">{%$data.school.guarantee_count%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">借款用途</td>
-                      <td class="td-one" total></td>
+                      <td class="td-one">{%$data.school.purpose%}</td>
                   </tr>  
               </table>
               <div class="title color-green fl">个人评估</div>
               <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
                   <tr>
                       <td class="th-one">您的身份证号</td>
-                      <td class="td-one" amount></td>
+                      <td class="td-one">{%$data.personal.certificate%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">您目前的住房类型</td>
-                      <td class="td-two" serviceCharge></td>
+                      <td class="td-two">{%$data.personal.house_type%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">住房详细地址</td>
-                      <td class="td-one" real_amount></td>
+                      <td class="td-one">{%$data.personal.detail_address%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">您的手机号</td>
-                      <td class="td-two" rate></td>
+                      <td class="td-two">{%$data.personal.cellphone%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">您的固话联系方式</td>
-                      <td class="td-one" interest_month></td>
+                      <td class="td-one">{%$data.personal.telephone%}</td>
                   </tr>
                   <tr>
                       <td class="th-two">您的储蓄账户存款余额</td>
-                      <td class="td-two" duration></td>
+                      <td class="td-two">{%$data.personal.scope_cash%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">您的股票、债券等其他有价证券资产</td>
-                      <td class="td-one" total></td>
+                      <td class="td-one">{%$data.personal.scope_stock%}</td>
                   </tr>
                   <tr>
-                      <td class="th-one">您是否有犯罪记录</td>
-                      <td class="td-one" total></td>
+                      <td class="th-two">您是否有犯罪记录</td>
+                      <td class="td-two">{%$data.personal.is_criminal%}</td>
                   </tr>
                   <tr>
                       <td class="th-one">您是否有未决诉讼</td>
-                      <td class="td-one" total></td>
+                      <td class="td-one">{%$data.personal.is_lawsuit%}</td>
                   </tr>
                     
               </table>

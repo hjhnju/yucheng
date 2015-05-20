@@ -14,10 +14,14 @@ class SchoolController extends Base_Controller_Page{
         'purpose'		=> '贷款使用用途不能为空!',
     );
     public function indexAction() {
+        //如果用户点击了修改，我们需要在这里得到之前添加过的cookie
+        $cookies = Apply_Cookie::parseCookie('school');
+        $cookies += Apply_Cookie::parseCookie('stock');
         $data = array(
 			'guarantee'		=> Apply_Type_Guarantee::getGuarantes(),
 			'branch_school'	=> Apply_Type_BranchSchool::$names,
 			'purpose'		=> Apply_Type_Purpose::$names,
+            'edit'          => $cookies,
 		);
 
 		$this->getView()->assign('data', $data);
@@ -37,10 +41,11 @@ class SchoolController extends Base_Controller_Page{
                 ),
             );
             $_POST['stock'] = json_encode($stock);
+
 			//记录cookie
 	    	$logic = new Apply_Logic_School();
 	    	$logic->saveCookie($_POST);
-            $this->ajax(array('url' => 'apply/person'), '', Apply_RetCode::NEED_REDIRECT);
+            $this->ajax(array('url' => '/apply/person'), '', Apply_RetCode::NEED_REDIRECT);
 		}
 
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
@@ -55,7 +60,7 @@ class SchoolController extends Base_Controller_Page{
      */
     protected function checkParam($param, $data) {
         foreach ($param as $key => $msg) {
-            if (empty($data[$key])) {
+            if ($data[$key] == '') {
                 $this->ajaxError(Apply_RetCode::PARAM_ERROR, $msg);
                 return false;
             }

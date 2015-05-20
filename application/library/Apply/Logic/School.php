@@ -4,6 +4,10 @@
  */
 class Apply_Logic_School extends Apply_Logic_Base{
 	/**
+	 * 可以为空的字段
+	 */
+	protected $_except = array('id', 'create_time', 'update_time', 'is_annual_income', 'is_profit', 'is_other_business', 'branch_school', 'guarantee_count');
+	/**
 	 * @param  
 	 * @return 
 	 */
@@ -11,17 +15,15 @@ class Apply_Logic_School extends Apply_Logic_Base{
 	public function saveSchool($apply_id) {
 		//得到所有的cookie
 		$cookies = Apply_Cookie::parseCookie('school');
-        $stock = Apply_Cookie::read(array('stock'=>'stock'));
-        $stock = json_decode($cookies['stock']['stock']);
+		$cookies['apply_id'] = $apply_id;
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
 		}
 		//开始存储信息
 		$apply = Apply_Object_School::init($cookies);
-
 		if ($apply->save()) {
-			$objRet = new Base_Result(Apply_RetCode::SUCCESS, array('stock'=>$stock), Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
+			$objRet = new Base_Result(Apply_RetCode::SUCCESS, array(), Apply_RetCode::getMsg(Apply_RetCode::SUCCESS));
             return $objRet->format();
         } else {
             return $this->errorFormat();
@@ -38,7 +40,6 @@ class Apply_Logic_School extends Apply_Logic_Base{
 			return false;
 		}
 		$fields = $this->getProperties();
-		$fields['stock'] = '';
 		Apply_Cookie::save($param, $fields);
 
 		return true;	

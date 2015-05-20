@@ -22,7 +22,7 @@ class VerifyController extends Base_Controller_Page{
         //获取当前用户身份
         $objUser = User_Api::checkLogin();
         $usertype = 0;
-        if(isset($objUser->usertype)){
+        if(isset($objUser)){
             $usertype = $objUser->usertype;
         }
         $data = array(
@@ -61,12 +61,12 @@ class VerifyController extends Base_Controller_Page{
             $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
             //检查验证码
             $bolRet = User_Logic_ImageCode::checkCode(self::IMAGECODE, $strCode);
-            if(!$bolRet){
-                return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG, 
-                    User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
-            }
+            // if(!$bolRet){
+            //     return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG, 
+            //         User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
+            // }
             //注册成一个新的账户，注册里面会验证用户名和密码是否合法，返回状态已经转化成数组格式
-            $objRet = User_Api::regist('fina', $strName, $strPasswd);
+            $objRet = User_Api::regist('fina', $strName, $strPasswd, '');
 
             if(User_RetCode::SUCCESS !== $objRet['status']){
                 return $this->ajaxError($objRet['status'], $objRet['statusInfo']); 
@@ -74,14 +74,9 @@ class VerifyController extends Base_Controller_Page{
             //注册成功后设置用户为登录状态并将登录信息入库
             $logic   = new User_Logic_Login();
             if(!empty($strName)){
-                $logic->login('name', $strName, $strPasswd);
-            }elseif(!empty($strPhone)){
-                $logic->login('phone', $strPhone, $strPasswd);
+                $logic->login('email', $strName, $strPasswd);
             }
             Base_Log::notice($_REQUEST);
-            
-            //注册后的系统消息
-            Msg_Api::sendmsg($userid, Msg_Type::SYSTEM);
         }
 
     	//检查值是否合法，合法后记录到cookie，并且跳转到下一步
@@ -105,7 +100,7 @@ class VerifyController extends Base_Controller_Page{
                     Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
             }
 
-            $this->ajax(array('url' => 'apply/basic'), '', Apply_RetCode::NEED_REDIRECT);
+            $this->ajax(array('url' => '/apply/basic'), '', Apply_RetCode::NEED_REDIRECT);
 		}
 
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
@@ -133,7 +128,7 @@ class VerifyController extends Base_Controller_Page{
      */
     protected function checkParam($param, $data) {
         foreach ($param as $key => $msg) {
-            if (empty($data[$key])) {
+            if ($data[$key] == '') {
                 $this->ajaxError(Apply_RetCode::PARAM_ERROR, $msg);
                 return false;
             }

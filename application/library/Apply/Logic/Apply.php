@@ -6,7 +6,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 	/**
 	 * 可以为空的字段
 	 */
-	protected $_except = array('id', 'create_time', 'update_time', 'start_time', 'end_time', 'status');
+	protected $_except = array('id', 'create_time', 'update_time', 'start_time', 'end_time', 'status', 'rate');
 	/**
 	 * @param  null
 	 * @return 
@@ -18,6 +18,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 		if($objUser) {
 			$cookies['userid'] = $objUser->userid;
 		}
+
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
@@ -42,7 +43,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 			return false;
 		}
 		$fields = $this->getProperties();
-		Apply_Cookie::save($param, $fields);
+		Apply_Cookie::save($param, 'apply');
 
 		return true;	
 	}

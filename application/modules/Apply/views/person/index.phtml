@@ -47,7 +47,7 @@ array(
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您的身份证号码</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" type="text" name="certificate" data-text="身份证号码" placeholder="请输入身份证号码"/> 
+                         <input autocomplete="off" type="text" value="{%$data.edit.certificate%}" name="certificate" data-text="身份证号码" placeholder="请输入身份证号码"/> 
                   </div> 
                   <div class="input-icon fl" id="certificate-icon"></div>
                   <div class="input-error fl" id="certificate-error"></div>
@@ -56,11 +56,11 @@ array(
                   <div class="loan-label fl">＊您目前的住房类型</div> 
                   <div class="loan-radio fl">
                         <div class="form-default_element form-radio form-radio--top">
-                            <input type="radio" id="house_type-1" name="house_type" value="1" checked=""/>
+                            <input type="radio" id="house_type-1" name="house_type" value="1" {%if '1' == $data.edit.house_type%}checked{%/if%}/>
                              <label for="house_type-1"><span class="ui-radio"></span>自有住房</label>
                         </div>
                         <div class="form-default_element form-radio form-radio--top">
-                            <input type="radio" id="house_type-2" name="house_type" value="0" />
+                            <input type="radio" id="house_type-2" name="house_type" value="2" {%if '2' == $data.edit.house_type%}checked{%/if%}/>
                              <label for="house_type-2"><span class="ui-radio"></span>租房</label>
                          </div> 
                   </div>
@@ -70,7 +70,7 @@ array(
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您的住房详细地址</div>
                   <div class="loan-input fl">  
-                       <input autocomplete="off" type="text" name="detail_address" data-text="住房详细地址" placeholder="请输入住房详细地址"/> 
+                       <input autocomplete="off" value="{%$data.edit.detail_address%}" type="text" name="detail_address" data-text="住房详细地址" placeholder="请输入住房详细地址"/> 
                   </div> 
                   <div class="input-icon fl" id="detail_address-icon"></div>
                   <div class="input-error fl" id="detail_address-error"></div>
@@ -78,7 +78,7 @@ array(
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您的手机号码</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" type="text" name="cellphone" data-text="手机号码" placeholder="请输入手机号码"/> 
+                         <input autocomplete="off" value="{%$data.edit.cellphone%}" type="text" name="cellphone" data-text="手机号码" placeholder="请输入手机号码"/> 
                   </div> 
                   <div class="input-icon fl" id="cellphone-icon"></div>
                   <div class="input-error fl" id="cellphone-error"></div>
@@ -86,7 +86,7 @@ array(
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您的固定电话</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" type="text" name="telephone" data-text="固定电话" placeholder="请输入固定电话"/> 
+                         <input autocomplete="off" value="{%$data.edit.telephone%}" type="text" name="telephone" data-text="固定电话" placeholder="请输入固定电话"/> 
                   </div> 
                   <div class="input-icon fl" id="telephone-icon"></div>
                   <div class="input-error fl" id="telephone-error"></div>
@@ -104,7 +104,7 @@ array(
                         <select class="select_hide" id="select-scope_cash">
                           <option value="">选择一项</option>
                           {%foreach $data.scope_cash as $key=>$value%}
-                          <option value="{%$key%}">{%$value%}</option>
+                          <option value="{%$key%}" {%if $key == $data.edit.scope_cash%}selected{%/if%}>{%$value%}</option>
                           {%/foreach%}
                         </select> 
                   </div>
@@ -118,7 +118,7 @@ array(
                         <select class="select_hide" id="select-scope_stock" >
                               <option value="">选择一项</option>
                               {%foreach $data.scope_stock as $key=>$value%}
-                              <option value="{%$key%}">{%$value%}</option>
+                              <option value="{%$key%}" {%if $key == $data.edit.scope_stock%}selected{%/if%}>{%$value%}</option>
                               {%/foreach%}
                         </select>
                    </div>
@@ -132,11 +132,11 @@ array(
                   <div class="loan-label fl">您是否有犯罪记录</div> 
                   <div class="loan-radio fl">
                         <div class="form-default_element form-radio form-radio--top">
-                            <input type="radio" id="is_criminal-1" name="is_criminal" value="1" />
+                            <input type="radio" id="is_criminal-1" name="is_criminal" value="1" {%if '1' == $data.edit.is_criminal%}checked{%/if%}/>
                              <label for="is_criminal-1"><span class="ui-radio"></span>是</label>
                         </div>
                         <div class="form-default_element form-radio form-radio--top">
-                            <input type="radio" id="is_criminal-2" name="is_criminal" value="0" />
+                            <input type="radio" id="is_criminal-2" name="is_criminal" value="0" {%if '0' == $data.edit.is_criminal%}checked{%/if%}/>
                              <label for="is_criminal-2"><span class="ui-radio"></span>否</label>
                          </div> 
                   </div>
@@ -147,11 +147,11 @@ array(
                   <div class="loan-label fl">是否有未决诉讼</div> 
                   <div class="loan-radio fl">
                         <div class="form-default_element form-radio form-radio--top">
-                            <input type="radio" id="is_lawsuit-1" name="is_lawsuit" value="1" />
+                            <input type="radio" id="is_lawsuit-1" name="is_lawsuit" value="1" {%if '1' == $data.edit.is_lawsuit%}checked{%/if%}/>
                              <label for="is_lawsuit-1"><span class="ui-radio"></span>是</label>
                         </div>
                         <div class="form-default_element form-radio form-radio--top">
-                            <input type="radio" id="is_lawsuit-2" name="is_lawsuit" value="0" />
+                            <input type="radio" id="is_lawsuit-2" name="is_lawsuit" value="0" {%if '0' == $data.edit.is_lawsuit%}checked{%/if%}/>
                              <label for="is_lawsuit-2"><span class="ui-radio"></span>否</label>
                          </div> 
                   </div>

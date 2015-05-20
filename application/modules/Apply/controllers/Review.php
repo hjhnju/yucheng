@@ -1,12 +1,12 @@
 <?php
 class ReviewController extends Base_Controller_Page{
 
-    protected $needLogin = false;
+    protected $needLogin = true;
 
     public function indexAction() {
-        print_r(Apply_Cookie::parseCookie('school'));die('123');
-        
-        
+        //读出所有的cookie，用来显示
+        $data = Apply_Cookie::showCookieValue();
+        $this->getView()->assign('data', $data);
     }
     /**
      * @param null
@@ -15,21 +15,37 @@ class ReviewController extends Base_Controller_Page{
      */
     public function submitAction() {
         //保存apply
-        // $apply      = new Apply_Logic_Apply();
-        // $objRst     = $apply->saveApply();
+        $apply      = new Apply_Logic_Apply();
+        $objRst     = $apply->saveApply();
+        $apply_id   = $objRst['data']['id'];
         //如果第一步保存成功，并且返回一个保存的apply id
-        if($objRst['data']['userid'] && Apply_RetCode::SUCCESS == $objRst['status']) {
+        if($apply_id) {
             //保存学校信息
             $school     = new Apply_Logic_School();
-            $objSchool  = $school->saveSchool();
+            $objSchool  = $school->saveSchool($apply_id);
+            if($objSchool['status'] != Apply_RetCode::SUCCESS) {
+                return $this->ajaxError(Apply_RetCode::SCHOOL_PARAM_ERROR, 
+                    Apply_RetCode::getMsg(Apply_RetCode::SCHOOL_PARAM_ERROR));
+            }
+            //保存股权结构信息
+            $stock = new Apply_Logic_Stock();
+            $objStock = $stock->saveStock($apply_id);
+            if($objStock['status'] != Apply_RetCode::SUCCESS) {
+                return $this->ajaxError(Apply_RetCode::STOCK_PARAM_ERROR, 
+                    Apply_RetCode::getMsg(Apply_RetCode::STOCK_PARAM_ERROR));
+            }
+            //保存个人信息
+            $personal   = new Apply_Logic_Personal();
+            $objPersonal= $personal->savePerson($apply_id);
+            if($objPersonal['status'] != Apply_RetCode::SUCCESS) {
+                return $this->ajaxError(Apply_RetCode::PERSONAL_PARAM_ERROR, 
+                    Apply_RetCode::getMsg(Apply_RetCode::PERSONAL_PARAM_ERROR));
+            }
+            //保存后将所有cookie删除，避免二次插入
+            // Apply_Cookie::erasureCookie();
+            $this->ajax(array('url' => '/apply/finish'), '', Apply_RetCode::NEED_REDIRECT);
         }
-
-        
-        
-        // $personal   = new Apply_Logic_Personal();
-        // $objRst     = $personal->savePerson();
-        
-        // $stock      = new Apply_Logic_Stock();
-        // $objRst     = $stock->saveStock();
+        return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
+                    Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
     }
 }

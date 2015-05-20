@@ -8,21 +8,25 @@ class Apply_Logic_Stock extends Apply_Logic_Base{
 	 * @return 
 	 */
 	
-	public function saveStock($apply_id, $param) {
+	public function saveStock($apply_id) {
 		//得到所有的cookie
-		$cookies = Apply_Cookie::parseCookie('stock');
+		$cookies = Apply_Cookie::read(array('stock'=>'stock'));
+        $cookies = json_decode($cookies['stock']);
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
 		}
-		$apply = Apply_Object_Stock::init($cookies);
 
-		if ($apply->save()) {
-			$objRet = new Base_Result(Apply_RetCode::SUCCESS, array('id'=>$apply->id), Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
-            $objRet->format();
-        } else {
-            return $this->errorFormat();
-	    }
+		foreach($cookies as $key=>$item) {
+			$item = (array)$item;
+			$item['apply_id'] = $apply_id;
+			$apply = Apply_Object_Stock::init($item);
+			if(!$apply->save()) {
+				return $this->errorFormat();
+	        }
+		}
+		$objRet = new Base_Result(Apply_RetCode::SUCCESS, array('id'=>$apply->id), Apply_RetCode::getMsg(Apply_RetCode::SUCCESS));
+		return $objRet->format();
 	}
 
 	/**

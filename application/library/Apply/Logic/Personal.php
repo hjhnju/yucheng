@@ -4,26 +4,18 @@
  */
 class Apply_Logic_Personal extends Apply_Logic_Base {
 	/**
+	 * 可以为空的字段
+	 */
+	protected $_except = array('id', 'create_time', 'update_time', 'is_criminal', 'is_lawsuit');
+	/**
 	 * @param  
 	 * @return 
 	 */
 	
-	public function savePerson() {
+	public function savePerson($apply_id) {
 		//得到所有的cookie
 		$cookies = Apply_Cookie::parseCookie('personal');
-		// $cookies = array(
-		// 	'realname'        => 'guojinli',
-	 //        'certificate'     => '130825198801193425',
-	 //        'house_type'      => '1',
-	 //        'detail_address'  => 'bushuo',
-	 //        'cellphone'       => '15810234069',
-	 //        'telephone'       => '010-7342732',
-	 //        'scope_cash'      => '1',
-	 //        'scope_stock'     => '2',
-	 //        'is_criminal'     => '1',
-	 //        'is_lawsuit'      => '0',
-	 //        'apply_id'        => '11',
-		// );
+		$cookies['apply_id'] = $apply_id;
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
