@@ -32,29 +32,34 @@ class Apply_Type_Duration extends Base_Type {
      */
     public static $names = array(
         array(
-            'type' => self::DAY,
+            'type'  => self::DAY,
             'value' => '15',
             'label' => '15天',
+            'step'  => '1',
         ),
         array(
-            'type' => self::MONTH,
+            'type'  => self::MONTH,
             'value' => '1',
             'label' => '1个月',
+            'step'  => '1',
         ),
         array(
             'type' => self::MONTH,
             'value' => '2',
             'label' => '2个月',
+            'step'  => '2',
         ),
         array(
             'type' => self::MONTH,
             'value' => '3',
             'label' => '3个月',
+            'step'  => '3',
         ),
         array(
             'type' => self::MONTH,
             'value' => '6',
             'label' => '6个月',
+            'step'  => '6',
         ),
     );
 

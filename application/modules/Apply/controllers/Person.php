@@ -24,6 +24,7 @@ class PersonController extends Base_Controller_Page{
 			'scope_cash'   	=> Apply_Type_Cash::$names,
 			'scope_stock'	=> Apply_Type_Stock::$names,
             'edit'          => $cookies,
+            'duration' => Apply_Type_Duration::$names,
 		);
 
 		$this->getView()->assign('data', $data);

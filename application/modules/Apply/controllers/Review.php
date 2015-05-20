@@ -6,6 +6,7 @@ class ReviewController extends Base_Controller_Page{
     public function indexAction() {
         //读出所有的cookie，用来显示
         $data = Apply_Cookie::showCookieValue();
+        $data['duration'] = Apply_Type_Duration::$names;
         $this->getView()->assign('data', $data);
     }
     /**

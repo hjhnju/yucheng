@@ -22,6 +22,7 @@ class SchoolController extends Base_Controller_Page{
 			'branch_school'	=> Apply_Type_BranchSchool::$names,
 			'purpose'		=> Apply_Type_Purpose::$names,
             'edit'          => $cookies,
+            'duration' => Apply_Type_Duration::$names,
 		);
 
 		$this->getView()->assign('data', $data);

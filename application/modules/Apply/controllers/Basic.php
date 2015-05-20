@@ -23,6 +23,7 @@ class BasicController extends Base_Controller_Page{
 			'yesno'	   	  => Apply_Type_YesNo::$names,
 			'nature'   	  => Apply_Type_Nature::$names,
 			'school_source'  => Apply_Type_Source::$names,
+            'duration' => Apply_Type_Duration::$names,
 		);
 		$this->getView()->assign('data', $data);
     }
