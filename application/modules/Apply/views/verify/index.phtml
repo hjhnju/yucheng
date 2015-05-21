@@ -1,17 +1,4 @@
- <!-- array(
-	'amount'         => '1000',
-	'duration'       => '90',
-	'durationMonth'  => '3',
-	'userid'         => '110',
-	'serviceCharge'  => '50',
-	'rate'           => '0.12',
-	'realname'		 => 'guojinli',
-	'name'			 => '中关村二小',
-	'email'			 => 'guojinli@xingjiaodai.com',
-	'password'		 => '123456',
-	'imagecode'		 => 'jpqe'
-); -->
-{%extends file="../../../views/common/page.phtml"%}
+ {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/verify/index.css" />
@@ -21,40 +8,28 @@
 <script>
     require(['apply/verify/index'], function (main) {
         main.init(0.13,0.18);  
-    });   
+    }); 
+/*    require(['common/ui/Form/icheck','jquery'], function (main) {
+      var $=require('jquery');
+        $('.loan-radio input').on('ifChecked',function(){
+               alert($('input:radio[name="duration2"]:checked').val());
+             } ).iCheck({ 
+        });
+    });*/
+    
 </script>
 {%/block%}
 
 {%block name="content"%}
 <style type="text/css" media="all">
-    
+
 </style>
 
 {%$smarty.debugging_ctrl = 'URL'%}
 <div class="box1" >
     <div class="container container2">
      <div class="container">
-        <ul class="step-box">
-            <li class="btn current">
-                <i class="iconfont icon-step1"></i>
-                <span>确认贷款额度</span>
-            </li>
-            <li class="iconfont icon-directionright dire"></li>
-            <li class="btn">
-                <i class="iconfont icon-step2"></i>
-                <span>贷款资格评估</span>
-            </li>
-            <li class="iconfont icon-directionright dire"></li>
-            <li class="btn">
-                <i class="iconfont icon-step3"></i>
-                <span>学校评估</span>
-            </li>
-            <li class="iconfont icon-directionright dire"></li>
-            <li class="btn">
-                <i class="iconfont icon-step4"></i>
-                <span>个人评估</span>
-            </li>
-        </ul>
+       {%include file='../../../views/common/loaninfo.phtml' type="1" current="1"%}
         <div class="title">
              <i class="iconfont icon-step1"></i>
              <span>您需要的贷款额度</span>
@@ -65,7 +40,7 @@
 <div class="box2 loan">
     <div class="container">
         <div class="left">
-            <form action="" method="post" accept-charset="utf-8" name="loan-form" id="loan-form">
+            <form action="" method="" accept-charset="utf-8" name="loan-form" id="loan-form">
                 <div class="title">请选择您需要的贷款额度</div>
                 <div class="loan-input loan-input-w fl"> 
                     <span class="dis-block fl">
@@ -77,23 +52,37 @@
                 </div> 
 
               <div class="title" style="margin-top: 46px;">请选择您需要的贷款期限</div>
-              <fieldset class="form-radio-group cl--ra">
+      <!--          <fieldset class="form-radio-group cl- -ra fl">
+              {%foreach $data.duration as $key=>$item%}
+       {%assign var="col" value=$key+1%}
+         <div class="form-default_element form-radio form-radio- -top">
+           {%if $col == 3%}
+             {%assign var="check" value="checked='true'"%}
+           {%else%}
+             {%assign var="check" value=""%}
+           {%/if%}
+           <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" duration_type="{%$item.type%}">
+           <label for="calc-loan-{%$col%}"><span class="ui-radio"></span>{%$item.label%}</label>
+         </div>  
+              {%/foreach%} 
+          </fieldset> -->
+             <div class="loan-radio fl" style="width:100%;">
                   {%foreach $data.duration as $key=>$item%}
-                  {%assign var="col" value=$key+1%}
-                    <div class="form-default_element form-radio form-radio--top">
-                      {%if $col == 3%}
-                        {%assign var="check" value="checked='true'"%}
-                      {%else%}
-                        {%assign var="check" value=""%}
-                      {%/if%}
-                      <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" durationType="{%$item.type%}">
-                      <label for="calc-loan-{%$col%}"><span class="ui-radio"></span>{%$item.label%}</label>
-                    </div>  
-                  {%/foreach%}
-              </fieldset>
-              <div class="title" style="padding: 18px 0px 10px 0px;line-height: 20px;">
+                    {%assign var="col" value=$key+1%} 
+                    <div class="radiobox">
+                       {%if $col == 3%}
+                          {%assign var="check" value="checked='true'"%}
+                        {%else%}
+                          {%assign var="check" value=""%}
+                        {%/if%}
+                        <input name="duration" type="radio" value="{%$item.value%}" id="calc-loan-{%$col%}"  duration_type="{%$item.type%}" data-step="{%$item.step%}" {%$check%} /> 
+                        <label for="calc-loan-{%$col%}">{%$item.label%}</label>
+                        </div>   
+                  {%/foreach%} 
+             </div>
+              <div class="title fl" style="padding: 18px 0px 10px 0px;line-height: 20px;">
                 按月付息，到期还本;<br/>
-                <span class="f14">共<span class="color-font-green">2</span>期</span>
+                <span class="f14">共<span class="duration-step-count color-font-green">2</span>期</span>
               </div>
               <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
                   <tr>
@@ -102,7 +91,7 @@
                   </tr>
                   <tr>
                       <td class="th-two">服务费用</td>
-                      <td class="td-two" serviceCharge></td>
+                      <td class="td-two" service_charge></td>
                   </tr>
                   <tr>
                       <td class="th-one">实际到账</td>
@@ -185,20 +174,20 @@
                             <label class="user-lable" for="imagecode-user"></label>
                       </div>
                       <div class="input-icon fl" id="imagecode-icon" style="margin:12px 10px 0px 4px"></div> 
-                      <a class="loan-submit fl">快速验证</a>
+                      <a class="loan-btn loan-submit fl">快速验证</a>
                   </div>
                 {%else%} 
                 <input type="hidden" value="{%$user.id%}" name="userid"/> 
                  <div class="form-default_element form-inpt">
                    <div class="loan-label fl">＊邮箱地址</div>
                    <div class="loan-input fl">  
-                        <input autocomplete="off" type="text" name="email" class="" value="{%$user.username%}"  data-text=""/>  
+                        <input autocomplete="off" type="text" name="email" class="" value="{%$user.username%}"  disabled="" />  
                    </div>
                  </div> 
                   <div class="form-default_element form-inpt">
                    <div class="loan-label fl"> </div>
                     
-                        <a class="loan-submit login fl">快速验证</a>
+                        <a class="loan-btn loan-submit login fl">快速验证</a>
                     
                  </div> 
                 {%/if%} 

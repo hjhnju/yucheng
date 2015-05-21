@@ -2,8 +2,8 @@
  * @ignore
  * @file index
  * @author fanyy
- * 借款请求
- * @time 15-5-13
+ * 借款请求  步骤二
+ * @time 15-5-18
  */
 
 define(function(require) {
@@ -13,7 +13,7 @@ define(function(require) {
     var util = require('common/util');
     var Remoter = require('common/Remoter');
 
-    //var basicSubmit=new Remoter('sssss');
+    var basicSubmit=new Remoter('APPLY_BASIC_SUBMIT');
 
     //select集合
     var selectArray = {
@@ -21,24 +21,25 @@ define(function(require) {
         nature: $("#select-nature"), //学校主体性质
         province: $("#select-province"), //省
         city: $("#select-city"), //市
-        schoolSource: $("#select-schoolSource"), //从哪里了解到我们
+        school_source: $("#select-school_source"), //从哪里了解到我们
         year: $("#select-year") //建校时间 
     };
 
     //radio集合
     var radioArray = {
-        incomeYear: $("[name='incomeYear']"), //年收入是否超过¥5,000,000
-        profit: $("[name='profit']"), //最近一年是否盈利
-        otherBusiness: $("[name='otherBusiness']") //除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务  
+        is_annual_income: $("[name='is_annual_income']"), //年收入是否超过¥5,000,000
+        is_profit: $("[name='is_profit']"), //最近一年是否盈利
+        is_other_business: $("[name='is_other_business']") //除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务  
     };
 
     //error集合
     var errorArray = {
+        errorbox:$('#error-box'),
         type: $("#type-error"), //学校类型
         nature: $("#nature-error"), //学校主体性质
         province: $("#province-error"), //省
         city: $("#city-error"), //市
-        schoolSource: $("#schoolSource-error"), //从哪里了解到我们
+        school_source: $("#school_source-error"), //从哪里了解到我们
         year: $("#year-error") //建校时间 
     };
 
@@ -48,7 +49,7 @@ define(function(require) {
         nature: $("#nature-icon"), //学校主体性质
         province: $("#province-icon"), //省
         city: $("#city-icon"), //市
-        schoolSource: $("#schoolSource-icon"), //从哪里了解到我们
+        school_source: $("#school_source-icon"), //从哪里了解到我们
         year: $("#year-icon") //建校时间 
     };
 
@@ -73,10 +74,11 @@ define(function(require) {
             var parent = e.parent();
             var icon = parent.find('.input-icon');
             var error = parent.find('.input-error');
+            var text = $(this).attr('data-text');
 
             if (!value) {
                 icon.addClass('error');
-                error.html('不能为空');
+                error.html(text+'不能为空');
             } else {
                 icon.attr('class', "input-icon fl");
                 error.html('');
@@ -101,30 +103,27 @@ define(function(require) {
         $('.loan .loan-submit').click(util.debounce(function(e) {
             e.preventDefault();
 
-            for (var select in selectArray) {
-                if (!selectArray[select].val()) {
-                    iconArray[select].addClass('error');
-                    errorArray[select].html('不能为空');
+            for (var item in selectArray) {
+                var select=selectArray[item];
+                if (!select.val()) {
+                    iconArray[item].addClass('error');
+                    errorArray[item].html(select.attr('data-text')+'不能为空');
                     return;
                 }
             }  
 
-            basicSubmit.remote({
-                amount: formParams.amount,
-                duration: formParams.duration,
-                durationType: formParams.durationType,
-                serviceCharge: formParams.serviceCharge,
-                userid: $("[name=userid]"), //用户ID,
-
-                nature: selectArray.nature.val(),
+            basicSubmit.remote({  
                 province: selectArray.province.val(),
                 city: selectArray.city.val(),
-                school_source: selectArray.schoolSource.val(),
+                type:selectArray.type.val(),
+                nature: selectArray.nature.val(),
                 year: selectArray.year.val(),
+                school_source: selectArray.school_source.val(),
 
-                incomeYear: radioArray.incomeYear.val(),
-                profit: radioArray.profit.val(),
-                otherBusiness: radioArray.otherBusiness.val(),
+                is_annual_income: radioArray.is_annual_income.val(),
+                is_profit: radioArray.is_profit.val(),
+                is_other_business: radioArray.is_other_business.val()
+ 
             });
 
         }, 1000));
@@ -139,7 +138,7 @@ define(function(require) {
         //提交后
         basicSubmit.on('success', function(data) {
             if (data && data.bizError) {
-                errorArray.errorbox(data.statusInfo);
+                errorArray.errorbox.html(data.statusInfo);
             } else {
                 if (status === 302) {
                     window.location.href = data.data.url;

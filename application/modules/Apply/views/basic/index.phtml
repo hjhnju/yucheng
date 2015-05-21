@@ -1,19 +1,4 @@
-<!-- this is basic page step2
-
-<?php
-        array(
-        'type'           => '2',  //学校类型
-        'nature'         => '4',  //学校主体性质
-        'province'       => '1',        //省
-        'city'           => '2400', //市
-        'schoolSource'   => '2',   //从哪里了解到我们
-        'year'           => '2013', //建校时间
-        'incomeYear'     => '1', //年收入是否超过¥5,000,000
-        'profit'         => '1', //最近一年是否盈利
-        'otherBusiness'  => '1', //除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务
-        );
-?> -->
-{%extends file="../../../views/common/page.phtml"%}
+ {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/basic/index.css" />
@@ -79,7 +64,7 @@
               <div class="form-default_element form-inpt">
                   <div class="loan-label fl">＊学校类型</div>
                   <div class="loan-select fl">  
-                        <select class="select_hide" id="select-type">
+                        <select class="select_hide" id="select-type" data-text="学校类型">
                           <option value="">选择一项</option>
                           {%foreach $data.school_type as $key=>$item%}
                           <option value="{%$key%}">{%$item%}</option>
@@ -92,7 +77,7 @@
                <div class="form-default_element form-inpt">
                    <div class="loan-label fl">＊建校时间</div>
                    <div class="loan-select fl">  
-                        <select class="select_hide" id="select-year" >
+                        <select class="select_hide" id="select-year"  data-text="建校时间">
                               <option value="">选择一项</option>
                               {%foreach $data.year as $key=>$item%}
                               <option value="{%$item%}">{%$item%}</option>
@@ -107,13 +92,13 @@
                         年收入是否<br/>超过¥5,000,000
                       </div> 
                      <div class="loan-radio fl">
-                            <div class="form-default_element form-radio form-radio--top">
-                                <input type="radio" id="incomeYear-1" name="incomeYear" value="1" checked=""/>
-                                 <label for="incomeYear-1"><span class="ui-radio"></span>是</label>
+                           <div class="radiobox">
+                                <input type="radio" id="is_annual_income-1" name="is_annual_income" value="1" checked=""/>
+                                 <label for="is_annual_income-1">是</label>
                             </div>
-                            <div class="form-default_element form-radio form-radio--top">
-                                <input type="radio" id="incomeYear-2" name="incomeYear" value="0" />
-                                 <label for="incomeYear-2"><span class="ui-radio"></span>否</label>
+                            <div class="radiobox">
+                                <input type="radio" id="is_annual_income-2" name="is_annual_income" value="0" />
+                                 <label for="is_annual_income-2">否</label>
                              </div> 
                       </div>
                       <div class="input-icon fl" id="password-icon"></div>
@@ -124,13 +109,13 @@
                          最近一年<br/>是否盈利
                       </div> 
                      <div class="loan-radio fl">
-                            <div class="form-default_element form-radio form-radio--top">
-                                <input type="radio" id="profit-1" name="profit" value="1" checked=""/>
-                                 <label for="profit-1"><span class="ui-radio"></span>是</label>
+                            <div class="radiobox">
+                                <input type="radio" id="is_profit-1" name="is_profit" value="1" checked=""/>
+                                 <label for="is_profit-1">是</label>
                             </div>
-                            <div class="form-default_element form-radio form-radio--top">
-                                 <input type="radio" id="profit-2" name="profit" value="0" />
-                                 <label for="profit-2"><span class="ui-radio"></span>否</label>
+                            <div class="radiobox">
+                                 <input type="radio" id="is_profit-2" name="is_profit" value="0" />
+                                 <label for="is_profit-2">否</label>
                              </div> 
                       </div>
                       <div class="input-icon fl" id="password-icon"></div>
@@ -141,13 +126,13 @@
                         除了本学校外，您是否<br/>还经营房地产、钢铁、采矿<br/>等类型业务
                       </div> 
                      <div class="loan-radio fl">
-                            <div class="form-default_element form-radio form-radio--top">
-                                <input type="radio" id="otherBusiness-1" name="otherBusiness" value="1" checked=""/>
-                                 <label for="otherBusiness-1"><span class="ui-radio"></span>是</label>
+                            <div class="radiobox">
+                                <input type="radio" id="is_other_business-1" name="is_other_business" value="1" checked=""/>
+                                 <label for="is_other_business-1">是</label>
                             </div>
-                            <div class="form-default_element form-radio form-radio--top">
-                                <input type="radio" id="otherBusiness-2" name="otherBusiness" value="0" />
-                                 <label for="otherBusiness-2"><span class="ui-radio"></span>否</label>
+                            <div class="radiobox">
+                                <input type="radio" id="is_other_business-2" name="is_other_business" value="0" />
+                                 <label for="is_other_business-2">否</label>
                              </div> 
                       </div>
                       <div class="input-icon fl" id="password-icon"></div>
@@ -158,7 +143,7 @@
                          学校主体性质
                       </div> 
                       <div class="loan-select fl">  
-                         <select class="select_hide" id="select-nature" >
+                         <select class="select_hide" id="select-nature" data-text="学校主体性质">
                               <option value="">选择一项</option>
                               {%foreach $data.nature as $key=>$item%}
                               <option value="{%$key%}">{%$item%}</option>
@@ -174,15 +159,15 @@
                          您从哪里了解到我们
                       </div> 
                       <div class="loan-select fl">  
-                         <select class="select_hide" id="select-schoolSource" >
+                         <select class="select_hide" id="select-school_source" data-text="了解渠道">
                               <option value="">选择一项</option>
                               {%foreach $data.school_source as $key=>$item%}
                               <option value="{%$key%}">{%$item%}</option>
                               {%/foreach%}
                          </select>
                       </div>
-                      <div class="input-icon fl" id="schoolSource-icon"></div>
-                      <div class="input-error fl" id="schoolSource-error"></div>
+                      <div class="input-icon fl" id="school_source-icon"></div>
+                      <div class="input-error fl" id="school_source-error"></div>
                 </div>
                 <div class="form-default_element form-inpt">
                    <div class="loan-label fl"> </div>

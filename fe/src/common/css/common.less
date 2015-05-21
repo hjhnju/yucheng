@@ -3,6 +3,7 @@
 @import "../ui/Pager/pager.less";
 @import "./datepicker.less";
 @import "../ui/Dialog/dialog.less";
+@import "./prettifyForm";
 body {
     margin: 0;
     font-size: 12px;
@@ -293,8 +294,7 @@ img{border:none;}
 }
 
 //登录注册滑块按钮结束
-.default-fastlogin {
-    color: #666666;
+.default-fastlogin { 
     text-decoration: none;
     line-height: 30px;
     margin-left: 10px;
@@ -303,9 +303,8 @@ img{border:none;}
 
 .default-login {
     display: inline-block;
-    color: #fff;
     padding: 4px 8px;
-    background-color: @color-red;
+    color: @color-red;
     text-decoration: none;
     .border-radius(3px);
     &:hover {
@@ -318,9 +317,14 @@ img{border:none;}
 }
 
 .unreadmsg {
-    text-decoration: none;
-    color: #f2746a;
-    font-size: 10px;
+    text-decoration: none; 
+    font-size: 12px;
+    i{ 
+      width: 10px;
+      height: 10px;
+      font-size: 14px;
+      margin-right: 4px;  
+    }
     &:hover {
         text-decoration: none;
     }
@@ -1318,56 +1322,28 @@ img{border:none;}
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-weibo:before {
-    content: "\e600";
-}
-
-.icon-qq:before {
-    content: "\e601";
-}
-
-.icon-iconphone:before {
-    content: "\e602";
-}
-
-.icon-weixin:before {
-    content: "\e603";
-}
-
-.icon-invest:before {
-    content: "\e60a";
-}
-
-.icon-directionleft:before {
-    content: "\e606";
-}
-
-.icon-directionright:before {
-    content: "\e607";
-}
-
-.icon-phone2:before {
-    content: "\e605";
-}
-
-.icon-phone:before {
-    content: "\e604";
-}
-
-.icon-phone3:before {
-    content: "\e608";
-}
-
-.icon-time:before {
-    content: "\e609";
-}
+.icon-down:before { content: "\e610"; }
+.icon-up:before { content: "\e611"; }
+.icon-success:before { content: "\e612"; }
+.icon-weibo:before { content: "\e600"; }
+.icon-qq:before { content: "\e601"; }
+.icon-delete:before { content: "\e613"; }
+.icon-iconphone:before { content: "\e602"; }
+.icon-email:before { content: "\e614"; }
+.icon-weixin:before { content: "\e603"; }
+.icon-error:before { content: "\e615"; }
+.icon-invest:before { content: "\e60a"; }
+.icon-directionleft:before { content: "\e606"; }
+.icon-directionright:before { content: "\e607"; }
+.icon-phone2:before { content: "\e605"; }
+.icon-phone:before { content: "\e604"; }
+.icon-phone3:before { content: "\e608"; }
+.icon-time:before { content: "\e609"; }
 .icon-step1:before { content: "\e60b"; }
 .icon-step2:before { content: "\e60c"; }
 .icon-step3:before { content: "\e60d"; }
 .icon-step4:before { content: "\e60e"; }
-.icon-step5:before { content: "\e60f"; } 
-.icon-down:before { content: "\e610"; }
-.icon-up:before { content: "\e611"; }
+.icon-step5:before { content: "\e60f"; }
 
 .nav-v2 {
     height: 66px;

@@ -8,9 +8,9 @@
 // Released under MIT licence:
 // http://ionden.com/a/plugins/licence-en.html
 // =====================================================================================================================
-
-(function ($) {
-    var plugin_count = 0;
+define(function(require) {
+    var $ = require('jquery');
+      var plugin_count = 0;
 
     if (!String.prototype.trim) {
         String.prototype.trim = function () {
@@ -180,4 +180,5 @@
             return false;
         }
     };
-})(jQuery);
+});
+ 

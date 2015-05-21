@@ -2,7 +2,7 @@
  * @ignore
  * @file index
  * @author fanyy
- * 借款请求
+ * 借款请求  步骤一
  * @time 15-5-13
  */
 
@@ -11,8 +11,8 @@ define(function(require) {
     var applyCommon = require('apply/common/applyCommon');
     var util = require('common/util');
     var Remoter = require('common/Remoter');
-    var verifySubmit = new Remoter('LOAN_REQUEST');
-    var checkEmail = new Remoter('LOAN_REQUEST');
+    var verifySubmit = new Remoter('APPLY_VERIFY_SUBMIT');
+    var checkEmail = new Remoter('APPLY_VERIFY_CHECKEMAIL');
 
     //input集合
     var inputArray = {
@@ -22,6 +22,16 @@ define(function(require) {
         password: $("[name='password']"), //密码
         password2: $("[name='password2']"), //确认密码
         imagecode: $('#loan-testing') //验证码
+    };
+
+    //是否验证
+    var statusArray = {
+        name: 1,
+        realname: 1,
+        email: 1,
+        password: 1,
+        password2: 1,
+        imagecode: 1
     };
 
     //error集合
@@ -54,6 +64,7 @@ define(function(require) {
     function init(rate1, rate2) {
         formParams = applyCommon.init(rate1, rate2);
         bindEvent();
+        ajaxCallback();
     }
 
     /**
@@ -95,10 +106,6 @@ define(function(require) {
         inputArray.name.blur(function() {
             var value = $.trim($(this).val());
 
-            if (!value) {
-                return;
-            }
-
             if (!testName.test(value)) {
                 iconArray.nameIcon.addClass('error');
                 errorArray.nameError.html('与营业执照或登记证书一致');
@@ -106,14 +113,11 @@ define(function(require) {
             }
             iconArray.nameIcon.addClass('success');
         });
-        //验证申请人姓名 ，必须为汉字 ，2-4个汉字 
+        //验证申请人姓名 ，必须为汉字  
         inputArray.realname.blur(function() {
             var value = $.trim($(this).val());
 
-            if (!value) {
-                return;
-            }
-            if (!testRealname.test(value)) {
+            if (!testName.test(value)) {
                 iconArray.realnameIcon.addClass('error');
                 errorArray.realnameError.html('请输入真实姓名');
                 return;
@@ -125,9 +129,6 @@ define(function(require) {
         inputArray.password.blur(function() {
             var value = $.trim($(this).val());
 
-            if (!value) {
-                return;
-            }
 
             if (!testPwd.test(value)) {
                 iconArray.passwordIcon.addClass('error');
@@ -141,10 +142,6 @@ define(function(require) {
             var pwd = $.trim($(inputArray.password).val());
             var value = $.trim($(this).val());
 
-            if (!value) {
-                return;
-            }
-            var lable = $(this).next();
             //检测两次密码是否一致
             if (value != pwd) {
                 iconArray.password2Icon.addClass('error');
@@ -161,17 +158,22 @@ define(function(require) {
                 checkEmail.remote({
                     email: value
                 });
-            } 
+            }
         });
 
         //快速验证 
         $('.loan .loan-submit').click(util.debounce(function(e) {
             e.preventDefault();
-        
-             for (var item in inputArray) {
-                if (!inputArray[item].val()) {
-                    iconArray[item+"Icon"].addClass('error');
-                    errorArray[item+"Error"].html('不能为空');
+
+            if ($(this).hasClass('login')) {
+                statusArray.password = 0;
+                statusArray.password2 = 0;
+                statusArray.imagecode = 0;
+            } 
+            for (var item in inputArray) {
+                if (!inputArray[item].val()&&statusArray[item]) {
+                    iconArray[item + "Icon"].addClass('error');
+                    errorArray[item + "Error"].html(inputArray[item].attr('data-text') + '不能为空');
                     return;
                 }
             } 
@@ -179,15 +181,16 @@ define(function(require) {
             verifySubmit.remote({
                 amount: formParams.amount,
                 duration: formParams.duration,
-                durationType: formParams.durationType,
-                serviceCharge: formParams.serviceCharge,
-                userid: $("[name=userid]"), //用户ID,
+                duration_type: formParams.duration_type,
+                service_charge: formParams.service_charge,
 
-                realname: inputArray.realname.val(),
                 name: inputArray.name.val(),
+                realname: inputArray.realname.val(),
                 email: inputArray.email.val(),
-                password: inputArray.password.val(),
-                imagecode: inputArray.imagecode.val()
+
+                password: statusArray.password?inputArray.password.val():'',
+                imagecode:statusArray.imagecode?inputArray.imagecode.val():''
+
             });
 
         }, 1000));
@@ -203,19 +206,18 @@ define(function(require) {
         checkEmail.on('success', function(data) {
             if (data && data.bizError) {
                 iconArray.emailIcon.addClass('error');
-                errorArray.emailError.html('两次输入的密码不一致 ');
+                errorArray.emailError.html(data.statusInfo);
             } else {
                 iconArray.emailIcon.addClass('success');
+                errorArray.emailError.html('');
             }
         });
         //提交后
         verifySubmit.on('success', function(data) {
             if (data && data.bizError) {
-                errorArray.errorbox(data.statusInfo);
+                errorArray.errorbox.html(data.statusInfo);
             } else {
-                if (status === 302) {
-                    window.location.href = data.data.url;
-                }
+
             }
         });
     }

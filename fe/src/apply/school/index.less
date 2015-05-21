@@ -38,13 +38,14 @@
         .box-sizing(border-box);
         position: relative;
         input {
-            width: 104px;
+            width: 114px;
+            padding-right: 0px;
         }
         &.stock-bai {
             width: 80px;
             margin-left: 4px;
             input {
-                width: 40px;
+                width: 52px;
             }
         }
     }
@@ -53,6 +54,14 @@
     }
     .stock-total{
         line-height: 40px;
+    }
+    .del-stock{
+        cursor: pointer;
+        .transition(all 200ms ease);
+        &:hover{
+            color: @color-red;
+            .transition(all 200ms ease);
+        }
     }
     .loan-submit{
         margin-top: 70px;

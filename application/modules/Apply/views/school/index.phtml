@@ -1,26 +1,4 @@
-<!-- this is school page step3 
-<?php
-        array(
-        'address'        => '...', //学校地址
-        'totalStudent'  => '345', //您的学校有多少学生？
-        'staff'          => '32', //您的学校有多少教职工？
-        'purpose'        => '1', //您的贷款使用用途是？
-        'guaranteeCount'=> '1', //兴教贷需要您的个人无限连带责任担保，除了您以外是否可以提供更多的担保人
-        'branch_school'  => '2',  //您已开了几所分校？
-        'school_stock'   => array(   //股权分配是个多值字段
-                array(
-                        'name'   => 'guojinli',
-                        'weight' => '40.5',
-                ),
-                array(
-                        'name'   => 'another',
-                        'weight' => '20.5',
-                )
-        )
-        );
-?> -->
-
-{%extends file="../../../views/common/page.phtml"%}
+ {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/school/index.css" />
@@ -91,7 +69,7 @@
                        是否可以提供更多的担保人<br/>
                  </div>
                   <div class="loan-select fl">
-                        <select class="select_hide" id="select-ismoreguarantee">
+                        <select class="select_hide" id="select-guarantee_count" data-text="担保人">
                           {%foreach $data.guarantee as $key=>$value%}
                           <option value="{%$key%}" {%if $key == $data.edit.guarantee_count%}selected{%/if%}>{%$value%} 人</option>
                           {%/foreach%}
@@ -103,7 +81,7 @@
                <div class="form-default_element form-inpt">
                    <div class="loan-label fl">＊您的贷款使用用途是</div>
                    <div class="loan-select fl">  
-                        <select class="select_hide" id="select-purpose" >
+                        <select class="select_hide" id="select-purpose" data-text="贷款用途">
                               <option value="">选择一项</option>
                               {%foreach $data.purpose as $key=>$value%}
                               <option value="{%$key%}" {%if $key == $data.edit.purpose%}selected{%/if%}>{%$value%}</option>
@@ -119,10 +97,7 @@
                      <div class="f16 color-6" style="  margin-left: 40px;line-height:50px;">您及所有占20%以上股份的股东</div>
                 </div> 
                 <table cellspacing="0" cellpadding="0"  class="apply-stock fl">
-                    <tbody class="stock-list">
-                       <tr>
-                          <td>张三</td><td class="tr">20%</td> 
-                       </tr>    
+                    <tbody class="stock-list">    
                     </tbody>  
                 </table> 
                <div class="form-default_element form-inpt" style="margin-bottom: 5px;">
@@ -135,12 +110,12 @@
                          <span class="dis-block fr">%</span>
                      </div> 
                       <a class="loan-btn add-stock fl">再添加一位股东</a>
-                      <span class="stock-total">共30%</span>  
+                      <span class="stock-total">共0%</span>  
                 </div>
                 <div class="form-default_element">
                    <div class="loan-label fl" style="width: 30px;"> </div>
                    <div class="color-red fl" id="error-box">  
-                        ddddd
+                        
                    </div>
                 </div>  
                 <div class="form-default_element form-inpt">

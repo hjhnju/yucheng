@@ -2,7 +2,7 @@
  * @ignore
  * @file index
  * @author fanyy
- * 借款请求 步骤3
+ * 借款请求 步骤3 school
  * @time 15-5-19
  */
 
@@ -13,12 +13,12 @@ define(function(require) {
     var util = require('common/util');
     var Remoter = require('common/Remoter');
 
-    //var schoolSubmit=new Remoter('sssss');
+    var schoolSubmit = new Remoter('APPLY_SCHOOL_SUBMIT');
 
     //select集合
     var selectArray = {
         purpose: $("#select-purpose"), //您的贷款使用用途是？
-        ismoreguarantee: $("#select-ismoreguarantee") //兴教贷需要您的个人无限连带责任担保，除了您以外是否可以提供更多的担保人
+        guarantee_count: $("#select-guarantee_count") //兴教贷需要您的个人无限连带责任担保，除了您以外是否可以提供更多的担保人
     };
 
     //input集合
@@ -38,8 +38,9 @@ define(function(require) {
 
     //error集合
     var errorArray = {
+        errorbox: $("#error-box"),
         purpose: $("#purpose-error"),
-        ismoreguarantee: $("#ismoreguarantee-error"),
+        guarantee_count: $("#guarantee_count-error"),
         address: $("#address-error"),
         total_student: $("#total_student-error"),
         staff: $("#staff-error"),
@@ -49,7 +50,7 @@ define(function(require) {
     //icon集合
     var iconArray = {
         purpose: $("#purpose-icon"),
-        ismoreguarantee: $("#ismoreguarantee-icon"),
+        guarantee_count: $("#guarantee_count-icon"),
         address: $("#address-icon"),
         total_student: $("#total_student-icon"),
         staff: $("#staff-icon"),
@@ -57,9 +58,16 @@ define(function(require) {
     };
 
 
-    var testRealname = /^[\u4e00-\u9fa5]{2,4}$/;
 
-    var formParams;
+    var testNumber = /^\\d+$/; //非负整数
+
+    var formParams = {};
+
+    //股东信息
+    var stockArray = {
+        stock: [],
+        total: 0
+    };
 
     function init(rate1, rate2) {
         formParams = applyCommon.init(rate1, rate2);
@@ -77,9 +85,7 @@ define(function(require) {
                 var parent = $(this).parent().parent();
                 var icon = parent.find('.input-icon');
                 var error = parent.find('.input-error');
-                var lable = $(this).next();
 
-                lable.addClass('hidden');
                 icon.attr('class', "input-icon fl");
                 error.html('');
 
@@ -91,25 +97,67 @@ define(function(require) {
                 var text = $(this).attr('data-text');
                 var icon = parent.find('.input-icon');
                 var error = parent.find('.input-error');
-                var lable = $(this).next();
+
 
                 if (!value) {
-                    lable.removeClass('hidden');
                     icon.addClass('error');
                     error.html(text + '不能为空');
                 }
+                icon.addClass('success');
+                error.html('');
             },
         });
+        //股东输入事件单独处理
+        $('.loan .stock-input input').on({
+            focus: function() {
+                errorArray.errorbox.html('');
+            },
+            blur: function() {
+                var value = $.trim($(this).val());
+                var text=$(this).attr('data-text');
+                if (!value) {
+                    errorArray.errorbox.html(text + '不能为空');
+                }
+            },
+        });
+
+        //验证数字类型的输入框
+        inputArray.total_student.blur(function(event) {
+            var value = $.trim($(this).val());
+            if (!testNumber.test(value)) {
+                iconArray.total_student.addClass('error');
+                errorArray.total_student.html(inputArray.total_student.attr('data-text')+'必须位数字！');
+                return;
+            }
+        });
+        inputArray.staff.blur(function(event) {
+            var value = $.trim($(this).val());
+            if (!testNumber.test(value)) {
+                iconArray.staff.addClass('error');
+                errorArray.staff.html(inputArray.staff.attr('data-text')+'必须位数字！');
+                return;
+            }
+        });
+        inputArray.branch_school.blur(function(event) {
+            var value = $.trim($(this).val());
+            if (!testNumber.test(value)) {
+                iconArray.branch_school.addClass('error');
+                errorArray.branch_school.html(inputArray.branch_school.attr('data-text')+'必须位数字！');
+                return;
+            }
+        });
+
 
         //select事件
         function selectEvent(e, value, text) {
             var parent = e.parent();
             var icon = parent.find('.input-icon');
             var error = parent.find('.input-error');
+            var text=e.attr('.data-text');
 
             if (!value) {
                 icon.addClass('error');
-                error.html('不能为空');
+                error.html(text+'不能为空');
             } else {
                 icon.attr('class', "input-icon fl");
                 error.html('');
@@ -134,32 +182,50 @@ define(function(require) {
         $('.loan .add-stock').click(util.debounce(function(e) {
             e.preventDefault();
 
-            for (var select in selectArray) {
-                if (!selectArray[select].val()) {
-                    iconArray[select].addClass('error');
-                    errorArray[select].html('不能为空');
+            for (var item in stockInputArray) {
+                var input = stockInputArray[item];
+                if (!input.val()) {
+                    errorArray.errorbox.html(input.attr('data-text') + '不能为空');
                     return;
                 }
             }
-            schoolSubmit.remote({
-                amount: formParams.amount,
-                duration: formParams.duration,
-                durationType: formParams.durationType,
-                serviceCharge: formParams.serviceCharge,
-                userid: $("[name=userid]"), //用户ID,
+            var tempStock = {
+                name: stockInputArray.name.val(),
+                weight: stockInputArray.weight.val()
+            };
+            if (tempStock.weight < 20) {
+                errorArray.errorbox.html('只需要填写占有股份20%以上的股东呦');
+                return;
+            }
+            var total = stockArray.total;
+            total = total + Number(tempStock.weight)
 
-                nature: selectArray.nature.val(),
-                province: selectArray.province.val(),
-                city: selectArray.city.val(),
-                school_source: selectArray.schoolSource.val(),
-                year: selectArray.year.val(),
+            if (total > 100) {
+                errorArray.errorbox.html('再添加股份超过100%啦');
+                return;
+            }
+            stockArray.total = total;
 
-                incomeYear: radioArray.incomeYear.val(),
-                profit: radioArray.profit.val(),
-                otherBusiness: radioArray.otherBusiness.val(),
+            //显示在列表里面
+            var tr = '<tr weight=' + tempStock.weight + '><td>' + tempStock.name + '</td><td class="tr">' + tempStock.weight + '%</td><td class="tc"><i class="iconfont icon-delete del-stock"></i></td></tr>';
+            $(tr).appendTo('.stock-list');
+            $('.stock-total').html(stockArray.total + '%');
+
+
+            //删除股东
+            $('.loan .del-stock').unbind('click').click(function(e) {
+                //TODO增加删除提示
+                var tr = $(this).parent().parent();
+                var weight = tr.attr('weight');
+                tr.remove();
+                stockArray.total = stockArray.total - Number(weight);
+                $('.stock-total').html(stockArray.total + '%');
+                errorArray.errorbox.html('');
             });
 
         }, 1000));
+
+
 
         //下一步
         $('.loan .loan-submit').click(util.debounce(function(e) {
@@ -168,30 +234,37 @@ define(function(require) {
                 var input = inputArray[item];
                 if (!input.val()) {
                     iconArray[item].addClass('error');
-                     errorArray[item].html('不能为空！');
+                    errorArray[item].html(input.attr('data-text') + '不能为空！');
                     return;
                 }
             }
             for (var item in selectArray) {
                 var input = selectArray[item];
                 if (!input.val()) {
-                     iconArray[item].addClass('error');
-                     errorArray[item].html('不能为空！');
+                    iconArray[item].addClass('error');
+                    errorArray[item].html('不能为空！');
                     return;
                 }
             }
-            schoolSubmit.remote({
-                amount: formParams.amount,
-                duration: formParams.duration,
-                durationType: formParams.durationType,
-                serviceCharge: formParams.serviceCharge,
-                userid: $("[name=userid]"), //用户ID,
 
-                realname: inputArray.realname.val(),
-                name: inputArray.name.val(),
-                email: inputArray.email.val(),
-                password: inputArray.password.val(),
-                imagecode: inputArray.imagecode.val()
+            //计算股东数据
+            $('.stock-list tr').each(function() {
+                var tempStock = {
+                    name: $(this).find("td:eq(0)").text(),
+                    weight: $(this).find("td:eq(1)").text()
+                };
+                stockArray.stock.push(tempStock);
+            });
+
+            schoolSubmit.remote({
+                address: inputArray.address.val(),
+                total_student: inputArray.total_student.val(),
+                staff: inputArray.staff.val(),
+                branch_school: inputArray.branch_school.val(),
+
+                guarantee_count: selectArray.guarantee_count.val(),
+                purpose: selectArray.purpose.val(),
+                stock: stockArray.stock
             });
 
         }, 1000));
@@ -206,7 +279,7 @@ define(function(require) {
         //提交后
         schoolSubmit.on('success', function(data) {
             if (data && data.bizError) {
-                errorArray.errorbox(data.statusInfo);
+                errorArray.errorbox.html(data.statusInfo);
             } else {
                 if (status === 302) {
                     window.location.href = data.data.url;

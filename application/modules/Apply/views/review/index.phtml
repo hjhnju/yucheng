@@ -36,7 +36,7 @@
                   </tr>
                   <tr>
                       <td class="th-two">服务费用</td>
-                      <td class="td-two" serviceCharge></td>
+                      <td class="td-two" service_charge></td>
                   </tr>
                   <tr>
                       <td class="th-one">实际到账</td>
@@ -82,7 +82,7 @@
                       <td class="td-one">{%$data.school.is_profit%}</td>
                   </tr>
                   <tr>
-                      <td class="th-two">除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务</td>
+                      <td class="th-two lh20">除了本学校外，您是否还经营房地产、钢铁、采矿等类型业务</td>
                       <td class="td-two">{%$data.school.is_other_business%}</td>
                   </tr>
                   <tr>
@@ -113,7 +113,7 @@
                       <td class="td-one">{%$data.school.is_profit%}</td>
                   </tr>
                   <tr>
-                      <td class="th-two">除本人外可提供无限连带责任担保人数量</td>
+                      <td class="th-two lh20">除本人外可提供无限连带责任担保人数量</td>
                       <td class="td-two">{%$data.school.guarantee_count%}</td>
                   </tr>
                   <tr>
@@ -148,7 +148,7 @@
                       <td class="td-two">{%$data.personal.scope_cash%}</td>
                   </tr>
                   <tr>
-                      <td class="th-one">您的股票、债券等其他有价证券资产</td>
+                      <td class="th-one lh20">您的股票、债券等其他有价证券资产</td>
                       <td class="td-one">{%$data.personal.scope_stock%}</td>
                   </tr>
                   <tr>
@@ -171,10 +171,14 @@
         <div class="right"> 
         	 {%include file='../../../views/common/loaninfo.phtml' type="2"%}
         </div>  
-          <div class="xieyi fl">
+        <div class="xieyi fl">
            <input type="checkbox"/> 
            我同意电子签章协议，并确定如上所填信息无误 
         </div>
+        <div class="form-default_element fl" style="margin-top:40px;">
+                 <div class="loan-label fl" > </div> 
+                   <a class="loan-btn loan-submit fl">提交申请</a> 
+        </div>  
     </div>
 </div>
  

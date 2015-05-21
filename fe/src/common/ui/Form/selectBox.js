@@ -47,7 +47,9 @@ define(function(require) {
             if (settings.selectText != "" && settings.selectText != undefined) {
                 $(".selectBox_div_" + elem_id + " span").first().text(settings.selectText);
             } else {
-                $(".selectBox_div_" + elem_id + " span").first().text($(obj).children("option").first().text());
+                var selectText=$(obj).children("option:selected").text(); 
+                //$(obj).children("option ").first().text()
+                $(".selectBox_div_" + elem_id + " span").first().text(selectText);
             }
 
             // 是否禁用下拉框

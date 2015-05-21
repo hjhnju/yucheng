@@ -3,13 +3,14 @@
         <a href="{%$webroot%}" class="logo"><img width="100%" src="{%$feroot%}/common/img/logo_v2.png" /></a>
           {%if isset($user)%}
             <div class="header-right-login fr">
-                <span class="default-fastlogin" style="">您好，{%$user.username%} 
+                <span class="default-fastlogin color-font-green" style="">
+                    您好，{%$user.username%} 
                      {%if $user.unreadMsg%}
-                     <a class="unreadmsg" style="color: #f2746a;font-size: 10px;text-decoration: none;" href="{%$webroot%}/account/message"> （{%$user.unreadMsg%}条未读）</a> 
+                     <a class="unreadmsg color-font-green" href="{%$webroot%}/account/message"> （<i class="iconfont icon-email"></i>{%$user.unreadMsg%}）</a> 
                      {%/if%}
                 </span>
                
-                <a class="default-login" href="/user/login/signout">退出</a>
+                <a class="default-login" href="/user/login/signout">[退出]</a>
             </div>
             {%else%}
             <div class="login-register register-hover fr">

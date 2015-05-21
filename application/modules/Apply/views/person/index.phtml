@@ -1,18 +1,4 @@
-<!-- this is person page step 4
-
-array(
-    'certificate'    => '身份证号码', //您的身份证号码
-    'houseType'      => '住房类型',   //您目前的住房类型
-    'detailAddress'  => '详细地址', //您的住房详细地址
-    'cellphone'      => '15810234069',		//您的手机号码
-    'telephone'      => '010-7342732',	//您的固定电话
-    'cash'           => '1',			//您的现金存款账户余额
-    'stock'          => '1',		//您的股票、债券等其他有价证券资产
-    'criminal'       => '1',		//您是否有犯罪记录？
-    'lawsuit'        => '1',		//您是否有未决诉讼
-); --> 
-
-{%extends file="../../../views/common/page.phtml"%}
+ {%extends file="../../../views/common/page.phtml"%}
 
 {%block name="link"%}
 <link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/person/index.css" />
@@ -35,7 +21,7 @@ array(
      <div class="container">
        {%include file='../../../views/common/loaninfo.phtml' type="1" current="4"%}
         <div class="title">
-             <i class="iconfont icon-step3"></i>
+             <i class="iconfont icon-step4"></i>
              <span>个人评估</span>
         </div>
     </div>
@@ -55,13 +41,13 @@ array(
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您目前的住房类型</div> 
                   <div class="loan-radio fl">
-                        <div class="form-default_element form-radio form-radio--top">
+                        <div class="radiobox">
                             <input type="radio" id="house_type-1" name="house_type" value="1" {%if '1' == $data.edit.house_type%}checked{%/if%}/>
-                             <label for="house_type-1"><span class="ui-radio"></span>自有住房</label>
+                             <label for="house_type-1">自有住房</label>
                         </div>
-                        <div class="form-default_element form-radio form-radio--top">
+                        <div class="radiobox">
                             <input type="radio" id="house_type-2" name="house_type" value="2" {%if '2' == $data.edit.house_type%}checked{%/if%}/>
-                             <label for="house_type-2"><span class="ui-radio"></span>租房</label>
+                             <label for="house_type-2">租房</label>
                          </div> 
                   </div>
                   <div class="input-icon fl" id="house_type-icon"></div>
@@ -131,13 +117,13 @@ array(
                 <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">您是否有犯罪记录</div> 
                   <div class="loan-radio fl">
-                        <div class="form-default_element form-radio form-radio--top">
+                        <div class="radiobox">
                             <input type="radio" id="is_criminal-1" name="is_criminal" value="1" {%if '1' == $data.edit.is_criminal%}checked{%/if%}/>
-                             <label for="is_criminal-1"><span class="ui-radio"></span>是</label>
+                             <label for="is_criminal-1">是</label>
                         </div>
                         <div class="form-default_element form-radio form-radio--top">
                             <input type="radio" id="is_criminal-2" name="is_criminal" value="0" {%if '0' == $data.edit.is_criminal%}checked{%/if%}/>
-                             <label for="is_criminal-2"><span class="ui-radio"></span>否</label>
+                             <label for="is_criminal-2">否</label>
                          </div> 
                   </div>
                   <div class="input-icon fl" id="is_criminal-icon"></div>
@@ -146,13 +132,13 @@ array(
                <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">是否有未决诉讼</div> 
                   <div class="loan-radio fl">
-                        <div class="form-default_element form-radio form-radio--top">
+                        <div class="radiobox">
                             <input type="radio" id="is_lawsuit-1" name="is_lawsuit" value="1" {%if '1' == $data.edit.is_lawsuit%}checked{%/if%}/>
-                             <label for="is_lawsuit-1"><span class="ui-radio"></span>是</label>
+                             <label for="is_lawsuit-1">是</label>
                         </div>
                         <div class="form-default_element form-radio form-radio--top">
                             <input type="radio" id="is_lawsuit-2" name="is_lawsuit" value="0" {%if '0' == $data.edit.is_lawsuit%}checked{%/if%}/>
-                             <label for="is_lawsuit-2"><span class="ui-radio"></span>否</label>
+                             <label for="is_lawsuit-2">否</label>
                          </div> 
                   </div>
                   <div class="input-icon fl" id="is_lawsuit-icon"></div>

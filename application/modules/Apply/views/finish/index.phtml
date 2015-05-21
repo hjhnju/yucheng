@@ -1,1 +1,24 @@
-this is finish page
+ {%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/apply/school/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+   /* require(['apply/school/index'], function (main) {
+        main.init(0.13,0.18);  
+    });  */ 
+</script>
+{%/block%}
+
+{%block name="content"%} 
+<div class="box1" >
+    <div class="container"> 
+        <div class="title"> 
+             感谢您的申请！<br/>
+             我们将在24小时内完成审核，请您保持手机/电话畅通。
+        </div> 
+    </div> 
+</div> 
+{%/block%}

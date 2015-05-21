@@ -135,9 +135,23 @@ define(function () {
             +'/account/awardapi/exchange',
              //+ '/test/account/awardapi/exchange.json' 
         ACCOUNT_INVITEAPI_LIST:rootUrl
-            +'/account/Inviteapi/list'
+            +'/account/Inviteapi/list',
              //+ '/test/account/Inviteapi/list.json' 
- 
+        APPLY_VERIFY_CHECKEMAIL :rootUrl
+            +'/apply/verify/checkemail',
+        APPLY_VERIFY_SUBMIT :rootUrl
+            +'/apply/verify/submit',
+        APPLY_BASIC_SUBMIT :rootUrl
+            +'/apply/basic/submit',
+        APPLY_SCHOOL_SUBMIT :rootUrl
+            +'/apply/school/submit',
+        APPLY_PERSON_SUBMIT :rootUrl
+            +'/apply/person/submit',
+        APPLY_REVIEW_SUBMIT :rootUrl
+            +'/apply/review/submit',
+        APPLY_VERIFY_CHECKIDCARD :rootUrl
+            +'/apply/verify/checkidcard'
+
         };
 
     return {

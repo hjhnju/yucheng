@@ -26,44 +26,36 @@
           <span class="dis-block fl">
               ￥
           </span>
-          <input autocomplete="off" type="text" name="amount" class="loan-num" value="5000" />
+          <input autocomplete="off" type="text" name="amount" class="loan-num"  value="{%$data.apply.amount%}" />
           <i class="icon up"></i>
           <i class="icon down"></i>
       </div>  
     <fieldset class="form-radio-group cl--ra fl">
-          <div class="form-default_element form-radio form-radio--top">
-              <input type="radio" id="calc-loan-1" name="duration" value="15" durationType="1">
-               <label for="calc-loan-1"><span class="ui-radio"></span>15天</label>
-          </div>
-          <div class="form-default_element form-radio form-radio--top">
-              <input type="radio" id="calc-loan-2" name="duration" value="1" durationType="2">
-               <label for="calc-loan-2"><span class="ui-radio"></span>1个月</label>
-           </div>
-           <div class="form-default_element form-radio form-radio--top">
-              <input type="radio" id="calc-loan-3" name="duration" value="2" checked=""durationType="2"> 
-              <label for="calc-loan-3"><span class="ui-radio"></span>2个月</label>
-           </div>
-           <div class="form-default_element form-radio form-radio--top">
-              <input type="radio" id="calc-loan-4" name="duration" value="3" durationType="2"> 
-              <label for="calc-loan-4"><span class="ui-radio"></span>3个月</label>
-           </div>
-           <div class="form-default_element form-radio form-radio--top">
-              <input type="radio" id="calc-loan-5" name="duration" value="6" durationType="2"> 
-              <label for="calc-loan-5"><span class="ui-radio"></span>6个月</label>
-           </div> 
+        {%foreach $data.duration as $key=>$item%}
+                {%assign var="col" value=$key+1%}
+                  <div class="form-default_element form-radio form-radio--top">
+                    {%if $col == 3%}
+                      {%assign var="check" value="checked='true'"%}
+                    {%else%}
+                      {%assign var="check" value=""%}
+                    {%/if%}
+                    <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" duration_type="{%$item.type%}">
+                    <label for="calc-loan-{%$col%}"><span class="ui-radio"></span>{%$item.label%}</label>
+                  </div>  
+        {%/foreach%} 
     </fieldset>
     <div class="title2 fl" style="padding: 10px 0px 10px 0px;line-height: 20px;">
       按月付息，到期还本;<br/>
       <span class="f14">共<span class="color-font-green">2</span>期</span>
     </div>
-    <table cellspacing="0" cellpadding="0" width="100%" class="from-table">
+    <table cellspacing="0" cellpadding="0" width="100%" class="from-table  fl">
         <tr>
             <td class="th-one">贷款总额</td>
             <td class="td-one" amount></td>
         </tr>
         <tr>
             <td class="th-two">服务费用</td>
-            <td class="td-two" serviceCharge></td>
+            <td class="td-two" service_charge></td>
         </tr>
         <tr>
             <td class="th-one">实际到账</td>
@@ -93,5 +85,8 @@
         </tr>
     </table>
   </form>
+{%elseif $type == '3'%}
+
 {%else%}
+
 {%/if%}

@@ -9,6 +9,7 @@
 define(function(require) {
     var $ = require('jquery');
     require("common/ui/RangeSlider/rangeSlider");
+    require("common/ui/Form/icheck");
     var util = require('common/util');
     var header = require('common/header');
 
@@ -28,11 +29,18 @@ define(function(require) {
     var fromTable = {
         amount: $("[amount]"), //贷款总额
         duration: $("[duration]"), //贷款期限，以天为单位
-        serviceCharge: $("[serviceCharge]"), //服务费
+        service_charge: $("[service_charge]"), //服务费
         rate: $("[rate]"), //利率
         interest_month: $("[interest_month]"), //月平均利息
         real_amount: $("[real_amount]"), //实际到账
         total: $("[total]") //总还款金额
+    };
+
+    //通用input集合
+    var commInputArray = {
+        amount: $("[name='amount']"), //贷款总额
+        duration: $("[name='duration']") //贷款期限，以天为单位 
+
     };
 
     var formParams;
@@ -53,15 +61,27 @@ define(function(require) {
      * @return {[type]} [description]
      */
     function bindEvent() {
-        //页面加载后先执行一遍计算金额
+
+
+        //读取缓存
+        var amountCookie = util.getCookie('amount');
+        var durationCookie = util.getCookie('duration');
+        if (amountCookie && durationCookie) {
+            commInputArray.amount.val(amountCookie);
+            $("input[name='duration'][value="+durationCookie+"]").attr("checked",true); 
+        }
+
+
+        //页面加载后先执行一遍计算金额 
         formParams = calParams();
         renderHTML(formParams);
 
-        //input集合
-        var commInputArray = {
-            amount: $("[name='amount']"), //贷款总额
-            duration: $("[name='duration']") //贷款期限，以天为单位 
-        };
+        //radio
+        $('.loan-radio input').on('ifChecked',function(){
+             var duration = $('input:radio[name="duration"]:checked');
+            $('.duration-step-count').text(duration.attr('data-step'));
+            formParams = calParams(), renderHTML(formParams);
+        }).iCheck();
 
         //贷款数额滑块
         $(".loan-num").ionRangeSlider({
@@ -74,7 +94,8 @@ define(function(require) {
         });
         //上下箭头改变贷款金额事件
         $("#loan-form .up,#loan-form .down").click(function(event) {
-            var amount = util.removeCommas(commInputArray.amount.val());
+            var amount = util.removeCommas(commInputArray
+                .amount.val());
             if ($(this).hasClass('up')) {
                 amount = amount + 1000;
             } else if ($(this).hasClass('down')) {
@@ -102,7 +123,8 @@ define(function(require) {
         $.map(array, function(t, i) {
             if (t.name == "duration") {
                 //期限类型单独处理
-                e["durationType"] = $('input:radio[name="duration"]:checked').attr("durationType");
+                var duration = $('input:radio[name="duration"]:checked');
+                e["duration_type"] = duration.attr("duration_type");
             }
             e[t.name] = util.removeCommas(t.value);
         });
@@ -113,6 +135,10 @@ define(function(require) {
                  return e[t.name] = util.removeCommas(t.value), e;
              }, {});
         */
+
+        //写入缓存
+        util.setCookie('amount', e.amount, 1);
+        util.setCookie('duration', e.duration, 1);
         return loansCalculator(e);
     }
 
@@ -127,17 +153,17 @@ define(function(require) {
     function loansCalculator(e) {
         var amount = e.amount;
         var duration = e.duration;
-        var serviceCharge = amount * 0.005;
+        var service_charge = amount * 0.005;
         var interest_month1 = (amount * rate1) / 365 * 30;
         var interest_month2 = (amount * rate2) / 365 * 30;
-        var real_amount = amount - serviceCharge;
+        var real_amount = amount - service_charge;
         var total1 = amount + ((amount * rate1) / 365 * duration);
         var total2 = amount + ((amount * rate2) / 365 * duration);
         return {
             amount: amount, //贷款总额
             duration: duration, //贷款期限， 
-            durationType: e.durationType, //期限类型
-            serviceCharge: serviceCharge, //服务费
+            duration_type: e.duration_type, //期限类型
+            service_charge: service_charge, //服务费
             rate1: rate1, //利率1
             rate2: rate2, //利率2
             interest_month1: interest_month1.toFixed(2), //月平均利息1
@@ -155,8 +181,8 @@ define(function(require) {
      */
     function renderHTML(e) {
         fromTable.amount.html("￥" + util.addCommas(e.amount));
-        fromTable.duration.html(e.duration + (e.durationType == "2" ? "个月" : "天"));
-        fromTable.serviceCharge.html("￥" + util.addCommas(e.serviceCharge));
+        fromTable.duration.html(e.duration + (e.duration_type == "2" ? "个月" : "天"));
+        fromTable.service_charge.html("￥" + util.addCommas(e.service_charge));
         fromTable.rate.html(util.toPercent(e.rate1) + "~" + util.toPercent(e.rate2));
         fromTable.interest_month.html("￥" + util.addCommas(e.interest_month1) + "~￥" + util.addCommas(e.interest_month2));
         fromTable.real_amount.html("￥" + util.addCommas(e.real_amount));
