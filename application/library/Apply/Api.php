@@ -36,8 +36,8 @@ class Apply_Api {
      * @param  string $sex [性别，1为男，2为女，不填写不验证]
      * @return [type]      [检查身份证是否合法]
      */
-    public static function checkIdCard($num, $sex='') {
-        if(Apply_IdCardCheck::checkIdentity($num, $sex='')) {
+    public static function checkIdCard($num) {
+        if(Apply_IdCardCheck::checkIdentity($num)) {
             return Apply_RetCode::SUCCESS;
         }
         return Apply_RetCode::ID_CARD_WRONG;;

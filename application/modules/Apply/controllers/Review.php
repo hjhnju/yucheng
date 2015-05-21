@@ -16,6 +16,8 @@ class ReviewController extends Base_Controller_Page{
      * 将所有的数据全部写入数据库
      */
     public function submitAction() {
+        $db = Base_Db::getInstance('xjd');
+        $db->beginTransaction();
         //保存apply
         $apply      = new Apply_Logic_Apply();
         $objRst     = $apply->saveApply();
@@ -43,10 +45,12 @@ class ReviewController extends Base_Controller_Page{
                 return $this->ajaxError(Apply_RetCode::PERSONAL_PARAM_ERROR, 
                     Apply_RetCode::getMsg(Apply_RetCode::PERSONAL_PARAM_ERROR));
             }
+             $db->commit();
             //保存后将所有cookie删除，避免二次插入
             // Apply_Cookie::erasureCookie();
             $this->ajax(array('url' => '/apply/finish'), '', Apply_RetCode::NEED_REDIRECT);
         }
+
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 
                     Apply_RetCode::getMsg(Apply_RetCode::PARAM_ERROR));
     }

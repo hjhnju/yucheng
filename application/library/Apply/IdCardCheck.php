@@ -5,6 +5,7 @@
 class Apply_IdCardCheck{
     // $num为身份证号码，$checkSex：1为男，2为女，不输入为不验证
     public static function checkIdentity($num,$checkSex=''){
+        $num = strtolower($num);
         // 不是15位或不是18位都是无效身份证号
         if(strlen($num) != 15 && strlen($num) != 18){
             return false;

@@ -114,12 +114,16 @@ class RegistApiController extends Base_Controller_Api{
     * 
     */
     public function indexAction(){
+        $usertypes = User_Type_Roles::$names;
         $strName   = trim($_REQUEST['name']);
         $strPasswd = trim($_REQUEST['passwd']);
         $strPhone  = trim($_REQUEST['phone']);
         $strCode   = isset($_REQUEST['vericode']) ? $_REQUEST['vericode'] : '';
         $strInviter= isset($_REQUEST['inviter']) ? $_REQUEST['inviter'] : '';
         $isThird   = isset($_REQUEST['isthird']) ? intval($_REQUEST['isthird']) : 0;
+        //添加用户类型，根据用户类型判断$strName是name字段还是email字段
+        $strType   = isset($_REQUEST['type']) ? $usertypes[$_REQUEST['type']] : 'priv';
+        $strName   = $strType == 'fina' ? trim($_REQUEST['email']) : $strName;
 
         $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
         if(!$ret){
@@ -134,7 +138,7 @@ class RegistApiController extends Base_Controller_Api{
         $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : 0;
         
         //进行注册
-        $objRet  = $logic->regist('priv', $strName, $strPasswd, $strPhone);
+        $objRet  = $logic->regist($strType, $strName, $strPasswd, $strPhone);
         if(User_RetCode::SUCCESS !== $objRet->status){
             return $this->ajaxError($objRet->status, $objRet->statusInfo); 
         }
@@ -171,17 +175,20 @@ class RegistApiController extends Base_Controller_Api{
         
         //注册成功后设置用户为登录状态并将登录信息入库
         $logic   = new User_Logic_Login();
-        if(!empty($strName)){
-            $logic->login('name', $strName, $strPasswd);
-        }elseif(!empty($strPhone)){
-            $logic->login('phone', $strPhone, $strPasswd);
+        if($strType == 'fina') {
+           $logic->login('email', $strName, $strPasswd); 
+        } else {
+            if(!empty($strName)){
+                $logic->login('name', $strName, $strPasswd);
+            }elseif(!empty($strPhone)){
+                $logic->login('phone', $strPhone, $strPasswd);
+            }
+            //注册后的系统消息
+            Msg_Api::sendmsg($userid, Msg_Type::SYSTEM);
+            //通知注册奖励
+            Awards_Api::registNotify($userid, $inviterid);
         }
         Base_Log::notice($_REQUEST);
-        
-        //注册后的系统消息
-        Msg_Api::sendmsg($userid, Msg_Type::SYSTEM);
-        //通知注册奖励
-        Awards_Api::registNotify($userid, $inviterid);
         
         return $this->ajaxJump('/user/open');
     }

@@ -18,7 +18,7 @@ class BasicController extends Base_Controller_Page{
 		$data = array(
 			'province'	  => Apply_Type_Province::$names,
 			'city'     	  => Apply_Type_Province::getAllCity(),
-			'school_type' => Apply_Type_SchoolType::$names,
+			'school_type' => Apply_Type_SchoolType::$items,
 			'year'     	  => Apply_Type_Year::getYears(),
 			'yesno'	   	  => Apply_Type_YesNo::$names,
 			'nature'   	  => Apply_Type_Nature::$names,

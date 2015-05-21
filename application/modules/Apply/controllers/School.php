@@ -17,6 +17,7 @@ class SchoolController extends Base_Controller_Page{
         //如果用户点击了修改，我们需要在这里得到之前添加过的cookie
         $cookies = Apply_Cookie::parseCookie('school');
         $cookies += Apply_Cookie::parseCookie('stock');
+        // print_r($cookies);die();
         $data = array(
 			'guarantee'		=> Apply_Type_Guarantee::getGuarantes(),
 			'branch_school'	=> Apply_Type_BranchSchool::$names,
@@ -32,16 +33,6 @@ class SchoolController extends Base_Controller_Page{
     public function submitAction() {
     	//检查值是否合法，合法后记录到cookie，并且跳转到下一步
 		if (!empty($_POST) && $this->checkParam($this->param, $_POST)) {
-            $stock = array(
-                array(
-                    'name' => 'guo',
-                    'weight' => '20',
-                ),
-                array(
-                    'name' => 'jinli',
-                    'weight' => '40',
-                ),
-            );
             $_POST['stock'] = json_encode($stock);
 
 			//记录cookie

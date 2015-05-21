@@ -19,7 +19,6 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 			$cookies['userid'] = $objUser->userid;
 		}
 		$cookies['status'] = Apply_Type_Status::AUDIT;
-
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
@@ -44,7 +43,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 			return false;
 		}
 		$fields = $this->getProperties();
-		Apply_Cookie::save($param, 'apply');
+		Apply_Cookie::save($param, $fields);
 
 		return true;	
 	}

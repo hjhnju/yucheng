@@ -48,10 +48,33 @@ class Apply_Type_SchoolType extends Base_Type {
      * @var array
      */
     public static $names = array(
-        1 => '学前教育',
-        2 => '基础教育',
-        3 => '职业教育',
-        4 => '高等教育',
-        5 => '教育培训机构',
+        self::BEFORE  => '学前教育',
+        self::BASE    => '基础教育',
+        self::JOB     => '职业教育',
+        self::HIGH    => '高等教育',
+        self::TRAIN   => '教育培训机构',
+    );
+
+    public static $items = array(
+        self::BEFORE  => array(
+            'label' => '学前教育',
+            'money' => '¥1,000,000',
+        ),
+        self::BASE    => array(
+            'label' => '基础教育',
+            'money' => '¥5,000,000',
+        ),
+        self::JOB     => array(
+            'label' => '职业教育',
+            'money' => '¥1,000,000',
+        ),
+        self::HIGH    => array(
+            'label' => '高等教育',
+            'money' => '¥5,000,000',
+        ),
+        self::TRAIN   => array(
+            'label' => '教育培训机构',
+            'money' => '¥1,000,000',
+        ),
     );
 }

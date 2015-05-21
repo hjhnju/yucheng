@@ -7,25 +7,25 @@
 class Apply_RetCode extends Base_RetCode{
 
     //邮箱已存在
-    const EMAIL_EXIST  = 1000; 
+    const EMAIL_EXIST  = 1600; 
 
     //邮箱格式错误
-    const EMAIL_FORMAT = 1001;
+    const EMAIL_FORMAT = 1601;
 
     //邮箱为空
-    const EMAIL_EMPTY  = 1002;
+    const EMAIL_EMPTY  = 1602;
     
     //学校保存数据格式错误
-    const SCHOOL_PARAM_ERROR  = 1003;
+    const SCHOOL_PARAM_ERROR  = 1603;
 
     //股权结构保存数据格式错误
-    const STOCK_PARAM_ERROR   = 1004;
+    const STOCK_PARAM_ERROR   = 1604;
 
     //个人数据格式错误
-    const PERSONAL_PARAM_ERROR= 1005;
+    const PERSONAL_PARAM_ERROR= 1605;
 
     //身份证号错误
-    const ID_CARD_WRONG = 1006;
+    const ID_CARD_WRONG = 1606;
 
     /* 消息函数
      * @var array

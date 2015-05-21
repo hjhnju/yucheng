@@ -134,6 +134,7 @@ class VerifyController extends Base_Controller_Page{
         if($code != Apply_RetCode::SUCCESS) {
             $this->ajaxError($code, Apply_RetCode::getMsg($code));
         }
+        
         $this->ajax();  
     }
 

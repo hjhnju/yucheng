@@ -38,8 +38,8 @@ class User_Type_Roles extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::TYPE_PRIV => '我要贷款',
-        self::TYPE_CORP => '我要投资',
-        self::TYPE_FINA => '企业用户',
+        self::TYPE_PRIV => 'priv',
+        self::TYPE_CORP => 'corp',
+        self::TYPE_FINA => 'fina',
     );
 }

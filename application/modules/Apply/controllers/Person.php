@@ -17,7 +17,6 @@ class PersonController extends Base_Controller_Page{
     );
 
     public function indexAction() {
-        Apply_Cookie::erasureCookie();
         $cookies = Apply_Cookie::parseCookie('personal');
         $data = array(
 			'yesno'	   	  	=> Apply_Type_YesNo::$names,
