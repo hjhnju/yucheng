@@ -308,7 +308,10 @@ define(function(require) {
             onStart: null,
             onChange: null,
             onFinish: null,
-            onUpdate: null
+            onUpdate: null,
+
+            readonly:false
+
         }, options);
 
         this.validate();
@@ -418,7 +421,9 @@ define(function(require) {
         append: function() {
             var container_html = '<span class="irs js-irs-' + this.plugin_count + '"></span>';
             this.$cache.input.before(container_html);
-            this.$cache.input.prop("readonly", true);
+            if(this.options.readonly){ 
+               this.$cache.input.prop("readonly", true);
+            }
             this.$cache.cont = this.$cache.input.prev();
             this.result.slider = this.$cache.cont;
 

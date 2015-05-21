@@ -7,15 +7,12 @@
 {%block name="script"%}
 <script>
     require(['apply/school/index'], function (main) {
-        main.init(0.13,0.18);  
+        main.init({%$data.minmax.min%},{%$data.minmax.max%});  
     });   
 </script>
 {%/block%}
 
-{%block name="content"%}
-<style type="text/css" media="all">
-    
-</style>
+{%block name="content"%} 
 <div class="box1" >
     <div class="container container2  step">
      <div class="container">
@@ -57,7 +54,7 @@
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您已开了几所分校</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" type="text" name="branch_school" data-text="分校数量" placeholder=""/> 
+                         <input autocomplete="off" type="text" name="branch_school" data-text="分校数量" placeholder="请输入分校数量"/> 
                   </div> 
                   <div class="input-icon fl" id="branch_school-icon"></div>
                   <div class="input-error fl" id="branch_school-error"></div>

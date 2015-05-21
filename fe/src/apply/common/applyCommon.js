@@ -24,6 +24,7 @@ define(function(require) {
         Jt = /^(?:submit|button|image|reset|file)$/i,
         Gt = /^(?:input|select|textarea|keygen)/i;
     _e = /^(?:checkbox|radio)$/i;
+    var testNumber = /^\d+$/; //非负整数
 
     //动态表格集合
     var fromTable = {
@@ -44,6 +45,7 @@ define(function(require) {
     };
 
     var formParams;
+    var loanNumSlider;
 
     function init(tempRate1, tempRate2) {
         if (isNaN(tempRate1) && isNaN(tempRate2)) {
@@ -68,7 +70,7 @@ define(function(require) {
         var durationCookie = util.getCookie('duration');
         if (amountCookie && durationCookie) {
             commInputArray.amount.val(amountCookie);
-            $("input[name='duration'][value="+durationCookie+"]").attr("checked",true); 
+            $("input[name='duration'][value=" + durationCookie + "]").attr("checked", true);
         }
 
 
@@ -77,14 +79,12 @@ define(function(require) {
         renderHTML(formParams);
 
         //radio
-        $('.loan-radio input').on('ifChecked',function(){
-             var duration = $('input:radio[name="duration"]:checked');
-            $('.duration-step-count').text(duration.attr('data-step'));
+        $('.loan-radio input').on('ifChecked', function() { 
             formParams = calParams(), renderHTML(formParams);
         }).iCheck();
 
         //贷款数额滑块
-        $(".loan-num").ionRangeSlider({
+        loanNumSlider = $(".loan-num").ionRangeSlider({
             min: 5000,
             max: 3000000,
             step: 1000,
@@ -106,6 +106,16 @@ define(function(require) {
             commInputArray.amount.val(util.addCommas(amount));
             commInputArray.amount.trigger("change");
         });
+        //自己输入金额
+        $("input.loan-num").blur(function(event) {
+            var value = util.removeCommas(commInputArray.amount.val());
+            if(!testNumber.test(value)){
+                value=5000;
+            }
+            value>3000000?value=3000000:(value<5000?value=5000:value=value);
+            //格式化
+            commInputArray.amount.val(util.addCommas(value));  
+        });
 
         //贷款金额数量变化事件 
         $("#loan-form").change(function() {
@@ -124,6 +134,7 @@ define(function(require) {
             if (t.name == "duration") {
                 //期限类型单独处理
                 var duration = $('input:radio[name="duration"]:checked');
+                e["duration_step_count"] = duration.attr('data-step');
                 e["duration_type"] = duration.attr("duration_type");
             }
             e[t.name] = util.removeCommas(t.value);
@@ -151,15 +162,27 @@ define(function(require) {
      *  
      */
     function loansCalculator(e) {
-        var amount = e.amount;
-        var duration = e.duration;
+        var amount = e.amount;//贷款总额
+        var duration = e.duration;//贷款期限， 
         var service_charge = amount * 0.005;
         var interest_month1 = (amount * rate1) / 365 * 30;
         var interest_month2 = (amount * rate2) / 365 * 30;
         var real_amount = amount - service_charge;
         var total1 = amount + ((amount * rate1) / 365 * duration);
         var total2 = amount + ((amount * rate2) / 365 * duration);
-        return {
+        var temp={  
+            service_charge: service_charge, //服务费
+            rate1: rate1, //利率1
+            rate2: rate2, //利率2
+            interest_month1: interest_month1.toFixed(2), //月平均利息1
+            interest_month2: interest_month2.toFixed(2), //月平均利息2
+            real_amount: real_amount, //实际到账
+            total1: total1.toFixed(2), //总还款金额1
+            total2: total2.toFixed(2) //总还款金额2
+        }
+        $.extend(e, temp);
+        return e;
+  /*      return { 
             amount: amount, //贷款总额
             duration: duration, //贷款期限， 
             duration_type: e.duration_type, //期限类型
@@ -172,7 +195,7 @@ define(function(require) {
             total1: total1.toFixed(2), //总还款金额1
             total2: total2.toFixed(2) //总还款金额2
 
-        }
+        }*/
     }
 
     /**
@@ -180,6 +203,10 @@ define(function(require) {
      * @param {json} e 表单参数 
      */
     function renderHTML(e) {
+        //期次 
+        $('.duration-step-count').text(e.duration_step_count);
+
+       //贷款信息表格
         fromTable.amount.html("￥" + util.addCommas(e.amount));
         fromTable.duration.html(e.duration + (e.duration_type == "2" ? "个月" : "天"));
         fromTable.service_charge.html("￥" + util.addCommas(e.service_charge));

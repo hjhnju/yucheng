@@ -7,15 +7,13 @@
 {%block name="script"%}
 <script>
     require(['apply/review/index'], function (main) {
-        main.init(0.13,0.18);  
+        main.init({%$data.minmax.min%},{%$data.minmax.max%});  
     });   
 </script>
 {%/block%}
 
 {%block name="content"%}
-<style type="text/css" media="all">
-    
-</style>
+ 
 <div class="box1" >
     <div class="container container2 step">
      <div class="container"> 
@@ -160,20 +158,15 @@
                       <td class="td-one">{%$data.personal.is_lawsuit%}</td>
                   </tr>
                     
-              </table>
-              <div class="form-default_element">
-                   <div class="loan-label fl"> </div>
-                   <div class="color-red fl" id="error-box">  
-                        
-                   </div>
-              </div>   
+              </table> 
         </div>
         <div class="right"> 
         	 {%include file='../../../views/common/loaninfo.phtml' type="2"%}
         </div>  
         <div class="xieyi fl">
-           <input type="checkbox"/> 
+           <input type="checkbox" id="tiaoyue-itp"/> 
            我同意电子签章协议，并确定如上所填信息无误 
+           <span id="error-box" class="color-red" style="margin-left:10px;"></span>
         </div>
         <div class="form-default_element fl" style="margin-top:40px;">
                  <div class="loan-label fl" > </div> 

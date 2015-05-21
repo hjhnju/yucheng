@@ -59,7 +59,7 @@ define(function(require) {
 
 
 
-    var testNumber = /^\\d+$/; //非负整数
+    var testNumber = /^\d+$/; //非负整数
 
     var formParams = {};
 
@@ -103,8 +103,6 @@ define(function(require) {
                     icon.addClass('error');
                     error.html(text + '不能为空');
                 }
-                icon.addClass('success');
-                error.html('');
             },
         });
         //股东输入事件单独处理
@@ -114,7 +112,7 @@ define(function(require) {
             },
             blur: function() {
                 var value = $.trim($(this).val());
-                var text=$(this).attr('data-text');
+                var text = $(this).attr('data-text');
                 if (!value) {
                     errorArray.errorbox.html(text + '不能为空');
                 }
@@ -126,25 +124,31 @@ define(function(require) {
             var value = $.trim($(this).val());
             if (!testNumber.test(value)) {
                 iconArray.total_student.addClass('error');
-                errorArray.total_student.html(inputArray.total_student.attr('data-text')+'必须位数字！');
+                errorArray.total_student.html(inputArray.total_student.attr('data-text') + '必须位数字！');
                 return;
             }
+            iconArray.total_student.addClass('success');
+            errorArray.total_student.html('');
         });
         inputArray.staff.blur(function(event) {
             var value = $.trim($(this).val());
             if (!testNumber.test(value)) {
                 iconArray.staff.addClass('error');
-                errorArray.staff.html(inputArray.staff.attr('data-text')+'必须位数字！');
+                errorArray.staff.html(inputArray.staff.attr('data-text') + '必须位数字！');
                 return;
             }
+            iconArray.staff.addClass('success');
+            errorArray.staff.html('');
         });
         inputArray.branch_school.blur(function(event) {
             var value = $.trim($(this).val());
             if (!testNumber.test(value)) {
                 iconArray.branch_school.addClass('error');
-                errorArray.branch_school.html(inputArray.branch_school.attr('data-text')+'必须位数字！');
+                errorArray.branch_school.html(inputArray.branch_school.attr('data-text') + '必须位数字！');
                 return;
             }
+            iconArray.branch_school.addClass('success');
+            errorArray.branch_school.html('');
         });
 
 
@@ -153,11 +157,11 @@ define(function(require) {
             var parent = e.parent();
             var icon = parent.find('.input-icon');
             var error = parent.find('.input-error');
-            var text=e.attr('.data-text');
+            var text = e.find('select').attr('data-text');
 
             if (!value) {
                 icon.addClass('error');
-                error.html(text+'不能为空');
+                error.html(text + '不能为空');
             } else {
                 icon.attr('class', "input-icon fl");
                 error.html('');
@@ -214,17 +218,33 @@ define(function(require) {
 
             //删除股东
             $('.loan .del-stock').unbind('click').click(function(e) {
-                //TODO增加删除提示
-                var tr = $(this).parent().parent();
-                var weight = tr.attr('weight');
-                tr.remove();
-                stockArray.total = stockArray.total - Number(weight);
-                $('.stock-total').html(stockArray.total + '%');
-                errorArray.errorbox.html('');
+
+                /*  var tr = $(this).parent().parent();
+                  var weight = tr.attr('weight');
+                  tr.remove();
+                  stockArray.total = stockArray.total - Number(weight);
+                  $('.stock-total').html(stockArray.total + '%');
+                  errorArray.errorbox.html('');*/
+                delStock($(this));
             });
 
         }, 1000));
 
+        //删除股东
+        $('.loan .del-stock').unbind('click').click(function(e) { 
+            delStock($(this));
+        });
+
+        //删除股东的方法
+        function delStock(e) {
+            //TODO增加删除提示
+            var tr = e.parent().parent();
+            var weight = tr.attr('weight');
+            tr.remove();
+            stockArray.total = stockArray.total - Number(weight);
+            $('.stock-total').html(stockArray.total + '%');
+            errorArray.errorbox.html('');
+        };
 
 
         //下一步

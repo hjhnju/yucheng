@@ -7,7 +7,7 @@
 {%block name="script"%}
 <script>
     require(['apply/basic/index'], function (main) {
-        main.init(0.13,0.18);  
+        main.init({%$data.minmax.min%},{%$data.minmax.max%});  
     });   
 </script>
 {%/block%}
@@ -37,7 +37,7 @@
               <div class="form-default_element form-inpt">
                   <div class="loan-label fl">＊学校地区</div>
                   <div class="loan-select loan-select-addr fl">  
-                        <select class="select_hide" id="select-province">
+                        <select class="select_hide" id="select-province"  data-text="省份">
                           <option value="">选择省份</option>
                           {%foreach $data.province as $key=>$item%}
                           <option value="{%$key%}">{%$item%}</option>
@@ -45,18 +45,14 @@
                         </select> 
                   </div>
                   <div class="loan-select loan-select-addr fl" style="margin-left: 6px;">  
-                        <select class="select_hide" id="select-city">
+                        <select class="select_hide" id="select-city" data-text="城市">
                           <option value="">选择城市</option>
-                          <option value="基础教育">海淀</option>
-                          <option value="幼儿园">朝阳</option> 
-                        </select> 
-                        {%foreach $data.city as $key=>$item%}
-                        <div data-id="{%$key%}" style="display:none">
-                          {%foreach $item as $k=>$v%}
-                          <div data-id="{%$v['id']%}">{%$v['name']%}</div>
-                          {%/foreach%}
-                        </div>
-                        {%/foreach%}
+                            {%foreach $data.city as $key=>$item%} 
+                              {%foreach $item as $k=>$v%}
+                               <option value="{%$v['id']%}" pid="{%$key%}" disabled="">{%$v['name']%}</option> 
+                              {%/foreach%} 
+                            {%/foreach%} 
+                        </select>  
                   </div>
                   <div class="input-icon fl" id="city-icon"></div>
                   <div class="input-error fl" id="city-error">目前仅开通北京、广西地区</div>
@@ -65,7 +61,7 @@
                   <div class="loan-label fl">＊学校类型</div>
                   <div class="loan-select fl">  
                         <select class="select_hide" id="select-type" data-text="学校类型">
-                          <option value="">选择一项</option>
+                          <option value="" >选择一项</option> 
                           {%foreach $data.school_type as $key=>$item%}
                           <option value="{%$key%}">{%$item%}</option>
                           {%/foreach%}
@@ -89,7 +85,7 @@
                 </div> 
                 <div class="form-default_element form-inpt">
                       <div class="loan-label fl" style="line-height: 20px;">
-                        年收入是否<br/>超过¥5,000,000
+                        年收入是否<br/>超过 <span class="data-money"> </span> 
                       </div> 
                      <div class="loan-radio fl">
                            <div class="radiobox">

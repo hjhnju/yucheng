@@ -39,14 +39,14 @@
                     {%else%}
                       {%assign var="check" value=""%}
                     {%/if%}
-                    <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" duration_type="{%$item.type%}">
+                    <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" duration_type="{%$item.type%}" data-step="{%$item.step%}"/>
                     <label for="calc-loan-{%$col%}"><span class="ui-radio"></span>{%$item.label%}</label>
                   </div>  
         {%/foreach%} 
     </fieldset>
     <div class="title2 fl" style="padding: 10px 0px 10px 0px;line-height: 20px;">
       按月付息，到期还本;<br/>
-      <span class="f14">共<span class="color-font-green">2</span>期</span>
+      <span class="f14">共<span class="duration-step-count color-font-green">2</span>期</span>
     </div>
     <table cellspacing="0" cellpadding="0" width="100%" class="from-table  fl">
         <tr>

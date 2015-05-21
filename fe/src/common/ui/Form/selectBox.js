@@ -47,7 +47,7 @@ define(function(require) {
             if (settings.selectText != "" && settings.selectText != undefined) {
                 $(".selectBox_div_" + elem_id + " span").first().text(settings.selectText);
             } else {
-                var selectText=$(obj).children("option:selected").text(); 
+                var selectText = $(obj).children("option:selected").text();
                 //$(obj).children("option ").first().text()
                 $(".selectBox_div_" + elem_id + " span").first().text(selectText);
             }
@@ -84,7 +84,9 @@ define(function(require) {
                         if ($(this).text() == selected_text) {
                             ul += "<li class='selectBox_options_selected' style='font-size:13px;background-color:" + settings.selectedColor + ";color:#fff;height:" + (settings.height - 3) + "px; line-height:" + (settings.height - 3) + "px;font-size:13px;'><label style='display:none;'>" + $(this).val() + "</label><label>" + $(this).text() + "</label></li>";
                         } else {
-                            ul += "<li style='font-size:13px;height:" + (settings.height - 3) + "px; line-height:" + (settings.height - 3) + "px;'><label style='display:none;'>" + $(this).val() + "</label><label>" + $(this).text() + "</label></li>";
+                            if (!$(this).attr('disabled')) {
+                                ul += "<li style='font-size:13px;height:" + (settings.height - 3) + "px; line-height:" + (settings.height - 3) + "px;'><label style='display:none;'>" + $(this).val() + "</label><label>" + $(this).text() + "</label></li>";
+                            };
                         }
                     });
                     ul += "</ul>";

@@ -7,23 +7,14 @@
 {%block name="script"%}
 <script>
     require(['apply/verify/index'], function (main) {
-        main.init(0.13,0.18);  
-    }); 
-/*    require(['common/ui/Form/icheck','jquery'], function (main) {
-      var $=require('jquery');
-        $('.loan-radio input').on('ifChecked',function(){
-               alert($('input:radio[name="duration2"]:checked').val());
-             } ).iCheck({ 
-        });
-    });*/
+        main.init({%$data.minmax.min%},{%$data.minmax.max%});  
+    });  
     
 </script>
 {%/block%}
 
 {%block name="content"%}
-<style type="text/css" media="all">
-
-</style>
+ 
 
 {%$smarty.debugging_ctrl = 'URL'%}
 <div class="box1" >
