@@ -178,9 +178,9 @@ define(function(require) {
                 cellphone: inputArray.cellphone.val(),
                 telephone: inputArray.telephone.val(),
 
-                house_type: radioArray.house_type.val(),
-                is_criminal: radioArray.is_criminal.val(),
-                is_lawsuit: radioArray.is_lawsuit.val(),
+                house_type: $('input:radio[name="house_type"]:checked'),
+                is_criminal:$('input:radio[name="is_criminal"]:checked'),
+                is_lawsuit: $('input:radio[name="is_lawsuit"]:checked'),
 
                 scope_cash: selectArray.scope_cash.val(),
                 scope_stock: selectArray.scope_stock.val()

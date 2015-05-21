@@ -7,15 +7,12 @@
 {%block name="script"%}
 <script>
     require(['apply/person/index'], function (main) {
-        main.init(0.13,0.18);  
+        main.init({%$data.minmax.min%},{%$data.minmax.max%});  
     });   
 </script>
 {%/block%}
 
-{%block name="content"%}
-<style type="text/css" media="all">
-    
-</style>
+{%block name="content"%} 
 <div class="box1" >
     <div class="container container2 step">
      <div class="container">

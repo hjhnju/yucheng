@@ -13,7 +13,7 @@ define(function(require) {
     var util = require('common/util');
     var Remoter = require('common/Remoter');
 
-    var basicSubmit=new Remoter('APPLY_BASIC_SUBMIT');
+    var basicSubmit = new Remoter('APPLY_BASIC_SUBMIT');
 
     //select集合
     var selectArray = {
@@ -34,7 +34,7 @@ define(function(require) {
 
     //error集合
     var errorArray = {
-        errorbox:$('#error-box'),
+        errorbox: $('#error-box'),
         type: $("#type-error"), //学校类型
         nature: $("#nature-error"), //学校主体性质
         province: $("#province-error"), //省
@@ -74,14 +74,36 @@ define(function(require) {
             var parent = e.parent();
             var icon = parent.find('.input-icon');
             var error = parent.find('.input-error');
-            var text = $(this).attr('data-text');
+            var select = e.find('select');
+            var text = select.attr('data-text');
 
             if (!value) {
                 icon.addClass('error');
-                error.html(text+'不能为空');
+                error.html(text + '不能为空');
             } else {
                 icon.attr('class', "input-icon fl");
                 error.html('');
+
+                //城市级联单独处理
+                if (select.attr('id') == 'select-province') {
+                    selectArray.city.find('option').each(function(index, el) {
+                        var option = $(this);
+                        var pid = option.attr('pid');
+                        if (pid && pid != value) {
+                            option.attr('disabled', 'true');
+                        } else {
+                            option.removeAttr('disabled');
+                        }
+                        $('#selectBox_span_select-city').text('选择城市');
+                    });
+                }
+
+                //根据学校性质更改收入money
+                 if (select.attr('id') == 'select-type') {
+                    var money = select.find('option:selected').attr('data-money');
+                    $('.data-money').html(money+"");
+                }
+
             }
         }
 
@@ -104,26 +126,26 @@ define(function(require) {
             e.preventDefault();
 
             for (var item in selectArray) {
-                var select=selectArray[item];
+                var select = selectArray[item];
                 if (!select.val()) {
                     iconArray[item].addClass('error');
-                    errorArray[item].html(select.attr('data-text')+'不能为空');
+                    errorArray[item].html(select.attr('data-text') + '不能为空');
                     return;
                 }
-            }  
+            }
 
-            basicSubmit.remote({  
+            basicSubmit.remote({
                 province: selectArray.province.val(),
                 city: selectArray.city.val(),
-                type:selectArray.type.val(),
+                type: selectArray.type.val(),
                 nature: selectArray.nature.val(),
                 year: selectArray.year.val(),
                 school_source: selectArray.school_source.val(),
 
-                is_annual_income: radioArray.is_annual_income.val(),
-                is_profit: radioArray.is_profit.val(),
-                is_other_business: radioArray.is_other_business.val()
- 
+                is_annual_income: $('input:radio[name="is_annual_income"]:checked'),
+                is_profit: $('input:radio[name="is_profit"]:checked'),
+                is_other_business: $('input:radio[name="is_other_business"]:checked')
+
             });
 
         }, 1000));

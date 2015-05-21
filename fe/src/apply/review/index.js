@@ -31,6 +31,13 @@ define(function(require) {
         //下一步
         $('.loan .loan-submit').click(util.debounce(function(e) {
             e.preventDefault(); 
+            //必须同意协议内容
+            if (!$('#tiaoyue-itp')[0].checked) {
+                $('#error-box').text('请同意用户条约!');
+                return;
+            }else{
+                $('#error-box').text('');
+            }
             reviewSubmit.remote();
 
         }, 1000));
