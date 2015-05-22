@@ -127,6 +127,7 @@ class RegistApiController extends Base_Controller_Api{
         
         //如果是普通用户需要验证手机验证码，如果是融资用户需要验证图片验证码
         if($strType == 'fina') {
+            $logic = new User_Logic_Regist();
             $ret = User_Api::checkImageCode($strCode, 'regist');
             if(!$ret){
                 return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG,
