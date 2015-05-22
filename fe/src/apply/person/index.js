@@ -166,7 +166,7 @@ define(function(require) {
                     return;
                 }
             }
-            if (!radioArray.house_type.val()) {
+            if (!$('input:radio[name="house_type"]:checked').val()) {
                 iconArray.house_type.addClass('error');
                 errorArray.house_type.html("住房类型不能为空！");
                 return;
@@ -178,9 +178,9 @@ define(function(require) {
                 cellphone: inputArray.cellphone.val(),
                 telephone: inputArray.telephone.val(),
 
-                house_type: $('input:radio[name="house_type"]:checked'),
-                is_criminal:$('input:radio[name="is_criminal"]:checked'),
-                is_lawsuit: $('input:radio[name="is_lawsuit"]:checked'),
+                house_type: $('input:radio[name="house_type"]:checked').val(),
+                is_criminal:$('input:radio[name="is_criminal"]:checked').val(),
+                is_lawsuit: $('input:radio[name="is_lawsuit"]:checked').val(),
 
                 scope_cash: selectArray.scope_cash.val(),
                 scope_stock: selectArray.scope_stock.val()

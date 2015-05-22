@@ -54,7 +54,7 @@
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您已开了几所分校</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" type="text" name="branch_school" data-text="分校数量" placeholder="请输入分校数量"/> 
+                         <input autocomplete="off" value="{%$data.edit.branch_school%}" type="text" name="branch_school" data-text="分校数量" placeholder="请输入分校数量" /> 
                   </div> 
                   <div class="input-icon fl" id="branch_school-icon"></div>
                   <div class="input-error fl" id="branch_school-error"></div>
@@ -94,7 +94,13 @@
                      <div class="f16 color-6" style="  margin-left: 40px;line-height:50px;">您及所有占20%以上股份的股东</div>
                 </div> 
                 <table cellspacing="0" cellpadding="0"  class="apply-stock fl">
-                    <tbody class="stock-list">    
+                    <tbody class="stock-list"> 
+                      {%foreach $data.stock as $key=>$item%}
+                          <tr weight="{%$item.weight%}">
+                            <td>{%$item.name%}</td><td class="tr">{%$item.weight%}%</td>
+                            <td class="tc"><i class="iconfont icon-delete del-stock"></i></td>
+                          </tr>
+                       {%/foreach%}  
                     </tbody>  
                 </table> 
                <div class="form-default_element form-inpt" style="margin-bottom: 5px;">

@@ -18,7 +18,7 @@
 
 {%$smarty.debugging_ctrl = 'URL'%}
 <div class="box1" >
-    <div class="container container2">
+    <div class="container container2 step">
      <div class="container">
        {%include file='../../../views/common/loaninfo.phtml' type="1" current="1"%}
         <div class="title">
@@ -208,9 +208,11 @@
                  <li class="list">专业团队后续为您全程服务</li> 
              </ul> 
         </div>
+        {%if !isset($user)%}
         <div class="alredy-apply fl">
           已经发起过申请？<a class="color-font-green" href="{%$webroot%}/user/login">立即登录 </a>
         </div>
+         {%/if%} 
     </div>
 </div>
  

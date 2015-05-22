@@ -130,10 +130,10 @@ define(function() {
 
     //写cookies
 
-    function setCookie(name, value,hours) { 
+    function setCookie(name, value,hours,path) { 
         var exp = new Date();
         exp.setTime(exp.getTime() + hours  * 60 * 60 * 1000);
-        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString()+ ";path=" +path;
     }
 
     //读取cookies

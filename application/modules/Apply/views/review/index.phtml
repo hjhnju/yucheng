@@ -35,27 +35,27 @@
                   <tr>
                       <td class="th-two">服务费用</td>
                       <td class="td-two" service_charge></td>
+                  </tr> 
+                  <tr>
+                      <td class="th-one">融资利率</td>
+                      <td class="td-one" rate></td>
                   </tr>
                   <tr>
-                      <td class="th-one">实际到账</td>
-                      <td class="td-one" real_amount></td>
+                      <td class="th-two">借款申请人</td>
+                      <td class="td-two" >{%$data.personal.realname%}</td>
                   </tr>
                   <tr>
-                      <td class="th-two">贷款利率</td>
-                      <td class="td-two" rate></td>
+                      <td class="th-one">借款人邮箱</td>
+                      <td class="td-one" >{%$user.username%}</td>
                   </tr>
                   <tr>
-                      <td class="th-one">月平均利息</td>
-                      <td class="td-one" interest_month></td>
-                  </tr>
-                  <tr>
-                      <td class="th-two">贷款周期</td>
+                      <td class="th-two">借款周期</td>
                       <td class="td-two" duration></td>
-                  </tr>
-                  <tr>
-                      <td class="th-one">总还款额</td>
-                      <td class="td-one" total></td>
                   </tr>  
+                  <tr>
+                      <td class="th-one">学校名称</td>
+                      <td class="td-one">{%$data.school.name%}</td>
+                  </tr> 
               </table>
               <div class="title color-green fl">资质评估</div>
               <table cellspacing="0" cellpadding="0" width="100%" class="from-table">

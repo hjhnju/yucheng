@@ -68,6 +68,7 @@ define(function(require) {
         //读取缓存
         var amountCookie = util.getCookie('amount');
         var durationCookie = util.getCookie('duration');
+        var service_chargeCookie = util.getCookie('service_charge');
         if (amountCookie && durationCookie) {
             commInputArray.amount.val(amountCookie);
             $("input[name='duration'][value=" + durationCookie + "]").attr("checked", true);
@@ -78,7 +79,7 @@ define(function(require) {
         formParams = calParams();
         renderHTML(formParams);
 
-        //radio
+        //美化radio
         $('.loan-radio input').on('ifChecked', function() { 
             formParams = calParams(), renderHTML(formParams);
         }).iCheck();
@@ -148,8 +149,9 @@ define(function(require) {
         */
 
         //写入缓存
-        util.setCookie('amount', e.amount, 1);
-        util.setCookie('duration', e.duration, 1);
+        util.setCookie('amount', e.amount, 1,'/apply');
+        util.setCookie('duration', e.duration, 1,'/apply');
+        util.setCookie('service_charge', e.service_charge, 1,'/apply'); 
         return loansCalculator(e);
     }
 

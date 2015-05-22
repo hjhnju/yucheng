@@ -142,9 +142,9 @@ define(function(require) {
                 year: selectArray.year.val(),
                 school_source: selectArray.school_source.val(),
 
-                is_annual_income: $('input:radio[name="is_annual_income"]:checked'),
-                is_profit: $('input:radio[name="is_profit"]:checked'),
-                is_other_business: $('input:radio[name="is_other_business"]:checked')
+                is_annual_income: $('input:radio[name="is_annual_income"]:checked').val(),
+                is_profit: $('input:radio[name="is_profit"]:checked').val(),
+                is_other_business: $('input:radio[name="is_other_business"]:checked').val()
 
             });
 

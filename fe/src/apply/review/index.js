@@ -33,12 +33,17 @@ define(function(require) {
             e.preventDefault(); 
             //必须同意协议内容
             if (!$('#tiaoyue-itp')[0].checked) {
-                $('#error-box').text('请同意用户条约!');
+                $('#error-box').html('请同意用户条约!');
                 return;
             }else{
-                $('#error-box').text('');
+                $('#error-box').html('');
             }
-            reviewSubmit.remote();
+            reviewSubmit.remote({
+                 amount: formParams.amount,
+                 duration: formParams.duration,
+                 duration_type: formParams.duration_type,
+                 service_charge: formParams.service_charge
+            });
 
         }, 1000));
 
@@ -52,7 +57,7 @@ define(function(require) {
         //提交后
         reviewSubmit.on('success', function(data) {
             if (data && data.bizError) {
-                errorArray.errorbox.html(data.statusInfo);
+                $('#error-box').html(data.statusInfo);
             } else { 
             }
         });
