@@ -124,18 +124,27 @@ class RegistApiController extends Base_Controller_Api{
         //添加用户类型，根据用户类型判断$strName是name字段还是email字段
         $strType   = isset($_REQUEST['type']) ? $usertypes[$_REQUEST['type']] : 'priv';
         $strName   = $strType == 'fina' ? trim($_REQUEST['email']) : $strName;
-
-        $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
-        if(!$ret){
-            return $this->ajaxError(User_RetCode::VERICODE_WRONG,
-                User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
+        
+        //如果是普通用户需要验证手机验证码，如果是融资用户需要验证图片验证码
+        if($strType == 'fina') {
+            $ret = User_Api::checkImageCode($strCode, 'regist');
+            if(!$ret){
+                return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG,
+                    User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
+            }
+        }else {
+            $ret = User_Api::checkSmsCode($strPhone, $strCode, 'regist');
+            if(!$ret){
+                return $this->ajaxError(User_RetCode::VERICODE_WRONG,
+                    User_RetCode::getMsg(User_RetCode::VERICODE_WRONG));
+            }
+            $logic = new User_Logic_Regist();
+            $objRet = $logic->checkInviter($strInviter);
+            if(User_RetCode::SUCCESS !== $objRet->status){
+                return $this->ajaxError($objRet->status, $objRet->statusInfo); 
+            }
+            $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : 0;
         }
-        $logic = new User_Logic_Regist();
-        $objRet = $logic->checkInviter($strInviter);
-        if(User_RetCode::SUCCESS !== $objRet->status){
-            return $this->ajaxError($objRet->status, $objRet->statusInfo); 
-        }
-        $inviterid = isset($objRet->data['inviterid']) ? $objRet->data['inviterid'] : 0;
         
         //进行注册
         $objRet  = $logic->regist($strType, $strName, $strPasswd, $strPhone);

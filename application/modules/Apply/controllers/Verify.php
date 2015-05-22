@@ -2,7 +2,6 @@
 class VerifyController extends Base_Controller_Page{
     protected $needLogin = false;
 
-    const IMAGECODE = 'apply';
     /**
      * 需要验证的参数值
      * @var array
@@ -30,7 +29,7 @@ class VerifyController extends Base_Controller_Page{
         //删除cookie,保证数据正确，不混乱
         Apply_Cookie::erasureCookie();
         $data = array(
-            'url' => $this->webroot . '/user/imagecode/getimage?type='.self::IMAGECODE.'&timestmp='.time(),
+            'url' => $this->webroot . '/user/imagecode/getimage?type=regist',
             'usertype' => $usertype,
             'duration' => Apply_Type_Duration::$names,
             'minmax'   => Apply_Type_MinMax::$values,
@@ -65,12 +64,12 @@ class VerifyController extends Base_Controller_Page{
             $strName   = trim($_POST['email']);
             $strPasswd = trim($_POST['password']);
             $strCode   = isset($_POST['imagecode']) ? trim($_POST['imagecode']) : null;
-            //检查验证码
-            $bolRet = User_Logic_ImageCode::checkCode(self::IMAGECODE, $strCode);
-            // if(!$bolRet){
-            //     return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG, 
-            //         User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
-            // }
+            //检查注册验证码
+            $ret = User_Api::checkImageCode($strCode, 'regist');
+            if(!$ret){
+                return $this->ajaxError(User_RetCode::IMAGE_CODE_WRONG,
+                    User_RetCode::getMsg(User_RetCode::IMAGE_CODE_WRONG));
+            }
             //注册成一个新的账户，注册里面会验证用户名和密码是否合法，返回状态已经转化成数组格式
             $objRet = User_Api::regist('fina', $strName, $strPasswd, '');
 
