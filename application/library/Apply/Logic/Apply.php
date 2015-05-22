@@ -85,7 +85,7 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
     public function getApplyList($page=1, $pagesize=10){
     	$objUser = User_Api::checkLogin();
     	$objApply = new Apply_List_Apply();
-    	$objApply->setFilter(array('userid' => 111161));
+    	$objApply->setFilter(array('userid' => $objUser->userid));
     	$objApply->setPage($page);
     	$objApply->setPagesize($pagesize);
     	$objApply->setOrder('create_time desc');
