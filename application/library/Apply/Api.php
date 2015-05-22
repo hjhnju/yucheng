@@ -44,12 +44,11 @@ class Apply_Api {
     }
 
     /**
-     * 加载一条apply的全部信息
-     * @param  [type] $apply_id [申请的id]
-     * @return [type] array     [返回一条apply信息的数组]
+     * @param  [type] $page [当前页数]
+     * @param  [pagesize] [每页多少条数据]
      */
-    public static function loadApply(){
+    public static function getApplyList($page, $pagesize){
         $obj  = new Apply_Logic_Apply();
-        return $obj->getApplyList();
+        return $obj->getApplyList($page, $pagesize);
     }   
 }

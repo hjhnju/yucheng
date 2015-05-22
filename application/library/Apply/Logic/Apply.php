@@ -70,17 +70,25 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
     	$type                = $data['duration_type'] == 2 ? '个月' : '天';
         $data['duration'] 	 = $data['duration'].' '.$type;
 
+        $status 			 = Apply_Type_Status::$names;
+        $data['status']		 = $status[$data['status']];
+
         return $data;
     }
 
     /**
      * 获得申请列表
-     * @return [type] [description]
+     * @param $page 当前页数
+     * @param $pagesize 每页多少条
+     * @return 获得申请列表
      */
-    public function getApplyList(){
+    public function getApplyList($page=1, $pagesize=10){
     	$objUser = User_Api::checkLogin();
     	$objApply = new Apply_List_Apply();
     	$objApply->setFilter(array('userid' => 111161));
+    	$objApply->setPage($page);
+    	$objApply->setPagesize($pagesize);
+    	$objApply->setOrder('create_time desc');
     	$data = $objApply->toArray();
     	foreach($data['list'] as $key=>$item) {
     		$tmpData = array();

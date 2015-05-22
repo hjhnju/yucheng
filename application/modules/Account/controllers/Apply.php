@@ -1,24 +1,23 @@
 <?php
 /**
- * 好友邀请页面
+ * 融资用户融资列表页面
  */
 class ApplyController extends Base_Controller_Page {
-    
-    CONST PAGESIZE = 20;    
+    protected $needLogin = true;
 
     public function init() {
         parent::init();
         $this->userInfoLogic = new Account_Logic_UserInfo();
-        $this->ajax          = true;
     }
     
     /**
-     * assign至前端邀请url
-     * inviteUrl 用户的专属邀请链接
-     * userinfo 左上角信息
+     * 融资列表默认请求页面
      */
     public function indexAction() {  
-        $data       = Apply_Api::loadApply(3);   
+        $page = $this->getInt('page', 1);
+        $pagesize = 10;
+
+        $data       = Apply_Api::getApplyList($page, $pagesize);  
         $userInfo   = $this->userInfoLogic->getUserInfo($this->objUser); 
         $this->getView()->assign('userinfo',$userInfo); 
         $this->getView()->assign('data',$data);   
