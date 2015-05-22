@@ -27,6 +27,8 @@ class VerifyController extends Base_Controller_Page{
         if(isset($objUser)){
             $usertype = $objUser->usertype;
         }
+        //删除cookie,保证数据正确，不混乱
+        Apply_Cookie::erasureCookie();
         $data = array(
             'url' => $this->webroot . '/user/imagecode/getimage?type='.self::IMAGECODE.'&timestmp='.time(),
             'usertype' => $usertype,
