@@ -45,7 +45,8 @@ define(function(require) {
         certificate: $("#certificate-error"),
         detail_address: $("#detail_address-error"),
         cellphone: $("#cellphone-error"),
-        telephone: $("#telephone-error")
+        telephone: $("#telephone-error"),
+        house_type:$('#house_type-error')
     };
 
     //icon集合
@@ -53,7 +54,8 @@ define(function(require) {
         certificate: $("#certificate-icon"),
         detail_address: $("#detail_address-icon"),
         cellphone: $("#cellphone-icon"),
-        telephone: $("#telephone-icon")
+        telephone: $("#telephone-icon"),
+        house_type:$('#house_type-icon')
     };
 
 

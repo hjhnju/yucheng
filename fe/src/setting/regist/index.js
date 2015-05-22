@@ -33,7 +33,7 @@ define(function(require) {
 
     var imgUrl = $('#login-img-url');
     var IMGURL = config.URL.IMG_GET;
-    var imgcodeType='regist';
+    var imgcodeType = 'regist';
 
     /**
      * input集合
@@ -47,6 +47,9 @@ define(function(require) {
         loginTest: $('#regist-testing'),
         loginTuiJian: $('#regist-tuijian'),
 
+
+        pwd: $('#regist3-pwd'),
+        pwd2: $('#regist3-pwd2'),
         usertype: $('input:radio[name="usertype"]:checked'),
         email: $('#regist-email'),
         imgcode: $('#regist-imgcode')
@@ -64,6 +67,9 @@ define(function(require) {
         testError: $('#regist-testing-error'),
         tuiJianError: $('#regist-tuijian-error'),
 
+
+        pwd: $('#regist3-pwd-error'),
+        pwd2: $('#regist3-pwd2-error'),
         email: $('#regist-email-error'),
         imgcode: $('#regist-imgcode-error')
     };
@@ -86,8 +92,16 @@ define(function(require) {
         testPointTip: $('#regist-testing-point').next(),
         tuiJianPointTip: $('#regist-tuijian-point').next(),
 
+
+        pwd: $('#regist3-pwd-point'),
+        pwd2: $('#regist3-pwd2-point'),
         email: $('#regist-email-point'),
-        imgcode: $('#regist-imgcode-point')
+        imgcode: $('#regist-imgcode-point'),
+        pwdTip: $('#regist3-pwd-point').next(),
+        pwd2Tip: $('#regist3-pwd2-point').next(),
+        emailTip: $('#regist-email-point').next(),
+        imgcodeTip: $('#regist-imgcode-point').next()
+
     };
     var allStatus = {
         user: 0,
@@ -116,7 +130,7 @@ define(function(require) {
 
     var usertype = 3;
 
-    function init(third) {  
+    function init(third) {
         isthird = third ? 1 : 0;
         //header.init();
         etpl.compile(tpl);
@@ -174,103 +188,100 @@ define(function(require) {
         });
 
 
-        if (usertype == 1) { //投资账户 
+        // 检查用户名
+        loginInput.loginUser.blur(function() {
+            var value = $.trim($(this).val());
 
+            if (value) {
+                checkName.remote({
+                    name: value
+                });
+            } else {
+                allStatus.user = 0;
+            }
+        });
+        // 检查手机号
+        loginInput.loginPhone.blur(function() {
+            var value = $.trim($(this).val());
 
-            // 检查用户名
-            loginInput.loginUser.blur(function() {
-                var value = $.trim($(this).val());
+            if (value) {
+                checkphone.remote({
+                    phone: value
+                });
+            } else {
+                allStatus.phone = 0;
+                $('.login-username-testing').addClass('disabled');
+            }
+        });
+        // 检查验证码
+        loginInput.loginTest.blur(function() {
+            var value = $.trim($(this).val());
+            var phone = $.trim(loginInput.loginPhone.val());
 
-                if (value) {
-                    checkName.remote({
-                        name: value
-                    });
-                } else {
-                    allStatus.user = 0;
-                }
-            });
-            // 检查手机号
-            loginInput.loginPhone.blur(function() {
-                var value = $.trim($(this).val());
+            if (!phone) {
+                loginInput.loginPhone.trigger('blur');
+                allStatus.vericode = 0;
+                return;
+            }
 
-                if (value) {
-                    checkphone.remote({
-                        phone: value
-                    });
-                } else {
-                    allStatus.phone = 0;
-                    $('.login-username-testing').addClass('disabled');
-                }
-            });
-            // 检查验证码
-            loginInput.loginTest.blur(function() {
-                var value = $.trim($(this).val());
-                var phone = $.trim(loginInput.loginPhone.val());
+            if (value) {
+                checksmscode.remote({
+                    vericode: value,
+                    phone: phone,
+                    type: 'regist'
+                });
+            } else {
+                allStatus.vericode = 0;
+            }
+        });
 
-                if (!phone) {
-                    loginInput.loginPhone.trigger('blur');
-                    allStatus.vericode = 0;
-                    return;
-                }
+        // 检查是否获取验证码
+        $('.login-username-testing').click(util.debounce(function(e) {
+            e.preventDefault();
 
-                if (value) {
-                    checksmscode.remote({
-                        vericode: value,
-                        phone: phone,
-                        type: 'regist'
-                    });
-                } else {
-                    allStatus.vericode = 0;
-                }
-            });
+            var value = $.trim(loginInput.loginPhone.val());
 
-            // 检查是否获取验证码
-            $('.login-username-testing').click(util.debounce(function(e) {
-                e.preventDefault();
+            if (!$(this).hasClass('disabled') && value) {
+                sendsmscode.remote({
+                    phone: value,
+                    type: 'regist'
+                });
+            }
 
-                var value = $.trim(loginInput.loginPhone.val());
+        }, 1000));
 
-                if (!$(this).hasClass('disabled') && value) {
-                    sendsmscode.remote({
-                        phone: value,
-                        type: 'regist'
-                    });
-                }
+        // 检查推荐人
+        loginInput.loginTuiJian.blur(function() {
+            var value = $.trim($(this).val());
 
-            }, 1000));
+            if (value) {
+                checkInviter.remote({
+                    inviter: value
+                });
+            }
 
-            // 检查推荐人
-            loginInput.loginTuiJian.blur(function() {
-                var value = $.trim($(this).val());
+        });
 
-                if (value) {
-                    checkInviter.remote({
-                        inviter: value
-                    });
-                }
+        //邮箱验证格式
+        loginInput.email.blur(function() {
+            var value = $.trim($(this).val());
+            if (value) {
+                checkEmail.remote({
+                    email: value
+                });
+            } else {
+                allStatus3.email = 0;
+            }
+        });
 
-            });
-        } else if (usertype == 3) { //贷款账户
-            //邮箱验证格式
-            loginInput.email.blur(function() {
-                var value = $.trim($(this).val());
-                if (value) {
-                    checkEmail.remote({
-                        email: value
-                    });
-                } else {
-                    allStatus3.email = 0;
-                }
-            });
+        //生成图片验证码
+        imgUrl.attr('src', IMGURL + imgcodeType + '&r=' + new Date().getTime());
+        // 获取图片验证码
+        imgUrl.click(function(e) {
+            e.preventDefault();
+            $(this).attr('src', IMGURL + imgcodeType + '&r=' + new Date().getTime());
+        });
 
-           //生成图片验证码
-            imgUrl.attr('src', IMGURL +imgcodeType+'&r=' + new Date().getTime());
-            // 获取图片验证码
-            imgUrl.click(function(e) {
-                e.preventDefault();
-                $(this).attr('src', IMGURL +imgcodeType+'&r=' + new Date().getTime());
-            });
-        }
 
 
 
@@ -280,23 +291,41 @@ define(function(require) {
 
             if (!value) {
                 allStatus.pwd = 0;
-            allStatus3.pwd = 0;
                 return;
             }
 
             if (!testPwd.test(value)) {
                 allStatus.pwd = 0;
-                allStatus3.pwd = 0;
                 $(this).parent().addClass('current');
                 error.pwd2Error.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
                 return;
             }
 
             allStatus.pwd = 1;
-            allStatus3.pwd = 1;
             // error.pwdError.html(CORRECT);
             point.pwdPointTip.hide();
             point.pwdPointIcon.html(CORRECT);
+        });
+
+        loginInput.pwd.blur(function() {
+            var value = $.trim($(this).val());
+
+            if (!value) {
+                allStatus3.pwd = 0;
+                return;
+            }
+
+            if (!testPwd.test(value)) {
+                allStatus3.pwd = 0;
+                $(this).parent().addClass('current');
+                error.pwd2Error.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
+                return;
+            }
+
+            allStatus3.pwd = 1;
+            // error.pwdError.html(CORRECT);
+            point.pwd.hide();
+            point.pwdTip.html(CORRECT);
         });
 
         // 确认密码格式验证
@@ -306,24 +335,43 @@ define(function(require) {
 
             if (!value) {
                 allStatus.pwd = 0;
-            allStatus3.pwd = 0;
                 return;
             }
 
             //检测两次密码是否一致
             if (value != pwd) {
                 allStatus.pwd = 0;
-                allStatus3.pwd = 0;
                 $(this).parent().addClass('current');
                 error.pwd2Error.html('两次输入的密码不一致 ');
                 return;
             }
 
             allStatus.pwd = 1;
-            allStatus3.pwd = 1;
             // error.pwdError.html(CORRECT);
             point.pwd2PointTip.hide();
             point.pwd2PointIcon.html(CORRECT);
+        });
+        loginInput.pwd2.blur(function() {
+            var pwd = $.trim($(loginInput.pwd).val());
+            var value = $.trim($(this).val());
+
+            if (!value) {
+                allStatus3.pwd = 0;
+                return;
+            }
+
+            //检测两次密码是否一致
+            if (value != pwd) {
+                allStatus3.pwd = 0;
+                $(this).parent().addClass('current');
+                error.pwd2Error.html('两次输入的密码不一致 ');
+                return;
+            }
+
+            allStatus3.pwd = 1;
+            // error.pwdError.html(CORRECT);
+            point.pwd2.hide();
+            point.pwd2Tip.html(CORRECT);
         });
 
 
@@ -374,7 +422,7 @@ define(function(require) {
                     type: usertype,
                     email: loginInput.email.val(),
                     passwd: loginInput.loginPwd.val(),
-                    imgcode: loginInput.imgcode.val()
+                    vericode: loginInput.imgcode.val()
                 });
             }
 
@@ -483,7 +531,7 @@ define(function(require) {
                 allStatus3.email = 0;
             } else {
                 point.email.hide();
-                point.email.html(CORRECT);
+                point.emailTip.html(CORRECT);
                 allStatus3.email = 1;
             }
         });
@@ -491,7 +539,7 @@ define(function(require) {
         registSubmit.on('success', function(data) {
             if (data.imgCode) {
                 error.imgcode.html(data.statusInfo);
-                imgUrl.attr('src', data.data.url +imgcodeType+'&r=' + new Date().getTime());
+                imgUrl.attr('src', data.data.url + imgcodeType + '&r=' + new Date().getTime());
             } else if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {
