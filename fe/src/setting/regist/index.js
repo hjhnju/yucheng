@@ -33,6 +33,7 @@ define(function(require) {
 
     var imgUrl = $('#login-img-url');
     var IMGURL = config.URL.IMG_GET;
+    var imgcodeType='regist';
 
     /**
      * input集合
@@ -115,7 +116,7 @@ define(function(require) {
 
     var usertype = 3;
 
-    function init(third) {
+    function init(third) {  
         isthird = third ? 1 : 0;
         //header.init();
         etpl.compile(tpl);
@@ -258,16 +259,16 @@ define(function(require) {
                         email: value
                     });
                 } else {
-                    allStatus3.user = 0;
+                    allStatus3.email = 0;
                 }
             });
 
            //生成图片验证码
-            imgUrl.attr('src', IMGURL + '?r=' + new Date().getTime());
+            imgUrl.attr('src', IMGURL +imgcodeType+'&r=' + new Date().getTime());
             // 获取图片验证码
             imgUrl.click(function(e) {
                 e.preventDefault();
-                $(this).attr('src', IMGURL + '?r=' + new Date().getTime());
+                $(this).attr('src', IMGURL +imgcodeType+'&r=' + new Date().getTime());
             });
         }
 
@@ -351,7 +352,7 @@ define(function(require) {
                 }
 
                 status && registSubmit.remote({
-                    usertype: loginInput.usertype.val(),
+                    type: loginInput.usertype.val(),
                     name: loginInput.loginUser.val(),
                     passwd: loginInput.loginPwd.val(),
                     phone: loginInput.loginPhone.val(),
@@ -370,11 +371,10 @@ define(function(require) {
                 }
 
                 status && registSubmit.remote({
-                    usertype: usertype,
-                    emain: loginInput.email.val(),
+                    type: usertype,
+                    email: loginInput.email.val(),
                     passwd: loginInput.loginPwd.val(),
-                    imgcode: loginInput.imgcode.val(),
-                    isthird: isthird
+                    imgcode: loginInput.imgcode.val()
                 });
             }
 
@@ -491,7 +491,7 @@ define(function(require) {
         registSubmit.on('success', function(data) {
             if (data.imgCode) {
                 error.imgcode.html(data.statusInfo);
-                imgUrl.attr('src', data.data.url + '?r=' + new Date().getTime());
+                imgUrl.attr('src', data.data.url +imgcodeType+'&r=' + new Date().getTime());
             } else if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {

@@ -150,7 +150,9 @@ define(function () {
         APPLY_REVIEW_SUBMIT :rootUrl
             +'/apply/review/submit',
         APPLY_VERIFY_CHECKIDCARD :rootUrl
-            +'/apply/verify/checkidcard'
+            +'/apply/verify/checkidcard',
+        MY_APPLY_GET :rootUrl
+            +'/apply/api/index'
 
         };
 

@@ -10,6 +10,7 @@ define(function(require) {
     var $ = require('jquery');
     var applyCommon = require('apply/common/applyCommon');
     var util = require('common/util');
+    var config = require('common/config');
     var Remoter = require('common/Remoter');
     var verifySubmit = new Remoter('APPLY_VERIFY_SUBMIT');
     var checkEmail = new Remoter('APPLY_VERIFY_CHECKEMAIL');
@@ -21,7 +22,7 @@ define(function(require) {
         email: $("[name='email']"), //邮箱地址  
         password: $("[name='password']"), //密码
         password2: $("[name='password2']"), //确认密码
-        imagecode: $('#loan-testing') //验证码
+        imagecode: $('#loan-imagecode') //验证码
     };
 
     //是否验证
@@ -60,6 +61,11 @@ define(function(require) {
     var testRealname = /^[\u4e00-\u9fa5]{2,4}$/;
 
     var formParams;
+
+    var imgUrl = $('#login-img-url');
+    var IMGURL = config.URL.IMG_GET;
+    var imgcodeType = 'regist';
+
 
     function init(rate1, rate2) {
         formParams = applyCommon.init(rate1, rate2);
@@ -161,6 +167,12 @@ define(function(require) {
             }
         });
 
+        //图片验证码 
+        imgUrl.click(function(e) {
+            e.preventDefault();
+            $(this).attr('src', IMGURL  + imgcodeType + '&r=' + new Date().getTime());
+        });
+
         //快速验证 
         $('.loan .loan-submit').click(util.debounce(function(e) {
             e.preventDefault();
@@ -169,14 +181,14 @@ define(function(require) {
                 statusArray.password = 0;
                 statusArray.password2 = 0;
                 statusArray.imagecode = 0;
-            } 
+            }
             for (var item in inputArray) {
-                if (!inputArray[item].val()&&statusArray[item]) {
+                if (!inputArray[item].val() && statusArray[item]) {
                     iconArray[item + "Icon"].addClass('error');
                     errorArray[item + "Error"].html(inputArray[item].attr('data-text') + '不能为空');
                     return;
                 }
-            } 
+            }
 
             verifySubmit.remote({
                 amount: formParams.amount,
@@ -188,8 +200,8 @@ define(function(require) {
                 realname: inputArray.realname.val(),
                 email: inputArray.email.val(),
 
-                password: statusArray.password?inputArray.password.val():'',
-                imagecode:statusArray.imagecode?inputArray.imagecode.val():''
+                password: statusArray.password ? inputArray.password.val() : '',
+                imagecode: statusArray.imagecode ? inputArray.imagecode.val() : ''
 
             });
 
@@ -214,7 +226,10 @@ define(function(require) {
         });
         //提交后
         verifySubmit.on('success', function(data) {
-            if (data && data.bizError) {
+            if (data.imgCode) {
+                errorArray.imgcode.html(data.statusInfo);
+                imgUrl.attr('src', data.data.url  + imgcodeType + '&r=' + new Date().getTime());
+            } else if (data && data.bizError) {
                 errorArray.errorbox.html(data.statusInfo);
             } else {
 
