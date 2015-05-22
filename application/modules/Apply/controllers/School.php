@@ -1,7 +1,7 @@
 <?php
 class SchoolController extends Base_Controller_Page{
 
-    protected $needLogin = false;
+    protected $needLogin = true;
 	/**
      * 需要验证的参数值
      * @var array
@@ -16,8 +16,7 @@ class SchoolController extends Base_Controller_Page{
     public function indexAction() {
         //如果用户点击了修改，我们需要在这里得到之前添加过的cookie
         $cookies = Apply_Cookie::parseCookie('school');
-        $cookies += Apply_Cookie::parseCookie('stock');
-        // print_r($cookies);die();
+        $cookies['stock'] = Apply_Cookie::parseCookie('stock');
         $data = array(
 			'guarantee'		=> Apply_Type_Guarantee::getGuarantes(),
 			'branch_school'	=> Apply_Type_BranchSchool::$names,
@@ -33,11 +32,15 @@ class SchoolController extends Base_Controller_Page{
     public function submitAction() {
     	//检查值是否合法，合法后记录到cookie，并且跳转到下一步
 		if (!empty($_POST) && $this->checkParam($this->param, $_POST)) {
-            $_POST['stock'] = json_encode($stock);
+            $_POST['stock'] = json_encode($_POST['stock']);
 
 			//记录cookie
 	    	$logic = new Apply_Logic_School();
 	    	$logic->saveCookie($_POST);
+
+            $stockLogic = new Apply_Logic_Stock();
+            $stockLogic->saveCookie($_POST);
+
             $this->ajax(array('url' => '/apply/person'), '', Apply_RetCode::NEED_REDIRECT);
 		}
 

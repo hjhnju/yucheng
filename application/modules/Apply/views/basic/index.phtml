@@ -40,7 +40,7 @@
                         <select class="select_hide" id="select-province"  data-text="省份">
                           <option value="">选择省份</option>
                           {%foreach $data.province as $key=>$item%}
-                          <option value="{%$key%}">{%$item%}</option>
+                          <option value="{%$key%}" {%if $key == $data.edit.province%}selected{%/if%}>{%$item%}</option>
                           {%/foreach%} 
                         </select> 
                   </div>
@@ -49,7 +49,7 @@
                           <option value="">选择城市</option>
                             {%foreach $data.city as $key=>$item%} 
                               {%foreach $item as $k=>$v%}
-                               <option value="{%$v['id']%}" pid="{%$key%}" disabled="">{%$v['name']%}</option> 
+                               <option value="{%$v['id']%}" {%if $v['id'] == $data.edit.city%}selected{%/if%} pid="{%$key%}" disabled="">{%$v['name']%}</option> 
                               {%/foreach%} 
                             {%/foreach%} 
                         </select>  
@@ -63,7 +63,7 @@
                         <select class="select_hide" id="select-type" data-text="学校类型">
                           <option value="" >选择一项</option> 
                           {%foreach $data.school_type as $key=>$item%}
-                          <option value="{%$key%}" data-money="{%$item['money']%}">{%$item['label']%}</option>
+                          <option value="{%$key%}" {%if $key == $data.edit.type%}selected{%/if%} data-money="{%$item['money']%}">{%$item['label']%}</option>
                           {%/foreach%}
                         </select> 
                   </div>
@@ -76,7 +76,7 @@
                         <select class="select_hide" id="select-year"  data-text="建校时间">
                               <option value="">选择一项</option>
                               {%foreach $data.year as $key=>$item%}
-                              <option value="{%$item%}">{%$item%}</option>
+                              <option value="{%$item%}" {%if $item == $data.edit.year%}selected{%/if%}>{%$item%}</option>
                               {%/foreach%}
                         </select>
                    </div>
@@ -89,11 +89,11 @@
                       </div> 
                      <div class="loan-radio fl">
                            <div class="radiobox">
-                                <input type="radio" id="is_annual_income-1" name="is_annual_income" value="1" checked=""/>
+                                <input type="radio" {%if 1 == $data.edit.is_annual_income%}checked{%/if%} id="is_annual_income-1" name="is_annual_income" value="1" checked=""/>
                                  <label for="is_annual_income-1">是</label>
                             </div>
                             <div class="radiobox">
-                                <input type="radio" id="is_annual_income-2" name="is_annual_income" value="0" />
+                                <input type="radio" {%if 0 == $data.edit.is_annual_income%}checked{%/if%} id="is_annual_income-2" name="is_annual_income" value="0" />
                                  <label for="is_annual_income-2">否</label>
                              </div> 
                       </div>
@@ -106,11 +106,11 @@
                       </div> 
                      <div class="loan-radio fl">
                             <div class="radiobox">
-                                <input type="radio" id="is_profit-1" name="is_profit" value="1" checked=""/>
+                                <input type="radio" {%if 1 == $data.edit.is_profit%}checked{%/if%} id="is_profit-1" name="is_profit" value="1" checked=""/>
                                  <label for="is_profit-1">是</label>
                             </div>
                             <div class="radiobox">
-                                 <input type="radio" id="is_profit-2" name="is_profit" value="0" />
+                                 <input type="radio" {%if 0 == $data.edit.is_profit%}checked{%/if%} id="is_profit-2" name="is_profit" value="0" />
                                  <label for="is_profit-2">否</label>
                              </div> 
                       </div>
@@ -123,11 +123,11 @@
                       </div> 
                      <div class="loan-radio fl">
                             <div class="radiobox">
-                                <input type="radio" id="is_other_business-1" name="is_other_business" value="1" checked=""/>
+                                <input type="radio" {%if 1 == $data.edit.is_other_business%}checked{%/if%} id="is_other_business-1" name="is_other_business" value="1" checked=""/>
                                  <label for="is_other_business-1">是</label>
                             </div>
                             <div class="radiobox">
-                                <input type="radio" id="is_other_business-2" name="is_other_business" value="0" />
+                                <input type="radio" {%if 0 == $data.edit.is_other_business%}checked{%/if%} id="is_other_business-2" name="is_other_business" value="0" />
                                  <label for="is_other_business-2">否</label>
                              </div> 
                       </div>
@@ -142,7 +142,7 @@
                          <select class="select_hide" id="select-nature" data-text="学校主体性质">
                               <option value="">选择一项</option>
                               {%foreach $data.nature as $key=>$item%}
-                              <option value="{%$key%}">{%$item%}</option>
+                              <option value="{%$key%}" {%if $key == $data.edit.nature%}selected{%/if%}>{%$item%}</option>
                               {%/foreach%}
                          </select>
                       </div>
@@ -158,7 +158,7 @@
                          <select class="select_hide" id="select-school_source" data-text="了解渠道">
                               <option value="">选择一项</option>
                               {%foreach $data.school_source as $key=>$item%}
-                              <option value="{%$key%}">{%$item%}</option>
+                              <option value="{%$key%}" {%if $key == $data.edit.school_source%}selected{%/if%}>{%$item%}</option>
                               {%/foreach%}
                          </select>
                       </div>

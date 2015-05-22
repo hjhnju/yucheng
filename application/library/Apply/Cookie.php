@@ -52,9 +52,20 @@ class Apply_Cookie {
 		    default:
 		    	$obj = new Apply_Object_Apply();
 		}
-		$properties = $obj->properties;
-		$cookies = self::read($properties);
-
+		if($type == 'stock') {
+			$cookie = new Base_Cookie();
+			$data = $cookie->read('stock');
+			$data = $data? json_decode($data) : '';
+			if(is_array($data)) {
+				foreach($data as $item){
+					$cookies[] = (array)$item;
+				}	
+			}
+		} else {
+			$properties = $obj->properties;
+			$cookies = self::read($properties);
+		}
+		
 		return $cookies;   
 	}
 
@@ -121,7 +132,7 @@ class Apply_Cookie {
         $personal['is_criminal']		= $yesno[$personal['is_criminal']];
         $personal['is_lawsuit']			= $yesno[$personal['is_lawsuit']];
 
-        $stock 							= Apply_Cookie::parseCookie(array('stock'=>'stock'));
+        $stock 							= Apply_Cookie::parseCookie('stock');
 
         $data = array(
         	'apply'     => $apply,

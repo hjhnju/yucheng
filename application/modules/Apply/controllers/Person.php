@@ -1,7 +1,7 @@
 <?php
 class PersonController extends Base_Controller_Page{
 
-    protected $needLogin = false;
+    protected $needLogin = true;
 	/**
      * 需要验证的参数值
      * @var array

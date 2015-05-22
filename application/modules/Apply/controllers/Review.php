@@ -47,7 +47,7 @@ class ReviewController extends Base_Controller_Page{
             }
              $db->commit();
             //保存后将所有cookie删除，避免二次插入
-            // Apply_Cookie::erasureCookie();
+            Apply_Cookie::erasureCookie();
             $this->ajax(array('url' => '/apply/finish'), '', Apply_RetCode::NEED_REDIRECT);
         }
 

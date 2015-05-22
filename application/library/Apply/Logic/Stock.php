@@ -10,8 +10,7 @@ class Apply_Logic_Stock extends Apply_Logic_Base{
 	
 	public function saveStock($apply_id) {
 		//得到所有的cookie
-		$cookies = Apply_Cookie::read(array('stock'=>'stock'));
-        $cookies = json_decode($cookies['stock']);
+		$cookies = Apply_Cookie::parseCookie('stock');
 		//如果没有通过验证
 		if(!$this->checkParams($cookies)) {
 			return $this->errorFormat();
@@ -38,7 +37,7 @@ class Apply_Logic_Stock extends Apply_Logic_Base{
 			return false;
 		}
 		$fields = $this->getProperties();
-		Apply_Cookie::save($param, $fields);	
+		Apply_Cookie::save($param, array('stock'=>'stock'));
 
 		return true;
 	}

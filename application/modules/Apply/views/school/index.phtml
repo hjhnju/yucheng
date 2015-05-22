@@ -95,7 +95,7 @@
                 </div> 
                 <table cellspacing="0" cellpadding="0"  class="apply-stock fl">
                     <tbody class="stock-list"> 
-                      {%foreach $data.stock as $key=>$item%}
+                      {%foreach $data.edit.stock as $key=>$item%}
                           <tr weight="{%$item.weight%}">
                             <td>{%$item.name%}</td><td class="tr">{%$item.weight%}%</td>
                             <td class="tc"><i class="iconfont icon-delete del-stock"></i></td>

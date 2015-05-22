@@ -19,6 +19,8 @@ class VerifyController extends Base_Controller_Page{
      * @return 加载申请第一步页面信息
      */
     public function indexAction() {
+        $cookies = Apply_Cookie::parseCookie('school');
+        $cookies += Apply_Cookie::parseCookie('personal');
         //获取当前用户身份
         $objUser = User_Api::checkLogin();
         $usertype = 0;
@@ -30,6 +32,7 @@ class VerifyController extends Base_Controller_Page{
             'usertype' => $usertype,
             'duration' => Apply_Type_Duration::$names,
             'minmax'   => Apply_Type_MinMax::$values,
+            'edit'          => $cookies,
         );
         
         $this->getView()->assign('data', $data);

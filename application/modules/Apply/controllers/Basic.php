@@ -15,12 +15,14 @@ class BasicController extends Base_Controller_Page{
         'school_source'	=> '从哪里了解到我们不能为空!',
     );
     public function indexAction() {
+        $cookies = Apply_Cookie::parseCookie('school');
 		$data = array(
 			'province'	  => Apply_Type_Province::$names,
 			'city'     	  => Apply_Type_Province::getAllCity(),
 			'school_type' => Apply_Type_SchoolType::$items,
 			'year'     	  => Apply_Type_Year::getYears(),
 			'yesno'	   	  => Apply_Type_YesNo::$names,
+            'edit'        => $cookies,
 			'nature'   	  => Apply_Type_Nature::$names,
 			'school_source'  => Apply_Type_Source::$names,
             'duration' => Apply_Type_Duration::$names,
