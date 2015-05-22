@@ -96,8 +96,9 @@
                 <table cellspacing="0" cellpadding="0"  class="apply-stock fl">
                     <tbody class="stock-list"> 
                       {%foreach $data.edit.stock as $key=>$item%}
+                      {%assign var="total" value=$item.weight+$total%}
                           <tr weight="{%$item.weight%}">
-                            <td>{%$item.name%}</td><td class="tr">{%$item.weight%}%</td>
+                            <td>{%$item.name%}</td><td class="tr"><span class="weight">{%$item.weight%}</span>%</td>
                             <td class="tc"><i class="iconfont icon-delete del-stock"></i></td>
                           </tr>
                        {%/foreach%}  
@@ -113,7 +114,7 @@
                          <span class="dis-block fr">%</span>
                      </div> 
                       <a class="loan-btn add-stock fl">再添加一位股东</a>
-                      <span class="stock-total">共0%</span>  
+                      <span class="lh40">共<span class="stock-total">{%$total%}</span>%</span>  
                 </div>
                 <div class="form-default_element">
                    <div class="loan-label fl" style="width: 30px;"> </div>

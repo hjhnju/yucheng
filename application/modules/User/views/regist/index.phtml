@@ -36,8 +36,61 @@
              </div>
        </div> 
         <div  class="regist-box fr"> 
-            <div class="regist-box-title">注册兴教贷</div>
-            <div class="regist-box-content">
+            <div class="regist-box-title  fl">注册兴教贷</div>
+            <div class="regist-radio fl">
+                <div class="radiobox">
+                    <input type="radio" id="usertype-3" name="usertype" value="3" checked="" />
+                     <label for="house_type-3">我要贷款</label>
+                </div>
+                <div class="radiobox">
+                    <input type="radio" id="usertype-2" name="usertype" value="1" />
+                     <label for="house_type-2">我要投资</label>
+                 </div>  
+            </div>
+            <div class="regist-box-content  fl" data-tab="3" >
+                 <div class="login-username">
+                    <label class="login-username-label">*邮箱</label> 
+                    <input autocomplete="off" class="login-input" id="regist-email" type="text" data-text="用户名" />
+                    <label class="user-lable" for="regist-email">输入邮箱</label>
+                    <div class="username-error" id="regist-email-error"></div>
+                    <div id="regist-email-point"></div>
+                    <div class="username-point" style="line-height: 18px;">请选择您的常用邮箱</div>
+                </div>
+                <div class="login-username">
+                    <label class="login-username-label">*密码</label> 
+                    <input autocomplete="off" class="login-input" id="regist-pwd" type="password" data-text="密码" />
+                    <label class="user-lable" for="regist-pwd">输入密码</label>
+                    <div class="username-error" id="regist-pwd-error"></div>
+                    <div id="regist-pwd-point"></div>
+                    <div class="username-point" >密码由6～32位字母、数字及常用符号组成</div>
+                </div>
+                <div class="login-username">
+                    <label class="login-username-label">*确认密码</label> 
+                    <input autocomplete="off" class="login-input" id="regist-pwd2" type="password" data-text="确认密码" />
+                    <label class="user-lable" for="regist-pwd2">再次输入密码</label>
+                    <div class="username-error" id="regist-pwd2-error"></div>
+                    <div id="regist-pwd2-point"></div>
+                    <div class="username-point">确保两次输入的密码一致</div>
+                </div>
+                <div class="login-username">
+                    <label class="login-username-label">*验证码</label> 
+                    <input autocomplete="off" class="login-input testing imgcode" id="regist-imgcode" type="text" data-text="验证码"/> <i></i>
+                    <a href="###" class="regist-username-imgcode">
+                        <img id="login-img-url" src="{%$url%}" width="162" height="42" />
+                    </a> 
+                    <div class="username-error" id="regist-imgcode-error"></div>
+                </div>
+                <a href="###" class="login-fastlogin">快速注册</a>
+                <div class="login-tiaoyue">
+                    <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />
+                    <label class="tiaoyue-lable" for="tiaoyue-itp">同意兴教贷<a href="/agreements">用户协议</a></label>
+               
+                </div>
+                <div class="login-thirdlogin">
+                <span class="login-tiaoyue-have">已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/user/login">登录</a>&nbsp;&nbsp;</span> 
+                </div>
+            </div>
+            <div class="regist-box-content  fl" data-tab="1" style="display:none;">
                 <div class="login-username">
                     <label class="login-username-label">*用户名</label> 
                     <input autocomplete="off" class="login-input" id="regist-user" type="text" data-text="用户名" />
@@ -87,7 +140,7 @@
                     <div class="username-error" id="regist-tuijian-error"></div>
                     <div id="regist-tuijian-point"></div>
                     <div class="username-point">请输入推荐人的11位手机号</div>
-                </div>
+                </div> 
                 <a href="###" class="login-fastlogin">快速注册</a>
                 <div class="login-tiaoyue">
                     <input autocomplete="off" type="checkbox" checked id="tiaoyue-itp" />
@@ -98,9 +151,9 @@
                 <span class="login-tiaoyue-have">已有账户？&nbsp;&nbsp;<a href="{%$webroot%}/user/login">登录</a>&nbsp;&nbsp;</span>
                     <span class="login-third-tx">您也可以使用第三方账号登录</span>
                     <a href="{%$webroot%}/user/login/auth?type=qq" class="login-third-qq qq"></a>
-                   <!--  <a href="{%$webroot%}/user/login/auth?type=weixin" class="login-third-weixin weixin"></a> -->
+                    <!-- <a href="{%$webroot%}/user/login/auth?type=weixin" class="login-third-weixin weixin"></a>   -->
                 </div>
-            </div>
+            </div> 
         </div>
      </div>
 </div>   

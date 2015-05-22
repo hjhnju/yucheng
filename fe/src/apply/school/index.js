@@ -182,6 +182,7 @@ define(function(require) {
         //美化下拉框
         $(".loan .form-inpt select").selectBox(settings);
 
+
         // 添加股东
         $('.loan .add-stock').click(util.debounce(function(e) {
             e.preventDefault();
@@ -193,6 +194,10 @@ define(function(require) {
                     return;
                 }
             }
+            //先计算原有的股东数据
+            stockArray = calStock();
+
+            //新添加的股东数据
             var tempStock = {
                 name: stockInputArray.name.val(),
                 weight: stockInputArray.weight.val()
@@ -211,9 +216,9 @@ define(function(require) {
             stockArray.total = total;
 
             //显示在列表里面
-            var tr = '<tr weight=' + tempStock.weight + '><td>' + tempStock.name + '</td><td class="tr">' + tempStock.weight + '%</td><td class="tc"><i class="iconfont icon-delete del-stock"></i></td></tr>';
+            var tr = '<tr weight=' + tempStock.weight + '><td>' + tempStock.name + '</td><td class="tr"><span class="weight">' + tempStock.weight + '</span> %</td><td class="tc"><i class="iconfont icon-delete del-stock"></i></td></tr>';
             $(tr).appendTo('.stock-list');
-            $('.stock-total').html(stockArray.total + '%');
+            $('.stock-total').html(stockArray.total);
 
 
             //删除股东
@@ -231,7 +236,7 @@ define(function(require) {
         }, 1000));
 
         //删除股东
-        $('.loan .del-stock').unbind('click').click(function(e) { 
+        $('.loan .del-stock').unbind('click').click(function(e) {
             delStock($(this));
         });
 
@@ -242,7 +247,7 @@ define(function(require) {
             var weight = tr.attr('weight');
             tr.remove();
             stockArray.total = stockArray.total - Number(weight);
-            $('.stock-total').html(stockArray.total + '%');
+            $('.stock-total').html(stockArray.total);
             errorArray.errorbox.html('');
         };
 
@@ -268,13 +273,15 @@ define(function(require) {
             }
 
             //计算股东数据
-            $('.stock-list tr').each(function() {
-                var tempStock = {
-                    name: $(this).find("td:eq(0)").text(),
-                    weight: $(this).find("td:eq(1)").text()
-                };
-                stockArray.stock.push(tempStock);
-            });
+            /*   $('.stock-list tr').each(function() {
+                   var tempStock = {
+                       name: $(this).find("td:eq(0)").text(),
+                       weight: $(this).find("td:eq(1)").find('.weight').text()
+                   };
+                   stockArray.stock.push(tempStock);
+               });*/
+
+            stockArray = calStock();
 
             schoolSubmit.remote({
                 address: inputArray.address.val(),
@@ -306,6 +313,23 @@ define(function(require) {
                 }
             }
         });
+    }
+
+    //计算股东数据 
+    function calStock() {
+        var stockArrayTemp = {
+            stock: [],
+            total: 0
+        };
+        $('.stock-list tr').each(function() {
+            var tempStock = {
+                name: $(this).find("td:eq(0)").text(),
+                weight: $(this).find("td:eq(1)").find('.weight').text()
+            };
+            stockArrayTemp.stock.push(tempStock);
+            stockArrayTemp.total = stockArrayTemp.total + Number(tempStock.weight);
+        });
+        return stockArrayTemp;
     }
     return {
         init: init

@@ -17,6 +17,7 @@ define(function(require) {
     var login = require('setting/login/index');
     var etpl = require('etpl');
     var tpl = require('./regist.tpl');
+    var config = require('common/config');
 
     var Remoter = require('common/Remoter');
     var checkName = new Remoter('REGIST_CHECKNAME_CHECK');
@@ -25,9 +26,13 @@ define(function(require) {
     var checkInviter = new Remoter('REGIST_CHECKINVITER_CHECK');
     var checksmscode = new Remoter('REGIST_CHECKSMSCODE_CHECK');
     var registSubmit = new Remoter('REGIST_INDEX_CHECK');
+    var checkEmail = new Remoter('APPLY_VERIFY_CHECKEMAIL');
 
     var testPwd = /^[a-zA-Z0-9!@#$%^&'\(\({}=+\-]{6,20}$/;
     var CORRECT = '<span class="username-error-span"></span>';
+
+    var imgUrl = $('#login-img-url');
+    var IMGURL = config.URL.IMG_GET;
 
     /**
      * input集合
@@ -41,8 +46,9 @@ define(function(require) {
         loginTest: $('#regist-testing'),
         loginTuiJian: $('#regist-tuijian'),
 
-        loginEmail: $('#regist-email'),
-        loginImgcode: $('#regist-email')
+        usertype: $('input:radio[name="usertype"]:checked'),
+        email: $('#regist-email'),
+        imgcode: $('#regist-imgcode')
     };
 
     /**
@@ -55,7 +61,10 @@ define(function(require) {
         pwd2Error: $('#regist-pwd2-error'),
         pwdError: $('#regist-pwd-error'),
         testError: $('#regist-testing-error'),
-        tuiJianError: $('#regist-tuijian-error')
+        tuiJianError: $('#regist-tuijian-error'),
+
+        email: $('#regist-email-error'),
+        imgcode: $('#regist-imgcode-error')
     };
     /**
      * 提示集合
@@ -74,7 +83,10 @@ define(function(require) {
         pwdPointTip: $('#regist-pwd-point').next(),
         pwd2PointTip: $('#regist-pwd2-point').next(),
         testPointTip: $('#regist-testing-point').next(),
-        tuiJianPointTip: $('#regist-tuijian-point').next()
+        tuiJianPointTip: $('#regist-tuijian-point').next(),
+
+        email: $('#regist-email-point'),
+        imgcode: $('#regist-imgcode-point')
     };
     var allStatus = {
         user: 0,
@@ -83,13 +95,20 @@ define(function(require) {
         vericode: 0,
         tui: 1
     };
-
+    var allStatus3 = {
+        pwd: 0,
+        email: 0,
+        imgcode: 1
+    };
     var mapInput = {
         user: 'loginUser',
         phone: 'loginPhone',
         pwd: 'loginPwd',
         vericode: 'loginTest',
-        tui: 'loginTuiJian'
+        tui: 'loginTuiJian',
+
+        email: 'email',
+        imgcode: 'imgcode'
     };
 
     var isthird;
@@ -108,6 +127,7 @@ define(function(require) {
     }
 
     function bindEvents() {
+
         //选择注册类型//美化radio 
         $('.regist-radio input').on('ifChecked', function() {
             usertype = $('input:radio[name="usertype"]:checked').val();
@@ -154,6 +174,8 @@ define(function(require) {
 
 
         if (usertype == 1) { //投资账户 
+
+
             // 检查用户名
             loginInput.loginUser.blur(function() {
                 var value = $.trim($(this).val());
@@ -229,15 +251,23 @@ define(function(require) {
             });
         } else if (usertype == 3) { //贷款账户
             //邮箱验证格式
-            loginInput.loginEmail.blur(function() {
+            loginInput.email.blur(function() {
                 var value = $.trim($(this).val());
                 if (value) {
-                    checkName.remote({
-                        name: value
+                    checkEmail.remote({
+                        email: value
                     });
                 } else {
-                    allStatus.user = 0;
+                    allStatus3.user = 0;
                 }
+            });
+
+           //生成图片验证码
+            imgUrl.attr('src', IMGURL + '?r=' + new Date().getTime());
+            // 获取图片验证码
+            imgUrl.click(function(e) {
+                e.preventDefault();
+                $(this).attr('src', IMGURL + '?r=' + new Date().getTime());
             });
         }
 
@@ -249,17 +279,20 @@ define(function(require) {
 
             if (!value) {
                 allStatus.pwd = 0;
+            allStatus3.pwd = 0;
                 return;
             }
 
             if (!testPwd.test(value)) {
                 allStatus.pwd = 0;
+                allStatus3.pwd = 0;
                 $(this).parent().addClass('current');
                 error.pwd2Error.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
                 return;
             }
 
             allStatus.pwd = 1;
+            allStatus3.pwd = 1;
             // error.pwdError.html(CORRECT);
             point.pwdPointTip.hide();
             point.pwdPointIcon.html(CORRECT);
@@ -272,18 +305,21 @@ define(function(require) {
 
             if (!value) {
                 allStatus.pwd = 0;
+            allStatus3.pwd = 0;
                 return;
             }
 
             //检测两次密码是否一致
             if (value != pwd) {
                 allStatus.pwd = 0;
+                allStatus3.pwd = 0;
                 $(this).parent().addClass('current');
                 error.pwd2Error.html('两次输入的密码不一致 ');
                 return;
             }
 
             allStatus.pwd = 1;
+            allStatus3.pwd = 1;
             // error.pwdError.html(CORRECT);
             point.pwd2PointTip.hide();
             point.pwd2PointIcon.html(CORRECT);
@@ -304,26 +340,46 @@ define(function(require) {
                 return;
             }
 
-            for (var name in allStatus) {
-                if (allStatus.hasOwnProperty(name)) {
-                    if (!allStatus[name]) {
-                        loginInput[mapInput[name]].trigger('blur');
-                        status = 0;
+            if (usertype == 1) {
+                for (var name in allStatus) {
+                    if (allStatus.hasOwnProperty(name)) {
+                        if (!allStatus[name]) {
+                            loginInput[mapInput[name]].trigger('blur');
+                            status = 0;
+                        }
                     }
                 }
+
+                status && registSubmit.remote({
+                    usertype: loginInput.usertype.val(),
+                    name: loginInput.loginUser.val(),
+                    passwd: loginInput.loginPwd.val(),
+                    phone: loginInput.loginPhone.val(),
+                    inviter: loginInput.loginTuiJian.val(),
+                    vericode: loginInput.loginTest.val(),
+                    isthird: isthird
+                });
+            } else if (usertype == 3) {
+                for (var name in allStatus3) {
+                    if (allStatus3.hasOwnProperty(name)) {
+                        if (!allStatus3[name]) {
+                            loginInput[mapInput[name]].trigger('blur');
+                            status = 0;
+                        }
+                    }
+                }
+
+                status && registSubmit.remote({
+                    usertype: usertype,
+                    emain: loginInput.email.val(),
+                    passwd: loginInput.loginPwd.val(),
+                    imgcode: loginInput.imgcode.val(),
+                    isthird: isthird
+                });
             }
 
-            status && registSubmit.remote({
-                name: loginInput.loginUser.val(),
-                passwd: loginInput.loginPwd.val(),
-                phone: loginInput.loginPhone.val(),
-                inviter: loginInput.loginTuiJian.val(),
-                vericode: loginInput.loginTest.val(),
-                isthird: isthird
-            });
 
         }, 1000));
-
     }
 
     function callBack() {
@@ -419,8 +475,24 @@ define(function(require) {
             }
         });
 
-        registSubmit.on('success', function(data) {
+        // checkEmail  
+        checkEmail.on('success', function(data) {
             if (data && data.bizError) {
+                loginInput.email.parent().addClass('current');
+                error.email.html(data.statusInfo);
+                allStatus3.email = 0;
+            } else {
+                point.email.hide();
+                point.email.html(CORRECT);
+                allStatus3.email = 1;
+            }
+        });
+
+        registSubmit.on('success', function(data) {
+            if (data.imgCode) {
+                error.imgcode.html(data.statusInfo);
+                imgUrl.attr('src', data.data.url + '?r=' + new Date().getTime());
+            } else if (data && data.bizError) {
                 alert(data.statusInfo);
             } else {
                 window.location.href = '/user/open/index';

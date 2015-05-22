@@ -7,7 +7,7 @@
 
 {%block name="script"%}
 <script>
-    require(['front/index'], rounction (main) {
+    require(['front/index'], function (main) {
         main.init();
     });
     require(['jquery','common/extra/FlexSlider/jquery.flexslider'], function (main) {
@@ -30,8 +30,8 @@
 {%/block%}
 
 {%block name="content"%}
-{%assign var="bannerList" value=[5 => "banner-six", 0 => "banner-one", 1 => "banner-two", 2 => "banner-three",4 => "banner-five"]%}
-{%assign var="bannerHref" value=[5 => "/activity/spring",0 => "/security", 1 => "/security", 2 => "/infos/post/detail?id=31",  4 => "/"]%}
+{%assign var="bannerList" value=[ 0 => "banner-one", 1 => "banner-two", 2 => "banner-three",4 => "banner-five"]%}
+{%assign var="bannerHref" value=[0 => "/security", 1 => "/security", 2 => "/infos/post/detail?id=31",  4 => "/"]%}
 
 <div class="banner-floation flexslider">
 
@@ -201,10 +201,11 @@
 <div class="media">
     <div class="container">  
         <div class="media-title">
-                                     媒体报道 
+               媒体报道 
+               <a href="#" class="more fr none" target="_blank" >查看全部报道&gt;</a> 
         </div>
         <div class="media-box fl">  
-           <ul class="media-box1 fl">
+           <ul class="media-box1 fl none">
                <li>
                    <a  href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-img-link" target="_blank" >
                       <span class="media-box-img zhongjingwang"></span>
@@ -233,21 +234,21 @@
                
                </li>
            </ul>
-           <a class="more fr" href="#">更多报道</a>       
+           <a class="more fr none" href="#">更多报道</a>       
            <ul class="media-box2 fl">
                <li>
-                   <a  href="http://www.zhejrx.com/html/2015/02/10/9013.html" class="media-box-img-link" target="_blank" >
-                      <span class="media-box-img zjrx"></span>
+                   <a  href="http://luxury.ce.cn/sd/sdzh/201502/11/t20150211_2325983.shtml" class="media-box-img-link" target="_blank" >
+                      <span class="media-box-img zhongjingwang"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="http://finance.china.com/fin/qy/201502/09/0634419.html" class="media-box-img-link" target="_blank" >
-                      <span class="media-box-img zhonghua"></span>
+                   <a  href="http://tech.hexun.com/2015-02-09/173203577.html" class="media-box-img-link" target="_blank" >
+                      <span class="media-box-img hexun"></span>
                    </a>
                </li>
                 <li>
-                   <a  href="http://life.21cn.com/zaojiao/xiaofei/a/2015/0211/10/29045589.shtml" class="media-box-img-link" target="_blank" >
-                      <span class="media-box-img cn21"></span>
+                   <a  href="http://www.sootoo.com/content/550811.shtml" class="media-box-img-link" target="_blank" >
+                      <span class="media-box-img sutu"></span>
                    </a>
                </li>
                 <li>
@@ -290,8 +291,8 @@
         <div class="phone-box fr" style="margin-left:0px;">
                <span class="phone" >400-016-2526</span>
                <span class="worktime" >周一至周五9:00-18:00</span> 
-               <span class="attention-box">
-                                                                     关注我们&nbsp;:
+               <span class="attention-box" style="display:none">
+                         关注我们&nbsp;:
                         <a class="attention-me weixin">
                             <div class="xinlang-erweima footer-erweima">
                                 <div class="triangle-top footer-erweima-top"></div>
@@ -302,7 +303,7 @@
                             <div class="xinlang-erweima footer-erweima footer-tip">
                                 <div class="triangle-top footer-erweima-top"></div>
                                 <div class="triangle-bottom footer-erweima-bottom"></div>
-                                                                                                点击关注兴教贷微博<br>
+                                    点击关注兴教贷微博<br>
                                 <span class="weibo-tip-span">@xingjiaodai</span>
                             </div>
                         </a>
