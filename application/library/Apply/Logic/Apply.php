@@ -58,4 +58,47 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 
 		return $fields;
 	}
+
+    /**
+     * 格式化信息
+     * @param  [type] $data [数据]
+     * @return [type] array [数据]
+     */
+    public function formatApply($data) {
+    	$data['amount'] 	 = number_format($data['amount'], 2);
+    	$data['create_time'] = date('Y-m-d', $data['create_time']);
+    	$type                = $data['duration_type'] == 2 ? '个月' : '天';
+        $data['duration'] 	 = $data['duration'].' '.$type;
+
+        return $data;
+    }
+
+    /**
+     * 获得申请列表
+     * @return [type] [description]
+     */
+    public function getApplyList(){
+    	$objUser = User_Api::checkLogin();
+    	$objApply = new Apply_List_Apply();
+    	$objApply->setFilter(array('userid' => 111161));
+    	$data = $objApply->toArray();
+    	foreach($data['list'] as $key=>$item) {
+    		$tmpData = array();
+    		$tmpData['apply'] = $this->formatApply($item);
+    		//得到学校信息
+    		$objSchool = new Apply_List_School();
+    		$objSchool->setFilter(array('apply_id' => $item['id']));
+    		$school = $objSchool->getData();
+    		$tmpData['school'] = $school[0];
+    		
+    		//得到个人信息
+    		$objPersonal = new Apply_List_Personal();
+    		$objPersonal->setFilter(array('apply_id' => $item['id']));
+    		$personal = $objPersonal->getData();
+    		$tmpData['personal'] = $personal[0];
+
+    		$data['list'][$key] = $tmpData;
+    	}
+    	return $data;
+    }
 }

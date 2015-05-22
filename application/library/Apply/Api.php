@@ -42,4 +42,14 @@ class Apply_Api {
         }
         return Apply_RetCode::ID_CARD_WRONG;;
     }
+
+    /**
+     * 加载一条apply的全部信息
+     * @param  [type] $apply_id [申请的id]
+     * @return [type] array     [返回一条apply信息的数组]
+     */
+    public static function loadApply(){
+        $obj  = new Apply_Logic_Apply();
+        return $obj->getApplyList();
+    }   
 }

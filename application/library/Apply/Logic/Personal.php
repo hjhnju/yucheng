@@ -55,4 +55,15 @@ class Apply_Logic_Personal extends Apply_Logic_Base {
 		
 		return $fields;
 	}
+
+	/**
+     * 格式化信息
+     * @param  [type] $data [数据]
+     * @return [type] array [数据]
+     */
+    public function formatApply($data) {
+    	$data['realname'] 	 = $data['realname'];
+
+        return $data;
+    }
 }

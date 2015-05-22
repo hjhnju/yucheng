@@ -70,4 +70,15 @@ class Apply_Logic_School extends Apply_Logic_Base{
         }
         return true;
     }
+
+    /**
+     * 格式化信息
+     * @param  [type] $data [数据]
+     * @return [type] array [数据]
+     */
+    public function formatApply($data) {
+    	$data['name'] 	 = $data['name'];
+
+        return $data;
+    }
 }
