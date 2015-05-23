@@ -1,0 +1,451 @@
+@import "../../../common/css/common";
+@import "../../../common/ui/RangeSlider/rangeSlider";
+/* 融资贷款 版本的样式开始 */
+
+body {
+    color: @color-font-black;
+}
+
+input,
+fieldset {
+    border: none;
+}
+
+.box1 {
+    background-color: #cff0a6;
+    &.step {
+        background: url(../img/index_bg3.png) center  center  no-repeat #cff0a6;
+        background-size: 1348px 266px
+    }
+    .container {
+        height: 266px;
+    }
+    .container2 {
+        height: 266px;
+        width: 1348px;
+        background: url(../img/index_bg1.png) 0px 0px no-repeat;
+        background-size: 100% 100%;
+        &.step {
+            background: url(../img/index_bg3.png) 0px 0px no-repeat;
+        }
+    }
+    .step-box {
+        float: left;
+        margin-top: 50px;
+        .btn {
+            width: 158px;
+            height: 30px;
+            float: left;
+            background-color: #e3e3e3;
+            line-height: 30px;
+            font-size: 15px;
+            overflow: hidden;
+            i {
+                display: block;
+                width: 60px;
+                float: left;
+                color: #fff;
+                font-size: 70px;
+                line-height: 50px;
+                margin-left: -5px;
+            }
+            span {
+                display: block;
+                width: 100px;
+                float: right;
+                color: #b8b8b8;
+                text-align: center;
+            }
+            &.current {
+                background-color: #4fc501;
+                i {
+                    color: #9afc59;
+                }
+                span {
+                    color: #fff;
+                }
+            }
+        }
+        .dire {
+            float: left;
+            width: 28px;
+            text-align: center;
+            font-size: 30px;
+            line-height: 30px;
+            color: #edf5f4;
+        }
+        .step-title {
+            line-height: 30px;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    }
+    .title {
+        width: 654px;
+        height: 80px;
+        padding-left: 60px;
+        line-height: 80px;
+        background-color: #f5ffee;
+        .border-top-left-radius(10px);
+        .border-top-right-radius(10px);
+        text-align: center;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        font-size: 24px;
+        i {
+            color: @color-font-green;
+            font-size: 60px;
+            position: absolute;
+            left: 220px;
+            top: 2px;
+        }
+    }
+}
+
+.loan {
+    .loan-input {
+        width: 236px;
+        height: 40px;
+        font-size: 14px;
+        border: 1px solid #cfcfcf;
+        .box-sizing(border-box);
+        position: relative;
+        .clearfix;
+        &.disabled {
+            background-color: #f8f8f8;
+            text-align: left;
+            line-height: 40px;
+            padding-left: 10px;
+        }
+        &.loan-input-w {
+            width: 320px;
+            height: 46px;
+            line-height: 46px;
+            font-size: 18px;
+            padding-left: 10px;
+            input {
+                font-size: 18px;
+                line-height: 28px;
+                height: 44px;
+                line-height: 48px;
+                padding: 0px;
+            }
+        }
+        input {
+            border: none;
+            width: 222px;
+            outline: none;
+            height: 36px;
+            float: left;
+            font-size: 14px;
+            padding-left: 10px;
+            line-height: 40px;
+        }
+        .icon {
+            width: 16px;
+            height: 10px;
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            &.up {
+                top: 8px;
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJBAMAAADJBLEBAAAALVBMVEUAAABPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQHm6nCbAAAADnRSTlMA8OPSvaSHcltCLRwPBlXiTh4AAAA+SURBVAjXYwAC9gIGCOh7AaE5372bAGYsfPdOCkRz671792gDkHH4HRDYMDDw+oEYTy4wsL4DgwCGPAjjGQCnXiHwNgMbgQAAAABJRU5ErkJggg==)
+            }
+            &.down {
+                bottom: 8px;
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKBAMAAABPkMOvAAAAMFBMVEUAAABPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQHbqyUVAAAAD3RSTlMA8OPSvaR4W0ItHA8Gj4vN3QpmAAAAQklEQVQI12N4/x8M/jKwQhgBDDz+IPrLAQaGzSCGNQMDA5f+//+fFjAAwcT//yUZQIDj//8GBjCo/84AAWwJDEgAANOqI/5wWCSOAAAAAElFTkSuQmCC);
+            }
+        }
+        .loan-num {
+            color: @color-font-green;
+        }
+    }
+    .loan-label {
+        font-size: 16px;
+        line-height: 40px;
+        padding-right: 10px;
+        text-align: right;
+        width: 96px;
+        height: 40px;
+        .clearfix;
+    }
+    .from-table {
+        text-align: center;
+        font-size: 14px;
+        line-height: 32px;
+        border: none;
+        .th-one {
+            background-color: #dfdfdf;
+            width: 172px;
+            border-right: 1px solid #fff;
+        }
+        .td-one {
+            background-color: #e9e9e9;
+            color: @color-font-green
+        }
+        .th-two {
+            background-color: #ebebeb;
+            width: 172px;
+            border-right: 1px solid #fff;
+        }
+        .td-two {
+            background-color: #f1f1f1;
+            color: @color-font-green
+        }
+    }
+    .testing {
+        display: block;
+        width: 128px;
+        height: 40px;
+        margin-right: 8px;
+        input {
+            width: 106px;
+        }
+    }
+    .input-error {
+        line-height: 40px;
+        color: @color-red;
+        padding-left: 5px;
+    }
+    .input-icon {
+        width: 16px;
+        height: 15px;
+        float: left;
+        margin-top: 13px;
+        margin-left: 10px;
+        display: none;
+        &.error {
+            display: block;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAJ1BMVEUAAADydGrydGrydGrydGrydGrydGrydGr+9PP0jYX////82tjzf3ZZEXVDAAAAB3RSTlMAktcrBr27QHkQJQAAAFhJREFUCNdjYGAwVC8SZgACx3IgEGFgYEkHMUodGBjLwUCAwbz89PTKPeXFDOLluzpnrC4vZFAvn7Giq7O8iKG8vLJrxfTycjgDLgVXDNcONxBuBdxSuDMADpQyEbIf7kMAAAAASUVORK5CYII=);
+        }
+        &.success {
+            display: block;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAQlBMVEV1z2R1z2R1z2R1z2R1z2R1z2R1z2R1z2R1z2T///7S78yj35fy+/Dt+evZ8tXH7MCq4qCa3I6M132H1Xiz5Kl90m2DGPBTAAAACHRSTlMBkvgs2LzVKva6AtUAAABuSURBVBjTZY9JFoQgDESBoP6gbTve/6oK5MmCWuVX6mVwWZOPIYx+ciaPyVce+DS0fsvIB8d6g7TAseiaIxGYgXNR3SG6AJcmzl9hQjb+qunlmWJEimPMWIcm1c322tpkjHSHdad3zxVJfV9y/QCG/QaN9rv9BAAAAABJRU5ErkJggg==);
+        }
+    }
+    .user-lable {
+        position: absolute;
+        left: 10px;
+        top: 11px;
+        font-size: 12px;
+        color: #8d8d8d;
+        color: #c4c4c4;
+        &.hidden {
+            display: none;
+        }
+    }
+    .loan-btn {
+        display: block;
+        width: 128px;
+        height: 40px;
+        line-height: 40px;
+        background-color: @color-font-green;
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;
+        &.disabled {
+            background-color: #d5d5d5;
+            color: #666;
+        }
+    }
+    .loan-submit {}
+    .loan-selsct {
+        width: 236px;
+        height: 40px;
+        font-size: 12px;
+        border: 1px solid #cfcfcf;
+        .box-sizing(border-box);
+        position: relative;
+        .clearfix;
+        overflow: hidden;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAKBAMAAABPkMOvAAAAMFBMVEUAAABPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQFPxQHbqyUVAAAAD3RSTlMA8OPSvaR4W0ItHA8Gj4vN3QpmAAAAQklEQVQI12N4/x8M/jKwQhgBDDz+IPrLAQaGzSCGNQMDA5f+//+fFjAAwcT//yUZQIDj//8GBjCo/84AAWwJDEgAANOqI/5wWCSOAAAAAElFTkSuQmCC);
+        background-repeat: no-repeat;
+        background-position: right center;
+        select {
+            border: none;
+            width: 110%;
+            cursor: pointer;
+            height: 38px;
+            color: #cecece;
+            outline: none;
+            background-color: transparent;
+            -webkit-appearance: none;
+        }
+    }
+    .loan-radio {
+        width: 100%;
+    }
+}
+
+.box2 {
+    background-color: #f8f8f8;
+    padding-bottom: 100px;
+    .left {
+        width: 664px;
+        float: left;
+        padding: 10px 25px 42px 25px;
+        background-color: #fff;
+        .clearfix;
+        .border-bottom-left-radius(10px);
+        .border-bottom-right-radius(10px);
+        .box-shadow(1px 2px 5px #cfcfcf);
+        .title {
+            font-size: 18px;
+            line-height: 60px;
+            height: 60px;
+            text-align: left;
+            width: 100%;
+        }
+    }
+    .right {
+        width: 245px;
+        padding-top: 10px;
+        padding-left: 35px;
+        float: right;
+        .clearfix;
+        .title {
+            margin-top: 30px;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: left;
+            color: @color-font-green;
+        }
+        .title2 {
+            line-height: 24px;
+            font-size: 14px;
+            color: #666;
+            text-align: left;
+            margin-top: 30px;
+        }
+        .content {
+            font-size: 12px;
+            line-height: 24px;
+            margin-top: 20px;
+            .list {
+                list-style: disc inside none;
+            }
+        }
+        .loan-input {
+            &.loan-input-w {
+                width: 100%;
+                height: 38px;
+                line-height: 38px;
+                background-color: #fff;
+                padding-left: 10px;
+                input {
+                    line-height: 38px;
+                    padding: 0px;
+                    height: 34px;
+                }
+            }
+            .icon {
+                &.down {
+                    bottom: 6px;
+                }
+                &.up {
+                    top: 6px;
+                }
+            }
+        }
+        .from-table {
+            font-size: 12px;
+            .th-one {
+                width: 82px;
+            }
+            .th-two {
+                width: 82px;
+            }
+        }
+        .color-6 {
+            color: #666;
+        }
+        .form-radio-group {
+            margin-top: 46px;
+        }
+        .form-checkbox,
+        .form-radio {
+            float: left;
+            margin-right: 20px;
+            margin-top: 20px;
+            width: 100px;
+        }
+        .irs {
+            height: 45px;
+            left: 0px;
+            width: 100%;
+            right: inherit;
+            top: 48px;
+            .irs {
+                top: 0;
+                right: 0;
+            }
+        }
+    }
+    .line {
+        height: 1px;
+        border-top: 1px dashed #c8c8c8;
+        margin: 40px 0px;
+        float: left;
+        width: 100%;
+    }
+    .alredy-apply {
+        width: 714px;
+        text-align: right;
+        line-height: 40px;
+        font-size: 14px;
+    }
+}
+/* 表单美化 */
+
+.form-default_element {
+    width: 100%;
+}
+
+.form-checkbox,
+.form-radio {
+    float: left;
+    margin-right: 30px;
+    width: 60px;
+    .clearfix;
+}
+
+.form-inpt {
+    float: left;
+    margin-bottom: 20px;
+    .clearfix;
+}
+
+.radiobox {
+    float: left;
+    margin: 0px 20px 0px 10px;
+    width: 60px;
+    text-align: center;
+}
+
+.radiobox label {
+    display: block;
+    text-align: center;
+}
+
+.iradio {
+    margin-bottom: 5px;
+}
+/* 表单美化 */
+/* 融资贷款 版本的样式结束 */
+
+//移动端兼容
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+    .container {
+        width: 1000px;
+    }
+    .box1 {
+        .container {
+            width: 1000px;
+        }
+    }
+}
+
+//移动端兼容

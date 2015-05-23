@@ -22,7 +22,7 @@
 
 {%/block%}
 
-{%block name="content"%}   
+{%block name="content"%}    
 <div class="invest bid">
    <div class="box-title">
    	  <div style="margin:0 auto;width:65%;min-width:236px;" class="flex-center">
@@ -51,16 +51,17 @@
 	    				</span>
 	    				 <span class="price-title" style="display: block;z-index: 100;position:relative;">
 	    					<span class="total">可用余额<label class="count color-red" >&nbsp;￥{%$userBalance.amount_text%}</label>
-                                <a class="common-a-btn recharge-btn" href="/m/recharge">充值</a>
-                         </span>
+                  <!-- <a class="common-a-btn recharge-btn" href="/m/account/recharge">充值</a> -->
+                   <a class="common-a-btn recharge-btn" href="/account/cash/recharge">充值</a> 
+                 </span>
 	    				</span> 
 	    				<span class="price-content">  
 		                     <span class="jindu-number">
-		                            80%
+		                            {%$data.percent%}%
 		                     </span> 
 		    				<span class="jindu">
 		    					 <span class="jindu-box">
-		                            <span class="jindu-box-inline" style="width: 80%;"></span>
+		                            <span class="jindu-box-inline" style="width: {%$data.percent%}%;"></span>
 			                     </span>
 	    					</span> 
 	    				</span> 
@@ -68,18 +69,19 @@
 	    		</div>
 	    	</li>  
 	    </ul>
-        <form class="right-top" id="invest-form" action="/invest/tender" method="post"> 
+        <form class="right-top" id="invest-form" action="/invest/tender" method="post">  
 	     <div class="pro-action" style="margin-top: 20px;position:relative;">
 		    <div class="pro-title">
                 投资金额:
-                <input name="amount" maxlength="10" type="text" autocomplete="off" class="input right-top-ipt-input"   placeholder="输入投资金额" max="{%$data.amount_rest%}" />元
+                <input name="amount" maxlength="10" type="number" autocomplete="off" class="input right-top-ipt-input"   placeholder="输入投资金额" max="{%$data.amount_rest%}" />元
+                <input name="id" type="hidden" value="{%$data.id%}">
                 <a class="common-a-btn recharge-btn confirm-all fr">全投</a>
             </div>  
 		 </div>
          <div class="chongzhi-right">预期收益：<span class="chongzhi-span  color-red">0.00</span>
             <div class="color-red fr show" id="chongzhi-error"> </div>
          </div> 
-		  <div class="pro-action">
+		  <div class="pro-action" style="display:none;">
 		    <div class="pro-title">使用优惠券：
                 <select name="bonus" id="bonus">
                     <option value="" selected="selected">请选择使用的红包</option>
@@ -88,8 +90,7 @@
                     <option value="196307">满20000减50 （剩 46 天）</option>
                     <option value="196305">满8000减20 （剩 46 天）</option>
                 </select>
-            </div>
-		    
+            </div> 
 		 </div>	 
         <div class="status">
         	<a class="combtn status-biding confirm-submit" >确定投资</a>	  

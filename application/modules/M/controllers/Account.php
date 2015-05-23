@@ -20,6 +20,8 @@ class AccountController extends Base_Controller_Page{
      * /m/account/overview
      */
     public function overviewAction() {
+        $this->getView()->assign('title', "我的账户");
+
         $userInfo     = $this->userInfoLogic->getUserInfo($this->objUser);        
         $userBg       = Finance_Api::getUserBalance($this->userid);
         $avlBal       = Base_Util_Number::tausendStyle($userBg['AvlBal']);
@@ -63,4 +65,109 @@ class AccountController extends Base_Controller_Page{
         $this->getView()->assign('rechargeurl',$rechargeurl);
         $this->getView()->assign('withdrawurl',$withdrawurl);
     }
+
+     /**
+     * /account/cash/recharge
+     * 充值入口
+     */
+    public function rechargeAction() {
+        $this->getView()->assign('title', "充值");
+
+        if(empty($this->huifuid)) {
+            $redirectUrl = $this->webroot.'/m/open';
+            $this->redirect($redirectUrl);
+        }
+        if(!empty($_POST)) {
+            $userid     = $this->userid;
+            $huifuid    = $this->huifuid;
+            $transAmt   = floatval($_REQUEST['value']);
+            $transAmt   = sprintf('%.2f',$transAmt);
+            $openBankId = strval($_REQUEST['id']);
+            $gateBusiId = 'B2C';
+            $dcFlag     = 'D';
+            Base_Log::notice(array(
+                'userid'     => $userid,
+                'huifuid'    => $huifuid,
+                'transAmt'   => $transAmt,
+                'gateBusiId' => $gateBusiId,
+                'openBankId' => $openBankId,
+                'dcFlag'     => $dcFlag,
+            ));
+            $this->transLogic->netsave($userid, $huifuid, $transAmt, $openBankId, $gateBusiId, $dcFlag);            
+        }       
+        $userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+        $this->getView()->assign('userinfo',$userinfo);     
+    }
+    
+    /**
+     * 提现入口
+     */
+    public function withdrawAction() {
+       $this->getView()->assign('title', "提现");
+
+        $huifuid = $this->huifuid;
+        if(empty($huifuid)) {
+            $redirectUrl = $this->webroot.'/m/open';
+            $this->redirect($redirectUrl);
+        }
+        $userid = intval($this->userid);        
+        $phone  = $this->phone;
+        $avlBal = Finance_Api::getUserAvlBalance($this->userid);
+        if(!empty($_POST)) {                        
+            $userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+            $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
+            $bindBank = $bankInfo['bindbank'];
+            $bankNum  = $bankInfo['banknum'];
+            $bankID   = $bankInfo['bankID'];
+            //TODO:?not empty为什么还要assigin
+            $this->getView()->assign('bindbank', $bindBank);
+            $this->getView()->assign('banknum', $bankNum);
+            $this->getView()->assign('bankID', $bankID);
+            $this->getView()->assign('avlBal', $avlBal);
+            $this->getView()->assign('userinfo',$userinfo);
+            $this->getView()->assign('withdrawfee','2');
+            $this->getView()->assign('phone',$this->phone);
+            
+            $transAmt   = floatval($_REQUEST['value']);
+            $openAcctId = isset($_REQUEST['openAcctId']) ? strval($_REQUEST['openAcctId']) : '';
+            $transAmt = sprintf('%.2f',$transAmt);
+            $openAcctId = strval($bankNum);
+            $this->transLogic->cash($userid,$transAmt,$openAcctId);
+        }
+        
+        $userinfo = $this->userInfoLogic->getUserInfo($this->objUser);
+        $bankInfo = $this->userInfoLogic->getuserCardInfo($huifuid);
+        $bindBank = $bankInfo['bindbank'];
+        $bankNum  = $bankInfo['banknum'];
+        $bankNum  = substr_replace($bankNum,'*********',4,13);
+        $bankID   = $bankInfo['bankID'];
+        $this->getView()->assign('bindbank', $bindBank);
+        $this->getView()->assign('banknum', $bankNum);
+        $this->getView()->assign('bankID', $bankID);
+        $this->getView()->assign('avlBal', $avlBal);
+        $this->getView()->assign('userinfo',$userinfo);
+        $this->getView()->assign('withdrawfee','2');
+        $this->getView()->assign('phone',$this->phone);
+    }
+    
+    /**
+     * /account/cash/rechargesuc
+     * assign
+     * status 0--充值  1--提现
+     * 充值成功
+     */
+    public function rechargesucAction() {
+    
+    }
+
+    /**
+     * /account/cash/rechargesuc
+     * assign 
+     * status 0--充值  1--提现
+     * 提现成功
+     */
+    public function withdrawsucAction() {
+    
+    }
+
 }

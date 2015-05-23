@@ -95,7 +95,8 @@ define(function(require) {
                     pager = new Pager({
                         total: +data.pageall,
                         main: $('#page'),
-                        startPage: 1
+                        startPage: 1,
+                        isPageNum:false
                     });
 
                     pager.on('change', function(e) {

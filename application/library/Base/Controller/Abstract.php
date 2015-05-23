@@ -57,6 +57,7 @@ class Base_Controller_Abstract extends Yaf_Controller_Abstract
                 'userid'    => $this->userid,
                 'username'  => $this->objUser->displayname,
                 'unreadMsg' => Msg_Api::getUnreadMsgNum($this->userid),
+                'usertype'  => $this->objUser->usertype,
             );
             $this->getView()->assign('user', $user);
         }

@@ -6,7 +6,7 @@
       min-width: 320px;
       max-width: 640px;
       .box-title {
-          background-image:none;
+          background-image: none;
           border-bottom: 3px solid #6ec076;
           background-size: 100% 100%;
           width: 100%;
@@ -32,11 +32,12 @@
               border-radius: 3px;
           }
           .project-title {
-              font-size: 15px;
+              font-size: 18px;
               line-height: 40px;
               .order(2);
           }
           .grade-star {
+              font-size: 26px;
               .order(3);
           }
       }
@@ -85,7 +86,7 @@
                           font-size: 18px;
                       }
                   }
-                  .price { 
+                  .price {
                       min-width: 200px;
                       max-width: none;
                       display: block;
@@ -295,6 +296,7 @@
   
   .content-left-text {
       flex: 1;
+      text-align: left;
   }
   
   #files {
@@ -375,12 +377,16 @@
               .content {
                   .price {
                       padding-left: 0px;
+                      height: 70%;
                       .price-title {
-                          line-height: 30px;
+                          line-height: 20px;
+                          display: block;
+                          font-size: 14px;
                       }
                       .price-content {
-                          top: 35px;
+                          top: inherit;
                           z-index: 1;
+                          bottom: 0px;
                       }
                   }
               }
@@ -431,7 +437,7 @@
                       .name-shi {}
                       .invest-title {
                           margin-left: 10px;
-                      } 
+                      }
                   }
                   .content {
                       height: 120px;

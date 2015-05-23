@@ -9,6 +9,10 @@ class IndexController extends Base_Controller_Page {
     }
 	
 	public function indexAction() {
+        $isMobile = Base_Util_Mobile::isMobile();
+        if($isMobile){
+            return $this->redirect('/m/invest/');
+        }
 	    $page = $this->getInt('page', 1);
 	    $pagesize = 10;
 	    

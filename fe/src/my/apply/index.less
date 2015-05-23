@@ -1,0 +1,91 @@
+@import "../../common/css/common.less";
+@import "../common/css/index.less";
+.my-apply-tab {
+    padding: 15px 25px;
+    background-color: @color-gray-bg;
+    margin-bottom: 10px;
+    .clearfix;
+    .my-apply-tab-item {
+        float: left;
+        padding: 0 10px;
+        height: 26px;
+        line-height: 26px;
+        color: @color-black;
+        .border-radius(3px);
+        margin-right: 15px;
+        font-size: 14px;
+        cursor: pointer;
+        &.current {
+            color: @color-white;
+            background-color: @color-red;
+        }
+    }
+}
+
+.my-apply-list {
+    position: relative;
+    min-height: 300px;
+    .my-apply-item {
+        height: 98px;
+        margin-bottom: 10px;
+        color: #666;
+        font-size: 16px;
+        line-height: 30px;
+        background-color: #f8f8f8;
+        .apply-status {
+            width: 160px;
+            height: 78px;
+            padding-top: 20px;
+            color: #fff;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+            background-color: #a2e078;
+            &.unsubmit {
+                background-color: #d2d2d2;
+            }
+            &.checking {
+                background-color: #a2e078;
+            }
+            &.checked {
+                background-color: #4fc501;
+            }
+            &.unchecked {
+                background-color: #f2746a;
+            }
+        }
+        .apply-info-left {
+            text-align: left;
+            width: 192px;
+            padding-left: 28px;
+            padding-top: 20px;
+        }
+        .apply-info-right {
+            width: 340px;
+            padding-left: 20px;
+            padding-top: 20px;
+        }
+        .apply-info-bottom {
+            display: none;
+            width: 540px;
+            padding-left: 38px;
+        }
+        &.my-apply-item-status2 {
+            .apply-status {
+                background-color: #4fc501;
+            }
+            .apply-info-left {
+                width: 182px;
+                padding-left: 38px;
+                text-align: left;
+                padding-top: 20px;
+            }
+            .apply-info-right {
+                width: 360px;
+            }
+            .apply-info-bottom {
+                display: block;
+            }
+        }
+    }
+}

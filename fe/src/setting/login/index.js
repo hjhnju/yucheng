@@ -70,7 +70,7 @@ define(function (require) {
         // 获取图片验证码
         imgUrl.click(function (e) {
             e.preventDefault();
-            $(this).attr('src', IMGURL + loginType);
+            $(this).attr('src', IMGURL + loginType+'&r='+new Date().getTime());
         });
 
 

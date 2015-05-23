@@ -22,5 +22,6 @@ foreach ($arrData as $val){
         if(!$bol){
             Base_Log::notice('Store award failed,userid is:'.$arrTemp[3]);
         }
+        var_dump($bol,$arrParam);
     }
 }

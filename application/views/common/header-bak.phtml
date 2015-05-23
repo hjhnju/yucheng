@@ -1,0 +1,78 @@
+<div class="header">
+    <div class="container z-index">
+        <div class="header-left">
+            <span class="header-left-phone phone-icon">
+               <!-- <em class="phone-icon"></em> -->  客服：400-016-2526
+             </span>
+            <span class="header-left-time">(周一至周五9:00-18:00)</span>
+                <span class="header-left-attention">
+                    <span class="attention-span">关注我们：</span>
+                    <a class="attention-me weixin" href="###">
+                        <div class="xinlang-erweima">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                        </div>
+                    </a>
+                    <a target="_blank" class="attention-me weibo" href="http://www.weibo.com/u/5478735172">
+                        <div class="xinlang-erweima weibo-tip">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                            点击关注兴教贷微博<br/>
+                            <span class="weibo-tip-span">@xingjiaodai</span>
+                        </div>
+                    </a>
+                    <a target="_blank" class="attention-me qq" href="http://jq.qq.com/?_wv=1027&k=TWWLkD">
+                        <div class="xinlang-erweima weibo-tip">
+                            <div class="triangle-top"></div>
+                            <div class="triangle-bottom"></div>
+                            加入投资交流群<br/>
+                            <span class="weibo-tip-span">QQ:389780348</span>
+                        </div>
+                    </a>
+                </span>
+        </div>
+        <div class="header-right">
+            <a target="_blank" href="{%$webroot%}/activity/spring"><img alt"最新活动" src="{%$feroot%}/activity/common/img/small_leaf1.png" class="activity-img fl"/></a>
+            <span class="new-activity fl"><a target="_blank" href="{%$webroot%}/activity">最新活动</a></span>
+            {%if isset($user)%}
+            <div class="header-right-login fr">
+                <span class="default-fastlogin" style="">您好，{%$user.username%} 
+                     {%if $user.unreadMsg%}
+                     <a class="unreadmsg" style="color: #f2746a;font-size: 10px;text-decoration: none;" href="{%$webroot%}/account/message"> （{%$user.unreadMsg%}条未读）</a> 
+                     {%/if%}
+                </span>
+               
+                <a class="default-login" href="/user/login/signout">退出</a>
+            </div>
+            {%else%}
+            <div class="login-register register-hover fr">
+                <a href="{%$webroot%}/user/regist" class="register fl">注册</a>
+                <a class="login fr" href="{%$webroot%}/user/login">登录</a>
+            </div>
+            {%/if%}
+        </div>
+    </div>
+</div>
+<div class="nav">
+    <div class="container">
+        <a href="{%$webroot%}" class="logo"><img width="100%" src="{%$feroot%}/common/img/logo.png" /></a>
+        <ul class="nav-item">
+            <li class="nav-item-list">
+                <a href="{%$webroot%}/invest" class="nav-item-link">我来投资</a>
+            </li>
+            <li class="nav-item-list">
+                <a href="{%$webroot%}/loan" class="nav-item-link">我要借款</a>
+            </li>
+            <li class="nav-item-list">
+                <a href="{%$webroot%}/security" class="nav-item-link">安全保障</a>
+            </li>
+            <li class="nav-item-list">
+                <a href="{%$webroot%}/help" class="nav-item-link">帮助中心</a>
+            </li>
+            <li class="nav-item-list last">
+                <a href="{%$webroot%}/about" class="nav-item-link">关于我们</a>
+            </li>
+        </ul>
+        <a href="/account/overview" class="nav-myaccount">我的账户</a>
+    </div>
+</div>

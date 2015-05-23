@@ -3,10 +3,11 @@
 @import "../ui/Pager/pager.less";
 @import "./datepicker.less";
 @import "../ui/Dialog/dialog.less";
+@import "./prettifyForm";
 body {
     margin: 0;
     font-size: 12px;
-    font-family: "Microsoft YaHei";
+    font-family: "Microsoft YaHei","Tahoma","Geneva","sans-serif";
 }
 
 ul {
@@ -22,6 +23,13 @@ p {
     padding: 0;
 }
 
+a {
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
+}
+img{border:none;}
 .container {
     width: 1000px;
     margin: 0 auto;
@@ -243,8 +251,7 @@ p {
 //登录注册滑块按钮开始
 .login-register {
     border: 1px solid #76cf65;
-    border-radius: 25px;
-    -moz-border-radius: 25px;
+    .border-radius(25px);
     width: 100px;
     height: 29px;
     background: url(../img/btn_bg1.png) no-repeat left center;
@@ -287,8 +294,7 @@ p {
 }
 
 //登录注册滑块按钮结束
-.default-fastlogin {
-    color: #666666;
+.default-fastlogin { 
     text-decoration: none;
     line-height: 30px;
     margin-left: 10px;
@@ -297,22 +303,28 @@ p {
 
 .default-login {
     display: inline-block;
-    color: #fff;
-    padding: 4px 8px;
-    background-color: @color-red;
+  /*   padding: 4px 8px; */
+    color: @color-red;
     text-decoration: none;
     .border-radius(3px);
     &:hover {
-        background-color: @color-red-hover;
+        /* background-color: @color-red-hover; */
     }
 }
 
-.header-right-login {}
+.header-right-login {
+    margin-top: 18px;
+}
 
 .unreadmsg {
-    text-decoration: none;
-    color: #f2746a;
-    font-size: 10px;
+    text-decoration: none; 
+    font-size: 12px;
+    i{ 
+      width: 10px;
+      height: 10px;
+      font-size: 14px;
+      margin-right: 4px;  
+    }
     &:hover {
         text-decoration: none;
     }
@@ -405,12 +417,12 @@ p {
     color: #cacaca;
     float: left;
     &:hover {
-         text-decoration: none;
-         color: #cacaca;
+        text-decoration: none;
+        color: #cacaca;
     }
     &:visited {
-         text-decoration: none;
-         color: #cacaca;
+        text-decoration: none;
+        color: #cacaca;
     }
 }
 
@@ -486,6 +498,8 @@ p {
     left: 0;
     top: 10px;
     color: #a7a7a7;
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
     .weibo-tip-span {
         color: blue;
     }
@@ -1171,8 +1185,300 @@ p {
 }
 
 //返回顶部按钮样式结束
+/* 颜色样式开始 */
+
+.color-red {
+    color: @color-red;
+}
+
+.color-green {
+    color: @color-green;
+}
+
+.color-gray-bg {
+    color: @color-gray-bg;
+}
+
+.color-black {
+    color: @color-black;
+}
+
+.color-white {
+    color: @color-white;
+}
+
+.color-font-green {
+    color: @color-font-green;
+}
+
+.color-font-black {
+    color: @color-font-black;
+}
+.color-6 {
+    color: @color-font-black;
+}
+/* 颜色样式结束 */
+/* 字体大小样式开始 */
+.f12{
+    font-size: 12px;
+}
+.f14 {
+    font-size: 14px;
+}
+
+.f16 {
+    font-size: 16px;
+}
+
+.f18 {
+    font-size: 18px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+.f22 {
+    font-size: 22px;
+}
+
+.f24 {
+    font-size: 24px;
+}
+.f26 {
+    font-size: 26px;
+}
+.f28 {
+    font-size: 28px;
+}
+.f30 {
+    font-size: 30px;
+}
+
+.lh14 {
+    line-height: 14px;
+}
+
+.lh16 {
+    line-height: 16px;
+}
+
+.lh18 {
+    line-height: 18px;
+}
+
+.lh20 {
+    line-height: 20px;
+}
+
+.lh22 {
+    line-height: 22px;
+}
+
+.lh24 {
+    line-height: 24px;
+}
+.lh26 {
+    line-height: 26px;
+}
+.lh28 {
+    line-height: 28px;
+}
+.lh30 {
+    line-height: 30px;
+}
+.lh40{
+    line-height: 40px;
+}
+/* 字体大小样式结束 */
+/* display:block  统一设置 */
+
+.dis-block {
+    display: block;
+}
+/* display:block  统一设置 */
+/* 融资贷款 版本的样式开始 */
+
+@font-face {
+    font-family: "iconfont";
+    src: url('../font/iconfont.eot');
+    /* IE9*/
+    
+    src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    
+    url('../font/iconfont.woff') format('woff'),
+    /* chrome、firefox */
+    
+    url('../font/iconfont.ttf') format('truetype'),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    
+    url('../font/iconfont.svg#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important; 
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-down:before { content: "\e610"; }
+.icon-up:before { content: "\e611"; }
+.icon-success:before { content: "\e612"; }
+.icon-weibo:before { content: "\e600"; }
+.icon-qq:before { content: "\e601"; }
+.icon-delete:before { content: "\e613"; }
+.icon-iconphone:before { content: "\e602"; }
+.icon-email:before { content: "\e614"; }
+.icon-delete2:before { content: "\e616"; }
+.icon-weixin:before { content: "\e603"; }
+.icon-error:before { content: "\e615"; }
+.icon-invest:before { content: "\e60a"; }
+.icon-directionleft:before { content: "\e606"; }
+.icon-directionright:before { content: "\e607"; }
+.icon-phone2:before { content: "\e605"; }
+.icon-phone:before { content: "\e604"; }
+.icon-phone3:before { content: "\e608"; }
+.icon-time:before { content: "\e609"; }
+.icon-step1:before { content: "\e60b"; }
+.icon-step2:before { content: "\e60c"; }
+.icon-step3:before { content: "\e60d"; }
+.icon-step4:before { content: "\e60e"; }
+.icon-step5:before { content: "\e60f"; }
+
+.nav-v2 {
+    height: 66px;
+    padding-top: 12px;
+     border-bottom: 2px solid #dfdfdf;
+    .nav-item {
+        margin-top: 0px;
+        line-height: 66px;
+        .nav-item-list {
+            .nav-item-link {
+                font-weight: normal;
+                color: @color-font-black;
+                &:hover, &.current {
+                    border-bottom: 0px solid @color-green;
+                    color: @color-font-green;
+                }
+            }
+        }
+    }
+    .login-register {
+        border: 1px solid #dcdcdc;
+        .border-radius(0px);
+        height: 23px;
+        background-image: none;
+        background-color: #fff;
+        margin-top: 20px;
+        a {
+            line-height: 23px;
+            color: @color-font-black;
+            transition: background-color 0.4s ease-in-out;
+            -webkit-transition: background-color 0.4s ease-in-out;
+            -moz-transition: background-color 0.4s ease-in-out;
+            -o-transition: background-color 0.4s ease-in-out;
+        }
+    }
+    .register-hover {
+        .register {
+            background-color: #eeeeee;
+            color: @color-font-green;
+        }
+        .login {
+            color: @color-font-black;
+        }
+    }
+    .login-hover {
+        .register {
+            color: @color-font-black;
+        }
+        .login {
+            background-color: #eeeeee;
+            color: @color-font-green;
+        }
+    }
+}
+
+.footer_v2 {
+    background-color: #3d4352;
+    padding: 50px 0px 40px 0px;
+    .footer-right {
+        font-size: 14px;
+        line-height: 28px;
+        padding-left: 0px;
+        .icon-phone {
+            color: #84878e;
+            font-size: 30px;
+            line-height: 40px;
+        }
+        .phone {
+            display: inline-block;
+        }
+        .worktime {
+            display: block;
+        }
+        .attention-box {
+            display: block;
+            margin-top: 16px;
+            .attention-me {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                font-size: 20px;
+                color: #cacaca;
+                margin-right: 10px;
+                vertical-align: middle;
+                text-decoration: none;
+                position: relative;
+                cursor: pointer;
+                &.weibo {
+                    &:hover {
+                        color: #e33f33;
+                    }
+                    &:before {
+                        content: "\e600";
+                    }
+                }
+                &.weixin {
+                    &:hover {
+                        color: #75cf64;
+                    }
+                    &:before {
+                        content: "\e603";
+                    }
+                }
+                &.qq {
+                    &:hover {
+                        color: #48a7dd;
+                    }
+                    &:before {
+                        content: "\e601";
+                    }
+                }
+            }
+        }
+    }
+    .footer-bottom {
+        width: 600px;
+        margin-top: 36px;
+    }
+}
+/* 融资贷款 版本的样式结束 */
+
 //移动端兼容样式
 @media screen and (min-width: 320px) and (max-width: 1024px) {
+    body {
+        width: 100%;
+        min-width: 1000px;
+    }
+    .container {
+        width: 1000px;
+    }
     .footer {
         min-width: 1000px;
         width: 100%;

@@ -5,7 +5,7 @@
  * @time 14-12-22
  */
 
-define(function (require) {
+define(function(require) {
 
     var $ = require('jquery');
     var util = require('common/util');
@@ -51,12 +51,11 @@ define(function (require) {
             id: model.id
         });
 
-        start.on('success', function (data) {
-            if(data && data.bizError) {
+        start.on('success', function(data) {
+            if (data && data.bizError) {
                 Error.parent().addClass('show');
                 Error.html(data.statusInfo);
-            }
-            else {
+            } else {
 
                 if (!data.list.length) {
                     $('#page').html('');
@@ -66,14 +65,14 @@ define(function (require) {
                     return;
                 }
 
-                if(!pager) {
+                if (!pager) {
                     pager = new Pager({
                         total: +data.pageall,
                         main: $('#page'),
                         startPage: 1
                     });
 
-                    pager.on('change', function (e) {
+                    pager.on('change', function(e) {
                         start.remote({
                             page: e.value,
                             id: model.id
@@ -83,13 +82,13 @@ define(function (require) {
 
                 pager.render(+data.page);
 
-                for(var i = 0, l = data.list.length; i<l; i++) {
+                for (var i = 0, l = data.list.length; i < l; i++) {
                     var tmp = data.list[i];
                     tmp.timeInfo = moment.unix(+tmp.create_time).format('YYYY-MM-DD HH:mm');
                 }
 
                 htmlContainer.html(etpl.render('list', {
-                    list:data.list
+                    list: data.list
                 }));
             }
         })
@@ -101,44 +100,46 @@ define(function (require) {
      */
     function bindEvent() {
 
-        $('.showproject').click(function () {
+        $('.showproject').click(function() {
             $(this).closest('.project-main').attr('class', 'project-main project');
         });
 
-        $('.showfile').click(function () {
+        $('.showfile').click(function() {
             $(this).closest('.project-main').attr('class', 'project-main file');
         });
 
-        $('.showrecord').click(function () {
+        $('.showrecord').click(function() {
             $(this).closest('.project-main').attr('class', 'project-main record');
         });
 
         // 全部投资
-        $('.confirm-all').click(function () {
+        $('.confirm-all').click(function() {
             var ipt = $('.right-top-ipt-input');
-
+            var tip = $('.chongzhi-span');
             investError.hasClass('show') && investError.removeClass('show');
 
             if (ipt[0].disabled) {
                 return;
             }
 
-            ipt.val(Math.min(model.userAmount, model.amountRest));
+            var value = Math.min(model.userAmount, model.amountRest);
+            ipt.val(value);
+            tip.html(caculateIncome(value || 0));
         });
 
         // 点差消失error
-        $('.detail-error-cha').click(function () {
+        $('.detail-error-cha').click(function() {
             $(this).parent().remove();
         });
 
         // 确定投资
-        $('.confirm-submit').click(function () {
+        $('.confirm-submit').click(function() {
 
             $('#invest-form').trigger('submit');
         });
 
         // form 提交
-        $('#invest-form').on('submit', function () {
+        $('#invest-form').on('submit', function() {
             var ipt = $('.right-top-ipt-input');
             var value = +$.trim(ipt.val());
 
@@ -187,7 +188,7 @@ define(function (require) {
 
         // 投资盈利计算
         $('.right-top-ipt-input').on({
-            keyup: function () {
+            keyup: function() {
                 var value = +$.trim($(this).val());
                 var tip = $('.chongzhi-span');
 
@@ -198,7 +199,7 @@ define(function (require) {
 
                 tip.html(caculateIncome(+$.trim($(this).val()) || 0));
             },
-            blur: function () {
+            blur: function() {
                 var value = +$.trim($(this).val());
 
                 if (isNaN(value)) {
@@ -222,6 +223,6 @@ define(function (require) {
     }
 
     return {
-        init:init
+        init: init
     };
 });
