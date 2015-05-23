@@ -32,6 +32,8 @@ class SchoolController extends Base_Controller_Page{
     public function submitAction() {
     	//检查值是否合法，合法后记录到cookie，并且跳转到下一步
 		if (!empty($_POST) && $this->checkParam($this->param, $_POST)) {
+            $refer = $_POST['refer'];
+            unset($_POST['refer']);
             $_POST['stock'] = json_encode($_POST['stock']);
 
 			//记录cookie
@@ -41,7 +43,7 @@ class SchoolController extends Base_Controller_Page{
             $stockLogic = new Apply_Logic_Stock();
             $stockLogic->saveCookie($_POST);
 
-            $refer = $_POST['refer']? $_POST['refer']: '/apply/person';
+            $refer = $refer? $refer: '/apply/person';
             $this->ajax(array('url' => $refer), '', Apply_RetCode::NEED_REDIRECT);
 		}
 
