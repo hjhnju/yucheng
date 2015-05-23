@@ -130,10 +130,10 @@ define(function() {
 
     //写cookies
 
-    function setCookie(name, value,hours,path) { 
+    function setCookie(name, value, hours, path) {
         var exp = new Date();
-        exp.setTime(exp.getTime() + hours  * 60 * 60 * 1000);
-        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString()+ ";path=" +path;
+        exp.setTime(exp.getTime() + hours * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=" + path;
     }
 
     //读取cookies
@@ -156,14 +156,27 @@ define(function() {
             document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
     }
 
+    /**
+     * 获取url参数
+     * @param  {[string]} name [参数名字]
+     * @return {[type]}      [description]
+     */
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
     return {
         addCommas: addCommas,
         copyToClipBoard: copyToClipBoard,
         debounce: debounce,
         removeCommas: removeCommas,
         toPercent: toPercent,
-        setCookie:setCookie,
-        getCookie:getCookie,
-        delCookie:delCookie 
+        setCookie: setCookie,
+        getCookie: getCookie,
+        delCookie: delCookie,
+        getUrlParam:getUrlParam
     };
 });

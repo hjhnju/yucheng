@@ -147,7 +147,11 @@ define(function(require) {
         inputArray.password2.blur(function() {
             var pwd = $.trim($(inputArray.password).val());
             var value = $.trim($(this).val());
-
+            if (!value) {
+                iconArray.password2Icon.addClass('error');
+                errorArray.password2Error.html('确认密码不能为空');
+                return;
+            }
             //检测两次密码是否一致
             if (value != pwd) {
                 iconArray.password2Icon.addClass('error');

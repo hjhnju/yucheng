@@ -27,7 +27,7 @@ fieldset {
     }
     .step-box {
         float: left;
-        margin-top: 100px;
+        margin-top: 50px;
         .btn {
             width: 158px;
             height: 30px;
@@ -70,6 +70,12 @@ fieldset {
             line-height: 30px;
             color: #edf5f4;
         }
+        .step-title {
+            line-height: 30px;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
     }
     .title {
         width: 654px;
@@ -98,7 +104,7 @@ fieldset {
     .loan-input {
         width: 236px;
         height: 40px;
-        font-size: 12px;
+        font-size: 14px;
         border: 1px solid #cfcfcf;
         .box-sizing(border-box);
         position: relative;
@@ -108,21 +114,24 @@ fieldset {
             height: 46px;
             line-height: 46px;
             font-size: 18px;
+            padding-left: 10px;
             input {
-                height: 24px;
                 font-size: 18px;
                 line-height: 28px;
-                padding-left: 0px;
+                height: 44px;
+                line-height: 48px;
+                padding: 0px;
             }
         }
         input {
             border: none;
-            width: 214px;
+            width: 224px;
             outline: none;
-            height: 18px;
+            height: 36px;
             float: left;
-            font-size: 12px;
-            padding: 10px;
+            font-size: 14px;
+            padding-left: 10px;
+            line-height: 40px;
         }
         .icon {
             width: 16px;
@@ -148,7 +157,7 @@ fieldset {
         line-height: 40px;
         padding-right: 10px;
         text-align: right;
-        width: 118px;
+        width: 96px;
         height: 40px;
         .clearfix;
     }
@@ -188,13 +197,13 @@ fieldset {
     .input-error {
         line-height: 40px;
         color: @color-red;
-        padding-left: 10px;
+        padding-left: 5px;
     }
     .input-icon {
         width: 16px;
-        height: 16px;
+        height: 15px;
         float: left;
-        margin-top: 12px;
+        margin-top: 13px;
         margin-left: 10px;
         display: none;
         &.error {
@@ -282,13 +291,13 @@ fieldset {
         }
     }
     .right {
-        width: 235px;
+        width: 245px;
         padding-top: 10px;
-        padding-left: 45px;
+        padding-left: 35px;
         float: right;
         .clearfix;
         .title {
-            margin: 20px 0px;
+            margin-top: 30px;
             font-size: 16px;
             line-height: 24px;
             text-align: center;
@@ -304,7 +313,7 @@ fieldset {
         .content {
             font-size: 12px;
             line-height: 24px;
-            margin-top: 30px;
+            margin-top: 20px;
             .list {
                 list-style: disc inside none;
             }
@@ -315,18 +324,19 @@ fieldset {
                 height: 38px;
                 line-height: 38px;
                 background-color: #fff;
+                padding-left: 10px;
                 input {
-                    line-height: 30px;
-                    padding: 6px;
-                    padding-left: 0px;
+                    line-height: 38px;
+                    padding: 0px;
+                    height: 34px;
                 }
             }
             .icon {
                 &.down {
-                    bottom: 5px;
+                    bottom: 6px;
                 }
                 &.up {
-                    top: 5px;
+                    top: 6px;
                 }
             }
         }

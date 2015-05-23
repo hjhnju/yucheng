@@ -91,17 +91,12 @@ define(function(require) {
                 var value = $.trim($(this).val());
                 var text = $(this).attr('data-text');
                 var icon = parent.find('.input-icon');
-                var error = parent.find('.input-error');
-
-
+                var error = parent.find('.input-error'); 
                 if (!value) {
                     icon.addClass('error');
                     error.html(text + '不能为空');
                     return;
-                } else {
-                    icon.addClass('success');
-                    error.html('');
-                }
+                } 
             },
         });
 
@@ -159,22 +154,14 @@ define(function(require) {
                     errorArray[item].html(input.attr('data-text') + "不能为空！");
                     return;
                 }
-            }
-            for (var item in selectArray) {
-                var select = selectArray[item];
-                if (!select.val()) {
-                    iconArray[item].addClass('error');
-                    errorArray[item].html(select.attr('data-text') + "不能为空！");
-                    return;
-                }
-            }
+            } 
             if (!$('input:radio[name="house_type"]:checked').val()) {
                 iconArray.house_type.addClass('error');
                 errorArray.house_type.html("住房类型不能为空！");
                 return;
             }
 
-            personSubmit.remote({
+            personSubmit.remote({ 
                 detail_address: inputArray.detail_address.val(),
                 certificate: inputArray.certificate.val(),
                 cellphone: inputArray.cellphone.val(),

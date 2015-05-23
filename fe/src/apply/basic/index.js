@@ -134,7 +134,7 @@ define(function(require) {
                 }
             }
 
-            basicSubmit.remote({
+            basicSubmit.remote({ 
                 province: selectArray.province.val(),
                 city: selectArray.city.val(),
                 type: selectArray.type.val(),

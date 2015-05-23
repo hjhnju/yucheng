@@ -17,7 +17,7 @@
     <div class="container container2 step">
      <div class="container">
        {%include file='../../../views/common/loaninfo.phtml' type="1" current="4"%}
-        <div class="title">
+        <div class="title fl">
              <i class="iconfont icon-step4"></i>
              <span>个人评估</span>
         </div>
@@ -118,7 +118,7 @@
                             <input type="radio" id="is_criminal-1" name="is_criminal" value="1" {%if '1' == $data.edit.is_criminal%}checked{%/if%}/>
                              <label for="is_criminal-1">是</label>
                         </div>
-                        <div class="form-default_element form-radio form-radio--top">
+                        <div class="radiobox">
                             <input type="radio" id="is_criminal-2" name="is_criminal" value="0" {%if '' == $data.edit.is_criminal%}checked{%/if%}/>
                              <label for="is_criminal-2">否</label>
                          </div> 
@@ -133,7 +133,7 @@
                             <input type="radio" id="is_lawsuit-1" name="is_lawsuit" value="1" {%if '1' == $data.edit.is_lawsuit%}checked{%/if%}/>
                              <label for="is_lawsuit-1">是</label>
                         </div>
-                        <div class="form-default_element form-radio form-radio--top">
+                        <div class="radiobox">
                             <input type="radio" id="is_lawsuit-2" name="is_lawsuit" value="0" {%if '' == $data.edit.is_lawsuit%}checked{%/if%}/>
                              <label for="is_lawsuit-2">否</label>
                          </div> 

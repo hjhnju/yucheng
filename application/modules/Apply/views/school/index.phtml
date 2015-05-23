@@ -17,7 +17,7 @@
     <div class="container container2  step">
      <div class="container">
        {%include file='../../../views/common/loaninfo.phtml' type="1" current="3"%}
-        <div class="title">
+        <div class="title fl">
              <i class="iconfont icon-step3"></i>
              <span>学校评估</span>
         </div>
@@ -38,7 +38,7 @@
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您的学校有多少学生</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" value="{%$data.edit.total_student%}" type="number" name="total_student" data-text="学生人数" placeholder="请输入学生人数"/> 
+                         <input autocomplete="off" value="{%$data.edit.total_student%}" type="text" name="total_student" data-text="学生人数" placeholder="请输入学生人数"/> 
                   </div> 
                   <div class="input-icon fl" id="total_student-icon"></div>
                   <div class="input-error fl" id="total_student-error"></div>
@@ -46,7 +46,7 @@
               <div class="form-default_element form-inpt"> 
                   <div class="loan-label fl">＊您的学校有多少教职工</div>
                   <div class="loan-input fl">  
-                         <input autocomplete="off" value="{%$data.edit.staff%}" type="number" name="staff" data-text="教职工人数" placeholder="请输入教职工人数"/> 
+                         <input autocomplete="off" value="{%$data.edit.staff%}" type="text" name="staff" data-text="教职工人数" placeholder="请输入教职工人数"/> 
                   </div> 
                   <div class="input-icon fl" id="staff-icon"></div>
                   <div class="input-error fl" id="staff-error"></div>
@@ -113,7 +113,7 @@
                         <input autocomplete="off" type="text" name="weight" data-text="百分比" class=""/>  
                          <span class="dis-block fr">%</span>
                      </div> 
-                      <a class="loan-btn add-stock fl">再添加一位股东</a>
+                      <a class="loan-btn add-stock fl">添加并保存股东</a>
                       <span class="lh40">共<span class="stock-total">{%$total%}</span>%</span>  
                 </div>
                 <div class="form-default_element">
