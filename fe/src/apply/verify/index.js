@@ -26,6 +26,16 @@ define(function(require) {
     };
 
     //是否验证
+    var ischeckArray = {
+        name: 1,
+        realname: 1,
+        email: 1,
+        password: 1,
+        password2: 1,
+        imagecode: 1
+    };
+
+    //是否验证通过
     var statusArray = {
         name: 1,
         realname: 1,
@@ -66,8 +76,11 @@ define(function(require) {
     var IMGURL = config.URL.IMG_GET;
     var imgcodeType = 'regist';
 
+    var rate1, rate2;
 
-    function init(rate1, rate2) {
+    function init(r1, r2) {
+        rate1 = r1;
+        rate1 = r1;
         formParams = applyCommon.init(rate1, rate2);
         bindEvent();
         ajaxCallback();
@@ -113,10 +126,12 @@ define(function(require) {
             var value = $.trim($(this).val());
 
             if (!testName.test(value)) {
+                statusArray.name = 0;
                 iconArray.nameIcon.addClass('error');
                 errorArray.nameError.html('与营业执照或登记证书一致');
                 return;
             }
+            statusArray.name = 1;
             iconArray.nameIcon.addClass('success');
         });
         //验证申请人姓名 ，必须为汉字  
@@ -124,10 +139,12 @@ define(function(require) {
             var value = $.trim($(this).val());
 
             if (!testName.test(value)) {
+                statusArray.realname = 0;
                 iconArray.realnameIcon.addClass('error');
                 errorArray.realnameError.html('请输入真实姓名');
                 return;
             }
+            statusArray.realname = 1;
             iconArray.realnameIcon.addClass('success');
         });
 
@@ -137,27 +154,26 @@ define(function(require) {
 
 
             if (!testPwd.test(value)) {
+                statusArray.password = 0;
                 iconArray.passwordIcon.addClass('error');
-                errorArray.passwordError.html('密码只能为 6 - 32 位数字，字母及常用符号组成');
+                errorArray.passwordError.html('密码只能为6-32位数字,字母及常用符号组成');
                 return;
             }
+            statusArray.password = 1;
             iconArray.passwordIcon.addClass('success');
         });
         // 确认密码格式验证
         inputArray.password2.blur(function() {
             var pwd = $.trim($(inputArray.password).val());
             var value = $.trim($(this).val());
-            if (!value) {
-                iconArray.password2Icon.addClass('error');
-                errorArray.password2Error.html('确认密码不能为空');
-                return;
-            }
             //检测两次密码是否一致
-            if (value != pwd) {
+            if (!value || value != pwd) {
+                statusArray.password2 = 0;
                 iconArray.password2Icon.addClass('error');
                 errorArray.password2Error.html('两次输入的密码不一致 ');
                 return;
             }
+            statusArray.password2 = 1;
             iconArray.password2Icon.addClass('success');
         });
         // 检查邮箱
@@ -174,7 +190,7 @@ define(function(require) {
         //图片验证码 
         imgUrl.click(function(e) {
             e.preventDefault();
-            $(this).attr('src', IMGURL  + imgcodeType + '&r=' + new Date().getTime());
+            $(this).attr('src', IMGURL + imgcodeType + '&r=' + new Date().getTime());
         });
 
         //快速验证 
@@ -182,18 +198,31 @@ define(function(require) {
             e.preventDefault();
 
             if ($(this).hasClass('login')) {
-                statusArray.password = 0;
-                statusArray.password2 = 0;
-                statusArray.imagecode = 0;
+                ischeckArray.password = 0;
+                ischeckArray.password2 = 0;
+                ischeckArray.imagecode = 0;
             }
-            for (var item in inputArray) {
-                if (!inputArray[item].val() && statusArray[item]) {
-                    iconArray[item + "Icon"].addClass('error');
-                    errorArray[item + "Error"].html(inputArray[item].attr('data-text') + '不能为空');
-                    return;
+            for (var item in ischeckArray) {
+                if (ischeckArray[item]) {
+                    inputArray[item].trigger('blur');
+                    if (!statusArray[item]) {
+                        return;
+                    }
+                    if (!inputArray[item].val()) {
+                        iconArray[item + 'Icon'].addClass('error');
+                        errorArray[item + 'Error'].html(inputArray[item].attr('data-text') + '不能为空');
+                        return;
+                    }
                 }
             }
-
+            /*    for (var item in inputArray) {
+                    if (!inputArray[item].val() && ischeckArray[item]) {
+                        iconArray[item + "Icon"].addClass('error');
+                        errorArray[item + "Error"].html(inputArray[item].attr('data-text') + '不能为空');
+                        return;
+                    }
+                }*/
+            formParams = applyCommon.calformParams(rate1, rate2);
             verifySubmit.remote({
                 amount: formParams.amount,
                 duration: formParams.duration,
@@ -221,18 +250,20 @@ define(function(require) {
         // checkEmail  
         checkEmail.on('success', function(data) {
             if (data && data.bizError) {
+                statusArray.email = 0;
                 iconArray.emailIcon.addClass('error');
                 errorArray.emailError.html(data.statusInfo);
             } else {
                 iconArray.emailIcon.addClass('success');
                 errorArray.emailError.html('');
+                statusArray.email = 1;
             }
         });
         //提交后
         verifySubmit.on('success', function(data) {
             if (data.imgCode) {
                 errorArray.imgcode.html(data.statusInfo);
-                imgUrl.attr('src', data.data.url  + imgcodeType + '&r=' + new Date().getTime());
+                imgUrl.attr('src', data.data.url + imgcodeType + '&r=' + new Date().getTime());
             } else if (data && data.bizError) {
                 errorArray.errorbox.html(data.statusInfo);
             } else {

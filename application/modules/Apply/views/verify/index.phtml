@@ -16,17 +16,14 @@
 {%block name="content"%}
  
 
-{%$smarty.debugging_ctrl = 'URL'%}
-<div class="box1" >
-    <div class="container container2 step">
-     <div class="container">
-     <!--   <div class="">最高效便捷地获得教育贷款</div> -->
+{%$smarty.debugging_ctrl = 'URL'%} 
+<div class="box1 step" > 
+     <div class="container"> 
        {%include file='../../../views/common/loaninfo.phtml' type="1" current="1"%}
         <div class="title fl">
              <i class="iconfont icon-step1"></i>
              <span>您需要的贷款额度</span>
         </div>
-    </div>
     </div> 
 </div>
 <div class="box2 loan">
@@ -143,7 +140,7 @@
                  <div class="form-default_element form-inpt">
                       <div class="loan-label fl">＊密码</div>
                       <div class="loan-input fl">  
-                            <input autocomplete="off" type="password" name="password"  data-text="密码"/ placeholder="密码由6-32位数字，字母及常用符号组成">  
+                            <input autocomplete="off" type="password" name="password"  data-text="密码"/ placeholder="6-32位数字,字母及常用符号组成">  
                       </div>
                       <div class="input-icon fl" id="password-icon"></div>
                       <div class="input-error fl" id="password-error"></div>
@@ -172,8 +169,9 @@
                 <input type="hidden" value="{%$user.id%}" name="userid"/> 
                  <div class="form-default_element form-inpt">
                    <div class="loan-label fl">＊邮箱地址</div>
-                   <div class="loan-input fl">  
-                        <input autocomplete="off" type="text" name="email" class="" value="{%$user.username%}"  disabled="" />  
+                   <div class="loan-input fl disabled">  
+                         {%$user.username%}
+                        <input autocomplete="off" type="hidden" name="email" class="" value="{%$user.username%}" disabled/>  
                    </div>
                  </div> 
                   <div class="form-default_element form-inpt">
@@ -191,7 +189,7 @@
                 </div>   
         </div>
         <div class="right">
-             <div class="title">
+             <div class="title" style="text-align: left;">
                   兴教贷为您提供<br/>
                 低息便捷的教育贷款
              </div>
@@ -201,7 +199,7 @@
                  <li class="list">费用透明无任何隐性费用</li>
                  <li class="list">一周内极速放款</li> 
              </ul>
-               <div class="title">
+               <div class="title" style="text-align: left;">
                   10分钟完成快速申请
              </div>
              <ul class="content"> 

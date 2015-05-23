@@ -222,7 +222,7 @@ define(function(require) {
             stockArray.total = total;
 
             //显示在列表里面
-            var tr = '<tr weight=' + tempStock.weight + '><td>' + tempStock.name + '</td><td class="tr"><span class="weight">' + tempStock.weight + '</span> %</td><td class="tc"><i class="iconfont icon-delete del-stock"></i></td></tr>';
+            var tr = '<tr weight=' + tempStock.weight + '><td>' + tempStock.name + '</td><td class="tr"><span class="weight">' + tempStock.weight + '</span> %</td><td class="tc"><i class="iconfont icon-delete2 del-stock"></i></td></tr>';
             $(tr).appendTo('.stock-list');
             $('.stock-total').html(stockArray.total);
 

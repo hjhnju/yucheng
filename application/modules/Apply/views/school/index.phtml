@@ -13,15 +13,13 @@
 {%/block%}
 
 {%block name="content"%} 
-<div class="box1" >
-    <div class="container container2  step">
+<div class="box1 step"> 
      <div class="container">
        {%include file='../../../views/common/loaninfo.phtml' type="1" current="3"%}
         <div class="title fl">
              <i class="iconfont icon-step3"></i>
              <span>学校评估</span>
         </div>
-    </div>
     </div> 
 </div>
 <div class="box2 loan">
@@ -99,7 +97,7 @@
                       {%assign var="total" value=$item.weight+$total%}
                           <tr weight="{%$item.weight%}">
                             <td>{%$item.name%}</td><td class="tr"><span class="weight">{%$item.weight%}</span>%</td>
-                            <td class="tc"><i class="iconfont icon-delete del-stock"></i></td>
+                            <td class="tc"><i class="iconfont icon-delete2 del-stock"></i></td>
                           </tr>
                        {%/foreach%}  
                     </tbody>  
