@@ -41,7 +41,8 @@ class SchoolController extends Base_Controller_Page{
             $stockLogic = new Apply_Logic_Stock();
             $stockLogic->saveCookie($_POST);
 
-            $this->ajax(array('url' => '/apply/person'), '', Apply_RetCode::NEED_REDIRECT);
+            $refer = $_POST['refer']? $_POST['refer']: '/apply/person';
+            $this->ajax(array('url' => $refer), Apply_RetCode::NEED_REDIRECT);
 		}
 
         return $this->ajaxError(Apply_RetCode::PARAM_ERROR, 

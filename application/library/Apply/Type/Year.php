@@ -24,7 +24,7 @@ class Apply_Type_Year extends Base_Type {
 	public static function getYears() {
 		$years = array();
 		$next_year = date("Y", time()) + 1;
-		for($i=$next_year; $i>=2010; $i--){
+		for($i=$next_year; $i>=1997; $i--){
 			$years[$i] = $i;
 		}
 
