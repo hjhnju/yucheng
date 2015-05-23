@@ -101,6 +101,7 @@ class Apply_Cookie {
         $apply 							= Apply_Cookie::parseCookie('apply');
 
         $school 						= Apply_Cookie::parseCookie('school');
+        $school['branch_school']		= $school['branch_school']? $school['branch_school'] : 0;
         $type_list 						= Apply_Type_SchoolType::$names;
         $school['type'] 				= $type_list[$school['type']];
         $nature_list 					= Apply_Type_Nature::$names;
