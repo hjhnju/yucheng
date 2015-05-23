@@ -1,0 +1,14 @@
+<div class="finish-nav apply">
+    <div class="finish-nav-top">
+        <div class="finish-nav-top-user">{%$userinfo.username%}</div>
+         
+    </div>
+    <ul class="finish-nav-item"> 
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/apply" class="finish-nav-item-link mymoney {%if $current == '1'%}current{%/if%}">我的贷款</a>
+        </li> 
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/message" class="finish-nav-item-link mynews {%if $current == '6'%}current{%/if%}">我的消息 {%if $user.unreadMsg%}<span class="mynews-count" style="color: #f2746a;font-size: 12px;width: 20px;height: 12px;">({%$user.unreadMsg%})</span> {%/if%}</a> 
+        </li>
+    </ul>
+</div>

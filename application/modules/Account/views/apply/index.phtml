@@ -1,0 +1,32 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/apply/index.css" />
+{%/block%}
+
+{%block name="script"%} 
+<script>
+    require(['my/apply/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<style type="text/css" media="all">
+ 
+</style>
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='../../../views/common/nav-apply.phtml' current="1"%}
+        <div class="finish-main">
+            <div class="finish-main-title">我的贷款</div> 
+            <div id="my-apply-list" class="my-apply-list">  
+                 <div class="xjd-loading">&nbsp;</div>  
+            </div>
+            <div id="my-apply-pager" class="my-apply-pager"></div>
+        </div>
+    </div>
+</div>
+
+{%/block%}

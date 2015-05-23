@@ -1,0 +1,358 @@
+/* body *, body :after, body :before  */
+
+.form-radio label .ui-radio *,
+.form-radio label .ui-radio:after,
+.form-radio label .ui-radio:before {
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+}
+
+.form-checkbox,
+.form-radio {
+    position: relative;
+}
+
+.form-checkbox input,
+.form-radio input {
+    position: absolute;
+    top: 0;
+    left: -9999px;
+}
+
+.form-checkbox label .ui-checkbox,
+.form-checkbox label .ui-radio,
+.form-radio label .ui-checkbox,
+.form-radio label .ui-radio {
+    position: relative;
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+.form-checkbox label .ui-checkbox:after,
+.form-checkbox label .ui-checkbox:before,
+.form-checkbox label .ui-radio:after,
+.form-checkbox label .ui-radio:before,
+.form-radio label .ui-checkbox:after,
+.form-radio label .ui-checkbox:before,
+.form-radio label .ui-radio:after,
+.form-radio label .ui-radio:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    margin: auto;
+    display: block;
+}
+
+.form-checkbox label .ui-checkbox:before,
+.form-checkbox label .ui-radio:before,
+.form-radio label .ui-checkbox:before,
+.form-radio label .ui-radio:before {
+    z-index: 2;
+}
+
+.form-checkbox label .ui-checkbox:after,
+.form-checkbox label .ui-radio:after,
+.form-radio label .ui-checkbox:after,
+.form-radio label .ui-radio:after {
+    content: '';
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.form-checkbox input:focus~label .ui-checkbox:after,
+.form-radio input:focus~label .ui-radio:after {
+    border-color: #4fc501;
+}
+
+.form-radio label .ui-radio:after,
+.form-radio label .ui-radio:before {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.form-radio label .ui-radio:before {
+    content: '';
+    width: 0;
+    height: 0;
+    background: #4fc501;
+}
+
+.form-radio input:checked~label .ui-radio:before {
+    width: 12px;
+    height: 12px;
+}
+
+.form-checkbox label .ui-checkbox:before {
+    right: auto;
+    margin: auto 0 auto 15%;
+    line-height: 24px;
+    color: #4fc501;
+    overflow: hidden;
+    width: 0;
+}
+
+.form-checkbox input:checked~label .ui-checkbox:before {
+    width: 70%;
+}
+
+.form-checkbox--left label,
+.form-radio--left label {
+    padding-left: 37px;
+    line-height: 24px;
+}
+
+.form-checkbox--left label .ui-checkbox,
+.form-checkbox--left label .ui-radio,
+.form-radio--left label .ui-checkbox,
+.form-radio--left label .ui-radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.form-checkbox--right label,
+.form-radio--right label {
+    padding-right: 37px;
+    line-height: 24px;
+    text-align: right;
+}
+
+.form-checkbox--right label .ui-checkbox,
+.form-checkbox--right label .ui-radio,
+.form-radio--right label .ui-checkbox,
+.form-radio--right label .ui-radio {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.form-checkbox--top label,
+.form-radio--top label {
+    text-align: center;
+    display: block;
+}
+
+.form-checkbox--top label .ui-checkbox,
+.form-checkbox--top label .ui-radio,
+.form-radio--top label .ui-checkbox,
+.form-radio--top label .ui-radio {
+    margin: 0 auto 5px;
+}
+
+.form-checkbox--bottom label,
+.form-radio--bottom label {
+    padding-bottom: 29px;
+    text-align: center;
+}
+
+.form-checkbox--bottom label .ui-checkbox,
+.form-checkbox--bottom label .ui-radio,
+.form-radio--bottom label .ui-checkbox,
+.form-radio--bottom label .ui-radio {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+//配合selectpic 开始
+/*外面边框的样式*/
+
+.selectBox_div {
+    background-color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 1px #CFCFCF;
+    line-height: 30px;
+    position: absolute;
+    overflow: hidden;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 9050;
+}
+
+.selectBox_icon {
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    float: right;
+    height: 30px;
+    width: 15px;
+    cursor: pointer;
+    color: #4fc501;
+    font-size: 18px;
+    margin-right: 5px;
+    &:before {
+        content: "\e610";
+    }
+}
+
+.selectBox_div:hover {
+    /*   background-color: #F5F5F5; */
+    
+    border: solid 1px #ccc;
+}
+
+.selectBox_div:active {
+    -moz-box-shadow: 0 0 3px #0099CC;
+    -webkit-box-shadow: 0 0 3px #0099CC;
+    box-shadow: 0 0 3px #0099CC;
+    border: solid 1px #0099CC;
+}
+/*下拉框的主体*/
+
+.selectBox_options {
+    border: solid 1px #CFCFCF;
+    border-bottom: none;
+    position: absolute;
+    z-index: 9060;
+    font-size: 13.5px;
+}
+
+.selectBox_options ul {
+    list-style: none;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    z-index: 9060;
+    font-size: 13.5px;
+}
+
+.selectBox_options ul li {
+    border-bottom: solid 1px #CFCFCF;
+    padding-left: 5px;
+    display: block;
+    font-size: 13.5px;
+    z-index: 9060;
+    background-color: #fff;
+    &:hover {
+        .transition(all 150ms ease-in-out 0s);
+    }
+}
+
+.selectBox_options_selected {
+    font-size: 13.5px;
+    z-index: 9060;
+}
+/*设置下拉框的不透明度*/
+
+.select_hide {
+    -moz-opacity: 0;
+    opacity: 0;
+    -webkit-opacity: 0;
+    filter: alpha(opacity=0);
+    display: none;
+}
+/*设置为disabled的时候*/
+
+.selectBox_no_select {
+    cursor: default;
+    color: #9a9898;
+    background-color: #F5F5F5;
+}
+
+//配合 icheck 开始
+/* iCheck plugin Flat skin, red
+----------------------------------- */
+.iradio *,
+.iradio:after,
+.iradio:before { 
+    .transition(all 200ms ease);
+}
+
+.iCheck-helper {
+    z-index: 3;
+} 
+.icheckbox,
+.iradio {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    border: none; 
+    margin-bottom: 5px;
+    input{
+        display: none;
+    }
+}
+
+.iradio:before,
+.iradio:after {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    margin: auto;
+    display: block;
+}
+
+.iradio:before {
+    content: '';
+    width: 0;
+    height: 0;
+    background: #4fc501;
+    border-radius: 50%;
+} 
+.iradio:after {
+    content: '';
+    background: #fff;
+    border: 1px solid #ddd;
+    z-index: 1;
+    .border-radius(50%);
+}
+.iradio.checked:before {
+    width: 12px;
+    height: 12px;
+    z-index: 2;
+}
+ 
+.icheckbox.disabled:before {
+    background-position: -44px 0;
+    cursor: default;
+}
+
+.icheckbox.disabled:after {
+     background: #ddd;
+}
+ 
+
+.iradio.disabled:before {
+    background: #fff;
+    cursor: default;
+    z-index: 2;
+} 
+.iradio .disabled:after {
+     background: #ddd;
+}
+
+/* HiDPI support */
+
+/* @media (-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi),
+(min-resolution: 1.25dppx) {
+    .icheckbox,
+    .iradio {
+        background-image: url(red@2x.png);
+        -webkit-background-size: 176px 22px;
+        background-size: 176px 22px;
+    }
+} */
+/* iCheck plugin Flat skin, red
+----------------------------------- */

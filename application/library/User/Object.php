@@ -8,11 +8,6 @@
  */ 
 class User_Object {
 
-    //用户类型－个人用户
-    const TYPE_PRIV = 1;
-    //用户类型－企业用户
-    const TYPE_CORP = 2;
-
     /**
      * 字段与属性隐射关系
      * @var array
@@ -78,7 +73,7 @@ class User_Object {
     public function __construct($userid = 0){
         $this->loginObj = new User_Object_Login(intval($userid));
         $usertype       = $this->loginObj->usertype;
-        if(self::TYPE_CORP === $usertype){
+        if(User_Type_Roles::TYPE_CORP === $usertype){
             $this->corpInfoObj = new User_Object_Corpinfo($this->userid);
         }else{
             $this->infoObj = new User_Object_Info($this->userid);
@@ -189,6 +184,9 @@ class User_Object {
         if($this->loginObj){
             $displayName = !empty($this->loginObj->name) ? $this->loginObj->name : 
                 Base_Util_String::starPhone($this->loginObj->phone);
+            if($displayName == '') {
+                $displayName = Base_Util_String::starEmail($this->loginObj->email);
+            }
         }
         return $displayName;
     }
