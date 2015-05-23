@@ -34,10 +34,10 @@ class ReviewController extends Base_Controller_Page{
             //保存股权结构信息
             $stock = new Apply_Logic_Stock();
             $objStock = $stock->saveStock($apply_id);
-            if($objStock['status'] != Apply_RetCode::SUCCESS) {
-                return $this->ajaxError(Apply_RetCode::STOCK_PARAM_ERROR, 
-                    Apply_RetCode::getMsg(Apply_RetCode::STOCK_PARAM_ERROR));
-            }
+            // if($objStock['status'] != Apply_RetCode::SUCCESS) {
+            //     return $this->ajaxError(Apply_RetCode::STOCK_PARAM_ERROR, 
+            //         Apply_RetCode::getMsg(Apply_RetCode::STOCK_PARAM_ERROR));
+            // }
             //保存个人信息
             $personal   = new Apply_Logic_Personal();
             $objPersonal= $personal->savePerson($apply_id);
