@@ -52,13 +52,10 @@ class OverviewController extends Base_Controller_Page {
      *     
      */
     public function indexAction(){
-
-        $isMobile = Base_Util_Mobile::isMobile();
-        if($isMobile){
-            return $this->redirect('/m/account/overview');
+        if($this->objUser->usertype == User_Type_Roles::TYPE_FINA){
+            return $this->redirect('/account/apply');
         }
-
-        $userInfo     = $this->userInfoLogic->getUserInfo($this->objUser);        
+        $userInfo     = $this->userInfoLogic->getUserInfo($this->objUser);     
         $userBg       = Finance_Api::getUserBalance($this->userid);
         $avlBal       = Base_Util_Number::tausendStyle($userBg['AvlBal']);
         $acctBal      = Base_Util_Number::tausendStyle($userBg['AcctBal']);

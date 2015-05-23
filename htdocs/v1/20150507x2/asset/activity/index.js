@@ -1,1 +1,0 @@
-define("activity/index",["require","jquery"],function(require){function e(){}require("jquery");return{init:e}});

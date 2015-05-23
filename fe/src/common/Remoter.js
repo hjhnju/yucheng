@@ -105,7 +105,7 @@ define(function (require) {
                         });
                     }
                 },
-                error: function() {
+                error: function(e) {
                     /**
                      * 触发错误回调
                      *

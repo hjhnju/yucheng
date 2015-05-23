@@ -1,0 +1,94 @@
+{%if $type == '1'%}
+
+ <ul class="step-box">
+     <li class="step-title">最高效便捷地获得教育贷款</li>
+      <li class="btn {%if $current == '1'%}current{%/if%}">
+          <i class="iconfont icon-step1"></i>
+          <span>确认贷款额度</span>
+      </li>
+      <li class="iconfont icon-directionright dire"></li>
+      <li class="btn {%if $current == '2'%}current{%/if%}">
+          <i class="iconfont icon-step2"></i>
+          <span>贷款资格评估</span>
+      </li>
+      <li class="iconfont icon-directionright dire"></li>
+      <li class="btn {%if $current == '3'%}current{%/if%}">
+          <i class="iconfont icon-step3"></i>
+          <span>学校评估</span>
+      </li>
+      <li class="iconfont icon-directionright dire"></li>
+      <li class="btn {%if $current == '4'%}current{%/if%}">
+          <i class="iconfont icon-step4"></i>
+          <span>个人评估</span>
+      </li>
+  </ul>
+{%elseif $type == '2'%}
+    <div class="title" style="margin:20px 0px;font-size:20px;">贷款信息</div>
+    <form action="" method="post" accept-charset="utf-8" name="loan-form" id="loan-form">  <div class="loan-input loan-input-w fl"> 
+          <span class="dis-block fl">
+              ￥
+          </span>
+          <input autocomplete="off" type="text" name="amount" class="loan-num"  value="{%$data.apply.amount%}" />
+          <i class="icon up"></i>
+          <i class="icon down"></i>
+      </div>  
+    <fieldset class="form-radio-group cl--ra fl">
+        {%foreach $data.duration as $key=>$item%}
+                {%assign var="col" value=$key+1%}
+                  <div class="form-default_element form-radio form-radio--top">
+                    {%if $col == 3%}
+                      {%assign var="check" value="checked='true'"%}
+                    {%else%}
+                      {%assign var="check" value=""%}
+                    {%/if%}
+                    <input type="radio" id="calc-loan-{%$col%}" name="duration" {%$check%} value="{%$item.value%}" duration_type="{%$item.type%}" data-step="{%$item.step%}"/>
+                    <label for="calc-loan-{%$col%}"><span class="ui-radio"></span>{%$item.label%}</label>
+                  </div>  
+        {%/foreach%} 
+    </fieldset>
+    <div class="title2 fl" style="padding: 10px 0px 10px 0px;line-height: 20px;">
+      按月付息，到期还本;<br/>
+      <span class="f14">共<span class="duration-step-count color-font-green">2</span>期</span>
+    </div>
+    <table cellspacing="0" cellpadding="0" width="100%" class="from-table  fl">
+        <tr>
+            <td class="th-one">贷款总额</td>
+            <td class="td-one" amount></td>
+        </tr>
+        <tr>
+            <td class="th-two">服务费用</td>
+            <td class="td-two" service_charge></td>
+        </tr>
+        <tr>
+            <td class="th-one">实际到账</td>
+            <td class="td-one" real_amount></td>
+        </tr>
+        <tr>
+            <td class="th-two">贷款利率</td>
+            <td class="td-two" rate></td>
+        </tr>
+        <tr>
+            <td class="th-one">月平均利息</td>
+            <td class="td-one" interest_month></td>
+        </tr>
+        <tr>
+            <td class="th-two">贷款周期</td>
+            <td class="td-two" duration></td>
+        </tr>
+        <tr>
+            <td class="th-one">总还款额</td>
+            <td class="td-one" total></td>
+        </tr> 
+        <tr>
+            <td colspan="2" class="tl">
+                <span class="f12 lh20 dis-block" style="margin-top: 10px;">注：最终贷款利率由兴教贷对借款人信用评估后确定。 
+              <a class="color-font-green f12" href="{%$webroot%}/help#loan" target="_blank">了解详细服务费率</a></span>
+            </td>
+        </tr>
+    </table>
+  </form>
+{%elseif $type == '3'%}
+
+{%else%}
+
+{%/if%}

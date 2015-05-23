@@ -6,7 +6,7 @@
  * @time 15-1-1
  */
 
-define(function () {
+define(function() {
 
     var $ = require('jquery');
     var moment = require('moment');
@@ -39,11 +39,9 @@ define(function () {
 
             if (startTime > today) {
                 render(startTime - today, index, 'startTime');
-            }
-            else if (endTime > today) {
+            } else if (endTime > today) {
                 render(endTime - today, index, 'leftTime');
-            }
-            else {
+            } else {
                 clearTimeout(countList[index]);
                 $(dom).html(etpl.render('over'));
             }
@@ -57,7 +55,7 @@ define(function () {
          * @param {string} tpl target名字
          */
         function render(difftime, idx, tpl) {
-            countList[idx] = setTimeout(function () {
+            countList[idx] = setTimeout(function() {
 
                 //时差差了8小时
                 var time = moment(difftime - 8 * 60 * 60 * 1000).toArray();
@@ -90,8 +88,20 @@ define(function () {
         countList.length = 0;
     }
 
+
+    //间隔一定时间后执行某一函数
+    function Interval(fun,time){
+        if(!$.isFunction(fun)){
+            return;
+        }
+       return  setInterval(function () {
+            fun();  
+        },time);
+    }
+
     return {
         init: init,
-        clear: clear
+        clear: clear,
+        Interval:Interval
     };
 });

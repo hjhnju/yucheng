@@ -1,0 +1,1491 @@
+@import '../../../dep/est/1.3.0/src/all.less';
+@import "./color.less";
+@import "../ui/Pager/pager.less";
+@import "./datepicker.less";
+@import "../ui/Dialog/dialog.less";
+@import "./prettifyForm";
+body {
+    margin: 0;
+    font-size: 12px;
+    font-family: "Microsoft YaHei","Tahoma","Geneva","sans-serif";
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    li {
+        list-style: none;
+    }
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
+}
+img{border:none;}
+.container {
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    &.z-index {
+        z-index: 15;
+    }
+    .clearfix;
+}
+
+//header开始
+.header {
+    height: 60px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.header-left {
+    float: left;
+    margin-top: 17px;
+}
+
+.header-left-phone {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 24px;
+    color: #666666;
+    margin-right: 10px;
+    padding-left: 33px;
+    background: url(../img/linkphone.png) 0 3px no-repeat;
+}
+
+.header-left-time {
+    display: inline-block;
+    line-height: 24px;
+    color: #666666;
+    margin-right: 20px;
+}
+
+.header-left-attention {
+    display: inline-block;
+    line-height: 24px;
+    font-size: 14px;
+    color: #666666;
+    .attention-me {
+        display: inline-block;
+        width: 28px;
+        height: 18px;
+        font-size: 12px;
+        background: url("../img/header_icon.png") 0 0 no-repeat;
+        margin-right: 10px;
+        vertical-align: middle;
+        position: relative;
+        &.weibo {
+            background-position: 0 -114px;
+            &:hover {
+                background-position: 0 -58px;
+            }
+        }
+        &.weixin {
+            background-position: 0 -29px;
+            &:hover {
+                background-position: 0 -1px;
+            }
+        }
+        &.qq {
+            background-position: 0 -336px;
+            &:hover {
+                background-position: 0 -280px;
+            }
+        }
+    }
+}
+
+.xinlang-erweima {
+    width: 258px;
+    height: 258px;
+    position: absolute;
+    left: -117px;
+    top: 27px;
+    z-index: 12;
+    border: 1px solid #cccccc;
+    display: none;
+    background: url(../img/weixin.jpg) 0 0 no-repeat;
+    text-decoration: none;
+    color: #333333;
+    &.footer-erweima {
+        top: -270px;
+    }
+    &.footer-tip {
+        top: -64px;
+        left: -62px;
+        display: none;
+    }
+    &.current {
+        display: block;
+    }
+}
+
+.weibo-tip {
+    background: #ffffff;
+    width: 150px;
+    height: 40px;
+    line-height: 20px;
+    padding: 5px 0;
+    text-align: center;
+    left: -70px;
+    color: #a7a7a7;
+    .border-radius(5px);
+    .weibo-tip-span {
+        color: blue;
+    }
+    .triangle-top {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #cccccc;
+        left: 70px;
+        top: -8px;
+        &.footer-erweima-top {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #cccccc;
+            border-bottom: none;
+            top: 258px;
+            left: 116px;
+        }
+    }
+    .triangle-bottom {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #FFFFFF;
+        left: 70px;
+        top: -6px;
+        &.footer-erweima-bottom {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #ffffff;
+            top: 258px;
+            border-bottom: none;
+            left: 116px;
+        }
+    }
+}
+
+.triangle-top {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #cccccc;
+    left: 119px;
+    top: -8px;
+    &.footer-erweima-top {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #cccccc;
+        border-bottom: none;
+        top: 258px;
+        left: 116px;
+    }
+}
+
+.triangle-bottom {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #FFFFFF;
+    left: 119px;
+    top: -6px;
+    &.footer-erweima-bottom {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #ffffff;
+        top: 258px;
+        border-bottom: none;
+        left: 116px;
+    }
+}
+
+.header-right {
+    float: right;
+    margin-top: 15px;
+    .activity-img {
+        margin-top: 4px;
+        margin-right: 5px;
+        float: left;
+        border: 0px;
+    }
+    .new-activity {
+        display: block;
+        height: 30px;
+        float: left;
+        line-height: 30px;
+        color: #4fc501;
+        margin-right: 10px;
+        text-align: center;
+        a {
+            color: #4fc501;
+            text-decoration: none;
+        }
+    }
+}
+
+.header-right-default {
+    //    margin-top: 10px;
+}
+
+//登录注册滑块按钮开始
+.login-register {
+    border: 1px solid #76cf65;
+    .border-radius(25px);
+    width: 100px;
+    height: 29px;
+    background: url(../img/btn_bg1.png) no-repeat left center;
+    transition: background-position 0.4s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    -webkit-transition: background-position 0.4s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    -moz-transition: background-position 0.4s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    -o-transition: background-position 0.4s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+    a {
+        color: #4fc501;
+        transition: color .4s linear;
+        -webkit-transition: color .4s linear;
+        -moz-transition: color .4s linear;
+        -o-transition: color .4s linear;
+        display: block;
+        text-align: center;
+        width: 50px;
+        text-decoration: none;
+        line-height: 30px;
+    }
+}
+
+.register-hover {
+    background-position: left center;
+    .register {
+        color: #fff;
+    }
+    .login {
+        color: #4fc501;
+    }
+}
+
+.login-hover {
+    background-position: right center;
+    .register {
+        color: #4fc501;
+    }
+    .login {
+        color: #fff;
+    }
+}
+
+//登录注册滑块按钮结束
+.default-fastlogin { 
+    text-decoration: none;
+    line-height: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.default-login {
+    display: inline-block;
+  /*   padding: 4px 8px; */
+    color: @color-red;
+    text-decoration: none;
+    .border-radius(3px);
+    &:hover {
+        /* background-color: @color-red-hover; */
+    }
+}
+
+.header-right-login {
+    margin-top: 18px;
+}
+
+.unreadmsg {
+    text-decoration: none; 
+    font-size: 12px;
+    i{ 
+      width: 10px;
+      height: 10px;
+      font-size: 14px;
+      margin-right: 4px;  
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+//header结束
+//nav 开始
+.nav {
+    height: 86px;
+    border-bottom: 2px solid @color-green;
+    padding-top: 22px;
+}
+
+.logo {
+    float: left;
+    width: 280px;
+    height: 60px;
+    display: block;
+    margin: -2px 42px 0 0;
+    img {
+        outline: none;
+        border: 0;
+    }
+}
+
+.nav-item {
+    float: left;
+    margin-top: 22px;
+    .clearfix;
+}
+
+.nav-item-list {
+    margin-right: 24px;
+    float: left;
+    &.last {
+        margin-right: 0;
+    }
+    .nav-item-link {
+        color: #676767;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 12px 7px;
+        text-decoration: none;
+        &:hover, &.current {
+            border-bottom: 3px solid @color-green;
+            color: @color-green;
+        }
+    }
+}
+
+.nav-myaccount {
+    float: right;
+    width: 110px;
+    margin: 22px 10px 0 0;
+    height: 24px;
+    line-height: 22px;
+    color: #676767;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    background: url("../img/my_account.png") 20px 0 no-repeat;
+    text-align: right;
+    padding-left: 10px;
+}
+
+//nav结束
+//footer开始
+.footer {
+    padding: 25px 0;
+    background-color: #292929;
+}
+
+.footer-left {
+    float: left;
+    font-size: 14px;
+}
+
+.footer-item {
+    .clearfix;
+    margin-bottom: 0px;
+}
+
+.footer-item-list {
+    float: left;
+    margin-right: 12px;
+}
+
+.footer-item-link {
+    text-decoration: none;
+    color: #cacaca;
+    float: left;
+    &:hover {
+        text-decoration: none;
+        color: #cacaca;
+    }
+    &:visited {
+        text-decoration: none;
+        color: #cacaca;
+    }
+}
+
+.footer-vertical {
+    margin: 0 6px;
+    color: #b1b1b3;
+    float: left;
+}
+
+.footer-site {}
+
+.footer-site-left {
+    color: #b1b1b3;
+    margin-right: 20px;
+    margin-top: 52px;
+}
+
+.footer-site-me {
+    color: #b1b1b3;
+}
+
+.footer-site-me-xinlang {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../img/header_icon.png") 0 0 no-repeat;
+    vertical-align: middle;
+    margin-left: 5px;
+    position: relative;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    font-size: 12px;
+    &.weibo {
+        background-position: 0 -150px;
+        &:hover {
+            background-position: 0 -300px;
+        }
+    }
+    &.weixin {
+        background-position: 0 -200px;
+        &:hover {
+            background-position: 0 -250px;
+        }
+    }
+    &.qq {
+        background-position: -30px -380px;
+        &:hover {
+            background-position: 0 -380px;
+        }
+    }
+}
+
+.footer-right {
+    float: right;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    color: #b1b1b3;
+    padding-left: 40px;
+    background: url("../img/footer_phone.png") 0 0 no-repeat;
+    background-image: none;
+}
+
+.footer-tip {
+    background: #ffffff;
+    width: 170px;
+    height: 40px;
+    line-height: 20px;
+    text-align: center;
+    padding: 5px 0;
+    display: block;
+    left: 0;
+    top: 10px;
+    color: #a7a7a7;
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    .weibo-tip-span {
+        color: blue;
+    }
+    .border-radius(5px);
+    .triangle-top {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #cccccc;
+        left: 70px;
+        top: -8px;
+        &.footer-erweima-top {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #cccccc;
+            border-bottom: none;
+            top: 50px;
+            left: 62px;
+        }
+    }
+    .triangle-bottom {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #FFFFFF;
+        left: 70px;
+        top: -6px;
+        &.footer-erweima-bottom {
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #ffffff;
+            top: 50px;
+            border-bottom: none;
+            left: 62px;
+        }
+    }
+}
+
+.footer-bottom {
+    float: left;
+    width: 1000px;
+    margin-top: 24px;
+    font-size: 14px;
+    height: 56px;
+    line-height: 20px;
+    color: #b1b1b3;
+    border-top: 0px dashed #000;
+    .footer-site-left {
+        margin: 10px 0px 0px 0px;
+    }
+}
+
+.footer-site-num {
+    font-size: 18px;
+    margin-top: 20px;
+    span {
+        font-size: 24px;
+    }
+    em {
+        font-size: 14px;
+        font-style: normal;
+    }
+}
+
+.footer-bottom-img {}
+
+//footer结束
+//投资列表开始
+.investlist {
+    padding-bottom: 23px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.investlist-title {
+    height: 56px;
+    line-height: 56px;
+    font-size: 20px;
+    color: #333333;
+}
+
+.investlist-box {
+    position: relative;
+    min-height: 300px;
+}
+
+.investlist-box-title {
+    border-bottom: 1px dashed #d8d8d8;
+    padding-left: 12px;
+    min-height: 64px;
+    line-height: 64px;
+    &:hover {
+        background-color: #f8f8f8;
+    }
+    &.border-bottom {
+        border-bottom: none;
+    }
+}
+
+.investlist-box-title-name {
+    float: left;
+    color: #999999;
+    font-size: 14px;
+    &.name {
+        width: 240px;
+        text-align: center;
+        .clearfix;
+        .ellipsis();
+    }
+    &.text-align-name {
+        text-align: left;
+    }
+    &.grade {
+        width: 100px;
+        text-align: left;
+        height: 64px;
+        .clearfix;
+        .grade-star {
+            display: inline-block;
+            width: 100px;
+            height: 64px;
+            margin-right: 4px;
+            float: left;
+            margin-top: 10px;
+        }
+    }
+    &.lilv {
+        width: 100px;
+        text-align: center;
+    }
+    &.price {
+        width: 170px;
+        text-align: center;
+    }
+    &.time {
+        width: 88px;
+        text-align: center;
+    }
+    &.jindu {
+        width: 170px;
+        text-align: center;
+        .clearfix;
+    }
+    &.status {
+        width: 120px;
+        text-align: center;
+    }
+}
+
+.jindu-box {
+    width: 70px;
+    height: 8px;
+    background-color: #cccccc;
+    float: left;
+    margin: 28px 10px 0 40px;
+    text-align: left;
+    .border-radius(20px);
+    .jindu-box-inline {
+        min-width: 10px;
+        background-color: @color-red;
+        height: 8px;
+        .border-radius(20px);
+    }
+}
+
+.jindu-number {
+    float: left;
+}
+
+.name-shi {
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    width: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: @color-green;
+    margin: 20px 10px 0;
+    .border-radius(3px);
+}
+
+.school {
+    text-align: left;
+    float: left;
+    width: 130px;
+    overflow: hidden;
+    color: #323232;
+    font-size: 14px;
+    .ellipsis();
+    display: inline-block;
+}
+
+.school-new {
+    float: left;
+    padding: 4px;
+    color: #d5f423;
+    font-size: 12px;
+    background-color: @color-green;
+    display: inline-block;
+    .border-radius(3px);
+    height: 14px;
+    line-height: 14px;
+    margin-top: 20px;
+}
+
+.lilv-number {
+    font-size: 16px;
+    color: @color-red;
+    font-weight: bold;
+    &.color-blank {
+        color: #000000;
+    }
+}
+
+.lilv-bai {
+    font-size: 12px;
+    color: #949494;
+}
+
+.status-biding {
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    margin-top: 18px;
+    background-color: @color-green;
+    .border-radius(3px);
+    &:hover {
+        background-color: #72e45d;
+        color: #FFFFFF;
+    }
+    &.current {
+        color: #666;
+        background-color: #e5e5e5;
+    }
+    &.current:hover {
+        background-color: #e5e5e5;
+    }
+    &.start {
+        color: #fff;
+        background-color: #f2746a;
+    }
+    &.start:hover {
+        background-color: #f2746a;
+    }
+    &.finshed {
+        color: #666;
+        background-color: #bdbdbd;
+    }
+    &.finshed:hover {
+        background-color: #bdbdbd;
+    }
+}
+
+.investlist-more {
+    display: block;
+    text-decoration: none;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 20px;
+    text-align: center;
+    color: #999999;
+    font-size: 14px;
+}
+
+//投资列表结束
+//page开始
+.pager {
+    .clearfix;
+    width: 460px;
+    margin: 40px auto 0;
+}
+
+.pager-link {
+    float: left;
+    padding: 6px 10px;
+    border: 1px solid #cccccc;
+    margin-right: 10px;
+    color: #000000;
+    text-decoration: none;
+    .border-radius(3px);
+    &:hover, &.current {
+        background-color: @color-green;
+        color: #FFFFFF;
+        border-color: @color-green;
+    }
+}
+
+.pager-span {
+    float: left;
+    padding: 6px 10px;
+    border: 1px solid #cccccc;
+    margin-right: 10px;
+    .border-radius(3px);
+}
+
+//page结束
+.xjd-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(img/loading.gif) no-repeat center center;
+}
+
+.xjd-error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    vertical-align: middle;
+    text-align: center;
+    .xjd-error-msg {
+        color: #999;
+        height: 100px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        margin-top: -50px;
+        line-height: 100px;
+        font-size: 14px;
+    }
+}
+
+.school-link {
+    text-decoration: none;
+    color: #333333;
+}
+
+// 成功页面
+.success-pic {
+    height: 102px;
+    background: url(../img/success.png) center center no-repeat;
+    margin: 20px 0;
+    &.error-pic {
+        background: url(../img/error.png) center center no-repeat;
+    }
+}
+
+.success-text {
+    height: 30px;
+    line-height: 30px;
+    font-size: 24px;
+    color: @color-green;
+    text-align: center;
+}
+
+.success-box-time {
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    .success-link {
+        text-decoration: none;
+        color: @color-green;
+    }
+}
+
+.success {
+    background-color: #efefef;
+}
+
+.kaitong-box {
+    padding: 50px;
+    min-height: 450px;
+}
+
+.changephone-box {
+    background-color: #FFFFFF;
+    padding: 30px 70px 100px;
+}
+
+.color-red {
+    color: @color-red;
+}
+
+#mk-dialog .close {
+    background: url(img/fix_cha.png) 0 0 no-repeat;
+    width: 30px;
+    height: 30px;
+    top: -15px;
+    right: -15px;
+    font-size: 0;
+    border: 0;
+    &:hover {
+        border: 0;
+    }
+}
+
+.grade-star {
+    width: 50px;
+    height: 44px;
+    background: url("../img/grade_icon.png") 0 0 no-repeat;
+    float: left;
+    &.level-aaa {
+        background-position: 7px 0;
+    }
+    &.level-aa {
+        background-position: 7px -100px;
+    }
+    &.level-a {
+        background-position: 7px -200px;
+    }
+    &.level-b {
+        background-position: 7px -300px;
+    }
+    &.level-c {
+        background-position: 7px -400px;
+    }
+    &.level-d {
+        background-position: 7px -500px;
+    }
+    &.level-hr {
+        background-position: 7px -600px;
+    }
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.tc {
+    text-align: center;
+}
+
+//新版投资列表开始
+.newinvestlist {
+    margin-top: 55px;
+    .container {
+        width: 1200px;
+    }
+    .newinvestlist-title {
+        width: 1000px;
+        margin: 0 auto;
+        line-height: 28px;
+        font-size: 20px;
+    }
+    .more {
+        font-size: 14px;
+        height: 100%;
+        color: #adadad;
+        text-decoration: none;
+        width: 120px;
+        text-align: right;
+    }
+    .color-red {
+        color: #f2746a;
+    }
+    .newinvestlist-box {
+        width: 1000px;
+        margin: 0 auto;
+        margin-top: 23px;
+        min-height: 358px;
+        position: relative;
+        overflow: hidden;
+        .newinvestlist-box-list {
+            width: 2000px;
+            float: left;
+            li {
+                width: 230px;
+                height: 358px;
+                float: left;
+                margin-right: 27px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                background-color: #f8f8f8;
+                span {
+                    display: block;
+                }
+            }
+        }
+    }
+    .newinvestlist-box-title {
+        width: 230px;
+        height: 55px;
+        border-bottom: 1px solid #fff;
+        text-align: center;
+        *zoom: 1: ;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        white-space: nowrap;
+        .school {
+            margin-top: 18px;
+            line-height: 30px;
+            font-size: 18px;
+            width: 174px;
+        }
+    }
+    .newinvestlist-box-lilv {
+        margin-top: 26px;
+        height: 96px;
+        text-align: center;
+        span {
+            display: block;
+            float: none;
+        }
+        .lilv {
+            height: 42px;
+            width: 140px;
+            margin: 0px auto;
+            text-align: left;
+            margin-top: 7px;
+            background: url(../img/btn_bg.png) no-repeat 0px -73px;
+            .lilv-number {
+                font-size: 18px;
+                line-height: 42px;
+                color: #f2746a;
+                margin-left: 10px;
+                width: 60px;
+                display: block;
+                float: left;
+                text-align: center;
+                font-weight: normal;
+            }
+            .lilv-bai {
+                font-size: 12px;
+                line-height: 42px;
+                color: #f2746a;
+                display: inline-block;
+            }
+            .lilv-day {
+                display: inline-block;
+            }
+            .color-white {
+                color: #fff;
+            }
+        }
+    }
+    .newinvestlist-box-price {
+        height: 136px;
+        margin: 0px auto;
+        text-align: center;
+        line-height: 25px;
+        .total-title {
+            font-size: 18px;
+            line-height: 25px;
+            width: 76px;
+            text-align: right;
+        }
+        .total-price {
+            font-size: 24px;
+            line-height: 25px;
+            width: 144px;
+            text-align: left;
+        }
+        .rest-title {
+            width: 76px;
+            text-align: right;
+        }
+        .rest-price {
+            font-size: 14px;
+            width: 144px;
+            text-align: left;
+        }
+    }
+    .jindu-box {
+        width: 74px;
+        margin: 10px 0px 0px 10px;
+    }
+    .jindu-number {
+        width: 60px;
+        margin-right: 0px;
+        margin-left: 5px;
+        .lilv-bai {
+            width: 20px;
+        }
+    }
+    .grade {
+        font-size: 14px;
+        line-height: 25px;
+        width: 140px;
+        text-align: left;
+    }
+    .status {
+        width: 230px;
+        height: 46px;
+        font-size: 18px;
+        line-height: 46px;
+        font-weight: 500;
+        .status-biding {
+            display: inline-block;
+            width: 230px;
+            height: 46px;
+            line-height: 46px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            margin-top: 0px;
+            background-color: #76cf65;
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            transition: background-color 0.4s ease-in-out;
+            -webkit-transition: background-color 0.4s ease-in-out;
+            -moz-transition: background-color 0.4s ease-in-out;
+            -o-transition: background-color 0.4s ease-in-out;
+            &:hover {
+                background-color: #72e45d;
+                transition: background-color 0.4s ease-in-out;
+                -webkit-transition: background-color 0.4s ease-in-out;
+                -moz-transition: background-color 0.4s ease-in-out;
+                -o-transition: background-color 0.4s ease-in-out;
+            }
+            &.current {
+                color: #666;
+                background-color: #e5e5e5;
+            }
+            &.current:hover {
+                background-color: #e5e5e5;
+            }
+            &.start {
+                color: #fff;
+                background-color: #f2746a;
+            }
+            &.start:hover {
+                background-color: #f2746a;
+            }
+            &.finshed {
+                color: #666;
+                background-color: #bdbdbd;
+            }
+            &.finshed:hover {
+                background-color: #bdbdbd;
+            }
+        }
+    }
+}
+
+.level-A,
+.level-AA,
+.level-AAA {
+    color: #75cf64;
+}
+
+.level-B {
+    color: #499fc0;
+}
+
+.level-C {
+    color: #9471da;
+}
+
+.level-D {
+    color: #f2746a;
+}
+
+.level-HR {
+    color: #f2746a;
+}
+
+//新版投资列表结束
+//返回顶部按钮样式开始
+#scrollUp {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: url(../img/btn_icon.png) 0px -298px no-repeat;
+}
+
+//返回顶部按钮样式结束
+/* 颜色样式开始 */
+
+.color-red {
+    color: @color-red;
+}
+
+.color-green {
+    color: @color-green;
+}
+
+.color-gray-bg {
+    color: @color-gray-bg;
+}
+
+.color-black {
+    color: @color-black;
+}
+
+.color-white {
+    color: @color-white;
+}
+
+.color-font-green {
+    color: @color-font-green;
+}
+
+.color-font-black {
+    color: @color-font-black;
+}
+.color-6 {
+    color: @color-font-black;
+}
+/* 颜色样式结束 */
+/* 字体大小样式开始 */
+.f12{
+    font-size: 12px;
+}
+.f14 {
+    font-size: 14px;
+}
+
+.f16 {
+    font-size: 16px;
+}
+
+.f18 {
+    font-size: 18px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+.f22 {
+    font-size: 22px;
+}
+
+.f24 {
+    font-size: 24px;
+}
+.f26 {
+    font-size: 26px;
+}
+.f28 {
+    font-size: 28px;
+}
+.f30 {
+    font-size: 30px;
+}
+
+.lh14 {
+    line-height: 14px;
+}
+
+.lh16 {
+    line-height: 16px;
+}
+
+.lh18 {
+    line-height: 18px;
+}
+
+.lh20 {
+    line-height: 20px;
+}
+
+.lh22 {
+    line-height: 22px;
+}
+
+.lh24 {
+    line-height: 24px;
+}
+.lh26 {
+    line-height: 26px;
+}
+.lh28 {
+    line-height: 28px;
+}
+.lh30 {
+    line-height: 30px;
+}
+.lh40{
+    line-height: 40px;
+}
+/* 字体大小样式结束 */
+/* display:block  统一设置 */
+
+.dis-block {
+    display: block;
+}
+/* display:block  统一设置 */
+/* 融资贷款 版本的样式开始 */
+
+@font-face {
+    font-family: "iconfont";
+    src: url('../font/iconfont.eot');
+    /* IE9*/
+    
+    src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    
+    url('../font/iconfont.woff') format('woff'),
+    /* chrome、firefox */
+    
+    url('../font/iconfont.ttf') format('truetype'),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    
+    url('../font/iconfont.svg#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important; 
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-down:before { content: "\e610"; }
+.icon-up:before { content: "\e611"; }
+.icon-success:before { content: "\e612"; }
+.icon-weibo:before { content: "\e600"; }
+.icon-qq:before { content: "\e601"; }
+.icon-delete:before { content: "\e613"; }
+.icon-iconphone:before { content: "\e602"; }
+.icon-email:before { content: "\e614"; }
+.icon-delete2:before { content: "\e616"; }
+.icon-weixin:before { content: "\e603"; }
+.icon-error:before { content: "\e615"; }
+.icon-invest:before { content: "\e60a"; }
+.icon-directionleft:before { content: "\e606"; }
+.icon-directionright:before { content: "\e607"; }
+.icon-phone2:before { content: "\e605"; }
+.icon-phone:before { content: "\e604"; }
+.icon-phone3:before { content: "\e608"; }
+.icon-time:before { content: "\e609"; }
+.icon-step1:before { content: "\e60b"; }
+.icon-step2:before { content: "\e60c"; }
+.icon-step3:before { content: "\e60d"; }
+.icon-step4:before { content: "\e60e"; }
+.icon-step5:before { content: "\e60f"; }
+
+.nav-v2 {
+    height: 66px;
+    padding-top: 12px;
+     border-bottom: 2px solid #dfdfdf;
+    .nav-item {
+        margin-top: 0px;
+        line-height: 66px;
+        .nav-item-list {
+            .nav-item-link {
+                font-weight: normal;
+                color: @color-font-black;
+                &:hover, &.current {
+                    border-bottom: 0px solid @color-green;
+                    color: @color-font-green;
+                }
+            }
+        }
+    }
+    .login-register {
+        border: 1px solid #dcdcdc;
+        .border-radius(0px);
+        height: 23px;
+        background-image: none;
+        background-color: #fff;
+        margin-top: 20px;
+        a {
+            line-height: 23px;
+            color: @color-font-black;
+            transition: background-color 0.4s ease-in-out;
+            -webkit-transition: background-color 0.4s ease-in-out;
+            -moz-transition: background-color 0.4s ease-in-out;
+            -o-transition: background-color 0.4s ease-in-out;
+        }
+    }
+    .register-hover {
+        .register {
+            background-color: #eeeeee;
+            color: @color-font-green;
+        }
+        .login {
+            color: @color-font-black;
+        }
+    }
+    .login-hover {
+        .register {
+            color: @color-font-black;
+        }
+        .login {
+            background-color: #eeeeee;
+            color: @color-font-green;
+        }
+    }
+}
+
+.footer_v2 {
+    background-color: #3d4352;
+    padding: 50px 0px 40px 0px;
+    .footer-right {
+        font-size: 14px;
+        line-height: 28px;
+        padding-left: 0px;
+        .icon-phone {
+            color: #84878e;
+            font-size: 30px;
+            line-height: 40px;
+        }
+        .phone {
+            display: inline-block;
+        }
+        .worktime {
+            display: block;
+        }
+        .attention-box {
+            display: block;
+            margin-top: 16px;
+            .attention-me {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                font-size: 20px;
+                color: #cacaca;
+                margin-right: 10px;
+                vertical-align: middle;
+                text-decoration: none;
+                position: relative;
+                cursor: pointer;
+                &.weibo {
+                    &:hover {
+                        color: #e33f33;
+                    }
+                    &:before {
+                        content: "\e600";
+                    }
+                }
+                &.weixin {
+                    &:hover {
+                        color: #75cf64;
+                    }
+                    &:before {
+                        content: "\e603";
+                    }
+                }
+                &.qq {
+                    &:hover {
+                        color: #48a7dd;
+                    }
+                    &:before {
+                        content: "\e601";
+                    }
+                }
+            }
+        }
+    }
+    .footer-bottom {
+        width: 600px;
+        margin-top: 36px;
+    }
+}
+/* 融资贷款 版本的样式结束 */
+
+//移动端兼容样式
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+    body {
+        width: 100%;
+        min-width: 1000px;
+    }
+    .container {
+        width: 1000px;
+    }
+    .footer {
+        min-width: 1000px;
+        width: 100%;
+    }
+    .footer-item-list {
+        margin-right: 10px;
+    }
+}
+
+//移动端兼容样式
