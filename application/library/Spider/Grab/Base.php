@@ -5,8 +5,12 @@
  * 抓取网页基本类
  */
 class Spider_Grab_Base{
-    public $_path = '/home/work/user/guojl/files/';
+    public $_path = '/home/work/var/files/';
     public $_separator = '.html';
+    public $_province = '';
+    public $_type = '';
+    
+    
     /**
      * @param $path 需要创建的路径
      * @return bool 返回创建成功与否

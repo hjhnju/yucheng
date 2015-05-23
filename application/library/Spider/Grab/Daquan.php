@@ -7,8 +7,10 @@
 class Spider_Grab_Daquan extends Spider_Grab_Base
 {
     public function __construct($url, $type, $province){
-        $this->_path =  $this->_path . $province . '/' . $type;
-        $this->_url  = $url;
+        $this->_path     =  $this->_path . $province . '/' . $type;
+        $this->_url      = $url;
+        $this->_province = $province;
+        $this->_type     = $type;
     }
     public function run()
     {
@@ -43,6 +45,8 @@ class Spider_Grab_Daquan extends Spider_Grab_Base
                 $arrRet['address'] = $this->getSubstr("地址:", "<\/ol>", $arrDetail[1]);
                 $arrRet['website'] = $this->getSubstr("网址:", "<\/ol>", $arrDetail[1]);
                 $arrRet['introduce'] = $this->getSubstr("hidden;\"><p>", "<\/p>", $arrDetail[1]);
+                $arrRet['province'] = $this->_province;
+                $arrRet['type_en'] = $this->_type;
                 $school[] = $arrRet;
             }
             //写入磁盘

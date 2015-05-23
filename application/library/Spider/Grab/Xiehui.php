@@ -3,14 +3,13 @@
  * 我要搜学网
  */
 class Spider_Grab_Xiehui extends Spider_Grab_Base{
-    private $_type = '';
     /**
      * 构造函数
      * @param $path 存储下载文件的路径
      * @param $url  网站初始地址
      */
     public function __construct(){
-
+        $this->_province = 'guangxi';
     }
 
     /**
@@ -40,6 +39,8 @@ class Spider_Grab_Xiehui extends Spider_Grab_Base{
                     'address' => $val[1],
                     'type'    => $val[2],
                     'nature'  => '民办',
+                    'province' => $this->_province,
+                    'type_en' => $this->_type,
                 );
                 if(empty($val[4])){
                     $arrData['phone']     = $val[3];

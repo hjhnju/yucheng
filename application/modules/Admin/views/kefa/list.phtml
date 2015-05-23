@@ -1,0 +1,149 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+<script>
+function refresh(){
+	var arr1 = new Array();
+	var arr2 = new Array();
+	var arr3 = new Array();
+	arr1["beijing"] = 0;
+	arr1["guangxi"] = 1;
+
+	arr2["private"] = 0;
+	arr2["public"]  = 1;
+	arr2["unknow"]  = 2;
+	
+	arr3["kindergarten"] = 0;
+	arr3["middle"] = 1;	
+	
+	var place  = "{%$place%}";
+    var type   = "{%$type%}";  
+    var nature = "{%$nature%}";
+    
+    var index1 = arr1[place];
+    var index2 = arr2[nature];
+    var index3 = arr3[type];
+    
+	document.getElementById("jumpMenu1")[index1].selected=true;
+	document.getElementById("jumpMenu2")[index2].selected=true;
+	document.getElementById("jumpMenu3")[index3].selected=true;
+    
+ }
+</script>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                             Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+            学校列表 
+            </h3>
+            <div class="page-bar">
+            <ul class="page-breadcrumb">
+            <form action="" method="get">
+                   学校地区：<select  name="jumpMenu" id="jumpMenu1" onchange="MM_jumpMenu()">
+           		<option value = "beijing">北京</option> 
+           		<option value = "guangxi">广西</option>   
+              </select> 
+              &nbsp;&nbsp;学校性质：<select name="jumpMenu" id="jumpMenu2" onchange="MM_jumpMenu()">         		
+                <option value = "private">私立</option> 
+           		<option value = "public">公立</option>
+           		<option value = "unknow">未知的</option>          
+              </select>  
+              &nbsp;&nbsp;学校类型：<select name="jumpMenu" id="jumpMenu3" onchange="MM_jumpMenu()">         		
+                <option value = "kindergarten">幼儿园</option> 
+           		<option value = "middle">中小学</option>           
+              </select>
+              <br>     
+             </form>
+             </ul>
+            </div>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="/admin">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>学校名称</th>
+                            <th>地址</th>
+                            <th>电话</th>
+                            <th>学校性质</th>
+                            <th>标记</th>
+                            <th>开办年份 </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%foreach from=$arrInfo key=i item=info%}
+                        <tr>
+                            <td>{%$info.id%}</td>
+                            <td>{%$info.name%}</td>
+                            <td>{%$info.address%}</td>
+                            <td>{%$info.phone%}</td>
+                            <td>{%$info.nature%}</td>
+                            <td>{%$info.tag%}</td>
+                            <td>{%$info.foundation_time%}</td>
+                            <td><form action="/admin/kefa/detail?id={%$info.id%}&type=detail" method="POST"><input value="详情" type="submit"></form></td>
+                            <td><form action="/admin/kefa/detail?id={%$info.id%}&type=edit" method="POST" ><input value="编辑" type="submit" ></form></td>                           
+                        </tr>
+                        {%/foreach%} 
+                        <iframe id="id_iframe" name="id_iframe" style="display:none;" onload="refresh()"></iframe>                       
+                    </tbody>
+                </table>
+                
+            </div>
+            <div id="setpage"  style = "text-align: center;font-size:17px;margin:0 auto;"></div> 
+        </div>
+    </div>
+   
+    <script src = "{%$feroot%}s/global/scripts/pageCut.js"></script>
+    <script>
+    cpage = {%$page%}; 
+    totalpage = {%$pageall%}; 
+    setpage(cpage,totalpage);
+    </script>
+    <script>
+    	function MM_jumpMenu(){ //v3.0 
+           var selectIndex1 = document.getElementById("jumpMenu1").selectedIndex;
+    	   var selectValue1 = document.getElementById("jumpMenu1").options[selectIndex1].value
+
+    	   var selectIndex2 = document.getElementById("jumpMenu2").selectedIndex;
+    	   var selectValue2 = document.getElementById("jumpMenu2").options[selectIndex2].value 
+
+    	   var selectIndex3 = document.getElementById("jumpMenu3").selectedIndex;
+    	   var selectValue3 = document.getElementById("jumpMenu3").options[selectIndex3].value  
+    	    	   
+      	   window.location="/admin/kefa/list?place="+selectValue1+"&nature="+selectValue2+"&type="+selectValue3;
+        } 
+    </script> 
+    
+});
+{%/block%}

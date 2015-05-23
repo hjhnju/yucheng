@@ -13,6 +13,8 @@ class Spider_Grab_SouXue extends Spider_Grab_Base{
      */
     public function __construct($url, $type, $province){
         $this->_path =  $this->_path . $province . '/' . $type;
+        $this->_province = $province;
+        $this->_type = $type;
         $this->_url  = $url;
     }
 
@@ -72,6 +74,8 @@ class Spider_Grab_SouXue extends Spider_Grab_Base{
                 'introduce' => $detail['introduce'],
                 'regulation' => $detail['regulations'],
                 'type' => $types[$key],
+                'province' => $this->_province,
+                'type_en'  => $this->_type,
             );
         }
         $this->writeIntoFile($schools);

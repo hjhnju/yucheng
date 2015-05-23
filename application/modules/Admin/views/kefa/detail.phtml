@@ -1,0 +1,183 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+    <script>
+     	function refresh(){
+     		var arr = new Array();     		     		    		
+     		var tag  = "{%$info.tag%}";
+            document.getElementById(tag).checked=true;   
+         	if("save"=="{%$type%}"){
+         		window.location.href="/admin/kefa/detail?type=detail&id={%$info.id%}";
+         	}    	         		
+        } 
+    </script>
+    
+　　＜style type="text/css"＞
+    .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"]
+margin-left: -10px;
+　　＜/style＞
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                             Widget settings form goes here
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn blue">Save changes</button>
+                            <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="/admin">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="/admin/kefa/list">学校列表</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.modal -->
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+            {%if edit==$type%}
+              {%$read=""%}
+              {%$boarder="1"%}
+                              信息修改
+            {%else%}
+             {%$read="readonly"%}
+             {%$boarder="none"%}
+                            学校详情 
+            {%/if%}             
+            </h3>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+               <form  role="form" action="/admin/kefa/detail?type=save" method="POST">
+                <table class="table table-striped"> 
+                    <thead >
+                        <tr>
+                            <th>ID</th>
+                            <th>                            
+                              <input type="text" style="border-style:none" value ={%$info.id%} name="id" readonly>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>学校名称</th>
+                            <th>
+                              <input type="text" style="border-style:{%$boarder%}" value ={%$info.name%} name="name" size={%strlen($info.name)%} {%$read%}>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>地址</th>
+                            <th>
+                              <input type="text" style="border-style:{%$boarder%}" name="address" size={%strlen($info.address)%} {%$read%} value ={%$info.address%}>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>联系人</th>
+                            <th>
+                              <input type="text" style="border-style:{%$boarder%}" name="president" {%$read%} value ={%$info.president%}>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>电话</th>
+                            <th>
+                              <input type="tel" style="border-style:{%$boarder%}" name="phone" {%$read%} value ={%$info.phone%}>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>邮政编码</th>
+                            <th>
+                              <input type="tel" style="border-style:{%$boarder%}" name="zip_code" {%$read%} value ={%$info.zip_code%}>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th>官网</th>
+                            <th>
+                            {%if edit==$type%}
+                              <input type="text" style="border-style:{%$boarder%}" size={%strlen($info.website)%} name="website" {%$read%}  value ={%$info.website%}>
+                            {%elseif $info.website eq " " || $info.website eq "http://" || $info.website eq "暂无学校网址"%}
+                               <input type="text" style="border-style:{%$boarder%}" readonly value={%$info.website%}>
+                              {%else%}
+                                 <a href={%$info.website%}>{%$info.website%}</a>
+                              {%/if%}
+                            </th>
+                        </tr>   
+                        <tr>
+                            <th>学校档次</th>
+                            <th>
+                              <input type="text" style="border-style:{%$boarder%}" name="weight" {%$read%} value ={%$info.weight%}>
+                            </th>
+                        </tr>
+                         
+                         <tr>
+                            <th>学校性质</th>
+                            <th>
+                              <input type="text" style="border-style:{%$boarder%}" name="nature" {%$read%} value ={%$info.nature%}>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th style="vertical-align:top;">招生简章</th>
+                            <th>
+                              <!--  <input type="text" style="border-style:none"  name="regulation"  size={%strlen($info.regulation)%} {%$read%} value ={%$info.regulation%}>-->
+                              <textarea style="border-style:{%$boarder%}"  cols=100 rows=10   name="regulation"  {%$read%}>{%$info.regulation%}</textarea>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th style="vertical-align:top;">评价</th>
+                            <th>
+                              <textarea style="border-style:{%$boarder%}"  cols=100 rows=5   name="evaluate"  {%$read%}>{%$info.evaluate%}</textarea>
+                            </th>
+                        </tr>
+                                  
+                        <tr>
+                            <th>标记</th>
+                            <th>
+                               <input type="radio" name="tag" id="无意向" value="无意向" >无意向                                                                    
+                               <input type="radio" name="tag" id="待跟进" value="待跟进" >待跟进                                                                    
+                               <input type="radio" name="tag" id="跟进中" value="跟进中" >跟进中                                                                  
+                               <input type="radio" name="tag" id="已成单" value="已成单" >已成单        
+                            </th>
+                        </tr>   
+                        <tr>
+                        {%if edit==$type%}
+                          <td>
+                            <input value="保存" type="submit">
+                          </td> 
+                          <td> 
+                             <input type=button onclick="window.location.href='/admin/kefa/list'" value="取消">              
+                          </td>
+                         {%else%} 
+                           <td>
+                             <input type=button onclick="window.location.href='/admin/kefa/list'" value="返回列表">                       
+                           </td>
+                        {%/if%}                                                                      
+                        </tr>
+                    </thead>
+                    </tbody>
+                    <iframe id="id_iframe" name="id_iframe" style="display:none;" onload="refresh()"></iframe>
+                </table> </form>                                             
+            </div>
+            <div id="setpage"  style = "text-align: center;font-size:17px;margin:0 auto;"></div> 
+        </div>
+    </div> 
+
+});
+{%/block%}

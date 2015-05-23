@@ -59,6 +59,19 @@ function setpage(capge,totalpage)
   outstr = ""; 
   } 
 function gotopage(target,webroot){
-	    var url = location.protocol +"//"+ location.hostname + ":" +location.port + window.location.pathname + "?page=" + target;
-	    window.location.href = url;
+	//var url = location.protocol +"//"+ location.hostname + ":" +location.port + window.location.pathname + "?page=" + target;
+    var url = window.location.href ;//
+    if(-1 == url.search(/page/)){
+    	if(-1 == url.search(/\?/)){
+    		url += "?page=" + target;
+    	}else{
+    		url += "&page=" + target;
+    	}
+    	
+    }else{
+    	var index = url.indexOf("page=");
+    	url = url.slice(0,index+5);
+        url += target;
+    }    
+	window.location.href = url;
   }
