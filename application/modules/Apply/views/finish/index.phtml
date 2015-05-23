@@ -6,19 +6,32 @@
 
 {%block name="script"%}
 <script>
-   /* require(['apply/school/index'], function (main) {
-        main.init(0.13,0.18);  
-    });  */ 
+    require(['common/countDown','jquery'], function (main) {
+    	 var $ = require('jquery'); 
+    	 var countDown=require('common/countDown');
+         var timer;
+         var value = 6;
+
+        timer = countDown.Interval(function () {  
+            $('.countdown').text(--value + '秒后返回');
+            if(value === 0) {
+                clearInterval(timer);
+                window.location.href = '/account/overview/index';
+            } 
+        },1000);
+    });   
 </script>
 {%/block%}
 
 {%block name="content"%} 
 <div class="box1" >
     <div class="container"> 
-        <div class="title"> 
+        <div class="title fl"> 
              感谢您的申请！<br/>
              我们将在24小时内完成审核，请您保持手机/电话畅通。
-        </div> 
+             <div class=" t_c f14"><labe class="countdown">5秒后返回</labe><a class="color-6" href="{%$webroot%}/m/account/overview">我的账户</a></div>  
+        </div>
+
     </div> 
 </div> 
 {%/block%}

@@ -89,6 +89,7 @@ define(function(require) {
             min: 5000,
             max: 3000000,
             step: 1000,
+            from:500000,
             hide_min_max: true,
             hide_from_to: true,
             grid: false,

@@ -400,7 +400,7 @@ define(function(require) {
                 }
 
                 status && registSubmit.remote({
-                    type: loginInput.usertype.val(),
+                    type: usertype,
                     name: loginInput.loginUser.val(),
                     passwd: loginInput.loginPwd.val(),
                     phone: loginInput.loginPhone.val(),

@@ -4,7 +4,7 @@
           {%if isset($user)%}
             <div class="header-right-login fr">
                 <span class="default-fastlogin color-font-green" style="">
-                    您好，<a href="{%$webroot%}/account/overview" class="color-font-green">{%$user.username%}</a>  
+                    <a href="{%$webroot%}/account/overview" class="color-font-green">{%$user.username%}</a>  
                      {%if $user.unreadMsg%}
                      <a class="unreadmsg color-font-green" href="{%$webroot%}/account/message"> （<i class="iconfont icon-email"></i>{%$user.unreadMsg%}）</a> 
                      {%/if%}

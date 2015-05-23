@@ -113,8 +113,14 @@ define(function(require) {
             blur: function() {
                 var value = $.trim($(this).val());
                 var text = $(this).attr('data-text');
+                var name = $(this).attr('name');
                 if (!value) {
                     errorArray.errorbox.html(text + '不能为空');
+                } else {
+                    if (name == "address") {
+                        iconArray.address.addClass('success');
+                        errorArray.address.html('');
+                    }
                 }
             },
         });
@@ -283,7 +289,9 @@ define(function(require) {
 
             stockArray = calStock();
 
-            schoolSubmit.remote({
+            schoolSubmit.remote({ 
+                refer:util.getUrlParam('refer')=='1'?'/apply/review':'',
+               
                 address: inputArray.address.val(),
                 total_student: inputArray.total_student.val(),
                 staff: inputArray.staff.val(),
