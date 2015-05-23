@@ -34,9 +34,9 @@ class Apply_RetCode extends Base_RetCode{
         self::EMAIL_EXIST	=> '邮箱已存在!',     
         self::EMAIL_FORMAT	=> '邮箱格式错误!',
         self::EMAIL_EMPTY	=> '邮箱不能为空!',
-        self::SCHOOL_PARAM_ERROR    => '邮箱已存在!',     
-        self::STOCK_PARAM_ERROR     => '邮箱格式错误!',
-        self::PERSONAL_PARAM_ERROR  => '邮箱不能为空!',
+        self::SCHOOL_PARAM_ERROR    => '学校资质参数错误!',     
+        self::STOCK_PARAM_ERROR     => '股权结构参数错误!',
+        self::PERSONAL_PARAM_ERROR  => '个人资质参数错误!',
         self::ID_CARD_WRONG         => '身份证号格式错误!',
     );
 }
