@@ -9,8 +9,9 @@ class ApiController extends Base_Controller_Api {
 	public function indexAction() {
 	    $page = $this->getInt('page', 1);
 	    $pagesize = 10;
-	    
-	    $list = Apply_Api::getApplyList($page, $pagesize);
+	    $objUser = User_Api::checkLogin();
+	    $filter = array('userid' => $objUser->userid);
+	    $list = Apply_Api::getApplyList($page, $pagesize, $filter);
 	    
 	    $this->ajax($list);
 	}

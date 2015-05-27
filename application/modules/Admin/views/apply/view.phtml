@@ -1,0 +1,151 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+<style type="text/css">
+    .panel-body label{
+        width:300px;
+    }
+</style>
+<div class="page-content-wrapper">
+<div class="page-content">
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            基本借款信息
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="title">借款ID</label><small>{%$data.apply.id%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">借款金额￥</label><small>{%$data.apply.amount%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">借款周期</label><small>{%$data.apply.duration%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">借款周期类型</label><small>{%$data.apply.duration_type%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">服务费</label><small>{%$data.apply.service_charge%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">利率</label><small>{%$data.apply.rate%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">申请日期</label><small>{%$data.apply.create_time%}</small>
+        </div>
+    </div>
+
+    <div class="panel-heading">
+        <h3 class="panel-title">学校信息</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="title">学校名字</label><small>{%$data.school.name%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">学校类型</label><small>{%$data.school.type%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">学校主体性质</label><small>{%$data.school.nature%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">省</label><small>{%$data.school.province%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">市</label><small>{%$data.school.city%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">具体地址</label><small>{%$data.school.address%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">学校成立年份</label><small>{%$data.school.year%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">年收入是否超过对应的额度</label><small>{%$data.school.is_annual_income%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">最近一年是否有盈利</label><small>{%$data.school.is_profit%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">是否还有其他业务</label><small>{%$data.school.is_other_business%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">学生总数</label><small>{%$data.school.total_student%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">职工总数</label><small>{%$data.school.staff%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">借款的目的</label><small>{%$data.school.purpose%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">担保人数量</label><small>{%$data.school.guarantee_count%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">分校的数量</label><small>{%$data.school.branch_school%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">学校如何知道我们的</label><small>{%$data.school.school_source%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">学校股权结构</label>
+            <div>
+                <ul>
+                    {%foreach $data.stock as $key=>$item%}
+                    <li>
+                        <span>{%$item.name%} {%$item.weight%}</span>
+                    </li>
+                    {%foreachelse%}
+                    <li>暂无</li>
+                    {%/foreach%}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-heading">
+        <h3 class="panel-title">贷款人信息</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="title">贷款人姓名</label><small>{%$data.personal.realname%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">身份证号</label><small>{%$data.personal.certificate%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">住房类型</label><small>{%$data.personal.house_type%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">详细居住地址</label><small>{%$data.personal.detail_address%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">移动电话</label><small>{%$data.personal.cellphone%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">固定电话</label><small>{%$data.personal.telephone%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">现金</label><small>{%$data.personal.scope_cash%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">其他资产</label><small>{%$data.personal.scope_stock%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">是否有犯罪记录</label><small>{%$data.personal.is_criminal%}</small>
+        </div>
+        <div class="form-group">
+            <label for="title">是否有诉讼</label><small>{%$data.personal.is_lawsuit%}</small>
+        </div>
+    </div>
+
+    <div class="panel-heading">
+        <a class="panel-title" href="/admin/apply/list">返回</a> | 
+        <a class="panel-title" href="/admin/apply/edit?id={%$data.apply.id%}">编辑</a>
+    </div>
+</div>
+</div>
+</div>
+{%/block%}

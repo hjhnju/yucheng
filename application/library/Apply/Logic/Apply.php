@@ -60,53 +60,69 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
 	}
 
     /**
-     * 格式化信息
-     * @param  [type] $data [数据]
-     * @return [type] array [数据]
-     */
-    public function formatApply($data) {
-    	$data['amount'] 	 = number_format($data['amount'], 2);
-    	$data['create_time'] = date('Y-m-d', $data['create_time']);
-    	$type                = $data['duration_type'] == 2 ? '个月' : '天';
-        $data['duration'] 	 = $data['duration'].' '.$type;
-
-        $status 			 = Apply_Type_Status::$names;
-        $data['status']		 = $status[$data['status']];
-
-        return $data;
-    }
-
-    /**
      * 获得申请列表
      * @param $page 当前页数
      * @param $pagesize 每页多少条
      * @return 获得申请列表
      */
-    public function getApplyList($page=1, $pagesize=10){
-    	$objUser = User_Api::checkLogin();
+    public function getApplyList($page=1, $pagesize=10, $filter=array()){
     	$objApply = new Apply_List_Apply();
-    	$objApply->setFilter(array('userid' => $objUser->userid));
+        if(!empty($filter)) {
+            $objApply->setFilter($filter);
+        }
     	$objApply->setPage($page);
     	$objApply->setPagesize($pagesize);
     	$objApply->setOrder('create_time desc');
     	$data = $objApply->toArray();
     	foreach($data['list'] as $key=>$item) {
     		$tmpData = array();
-    		$tmpData['apply'] = $this->formatApply($item);
+    		$tmpData['apply'] = $this->getDataItem($item);
     		//得到学校信息
     		$objSchool = new Apply_List_School();
     		$objSchool->setFilter(array('apply_id' => $item['id']));
-    		$school = $objSchool->getData();
-    		$tmpData['school'] = $school[0];
+            $logicSchool = new Apply_Logic_School();
+    		$tmpData['school'] = $logicSchool->getDataItem($objSchool->getData());
     		
     		//得到个人信息
     		$objPersonal = new Apply_List_Personal();
     		$objPersonal->setFilter(array('apply_id' => $item['id']));
-    		$personal = $objPersonal->getData();
-    		$tmpData['personal'] = $personal[0];
+            $logicPersonal = new Apply_Logic_Personal();
+    		$tmpData['personal'] = $logicPersonal->getDataItem($objPersonal->getData());
+
+            //得到股权信息
+            $objStock = new Apply_List_Stock();
+            $objStock->setFilter(array('apply_id' => $item['id']));
+            $logicStock = new Apply_Logic_Stock();
+            $tmpData['stock'] = $logicStock->getDataItem($objStock->getData());
 
     		$data['list'][$key] = $tmpData;
     	}
     	return $data;
+    }
+
+    /**
+     * 只会返回第一个数组元素，目的是省的到处写 $data[0]
+     * @param  [type] $data [需要解析的数组]
+     * @return [type]       [解析数组后的数组元素]
+     */
+    public function getDataItem($data) {
+        if(!empty($data[0])) {
+            $item = reset($data);
+        }else {
+            $item = $data;
+        }
+        $user                = User_Api::getUserObject($item['userid']);
+        $item['amount']      = number_format($item['amount'], 2);
+        $item['create_time'] = date('Y-m-d H:i', $item['create_time']);
+        $type                = $item['duration_type'] == 2 ? '个月' : '天';
+        $item['duration']    = $item['duration'].' '.$type;
+        $status              = Apply_Type_Status::$names;
+        $item['status']      = $status[$item['status']];
+        $item['service_charge'] = floatval($item['service_charge']);
+        $item['rate']           = floatval($item['rate']);
+
+        $item['username']           = $user->email;
+
+        return $item;
     }
 }
