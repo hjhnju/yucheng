@@ -18,7 +18,12 @@ class ApiController extends Base_Controller_Api{
 	    if(empty($name)){
 	        return $this->ajaxError(Angel_RetCode::ANGEL_CODE_WRONG,Angel_RetCode::getMsg(Angel_RetCode::ANGEL_CODE_WRONG));
 	    }
-        $objAngel = new Angel_Object_Angel();
+	    $objAngel = new Angel_Object_Angel();
+	    $objAngel->fetch(array('userid'=>$this->userid,'angelid'=>$intUserid));	  
+	    $arrRet = $objAngel->toArray();  
+	    if(!empty($arrRet['userid'])){
+	        return $this->ajaxError(Angel_RetCode::ANGEL_EXSIT,Angel_RetCode::getMsg(Angel_RetCode::ANGEL_EXSIT));
+	    }
         $objAngel->userid     = $this->userid;
         $objAngel->angelid    = $objUser->userid;
         $objAngel->angelcode  = $angelCode;
