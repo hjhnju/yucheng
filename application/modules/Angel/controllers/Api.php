@@ -14,8 +14,8 @@ class ApiController extends Base_Controller_Api{
 	    $logic     = new Awards_Logic_Invite();
 	    $intUserid = $logic->decode($angelCode);
 	    $objUser = User_Api::getUserObject($intUserid);
-	    $userid = $objUser->userid;
-	    if(empty($userid)){
+	    $name = $objUser->name;
+	    if(empty($name)){
 	        return $this->ajaxError(Angel_RetCode::ANGEL_CODE_WRONG,Angel_RetCode::getMsg(Angel_RetCode::ANGEL_CODE_WRONG));
 	    }
         $objAngel = new Angel_Object_Angel();
