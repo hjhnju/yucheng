@@ -6,7 +6,8 @@
      		var tag  = "{%$info.tag%}";
             document.getElementById(tag).checked=true;   
          	if("save"=="{%$type%}"){
-         		window.location.href="/admin/kefa/detail?type=detail&id={%$info.id%}";
+         		//window.location.href="/admin/kefa/detail?type=detail&id={%$info.id%}";
+         		window.location.href="/admin/kefa/list";
          	}    	         		
         } 
     </script>
@@ -84,7 +85,7 @@ margin-left: -10px;
                         <tr>
                             <th>地址</th>
                             <th>
-                              <input type="text" style="border-style:{%$boarder%}" name="address" size={%strlen($info.address)%} {%$read%} value ={%$info.address%}>
+                              <input type="text" style="border-style:{%$boarder%}" name="address" size={%strlen($info.address)%} {%$read%} value ="{%$info.address%}">
                             </th>
                         </tr>
                         <tr>
@@ -96,7 +97,7 @@ margin-left: -10px;
                         <tr>
                             <th>电话</th>
                             <th>
-                              <input type="tel" style="border-style:{%$boarder%}" name="phone" {%$read%} value ={%$info.phone%}>
+                              <input type="tel" style="border-style:{%$boarder%}" name="phone" {%$read%} size={%strlen($info.phone)%} value ="{%$info.phone%}">
                             </th>
                         </tr>
                         <tr>
@@ -111,7 +112,7 @@ margin-left: -10px;
                             <th>
                             {%if edit==$type%}
                               <input type="text" style="border-style:{%$boarder%}" size={%strlen($info.website)%} name="website" {%$read%}  value ={%$info.website%}>
-                            {%elseif $info.website eq " " || $info.website eq "http://" || $info.website eq "暂无学校网址"%}
+                            {%elseif $info.website eq "" || $info.website eq "http://" || $info.website eq "暂无学校网址"%}
                                <input type="text" style="border-style:{%$boarder%}" readonly value={%$info.website%}>
                               {%else%}
                                  <a href={%$info.website%}>{%$info.website%}</a>
@@ -125,10 +126,17 @@ margin-left: -10px;
                             </th>
                         </tr>
                          
-                         <tr>
+                        <tr>
                             <th>学校性质</th>
                             <th>
                               <input type="text" style="border-style:{%$boarder%}" name="nature" {%$read%} value ={%$info.nature%}>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th>开办年份</th>
+                            <th>
+                              <input type="text" style="border-style:{%$boarder%}" name="foundation_time" {%$read%} value ={%$info.foundation_time%}>
                             </th>
                         </tr>
                         
@@ -150,10 +158,18 @@ margin-left: -10px;
                         <tr>
                             <th>标记</th>
                             <th>
-                               <input type="radio" name="tag" id="无意向" value="无意向" >无意向                                                                    
-                               <input type="radio" name="tag" id="待跟进" value="待跟进" >待跟进                                                                    
-                               <input type="radio" name="tag" id="跟进中" value="跟进中" >跟进中                                                                  
-                               <input type="radio" name="tag" id="已成单" value="已成单" >已成单        
+                               <label class="radio-inline">
+                               <input type="radio" name="tag" id="无意向" value="无意向" >无意向 
+                               </label>  
+                               <label class="radio-inline">                                                                  
+                               <input type="radio" name="tag" id="待跟进" value="待跟进" >待跟进  
+                               </label>      
+                               <label class="radio-inline">                                                            
+                               <input type="radio" name="tag" id="跟进中" value="跟进中" >跟进中  
+                               </label>      
+                               <label class="radio-inline">                                                                 
+                               <input type="radio" name="tag" id="已成单" value="已成单" >已成单  
+                               </label>      
                             </th>
                         </tr>   
                         <tr>

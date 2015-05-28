@@ -5,6 +5,7 @@ function refresh(){
 	var arr1 = new Array();
 	var arr2 = new Array();
 	var arr3 = new Array();
+	
 	arr1["beijing"] = 0;
 	arr1["guangxi"] = 1;
 
@@ -14,11 +15,13 @@ function refresh(){
 	
 	arr3["kindergarten"] = 0;
 	arr3["middle"] = 1;	
-	
+		
 	var place  = "{%$place%}";
     var type   = "{%$type%}";  
     var nature = "{%$nature%}";
-    
+    {%foreach from=$arrInfo key=i item=info%}
+       document.getElementById("{%$info.tag%}{%$i%}").selected=true;
+    {%/foreach%};
     var index1 = arr1[place];
     var index2 = arr2[nature];
     var index3 = arr3[type];
@@ -83,6 +86,7 @@ function refresh(){
                         <i class="fa fa-home"></i>
                         <a href="/admin">Home</a>
                         <i class="fa fa-angle-right"></i>
+                         <i >共有{%$total%}条</i>
                     </li>
                 </ul>
             </div>
@@ -109,7 +113,13 @@ function refresh(){
                             <td>{%$info.address%}</td>
                             <td>{%$info.phone%}</td>
                             <td>{%$info.nature%}</td>
-                            <td>{%$info.tag%}</td>
+                            <td>
+                            <select name='tag'  onchange="sendTag(this.options[this.selectedIndex].value,{%$info.id%})">                           
+                                <option value="无意向" id="无意向{%$i%}">无意向</option>                            
+                                <option value="待跟进" id="待跟进{%$i%}">待跟进</option>                             
+                                <option value="跟进中" id="跟进中{%$i%}">跟进中</option>                            
+                                <option value="已成单" id="已成单{%$i%}">已成单</option>                              
+                            </td>
                             <td>{%$info.foundation_time%}</td>
                             <td><form action="/admin/kefa/detail?id={%$info.id%}&type=detail" method="POST"><input value="详情" type="submit"></form></td>
                             <td><form action="/admin/kefa/detail?id={%$info.id%}&type=edit" method="POST" ><input value="编辑" type="submit" ></form></td>                           
@@ -141,9 +151,45 @@ function refresh(){
     	   var selectIndex3 = document.getElementById("jumpMenu3").selectedIndex;
     	   var selectValue3 = document.getElementById("jumpMenu3").options[selectIndex3].value  
     	    	   
-      	   window.location="/admin/kefa/list?place="+selectValue1+"&nature="+selectValue2+"&type="+selectValue3;
+      	   window.location="/admin/kefa/list?place="+selectValue1+"&nature="+selectValue2+"&type="+selectValue3;   	   
         } 
     </script> 
     
+    <script type="text/javascript">
+    //创建XMLHttpRequest
+    function createXmlHttpRequest(){
+        if(window.XMLHttpRequest){
+            return new XMLHttpRequest();
+        }else{
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    //ajax回调函数
+    function finish(){
+        if(XmlHttpRequest.readyState == 4&& XmlHttpRequest.status == 200){
+            var result = XmlHttpRequest.responseText;
+            if(result =="true"){
+                //alert("");
+            }else{
+                //alert(result);
+            }
+        }
+    }
+    
+    //当用户先择了标记时调用该方法
+    function sendTag(tag,id){
+        //get请求字符串
+        var url="/admin/kefa/detail?type=save&id="+id+"&tag="+tag;
+        //调用方法创建XMLHttpRequest对象
+        XmlHttpRequest = createXmlHttpRequest();
+        //设置回调函数
+        XmlHttpRequest.onreadystatechange=finish;
+        //初始化xmlhttprequest
+        //alert(url);
+        XmlHttpRequest.open("GET",url,true);
+        //发送请求
+        XmlHttpRequest.send(null);
+    }   
+    </script>
 });
 {%/block%}
