@@ -18,7 +18,7 @@ class TenderController extends Base_Controller_Page {
 	public function indexAction() {
 		$loanId = intval($_REQUEST['id']);
 		$amount = floatval($_REQUEST['amount']);
-		$rate   = isset($_REQUEST['rate'])?intval($_REQUEST['rate']):0;
+		$rate   = isset($_REQUEST['rate'])?floatval($_REQUEST['rate']):0;
 		$angel  = isset($_REQUEST['angel'])?$_REQUEST['angel']:'';
 		$uid    = $this->userid;
 		$sess   = Yaf_Session::getInstance();

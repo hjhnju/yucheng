@@ -53,7 +53,7 @@ class ApiController extends Base_Controller_Api{
     	    $loan->fetch(array('status'=>Loan_Type_LoanStatus::LENDING));
     	    $url = $this->webroot."/invest/angeldetail?id=$loan->id";
     	    foreach ($arrRet['list'] as $key => $val){
-    	        $arrRet['list'][$key]['url'] = $url."&angle=".$val['angelcode'];
+    	        $arrRet['list'][$key]['url'] = $url."&angel=".$val['angelcode'];
     	    }
 	    }
 	    $this->ajax($arrRet);
