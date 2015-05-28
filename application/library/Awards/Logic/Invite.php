@@ -18,7 +18,7 @@ class Awards_Logic_Invite {
      * @param int $userid
      * @return string $code
      */
-    protected function encode($userid){
+    public function encode($userid){
         $strCode = Base_Util_Number::dec2Any($userid + self::STARTUP, 62);
         return $strCode;
     }

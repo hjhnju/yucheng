@@ -40,15 +40,18 @@ class ApiController extends Base_Controller_Api{
 	 * 查询用户天使接口
 	 */
 	public function listAction(){
+	    $page = isset($_REQUEST['page'])?intval($_REQUEST['page']):0;
 	    $objAngel = new Angel_List_Angel();
 	    $objAngel->setFilter(array("userid"=>$this->userid));
-	    $arrRet = $objAngel->getData();
-	    if(!empty($arrRet)){
+	    $objAngel->setPage($page);
+	    $objAngel->setPagesize(11);
+	    $arrRet = $objAngel->toArray();
+	    if(!empty($arrRet['list'])){
     	    $loan = new Loan_Object_Loan();
     	    $loan->fetch(array('status'=>Loan_Type_LoanStatus::LENDING));
     	    $url = $this->webroot."/invest/angeldetail?id=$loan->id";
-    	    foreach ($arrRet as $key => $val){
-    	        $arrRet[$key]['url'] = $url;
+    	    foreach ($arrRet['list'] as $key => $val){
+    	        $arrRet['list'][$key]['url'] = $url."&angle=".$val['angelcode'];
     	    }
 	    }
 	    $this->ajax($arrRet);

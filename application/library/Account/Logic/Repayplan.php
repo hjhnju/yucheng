@@ -9,9 +9,9 @@ class Account_Logic_Repayplan {
      * @param string $investId
      * @return array
      */
-    public static function getRepayplan($investId) {        
+    public static function getRepayplan($investId, $user_id=0) {        
         $investId = intval($investId);
-        $retData  = Invest_Api::getRefunds($investId);       
+        $retData  = Invest_Api::getRefunds($investId, $user_id);       
         $list = array();
         $data = array();
         if(empty($retData)) {
