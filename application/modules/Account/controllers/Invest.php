@@ -56,10 +56,13 @@ class InvestController extends Base_Controller_Page {
 		$status     = Invest_Type_InvestStatus::REFUNDING;
 		$userid     = $this->userid;
 		$page       = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);		
+		$backingRet = Invest_Api::getUserInvests($userid, $status, $page, self::PAGESIZE);	
+		
+		$objShare = new Invest_Object_Share();
+		$objShare->fetch(array('to_userid'=>$userid));
+
 		$listRet    = array();
 		$list       = $backingRet['list'];
-
         if(empty($list)) {
         	$ret = array(
         		'page'    => $page,
@@ -72,7 +75,7 @@ class InvestController extends Base_Controller_Page {
         }
  	    foreach ($list as $key => $value) {
 			$listRet[$key]['invest_id']       = $value['id'];//invest_id	        
-			$backingRefund                    = Account_Logic_Repayplan::getRepayplan($value['id']);
+			$backingRefund                    = Account_Logic_Repayplan::getRepayplan($value['id'],$value['user_id']);
 			$total                            = $backingRefund['total'];	        
 			$listRet[$key]['proId']           = $value['loan_id'];
 			$loanInfo                         = Loan_Api::getLoanDetail($value['loan_id']);
@@ -84,6 +87,11 @@ class InvestController extends Base_Controller_Page {
 			$listRet[$key]['haveBack']        = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
 			$listRet[$key]['toBeBack']        = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
 			$listRet[$key]['status']          = $value['status'];
+			$angelArray                       = Angel_Api::getAngel($userid, $value['id']);
+			if(!empty($angelArray)){
+			    $listRet[$key]['angel'] = $angelArray;
+			}
+			 
  	    }  
 	    $ret = array(
 			'page'    => $page,
@@ -145,6 +153,10 @@ class InvestController extends Base_Controller_Page {
 	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
 	    	$listRet[$key]['tenderTime'] = $value['create_time'];
 	    	$listRet[$key]['tenderProgress'] = $loanInfo['percent'];
+	    	$angelArray                       = Angel_Api::getAngel($userid, $value['id']);
+	    	if(!empty($angelArray)){
+	    	    $listRet[$key]['angel'] = $angelArray;
+	    	}
 	    }
 	    $ret = array(
 	    		'page'    => $page,
@@ -211,11 +223,15 @@ class InvestController extends Base_Controller_Page {
 	    	$listRet[$key]['endTime']     = $value['deadline'];
 	    	$listRet[$key]['totalRetAmt'] = $value['capital_refund'] + $value['amount_refund'];
 	    	$listRet[$key]['totalProfit'] = $value['income'];
+	    	$angelArray                       = Angel_Api::getAngel($userid, $value['id']);
+	    	if(!empty($angelArray)){
+	    	    $listRet[$key]['angel'] = $angelArray;
+	    	}
 	    }
 	    $ret = array(
 	    	'page' => $page,
-	    	'pageall' =>$tenderFailRet['pageall'],
-	    	'all' => $tenderFailRet['total'],
+	    	'pageall' =>$endedRet['pageall'],
+	    	'all' => $endedRet['total'],
 	    	'list' => $listRet,
 	    );
 	    $this->output($ret);
@@ -272,6 +288,10 @@ class InvestController extends Base_Controller_Page {
 	    	$listRet[$key]['deadline'] = $loanInfo['duration_name'];
 	    	$listRet[$key]['tenderTime'] = $value['create_time'];
 	    	$listRet[$key]['failReason'] = $value['fail_info'];
+	    	$angelArray                       = Angel_Api::getAngel($userid, $value['id']);
+	    	if(!empty($angelArray)){
+	    	    $listRet[$key]['angel'] = $angelArray;
+	    	}
 	    }
 	    $ret = array(
 	    	'page' => $page,
@@ -315,8 +335,9 @@ class InvestController extends Base_Controller_Page {
 	 */
 	public function repayplanAction() {	
 		$investId = intval($_REQUEST['invest_id']);
-		$ret = Account_Logic_Repayplan::getRepayplan($investId);
+		$userid   = $this->userid;
+		$ret = Account_Logic_Repayplan::getRepayplan($investId,$userid);
 		$this->output($ret);
 		return ;		
-	}	
+	}		
 }

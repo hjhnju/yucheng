@@ -324,7 +324,7 @@ class Finance_Api {
      *
      */
     public static function initiativeTender($loanId, $transAmt, $userid ,$borrowerDetails,
-        $retUrl='', $vocherAmt=0.00) {
+        $retUrl='', $vocherAmt=0.00, $shareInfo='') {
         if(!isset($loanId) || empty($loanId) || !isset($transAmt) || empty($transAmt) ||
            !isset($userid) || empty($userid) || !isset($borrowerDetails) || empty($borrowerDetails)) {
             Base_Log::error(array(
@@ -345,7 +345,7 @@ class Finance_Api {
             'retUrl'          => $retUrl,
         ));
 
-        $transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl, $vocherAmt);
+        $transLogic->initiativeTender($loanId, $transAmt, $userid, $borrowerDetails, $retUrl, $vocherAmt, $shareInfo);
     }
 
     /**
@@ -386,9 +386,9 @@ class Finance_Api {
      * @return bool true--打款成功  false--打款失败
      *
      */
-    public static function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt) {
+    public static function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt,$fee=0.00) {
         $transLogic = new Finance_Logic_Transaction();
-        $objRst     = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+        $objRst     = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt, $fee);
         Base_Log::notice(array(
             'msg'  => '财务满标打款接口',
             'args' => func_get_args(),

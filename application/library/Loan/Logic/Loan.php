@@ -97,7 +97,11 @@ class Loan_Logic_Loan {
         //获取该项目所有投资
         $arrRet   = Invest_Api::getLoanInvests($loanId);
         foreach($arrRet['list'] as $arrInfo){
-
+            $obj_share = new Invest_Object_Share();
+            $obj_share->fetch(array('invest_id'=>$arrInfo['id']));
+            if(!empty($obj_share->id)){
+                $arrInfo['fee'] = $obj_share;
+            }
             $bolRet1 = $this->singleMakeLoans($loanId, $inUserId, $arrInfo);
             $bolRet  = $bolRet && $bolRet1;
         }
@@ -137,6 +141,7 @@ class Loan_Logic_Loan {
         $outUserId     = $arrInvestInfo['user_id'];
         $transAmt      = $arrInvestInfo['amount'];
         $singlePayStat = $arrInvestInfo['status'];
+        $fee           = isset($arrInvestInfo['fee'])?$arrInvestInfo['fee']:0;
         //是否需要打款
         if($singlePayStat >= Invest_Type_InvestStatus::REFUNDING){
             $bolRet = true;
@@ -149,7 +154,7 @@ class Loan_Logic_Loan {
         }
 
         //通知财务打款
-        $arrRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
+        $arrRet = Finance_Api::loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt, $fee);
         if(Base_RetCode::SUCCESS !== $arrRet['status']){
             $bolRet = false;
             Base_Log::error(array(

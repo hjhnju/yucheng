@@ -11,7 +11,8 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
    
     public function __construct(){
         parent::__construct();
-        $this->webroot = Base_Config::getConfig('web')->fnroot;
+        $this->webroot = Base_Config::getConfig('web')->root;
+        $this->fnroot = Base_Config::getConfig('web')->fnroot;
     } 
     
     /**
@@ -31,10 +32,10 @@ class Finance_Logic_UserManage extends Finance_Logic_Base{
             ));
             return false;
         }
-        $bgRetUrl = $this->webroot.'/finance/bgcall/userregist';
+        $bgRetUrl = $this->fnroot.'/finance/bgcall/userregist';
         $retUrl   = $this->webroot.'/finance/ret';
         //默认填好汇付账号名
-        $usrId    = empty($userName) ? '' : strval($userName);
+        $usrId    = empty($userName) ? strval($userMp) : strval($userName);
         $usrMp    = '';//strval($userMp);
         $usrName  = '';
         $idType   = '';

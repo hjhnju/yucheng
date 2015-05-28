@@ -8,6 +8,11 @@ class AngeldetailController extends Base_Controller_Response {
     const ERROR_KEY = 'invest_error';
     
     public function indexAction() {
+        $code = isset($_REQUEST['angle'])?$_REQUEST['angle']:'';
+        $angle = new Angel_Object_Angel();
+        $angle->fetch(array('angelcode'=>$code));
+        $arrAngel['code'] = $code;
+        $arrAngel['name'] = $angle->angelname;
         $id = $this->getInt('id');
         if (empty($id)) {
             $this->outputError(Base_RetCode::PARAM_ERROR);
@@ -37,7 +42,7 @@ class AngeldetailController extends Base_Controller_Response {
         // 对输出进行格式化
         $data = $logic->formatDetail($loan);
         $this->_view->assign('data', $data);
-        
+        $this->_view->assign('angle',$arrAngel);
         // 增加错误信息
         $sess = Yaf_Session::getInstance();
         if ($sess->has(self::ERROR_KEY)) {

@@ -404,7 +404,7 @@ class BgcallController extends Base_Controller_Page {
                     Finance_Order_Type::TENDERFREEZE, $transAmt, '投标冻结记录');
 
                 $bolSucc = Invest_Api::doInvest($orderId, $userId, $proId, $transAmt);
-
+                
                 if (!$bolSucc) {
                     Base_Log::notice(array(
                         'msg'      => '投标失败，发起资金解冻',
@@ -417,11 +417,14 @@ class BgcallController extends Base_Controller_Page {
                     $logic   = new Finance_Logic_Transaction();
                     $bolRet2 = $logic->unfreezeOrder($orderId, $proId);
                 }else{
-                //发送短信通知
-                $objUser = User_Api::getUserObject($userId);;
-                $arrArgs = array('JK_'.$proId, $transAmt);
-                $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-                $bResult  = Base_Sms::getInstance()->send($objUser->phone, $tplid[3], $arrArgs);
+                    if(isset($merPriv[2])){
+                        $ret = Invest_Api::shareInvest($orderId, $userId, $proId, $transAmt, $merPriv[2],$merPriv[3]);
+                    }
+                    //发送短信通知
+                    $objUser = User_Api::getUserObject($userId);;
+                    $arrArgs = array('JK_'.$proId, $transAmt);
+                    $tplid    = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+                    $bResult  = Base_Sms::getInstance()->send($objUser->phone, $tplid[3], $arrArgs);
                 }
             }
         }catch(Exception $e){
@@ -603,7 +606,7 @@ class BgcallController extends Base_Controller_Page {
                     Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
                         $respCode, $respDesc);
                     //插入记录至finance_record表
-                    Finance_Logic_Order::saveRecord($orderId, $userid, Finance_Order_Type::CASH, 
+                    Finance_Logic_Order::saveRecord($orderId, $userId, Finance_Order_Type::CASH, 
                         $transAmt, '充值记录');
                     
                     //发送消息
@@ -822,62 +825,21 @@ class BgcallController extends Base_Controller_Page {
         }
         
         try{
-        if($respCode !=='000') {
-            Base_Log::error(array(
-                'msg'       => $respDesc,
-                'outUserId' => $outUserId,
-                'orderId'   => $orderId,
-                'orderDate' => $orderDate,
-                'respCode'  => $respCode,               
-            ));
-            //将finance_order表状态更改为“处理失败”
-            Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
-                 $respCode, $respDesc);
-            return;
-        }       
-        //将finance_order表状态更改为“处理成功”
-        $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
-            $respCode, $respDesc);
-        Base_Log::notice(array('msg'=>'更新表状态', 'bolRet'=>$bolRet));
-        if ($bolRet) {
-            //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderId, $outUserId, Finance_Order_Type::REPAYMENT,
-                $amount, '财务类还款记录');
-
-            //收款人的资金纪录入表finance_order
-            $paramOrder = array(
-                'userId'      => $inUserId,//收款人的uid
-                'type'        => Finance_Order_Type::REFUNDED,
-                'amount'      => $amount,
-                'status'      => Finance_Order_Status::SUCCESS,
-                'freezeTrxId' => $orderId,//保存关联的还款订单号
-                'comment'     => '回款入款成功',
-            );
-            $orderInfo = Finance_Logic_Order::saveOrder($paramOrder);
-            //插入还款记录至表finance_record
-            Finance_Logic_Order::saveRecord($orderInfo['orderId'], $inUserId, Finance_Order_Type::REFUNDED,
-                $amount, '财务类还款记录');
-
-            //TODO:如有$fee则需要增加手续费记录，finance_order_type增加还款手续费
-
-            //单笔还款成功，更新回款计划字段
-            $bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
-            
-            if(!$bolRet){
+            if($respCode !=='000') {
                 Base_Log::error(array(
                     'msg'       => $respDesc,
                     'outUserId' => $outUserId,
                     'orderId'   => $orderId,
                     'orderDate' => $orderDate,
-                    'respCode'  => $respCode,
+                    'respCode'  => $respCode,               
                 ));
                 //将finance_order表状态更改为“处理失败”
                 Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
                      $respCode, $respDesc);
                 return;
-            }
+            }       
             //将finance_order表状态更改为“处理成功”
-            $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS,
+            $bolRet = Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::SUCCESS, 
                 $respCode, $respDesc);
             Base_Log::notice(array('msg'=>'更新表状态', 'bolRet'=>$bolRet));
             if ($bolRet) {
@@ -903,18 +865,24 @@ class BgcallController extends Base_Controller_Page {
     
                 //单笔还款成功，更新回款计划字段
                 $bolRet = Invest_Api::updateInvestRefundStatus($refundId, Invest_Type_RefundStatus::RETURNED);
-    
+                
                 if(!$bolRet){
                     Base_Log::error(array(
-                        'msg'      => '更新投资回款计划状态失败',
-                        'refundId' => $refundId,
-                        'info'     => $arrRefundInfo,
-                        'bolRet'   => $bolRet,
+                        'msg'       => $respDesc,
+                        'outUserId' => $outUserId,
+                        'orderId'   => $orderId,
+                        'orderDate' => $orderDate,
+                        'respCode'  => $respCode,
                     ));
+                    //将finance_order表状态更改为“处理失败”
+                    Finance_Logic_Order::updateOrderStatus($orderId, Finance_Order_Status::FAILED,
+                         $respCode, $respDesc);
+                    return;
                 }
-    
-                $arrRefundInfo = Invest_Api::getRefundById($refundId);
-                Base_Log::notice(array(
+                      
+               $arrRefundInfo = Invest_Api::getRefundById($refundId);
+               
+               Base_Log::notice(array(
                     'msg'           => '单笔还款成功',
                     'loanId'        => $loanId,
                     'outUserId'     => $outUserId,
@@ -922,21 +890,20 @@ class BgcallController extends Base_Controller_Page {
                     'refundId'      => $refundId,
                     'arrRefundInfo' => $arrRefundInfo,
                     'bolRet'        => $bolRet,
-                ));
-                
-                //发送消息
-                Msg_Api::sendmsg($inUserId, Msg_Type::INVEST_BACK,array($amount));
-                
-                //投资人回款短信通知
-                $arrArgs = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
-                $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
-                $objUser = User_Api::getUserObject($inUserId);
-                Base_Sms::getInstance()->send($objUser->phone, $tplid[6], $arrArgs);
-    
+               ));
+                    
+               //发送消息
+               Msg_Api::sendmsg($inUserId, Msg_Type::INVEST_BACK,array($amount));
+                    
+              //投资人回款短信通知
+               $arrArgs = array('JK_'.$loanId,$amount,$arrRefundInfo['capital'],$arrRefundInfo['interest']);
+               $tplid   = Base_Config::getConfig('sms.tplid.vcode', CONF_PATH . '/sms.ini');
+               $objUser = User_Api::getUserObject($inUserId);
+               Base_Sms::getInstance()->send($objUser->phone, $tplid[6], $arrArgs);
             }
-        }}catch(Exception $e){
+        }catch(Exception $e){
             Base_Lock::unlock($cckey);
-            Base_Log::error($retParam);
+            Base_Log::error($e->getMessage());
             return;
         }
         Base_Log::notice($retParam);

@@ -24,6 +24,54 @@ class Invest_Api {
         }
         return $bolRet;
     }
+    
+    /**
+     * 投标时创建的分享收益信息
+     * @param integer $orderId
+     * @param integer $userId
+     * @param integer $proId
+     * @param float $transAmt
+     * @param integer $toId
+     * @param float $rate
+     * @return boolean
+     */
+    public static function shareInvest($orderId, $userId, $proId, $transAmt, $toId,$rate){
+        $obj_invest = new Invest_Object_Invest();
+        $obj_invest->fetch(array('loan_id'=>$proId,'user_id'=>$userId,'order_id'=>$orderId));
+        $investId = $obj_invest->id;
+        
+        $loan = Loan_Api::getLoanInfo($proId);
+        $type = $loan['refund_type'];
+        $date           = new DateTime('tomorrow');
+        $start          = $date->getTimestamp() - 1;
+        $capital_refund = 0;
+        if($type === Loan_Type_RefundType::MONTH_INTEREST || $loan['duration']<30){
+            $date->modify('+1month');
+            $promise  = $date->getTimestamp() - 1;
+            $days     = ($promise - $start) / 3600 / 24;
+            $income = self::getInterestByDay($transAmt, $rate, $days);
+        }elseif($type === Loan_Type_RefundType::AVERAGE){
+            $date = new DateTime('tomorrow');
+            $periods = ceil($loan['duration'] / 30);
+            $start = $date->getTimestamp() - 1;
+            $b = $rate/100/12;
+            $a = $transAmt;           
+            $date->modify('+1month');
+            $promise = $date->getTimestamp() - 1;
+            $days    = ($promise - $start) / 3600 / 24;
+            $income  = $a * $b * (pow(1 + $b, $periods)) / (pow(1 + $b, $periods) - 1)-$a/$periods;                      
+        }
+        
+        $obj_share = new Invest_Object_Share();
+        $obj_share->loanId     = $proId;
+        $obj_share->investId   = $investId;
+        $obj_share->fromUserid = $userId;
+        $obj_share->toUserid   = $toId;
+        $obj_share->rate       = $rate;
+        $obj_share->income     = $income;
+        $bRet = $obj_share->save();
+        return $bRet;
+    }
 
     /**
      * 获取借款的投资列表
@@ -136,11 +184,14 @@ class Invest_Api {
      * @param integer $invest_id
      * @return array
      */
-    public static function getRefunds($invest_id) {
+    public static function getRefunds($invest_id,$user_id=0) {
         $refunds = new Invest_List_Refund();
         $filters = array(
             'invest_id' => $invest_id,
         );
+        if(!empty($user_id)){
+            $filters['user_id'] = $user_id;
+        }
         $refunds->setFilter($filters);
         $refunds->setOrder('id asc');
         $refunds->setPagesize(PHP_INT_MAX);
@@ -314,14 +365,25 @@ class Invest_Api {
     public static function buildRefunds($invest_id) {
         $invest = self::getInvest($invest_id);
         $loan   = Loan_Api::getLoanInfo($invest['loan_id']);
-        
+        $invest_share = new Invest_Object_Share();
+        $invest_share->fetch(array('invest_id'=>$invest_id));
+        if(!empty($invest_share->id)){
+            $loan['interest'] -= $invest_share->rate;
+        }
         if ($loan['duration'] < 30) {
             $date = new DateTime('tomorrow');
             $date->modify('+' . $loan['duration'] . 'days');
             $promise = $date->getTimestamp() - 1;
             
             $income = self::getInterestByDay($invest['amount'], $invest['interest'], $loan['duration']);
-            //$invest, $period, $capital, $income, $promiseTime
+            //$invest, $period, $capital, $income, $promiseTime\
+            if(!empty($invest_share->id)){
+                $shareincome = self::getInterestByDay($invest['amount'], $invest_share->rate, $loan['duration']);
+                $shareInvest['id']      = $invest_id;
+                $shareInvest['loan_id'] = $invest_share->loanId;
+                $shareInvest['user_id'] = $invest_share->toUserid;
+                self::addRefund($shareInvest, 1, 0, $shareincome, $promise);
+            }
             return self::addRefund($invest, 1, $invest['amount'], $income, $promise);
         }
         
@@ -339,6 +401,13 @@ class Invest_Api {
                     $capital = $invest['amount'];
                 } else {
                     $capital = 0;
+                }
+                if(!empty($invest_share->id)){
+                    $shareincome = self::getInterestByDay($invest['amount'], $invest_share->rate, $days);
+                    $shareInvest['id']      = $invest_id;
+                    $shareInvest['loan_id'] = $invest_share->loanId;
+                    $shareInvest['user_id'] = $invest_share->toUserid;
+                    self::addRefund($shareInvest, $period, 0, $shareincome, $promise);
                 }
                 $res = self::addRefund($invest, $period, $capital, $income, $promise);
                 
@@ -381,6 +450,14 @@ class Invest_Api {
                 $days    = ($promise - $start) / 3600 / 24;
                 $income  = $a * $b * (pow(1 + $b, $periods) - pow(1 + $b, $period - 1)) / (pow(1 + $b, $periods) - 1);
                 $capital = $a * $b * pow(1 + $b, $period - 1) / (pow(1 + $b, $periods) - 1);
+                if(!empty($invest_share->id)){
+                    $c = $invest_share->rate/12;
+                    $income  = $a * $c * (pow(1 + $c, $periods) - pow(1 + $c, $period - 1)) / (pow(1 + $c, $periods) - 1);
+                    $shareInvest['id']      = $invest_id;
+                    $shareInvest['loan_id'] = $invest_share->loanId;
+                    $shareInvest['user_id'] = $invest_share->toUserid;
+                    self::addRefund($shareInvest, $period, 0, $shareincome, $promise);
+                }
                 $res     = self::addRefund($invest, $period, $capital, $income, $promise);
                 
                 if (!$res) {

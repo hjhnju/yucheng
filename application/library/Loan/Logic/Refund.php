@@ -10,6 +10,7 @@ class Loan_Logic_Refund {
      * @param $loanId
      */
     public function doRefund($refundId, $loanId){
+        
         $refundId = intval($refundId);
         $loanId   = intval($loanId);
 
@@ -41,7 +42,13 @@ class Loan_Logic_Refund {
         $bolRet = true;
         foreach($list['list'] as $arrInfo){
             $investRefundId = $arrInfo['id'];
-            $bolRet1        = $this->singleDoRefund($investRefundId, $outUserId, $arrInfo);
+            if(intval($arrInfo['capital'])==0){
+                $transAmt = floatval($arrInfo['amount']) + floatval($arrInfo['late_charge']);
+                $bolRet1 = Finance_Api::transfer($arrInfo['user_id'], $transAmt);
+                Invest_Api::updateInvestRefundStatus($investRefundId, Invest_Type_RefundStatus::RETURNED);
+            }else{
+                $bolRet1 = $this->singleDoRefund($investRefundId, $outUserId, $arrInfo);
+            }
             if(!$bolRet1){
                 $bolRet  = false;
                 break;
@@ -180,13 +187,17 @@ class Loan_Logic_Refund {
     public function buildRefunds($loanId) {
         $loan = new Loan_Object_Loan($loanId);
         $loan = $loan->toArray();
-        
+        $invest_share = new Invest_Object_Share();
+        $invest_share->fetch(array('loan_id'=>$loanId));
+        if(!empty($invest_share->id)){
+            $loan['interest'] -= $invest_share->rate;
+        }        
         if ($loan['duration'] < 30) {
             $date        = new DateTime('tomorrow');
             $date->modify('+' . $loan['duration'] . 'days');
             $promiseTime = $date->getTimestamp() - 1;
             $interest    = $this->getInterestByDay($loan['amount'], $loan['interest'], $loan['duration']);
-            //$loan, $period, $capital, $interest, $promiseTime, $capital_refund, $capital_rest
+            //$loan, $period, $capital, $interest, $promiseTime, $capital_refund, $capital_rest           
             return self::addRefund($loan, 1, $loan['amount'], $interest, $promiseTime, 0, $loan['amount']);
         }
         
@@ -207,7 +218,7 @@ class Loan_Logic_Refund {
                     $capital = 0;
                 }
                 $capital_rest   = $loan['amount'] - $capital;
-                $capital_refund += $capital;
+                $capital_refund += $capital;               
                 $res            = self::addRefund($loan, $period, $capital, $interest, 
                     $promise, $capital_refund, $capital_rest);
         
