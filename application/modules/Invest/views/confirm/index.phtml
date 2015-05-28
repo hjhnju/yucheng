@@ -1,0 +1,159 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/project/confirm/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/success/index'], function (main) {
+       // main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="confirm heart">
+    <div class="container">
+        <div class="confirm-box">
+            <div class="confirm-title title-icon">
+                <a href="{%$webroot%}/invest" class="left-title-link">我来投资</a>
+                <span class="left-title-greater">&gt;</span> 
+                <span class="left-title-link-span">确认投资</span>
+            </div>
+            {%if isset($error)%}
+            <div class="chongzhi-error show">{%$error%}</div>
+            {%/if%}
+            <div class="project">
+                <div class="project-box">
+                    <div class="project-title">
+                        <div class="project-title-name" title="{%$data.title%}">
+                            {%if isset({%$data.level_name%})%}
+                            <span class="grade-star level-{%$data.level_name%}"></span>
+                            {%/if%}
+                            {%$data.title%}
+                        </div>
+                       <!--  <div class="project-title-number">
+                           <span>借款编号：</span>
+                           <span><a target="_blank" style="color:#76cf65" href="/loan/contract">JK_{%$data.id%}</a></span>
+                       </div> -->
+                       <div class="project-gaishu-top">
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon rental">借款总额</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span>￥</span>
+                                    <span class="rental-number-big">{%$data.amount%}</span>
+                                </div>
+                            </div>
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon lilv">借款年利率</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span class="rental-number-big">{%$data.interest%}</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon time">借款期限</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span class="rental-number-big">{%$data.duration_day%}</span>
+                                    <span>{%$data.duration_type%}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="project-gaishu"> 
+
+                        <div class="project-gaishu-bottom">
+                            <div class="gaishu-bottom-guard">
+                                <div class="gaishu-guard-baozhang">
+                                    <span class="span">保障方式：</span>
+                                    <div class="baozhang-box">
+                                        {%foreach $data.safemode as $key => $item%}
+                                        <span class="baozhang-type benxi">{%$item%}</span>
+                                        {%/foreach%}
+
+                                    </div>
+
+                                </div>
+                                <div class="jindu-top">
+                                    <span class="jindu-top-text">筹款进度：</span>
+                                    <div class="jindu-top-tiao">
+                                        <div class="jindu-tio-tiao-within" style="width: {%$data.percent%}%;"></div>
+                                    </div>
+                                    <span class="jindu-top-bai">
+                                        <span class="jindu-top-bai-number">{%$data.percent%}</span>%
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="gaishu-bottom-jindu">
+                                <div class="gaishu-guard-baozhang">
+                                    <span>还款方式：</span>
+                                    <span class="baozhang-return">{%$data.refund_typename%}</span>
+                                </div>
+                                <div class="jindu-btm">
+                                    <span class="jindu-top-text">已投标：</span><span>{%$data.invest_cnt%}人</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-time">
+                        <span class="project-time-start">开始时间：{%$data.start_time|date_format:'%Y-%m-%d %H:%M'%}</span>
+                        <span class="project-time-start">截止日期：{%$data.deadline|date_format:'%Y-%m-%d %H:%M'%}</span>
+                    </div>
+                </div>
+
+                <div class="project-main project">
+                    <div class="project-main-title"> 
+                        <div class="main-title-box showrecord">投资记录</div>
+                        <div class="main-title-box showplan">还款计划</div>
+                    </div> 
+                    <div class="main-box-details showrecord-main">
+                        {%if isset($userBalance.amount)%}
+                        <div class="details-main-box">
+                            
+                            <div class="main-detail-content" id="toulist">
+                            </div>
+                        </div>
+                        <div id="page"></div>
+                        {%else%}
+                        <div class="detail-unlogin">
+                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                        </div>
+                        {%/if%}
+                    </div>
+                    <div class="main-box-details">
+                        <div class="details-main-box">
+                              <div class="bottom-title-number">共<span class="btm-title-number-sp">{%count($data.refunds)%}</span>期</div>
+                            <div class="main-detail-content" id="">
+                                <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                    <tbody>
+                                        <tr class="color-hui">
+                                           <td>还款时间</td><td>应还本息</td><td>还款状态</td> 
+                                        </tr>
+                                        {%foreach $data.refunds as $key => $item%}
+                                         <tr><td>{%$item.promise_time|date_format:'%Y-%m-%d'%}</td>
+                                            <td>￥{%$item.amount%}</td>
+                                            <td> {%if $item.status == 1%}
+                                                  未到期
+                                                  {%else if $item.status == 2%}
+                                                  已还款
+                                                  {%else%}
+                                                  已逾期
+                                                  {%/if%}
+                                            </td>
+                                         </tr>
+                                        {%/foreach%}
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%/block%}

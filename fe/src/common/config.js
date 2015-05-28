@@ -152,7 +152,12 @@ define(function () {
         APPLY_VERIFY_CHECKIDCARD :rootUrl
             +'/apply/verify/checkidcard',
         MY_APPLY_GET :rootUrl
-            +'/apply/api/index'
+            +'/apply/api/index',
+        MY_ANGEL_LIST :rootUrl
+            +'/angel/api/list',
+        MY_ANGEL_ADD :rootUrl
+            +'/angel/api/add'
+            
 
         };
 

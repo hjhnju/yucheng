@@ -55,7 +55,7 @@ define(function(require) {
         container.delegate('.msg-content-text', 'click', function() {
             var id = $(this).attr('data-id');
             var parent = $(this).closest('.my-invest-item');
-            var detail = parent.find("my-msg-detail");
+            var detail = parent.find(".my-msg-detail");
 
             parent.removeClass('unread');
 

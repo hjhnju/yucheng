@@ -113,7 +113,7 @@ define(function(require) {
         '<span class="irs">' +
         '<span class="irs-line" tabindex="-1"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span>' +
         '<span class="irs-min">0</span><span class="irs-max">1</span>' +
-        '<span class="irs-from">0</span><span class="irs-to">0</span><span class="irs-single">0</span>' +
+        '<span class="irs-from">0</span><span class="irs-to">0</span><span class="irs-single">0</span><span class="irs-single-leftnum">0</span>' +
         '</span>' +
         '<span class="irs-grid"></span>' +
         '<span class="irs-bar"></span>';
@@ -131,6 +131,8 @@ define(function(require) {
 
     var disable_html =
         '<span class="irs-disable-mask"></span>';
+
+    
 
 
 
@@ -256,6 +258,8 @@ define(function(require) {
         // get config from options
         this.options = $.extend({
             type: "single",
+
+            single_fixed: false,
 
             min: 10,
             max: 100,
@@ -434,6 +438,7 @@ define(function(require) {
             this.$cache.from = this.$cache.cont.find(".irs-from");
             this.$cache.to = this.$cache.cont.find(".irs-to");
             this.$cache.single = this.$cache.cont.find(".irs-single");
+            this.$cache.single_leftnum = this.$cache.cont.find(".irs-single-leftnum"); 
             this.$cache.bar = this.$cache.cont.find(".irs-bar");
             this.$cache.line = this.$cache.cont.find(".irs-line");
             this.$cache.grid = this.$cache.cont.find(".irs-grid");
@@ -920,6 +925,9 @@ define(function(require) {
                 this.labels.p_single_left = this.coords.p_single + (this.coords.p_handle / 2) - (this.labels.p_single / 2);
                 this.labels.p_single_left = this.checkEdges(this.labels.p_single_left, this.labels.p_single);
 
+                //剩余数量
+                this.labels.p_single_leftnum_left = (this.labels.p_max-this.labels.p_single);
+
             } else {
 
                 this.labels.w_from = this.$cache.from.outerWidth(false);
@@ -1000,9 +1008,12 @@ define(function(require) {
 
                 if (this.options.type === "single") {
                     this.$cache.s_single[0].style.left = this.coords.p_single + "%";
-
-                    this.$cache.single[0].style.left = this.labels.p_single_left + "%";
-
+                     
+                    if(!this.options.single_fixed){
+                        this.$cache.single[0].style.left = this.labels.p_single_left + "%";
+                    }else{
+                        
+                    }  
                     if (this.options.values.length) {
                         this.$cache.input.prop("value", this._prettify(this.result.from_value));
                         this.$cache.input.data("from", this._prettify(this.result.from_value));
@@ -1070,7 +1081,8 @@ define(function(require) {
                 p_values = this.options.p_values,
                 text_single,
                 text_from,
-                text_to;
+                text_to,
+                text_single_leftnum;
 
             if (this.options.hide_from_to) {
                 return;
@@ -1081,9 +1093,13 @@ define(function(require) {
                 if (values_num) {
                     text_single = this.decorate(p_values[this.result.from]);
                     this.$cache.single.html(text_single);
+                    this.$cache.single_leftnum.html(this.decorate((p_values[this.options.max]*100-text_single*100)/100));
                 } else {
-                    text_single = this.decorate(this._prettify(this.result.from), this.result.from);
+                     text_single = this.decorate(this._prettify(this.result.from), this.result.from);
                     this.$cache.single.html(text_single);
+                    var single_leftnum=this.toFixed(this.options.max-this.result.from,2);
+                    text_single_leftnum=this.decorate(this._prettify(single_leftnum), single_leftnum);
+                     this.$cache.single_leftnum.html(text_single_leftnum); 
                 }
 
                 this.calcLabels();
