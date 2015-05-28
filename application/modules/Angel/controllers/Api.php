@@ -1,6 +1,8 @@
 <?php
 class ApiController extends Base_Controller_Api{
     
+    const PAGE_SIZE = 11;
+    
     public function init(){
         $this->setNeedLogin(true);
         parent::init();
@@ -44,7 +46,7 @@ class ApiController extends Base_Controller_Api{
 	    $objAngel = new Angel_List_Angel();
 	    $objAngel->setFilter(array("userid"=>$this->userid));
 	    $objAngel->setPage($page);
-	    $objAngel->setPagesize(11);
+	    $objAngel->setPagesize(self::PAGE_SIZE);
 	    $arrRet = $objAngel->toArray();
 	    if(!empty($arrRet['list'])){
     	    $loan = new Loan_Object_Loan();
