@@ -81,20 +81,30 @@ class Apply_Logic_Apply extends Apply_Logic_Base {
     		$objSchool = new Apply_List_School();
     		$objSchool->setFilter(array('apply_id' => $item['id']));
             $logicSchool = new Apply_Logic_School();
-    		$tmpData['school'] = $logicSchool->getDataItem($objSchool->getData());
+            $school = $objSchool->getData();
+    		$tmpData['school'] = $logicSchool->getDataItem($school);
     		
     		//得到个人信息
     		$objPersonal = new Apply_List_Personal();
     		$objPersonal->setFilter(array('apply_id' => $item['id']));
             $logicPersonal = new Apply_Logic_Personal();
-    		$tmpData['personal'] = $logicPersonal->getDataItem($objPersonal->getData());
+            $personal = $objPersonal->getData();
+    		$tmpData['personal'] = $logicPersonal->getDataItem($personal);
 
             //得到股权信息
             $objStock = new Apply_List_Stock();
             $objStock->setFilter(array('apply_id' => $item['id']));
             $logicStock = new Apply_Logic_Stock();
-            $tmpData['stock'] = $logicStock->getDataItem($objStock->getData());
+            $stock = $objStock->getData();
+            $tmpData['stock'] = $logicStock->getDataItem($stock);
 
+            //保存原始数据
+            $tmpData['origin'] = array(
+                'apply'     => $item,
+                'school'    => $school,
+                'personal'  => $personal,
+                'stock'     => $personal,
+            );
     		$data['list'][$key] = $tmpData;
     	}
     	return $data;
