@@ -79,9 +79,9 @@ define(function(require) {
                 if (!data.list.length) {
                     pager = null;
                     $('#my-angel-pager').html('');
-                    htmlContainer.html(etpl.render('Error', {
+         /*           htmlContainer.html(etpl.render('Error', {
                         msg: '您当前没有数据哟'
-                    }));
+                    }));*/
                     return;
                 }
                 if (!pager) {
@@ -98,7 +98,7 @@ define(function(require) {
                 pager.render(+data.page);
                 pager.setOpt('pageall', +data.pageall);
 
-                htmlContainer.html(etpl.render(tpl, {
+                htmlContainer.html(etpl.render('returnAngelList', {
                     list: data.list
                 }));
             }

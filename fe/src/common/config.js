@@ -156,7 +156,10 @@ define(function () {
         MY_ANGEL_LIST :rootUrl
             +'/angel/api/list',
         MY_ANGEL_ADD :rootUrl
-            +'/angel/api/add'
+            +'/angel/api/add',
+        MY_ANGELPROFIT_LIST :rootUrl
+            +'/account/angelprofit/list'
+            
             
 
         };

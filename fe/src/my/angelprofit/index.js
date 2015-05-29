@@ -13,8 +13,7 @@ define(function(require) {
     var header = require('common/header');
     var Pager = require('common/ui/Pager/Pager');
     var Remoter = require('common/Remoter');
-    var getAngelProfitList = new Remoter('MY_ANGEL_LIST');
-    var getAngelProfitDetail = new Remoter('MY_ANGEL_ADD');
+    var getAngelProfitList = new Remoter('MY_ANGELPROFIT_LIST');
     var tpl = require('./list.tpl');
 
     // 分页对象
@@ -49,7 +48,7 @@ define(function(require) {
      */
     function bindEvents() {
         // 获取收益详情按钮
-        $('.my-invest-list').delegate('.view-plan-btn', 'click', function () {
+        $('.my-invest-list').delegate('.view-plan-btn', 'click', function() {
             var allItem = $('.my-invest-item');
             // 如果当前为显示状态，则隐藏
             if ($(this).hasClass('current')) {
@@ -65,12 +64,6 @@ define(function(require) {
             $(this).closest('.my-invest-item').addClass('current');
             $(this).addClass('current');
 
-            // 获取内容后再次展开不再发送请求
-            if (!$(this).hasClass('hasDetail')) {
-                getReturnDetail.remote({
-                    invest_id: value
-                });
-            }
         });
     }
 
@@ -110,19 +103,18 @@ define(function(require) {
                 pager.render(+data.page);
                 pager.setOpt('pageall', +data.pageall);
 
-                htmlContainer.html(etpl.render(tpl, {
+                // 格式化时间
+                var list =data.list;
+                for (var i = 0, l = list.length; i < l; i++) {
+                    list[i].timeInfo = moment.unix(list[i].tenderTime).format('YYYY-MM-DD HH:mm');
+                    if (list[i].endTime) {
+                        list[i].endTimeInfo = moment.unix(list[i].endTime).format(FORMATER);
+                    }
+                }
+
+                htmlContainer.html(etpl.render('returnAngelProfitList', {
                     list: data.list
                 }));
-            }
-        }); 
-        //添加爱心天使 成功
-        addAngel.on('success', function(data) {
-            if (data.bizError) {
-                $('.add-error').html(data.statusInfo);
-            } else {
-                getAngelList.remote({
-                    page: 1
-                });
             }
         });
     }
