@@ -15,19 +15,21 @@ class Angel_Api {
         if(!empty($objShare->id)){
             $objInvest = new Invest_Object_Invest();
             $objInvest->fetch(array('id'=>$investId,'user_id'=>$userid));
-            $objRefund = new Invest_List_Refund();
-            $objRefund->setFilter(array("invest_id"=>intval($investId),"user_id"=>$userid));
+            $objRefund = new Invest_List_Invest();
+            $objRefund->setFilter(array("id"=>intval($investId),"user_id"=>$userid));
             $objRefund->setPagesize(PHP_INT_MAX);
             $arrRefund = $objRefund->getData();
             $selfmoney = 0;
             foreach ($arrRefund as $val){
                 $selfmoney += $val['interest'];
             }
+            $objUser  = User_Api::getUserObject($objShare->toUserid);
             return array(
                 'angelrate'  => $objShare->rate,
                 'angelmoney' => $objShare->income,
                 'selfrate'   => $objInvest->interest-$objShare->rate,
                 'selfmoney'  => $selfmoney,
+                'headurl'    => $objUser->headurl,
             );
         }
         return array();
