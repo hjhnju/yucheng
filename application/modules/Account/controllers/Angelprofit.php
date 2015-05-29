@@ -59,8 +59,40 @@ class AngelprofitController extends Base_Controller_Page {
 		        $temp[$index]['amount'] = 0;
 		        $temp[$index]['create_time'] = $list['create_time'];
 		        $temp[$index]['user_id'] = $list['user_id'];
+		        $temp[$index]['status']  = $status;
 		    }
 		    $backingRet['list']  = $temp;
+		}
+		
+		$objShare = new Invest_List_Share();
+		$temp = array();
+		$objShare->setFilter(array('to_userid'=>$userid));
+		$obj->setPagesize(PHP_INT_MAX);
+		$arrShare = $objShare->getData();
+		if(!empty($arrShare)){
+		    foreach ($arrShare as $index => $list){
+		        $loan = Loan_Api::getLoanInfo($list['loan_id']);
+		        $temp[$index]['id']      = $list['invest_id'];
+		        $temp[$index]['loan_id'] = $list['loan_id'];
+		        $temp[$index]['annlnterestRate'] = $loan['tenderAmt'];
+		        $temp[$index]['title'] = $loan['title'];
+		        $temp[$index]['interest'] = $list['income'];
+		        $temp[$index]['amount'] = 0;
+		        $temp[$index]['create_time'] = $list['create_time'];
+		        $temp[$index]['user_id'] = $list['user_id'];
+		        $temp[$index]['status']  = $loan['status'];
+		    }		   
+		}
+		$backingRet['pageall'] += floor(count($temp)/self::PAGESIZE);
+		$backingRet['all']     += count($temp);
+		if(count($backingRet['list']) < self::PAGESIZE){
+		    $arrTemp = array_slice($temp,($page-1)*self::PAGESIZE,self::PAGESIZE-count($backingRet['list']));
+		    if(empty($backingRet['list'])){
+		        $backingRet['list'] = $arrTemp;
+		    }else{
+		        $backingRet['list'] = array_merge($backingRet['list'],$arrTemp);
+		    }
+		    
 		}
 
 		$listRet    = array();
