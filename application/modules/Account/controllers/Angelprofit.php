@@ -94,11 +94,10 @@ class AngelprofitController extends Base_Controller_Page {
 			$listRet[$key]['haveBack']        = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
 			$listRet[$key]['toBeBack']        = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
 			$listRet[$key]['status']          = $value['status'];
-			$angelArray                       = Angel_Api::getAngel($value['user_id'], $value['id']);
+			/*$angelArray                       = Angel_Api::getAngel($value['user_id'], $value['id']);
 			if(!empty($angelArray)){
 			    $listRet[$key]['angel'] = $angelArray;
-			}
-			 
+			}*/			 
  	    }  
 	    $ret = array(
 			'page'    => $page,
@@ -108,5 +107,16 @@ class AngelprofitController extends Base_Controller_Page {
 	    );
 	    $this->output($ret);
         return ;
+	}
+	
+	/**
+	 * 还款计划
+	 */
+	public function repayplanAction() {
+	    $investId = intval($_REQUEST['invest_id']);
+	    $userid   = $this->userid;
+	    $ret = Account_Logic_Repayplan::getRepayplan($investId,$userid);
+	    $this->output($ret);
+	    return ;
 	}
 }
