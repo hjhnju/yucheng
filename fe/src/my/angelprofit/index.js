@@ -103,8 +103,10 @@ define(function(require) {
                         total: +data.pageall
                     }));
 
-                    pager.on('change', function(e) {
-                        getAngelProfitList(e.value);
+                    pager.on('change', function(e) { 
+                        getAngelProfitList.remote({
+                            page: e.value
+                        });
                     });
                 }
 

@@ -28,7 +28,13 @@
         <span class="my-invest-project invest-profit">
             <span class="color-pink">${item.interest}%</span>￥${item.haveBack}
         </span>
+        <!-- if: ${item.status} ==  5 -->
         <span class="my-invest-project view-plan"><span class="view-plan-btn" data-id="${item.invest_id}">查看收益详情</span></span>
+        <!-- elseif ${item.status}== 2-->
+          <span data-id="${item.invest_id}">投标中</span>
+        <!-- elseif ${item.status}== 6-->
+          <span data-id="${item.invest_id}">已完成</span>
+        <!-- /if --> 
     </div> 
     <div class="my-invest-detail"></div>
 </li>
