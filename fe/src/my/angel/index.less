@@ -1,17 +1,22 @@
 @import "../../common/css/common.less";
 @import "../common/css/index.less";
 .my-angel-list {
+    position: relative;
     color: #666;
     font-size: 14px;
     line-height: 24px;
+    min-height: 420px;
+    margin-top: 50px;
     ul {
         float: left;
+        width: 100%;
     }
     .my-angel-item {
         width: 185px;
         float: left;
         text-align: center;
         .angel-img {
+            display: inline-block;
             width: 88px;
             height: 88px;
             .border-radius(50%);
@@ -41,10 +46,11 @@
         }
         .add-angel-btn {
             line-height: 20px;
-            width: 40px;
+            width: 38px;
             display: inline-block;
             border-radius: 2px;
             font-size: 14px;
+            margin-left: 4px;
         }
     }
 }

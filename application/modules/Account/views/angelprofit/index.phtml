@@ -21,11 +21,11 @@
             <div class="all-account-box">
                 <div class="all-box-income">
                       <div class="all-box-income-title">
-                          <p class="all-income-title-price">￥11,035,820.66</p>
+                          <p class="all-income-title-price">￥{%$money%}</p>
                           <p class="all-income-title-name">爱心收益</p>
                       </div>
                       <div class="all-box-income-title">
-                          <p class="all-income-title-price">3人</p>
+                          <p class="all-income-title-price">{%$person%}人</p>
                           <p class="all-income-title-name">累计投标人</p>
                       </div>
                   </div>  
@@ -34,15 +34,51 @@
                    </div> 
             </div>
             <div id="my-angel-list" class="my-invest-list">
-               <table border="0" cellspacing="0" cellpadding="0" class="my-invest-table">
-                <tbody>
-                  <tr>  
-                    <th>投资项目</th><th>年利率</th><th>投标人</th><th>投标时间</th><th>期限</th><th>收益分配（您自己</th><th></th>
-                  </tr>
-                  <tr>
-                    <td><a href="/invest/angeldetail/index?id=15" class="invest-name">全走一遍(1)</a></td><td><span class="invest-em">10.60</span>%</td><td>￥1000000.00</td><td>1个月</td><td>2015-02-08 18:50</td><td>2015-02-14</td><td>￥1008131.51</td><td><span class="invest-em">￥8131.51</span></td><td><span class="view-plan-btn" data-id="211">查看还款计划</span></td></tr>
-                  </tbody>
-                </table>
+              <ul>
+                <li class="my-invest-header">
+                    <span class="my-invest-title invest-name">投资项目</span>
+                    <span class="my-invest-title invest-rate">年利率</span>
+                    <span class="my-invest-title invest-money">投标人</span>
+                    <span class="my-invest-title invest-time">投标时间</span>
+                    <span class="my-invest-title invest-finish">期限</span>
+                    <span class="my-invest-title invest-profit">收益分配(您自己)</span>
+                    <span class="my-invest-title invest-op"></span>
+                </li> 
+                <li class="my-invest-item  my-heart-item">
+                    <div class="my-invest-content"> 
+                        <a href="/invest/detail/index?id=${item.proId}" class="my-invest-project invest-name"> <i class="iconfont icon-heart"></i> 投资项目</a>
+                        <span class="my-invest-project invest-rate"><span class="invest-em">12</span>%</span>
+                        <span class="my-invest-project invest-money">投标人</span>
+                        <span class="my-invest-project invest-time">投标时间</span>
+                        <span class="my-invest-project invest-finish">期限</span>
+                        <span class="my-invest-project invest-profit">收益分配</span>
+                        <span class="my-invest-project view-plan"><span class="view-plan-btn" data-id="${item.invest_id}">查看还款计划</span></span>
+                    </div>  
+                    <div class="my-invest-detail">
+                      <span class="trangle-border"></span>
+                      <span class="trangle-content"></span>
+                      <table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                              <th>时间</th> 
+                              <th>待收收益</th> 
+                              <th>已收收益</th>
+                              <th>还款状态</th> 
+                          </tr> 
+                          <tr>
+                              <td>${item.timeInfo}</td> 
+                              <td>${item.repossProfit}</td> 
+                              <td>${item.receProfit}</td>
+                              <td>未到期</td> 
+                          </tr> 
+                          <tr class="my-invest-plan-all">
+                              <td>总计</td> 
+                              <td>${data.total.repossProfit}</td> 
+                              <td>${data.total.receProfit}</td>
+                              <td></td> 
+                          </tr>
+                      </table>
+                  </div>
+                </li>
                <!--  <div class="xjd-loading">&nbsp;</div> -->
                
             </div> 

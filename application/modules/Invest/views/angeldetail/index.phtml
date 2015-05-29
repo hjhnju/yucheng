@@ -251,15 +251,16 @@
                 </div>
                 <div id="chongzhi-error" class="chongzhi-error"></div>
                 <div class="angel-code-box">
-                    <img class="head-img fl" alt="" src="http://static.xingjiaodai.com.cn:8089/v1/20150525x2/asset/common/img/logo_v2.png" />
+                    <img class="head-img fl" alt="" src="{%$angel.headurl%}" />
                     <span class="code-span">
-                      <span class="angel-name">XXX</span>爱心天使邀请您<br/>
-                       专属天使码：<span class="code">1111 </span> 
-                    </span>
+                      <a class="angel-name" title="{%$angel.name%}">{%$angel.name%}</a>邀请您  
+                    </span> 
+                    <span class="dis-block fr" style="width:190px;">专属天使码：<span class="code">{%$angel.code%} </span> </span>  
                 </div>
                 <div class="rangeslider">
                     <div class="title">分配您与爱心天使的收益</div>
-                    <input type="hidden" class="angel-rate" name="">
+                    <input type="hidden"  class="angel-rate" name="rate"/>
+                    <input type="hidden"  name="angel" value="{%$angel.code%}" />
                 </div>
                 <div class="right-top-ipt shouyi-box">
                     <input type="hidden" name=""  class="my-single"/>
