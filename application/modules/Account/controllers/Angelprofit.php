@@ -58,7 +58,8 @@ class AngelprofitController extends Base_Controller_Page {
 		        $temp[$index]['interest'] = $loan['interest'];
 		        $temp[$index]['amount'] = 0;
 		        $temp[$index]['create_time'] = $list['create_time'];
-		        $temp[$index]['user_id'] = $list['user_id'];
+		        $temp[$index]['user_id'] = $objShare->fromUserid;
+		        $temp[$index]['income'] = $list['amount'];
 		        $temp[$index]['status']  = $status;
 		    }
 		    $backingRet['list']  = $temp;
@@ -74,12 +75,13 @@ class AngelprofitController extends Base_Controller_Page {
 		        $loan = Loan_Api::getLoanInfo($list['loan_id']);
 		        $temp[$index]['id']      = $list['invest_id'];
 		        $temp[$index]['loan_id'] = $list['loan_id'];
-		        $temp[$index]['annlnterestRate'] = $loan['tenderAmt'];
+		        $temp[$index]['annlnterestRate'] = $list['rate'];
 		        $temp[$index]['title'] = $loan['title'];
-		        $temp[$index]['interest'] = $list['income'];
+		        $temp[$index]['interest'] = $loan['interest'];
 		        $temp[$index]['amount'] = 0;
 		        $temp[$index]['create_time'] = $list['create_time'];
-		        $temp[$index]['user_id'] = $list['user_id'];
+		        $temp[$index]['user_id'] = $list['from_userid'];
+		        $temp[$index]['income'] = $list['income'];
 		        $temp[$index]['status']  = $loan['status'];
 		    }		   
 		}
@@ -110,7 +112,7 @@ class AngelprofitController extends Base_Controller_Page {
  	    foreach ($list as $key => $value) {
  	        $user = User_Api::getUserObject($value['user_id']);
  	        $share = new Invest_Object_Share();
- 	        $share->fetch(array('invest_id'=>$value['id'],'to_userid'=>$value['user_id']));
+ 	        $share->fetch(array('invest_id'=>$value['id'],'from_userid'=>$value['user_id']));
 			$listRet[$key]['invest_id']       = $value['id'];//invest_id	
 			$listRet[$key]['name']            = Base_Util_String::starUsername($user->name);  
 			$backingRefund                    = Account_Logic_Repayplan::getRepayplan($value['id'],$value['user_id']);
@@ -123,8 +125,8 @@ class AngelprofitController extends Base_Controller_Page {
 			$listRet[$key]['tenderAmt']       = $value['amount'];
 			$listRet[$key]['deadline']        = $loanInfo['duration_name'];
 			$listRet[$key]['tenderTime']      = $value['create_time'];
-			$listRet[$key]['haveBack']        = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
-			$listRet[$key]['toBeBack']        = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
+			$listRet[$key]['haveBack']        = $value['income'];
+			$listRet[$key]['toBeBack']        = 0;
 			$listRet[$key]['status']          = $value['status'];		 
  	    }  
 	    $ret = array(
