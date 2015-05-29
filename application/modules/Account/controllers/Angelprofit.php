@@ -76,7 +76,9 @@ class AngelprofitController extends Base_Controller_Page {
         	return ;
         }
  	    foreach ($list as $key => $value) {
-			$listRet[$key]['invest_id']       = $value['id'];//invest_id	        
+ 	        $user = User_Api::getUserObject($value['user_id']);
+			$listRet[$key]['invest_id']       = $value['id'];//invest_id	
+			$listRet[$key]['name']            = Base_Util_String::starUsername($user->name);  
 			$backingRefund                    = Account_Logic_Repayplan::getRepayplan($value['id'],$value['user_id']);
 			$total                            = $backingRefund['total'];	        
 			$listRet[$key]['proId']           = $value['loan_id'];
