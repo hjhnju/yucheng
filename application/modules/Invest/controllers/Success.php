@@ -15,16 +15,19 @@ class SuccessController extends Base_Controller_Response {
     	    $objAngel = new Angel_Object_Angel();
     	    $objUser  = new User_Object_Login();
     	    $logic     = new Awards_Logic_Invite();
-    	    
+ 	    
             $objUser->fetch(array('name'=>$name));
             $user = User_Api::getUserObject($objUser->userid);
-    	    
-    	    $objAngel->userid     = $this->userid;
-    	    $objAngel->angelid    = $user->userid;
-    	    $objAngel->angelname  = $user->name;
-    	    $objAngel->angelcode  = $logic->encode($user->userid);
-    	    $objAngel->angelimage = $user->headurl;
-    	    $objAngel->save();
+            
+            $objAngel->fetch(array('userid'=>$this->userid,'angelid'=>$user->userid));
+            if(empty($objAngel->id)){    	    
+        	    $objAngel->userid     = $this->userid;
+        	    $objAngel->angelid    = $user->userid;
+        	    $objAngel->angelname  = $user->name;
+        	    $objAngel->angelcode  = $logic->encode($user->userid);
+        	    $objAngel->angelimage = $user->headurl;
+        	    $objAngel->save();
+            }
 	    }
 	} 
 }
