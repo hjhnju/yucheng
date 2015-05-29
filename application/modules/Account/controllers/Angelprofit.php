@@ -48,8 +48,8 @@ class AngelprofitController extends Base_Controller_Page {
 		    $obj->setFilter(array('user_id'=>$userid));	
 		    $obj->setPagesize(self::PAGESIZE);
 		    $obj->setPage($page);
-		    $ShareRet = $obj->toArray();
-		    foreach ($ShareRet['list'] as $index => $list){
+		    $backingRet = $obj->toArray();
+		    foreach ($backingRet['list'] as $index => $list){
 		        $loan = Loan_Api::getLoanInfo($list['loan_id']);
 		        $temp[$index]['id']      = $list['invest_id'];
 		        $temp[$index]['loan_id'] = $list['loan_id'];
@@ -93,11 +93,7 @@ class AngelprofitController extends Base_Controller_Page {
 			$listRet[$key]['tenderTime']      = $value['create_time'];
 			$listRet[$key]['haveBack']        = sprintf('%.2f',floatval($total['recePrincipal']) + floatval($total['receProfit']));
 			$listRet[$key]['toBeBack']        = sprintf('%.2f',floatval($total['repossPrincipal']) + floatval($total['repossProfit']));
-			$listRet[$key]['status']          = $value['status'];
-			/*$angelArray                       = Angel_Api::getAngel($value['user_id'], $value['id']);
-			if(!empty($angelArray)){
-			    $listRet[$key]['angel'] = $angelArray;
-			}*/			 
+			$listRet[$key]['status']          = $value['status'];		 
  	    }  
 	    $ret = array(
 			'page'    => $page,
