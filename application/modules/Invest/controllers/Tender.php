@@ -86,8 +86,8 @@ class TenderController extends Base_Controller_Page {
 	    $rate =  $loan['interest'] - $rate;
 	    $intRate = intval($rate);
 	    if(!empty($intRate)){
-	        $logic     = new Awards_Logic_Invite();
-	        $intUserid = $logic->decode($angel);
+	        $awardslogic  = new Awards_Logic_Invite();
+	        $intUserid    = $awardslogic->decode($angel);
 	        $shareInfo['uid']  = $intUserid;
 	        $shareInfo['rate'] = $rate;
 	    }
