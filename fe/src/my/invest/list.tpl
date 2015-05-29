@@ -136,7 +136,8 @@
         </tr>
      <!-- if: ${item.angel}-->
           <tr>
-            <td class="my-heart-content" colspan="6"> 
+            <td class="my-heart-content" colspan="6">
+             <span class="my-heart-span">
                    <span class="">收益分配：
                     <span class="color-green">${item.angel.selfrate}%</span>
                     (您自己)${item.angel.selfmoney}元
@@ -147,6 +148,7 @@
                     (爱心天使)${item.angel.angelmoney}元
                 </span>
                 </div>
+             </span> 
             </td>
          </tr>
       <!-- /if -->   
@@ -170,10 +172,13 @@
     <!-- for: ${list} as ${item} -->
        <!-- if: ${item.angel}-->
         <tr  class="my-heart-tr">
+           <td>
+            <i class="iconfont icon-heart"></i>
         <!-- else -->
         <tr>
+            <td>
         <!-- /if -->  
-            <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
+            <a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
             <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
             <td>￥${item.tenderAmt}</td>
             <td>${item.deadline}</td>
@@ -184,16 +189,19 @@
         </tr>
        <!-- if: ${item.angel}-->
         <tr>
-            <td class="my-heart-content" colspan="6"> 
+          <td class="my-heart-content" colspan="6">
+             <span class="my-heart-span">
                    <span class="">收益分配：
-                    <span class="color-green">${item.angel.selfrate}%</span>(您自己)${item.angel.selfmoney} 元
+                    <span class="color-green">${item.angel.selfrate}%</span>
+                    (您自己)${item.angel.selfmoney}元
                 </span>
-                <img class="angel-img" alt="" src="${item.angel.headurl}" /> 
-                <span class="">
+                <img class="angel-img" alt="" src="${item.angel.headurl}" />
+                 <span class="">
                     <span class="color-pink">${item.angel.angelrate}%</span>
                     (爱心天使)${item.angel.angelmoney}元
                 </span>
                 </div>
+             </span> 
             </td>
         </tr>
         <!-- /if -->  
@@ -226,16 +234,19 @@
         </tr>
     <!-- if: ${item.angel}-->
         <tr>
-            <td class="my-heart-content" colspan="6"> 
+            <td class="my-heart-content" colspan="6">
+             <span class="my-heart-span">
                    <span class="">收益分配：
-                    <span class="color-green">${item.angel.selfrate}%</span>(您自己)${item.angel.selfmoney} 元
+                    <span class="color-green">${item.angel.selfrate}%</span>
+                    (您自己)${item.angel.selfmoney}元
                 </span>
                 <img class="angel-img" alt="" src="${item.angel.headurl}" />
-                <span class="">
+                 <span class="">
                     <span class="color-pink">${item.angel.angelrate}%</span>
                     (爱心天使)${item.angel.angelmoney}元
                 </span>
                 </div>
+             </span> 
             </td>
         </tr>
         <!-- /if -->  

@@ -171,8 +171,8 @@
         display: block;
         height: 10px;
         width: 10px;
-        float: left;
         color: #f0acc8;
+        float: left;
     }
     .invest-name {
         padding-left: 5px;
@@ -182,33 +182,41 @@
     }
 }
 
-.my-heart-content {
-    background-color: #f5f5f5;
-    width: 710px;
-    height: 50px;
-    padding-left: 10px;
-    line-height: 50px;
-    .angel-img {
-        width: 35px;
-        height: 35px;
-        vertical-align: middle;
-        margin-left: 40px;
-        margin-right: 10px;
-        .border-radius(17px);
-    }
-}
-
 .my-invest-table {
-    .my-heart-tr td {
-        border-bottom: none;
-        &:first-child {
-            padding-left: 5px;
+    .my-heart-tr {
+        position: relative;
+        td {
+            border-bottom: none;
+            &:first-child {
+                padding-left: 12px;
+            }
         }
     }
     .icon-heart {
         height: 10px;
         width: 10px;
         color: #f0acc8;
+        position: absolute;
+        left: -5px;
+    }
+    .my-heart-content {
+        padding-left: 10px;
+        line-height: 40px;
+        height: 40px;
+        .my-heart-span {
+            display: block;
+            background-color: #f5f5f5;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+        .angel-img {
+            width: 35px;
+            height: 35px;
+            vertical-align: middle;
+            margin-left: 40px;
+            margin-right: 10px;
+            .border-radius(17px);
+        }
     }
 }
 

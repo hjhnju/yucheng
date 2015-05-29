@@ -29,44 +29,8 @@
             <span class="color-pink">${item.interest}%</span>￥${item.haveBack}
         </span>
         <span class="my-invest-project view-plan"><span class="view-plan-btn" data-id="${item.invest_id}">查看收益详情</span></span>
-    </div>  
-    <div class="my-invest-detail">
-        <span class="trangle-border"></span>
-        <span class="trangle-content"></span>
-        <table border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <th>时间</th> 
-                <th>待收收益</th> 
-                <th>已收收益</th>
-                <th>还款状态</th> 
-            </tr>
-            <!-- for: ${data.list} as ${item} -->
-            <tr>
-                <td>${item.timeInfo}</td>
-                <td>${item.repossPrincipal}</td>
-                <td>${item.repossProfit}</td>
-                <!-- if: ${item.paymentStatus} == 0 --> 
-                <td>${item.receProfit}</td>
-                <td>未到期</td>
-                <td>${item.punitive}</td>
-                <!-- elif: ${item.paymentStatus} == 1 --> 
-                <td><span class="invest-pass">${item.receProfit}</span></td>
-                <td>按时还款</td>
-                <td><span class="invest-pass">${item.punitive}</span></td>
-                <!-- else --> 
-                <td><span class="invest-em">${item.receProfit}</span></td>
-                <td>已逾期</td> 
-                <!-- /if -->
-            </tr>
-            <!-- /for -->
-            <tr class="my-invest-plan-all">
-                <td>总计</td> 
-                <td>${data.total.repossProfit}</td> 
-                <td>${data.total.receProfit}</td>
-                <td></td> 
-            </tr>
-        </table>
-    </div>
+    </div> 
+    <div class="my-invest-detail"></div>
 </li>
 <!-- /for -->
 </ul>
@@ -110,40 +74,37 @@
 
 
 
-<!-- target: returnAngelProfitDetail -->
-<span class="trangle-border"></span>
-<span class="trangle-content"></span> 
-<table border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        <th>时间</th> 
-        <th>待收收益</th> 
-        <th>已收收益</th>
-        <th>还款状态</th> 
-    </tr>
-    <!-- for: ${data.list} as ${item} -->
-    <tr>
-        <td>${item.timeInfo}</td>
-        <td>${item.repossPrincipal}</td>
-        <td>${item.repossProfit}</td>
-        <!-- if: ${item.paymentStatus} == 0 --> 
-        <td>${item.receProfit}</td>
-        <td>未到期</td>
-        <td>${item.punitive}</td>
-        <!-- elif: ${item.paymentStatus} == 1 --> 
-        <td><span class="invest-pass">${item.receProfit}</span></td>
-        <td>按时还款</td>
-        <td><span class="invest-pass">${item.punitive}</span></td>
-        <!-- else --> 
-        <td><span class="invest-em">${item.receProfit}</span></td>
-        <td>已逾期</td> 
-        <!-- /if -->
-    </tr>
-    <!-- /for -->
-    <tr class="my-invest-plan-all">
-        <td>总计</td> 
-        <td>${data.total.repossProfit}</td> 
-        <td>${data.total.receProfit}</td>
-        <td></td> 
-    </tr>
-</table>
+<!-- target: returnAngelProfitDetail --> 
+        <span class="trangle-border"></span>
+        <span class="trangle-content"></span>
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>时间</th> 
+                <th>待收收益</th> 
+                <th>已收收益</th>
+                <th>还款状态</th> 
+            </tr>
+            <!-- for: ${data.list} as ${item} -->
+            <tr>
+                <td>${item.timeInfo}</td> 
+                <td>${item.repossProfit}</td>
+                <!-- if: ${item.paymentStatus} == 0 --> 
+                <td>${item.receProfit}</td>
+                <td>未到期</td> 
+                <!-- elif: ${item.paymentStatus} == 1 --> 
+                <td><span class="invest-pass">${item.receProfit}</span></td>
+                <td>按时还款</td> 
+                <!-- else --> 
+                <td><span class="invest-em">${item.receProfit}</span></td>
+                <td>已逾期</td> 
+                <!-- /if -->
+            </tr>
+            <!-- /for -->
+            <tr class="my-invest-plan-all">
+                <td>总计</td> 
+                <td>${data.total.repossProfit}</td> 
+                <td>${data.total.receProfit}</td>
+                <td></td> 
+            </tr>
+        </table> 
 <!-- /target -->

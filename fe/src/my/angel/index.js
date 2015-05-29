@@ -91,7 +91,7 @@ define(function(require) {
                     }));
 
                     pager.on('change', function(e) {
-                        getRemoteList(e.value);
+                        getAngelList(e.value);
                     });
                 }
 

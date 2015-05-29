@@ -158,7 +158,9 @@ define(function () {
         MY_ANGEL_ADD :rootUrl
             +'/angel/api/add',
         MY_ANGELPROFIT_LIST :rootUrl
-            +'/account/angelprofit/list'
+            +'/account/angelprofit/list',
+        MY_ANGELPROFIT_DETAIL :rootUrl
+            +'/account/angelprofit/repayplan'
             
             
 
