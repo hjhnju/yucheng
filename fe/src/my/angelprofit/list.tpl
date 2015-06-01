@@ -14,7 +14,7 @@
     <span class="my-invest-title invest-money">投标人</span>
     <span class="my-invest-title invest-time">投标时间</span>
     <span class="my-invest-title invest-finish">期限</span>
-    <span class="my-invest-title invest-profit">收益分配(您自己)</span>
+    <span class="my-invest-title invest-profit">收益分配（您自己）</span>
     <span class="my-invest-title invest-op"></span>
 </li>
 <!-- for: ${list} as ${item} -->  
@@ -90,7 +90,7 @@
                 <th>时间</th> 
                 <th>待收收益</th> 
                 <th>已收收益</th>
-                <th>还款状态</th> 
+                <th>回款状态</th> 
             </tr>
             <!-- for: ${data.list} as ${item} -->
             <tr>

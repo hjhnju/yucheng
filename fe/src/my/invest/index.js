@@ -319,7 +319,7 @@ define(function (require) {
      */
     function renderHTML(tpl, data) {
 
-        pager.setOpt('pageall', +data.pageall);
+        pager.setOpt('total', +data.pageall);
         pager.render(+data.page);
 
         // 格式化时间
