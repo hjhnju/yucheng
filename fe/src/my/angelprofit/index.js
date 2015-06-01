@@ -14,6 +14,7 @@ define(function(require) {
     var Pager = require('common/ui/Pager/Pager');
     var Remoter = require('common/Remoter');
     var getAngelProfitList = new Remoter('MY_ANGELPROFIT_LIST');
+    var getAngelProfitDetail = new Remoter('MY_ANGELPROFIT_DETAIL');
     var tpl = require('./list.tpl');
 
     // 分页对象
@@ -64,6 +65,13 @@ define(function(require) {
             $(this).closest('.my-invest-item').addClass('current');
             $(this).addClass('current');
 
+            // 获取内容后再次展开不再发送请求
+            if (!$(this).hasClass('hasDetail')) {
+                getAngelProfitDetail.remote({
+                    invest_id: value
+                });
+            }
+
         });
     }
 
@@ -95,8 +103,10 @@ define(function(require) {
                         total: +data.pageall
                     }));
 
-                    pager.on('change', function(e) {
-                        getRemoteList(e.value);
+                    pager.on('change', function(e) { 
+                        getAngelProfitList.remote({
+                            page: e.value
+                        });
                     });
                 }
 
@@ -104,7 +114,7 @@ define(function(require) {
                 pager.setOpt('pageall', +data.pageall);
 
                 // 格式化时间
-                var list =data.list;
+                var list = data.list;
                 for (var i = 0, l = list.length; i < l; i++) {
                     list[i].timeInfo = moment.unix(list[i].tenderTime).format('YYYY-MM-DD HH:mm');
                     if (list[i].endTime) {
@@ -114,6 +124,31 @@ define(function(require) {
 
                 htmlContainer.html(etpl.render('returnAngelProfitList', {
                     list: data.list
+                }));
+            }
+        });
+
+        getAngelProfitDetail.on('success', function(data) {
+            var container = $(item).closest('.my-invest-item')
+                .addClass('current').find('.my-invest-detail');
+
+            if (data.bizError) {
+                container.render(etpl.render('Error', {
+                    msg: data.statusInfo
+                }));
+            } else {
+                if (!item) {
+                    return;
+                }
+
+                $(item).addClass('hasDetail');
+
+                for (var i = 0, l = data.list.length; i < l; i++) {
+                    data.list[i].timeInfo = moment.unix(data.list[i].time).format(FORMATER);
+                }
+
+                container.html(etpl.render('returnAngelProfitDetail', {
+                    data: data
                 }));
             }
         });
