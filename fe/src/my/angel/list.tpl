@@ -17,7 +17,7 @@
 	</li>
 <!-- /for -->
     <li class="my-angel-item add-angel-li">
-       <span class="add-angel">+</span>
+       <span class="add-angel"></span>
        <span class="dis-block tl"> 
          输入天使码：<input type="text" name="angelcode" class="add-angel-input" />
          <a class="common-a-btn add-angel-btn">确定</a>
