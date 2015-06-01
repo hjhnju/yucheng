@@ -10,7 +10,7 @@
 <!-- for: ${list} as ${item} --> 
 	<li class="my-angel-item">
      <a href="${item.url}" target="_blank">
-		   <img src="${item.url}" alt="" class="angel-img">
+		   <img src="${item.angelimage}" alt="" class="angel-img">
       </a>
      <span class="angel-name">天使：${item.angelname} </span>
      <span class="angel-code">专属码：${item.angelcode}</span>

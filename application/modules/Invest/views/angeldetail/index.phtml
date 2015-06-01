@@ -58,13 +58,9 @@
 {%block name="content"%} 
 <div class="details heart">
     <div class="container">
+        <div class="box1"></div>
         <div class="detail-left">
-            <div class="detail-left-title title-icon">
-                <a href="{%$webroot%}/invest" class="left-title-link">我来投资</a>
-                <span class="left-title-greater">&gt;</span>
-                <a href="{%$webroot%}/invest" class="left-title-link">项目列表</a>
-                <span class="left-title-greater">&gt;</span>
-                <span class="left-title-link-span">项目详情</span>
+            <div class="detail-left-title title-icon"> 
             </div>
             {%if isset($error)%}
             <div class="chongzhi-error show">{%$error%}</div>
@@ -151,7 +147,7 @@
                 <div class="project-main project">
                     <div class="project-main-title"> 
                         <div class="main-title-box showrecord">投资记录</div>
-                        <div class="main-title-box showplan">还款计划</div>
+                        <div class="main-title-box showplan">回款计划</div>
                     </div> 
                     <div class="main-box-details showrecord-main">
                         {%if isset($userBalance.amount)%}
