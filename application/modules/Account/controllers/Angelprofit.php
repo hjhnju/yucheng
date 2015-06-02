@@ -73,7 +73,7 @@ class AngelprofitController extends Base_Controller_Page {
 		        $temp[$index]['user_id'] = $objShare->fromUserid;
 		        $temp[$index]['income'] = $list['amount'];
 		        $temp[$index]['status']  = $status;
-		        $arrInvest[] = $list['invest_id'];
+		        $arrInvest[$index] = $list['invest_id'];
 		    }
 		    $backingRet['list']  = $temp;
 		}

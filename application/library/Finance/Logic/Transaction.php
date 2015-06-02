@@ -336,7 +336,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param float transAmt 放款金额
      *
      */
-    public function loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt, $sharefee=0.00) {
+    public function loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt) {
         $objRst = new Base_Result();
         if(!isset($loanId) || !isset($subOrdId) || !isset($inUserId) || !isset($outUserId) || !isset($transAmt)) {
             Base_Log::error(array(
@@ -385,9 +385,9 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         //收取费用
         $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
         //里面函数已经round(,2)
-        $fee       = sprintf('%.2f', $arrFeeInfo['total_fee']+$sharefee);
+        $fee       = sprintf('%.2f', $arrFeeInfo['total_fee']);
         $riskFee   = sprintf('%.2f', $arrFeeInfo['risk_fee']);
-        $servFee   = sprintf('%.2f', $arrFeeInfo['serv_fee']+$sharefee);
+        $servFee   = sprintf('%.2f', $arrFeeInfo['serv_fee']);
         
         $subOrderInfo  = Finance_Logic_Order::getOrderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
