@@ -186,12 +186,7 @@ class Loan_Logic_Refund {
      */
     public function buildRefunds($loanId) {
         $loan = new Loan_Object_Loan($loanId);
-        $loan = $loan->toArray();
-        $invest_share = new Invest_Object_Share();
-        $invest_share->fetch(array('loan_id'=>$loanId));
-        if(!empty($invest_share->id)){
-            $loan['interest'] -= $invest_share->rate;
-        }        
+        $loan = $loan->toArray();        
         if ($loan['duration'] < 30) {
             $date        = new DateTime('tomorrow');
             $date->modify('+' . $loan['duration'] . 'days');

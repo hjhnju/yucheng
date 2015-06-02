@@ -45,21 +45,30 @@ class Invest_Api {
         $date           = new DateTime('tomorrow');
         $start          = $date->getTimestamp() - 1;
         $capital_refund = 0;
-        if($type === Loan_Type_RefundType::MONTH_INTEREST || $loan['duration']<30){
-            $date->modify('+1month');
+        Base_Log::notice(array(
+                        'msg'      => '测试多月',
+                        'duration' => $loan['duration'],
+                        'type'     => $type,
+                        'proId'    => $proId,
+                        'transAmt' => $transAmt,
+                    ));
+        if($type == Loan_Type_RefundType::MONTH_INTEREST || $loan['duration']<30){
+            if($loan['duration']>= 30){
+                $periods = ceil($loan['duration'] / 30);
+                $date->modify('+'.$periods.' month');
+            }else{
+                $date->modify('+'.$loan['duration'].' day');
+            }
             $promise  = $date->getTimestamp() - 1;
             $days     = ($promise - $start) / 3600 / 24;
             $income = self::getInterestByDay($transAmt, $rate, $days);
-        }elseif($type === Loan_Type_RefundType::AVERAGE){
+        }elseif($type == Loan_Type_RefundType::AVERAGE){
             $date = new DateTime('tomorrow');
             $periods = ceil($loan['duration'] / 30);
             $start = $date->getTimestamp() - 1;
             $b = $rate/100/12;
             $a = $transAmt;           
-            $date->modify('+1month');
-            $promise = $date->getTimestamp() - 1;
-            $days    = ($promise - $start) / 3600 / 24;
-            $income  = $a * $b * (pow(1 + $b, $periods)) / (pow(1 + $b, $periods) - 1)-$a/$periods;                      
+            $income   = ($a * $b * (pow(1 + $b, $periods)) / (pow(1 + $b, $periods) - 1)-$a/$periods)*$periods;                     
         }
         
         $obj_share = new Invest_Object_Share();
@@ -513,7 +522,7 @@ class Invest_Api {
      * @param number $days
      * @return number
      */
-    private static function getInterestByDay($amount, $interest, $days) {
+    public static function getInterestByDay($amount, $interest, $days) {
         $money = $amount * $interest * $days / 365 / 100;
         return $money;
     }

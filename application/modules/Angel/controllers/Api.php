@@ -39,6 +39,22 @@ class ApiController extends Base_Controller_Api{
 	}
 	
 	/**
+	 * 取消关注接口
+	 */
+	public function cancelAction(){
+	    $angelCode = isset($_REQUEST['code'])?$_REQUEST['code']:'';
+	    $logic     = new Awards_Logic_Invite();
+	    $intUserid = $logic->decode($angelCode);
+	    $objAngel = new Angel_Object_Angel();
+	    $objAngel->fetch(array('userid'=>$this->userid,'angelid'=>$intUserid));
+	    $ret = $objAngel->erase();
+	    if($ret){
+	        return $this->ajax();
+	    }
+	    return $this->ajaxError();
+	}
+	
+	/**
 	 * 查询用户天使接口
 	 */
 	public function listAction(){
@@ -49,9 +65,17 @@ class ApiController extends Base_Controller_Api{
 	    $objAngel->setPagesize(self::PAGE_SIZE);
 	    $arrRet = $objAngel->toArray();
 	    if(!empty($arrRet['list'])){
-    	    $loan = new Loan_Object_Loan();
-    	    $loan->fetch(array('status'=>Loan_Type_LoanStatus::LENDING));
-    	    $url = $this->webroot."/invest/angeldetail?id=$loan->id";
+    	    $loan = new Loan_List_Loan();
+    	    $loan->setFilter(array('status'=>Loan_Type_LoanStatus::LENDING));
+    	    $loan->setOrder(0);
+    	    $loan->setPagesize(PHP_INT_MAX);
+    	    $ret = $loan->getData();
+    	    if(!empty($ret)){
+        	    $id = $ret[0]['id'];
+        	    $url = $this->webroot."/invest/angeldetail?id=$id";
+    	    }else{
+    	        $url = $this->webroot."/invest";
+    	    }
     	    foreach ($arrRet['list'] as $key => $val){
     	        $arrRet['list'][$key]['url'] = $url."&angel=".$val['angelcode'];
     	    }
@@ -66,6 +90,11 @@ class ApiController extends Base_Controller_Api{
 	    $name = isset($_REQUEST['name'])?$_REQUEST['name']:'';
 	    $objUser = new User_Object_Login();
 	    $objUser->fetch(array('name'=>$name));
+	    $uid = $objUser->userid;
+	    if(empty($uid)){
+	        $objUser = new User_Object_Login();
+	        $objUser->fetch(array('phone'=>$name));
+	    }
 	    if($objUser->usertype !== User_Type_Roles::TYPE_ANGEL){
 	        return $this->ajaxError();
 	    }	    

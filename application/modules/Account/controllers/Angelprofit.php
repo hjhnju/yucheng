@@ -20,17 +20,23 @@ class AngelprofitController extends Base_Controller_Page {
 		$userInfo = $this->userInfoLogic->getUserInfo($this->objUser);	
 		$objShare = new Invest_List_Share();
 		$objShare->setFilter(array('to_userid'=>$this->objUser->userid));
+		$objShare->setPagesize(PHP_INT_MAX);
 		$arrRet = $objShare->toArray();
 		$money  = 0.00;
 		$arrPerson = array();
 		foreach ($arrRet['list'] as $val){
 		    $arrPerson[]  = $val['from_userid'];
-		    $money       += $val['income'];
+		    $loan = Loan_Api::getLoanInfo($val['loan_id']);
+		    if($loan['status'] == Loan_Type_LoanStatus::FINISHED){
+		        $money       += $val['income'];
+		    }
 		}	
+		$count = count($arrPerson);
 		$arrPerson = array_unique($arrPerson);
 		$this->getView()->assign('userinfo',$userInfo);
 		$this->getView()->assign('money',$money);
 		$this->getView()->assign('person',count($arrPerson));
+		$this->getView()->assign('count',$count);
 	}
 	
 	/**
@@ -64,11 +70,10 @@ class AngelprofitController extends Base_Controller_Page {
 		    }
 		    $backingRet['list']  = $temp;
 		}
-		
 		$objShare = new Invest_List_Share();
 		$temp = array();
 		$objShare->setFilter(array('to_userid'=>$userid));
-		$obj->setPagesize(PHP_INT_MAX);
+		$objShare->setPagesize(PHP_INT_MAX);
 		$arrShare = $objShare->getData();
 		if(!empty($arrShare)){
 		    foreach ($arrShare as $index => $list){
@@ -85,16 +90,15 @@ class AngelprofitController extends Base_Controller_Page {
 		        $temp[$index]['status']  = $loan['status'];
 		    }		   
 		}
-		$backingRet['pageall'] += floor(count($temp)/self::PAGESIZE);
+		$backingRet['pageall']  = ceil((count($temp)+$backingRet['all'])/self::PAGESIZE);
 		$backingRet['all']     += count($temp);
 		if(count($backingRet['list']) < self::PAGESIZE){
-		    $arrTemp = array_slice($temp,($page-1)*self::PAGESIZE,self::PAGESIZE-count($backingRet['list']));
+		    $arrTemp = array_slice($temp,floor(($page*self::PAGESIZE-$backingRet['total'])/self::PAGESIZE)*self::PAGESIZE,self::PAGESIZE-count($backingRet['list']));
 		    if(empty($backingRet['list'])){
 		        $backingRet['list'] = $arrTemp;
 		    }else{
 		        $backingRet['list'] = array_merge($backingRet['list'],$arrTemp);
-		    }
-		    
+		    }		    
 		}
 
 		$listRet    = array();

@@ -9,9 +9,9 @@ class SuccessController extends Base_Controller_Response {
 	    $amount = $sess->get('invest_amount');
 	    $name = isset($_REQUEST['name'])?$_REQUEST['name']:'';
 	    $this->_view->assign('amount', Base_Util_Number::tausendStyle($amount));
-	    $this->_view->assign('name',$name);
 	    
 	    if(!empty($name)){
+	        $this->_view->assign('name',$name);
     	    $objAngel = new Angel_Object_Angel();
     	    $objUser  = new User_Object_Login();
     	    $logic     = new Awards_Logic_Invite();
