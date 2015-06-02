@@ -55,7 +55,13 @@ class AngelprofitController extends Base_Controller_Page {
 		    $obj->setPagesize(self::PAGESIZE);
 		    $obj->setPage($page);
 		    $backingRet = $obj->toArray();
+		    $arrInvest = array();
 		    foreach ($backingRet['list'] as $index => $list){
+		        $ret = array_search($list['invest_id'],$arrInvest);
+		        if(false !== $ret){
+		            $temp[$ret]['income'] += $list['amount'];
+		            continue;
+		        }
 		        $loan = Loan_Api::getLoanInfo($list['loan_id']);
 		        $temp[$index]['id']      = $list['invest_id'];
 		        $temp[$index]['loan_id'] = $list['loan_id'];
@@ -67,6 +73,7 @@ class AngelprofitController extends Base_Controller_Page {
 		        $temp[$index]['user_id'] = $objShare->fromUserid;
 		        $temp[$index]['income'] = $list['amount'];
 		        $temp[$index]['status']  = $status;
+		        $arrInvest[] = $list['invest_id'];
 		    }
 		    $backingRet['list']  = $temp;
 		}
