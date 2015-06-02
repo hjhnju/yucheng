@@ -116,7 +116,7 @@ class AngelprofitController extends Base_Controller_Page {
  	    foreach ($list as $key => $value) {
  	        $user = User_Api::getUserObject($value['user_id']);
  	        $share = new Invest_Object_Share();
- 	        $share->fetch(array('invest_id'=>$value['id'],'from_userid'=>$value['user_id']));
+ 	        $share->fetch(array('invest_id'=>$value['id']));
 			$listRet[$key]['invest_id']       = $value['id'];//invest_id	
 			$listRet[$key]['name']            = Base_Util_String::starUsername($user->name);  
 			$backingRefund                    = Account_Logic_Repayplan::getRepayplan($value['id'],$value['user_id']);
