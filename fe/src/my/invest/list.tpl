@@ -36,14 +36,16 @@
     </div> 
      <!-- if: ${item.angel}-->
     <div class="my-heart-content">
-        <span class="">收益分配：
-            <span class="color-green">${item.angel.selfrate}%</span>(您自己)${item.angel.selfmoney} 元
+        <span class="my-heart-span"> 
+            <span class="">收益分配：
+                <span class="color-green">${item.angel.selfrate}%</span>(您自己)${item.angel.selfmoney} 元
+            </span>
+            <img class="angel-img" alt="" src="${item.angel.headurl}" />
+            <span class="">
+                        <span class="color-pink">${item.angel.angelrate}%</span>
+                        (爱心天使)${item.angel.angelmoney}元
+            </span>
         </span>
-        <img class="angel-img" alt="" src="${item.angel.headurl}" />
-        <span class="">
-                    <span class="color-pink">${item.angel.angelrate}%</span>
-                    (爱心天使)${item.angel.angelmoney}元
-                </span>
     </div>
      <!-- /if -->
     <div class="my-invest-detail">

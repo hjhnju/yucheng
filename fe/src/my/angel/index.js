@@ -49,7 +49,7 @@ define(function(require) {
      */
     function bindEvents() {
         //添加爱心天使
-        $('.add-angel-btn').click(function(e) {
+         $('#my-angel-list').delegate('.add-angel-btn', 'click', function(e) { 
             e.preventDefault();
             var value = $('.add-angel-input').val();
             if (!value) {

@@ -8,7 +8,7 @@ var time = ''
     + ('' + (date.getMonth() + 101)).substr(1)
     + ('' + (date.getDate() + 100)).substr(1);
 
-exports.output = path.resolve( __dirname, 'output/v1', time + 'x2' );
+exports.output = path.resolve( __dirname, '../htdocs/v1', time + 'x2' );
 
 // var moduleEntries = 'html,htm,phtml,tpl,vm,js';
 // var pageEntries = 'html,htm,phtml,tpl,vm';
@@ -30,8 +30,11 @@ exports.getProcessors = function () {
             'src/my/topup/index.less',
             'src/my/success/index.less',
             'src/my/invite/index.less',
+            'src/my/angel/index.less', 
+            'src/my/angelprofit/index.less', 
             'src/project/detail/index.less',
             'src/project/list/index.less',
+            'src/project/confirm/index.less', 
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
@@ -61,7 +64,23 @@ exports.getProcessors = function () {
             'src/m/open/index.less',
             'src/m/project/list/index.less',
             'src/m/project/detail/index.less',
-            'src/m/account/index.less'
+            'src/m/account/index.less',
+            'src/m/account/topup/index.less',
+            'src/m/account/invest/index.less',
+
+        
+            'src/front/index.less',
+            'src/apply/index/index.less',
+            'src/apply/verify/index.less',
+            'src/apply/basic/index.less',
+            'src/apply/school/index.less', 
+            'src/apply/person/index.less',  
+            'src/apply/review/index.less', 
+            'src/apply/files/index.less',
+            'src/apply/finish/index.less',  
+            'src/my/apply/index.less', 
+            'src/home/index.less',
+
 
         ]
     });
@@ -81,8 +100,11 @@ exports.getProcessors = function () {
             'src/my/topup/index.less',
             'src/my/success/index.less',
             'src/my/invite/index.less',
+            'src/my/angel/index.less', 
+            'src/my/angelprofit/index.less', 
             'src/project/detail/index.less',
             'src/project/list/index.less',
+            'src/project/confirm/index.less', 
             'src/setting/chpassword/index.less',
             'src/setting/phone/index.less',
             'src/setting/email/index.less',
@@ -113,7 +135,23 @@ exports.getProcessors = function () {
             'src/m/open/index.less',
             'src/m/project/list/index.less',
             'src/m/project/detail/index.less',
-            'src/m/account/index.less'
+            'src/m/account/index.less',
+            'src/m/account/topup/index.less',
+            'src/m/account/invest/index.less',
+ 
+
+
+            'src/front/index.less',
+            'src/apply/index/index.less',
+            'src/apply/verify/index.less', 
+             'src/apply/basic/index.less',
+            'src/apply/school/index.less', 
+            'src/apply/person/index.less',   
+            'src/apply/review/index.less', 
+            'src/apply/files/index.less',
+            'src/apply/finish/index.less',
+            'src/my/apply/index.less',    
+             'src/home/index.less'
         ]
     });
     var moduleProcessor = new ModuleCompiler({
@@ -123,7 +161,7 @@ exports.getProcessors = function () {
             '!~src/common/extra/jquery.qrcode.js',
             '!~src/common/extra/jquery.zclip.js',
             '!~src/common/extra/esl.js',
-            '!~src/common/extra/Datepicker.js'
+            '!~src/common/extra/Datepicker.js' 
         ]
     });
     var jsProcessor = new JsCompressor({
@@ -141,8 +179,12 @@ exports.getProcessors = function () {
             'src/my/topup/index.js',
             'src/my/success/index.js',
             'src/my/invite/index.js',
+            'src/my/angel/index.js',  
+            'src/my/loan/index.js',    
+            'src/my/angelprofit/index.js', 
             'src/project/detail/index.js',
             'src/project/list/index.js',
+            'src/project/confirm/index.js', 
             'src/setting/chpassword/index.js',
             'src/setting/phone/index.js',
             'src/setting/email/index.js',
@@ -169,7 +211,21 @@ exports.getProcessors = function () {
             'src/m/open/index.js',
             'src/m/project/list/index.js',
             'src/m/project/detail/index.js',
-            'src/m/project/detail/bid.js'
+            'src/m/project/detail/bid.js',
+
+            
+            'src/front/index.js',
+            'src/apply/index/index.js',
+            'src/apply/verify/index.js',
+             'src/apply/basic/index.js', 
+            'src/apply/school/index.js',  
+            'src/apply/review/index.js', 
+            'src/apply/person/index.js', 
+            'src/apply/files/index.js',
+            'src/apply/finish/index.js', 
+            'src/my/apply/index.js',   
+            'src/home/index.js'
+            
         ]
     });
     var html2JsProcessor = new Html2JsCompiler({
