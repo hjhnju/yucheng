@@ -1,0 +1,66 @@
+{%extends file='common/layout.phtml'%}
+{%block name='content'%} 
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">借款列表 <small>所有借款</small></h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="/admin">Home</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a href="#">借款列表</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN LIST -->
+            <div class="row-fluid">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>申请人</th>
+                            <th>申请学校</th>
+                            <th>贷款金额 ¥</th>
+                            <th>申请时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%foreach $data['list'] as $key=>$item%}
+                        <tr>
+                            <td>{%$item.apply.username%}</td>
+                            <td>{%$item.school.name%}</td>
+                            <td>{%$item.apply.amount%}</td>
+                            <td>{%$item.apply.create_time%}</td>
+                            <td>
+                            	<a href="/admin/apply/view?id={%$item.apply.id%}">查看</a> | 
+                            	<a href="/admin/apply/edit?id={%$item.apply.id%}">编辑 </a>
+                            </td>
+                        </tr>
+                        {%/foreach%}
+                    </tbody>
+                </table>
+            </div>
+             <div id="setpage"  style = "text-align: center;font-size:17px;margin:0 auto;"></div> 
+            <!-- END LIST -->
+        </div>
+    </div>
+    <script src = "{%$feroot%}s/global/scripts/pageCut.js"></script>
+    <script>
+    cpage = {%$data.page%}; 
+    totalpage = {%$data.pageall%}; 
+    setpage(cpage,totalpage);
+    </script>
+    
+    <script  type="text/javascript">
+    function userInfo(val){ 
+    	alert(String(val));     
+    }
+    </script>
+    
+{%/block%}

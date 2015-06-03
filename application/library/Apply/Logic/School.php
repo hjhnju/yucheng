@@ -81,4 +81,37 @@ class Apply_Logic_School extends Apply_Logic_Base{
 
         return $data;
     }
+    
+    /**
+	 * 只会返回第一个数组元素，目的是省的到处写 $data[0]
+	 * @param  [type] $data [需要解析的数组]
+	 * @return [type]       [解析数组后的数组元素]
+	 */
+	public function getDataItem($data) {
+		$item = reset($data);
+		$yesno 						= Apply_Type_YesNo::$names;
+		$item['branch_school']		= $item['branch_school']? $item['branch_school'] : 0;
+        $type_list 					= Apply_Type_SchoolType::$names;
+        $item['type'] 				= $type_list[$item['type']];
+        $nature_list 				= Apply_Type_Nature::$names;
+        $item['nature'] 			= $nature_list[$item['nature']];
+        $source_list 				= Apply_Type_Source::$names;
+        $item['school_source'] 		= $source_list[$item['school_source']];
+        $item['is_annual_income']	= $yesno[$item['is_annual_income']];
+        $item['is_profit'] 			= $yesno[$item['is_profit']];
+        $item['is_other_business'] 	= $yesno[$item['is_other_business']];
+        $purpose_list 				= Apply_Type_Purpose::$names;
+        $item['purpose'] 			= $purpose_list[$item['purpose']];
+        $province_list 				= Apply_Type_Province::$names;
+        $item['province'] 			= $province_list[$item['province']];
+        $city_list					= Apply_Type_Province::getCity($item['province']);
+        foreach($city_list as $key=>$value) {
+        	if($value['id'] = $item['city']){
+        		$item['city'] = $value['name'];
+        		break;
+        	}
+        }
+
+		return $item;
+	}
 }

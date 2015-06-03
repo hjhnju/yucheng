@@ -27,6 +27,9 @@ class Apply_RetCode extends Base_RetCode{
     //身份证号错误
     const ID_CARD_WRONG = 1606;
 
+    //当前用户不合法
+    const ILLEGAL_USER = 1607;
+
     /* 消息函数
      * @var array
      */
@@ -38,5 +41,6 @@ class Apply_RetCode extends Base_RetCode{
         self::STOCK_PARAM_ERROR     => '股权结构参数错误!',
         self::PERSONAL_PARAM_ERROR  => '个人资质参数错误!',
         self::ID_CARD_WRONG         => '身份证号格式错误!',
+        self::ILLEGAL_USER          => '当前用户不合法!',
     );
 }

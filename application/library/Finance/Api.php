@@ -386,9 +386,9 @@ class Finance_Api {
      * @return bool true--打款成功  false--打款失败
      *
      */
-    public static function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt,$fee=0.00) {
+    public static function loans($loanId,$subOrdId,$inUserId,$outUserId,$transAmt) {
         $transLogic = new Finance_Logic_Transaction();
-        $objRst     = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt, $fee);
+        $objRst     = $transLogic->loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt);
         Base_Log::notice(array(
             'msg'  => '财务满标打款接口',
             'args' => func_get_args(),

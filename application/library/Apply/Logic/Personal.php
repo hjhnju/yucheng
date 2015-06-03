@@ -66,4 +66,24 @@ class Apply_Logic_Personal extends Apply_Logic_Base {
 
         return $data;
     }
+
+    /**
+	 * 只会返回第一个数组元素，目的是省的到处写 $data[0]
+	 * @param  [type] $data [需要解析的数组]
+	 * @return [type]       [解析数组后的数组元素]
+	 */
+	public function getDataItem($data) {
+		$item = reset($data);
+		$yesno 						= Apply_Type_YesNo::$names;
+        $house_type_list 			= Apply_Type_HouseType::$names;
+        $item['house_type']			= $house_type_list[$item['house_type']];
+        $cash_list 					= Apply_Type_Cash::$names;
+        $item['scope_cash']			= $cash_list[$item['scope_cash']];
+        $scope_stock_list 			= Apply_Type_Stock::$names;
+        $item['scope_stock']		= $scope_stock_list[$item['scope_stock']];
+        $item['is_criminal']		= $yesno[$item['is_criminal']];
+        $item['is_lawsuit']			= $yesno[$item['is_lawsuit']];
+        
+		return $item;
+	}
 }

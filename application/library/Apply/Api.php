@@ -47,8 +47,8 @@ class Apply_Api {
      * @param  [type] $page [当前页数]
      * @param  [pagesize] [每页多少条数据]
      */
-    public static function getApplyList($page, $pagesize){
+    public static function getApplyList($page=1, $pagesize=10, $filter){
         $obj  = new Apply_Logic_Apply();
-        return $obj->getApplyList($page, $pagesize);
+        return $obj->getApplyList($page, $pagesize, $filter);
     }   
 }

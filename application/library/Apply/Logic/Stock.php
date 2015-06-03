@@ -67,4 +67,21 @@ class Apply_Logic_Stock extends Apply_Logic_Base{
         }
         return true;
     }
+
+    /**
+	 * 只会返回第一个数组元素，目的是省的到处写 $data[0]
+	 * @param  [type] $data [需要解析的数组]
+	 * @return [type]       [解析数组后的数组元素]
+	 */
+	public function getDataItem($data) {
+		$items = array();
+		foreach($data as $key=>$value){
+			$items[$key] = array(
+				'name' 		=> $value['name'],
+				'weight'	=> floatval($value['weight']) . '%',
+			);
+		}
+
+		return $items;
+	}
 }

@@ -49,7 +49,7 @@ define(function(require) {
      */
     function bindEvents() {
         //添加爱心天使
-         $('#my-angel-list').delegate('.add-angel-btn', 'click', function(e) { 
+        $('#my-angel-list').delegate('.add-angel-btn', 'click', function(e) {
             e.preventDefault();
             var value = $('.add-angel-input').val();
             if (!value) {
@@ -79,9 +79,12 @@ define(function(require) {
                 if (!data.list.length) {
                     pager = null;
                     $('#my-angel-pager').html('');
-         /*           htmlContainer.html(etpl.render('Error', {
-                        msg: '您当前没有数据哟'
-                    }));*/
+                    htmlContainer.html(etpl.render('returnAngelList', {
+                        list: data.list
+                    }));
+                    /*           htmlContainer.html(etpl.render('Error', {
+                                   msg: '您当前没有数据哟'
+                               }));*/
                     return;
                 }
                 if (!pager) {
@@ -102,7 +105,7 @@ define(function(require) {
                     list: data.list
                 }));
             }
-        }); 
+        });
         //添加爱心天使 成功
         addAngel.on('success', function(data) {
             if (data.bizError) {
