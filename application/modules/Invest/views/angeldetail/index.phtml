@@ -1,0 +1,303 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/project/detail/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['project/detail/index'], function (main) {
+        main.init({
+            id: '{%$data.id%}',
+            amountRest: '{%$data.amount_rest%}',
+            userAmount: '{%if isset($userBalance.amount)%}{%$userBalance.amount%}{%else%}0.00{%/if%}',
+            interest: +'{%$data.interest%}',
+            days: +'{%$data.days%}',
+            sTime: +'{%$data.create_time%}',
+            eTime: +'{%$data.deadline%}',
+            fullTime: +'{%$data.full_time%}'
+        });
+    });
+     require(["common/ui/RangeSlider/rangeSlider"],function(main){ 
+         var $ = require('jquery');
+          //滑块
+        $(".angel-rate").ionRangeSlider({
+            min: 0,
+            max: '{%$data.interest%}',
+            step: 0.01,
+            from: Number('{%$data.interest%}')/2,
+            hide_min_max: true,
+            hide_from_to: false,
+            grid: false,
+            postfix: "%",
+            single_fixed:true,
+            onStart:function(e){
+               /* $(".irs .irs").append($().Number('{%$data.interest%}'));*/
+               var from=e.from.toFixed(2)
+               var leftnum=(e.max-e.from).toFixed(2);
+               $('.shouyi-box span.my-single').html(from);
+               $('.shouyi-box span.angel-single').html(leftnum);
+               $('.shouyi-box input.my-single').val(from);
+               $('.shouyi-box input.angel-single').val(leftnum);
+               $('.right-top-ipt-input').trigger('keyup');
+            },
+            onChange:function(e){ 
+               var from=e.from.toFixed(2)
+               var leftnum=(e.max-e.from).toFixed(2);
+               $('.shouyi-box span.my-single').html(from);
+               $('.shouyi-box span.angel-single').html(leftnum);
+               $('.shouyi-box input.my-single').val(from);
+               $('.shouyi-box input.angel-single').val(leftnum);
+               $('.right-top-ipt-input').trigger('keyup');
+            }
+        });
+     });
+</script>
+{%/block%}
+
+{%block name="content"%} 
+<div class="details heart">
+    <div class="container">
+        <div class="box1"></div>
+        <div class="detail-left">
+            <div class="detail-left-title title-icon"> 
+            </div>
+            {%if isset($error)%}
+            <div class="chongzhi-error show">{%$error%}</div>
+            {%/if%}
+            <div class="project">
+                <div class="project-box">
+                    <div class="project-title">
+                        <div class="project-title-name" title="{%$data.title%}">
+                            {%if isset({%$data.level_name%})%}
+                            <span class="grade-star level-{%$data.level_name%}"></span>
+                            {%/if%}
+                            {%$data.title%}
+                        </div>
+                        <div class="project-title-number">
+                            <span>借款编号：</span>
+                            <span><a target="_blank" style="color:#76cf65" href="/loan/contract">JK_{%$data.id%}</a></span>
+                        </div>
+                    </div>
+                    <div class="project-gaishu">
+                        <div class="project-gaishu-top">
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon rental">借款总额</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span>￥</span>
+                                    <span class="rental-number-big">{%$data.amount%}</span>
+                                </div>
+                            </div>
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon lilv">借款年利率</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span class="rental-number-big">{%$data.interest%}</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="gaisu-top-rental">
+                                <div class="gaishu-top-rental-icon time">借款期限</div>
+                                <div class="gaishu-top-rental-number">
+                                    <span class="rental-number-big">{%$data.duration_day%}</span>
+                                    <span>{%$data.duration_type%}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="project-gaishu-bottom">
+                            <div class="gaishu-bottom-guard">
+                                <div class="gaishu-guard-baozhang">
+                                    <span class="span">保障方式：</span>
+                                    <div class="baozhang-box">
+                                        {%foreach $data.safemode as $key => $item%}
+                                        <span class="baozhang-type benxi">{%$item%}</span>
+                                        {%/foreach%}
+
+                                    </div>
+
+                                </div>
+                                <div class="jindu-top">
+                                    <span class="jindu-top-text">筹款进度：</span>
+                                    <div class="jindu-top-tiao">
+                                        <div class="jindu-tio-tiao-within" style="width: {%$data.percent%}%;"></div>
+                                    </div>
+                                    <span class="jindu-top-bai">
+                                        <span class="jindu-top-bai-number">{%$data.percent%}</span>%
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="gaishu-bottom-jindu">
+                                <div class="gaishu-guard-baozhang">
+                                    <span>还款方式：</span>
+                                    <span class="baozhang-return">{%$data.refund_typename%}</span>
+                                </div>
+                                <div class="jindu-btm">
+                                    <span class="jindu-top-text">已投标：</span><span>{%$data.invest_cnt%}人</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-time">
+                        <span class="project-time-start">开始时间：{%$data.start_time|date_format:'%Y-%m-%d %H:%M'%}</span>
+                        <span class="project-time-start">截止日期：{%$data.deadline|date_format:'%Y-%m-%d %H:%M'%}</span>
+                    </div>
+                </div>
+
+                <div class="project-main project">
+                    <div class="project-main-title"> 
+                        <div class="main-title-box showrecord">投资记录</div>
+                        <div class="main-title-box showplan">回款计划</div>
+                    </div> 
+                    <div class="main-box-details showrecord-main">
+                        {%if isset($userBalance.amount)%}
+                        <div class="details-main-box">
+                            
+                            <div class="main-detail-content" id="toulist">
+                            </div>
+                        </div>
+                        <div id="page"></div>
+                        {%else%}
+                        <div class="detail-unlogin">
+                            请 <a href="/user/login">登录</a> 或 <a href="/user/regist">注册</a> 后查看
+                        </div>
+                        {%/if%}
+                    </div>
+                    <div class="main-box-details">
+                        <div class="details-main-box">
+                              <div class="bottom-title-number">共<span class="btm-title-number-sp">{%count($data.refunds)%}</span>期</div>
+                            <div class="main-detail-content" id="">
+                                <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                    <tbody>
+                                        <tr class="color-hui">
+                                           <td>还款时间</td><td>应还本息</td><td>还款状态</td> 
+                                        </tr>
+                                        {%foreach $data.refunds as $key => $item%}
+                                         <tr><td>{%$item.promise_time|date_format:'%Y-%m-%d'%}</td>
+                                            <td>￥{%$item.amount%}</td>
+                                            <td> {%if $item.status == 1%}
+                                                  未到期
+                                                  {%else if $item.status == 2%}
+                                                  已还款
+                                                  {%else%}
+                                                  已逾期
+                                                  {%/if%}
+                                            </td>
+                                         </tr>
+                                        {%/foreach%}
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="detail-right">
+            {%if $data.status == 3%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div class="right-top2nd-title">已满标</div>
+                    <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时：{%$data.expend_time%}</div>
+                    <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
+                </div>
+            </div>
+            {%else if $data.status == 10%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div style="width:200px;margin:20px" class="right-top2nd-title refund">即将开启</div>
+                </div>
+            </div>
+            {%else if $data.status == 5%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div class="right-top2nd-title refund">还款中</div>
+                    <div class="right-top2nd-box">待还本息（元）: ￥{%$data.rest_total%}</div>
+                    <div class="right-top2nd-box">剩余期数（月）: {%$data.left_month%}</div>
+                    <div class="right-top2nd-box">下次合约还款日: {%$data.next_date|date_format:'%Y-%m-%d'%}</div>
+                </div>
+            </div>
+            {%else if $data.status == 2%}
+            <form id="invest-form" method="post" action="/invest/tender" class="right-top">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-top-allmoney">
+                    <div class="right-top-allmoney-money">可投金额：<span id="money-all">{%$data.amount_rest%}元</span></div>
+                    <div class="right-top-allmoney-time">剩余时间：<span> </span></div>
+                </div>
+                <div class="right-top-ipt {%if !isset($user)%}disabled{%/if%}"> 
+                    投资金额：
+                    <input name="amount" maxlength="10" type="text" autocomplete="off" class="right-top-ipt-input" {%if !isset($user)%} disabled{%/if%} />
+                    <input name="id" type="hidden" value="{%$data.id%}" /> 
+                </div>
+                <div id="chongzhi-error" class="chongzhi-error"></div>
+                <div class="angel-code-box">
+                    <img class="head-img fl" alt="" src="{%$angel.headurl%}" />
+                    <span class="code-span">
+                      <a class="angel-name" title="{%$angel.name%}">{%$angel.name%}</a>邀请您  
+                    </span> 
+                    <span class="dis-block fr" style="width:190px;">专属天使码：<span class="code">{%$angel.code%} </span> </span>  
+                </div>
+                <div class="rangeslider">
+                    <div class="title">分配您与爱心天使的收益</div>
+                    <input type="hidden"  class="angel-rate" name="rate"/>
+                    <input type="hidden"  name="angel" value="{%$angel.code%}" />
+                </div>
+                <div class="right-top-ipt shouyi-box">
+                    <input type="hidden" name=""  class="my-single"/>
+                    <input type="hidden" name=""  class="angel-single"/>
+                     <!-- <div class="chongzhi-right">预期收益：<span class="chongzhi-span">0.00</span> -->
+                        预期收益：
+                        <div class="shouyi-content color-font-green fr"><span class="my-single"></span>%(您自己)<span class="my-shouyi">0.00</span>元</div>   
+                        <div class="shouyi-content color-font-pink fr"> 
+                             <span class="angel-single"></span>%(爱心天使)<span class="angel-shouyi">0.00</span>元 
+                        </div>
+                </div>    
+                <div class="right-top-chongzhi">
+                    <div class="chongzhi-left">可用金额：
+                        {%if isset($userBalance.amount)%}
+                        <span id="my-money">{%$userBalance.amount_text%}</span>元{%else%}
+                        <a href="/user/login" class="account-a-link">立即登录</a>
+                         <a href="/user/regist" class="account-a-link">注册</a>
+                        {%/if%}
+                        <a target="_blank" href="{%$webroot%}/account/cash/recharge" class="chongzhi-link"> [充值]</a></div>
+                </div>
+                <div class="right-top-btn">
+                    <a class="right-top-btn-confirm confirm-submit">确定投资</a>
+                    <a class="right-top-btn-confirm confirm-all">全部投资</a>
+                </div>
+            </form>
+            {%else%}
+            <div class="right-top right-bg-color">
+                <div class="right-top-title">我来投资</div>
+                {%if $data.fresh%}
+                <div class="right-top-new"></div>
+                {%/if%}
+                <div class="right-box-top">
+                    <div class="right-top2nd-title">已结束</div>
+                    <div class="right-top2nd-box">满标时间：{%$data.full_time|date_format:'%Y-%m-%d %H:%M'%}</div>
+                    <div class="right-top2nd-box">满标耗时：<span id="full-time"></span></div>
+                    <div class="right-top2nd-box">投标人数：{%$data.invest_cnt%}人</div>
+                </div>
+            </div>
+            {%/if%} 
+        </div>
+    </div>
+</div>
+
+{%/block%}

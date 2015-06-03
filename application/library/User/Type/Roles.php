@@ -22,6 +22,12 @@ class User_Type_Roles extends Base_Type {
     const TYPE_FINA = 3;
     
     /**
+     * 用户类型－天使用户
+     * @var integer
+     */
+    const TYPE_ANGEL = 4;
+    
+    /**
      * 默认key名
      * @var string
      */
@@ -38,8 +44,9 @@ class User_Type_Roles extends Base_Type {
      * @var array
      */
     public static $names = array(
-        self::TYPE_PRIV => 'priv',
-        self::TYPE_CORP => 'corp',
-        self::TYPE_FINA => 'fina',
+        self::TYPE_PRIV  => 'priv',
+        self::TYPE_CORP  => 'corp',
+        self::TYPE_FINA  => 'fina',
+        self::TYPE_ANGEL => 'angel'
     );
 }

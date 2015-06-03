@@ -1,5 +1,5 @@
 <?php
-require(dirname(__FILE__) . '/env.inc.php');
+require(dirname(__DIR__) . '/env.inc.php');
 
 $sql = "SELECT userid, invitee, create_time 
 	FROM `xjd`.`user_invite` where create_time>=1429027200 order by create_time asc";

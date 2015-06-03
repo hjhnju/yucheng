@@ -18,6 +18,9 @@ define(function(require) {
     var Pager = require('common/ui/Pager/Pager');
     var header = require('common/header');
 
+    //tab标签
+    var tabBox = require('common/ui/Form/tabBox');
+
     var investTender = new Remoter('INVEST_DETAIL_CONFIRM_ADD');
     var pager;
 
@@ -100,17 +103,25 @@ define(function(require) {
      */
     function bindEvent() {
 
-        $('.showproject').click(function() {
-            $(this).closest('.project-main').attr('class', 'project-main project');
+        /* $('.showproject').click(function() {
+             $(this).closest('.project-main').attr('class', 'project-main project');
+         });
+
+         $('.showfile').click(function() {
+             $(this).closest('.project-main').attr('class', 'project-main file');
+         });
+
+         $('.showrecord').click(function() {
+             $(this).closest('.project-main').attr('class', 'project-main record');
+         });*/
+        //绑定tab
+        tabBox({
+            control: '.main-title-box',
+            content: '.main-box-details',
+            eventName: 'click',
+            currentClass: 'current'
         });
 
-        $('.showfile').click(function() {
-            $(this).closest('.project-main').attr('class', 'project-main file');
-        });
-
-        $('.showrecord').click(function() {
-            $(this).closest('.project-main').attr('class', 'project-main record');
-        });
 
         // 全部投资
         $('.confirm-all').click(function() {
@@ -198,6 +209,17 @@ define(function(require) {
                 }
 
                 tip.html(caculateIncome(+$.trim($(this).val()) || 0));
+
+                var myTip = $('.shouyi-box .my-shouyi');
+                var angelTip = $('.shouyi-box .angel-shouyi');
+                if (myTip.length > 0) {
+                    var myRate = Number($('.shouyi-box .my-single').text()) || 0;
+                    var angelRate = Number($('.shouyi-box .angel-single').text()) || 0; 
+                    myTip.html(caculateIncomeEx(+$.trim($(this).val()), myRate) || 0);
+                    angelTip.html(caculateIncomeEx(+$.trim($(this).val()), angelRate) || 0);
+
+                }
+
             },
             blur: function() {
                 var value = +$.trim($(this).val());
@@ -218,6 +240,13 @@ define(function(require) {
 
     function caculateIncome(money) {
         var income = money * model.interest / 100 * model.days / 365;
+        income = income.toFixed(2);
+        return util.addCommas(income);
+    }
+
+    //爱心投资计算收益
+    function caculateIncomeEx(money, rate) {
+        var income = money * rate / 100 * model.days / 365;
         income = income.toFixed(2);
         return util.addCommas(income);
     }

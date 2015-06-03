@@ -28,7 +28,7 @@ class Invest_Logic_Invest {
      * @param number $interest
      * @return boolean|string
      */
-    public function invest($userid, $loan_id, $amount, $interest=0, $vocherAmt=0.00) {
+    public function invest($userid, $loan_id, $amount, $interest=0, $vocherAmt=0.00,$shareInfo='') {
         $loan = Loan_Api::getLoanInfo($loan_id);
         if ($loan['status'] != Invest_Type_InvestStatus::LENDING) {
             Base_Log::notice('loan status is finished');
@@ -46,7 +46,11 @@ class Invest_Logic_Invest {
             ),
         );
         $returl = Base_Config::getConfig('web')->root . '/invest/confirm';
-        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $returl, $vocherAmt);
+        if(isset($shareInfo['uid'])){
+            $user = User_Api::getUserObject($shareInfo['uid']);
+            $returl .= "?name=$user->name";
+        }      
+        return Finance_Api::initiativeTender($loan_id, $amount, $userid, $detail, $returl, $vocherAmt, $shareInfo);
     }
 
     /**

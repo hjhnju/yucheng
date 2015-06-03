@@ -51,6 +51,7 @@
                  <div class="form-group">
                        <input type="submit" class="btn btn-default" value="查询"/>
                        <a href="/admin/user/count"><input type="button" class="btn btn-default" value="查看统计数据"/></a>
+                       <a href="/admin/user/reg"><input type="button" class="btn btn-default" value="添加用户"/></a>
                  </div>
             </div>
             </form>
@@ -78,7 +79,7 @@
                             <td>{%$user.phone%}</td>
                             <td>{%$user.email%}</td>
                             <td>{%date("Y-m-d H:i:s",$user.login_time)%}</td>
-                            <td><a href="/admin/user?userid={%$user.userid%}">删除该用户</a></td>
+                            <td><a href="/admin/user/reg?userid={%$user.userid%}">添加图像,成为天使</a></td>
                         </tr>
                         {%/foreach%}
                     </tbody>

@@ -34,6 +34,12 @@ class ListAction extends Yaf_Action_Abstract {
             }
         }
         
+        $counts = array();
+        foreach ($arrInfos as $info) {
+            $counts[] = $info['id'];
+        }
+        array_multisort($counts, SORT_ASC , $arrInfos);
+        
         $arrInfos = array_slice($arrInfos,($page-1)*$intPageSize,$intPageSize);
        
         $this->getView()->assign('arrInfo', $arrInfos);
@@ -42,6 +48,7 @@ class ListAction extends Yaf_Action_Abstract {
         $this->getView()->assign('type', $type);
         $this->getView()->assign('place', $place);
         $this->getView()->assign('nature', $nature);
+        $this->getView()->assign('total', $count);
     }
     
     /**

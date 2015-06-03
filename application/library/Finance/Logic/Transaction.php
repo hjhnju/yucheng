@@ -228,7 +228,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * redirect
      *
      */
-    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $retUrl = '', $vocherAmt = 0.00) {
+    public function initiativeTender($loanId, $transAmt, $userid, $arrDetails, $retUrl = '', $vocherAmt = 0.00, $shareInfo='') {
         if(!isset($loanId) || !isset($transAmt) || !isset($userid) || !isset($arrDetails)) {
             Base_Log::error(array(
                 'msg'        => '请求参数错误',
@@ -263,6 +263,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $orderId   = $orderInfo['orderId'];
 
         $maxTenderRate   = Finance_Fee::MaxTenderRate;
+
         $borrowerDetails = array();
         foreach ($arrDetails as $detail) {
             $borrowerDetails[] = array(
@@ -289,6 +290,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $proId       = $loanId;
         $merPriv     = $userid.'_'.$proId; //将userid与proid作为私有域传入
         $regExt      = '';
+        
+        if(isset($shareInfo['uid'])){
+            $merPriv .= '_'.$shareInfo['uid'].'_'.$shareInfo['rate'];
+        }
         //使用代金券
         if($vocherAmt > 0){
             $regExt = array(
@@ -298,7 +303,8 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 ),
             );
             $regExt = json_encode($regExt);
-        }
+        }        
+      
         $transAmt  = sprintf('%.2f',$transAmt);
         Base_Log::notice(array(
             'merCustId'       => $this->merCustId,
@@ -314,7 +320,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
             'bgRetUrl'        => $bgRetUrl,
             'merPriv'         => $merPriv,
             'regExt'          => $regExt,
-            'acctId'          => $acctId,
             'vocherAmt'       => $vocherAmt,
         ));
         $this->chinapnr->initiativeTender($this->merCustId, $orderId, $orderDate, $transAmt,
@@ -331,7 +336,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
      * @param float transAmt 放款金额
      *
      */
-    public function loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt) {
+    public function loans($loanId, $subOrdId, $inUserId, $outUserId, $transAmt, $sharefee=0.00) {
         $objRst = new Base_Result();
         if(!isset($loanId) || !isset($subOrdId) || !isset($inUserId) || !isset($outUserId) || !isset($transAmt)) {
             Base_Log::error(array(
@@ -342,6 +347,7 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
                 'outUserId' => $outUserId,
                 'transAmt'  => $transAmt,
             ));
+            
             $objRst->status     = Base_RetCode::PARAM_ERROR;
             $objRst->statusInfo = Base_RetCode::getMsg(Base_RetCode::PARAM_ERROR);
             return $objRst;
@@ -379,10 +385,10 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         //收取费用
         $arrFeeInfo= Finance_Fee::totalFeeInfo($loanId, $transAmt);
         //里面函数已经round(,2)
-        $fee       = sprintf('%.2f', $arrFeeInfo['total_fee']);
+        $fee       = sprintf('%.2f', $arrFeeInfo['total_fee']+$sharefee);
         $riskFee   = sprintf('%.2f', $arrFeeInfo['risk_fee']);
-        $servFee   = sprintf('%.2f', $arrFeeInfo['serv_fee']);
-
+        $servFee   = sprintf('%.2f', $arrFeeInfo['serv_fee']+$sharefee);
+        
         $subOrderInfo  = Finance_Logic_Order::getOrderInfo($subOrdId);
         $subOrdId      = strval($subOrdId);
         $subOrdDate    = strval($subOrderInfo['orderDate']);
@@ -633,7 +639,6 @@ class Finance_Logic_Transaction extends Finance_Logic_Base{
         $subOrdDate = strval($arrOrderInfo['orderDate']);
         $outAcctId  = '';
         $inAcctId  = '';
-        $transAmt   = $transAmt;
         $fee        = sprintf("%.2f", $mangFee);
         $divDetails = '';
         if($mangFee > 0.00){

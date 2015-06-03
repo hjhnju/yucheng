@@ -154,6 +154,9 @@ class Loan_Type_Duration extends Base_Type {
      * @return number
      */
     public static function getMonths($type) {
+        if($type < 30){
+            return $type/30;
+        }
         return floor($type / 30);
     }
     
@@ -165,7 +168,7 @@ class Loan_Type_Duration extends Base_Type {
      */
     public static function getTimestamp($type, $startTime) {
         if ($type < 30) {
-            return $type * 24 * 3600;
+            return $startTime + $type * 24 * 3600;
         }
         
         $months = self::getMonths($type);

@@ -17,9 +17,15 @@
     <span class="my-invest-title invest-wait">待回款</span>
     <span class="my-invest-title invest-op"></span>
 </li>
-<!-- for: ${list} as ${item} -->
+<!-- for: ${list} as ${item} --> 
+<!-- if: ${item.angel}-->
+<li class="my-invest-item  my-heart-item">
+    <div class="my-invest-content">
+        <i class="iconfont icon-heart"></i>
+<!-- else -->
 <li class="my-invest-item">
     <div class="my-invest-content">
+<!-- /if --> 
         <a href="/invest/detail/index?id=${item.proId}" class="my-invest-project invest-name">${item.investPro}</a>
         <span class="my-invest-project invest-balance"><span class="invest-em">${item.annlnterestRate}</span>%</span>
         <span class="my-invest-project invest-money">￥${item.tenderAmt}</span>
@@ -27,7 +33,21 @@
         <span class="my-invest-project invest-finish">￥${item.haveBack}</span>
         <span class="my-invest-project invest-wait">￥${item.toBeBack}</span>
         <span class="my-invest-project view-plan"><span class="view-plan-btn" data-id="${item.invest_id}">查看还款计划</span></span>
+    </div> 
+     <!-- if: ${item.angel}-->
+    <div class="my-heart-content">
+        <span class="my-heart-span"> 
+            <span class="">收益分配：
+                <span class="color-green">${item.angel.selfrate}%</span>(您自己)${item.angel.selfmoney} 元
+            </span>
+            <img class="angel-img" alt="" src="${item.angel.headurl}" />
+            <span class="">
+                        <span class="color-pink">${item.angel.angelrate}%</span>
+                        (爱心天使)${item.angel.angelmoney}元
+            </span>
+        </span>
     </div>
+     <!-- /if -->
     <div class="my-invest-detail">
         <span class="trangle-border"></span>
         <span class="trangle-content"></span>
@@ -97,17 +117,44 @@
         <th>进度</th>
     </tr>
     <!-- for: ${list} as ${item} -->
-    <tr>
-        <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
-        <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
-        <td>￥${item.tenderAmt}</td>
-        <td>${item.deadline}</td>
-        <td>${item.timeInfo}</td>
-        <td>
-            <span class="span-box"><span class="within" style="width: ${item.tenderProgress}%;"></span></span>
-            <span class="invest-em">${item.tenderProgress}</span>%
-        </td>
-    </tr>
+     <!-- if: ${item.angel}-->
+        <tr  class="my-heart-tr">
+         <td>
+           <i class="iconfont icon-heart"></i>
+      <!-- else -->
+        <tr>
+          <td>
+      <!-- /if -->   
+                <a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a>
+            </td>
+            <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
+            <td>￥${item.tenderAmt}</td>
+            <td>${item.deadline}</td>
+            <td>${item.timeInfo}</td>
+            <td>
+                <span class="span-box"><span class="within" style="width: ${item.tenderProgress}%;"></span></span>
+                <span class="invest-em">${item.tenderProgress}</span>%
+            </td>
+        </tr>
+     <!-- if: ${item.angel}-->
+          <tr>
+            <td class="my-heart-content" colspan="6">
+             <span class="my-heart-span">
+                   <span class="">收益分配：
+                    <span class="color-green">${item.angel.selfrate}%</span>
+                    (您自己)${item.angel.selfmoney}元
+                </span>
+                <img class="angel-img" alt="" src="${item.angel.headurl}" />
+                 <span class="">
+                    <span class="color-pink">${item.angel.angelrate}%</span>
+                    (爱心天使)${item.angel.angelmoney}元
+                </span>
+                </div>
+             </span> 
+            </td>
+         </tr>
+      <!-- /if -->   
+
     <!-- /for -->
 </table>
 <!-- /target -->
@@ -125,16 +172,41 @@
         <th>总收益</th>
     </tr>
     <!-- for: ${list} as ${item} -->
-    <tr>
-        <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
-        <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
-        <td>￥${item.tenderAmt}</td>
-        <td>${item.deadline}</td>
-        <td>${item.timeInfo}</td>
-        <td>${item.endTimeInfo}</td>
-        <td>￥${item.totalRetAmt}</td>
-        <td><span class="invest-em">￥${item.totalProfit}</span></td>
-    </tr>
+       <!-- if: ${item.angel}-->
+        <tr  class="my-heart-tr">
+           <td>
+            <i class="iconfont icon-heart"></i>
+        <!-- else -->
+        <tr>
+            <td>
+        <!-- /if -->  
+            <a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
+            <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
+            <td>￥${item.tenderAmt}</td>
+            <td>${item.deadline}</td>
+            <td>${item.timeInfo}</td>
+            <td>${item.endTimeInfo}</td>
+            <td>￥${item.totalRetAmt}</td>
+            <td><span class="invest-em">￥${item.totalProfit}</span></td>
+        </tr>
+       <!-- if: ${item.angel}-->
+        <tr>
+          <td class="my-heart-content" colspan="6">
+             <span class="my-heart-span">
+                   <span class="">收益分配：
+                    <span class="color-green">${item.angel.selfrate}%</span>
+                    (您自己)${item.angel.selfmoney}元
+                </span>
+                <img class="angel-img" alt="" src="${item.angel.headurl}" />
+                 <span class="">
+                    <span class="color-pink">${item.angel.angelrate}%</span>
+                    (爱心天使)${item.angel.angelmoney}元
+                </span>
+                </div>
+             </span> 
+            </td>
+        </tr>
+        <!-- /if -->  
     <!-- /for -->
 </table>
 <!-- /target -->
@@ -150,14 +222,36 @@
         <th>失败原因</th>
     </tr>
     <!-- for: ${list} as ${item} -->
-    <tr>
-        <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
-        <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
-        <td>￥${item.tenderAmt}</td>
-        <td>${item.deadline}</td>
-        <td>${item.timeInfo}</td>
-        <td>${item.failReason}</td>
-    </tr>
+    <!-- if: ${item.angel}-->
+        <tr  class="my-heart-tr">
+     <!-- else -->
+        <tr>
+     <!-- /if -->  
+            <td><a href="/invest/detail/index?id=${item.proId}" class="invest-name">${item.investPro}</a></td>
+            <td><span class="invest-em">${item.annlnterestRate}</span>%</td>
+            <td>￥${item.tenderAmt}</td>
+            <td>${item.deadline}</td>
+            <td>${item.timeInfo}</td>
+            <td>${item.failReason}</td>
+        </tr>
+    <!-- if: ${item.angel}-->
+        <tr>
+            <td class="my-heart-content" colspan="6">
+             <span class="my-heart-span">
+                   <span class="">收益分配：
+                    <span class="color-green">${item.angel.selfrate}%</span>
+                    (您自己)${item.angel.selfmoney}元
+                </span>
+                <img class="angel-img" alt="" src="${item.angel.headurl}" />
+                 <span class="">
+                    <span class="color-pink">${item.angel.angelrate}%</span>
+                    (爱心天使)${item.angel.angelmoney}元
+                </span>
+                </div>
+             </span> 
+            </td>
+        </tr>
+        <!-- /if -->  
     <!-- /for -->
 </table>
 <!-- /target -->

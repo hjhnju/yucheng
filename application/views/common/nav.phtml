@@ -36,6 +36,16 @@
             <a href="{%$webroot%}/account/loan" class="finish-nav-item-link mymoney {%if $current == '7'%}current{%/if%}">我的借款</a>
         </li>
         {%/if%}
+        {%if $user.usertype == 1%}
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/angel" class="finish-nav-item-link heart {%if $current == '9'%}current{%/if%}">爱心天使</a>
+        </li>
+        {%/if%}
+        {%if $user.usertype == 4%}
+        <li class="finish-nav-item-list">
+            <a href="{%$webroot%}/account/angelprofit" class="finish-nav-item-link heart {%if $current == '9'%}current{%/if%}">爱心收益</a>
+        </li>
+        {%/if%}
         <li class="finish-nav-item-list">
             <a href="{%$webroot%}/account/cash" class="finish-nav-item-link pay {%if $current == '3'%}current{%/if%}">交易记录</a>
         </li>

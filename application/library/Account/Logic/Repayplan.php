@@ -9,9 +9,9 @@ class Account_Logic_Repayplan {
      * @param string $investId
      * @return array
      */
-    public static function getRepayplan($investId) {        
+    public static function getRepayplan($investId, $user_id=0) {        
         $investId = intval($investId);
-        $retData  = Invest_Api::getRefunds($investId);       
+        $retData  = Invest_Api::getRefunds($investId, $user_id);       
         $list = array();
         $data = array();
         if(empty($retData)) {
@@ -36,7 +36,8 @@ class Account_Logic_Repayplan {
             //是否已还款     
             if($value['status'] === Invest_Type_RefundStatus::RETURNED) {      
                 //已收收益      
-                $list[$key]['receProfit']   = sprintf('%.2f', $value['interest']);      
+                $list[$key]['receProfit']   = sprintf('%.2f', $value['interest']); 
+                $list[$key]['repossProfit'] = sprintf('%.2f', 0);
             }else{
                 //已收收益      
                 $list[$key]['receProfit']   = '0.00';       

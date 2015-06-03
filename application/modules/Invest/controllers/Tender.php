@@ -18,6 +18,8 @@ class TenderController extends Base_Controller_Page {
 	public function indexAction() {
 		$loanId = intval($_REQUEST['id']);
 		$amount = floatval($_REQUEST['amount']);
+		$rate   = isset($_REQUEST['rate'])?floatval($_REQUEST['rate']):-1;
+		$angel  = isset($_REQUEST['angel'])?$_REQUEST['angel']:'';
 		$uid    = $this->userid;
 		$sess   = Yaf_Session::getInstance();
 		$isMobile = Base_Util_Mobile::isMobile();
@@ -78,8 +80,21 @@ class TenderController extends Base_Controller_Page {
         ));
 	    // 主动投标（会跳转至汇付）
 	    $interest  = 0.00;
-
-	    return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt);
+	    
+	    $shareInfo = array(); 
+	    $loan = Loan_Api::getLoanInfo($loanId);
+	    if(-1 == $rate){
+	        return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt, $shareInfo);
+	    }
+	    $rate =  $loan['interest'] - $rate;	 
+	    $intRateAngel = intval($rate);  
+	    if(!empty($intRateAngel)){
+	        $awardslogic  = new Awards_Logic_Invite();
+	        $intUserid    = $awardslogic->decode($angel);
+	        $shareInfo['uid']  = $intUserid;
+	        $shareInfo['rate'] = $rate;
+	    }
+	    return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt, $shareInfo);
 	}
 
 	/**

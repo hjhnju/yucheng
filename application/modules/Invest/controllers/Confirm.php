@@ -40,6 +40,10 @@ class ConfirmController extends Base_Controller_Response {
 
         $sess = Yaf_Session::getInstance();
         $sess->set('invest_amount', $amount);
+        if(isset($arrRet['name'])){
+            $name = $arrRet['name'];
+            $this->redirect("/invest/success?name=$name");
+        }
         $this->redirect('/invest/success');
     }
 }

@@ -26,7 +26,7 @@
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
             <!-- BEGIN PAGE HEADER-->
             <h3 class="page-title">
-            添加个人用户 <small>管理员代开通</small>
+            添加用户 <small>管理员代开通</small>
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
@@ -44,13 +44,15 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <!-- BEGIN FORM-->
-                <form class="form-horizontal" role="form" method="post" action="">
+                <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
                     {%if $error_msg%}
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <strong>Warning! </strong> {%$error_msg%}
                     </div>
                     {%/if%}
+                    {%if $smarty.get.userid%}
+                    {%else%}                  
                     <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-4">
@@ -69,12 +71,30 @@
                             <input type="text" class="form-control" name="phone" id="phone" placeholder="设置手机号">
                         </div>
                      </div>   
+                     
                      <div class="form-group">
-                        <label for="phone" class="col-sm-2 control-label">推荐人手机号</label>
+                        <label class="col-sm-2 control-label">用户类型</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="inviter" id="inviter" placeholder="设置推荐人手机号">
+                            <label class="radio-inline">
+                               <input type="radio" name="type" id="pri" value="1" style="padding-top:0">个人用户 
+                            </label>  
+                            <label class="radio-inline">                                                                  
+                               <input type="radio" name="type" id="corp" value="2" >企业用户  
+                            </label>      
+                            <label class="radio-inline">                                                            
+                               <input type="radio" name="type" id="angel" value="4" checked>天使  
+                            </label> 
                         </div>
                      </div>
+                     {%/if%}
+                     <div class="form-group">
+                        <label for="file" class="col-sm-2 control-label">上传图像</label>
+                        <div class="col-sm-4">
+                            <!--  <input type="file" class="form-control" name="file" id="file" placeholder="上传图像"  onchange="UpPic()">-->
+                            <input type="file"  name="file" class="form-control" id="file">
+                        </div>
+                     </div>
+                     <div><input type="hidden" name="add" value="{%$smarty.get.userid%}"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-default">提交</button>
@@ -87,4 +107,46 @@
 
         </div>
     </div>
+      <script type="text/javascript">
+    //创建XMLHttpRequest
+    function createXmlHttpRequest(){
+        if(window.XMLHttpRequest){
+            return new XMLHttpRequest();
+        }else{
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    //ajax回调函数
+    function finish(){
+        if(XmlHttpRequest.readyState == 4&& XmlHttpRequest.status == 200){
+            var result = XmlHttpRequest.responseText;
+            if(result =="true"){
+                alert("");
+            }else{
+                alert(result);
+            }
+        }
+    }
+    
+    //当用户先择了标记时调用该方法
+    function UpPic(){
+    	var fileObj = document.getElementById("file").files[0];
+
+        var url="/Upload/pic";
+        var form = new FormData();
+        form.append("file", fileObj);    
+        //调用方法创建XMLHttpRequest对象
+        XmlHttpRequest = createXmlHttpRequest();       
+        //设置回调函数
+        XmlHttpRequest.onreadystatechange=finish;
+        //初始化xmlhttprequest
+        XmlHttpRequest.open("POST",url,true);
+        XmlHttpRequest.setRequestHeader("Content-Type","multipart/form-data");
+        //发送请求
+        XmlHttpRequest.onload = function () {
+            alert(fileObj);
+        };
+        XmlHttpRequest.send(form);
+    }   
+    </script>
 {%/block%}

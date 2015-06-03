@@ -29,6 +29,7 @@ a {
         text-decoration: none;
     }
 }
+button,input{outline: none;}
 img{border:none;}
 .container {
     width: 1000px;
@@ -1186,7 +1187,9 @@ img{border:none;}
 
 //返回顶部按钮样式结束
 /* 颜色样式开始 */
-
+.color-pink{
+    color: @color-pink;
+}
 .color-red {
     color: @color-red;
 }
@@ -1291,6 +1294,44 @@ img{border:none;}
     line-height: 40px;
 }
 /* 字体大小样式结束 */
+
+/* 按钮样式开始 */
+.combtn {
+    border: 0;
+    color: #FFFFFF;
+    background-color: #5ac911;
+    text-align: center;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -ms-boder-radius: 5px;
+    -o-boder-radius: 5px;
+    border-radius: 5px;
+}
+
+.common-a-btn {
+    display: block;
+    color: #FFFFFF;
+    background-color: #5ac911;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -ms-boder-radius: 5px;
+    -o-boder-radius: 5px;
+    border-radius: 5px;
+    line-height: 40px;
+    &:hover {
+        color: #FFFFFF;
+        background-color: #5ac911;
+        text-decoration: none;
+    }
+}
+/* 按钮样式结束 */
+
 /* display:block  统一设置 */
 
 .dis-block {
@@ -1330,6 +1371,7 @@ img{border:none;}
 .icon-success:before { content: "\e612"; }
 .icon-weibo:before { content: "\e600"; }
 .icon-qq:before { content: "\e601"; }
+.icon-heart:before { content: "\e617"; }
 .icon-delete:before { content: "\e613"; }
 .icon-iconphone:before { content: "\e602"; }
 .icon-email:before { content: "\e614"; }

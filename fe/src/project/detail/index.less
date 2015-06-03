@@ -1,22 +1,20 @@
 @import "../../common/css/common.less";
+@import "../../common/ui/RangeSlider/rangeSlider";
+.details {}
 
-.details {
-
-}
 .detail-left {
     float: left;
     width: 670px;
     margin-right: 29px;
 }
+
 .detail-left-title {
     height: 40px;
     line-height: 40px;
-
     .left-title-link {
         font-size: 14px;
         color: @color-mianbao;
         text-decoration: none;
-
         &:hover {
             text-decoration: underline;
         }
@@ -29,17 +27,17 @@
         margin: 0 6px;
     }
 }
-.project {
 
-}
+.project {}
+
 .project-title {
     height: 70px;
     padding: 0 20px;
     border-bottom: 1px solid #dfdfdf;
     background-color: #f8f8f8;
-
     .clearfix;
 }
+
 .project-title-name {
     float: left;
     font-size: 26px;
@@ -48,75 +46,74 @@
     width: 375px;
     .ellipsis();
     .clearfix;
-
     .grade-star {
         margin: 14px 5px 0 2px;
     }
 }
+
 .project-title-number {
     float: right;
     font-size: 16px;
     color: #333333;
     line-height: 70px;
 }
+
 .project-gaishu {
     padding: 30px 30px 0 30px;
 }
+
 .project-gaishu-top {
     padding-bottom: 20px;
     margin-bottom: 20px;
     border-bottom: 1px dashed #dfdfdf;
-
     .clearfix;
 }
+
 .gaisu-top-rental {
     width: 200px;
     float: left;
 }
+
 .gaishu-top-rental-icon {
     height: 20px;
     margin-bottom: 14px;
     background: url("img/icon.png") 0 0 no-repeat;
     padding-left: 24px;
     font-size: 14px;
-
     &.rental {
         background-position: 0 0;
     }
-
-    &.lilv{
+    &.lilv {
         background-position: 0 -50px;
     }
-
     &.time {
         background-position: 0 -100px;
     }
 }
+
 .gaishu-top-rental-number {
     color: @color-red;
-
     span {
         font-size: 14px;
     }
-
     .rental-number-big {
         font-size: 22px;
     }
 }
+
 .project-gaishu-bottom {
     .clearfix;
 }
+
 .gaishu-bottom-guard {
-
-
     .clearfix;
 }
+
 .gaishu-guard-baozhang {
     height: 38px;
     margin-bottom: 8px;
     float: left;
     .clearfix;
-
     span {
         font-size: 14px;
         color: #333333;
@@ -124,69 +121,60 @@
         line-height: 20px;
         float: left;
     }
-
     .baozhang-box {
         float: left;
         width: 316px;
-
         .clearfix;
     }
-
     .baozhang-type {
         background: url("img/icon.png") 0 0 no-repeat;
         display: inline-block;
         padding-left: 20px;
         line-height: 20px;
         margin-right: 8px;
-
         &.benxi {
             background-position: 0 -150px;
         }
     }
 }
+
 .gaishu-bottom-jindu {
     .clearfix;
 }
+
 .jindu-top {
     font-size: 14px;
     color: #333333;
     line-height: 20px;
-
     .clearfix;
-
-
     .jindu-top-tiao {
         display: inline-block;
         width: 70px;
         height: 8px;
         background-color: #cccccc;
         margin-right: 10px;
-
         .border-radius(20px);
-
         .jindu-tio-tiao-within {
             height: 8px;
             min-width: 10%;
             background-color: @color-red;
-
             .border-radius(20px);
         }
     }
     .jindu-top-bai {
         font-size: 12px;
-
         .jindu-top-bai-number {
             color: @color-red;
             font-size: 14px;
         }
     }
 }
+
 .jindu-btm {
     font-size: 14px;
     color: #333333;
     margin-left: 374px;
-
-//    .clearfix;
+    //    .clearfix;
 }
 
 .jindu-top-text {
@@ -203,25 +191,22 @@
     border-top: 1px solid #dfdfdf;
     background-color: #f8f8f8;
 }
+
 .project-time-start {
     line-height: 70px;
     font-size: 14px;
     color: #333333;
     margin-right: 90px;
 }
-.project-main {
 
-    .showproject-main,
-    .showfile-main,
-    .showrecord-main {
+.project-main {
+    .showproject-main, .showfile-main, .showrecord-main {
         display: block;
     }
-
     &.project {
         .showproject {
             .title-current;
         }
-
         .showproject-main {
             display: block;
         }
@@ -230,12 +215,10 @@
             display: none;
         }
     }
-
     &.file {
         .showfile {
             .title-current;
         }
-
         .showfile-main {
             display: block;
         }
@@ -244,7 +227,6 @@
             display: none;
         }
     }
-
     &.record {
         .showrecord {
             .title-current;
@@ -258,12 +240,13 @@
         }
     }
 }
+
 .project-main-title {
     border-bottom: 1px solid #dfdfdf;
     margin-bottom: 30px;
-
     .clearfix;
 }
+
 .main-title-box {
     float: left;
     cursor: pointer;
@@ -273,7 +256,11 @@
     font-size: 14px;
     width: 120px;
     text-align: center;
+    &.current {
+        .title-current;
+    }
 }
+
 .title-current {
     border-top: 2px solid @color-green;
     border-left: 1px solid #dfdfdf;
@@ -283,9 +270,11 @@
     color: @color-green;
     line-height: 40px;
 }
+
 .main-box-details {
     display: none;
 }
+
 .main-box-detail-title {
     width: 96px;
     height: 28px;
@@ -296,15 +285,15 @@
     color: @color-green;
     font-size: 14px;
     margin-bottom: 20px;
-
     .border-radius(5px);
 }
+
 .main-detail-content {
     .clearfix;
     min-height: 100px;
     position: relative;
-
 }
+
 .main-detail-content-left {
     float: left;
     width: 350px;
@@ -312,88 +301,97 @@
     color: #333333;
     overflow: hidden;
 }
+
 .left-box {
     .clearfix;
     line-height: 18px;
     margin-bottom: 18px;
 }
+
 .details-main-box {
     border-bottom: 1px dashed #efefef;
     margin-bottom: 30px;
     position: relative;
-
     &.bor-btm {
         border-bottom: none;
         margin-bottom: 50px;
     }
 }
+
 .content-left-name {
     float: left;
     width: 100px;
     text-align: right;
 }
+
 .content-left-text {
     width: 250px;
     float: left;
     word-wrap: break-word;
     word-break: break-all;
-
     &.right-text {
         width: 200px;
     }
 }
+
 .main-detail-content-right {
     width: 300px;
     float: right;
     font-size: 14px;
     color: #333333;
 }
+
 .file-left {
     float: left;
     width: 210px;
 }
+
 .file-left-box {
     margin-bottom: 18px;
     line-height: 18px;
     font-size: 14px;
     color: #333333;
-
     .clearfix;
 }
+
 .file-left-name {
     float: left;
     width: 100px;
     text-align: right;
 }
+
 .file-left-text {
     float: left;
     width: 110px;
 }
+
 .file-enter {
     width: 250px;
     float: left;
-
     .file-left-text {
         float: left;
         width: 150px;
     }
 }
+
 .main-detail-content-right {
-    width:300px;
-    float:right;
-    font-size:14px;
-    color:#333
+    width: 300px;
+    float: right;
+    font-size: 14px;
+    color: #333
 }
+
 .main-detail-content-down {
-    float:left;
-    width:600px;
-    font-size:14px;
-    color:#333;
-    overflow:hidden
+    float: left;
+    width: 600px;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden
 }
+
 .content-down-text {
-    word-wrap:break-word;
-    word-break:break-all;
+    word-wrap: break-word;
+    word-break: break-all;
     line-height: 22px;
     font-size: 13px;
     margin-left: 100px;
@@ -402,75 +400,67 @@
 .renzheng-box {
     padding-left: 30px;
 }
+
 .renzheng-title {
     height: 40px;
     line-height: 40px;
     font-size: 14px;
     color: #333333;
 }
+
 .renzheng-box-main {
     .clearfix;
     margin: 0 -40px 30px 0;
-
 }
+
 .renzheng-big-box {
     float: left;
     margin: 0 35px 20px 0;
 }
+
 .renzheng-pic {
     width: 100px;
     height: 120px;
     margin-right: 30px;
     background: url("./img/renzheng.png") 0 0 no-repeat;
-
     &.shidi {
         background-position: 20px 0;
     }
-
     &.yingye {
         background-position: -110px 0;
     }
-
     &.shuiwu {
         background-position: -240px 0;
     }
-
     &.bank {
         background-position: -370px 0;
     }
-
     &.zuzhi {
         background-position: -502px 0;
     }
-
     &.zhengxin {
         background-position: 20px -120px;
     }
-
     &.diya {
         background-position: -110px -120px;
     }
-
     &.shenfen {
         background-position: 20px -240px;
     }
-
     &.hukou {
         background-position: -110px -240px;
     }
-
     &.jiehun {
         background-position: -240px -240px;
     }
-
     &.fangchan {
         background-position: -370px -240px;
     }
-
     &.xingshi {
         background-position: -502px -240px;
     }
 }
+
 .detail-pass {
     width: 490px;
     line-height: 22px;
@@ -478,6 +468,7 @@
     color: #333333;
     padding-left: 30px;
 }
+
 .detail-symbol {
     width: 140px;
     height: 80px;
@@ -486,6 +477,7 @@
     right: 8px;
     top: 30px;
 }
+
 .detail-right {
     width: 260px;
     border-left: 1px solid #efefef;
@@ -493,12 +485,14 @@
     float: right;
     margin-top: 50px;
 }
+
 .right-top {
     border-bottom: 1px dashed #efefef;
     padding-bottom: 30px;
     margin-bottom: 30px;
     position: relative;
 }
+
 .right-top-new {
     position: absolute;
     width: 66px;
@@ -507,6 +501,7 @@
     right: -20px;
     background: url(./img/new.png) 0 0 no-repeat;
 }
+
 .right-top-title {
     height: 30px;
     line-height: 30px;
@@ -514,27 +509,30 @@
     font-size: 19px;
     color: #333333;
 }
+
 .right-top-allmoney {
     padding: 15px 25px;
     background-color: #f8f8f8;
     border: 1px solid #efefef;
     margin-bottom: 10px;
 }
+
 .right-top-allmoney-money {
     font-size: 14px;
     color: #333333;
     height: 20px;
     line-height: 20px;
-
     span {
         color: @color-red;
     }
 }
+
 .right-top-allmoney-time {
     color: #666;
     height: 20px;
     line-height: 20px;
 }
+
 .right-top-ipt {
     height: 34px;
     border: 1px solid #efefef;
@@ -542,11 +540,9 @@
     line-height: 32px;
     position: relative;
     margin-bottom: 10px;
-
     &.disabled {
         background-color: #f8f8f8;
     }
-
     .right-top-ipt-input {
         outline: none;
         border: none;
@@ -556,28 +552,25 @@
         background: none;
     }
 }
+
 .right-top-chongzhi {
     position: relative;
     height: 34px;
     color: #666;
-
     .clearfix;
 }
+
 .chongzhi-left {
     float: left;
     color: #333;
     line-height: 34px;
-
-
     .account-a-link {
         text-decoration: none;
         color: @color-green;
-
         &:hover {
             text-decoration: underline;
         }
     }
-
     .chongzhi-link {
         text-decoration: none;
         color: @color-green;
@@ -589,16 +582,14 @@
     position: absolute;
     right: 5px;
     top: 0;
-
     .chongzhi-span {
         color: @color-red;
     }
 }
+
 .right-top-btn {
     height: 34px;
-
     .clearfix;
-
     .right-top-btn-confirm {
         float: left;
         width: 170px;
@@ -609,116 +600,105 @@
         font-size: 14px;
         text-align: center;
         cursor: pointer;
-
         .border-radius(5px);
-
         &.confirm-all {
             width: 80px;
             background-color: @color-red;
             float: right;
-
             .border-radius(5px);
         }
     }
 }
+
 .right-bottom {
     margin-bottom: 20px;
 }
+
 .right-bottom-title {
     height: 30px;
-
     .clearfix;
 }
+
 .bottom-title-name {
     float: left;
     font-size: 18px;
     color: #333333;
     line-height: 30px;
 }
+
 .bottom-title-number {
     float: right;
     line-height: 30px;
     font-size: 14px;
     color: #333333;
-
     .btm-title-number-sp {
         color: @color-red;
     }
 }
-.right-bottom-main {
 
-}
+.right-bottom-main {}
+
 .bottom-main-title {
     height: 30px;
     border-left: 5px solid @color-green;
     background-color: #f8f8f8;
-
     .clearfix;
 }
+
 .btm-main-title-box {
     float: left;
     width: 90px;
     line-height: 30px;
     padding-left: 10px;
-
     &.time {
         width: 80px;
     }
-
     &.yinghuan {
         width: 90px;
     }
-
     &.status {
         width: 54px;
         float: right;
     }
 }
+
 .btm-main-box {
     height: 30px;
     padding-left: 5px;
-
     &.btm-bg-color {
         background-color: #f8f8f8;
     }
-
     .clearfix;
 }
 
-
 //文件资料
-
 .detail-item {
     .clearfix;
     width: 680px;
     padding-bottom: 10px;
 }
+
 .detail-item-list {
     float: left;
     width: 130px;
     margin-right: 40px;
     margin-bottom: 20px;
-
     &.img-city {
         width: 200px;
         margin-right: 20px;
-
         .detail-item-list-img {
             width: 200px;
             height: 180px;
         }
     }
-
     .detail-item-list-img {
         width: 130px;
         height: 180px;
-
         &.img-width {
             width: 192px;
             height: 144px;
         }
     }
-
     .detail-item-p {
         text-align: center;
         height: 30px;
@@ -727,42 +707,39 @@
         color: #333333;
     }
 }
+
 .item-last {
     border-bottom: none;
 }
+
 //投资记录
 .main-detail-content table {
     border-top: 1px solid #ededed;
     tr {
         height: 30px;
         padding-left: 20px;
-
         &.color-white {
             background-color: #FFFFFF;
         }
-
         &.color-hui {
             background-color: #f8f8f8;
         }
-
         td {
             padding-left: 20px;
         }
     }
 }
 
-
 // 满标状态
-.right-bg-color {
+.right-bg-color {}
 
-}
 .right-box-top {
     background-color: #f8f8f8;
     padding: 30px 0 30px 30px;
     border: 1px solid #dedede;
 }
-.right-top2nd-title {
 
+.right-top2nd-title {
     width: 90px;
     margin: 0 auto 20px;
     height: 30px;
@@ -771,12 +748,12 @@
     font-size: 24px;
     color: @color-red;
     padding-left: 30px;
-
     &.refund {
         background: url(./img/refresh.png) 0 center no-repeat;
         color: @color-green;
     }
 }
+
 .right-top2nd-box {
     height: 30px;
     line-height: 30px;
@@ -784,15 +761,16 @@
     font-size: 14px;
 }
 
-
 .project-box {
     border: 1px solid #dfdfdf;
     margin-bottom: 20px;
 }
+
 .title-icon {
-//    background: url(./img/title_icon.png) 0 12px no-repeat;
-//    padding-left: 20px;
+    //    background: url(./img/title_icon.png) 0 12px no-repeat;
+    //    padding-left: 20px;
 }
+
 .detail-error {
     height: 36px;
     line-height: 36px;
@@ -804,11 +782,9 @@
     margin-bottom: 10px;
     position: relative;
     display: none;
-
     &.show {
         display: block;
     }
-
     .detail-error-cha {
         display: block;
         position: absolute;
@@ -821,9 +797,7 @@
     }
 }
 
-
 // 实地认证状态
-
 .renzheng-box-main-box {
     float: left;
     width: 100px;
@@ -831,61 +805,50 @@
     margin-right: 36px;
     margin-bottom: 36px;
 }
+
 .renzheng-box-main-box-pic {
     width: 100px;
     height: 60px;
     margin-bottom: 10px;
     background: url(./img/renzheng_icon.png) 0 0 no-repeat;
-
-
     &.shidi {
         background-position: 17px 0;
     }
-
     &.yingye {
         background-position: 17px -102px;
     }
-
     &.shuiwu {
         background-position: 17px -202px;
     }
-
     &.bank {
         background-position: 17px -302px;
     }
-
     &.zuzhi {
         background-position: 17px -400px;
     }
-
     &.zhengxin {
         background-position: 17px -502px;
     }
-
     &.diya {
         background-position: 17px -600px;
     }
-
     &.shenfen {
         background-position: 17px -702px;
     }
-
     &.hukou {
         background-position: 17px -800px;
     }
-
     &.jiehun {
         background-position: 17px -900px;
     }
-
     &.fangchan {
         background-position: 17px -1000px;
     }
-
     &.xingshi {
         background-position: 17px -1100px;
     }
 }
+
 .renzheng-box-main-box-name {
     height: 16px;
     line-height: 16px;
@@ -904,11 +867,11 @@
     background-color: #ffecea;
     margin-bottom: 10px;
     display: none;
-
     &.show {
         display: block;
     }
 }
+
 .invest-main {
     position: relative;
     min-height: 300px;
@@ -919,10 +882,144 @@
     font-size: 18px;
     line-height: 22px;
     text-align: center;
-
     a {
         color: @color-green;
         text-decoration: none;
         cursor: pointer;
     }
 }
+
+//爱心投资开始
+.heart {
+    .box1 {
+        width: 1000px;
+        height: 266px;
+        background: url(img/index_bg.png) center center no-repeat;
+    }
+    .right-top {
+        border-bottom: 0px dashed #efefef;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    .color-font-pink {
+        color: #f0acc8;
+    }
+    .right-top-ipt {
+        height: 44px;
+        border: 1px solid #efefef;
+        padding-left: 25px;
+        line-height: 32px;
+        position: relative;
+        margin-bottom: 10px;
+        font-size: 14px;
+        line-height: 46px;
+        &.disabled {
+            background-color: #f8f8f8;
+        }
+        .right-top-ipt-input {
+            outline: none;
+            border: none;
+            height: 12px;
+            padding: 11px 0;
+            background: none;
+            width: 160px;
+            float: right;
+            color: @color-green;
+            font-size: 14px;
+            height: 22px;
+        }
+        &.shouyi-box {
+            padding-top: 10px;
+            padding-left: 10px;
+            height: 56px;
+            line-height: 22px;
+            font-size: 12px;
+            .shouyi-content {
+                padding-top: 1px;
+                width: 180px;
+                line-height: 20px;
+            }
+        }
+    }
+    .angel-code-box {
+        height: 60px;
+        color: #ea6ea1;
+        font-size: 14px;
+        line-height: 24px;
+        width: 100%;
+        .head-img {
+            width: 58px;
+            height: 58px;
+            border-radius: 30px;
+            box-shadow: 1px 3px 3px #e6e6e6;
+        }
+        .code-span {
+            display: block;
+            width: 190px;
+            float: right;
+            line-height: 30px;
+            .angel-name {
+                max-width: 148px;
+                text-overflow: ellipsis;
+                display: block;
+                overflow: hidden;
+                line-height: 30px;
+                float: left;
+            }
+        }
+    }
+    .rangeslider {
+        height: 100px;
+        .title {
+            font-size: 16px;
+            color: #333;
+            line-height: 50px;
+        }
+    }
+    .irs {
+        right: 0px;
+        width: 100%;
+    }
+    .irs-line {
+        background: linear-gradient(to bottom, #f0acc8 -50%, #ea6ea1 150%);
+    }
+    .irs-slider {
+        font-family: "iconfont" !important;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: 0.2px;
+        -moz-osx-font-smoothing: grayscale;
+        background: none;
+        .border-radius(inherit);
+        border: none;
+        .box-shadow(none);
+       /*  text-shadow: 1px 2px 3px #666; */
+        height: 36px;
+        color: #ea6ea1;
+        font-size: 34px;
+        &:before {
+            content: "\e617";
+        }
+    }
+    .irs-single {
+        top: -10px;
+        color: @color-green;
+        background-color: transparent;
+    }
+    .irs-single-leftnum {
+        position: absolute;
+        display: block;
+        top: -10px;
+        right: 0px;
+        cursor: default;
+        white-space: nowrap;
+        font-size: 14px;
+        line-height: 1.333;
+        text-shadow: none;
+        padding: 1px 5px;
+        color: #ea6ea1;
+        .border-radius(3px);
+    }
+}
+
+//爱心投资结束

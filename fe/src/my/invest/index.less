@@ -1,12 +1,10 @@
 @import "../../common/css/common.less";
 @import "../common/css/index.less";
-
 .my-invest-tab {
     padding: 15px 25px;
     background-color: @color-gray-bg;
     margin-bottom: 10px;
     .clearfix;
-
     .my-invest-tab-item {
         float: left;
         padding: 0 10px;
@@ -17,7 +15,6 @@
         margin-right: 15px;
         font-size: 14px;
         cursor: pointer;
-
         &.current {
             color: @color-white;
             background-color: @color-red;
@@ -28,7 +25,6 @@
 .my-invest-list {
     position: relative;
     min-height: 300px;
-
     .my-invest-header {
         border-bottom: 1px solid @color-gray-border;
         .clearfix;
@@ -37,12 +33,10 @@
         min-height: 60px;
         line-height: 60px;
         border-bottom: 1px dashed @color-gray-border;
-
         &.current .my-invest-detail {
             display: block;
         }
     }
-
     .my-invest-content {
         .clearfix;
     }
@@ -54,14 +48,11 @@
         width: 75px;
         padding-left: 10px;
     }
-
     .my-invest-project {
         float: left;
         width: 75px;
-
         padding-left: 10px;
     }
-
     .invest-name {
         width: 180px;
         color: @color-black;
@@ -72,13 +63,11 @@
         text-align: center;
         cursor: pointer;
     }
-
     .invest-op,
     .view-plan {
         width: 80px;
         .clearfix;
     }
-
     .view-plan-btn {
         float: left;
         background-color: @color-green;
@@ -90,45 +79,38 @@
         margin-top: 14px;
         padding: 0 4px;
     }
-
     .invest-em {
         color: @color-red;
     }
     .invest-pass {
         color: @color-green;
     }
-
     .my-invest-detail {
         display: none;
         position: relative;
         border: 1px solid @color-gray-border;
         margin-bottom: 20px;
         min-height: 100px;
-
         .my-invest-plan-title {
             background-color: @color-gray-bg;
             margin: 0;
             padding-left: 20px;
             font-weight: normal;
         }
-
         table {
             width: 100%;
             text-align: center;
             line-height: 40px;
         }
-
         th,
         .my-invest-plan-all td {
             background: @color-gray-bg;
             border-bottom: 0;
         }
-
         td,
         th {
             border-bottom: 1px solid @color-gray-border;
         }
-
         .trangle-border,
         .trangle-content {
             position: absolute;
@@ -139,7 +121,6 @@
             top: -20px;
             right: 30px;
         }
-
         .trangle-border {
             top: -21px;
             border-color: transparent transparent @color-gray-border transparent;
@@ -153,7 +134,6 @@
 .my-invest-table {
     width: 100%;
     text-align: left;
-
     th {
         color: #a0a0a0;
         border-bottom: 1px solid @color-gray-border;
@@ -161,7 +141,6 @@
         line-height: 34px;
         padding-left: 10px;
     }
-
     td {
         border-bottom: 1px dashed @color-gray-border;
         padding-left: 10px;
@@ -169,20 +148,94 @@
         line-height: 60px;
     }
 }
+
 .span-box {
     display: inline-block;
     width: 70px;
     height: 8px;
     background-color: #cccccc;
-
     .border-radius(20px);
-
     .within {
         min-width: 10%;
         height: 8px;
         display: block;
         background-color: @color-red;
-
         .border-radius(20px);
     }
 }
+
+//爱心天使开始
+.my-heart-item {
+    /*  height: 120px; */
+    
+    .icon-heart {
+        display: block;
+        height: 10px;
+        width: 10px;
+        color: #f0acc8;
+        position: absolute;
+        left: -5px;
+    }
+    .my-heart-span {
+        display: block;
+        background-color: #f5f5f5;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+    .angel-img {
+        width: 35px;
+        height: 35px;
+        vertical-align: middle;
+        margin-left: 40px;
+        margin-right: 10px;
+        -webkit-border-radius: 17px;
+        -moz-border-radius: 17px;
+        border-radius: 17px;
+    }
+    .my-heart-content {
+        line-height: 40px;
+        height: 40px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+.my-invest-table {
+    .my-heart-tr {
+        position: relative;
+        td {
+            border-bottom: none;
+            &:first-child {
+                padding-left: 12px;
+            }
+        }
+    }
+    .icon-heart {
+        height: 10px;
+        width: 10px;
+        color: #f0acc8;
+        position: absolute;
+        left: -5px;
+    }
+    .my-heart-content {
+        padding-left: 10px;
+        line-height: 40px;
+        height: 40px;
+        .my-heart-span {
+            display: block;
+            background-color: #f5f5f5;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+        .angel-img {
+            width: 35px;
+            height: 35px;
+            vertical-align: middle;
+            margin-left: 40px;
+            margin-right: 10px;
+            .border-radius(17px);
+        }
+    }
+}
+
+//爱心天使结束

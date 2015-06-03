@@ -1,5 +1,5 @@
 <?php
-require(dirname(__FILE__) . '/env.inc.php');
+require(dirname(__DIR__) . '/env.inc.php');
 
 $startTs = strtotime("2015-04-01 00:00:00");
 $endTs = strtotime("2015-04-17 14:00:00");

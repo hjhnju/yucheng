@@ -1,0 +1,47 @@
+{%extends file="../../../views/common/page.phtml"%}
+
+{%block name="link"%}
+<link rel="stylesheet" type="text/css" href="{%$feroot%}/my/angelprofit/index.css" />
+{%/block%}
+
+{%block name="script"%}
+<script>
+    require(['my/angelprofit/index'], function (main) {
+        main.init();
+    });
+</script>
+{%/block%}
+
+{%block name="content"%}
+<div class="finish">
+    <div class="container finish-bg-color">
+        {%include file='../../../views/common/nav.phtml' current="9"%}
+        <div class="finish-main">
+            <div class="finish-main-title">爱心收益</div>
+            <div class="all-account-box">
+                <div class="all-box-income">
+                      <div class="all-box-income-title">
+                          <p class="all-income-title-price">{%$money%}<span style="font-size:18px">元</span></p>
+                          <p class="all-income-title-name">爱心收益</p>
+                      </div>
+                      <div class="all-box-income-title">
+                          <p class="all-income-title-price">{%$person%}<span style="font-size:18px">位</span></p>
+                          <p class="all-income-title-name">累计投标人</p>
+                      </div>
+                      <div class="all-box-income-title">
+                          <p class="all-income-title-price">{%$count%}<span style="font-size:18px">笔</span></p>
+                          <p class="all-income-title-name">累计投标笔数</p>
+                      </div>
+                  </div>  
+                  <div class="all-box-income-class"> 
+                      <a target="_blank" href="http://www.xingjiaodai.com.cn:8089/account/cash/withdraw" class="all-box-pay-link cash-link">提现</a>
+                   </div> 
+            </div>
+            <div id="my-angel-list" class="my-invest-list">
+               <div class="xjd-loading">&nbsp;</div>
+            </div> 
+            <div id="my-angel-pager" class="my-invest-pager"></div>
+        </div>
+    </div>
+</div>
+{%/block%}
