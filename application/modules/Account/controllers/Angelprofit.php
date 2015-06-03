@@ -56,6 +56,7 @@ class AngelprofitController extends Base_Controller_Page {
 		    $obj->setPage($page);
 		    $backingRet = $obj->toArray();
 		    $arrInvest = array();
+		    $temp = array();
 		    foreach ($backingRet['list'] as $index => $list){
 		        $ret = array_search($list['invest_id'],$arrInvest);
 		        if(false !== $ret){
@@ -97,10 +98,20 @@ class AngelprofitController extends Base_Controller_Page {
 		        $temp[$index]['status']  = $loan['status'];
 		    }		   
 		}
-		$backingRet['pageall']  = ceil((count($temp)+$backingRet['all'])/self::PAGESIZE);
-		$backingRet['all']     += count($temp);
+		if(isset($backingRet['all'])){
+		    $backingRet['pageall']  = ceil((count($temp)+$backingRet['all'])/self::PAGESIZE);
+		    $backingRet['all']     += count($temp);
+		}else{
+		    $backingRet['pageall']  = ceil((count($temp))/self::PAGESIZE);
+		    $backingRet['all']     = count($temp);
+		    $backingRet['total'] = 0;
+		}
 		if(count($backingRet['list']) < self::PAGESIZE){
-		    $arrTemp = array_slice($temp,floor(($page*self::PAGESIZE-$backingRet['total'])/self::PAGESIZE)*self::PAGESIZE,self::PAGESIZE-count($backingRet['list']));
+		    if(!empty($backingRet['list'])){
+		        $arrTemp = array_slice($temp,floor(($page*self::PAGESIZE-$backingRet['total'])/self::PAGESIZE)*self::PAGESIZE,self::PAGESIZE-count($backingRet['list']));
+		    }else{
+		        $arrTemp = array_slice($temp,($page-1)*self::PAGESIZE,self::PAGESIZE);
+		    }
 		    if(empty($backingRet['list'])){
 		        $backingRet['list'] = $arrTemp;
 		    }else{
