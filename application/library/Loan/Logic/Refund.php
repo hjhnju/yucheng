@@ -42,11 +42,22 @@ class Loan_Logic_Refund {
         $bolRet = true;
         foreach($list['list'] as $arrInfo){
             $investRefundId = $arrInfo['id'];
-            if(intval($arrInfo['capital'])==0){
-                $transAmt = floatval($arrInfo['amount']) + floatval($arrInfo['late_charge']);
-                $bolRet1 = Finance_Api::transfer($arrInfo['user_id'], $transAmt);
-                Invest_Api::updateInvestRefundStatus($investRefundId, Invest_Type_RefundStatus::RETURNED);
-            }else{
+            $objShare = new Invest_Object_Share();
+            $objShare->fetch(array('invest_id'=>$arrInfo['invest_id']));
+            $arrShare = $objShare->toArray();
+            if(!empty($arrShare['id'])){
+                if($arrInfo['user_id'] == $arrShare['to_userid']){
+                    $transAmt = floatval($arrInfo['amount']) + floatval($arrInfo['late_charge']);
+                    $bolRet1 = Finance_Api::transfer($arrInfo['user_id'], $transAmt);
+                    Invest_Api::updateInvestRefundStatus($investRefundId, Invest_Type_RefundStatus::RETURNED);
+                }else{
+                    $objRefund = new Invest_Object_Refund();
+                    $objRefund->fetch(array('invest_id'=>$arrShare['invest_id'],'period' => $arrInfo['period'],'user_id'=>$arrShare['from_userid']));
+                    $arrInfo = $objRefund->toArray();
+                    $investRefundId = $arrInfo['id'];
+                    $bolRet1 = $this->singleDoRefund($investRefundId, $outUserId, $arrInfo,$transAmt);
+                }
+            }else{                
                 $bolRet1 = $this->singleDoRefund($investRefundId, $outUserId, $arrInfo);
             }
             if(!$bolRet1){
@@ -114,7 +125,7 @@ class Loan_Logic_Refund {
     /**
      * 单笔还款，成功则修改invest_refund纪录状态为结束
      */
-    private function singleDoRefund($refundId, $outUserId, $arrInfo){
+    private function singleDoRefund($refundId, $outUserId, $arrInfo,$mangFee = 0.00){
         $bolRet   = false;
         $loanId   = $arrInfo['loan_id'];
         $investId = $arrInfo['invest_id'];
@@ -135,7 +146,7 @@ class Loan_Logic_Refund {
         //获取投资订单号
         $objInvest = new Invest_Object_Invest($investId);
         $subOrdId  = $objInvest->orderId;
-        $mangFee   = 0.00; //预留还款管理费（一般逾期情况）
+        //$mangFee   = 0.00; //预留还款管理费（一般逾期情况）
 
         //通知财务还款
         $arrRet = Finance_Api::repayment($refundId,$outUserId,$inUserId,$subOrdId,$transAmt,$loanId,$mangFee);

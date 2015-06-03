@@ -77,7 +77,11 @@ class ApiController extends Base_Controller_Api{
     	        $url = $this->webroot."/invest";
     	    }
     	    foreach ($arrRet['list'] as $key => $val){
-    	        $arrRet['list'][$key]['url'] = $url."&angel=".$val['angelcode'];
+    	        if(!empty($ret)){
+    	            $arrRet['list'][$key]['url'] = $url."&angel=".$val['angelcode'];
+    	        }else{
+    	            $arrRet['list'][$key]['url'] = $url;
+    	        }
     	    }
 	    }
 	    $this->ajax($arrRet);
