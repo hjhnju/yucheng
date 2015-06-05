@@ -8,16 +8,38 @@ class AngeldetailController extends Base_Controller_Response {
     const ERROR_KEY = 'invest_error';
     
     public function indexAction() {
-        $code = isset($_REQUEST['angel'])?$_REQUEST['angel']:'';
+        $strCode = $this->getRequest()->getParam('code');
+        
+        $loan = new Loan_List_Loan();
+        $loan->setFilter(array('status'=>Loan_Type_LoanStatus::LENDING));
+        $loan->setOrder(0);
+        $loan->setPagesize(PHP_INT_MAX);
+        $ret = $loan->getData();
+        if(!empty($ret)){
+            $id = $ret[0]['id'];
+        }else{
+            $loan->setFilter(array('status'=>Loan_Type_LoanStatus::WAITING));
+            $loan->setOrder(0);
+            $loan->setPagesize(PHP_INT_MAX);
+            $ret = $loan->getData();
+            if(!empty($ret)){
+                $id = $ret[0]['id'];
+            }else{
+                $loan->setFilter(array('status'=>Loan_Type_LoanStatus::FINISHED));
+                $loan->setOrder(0);
+                $loan->setPagesize(PHP_INT_MAX);
+                $ret = $loan->getData();
+                if(!empty($ret)){
+                    $id = $ret[0]['id'];
+                }
+           }
+        }
+                
         $angle = new Angel_Object_Angel();
-        $angle->fetch(array('angelcode'=>$code));
-        $arrAngel['code'] = $code;
+        $angle->fetch(array('angelcode'=>$strCode));
+        $arrAngel['code'] = $strCode;
         $arrAngel['name'] = $angle->angelname;
         $arrAngel['headurl'] = $angle->angelimage;
-        $id = $this->getInt('id');
-        if (empty($id)) {
-            $this->outputError(Base_RetCode::PARAM_ERROR);
-        }
 
         //检查是否允许投标
         $logic = new Invest_Logic_Invest();
@@ -27,7 +49,7 @@ class AngeldetailController extends Base_Controller_Response {
             exit;
         }
         $loan['allow_invest'] = $logic->allowInvest($this->userid, $loan['id']);
-        
+
         // 登录用户增加账号余额信息
         if (!empty($this->userid)) {
         	$user = $logic->getUserBalance($this->objUser);

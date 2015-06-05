@@ -64,24 +64,10 @@ class ApiController extends Base_Controller_Api{
 	    $objAngel->setPage($page);
 	    $objAngel->setPagesize(self::PAGE_SIZE);
 	    $arrRet = $objAngel->toArray();
-	    if(!empty($arrRet['list'])){
-    	    $loan = new Loan_List_Loan();
-    	    $loan->setFilter(array('status'=>Loan_Type_LoanStatus::LENDING));
-    	    $loan->setOrder(0);
-    	    $loan->setPagesize(PHP_INT_MAX);
-    	    $ret = $loan->getData();
-    	    if(!empty($ret)){
-        	    $id = $ret[0]['id'];
-        	    $url = $this->webroot."/invest/angeldetail?id=$id";
-    	    }else{
-    	        $url = $this->webroot."/invest";
-    	    }
-    	    foreach ($arrRet['list'] as $key => $val){
-    	        if(!empty($ret)){
-    	            $arrRet['list'][$key]['url'] = $url."&angel=".$val['angelcode'];
-    	        }else{
-    	            $arrRet['list'][$key]['url'] = $url;
-    	        }
+	    if(!empty($arrRet['list'])){   	   
+    	    foreach ($arrRet['list'] as $key => $val){    	        
+    	        $arrRet['list'][$key]['url'] = $this->webroot."/a/".$val['angelcode'];
+    	        $arrRet['list'][$key]['angelname'] = Base_Util_String::starUsername($val['angelname']);
     	    }
 	    }
 	    $this->ajax($arrRet);
@@ -102,12 +88,8 @@ class ApiController extends Base_Controller_Api{
 	    if($objUser->usertype !== User_Type_Roles::TYPE_ANGEL){
 	        return $this->ajaxError();
 	    }	    
-	    $loan = new Loan_Object_Loan();
-	    $loan->fetch(array('status'=>Loan_Type_LoanStatus::LENDING));
-	    $url   = $this->webroot."/invest/angeldetail?id=$loan->id";
 	    $logic = new Awards_Logic_Invite();
-	    $code  = $logic->encode($objUser->userid);
-	    $url  .= "&angel=".$code;
-	    return $this->ajax($url);
+	    $code  = $logic->encode($objUser->userid);   
+	    return $this->ajax($code);
 	}
 }
