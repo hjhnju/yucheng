@@ -22,6 +22,7 @@ if($intPos !== false){
 $params  = explode('/', $uri);
 $module  = empty($params[1]) ? 'Index' : ucfirst(strtolower($params[1]));
 $module  = in_array($module, array('I')) ? 'Awards' : $module;
+$module  = in_array($module, array('A')) ? 'Invest' : $module;
 $module  = in_array($module, $modules) ? $module : 'Index';
 define('MODULE', $module);
 
@@ -43,7 +44,6 @@ try {
     $application = new Yaf_Application($conf);
     $application->bootstrap()->run();
 } catch (Exception $e) {
-    var_dump($e->getMessage());die;
     Base_Log::error($e->getMessage());
 }
 

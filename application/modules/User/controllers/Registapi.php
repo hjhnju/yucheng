@@ -199,8 +199,10 @@ class RegistApiController extends Base_Controller_Api{
             Awards_Api::registNotify($userid, $inviterid);
         }
         Base_Log::notice($_REQUEST);
-        
-        return $this->ajaxJump('/user/open');
+        if($strType == 'priv'){
+            return $this->ajaxJump('/user/open');
+        }
+        return $this->ajaxJump('/account/apply');
     }
     
     /** 
