@@ -38,7 +38,7 @@ class AngeldetailController extends Base_Controller_Response {
         $angle = new Angel_Object_Angel();
         $angle->fetch(array('angelcode'=>$strCode));
         $arrAngel['code'] = $strCode;
-        $arrAngel['name'] = $angle->angelname;
+        $arrAngel['name'] = Base_Util_String::starUsername($angle->angelname);
         $arrAngel['headurl'] = $angle->angelimage;
 
         //检查是否允许投标
