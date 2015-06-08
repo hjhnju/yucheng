@@ -86,6 +86,10 @@ class TenderController extends Base_Controller_Page {
 	    if(-1 == $rate){
 	        return $logic->invest($uid, $loanId, $amount, $interest, $vocherAmt, $shareInfo);
 	    }
+	    if($rate < 0 || $rate > $loan['interest']){
+	        $sess->set('invest_error', Invest_RetCode::AMOUNT_ERROR);
+	        return $this->redirect("$investUrl/detail?id=" . $loanId);
+	    }
 	    $rate =  $loan['interest'] - $rate;	 
 	    $intRateAngel = intval($rate);  
 	    if(!empty($intRateAngel)){
