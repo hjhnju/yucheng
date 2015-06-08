@@ -9,6 +9,17 @@ class AngeldetailController extends Base_Controller_Response {
     
     public function indexAction() {
         $strCode = $this->getRequest()->getParam('code');
+        $angle = new Angel_Object_Angel();
+        $angle->fetch(array('angelcode'=>$strCode));
+        $angleid = $angle->id;
+        if(empty($angleid)){
+            $this->redirect('/');
+            exit;
+        }
+        $arrAngel['code'] = $strCode;
+        $arrAngel['name'] = Base_Util_String::starUsername($angle->angelname);
+        $arrAngel['headurl'] = $angle->angelimage;
+        
         
         $loan = new Loan_List_Loan();
         $loan->setFilter(array('status'=>Loan_Type_LoanStatus::LENDING));
@@ -34,13 +45,7 @@ class AngeldetailController extends Base_Controller_Response {
                 }
            }
         }
-                
-        $angle = new Angel_Object_Angel();
-        $angle->fetch(array('angelcode'=>$strCode));
-        $arrAngel['code'] = $strCode;
-        $arrAngel['name'] = Base_Util_String::starUsername($angle->angelname);
-        $arrAngel['headurl'] = $angle->angelimage;
-
+                     
         //检查是否允许投标
         $logic = new Invest_Logic_Invest();
         $loan = $logic->getLoanDetail($id);
