@@ -110,8 +110,10 @@ class User_Logic_Regist{
                 $objLogin->email = $username;
             }else {
                 $objLogin->name  = $username;
-                $objLogin->phone    = $phone;
             }  
+        }
+        if($phone) {
+            $objLogin->phone    = $phone;
         }
         $objLogin->passwd   = $passwd;
         $objLogin->usertype = $usertype;
