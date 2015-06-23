@@ -187,6 +187,9 @@ class User_Api{
      * 获取短信验证码信息,需要参数手机号及类型
      */
     public static function sendSmsCode($strPhone, $strType){
+        //暂时需要让所有的验证码全部通过，因为现在不需要手机验证
+        return true;
+
         if('dev' === ini_get('yaf.environ')){
             return true;
         }

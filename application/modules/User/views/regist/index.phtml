@@ -115,6 +115,7 @@
                     <div id="regist-pwd2-point"></div>
                     <div class="username-point">确保两次输入的密码一致</div>
                 </div>
+                <!--
                 <div class="login-username">
                     <label class="login-username-label">*手机号</label> 
                     <input autocomplete="off" class="login-input" id="regist-phone" type="text" data-text="手机号" />
@@ -133,6 +134,7 @@
                     <div class="username-error yanzma" id="regist-testing-error">
                     </div>
                 </div>
+                -->
                 <div class="login-username">
                     <label class="login-username-label">推荐人</label> 
                     <input autocomplete="off" {%if $result.data.inviter%}readonly value="{%$result.data.inviter%}"{%/if%} class="login-input login-tuijian" id="regist-tuijian" type="text" />
