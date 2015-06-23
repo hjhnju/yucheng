@@ -379,7 +379,8 @@ define(function(require) {
 
 
         // 检查快速注册
-        $('.regist .login-fastlogin').click(util.debounce(function(e) {
+        // 取消注册绑定事件，现在不需要用户进行注册·
+        $('.regist-old .login-fastlogin').click(util.debounce(function(e) {
             e.preventDefault();
 
             var status = 1;
